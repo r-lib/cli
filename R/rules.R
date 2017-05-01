@@ -69,7 +69,7 @@ make_line <- function(x, char = symbol$line) {
 #' cat(rule(center = "TITLE", line = crayon::blue("~-")), "\n")
 #'
 #' ## Even more custom line
-#' cat(rule(center = bgRed(" ", clisymbols::symbol$star, "TITLE",
+#' cat(rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
 #'   clisymbols::symbol$star, " "),
 #'   line = "\u2582",
 #'   line_color = "orange"))

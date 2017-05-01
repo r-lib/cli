@@ -8,24 +8,24 @@ rule(left = "", center = "", right = "", line = 1, line_color = NULL,
   width = getOption("width"))
 }
 \arguments{
-\item{left}{Label to show on the left. It interferes with the `center`
+\item{left}{Label to show on the left. It interferes with the \code{center}
 label, only at most one of them can be present.}
 
 \item{center}{Label to show at the center. It interferes  with the
-`left` and `right` labels.}
+\code{left} and \code{right} labels.}
 
-\item{right}{Label to show on the right. It interferes with the `center`
+\item{right}{Label to show on the right. It interferes with the \code{center}
 label, only at most one of them can be present.}
 
 \item{line}{The character or string that is used to draw the line.
-It can also `1` or `2`, to request a single line (Unicode, if
+It can also \code{1} or \code{2}, to request a single line (Unicode, if
 available), or a double line.}
 
-\item{line_color}{Either a color name (used in [crayon::make_style()]),
-or a style function from `crayon`, to color the line.}
+\item{line_color}{Either a color name (used in \code{\link[crayon:make_style]{crayon::make_style()}}),
+or a style function from \code{crayon}, to color the line.}
 
-\item{width}{Width of the rule. Defaults to the `width` option, see
-[base::options()].}
+\item{width}{Width of the rule. Defaults to the \code{width} option, see
+\code{\link[base:options]{base::options()}}.}
 }
 \value{
 Character scalar, the rule.
@@ -35,9 +35,9 @@ The rule can include either a centered text label, or labels on the
 left and right side.
 }
 \details{
-To color the labels, use the functions from the `crayon` package
+To color the labels, use the functions from the \code{crayon} package
 directly, see examples below. To color the line, either use the
-`crayon` colors directly, or the `line_color` option.
+\code{crayon} colors directly, or the \code{line_color} option.
 }
 \examples{
 
@@ -66,7 +66,7 @@ cat(rule(center = "TITLE", line = "~"))
 cat(rule(center = "TITLE", line = crayon::blue("~-")), "\\n")
 
 ## Even more custom line
-cat(rule(center = bgRed(" ", clisymbols::symbol$star, "TITLE",
+cat(rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
   clisymbols::symbol$star, " "),
   line = "\\u2582",
   line_color = "orange"))
