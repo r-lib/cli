@@ -71,16 +71,16 @@ cat(boxx("Hello there!", border_style = "double"), "\\n")
 cat(boxx(c("Hello", "there!"), padding = 1), "\\n")
 
 ## Padding
-cat(boxx("Hello there!", padding = 1), "\\n") 
-cat(boxx("Hello there!", padding = c(1, 5, 1, 5)), "\\n") 
+cat(boxx("Hello there!", padding = 1), "\\n")
+cat(boxx("Hello there!", padding = c(1, 5, 1, 5)), "\\n")
 
 ## Margin
-cat(boxx("Hello there!", margin = 1), "\\n") 
-cat(boxx("Hello there!", margin = c(1, 5, 1, 5)), "\\n") 
-cat(boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5)), "\\n") 
+cat(boxx("Hello there!", margin = 1), "\\n")
+cat(boxx("Hello there!", margin = c(1, 5, 1, 5)), "\\n")
+cat(boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5)), "\\n")
 
 ## Floating
-cat(boxx("Hello there!", padding = 1, float = "center"), "\\n") 
+cat(boxx("Hello there!", padding = 1, float = "center"), "\\n")
 cat(boxx("Hello there!", padding = 1, float = "right"), "\\n")
 
 ## Text color
@@ -88,18 +88,18 @@ cat(boxx(crayon::cyan("Hello there!"), padding = 1,
          float = "center"), "\\n")
 
 ## Backgorund color
-cat(boxx("Hello there!", padding = 1, background_color = "brown"), "\\n") 
+cat(boxx("Hello there!", padding = 1, background_color = "brown"), "\\n")
 cat(boxx("Hello there!", padding = 1,
-         background_color = crayon::bgRed), "\\n") 
+         background_color = crayon::bgRed), "\\n")
 
 ## Border color
-cat(boxx("Hello there!", padding = 1, border_color = "green"), "\\n") 
-cat(boxx("Hello there!", padding = 1, border_color = crayon::red), "\\n") 
+cat(boxx("Hello there!", padding = 1, border_color = "green"), "\\n")
+cat(boxx("Hello there!", padding = 1, border_color = crayon::red), "\\n")
 
 ## Label alignment
-cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "left"), "\\n") 
-cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "center"), "\\n") 
-cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "right"), "\\n") 
+cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "left"), "\\n")
+cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "center"), "\\n")
+cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "right"), "\\n")
 
 ## A very customized box
 star <- clisymbols::symbol$star

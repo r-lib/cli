@@ -34,12 +34,19 @@ make_line <- function(x, char = symbol$line) {
 #'   label, only at most one of them can be present.
 #' @param line The character or string that is used to draw the line.
 #'   It can also `1` or `2`, to request a single line (Unicode, if
-#'   available), or a double line.
+#'   available), or a double line. Some strings are interpreted specially,
+#'   see *Line styles* below.
 #' @param line_color Either a color name (used in [crayon::make_style()]),
 #'   or a style function from `crayon`, to color the line.
 #' @param width Width of the rule. Defaults to the `width` option, see
 #'   [base::options()].
 #' @return Character scalar, the rule.
+#'
+#' @section Line styles:
+#' Some strings for the `line` argument are interpreted specially:
+#' * `"single"`: (same as `1`), a single line,
+#' * `"double"`: (same as `2`), a double line,
+#' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
 #'
 #' @export
 #' @examples
@@ -49,6 +56,10 @@ make_line <- function(x, char = symbol$line) {
 #'
 #' ## Double rule
 #' cat(rule(line = 2), "\n")
+#'
+#' ## Bars
+#' cat(rule(line = "bar2"), "\n")
+#' cat(rule(line = "bar5"), "\n")
 #'
 #' ## Left label
 #' cat(rule(left = "Results"), "\n")
@@ -110,6 +121,13 @@ get_line_char <- function(line) {
 
   } else if (identical(line, 2) || identical(line, 2L)) {
     symbol$double_line
+
+  } else if (line %in% paste0("bar", 1:8)) {
+    bars <- structure(
+      paste0("lower_block_", 1:8),
+      names = paste0("bar", 1:8)
+    )
+    symbol[[ bars[[line]] ]]
 
   } else {
     paste(as.character(line), collapse = "")

@@ -19,7 +19,8 @@ label, only at most one of them can be present.}
 
 \item{line}{The character or string that is used to draw the line.
 It can also \code{1} or \code{2}, to request a single line (Unicode, if
-available), or a double line.}
+available), or a double line. Some strings are interpreted specially,
+see \emph{Line styles} below.}
 
 \item{line_color}{Either a color name (used in \code{\link[crayon:make_style]{crayon::make_style()}}),
 or a style function from \code{crayon}, to color the line.}
@@ -39,6 +40,16 @@ To color the labels, use the functions from the \code{crayon} package
 directly, see examples below. To color the line, either use the
 \code{crayon} colors directly, or the \code{line_color} option.
 }
+\section{Line styles}{
+
+Some strings for the \code{line} argument are interpreted specially:
+\itemize{
+\item \code{"single"}: (same as \code{1}), a single line,
+\item \code{"double"}: (same as \code{2}), a double line,
+\item \code{"bar1"}, \code{"bar2"}, \code{"bar3"}, etc., \code{"bar8"} uses varying height bars.
+}
+}
+
 \examples{
 
 ## Simple rule
@@ -46,6 +57,10 @@ cat(rule(), "\\n")
 
 ## Double rule
 cat(rule(line = 2), "\\n")
+
+## Bars
+cat(rule(line = "bar2"), "\\n")
+cat(rule(line = "bar5"), "\\n")
 
 ## Left label
 cat(rule(left = "Results"), "\\n")
