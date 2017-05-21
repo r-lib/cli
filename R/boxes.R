@@ -174,3 +174,10 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
 #' @importFrom methods setOldClass
 
 setOldClass(c("boxx", "character"))
+
+#' @export
+
+print.boxx <- function(x, ..., sep = "\n") {
+  cat(x, ..., sep = sep)
+  invisible(x)
+}

@@ -198,3 +198,10 @@ rule_left_right <- function(o) {
 #' @importFrom methods setOldClass
 
 setOldClass(c("rule", "character"))
+
+#' @export
+
+print.rule <- function(x, ..., sep = "\n") {
+  cat(x, ..., sep = sep)
+  invisible(x)
+}
