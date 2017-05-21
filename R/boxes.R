@@ -36,59 +36,57 @@
 #' @export
 #' @examples
 #' ## Simple box
-#' cat(boxx("Hello there!"), "\n")
+#' boxx("Hello there!")
 #'
 #' ## All border styles
 #' list_border_styles()
 #'
 #' ## Change border style
-#' cat(boxx("Hello there!", border_style = "double"), "\n")
+#' boxx("Hello there!", border_style = "double")
 #'
 #' ## Multiple lines
-#' cat(boxx(c("Hello", "there!"), padding = 1), "\n")
+#' boxx(c("Hello", "there!"), padding = 1)
 #'
 #' ## Padding
-#' cat(boxx("Hello there!", padding = 1), "\n")
-#' cat(boxx("Hello there!", padding = c(1, 5, 1, 5)), "\n")
+#' boxx("Hello there!", padding = 1)
+#' boxx("Hello there!", padding = c(1, 5, 1, 5))
 #'
 #' ## Margin
-#' cat(boxx("Hello there!", margin = 1), "\n")
-#' cat(boxx("Hello there!", margin = c(1, 5, 1, 5)), "\n")
-#' cat(boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5)), "\n")
+#' boxx("Hello there!", margin = 1)
+#' boxx("Hello there!", margin = c(1, 5, 1, 5))
+#' boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5))
 #'
 #' ## Floating
-#' cat(boxx("Hello there!", padding = 1, float = "center"), "\n")
-#' cat(boxx("Hello there!", padding = 1, float = "right"), "\n")
+#' boxx("Hello there!", padding = 1, float = "center")
+#' boxx("Hello there!", padding = 1, float = "right")
 #'
 #' ## Text color
-#' cat(boxx(crayon::cyan("Hello there!"), padding = 1,
-#'          float = "center"), "\n")
+#' boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
 #'
 #' ## Backgorund color
-#' cat(boxx("Hello there!", padding = 1, background_color = "brown"), "\n")
-#' cat(boxx("Hello there!", padding = 1,
-#'          background_color = crayon::bgRed), "\n")
+#' boxx("Hello there!", padding = 1, background_color = "brown")
+#' boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
 #'
 #' ## Border color
-#' cat(boxx("Hello there!", padding = 1, border_color = "green"), "\n")
-#' cat(boxx("Hello there!", padding = 1, border_color = crayon::red), "\n")
+#' boxx("Hello there!", padding = 1, border_color = "green")
+#' boxx("Hello there!", padding = 1, border_color = crayon::red)
 #'
 #' ## Label alignment
-#' cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "left"), "\n")
-#' cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "center"), "\n")
-#' cat(boxx(c("Hi", "there", "you!"), padding = 1, align = "right"), "\n")
+#' boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
+#' boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
+#' boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 #'
 #' ## A very customized box
 #' star <- clisymbols::symbol$star
 #' label <- c(paste(star, "Hello", star), "  there!")
-#' cat(boxx(
+#' boxx(
 #'   crayon::white(label),
 #'   border_style="round",
 #'   padding = 1,
 #'   float = "center",
 #'   border_color = "tomato3",
 #'   background_color="darkolivegreen"
-#' ), "\n")
+#' )
 
 boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  float = c("left", "center", "right"),

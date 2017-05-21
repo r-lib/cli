@@ -52,38 +52,38 @@ make_line <- function(x, char = symbol$line) {
 #' @examples
 #'
 #' ## Simple rule
-#' cat(rule(), "\n")
+#' rule()
 #'
 #' ## Double rule
-#' cat(rule(line = 2), "\n")
+#' rule(line = 2)
 #'
 #' ## Bars
-#' cat(rule(line = "bar2"), "\n")
-#' cat(rule(line = "bar5"), "\n")
+#' rule(line = "bar2")
+#' rule(line = "bar5")
 #'
 #' ## Left label
-#' cat(rule(left = "Results"), "\n")
+#' rule(left = "Results")
 #'
 #' ## Centered label
-#' cat(rule(center = " * RESULTS * "), "\n")
+#' rule(center = " * RESULTS * ")
 #'
 #' ## Colored labels
-#' cat(rule(center = crayon::red(" * RESULTS * ")), "\n")
+#' rule(center = crayon::red(" * RESULTS * "))
 #'
 #' ## Colored line
-#' cat(rule(center = crayon::red(" * RESULTS * "), line_color = "red"), "\n")
+#' rule(center = crayon::red(" * RESULTS * "), line_color = "red")
 #'
 #' ## Custom line
-#' cat(rule(center = "TITLE", line = "~"))
+#' rule(center = "TITLE", line = "~")
 #'
 #' ## More custom line
-#' cat(rule(center = "TITLE", line = crayon::blue("~-")), "\n")
+#' rule(center = "TITLE", line = crayon::blue("~-"))
 #'
 #' ## Even more custom line
-#' cat(rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
+#' rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
 #'   clisymbols::symbol$star, " "),
 #'   line = "\u2582",
-#'   line_color = "orange"))
+#'   line_color = "orange")
 
 rule <- function(left = "", center = "", right = "", line = 1,
                  line_color = NULL, width = getOption("width")) {
