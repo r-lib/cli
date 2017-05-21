@@ -94,7 +94,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
   if (is.character(line_color)) line_color <- crayon::make_style(line_color)
   if (is.function(line_color)) options$line <- line_color(options$line)
 
-  if (nchar(center)) {
+  res <- if (nchar(center)) {
     if (nchar(left) || nchar(right)) {
       stop(sQuote("center"), " cannnot be specified with ", sQuote("left"),
            " or ", sQuote("right"))
@@ -113,6 +113,9 @@ rule <- function(left = "", center = "", right = "", line = 1,
   } else {
     rule_line(options)
   }
+
+  class(res) <- unique(c("rule", class(res), "character"))
+  res
 }
 
 get_line_char <- function(line) {
@@ -191,3 +194,7 @@ rule_left_right <- function(o) {
     make_line(2, o$line)
   )
 }
+
+#' @importFrom methods setOldClass
+
+setOldClass(c("rule", "character"))

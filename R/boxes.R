@@ -165,5 +165,12 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
   middle <- paste0(mar_left, side,
                    color_content(paste0(pad_left, label, pad_right)), side)
 
-  paste0(top, "\n", paste0(middle, collapse = "\n"), "\n", bottom)
+  box <- paste0(top, "\n", paste0(middle, collapse = "\n"), "\n", bottom)
+
+  class(box) <- unique(c("boxx", class(box), "character"))
+  box
 }
+
+#' @importFrom methods setOldClass
+
+setOldClass(c("boxx", "character"))
