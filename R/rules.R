@@ -53,6 +53,7 @@ make_line <- function(x, char = symbol$line) {
 #' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
 #'
 #' @export
+#' @importFrom crayon col_substr
 #' @examples
 #'
 #' ## Simple rule
@@ -117,6 +118,8 @@ rule <- function(left = "", center = "", right = "", line = 1,
   } else {
     rule_line(options)
   }
+
+  res <- col_substr(res, 1, width)
 
   class(res) <- unique(c("rule", class(res), "character"))
   res
