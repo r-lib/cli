@@ -100,7 +100,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
 
   res <- if (nchar(center)) {
     if (nchar(left) || nchar(right)) {
-      stop(sQuote("center"), " cannnot be specified with ", sQuote("left"),
+      stop(sQuote("center"), " cannot be specified with ", sQuote("left"),
            " or ", sQuote("right"))
     }
     rule_center(options)
