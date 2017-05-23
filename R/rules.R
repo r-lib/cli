@@ -3,6 +3,10 @@
 #' @importFrom crayon col_substring
 
 make_line <- function(x, char = symbol$line) {
+
+  ## Easiest to handle this specially
+  if (x <= 0) return("")
+
   cw <- col_nchar(char, "width")
 
   ## We handle the simple case differently, to make it faster
