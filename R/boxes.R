@@ -34,6 +34,7 @@
 #' which makes the boxes ugly.
 #'
 #' @export
+#' @importFrom crayon col_align
 #' @examples
 #' ## Simple box
 #' boxx("Hello there!")
@@ -112,8 +113,9 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
     margin <- c(margin, margin * 3, margin, margin * 3)
   }
 
-  label <- col_align(label, align = align)
-  content_width <- max(col_nchar(label)) + padding[2] + padding[4]
+  max_label_width <- max(col_nchar(label))
+  label <- col_align(label, align = align, width = max_label_width)
+  content_width <- max_label_width + padding[2] + padding[4]
 
   mar_left <- if (float == "center") {
     make_space((width - content_width) / 2)
