@@ -129,7 +129,7 @@ get_line_char <- function(line) {
   } else if (identical(line, 2) || identical(line, 2L)) {
     symbol$double_line
 
-  } else if (line %in% paste0("bar", 1:8)) {
+  } else if (length(line) == 1 && line %in% paste0("bar", 1:8)) {
     bars <- structure(
       paste0("lower_block_", 1:8),
       names = paste0("bar", 1:8)
