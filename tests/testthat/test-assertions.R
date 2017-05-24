@@ -19,10 +19,10 @@ test_that("is_string", {
 })
 
 test_that("is_border_style", {
-  expect_true(is_border_style(rownames(box_styles)[1]))
+  expect_true(is_border_style(rownames(box_styles())[1]))
   expect_false(is_border_style("blahblahxxx"))
 
-  expect_silent(assert_that(is_border_style(rownames(box_styles)[1])))
+  expect_silent(assert_that(is_border_style(rownames(box_styles())[1])))
   expect_error(assert_that(is_border_style("blahblahxxx")),
                "not a border style")
 })

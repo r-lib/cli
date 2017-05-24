@@ -147,7 +147,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
 
   label <- c(rep("", padding[3]), label, rep("", padding[1]))
 
-  chars <- box_styles[border_style, ]
+  chars <- box_styles()[border_style, ]
 
   horizontal <- strrep(chars$horizontal, content_width)
   top <- color_border(paste0(

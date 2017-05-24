@@ -10,7 +10,7 @@ on_failure(is_string) <- function(call, env) {
 }
 
 is_border_style <- function(x) {
-  is_string(x) && x %in% rownames(box_styles)
+  is_string(x) && x %in% rownames(box_styles())
 }
 
 on_failure(is_border_style) <- function(call, env) {

@@ -1,5 +1,5 @@
 
-box_styles <- (function() {
+box_styles <- function() {
 
   styles <- list(
     single = list(
@@ -61,11 +61,11 @@ box_styles <- (function() {
   )
 
   do.call(rbind, styles)
-})()
+}
 
 #' @export
 #' @rdname boxx
 
 list_border_styles <- function() {
-  rownames(box_styles)
+  rownames(box_styles())
 }
