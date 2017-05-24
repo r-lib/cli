@@ -96,7 +96,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  width = getOption("width")) {
 
   label <- as.character(label)
-  widest <- max(col_nchar(label))
+  widest <- max(col_nchar(label), 0)
 
   assert_that(is_border_style(border_style))
   assert_that(is_padding_or_margin(padding))
@@ -113,9 +113,8 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
     margin <- c(margin, margin * 3, margin, margin * 3)
   }
 
-  max_label_width <- max(col_nchar(label))
-  label <- col_align(label, align = align, width = max_label_width)
-  content_width <- max_label_width + padding[2] + padding[4]
+  label <- col_align(label, align = align, width = widest)
+  content_width <- widest + padding[2] + padding[4]
 
   mar_left <- if (float == "center") {
     make_space((width - content_width) / 2)
