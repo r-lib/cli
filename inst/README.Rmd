@@ -1,0 +1,194 @@
+
+```{r, setup, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  tidy = FALSE,
+  error = FALSE,
+  fig.path = "inst/figure/")
+```
+
+# boxes
+
+> Draw Boxes in the R Console
+
+[![Linux Build Status](https://travis-ci.org/r-pkgs/boxes.svg?branch=master)](https://travis-ci.org/r-pkgs/boxes)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-pkgs/boxes?svg=true)](https://ci.appveyor.com/project/r-pkgs/boxes)
+[![](http://www.r-pkg.org/badges/version/boxes)](http://www.r-pkg.org/pkg/boxes)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/boxes)](http://www.r-pkg.org/pkg/boxes)
+[![Coverage Status](https://img.shields.io/codecov/c/github/r-pkgs/boxes/master.svg)](https://codecov.io/github/r-pkgs/boxes?branch=master)
+
+It integrates well with `crayon` for coloring the boxes or their content,
+and `clisymbols` to include Unicode characters in the boxes. It can also
+draw rules to make headers or footers in console output.
+
+## Installation
+
+```r
+devtools::install_github("r-pkgs/boxes")
+```
+
+## Usage
+
+```{r}
+library(boxes)
+```
+
+```{r echo = FALSE, results = "hide"}
+options(crayon.enabled = TRUE)
+options(crayon.colors = 256)
+crayon::num_colors(forget = TRUE)
+```
+
+### Rules
+
+Simple rule
+
+```{r rule, render=ansistrings:::knit_print.html}
+rule()
+```
+
+Double rule
+
+```{r rule-double, render=ansistrings:::knit_print.html}
+rule(line = 2)
+```
+
+Bars
+
+```{r rule-bars, render=ansistrings:::knit_print.html}
+rule(line = "bar2")
+rule(line = "bar5")
+```
+
+Left label
+
+```{r rule-left, render=ansistrings:::knit_print.html}
+rule(left = "Results")
+```
+
+Centered label
+
+```{r rule-center, render=ansistrings:::knit_print.html}
+rule(center = " * RESULTS * ")
+```
+
+Colored labels
+
+```{r rule-color, render=ansistrings:::knit_print.html}
+rule(center = crayon::red(" * RESULTS * "))
+```
+
+Colored line
+
+```{r rule-color-line, render=ansistrings:::knit_print.html}
+rule(center = crayon::red(" * RESULTS * "), line_color = "red")
+```
+
+Custom line
+
+```{r rule-line-custom, render=ansistrings:::knit_print.html}
+rule(center = "TITLE", line = "~")
+```
+
+More custom line
+
+```{r rule-line-custom-2, render=ansistrings:::knit_print.html}
+rule(center = "TITLE", line = crayon::blue("~-"))
+```
+Even more custom line
+
+```{r rule-line-custom-3, render=ansistrings:::knit_print.html}
+rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
+  clisymbols::symbol$star, " "),
+  line = "\u2582",
+  line_color = "orange")
+```
+
+### Boxes
+
+Default box
+
+```{r box, render=ansistrings:::knit_print.html}
+boxx("Hello there!")
+```
+
+Change border style
+
+```{r box-border-style, render=ansistrings:::knit_print.html}
+boxx("Hello there!", border_style = "double")
+```
+
+Multiple lines
+
+```{r box-lines, render=ansistrings:::knit_print.html}
+boxx(c("Hello", "there!"), padding = 1)
+```
+
+Padding
+
+```{r box-padding, render=ansistrings:::knit_print.html}
+boxx("Hello there!", padding = 1)
+boxx("Hello there!", padding = c(1, 5, 1, 5))
+```
+
+Margin
+
+```{r box-margin, render=ansistrings:::knit_print.html}
+boxx("Hello there!", margin = 1)
+boxx("Hello there!", margin = c(1, 5, 1, 5))
+boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5))
+```
+
+Floating
+
+```{r box-floating, render=ansistrings:::knit_print.html}
+boxx("Hello there!", padding = 1, float = "center")
+boxx("Hello there!", padding = 1, float = "right")
+```
+
+Text color
+
+```{r box-color, render=ansistrings:::knit_print.html}
+boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
+```
+
+Backgorund color
+
+```{r box-bgcolor, render=ansistrings:::knit_print.html}
+boxx("Hello there!", padding = 1, background_color = "brown")
+boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
+```
+
+Border color
+
+```{r box-border-color, render=ansistrings:::knit_print.html}
+boxx("Hello there!", padding = 1, border_color = "green")
+boxx("Hello there!", padding = 1, border_color = crayon::red)
+```
+
+Label alignment
+
+```{r box-label-align, render=ansistrings:::knit_print.html}
+boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
+boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
+boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
+```
+
+A very customized box
+
+```{r box-customized, render=ansistrings:::knit_print.html}
+star <- clisymbols::symbol$star
+label <- c(paste(star, "Hello", star), "  there!")
+boxx(
+  crayon::white(label),
+  border_style="round",
+  padding = 1,
+  float = "center",
+  border_color = "tomato3",
+  background_color="darkolivegreen"
+)
+```
+
+## License
+
+MIT © RStudio
