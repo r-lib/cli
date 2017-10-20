@@ -91,7 +91,7 @@ make_line <- function(x, char = symbol$line) {
 #'   line_color = "orange")
 
 rule <- function(left = "", center = "", right = "", line = 1,
-                 line_color = NULL, width = getOption("width")) {
+                 line_color = NULL, width = console_width()) {
 
   options <- as.list(environment())
 
@@ -211,4 +211,13 @@ setOldClass(c("rule", "character"))
 print.rule <- function(x, ..., sep = "\n") {
   cat(x, ..., sep = sep)
   invisible(x)
+}
+
+console_width <- function() {
+  rstudio <- Sys.getenv("RSTUDIO_CONSOLE_WIDTH")
+  if (identical(rstudio, "")) {
+    getOption("width", 80)
+  } else {
+    as.integer(rstudio)
+  }
 }

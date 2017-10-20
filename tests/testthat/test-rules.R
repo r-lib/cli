@@ -17,8 +17,8 @@ test_that("make_line", {
 
 test_that("width option", {
 
-  withr::with_options(
-    list(width = 10),
+  withr::with_envvar(
+    list(RSTUDIO_CONSOLE_WIDTH = 10),
     expect_equal(
       rule(line = "-"),
       rule_class("----------")

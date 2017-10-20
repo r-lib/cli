@@ -5,7 +5,7 @@
 \title{Make a rule with one or two text labels}
 \usage{
 rule(left = "", center = "", right = "", line = 1, line_color = NULL,
-  width = getOption("width"))
+  width = console_width())
 }
 \arguments{
 \item{left}{Label to show on the left. It interferes with the \code{center}
