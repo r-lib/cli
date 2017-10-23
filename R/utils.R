@@ -12,7 +12,7 @@ strrep <- function(x, ...) {
 }
 
 fancy_boxes <- function() {
-  getOption("boxes.unicode") %||% l10n_info()$`UTF-8`
+  getOption("cli.unicode") %||% l10n_info()$`UTF-8`
 }
 
 vcapply <- function(X, FUN, ..., USE.NAMES = TRUE) {

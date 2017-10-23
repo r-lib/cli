@@ -25,7 +25,7 @@ Character vector, the lines of the tree drawing.
 }
 \description{
 Draw a tree using box drawing characters. Unicode characters are
-used if available. (Set the \code{boxes.unicode} option if auto-detection
+used if available. (Set the \code{cli.unicode} option if auto-detection
 fails.)
 }
 \details{

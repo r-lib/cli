@@ -2,7 +2,7 @@
 #' Draw a tree
 #'
 #' Draw a tree using box drawing characters. Unicode characters are
-#' used if available. (Set the `boxes.unicode` option if auto-detection
+#' used if available. (Set the `cli.unicode` option if auto-detection
 #' fails.)
 #'
 #' A node might appear multiple times in the tree, or might not appear
