@@ -212,12 +212,3 @@ print.rule <- function(x, ..., sep = "\n") {
   cat(x, ..., sep = sep)
   invisible(x)
 }
-
-console_width <- function() {
-  rstudio <- Sys.getenv("RSTUDIO_CONSOLE_WIDTH")
-  if (identical(rstudio, "")) {
-    getOption("width", 80)
-  } else {
-    as.integer(rstudio)
-  }
-}
