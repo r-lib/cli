@@ -27,6 +27,8 @@
 #' get_spinner("shark")
 
 get_spinner <- function(which = NULL) {
+  assert_that(is.null(which) || is_string(which))
+
   if (is.null(which)) {
     which <- if (fancy_boxes()) "dots" else "line"
   }
@@ -66,6 +68,8 @@ list_spinners <- function() {
 #' }
 
 demo_spinners <- function(which = NULL) {
+  assert_that(is.null(which) || is.character(which))
+
   all <- list_spinners()
   which <- which %||% all
 
