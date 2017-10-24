@@ -43,7 +43,7 @@ Simple rule
 rule()
 ```
 
-![plot of chunk rule](inst/figure/rule-1.png)
+![plot of chunk rule](man/figures/rule-1.png)
 
 Double rule
 
@@ -52,7 +52,7 @@ Double rule
 rule(line = 2)
 ```
 
-![plot of chunk rule-double](inst/figure/rule-double-1.png)
+![plot of chunk rule-double](man/figures/rule-double-1.png)
 
 Bars
 
@@ -61,13 +61,13 @@ Bars
 rule(line = "bar2")
 ```
 
-![plot of chunk rule-bars](inst/figure/rule-bars-1.png)
+![plot of chunk rule-bars](man/figures/rule-bars-1.png)
 
 ```r
 rule(line = "bar5")
 ```
 
-![plot of chunk rule-bars](inst/figure/rule-bars-2.png)
+![plot of chunk rule-bars](man/figures/rule-bars-2.png)
 
 Left label
 
@@ -76,7 +76,7 @@ Left label
 rule(left = "Results")
 ```
 
-![plot of chunk rule-left](inst/figure/rule-left-1.png)
+![plot of chunk rule-left](man/figures/rule-left-1.png)
 
 Centered label
 
@@ -85,7 +85,7 @@ Centered label
 rule(center = " * RESULTS * ")
 ```
 
-![plot of chunk rule-center](inst/figure/rule-center-1.png)
+![plot of chunk rule-center](man/figures/rule-center-1.png)
 
 Colored labels
 
@@ -94,7 +94,7 @@ Colored labels
 rule(center = crayon::red(" * RESULTS * "))
 ```
 
-![plot of chunk rule-color](inst/figure/rule-color-1.png)
+![plot of chunk rule-color](man/figures/rule-color-1.png)
 
 Colored line
 
@@ -103,7 +103,7 @@ Colored line
 rule(center = crayon::red(" * RESULTS * "), line_color = "red")
 ```
 
-![plot of chunk rule-color-line](inst/figure/rule-color-line-1.png)
+![plot of chunk rule-color-line](man/figures/rule-color-line-1.png)
 
 Custom line
 
@@ -112,7 +112,7 @@ Custom line
 rule(center = "TITLE", line = "~")
 ```
 
-![plot of chunk rule-line-custom](inst/figure/rule-line-custom-1.png)
+![plot of chunk rule-line-custom](man/figures/rule-line-custom-1.png)
 
 More custom line
 
@@ -121,7 +121,7 @@ More custom line
 rule(center = "TITLE", line = crayon::blue("~-"))
 ```
 
-![plot of chunk rule-line-custom-2](inst/figure/rule-line-custom-2-1.png)
+![plot of chunk rule-line-custom-2](man/figures/rule-line-custom-2-1.png)
 Even more custom line
 
 
@@ -132,7 +132,7 @@ rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
   line_color = "orange")
 ```
 
-![plot of chunk rule-line-custom-3](inst/figure/rule-line-custom-3-1.png)
+![plot of chunk rule-line-custom-3](man/figures/rule-line-custom-3-1.png)
 
 ### Boxes
 
@@ -143,7 +143,7 @@ Default box
 boxx("Hello there!")
 ```
 
-![plot of chunk box](inst/figure/box-1.png)
+![plot of chunk box](man/figures/box-1.png)
 
 Change border style
 
@@ -152,7 +152,7 @@ Change border style
 boxx("Hello there!", border_style = "double")
 ```
 
-![plot of chunk box-border-style](inst/figure/box-border-style-1.png)
+![plot of chunk box-border-style](man/figures/box-border-style-1.png)
 
 Multiple lines
 
@@ -161,7 +161,7 @@ Multiple lines
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
-![plot of chunk box-lines](inst/figure/box-lines-1.png)
+![plot of chunk box-lines](man/figures/box-lines-1.png)
 
 Padding
 
@@ -170,13 +170,13 @@ Padding
 boxx("Hello there!", padding = 1)
 ```
 
-![plot of chunk box-padding](inst/figure/box-padding-1.png)
+![plot of chunk box-padding](man/figures/box-padding-1.png)
 
 ```r
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-padding](inst/figure/box-padding-2.png)
+![plot of chunk box-padding](man/figures/box-padding-2.png)
 
 Margin
 
@@ -185,19 +185,19 @@ Margin
 boxx("Hello there!", margin = 1)
 ```
 
-![plot of chunk box-margin](inst/figure/box-margin-1.png)
+![plot of chunk box-margin](man/figures/box-margin-1.png)
 
 ```r
 boxx("Hello there!", margin = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-margin](inst/figure/box-margin-2.png)
+![plot of chunk box-margin](man/figures/box-margin-2.png)
 
 ```r
 boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-margin](inst/figure/box-margin-3.png)
+![plot of chunk box-margin](man/figures/box-margin-3.png)
 
 Floating
 
@@ -206,13 +206,13 @@ Floating
 boxx("Hello there!", padding = 1, float = "center")
 ```
 
-![plot of chunk box-floating](inst/figure/box-floating-1.png)
+![plot of chunk box-floating](man/figures/box-floating-1.png)
 
 ```r
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
-![plot of chunk box-floating](inst/figure/box-floating-2.png)
+![plot of chunk box-floating](man/figures/box-floating-2.png)
 
 Text color
 
@@ -221,7 +221,7 @@ Text color
 boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-![plot of chunk box-color](inst/figure/box-color-1.png)
+![plot of chunk box-color](man/figures/box-color-1.png)
 
 Backgorund color
 
@@ -230,13 +230,13 @@ Backgorund color
 boxx("Hello there!", padding = 1, background_color = "brown")
 ```
 
-![plot of chunk box-bgcolor](inst/figure/box-bgcolor-1.png)
+![plot of chunk box-bgcolor](man/figures/box-bgcolor-1.png)
 
 ```r
 boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
 ```
 
-![plot of chunk box-bgcolor](inst/figure/box-bgcolor-2.png)
+![plot of chunk box-bgcolor](man/figures/box-bgcolor-2.png)
 
 Border color
 
@@ -245,13 +245,13 @@ Border color
 boxx("Hello there!", padding = 1, border_color = "green")
 ```
 
-![plot of chunk box-border-color](inst/figure/box-border-color-1.png)
+![plot of chunk box-border-color](man/figures/box-border-color-1.png)
 
 ```r
 boxx("Hello there!", padding = 1, border_color = crayon::red)
 ```
 
-![plot of chunk box-border-color](inst/figure/box-border-color-2.png)
+![plot of chunk box-border-color](man/figures/box-border-color-2.png)
 
 Label alignment
 
@@ -260,19 +260,19 @@ Label alignment
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
 ```
 
-![plot of chunk box-label-align](inst/figure/box-label-align-1.png)
+![plot of chunk box-label-align](man/figures/box-label-align-1.png)
 
 ```r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
 ```
 
-![plot of chunk box-label-align](inst/figure/box-label-align-2.png)
+![plot of chunk box-label-align](man/figures/box-label-align-2.png)
 
 ```r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
-![plot of chunk box-label-align](inst/figure/box-label-align-3.png)
+![plot of chunk box-label-align](man/figures/box-label-align-3.png)
 
 A very customized box
 
@@ -290,7 +290,7 @@ boxx(
 )
 ```
 
-![plot of chunk box-customized](inst/figure/box-customized-1.png)
+![plot of chunk box-customized](man/figures/box-customized-1.png)
 
 ### Trees
 
@@ -320,7 +320,7 @@ data <- data.frame(
 tree(data, root = "rcmdcheck")
 ```
 
-![plot of chunk tree](inst/figure/tree-1.png)
+![plot of chunk tree](man/figures/tree-1.png)
 
 An optional third column may contain custom labels. These can be colored
 as well:
@@ -338,7 +338,7 @@ data$label[roots] <- crayon::cyan(crayon::italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
 
-![plot of chunk tree-color](inst/figure/tree-color-1.png)
+![plot of chunk tree-color](man/figures/tree-color-1.png)
 
 ## License
 
