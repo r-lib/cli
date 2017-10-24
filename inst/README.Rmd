@@ -1,5 +1,11 @@
 
-
+```{r, setup, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  tidy = FALSE,
+  error = FALSE,
+  fig.path = "inst/figure/")
+```
 
 # boxes
 
@@ -24,257 +30,154 @@ devtools::install_github("r-lib/boxes")
 
 ## Usage
 
-
-```r
+```{r}
 library(boxes)
 ```
 
-
+```{r echo = FALSE, results = "hide"}
+options(crayon.enabled = TRUE)
+options(crayon.colors = 256)
+crayon::num_colors(forget = TRUE)
+```
 
 ### Rules
 
 Simple rule
 
-
-```r
+```{r rule, render=ansistrings:::knit_print.html}
 rule()
 ```
 
-![plot of chunk rule](inst/figure/rule-1.png)
-
 Double rule
 
-
-```r
+```{r rule-double, render=ansistrings:::knit_print.html}
 rule(line = 2)
 ```
 
-![plot of chunk rule-double](inst/figure/rule-double-1.png)
-
 Bars
 
-
-```r
+```{r rule-bars, render=ansistrings:::knit_print.html}
 rule(line = "bar2")
-```
-
-![plot of chunk rule-bars](inst/figure/rule-bars-1.png)
-
-```r
 rule(line = "bar5")
 ```
 
-![plot of chunk rule-bars](inst/figure/rule-bars-2.png)
-
 Left label
 
-
-```r
+```{r rule-left, render=ansistrings:::knit_print.html}
 rule(left = "Results")
 ```
 
-![plot of chunk rule-left](inst/figure/rule-left-1.png)
-
 Centered label
 
-
-```r
+```{r rule-center, render=ansistrings:::knit_print.html}
 rule(center = " * RESULTS * ")
 ```
 
-![plot of chunk rule-center](inst/figure/rule-center-1.png)
-
 Colored labels
 
-
-```r
+```{r rule-color, render=ansistrings:::knit_print.html}
 rule(center = crayon::red(" * RESULTS * "))
 ```
 
-![plot of chunk rule-color](inst/figure/rule-color-1.png)
-
 Colored line
 
-
-```r
+```{r rule-color-line, render=ansistrings:::knit_print.html}
 rule(center = crayon::red(" * RESULTS * "), line_color = "red")
 ```
 
-![plot of chunk rule-color-line](inst/figure/rule-color-line-1.png)
-
 Custom line
 
-
-```r
+```{r rule-line-custom, render=ansistrings:::knit_print.html}
 rule(center = "TITLE", line = "~")
 ```
 
-![plot of chunk rule-line-custom](inst/figure/rule-line-custom-1.png)
-
 More custom line
 
-
-```r
+```{r rule-line-custom-2, render=ansistrings:::knit_print.html}
 rule(center = "TITLE", line = crayon::blue("~-"))
 ```
-
-![plot of chunk rule-line-custom-2](inst/figure/rule-line-custom-2-1.png)
 Even more custom line
 
-
-```r
+```{r rule-line-custom-3, render=ansistrings:::knit_print.html}
 rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
   clisymbols::symbol$star, " "),
   line = "\u2582",
   line_color = "orange")
 ```
 
-![plot of chunk rule-line-custom-3](inst/figure/rule-line-custom-3-1.png)
-
 ### Boxes
 
 Default box
 
-
-```r
+```{r box, render=ansistrings:::knit_print.html}
 boxx("Hello there!")
 ```
 
-![plot of chunk box](inst/figure/box-1.png)
-
 Change border style
 
-
-```r
+```{r box-border-style, render=ansistrings:::knit_print.html}
 boxx("Hello there!", border_style = "double")
 ```
 
-![plot of chunk box-border-style](inst/figure/box-border-style-1.png)
-
 Multiple lines
 
-
-```r
+```{r box-lines, render=ansistrings:::knit_print.html}
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
-![plot of chunk box-lines](inst/figure/box-lines-1.png)
-
 Padding
 
-
-```r
+```{r box-padding, render=ansistrings:::knit_print.html}
 boxx("Hello there!", padding = 1)
-```
-
-![plot of chunk box-padding](inst/figure/box-padding-1.png)
-
-```r
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-padding](inst/figure/box-padding-2.png)
-
 Margin
 
-
-```r
+```{r box-margin, render=ansistrings:::knit_print.html}
 boxx("Hello there!", margin = 1)
-```
-
-![plot of chunk box-margin](inst/figure/box-margin-1.png)
-
-```r
 boxx("Hello there!", margin = c(1, 5, 1, 5))
-```
-
-![plot of chunk box-margin](inst/figure/box-margin-2.png)
-
-```r
 boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-margin](inst/figure/box-margin-3.png)
-
 Floating
 
-
-```r
+```{r box-floating, render=ansistrings:::knit_print.html}
 boxx("Hello there!", padding = 1, float = "center")
-```
-
-![plot of chunk box-floating](inst/figure/box-floating-1.png)
-
-```r
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
-![plot of chunk box-floating](inst/figure/box-floating-2.png)
-
 Text color
 
-
-```r
+```{r box-color, render=ansistrings:::knit_print.html}
 boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-![plot of chunk box-color](inst/figure/box-color-1.png)
-
 Backgorund color
 
-
-```r
+```{r box-bgcolor, render=ansistrings:::knit_print.html}
 boxx("Hello there!", padding = 1, background_color = "brown")
-```
-
-![plot of chunk box-bgcolor](inst/figure/box-bgcolor-1.png)
-
-```r
 boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
 ```
 
-![plot of chunk box-bgcolor](inst/figure/box-bgcolor-2.png)
-
 Border color
 
-
-```r
+```{r box-border-color, render=ansistrings:::knit_print.html}
 boxx("Hello there!", padding = 1, border_color = "green")
-```
-
-![plot of chunk box-border-color](inst/figure/box-border-color-1.png)
-
-```r
 boxx("Hello there!", padding = 1, border_color = crayon::red)
 ```
 
-![plot of chunk box-border-color](inst/figure/box-border-color-2.png)
-
 Label alignment
 
-
-```r
+```{r box-label-align, render=ansistrings:::knit_print.html}
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
-```
-
-![plot of chunk box-label-align](inst/figure/box-label-align-1.png)
-
-```r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
-```
-
-![plot of chunk box-label-align](inst/figure/box-label-align-2.png)
-
-```r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
-![plot of chunk box-label-align](inst/figure/box-label-align-3.png)
-
 A very customized box
 
-
-```r
+```{r box-customized, render=ansistrings:::knit_print.html}
 star <- clisymbols::symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
@@ -287,15 +190,12 @@ boxx(
 )
 ```
 
-![plot of chunk box-customized](inst/figure/box-customized-1.png)
-
 ### Trees
 
 You can specify the tree with a two column data frame, containing the
 node ids/labels, and the list of their children.
 
-
-```r
+```{r tree, render=ansistrings:::knit_print.html}
 data <- data.frame(
   stringsAsFactors = FALSE,
   package = c("processx", "backports", "assertthat", "Matrix",
@@ -317,13 +217,10 @@ data <- data.frame(
 tree(data, root = "rcmdcheck")
 ```
 
-![plot of chunk tree](inst/figure/tree-1.png)
-
 An optional third column may contain custom labels. These can be colored
 as well:
 
-
-```r
+```{r tree-color, render=ansistrings:::knit_print.html}
 data$label <- paste(data$package,
   crayon::blurred(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
@@ -334,8 +231,6 @@ roots <- ! data$package %in% unlist(data$dependencies)
 data$label[roots] <- crayon::cyan(crayon::italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
-
-![plot of chunk tree-color](inst/figure/tree-color-1.png)
 
 ## License
 
