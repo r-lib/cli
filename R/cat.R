@@ -23,13 +23,12 @@ cat_line <- function(..., col = NULL, background_col = NULL, file = stdout()) {
   cat(out, "\n", sep = "", file = file)
 }
 
-# TODO(hadley): use bullet symbol when clisymbols integrated
 #' @export
 #' @rdname cat_line
 cat_bullet <- function(..., col = NULL, background_col = NULL, bullet_col = NULL,
                        file = stdout()) {
   out <- apply_style(paste(...), col)
-  bullet <- apply_style("*", bullet_col)
+  bullet <- apply_style(symbol$bullet, bullet_col)
 
   cat_line(paste(bullet, out), background_col = background_col, file = file)
 }
