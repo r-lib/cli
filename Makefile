@@ -1,3 +1,3 @@
 
-README.md: inst/README.Rmd
+README.md: README.Rmd
 	Rscript -e "knitr::knit('$<', output = '$@')"
