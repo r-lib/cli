@@ -4,25 +4,33 @@
 #' they all set `sep = ""`, and `cat_line()` automatically adds a newline.
 #'
 #' @export
-#' @param ... For `cat_line()` and `cat_bullet()`, passed on to [cat()] and
-#'   pasted together. For `cat_rule()` and `cat_boxx()` passed on to
+#' @param ... For `cat_line()` and `cat_bullet()`, paste'd together with
+#'   `collapse = "\n"`. For `cat_rule()` and `cat_boxx()` passed on to
 #'   [rule()] and [boxx()] respectively.
 #' @param x An object to print.
 #' @param file Output destination. Defaults to standard output.
 #' @example
-#' cat_line("This is ", "a ", "line of text.")
+#' cat_line("This is ", "a ", "line of text.", col = "red")
+#' cat_bullet(letters[1:5], bullet_col = "green")
 #' cat_rule()
-cat_line <- function(..., file = stdout()) {
-  cat(..., "\n", sep = "", file = file)
+cat_line <- function(..., col = NULL, background_col = NULL, file = stdout()) {
+  out <- paste0(..., collapse = "\n")
+  out <- apply_style(out, col)
+  out <- apply_style(out, background_col, bg = TRUE)
+
+  cat(out, "\n", sep = "", file = file)
 }
 
 # TODO(hadley): use bullet symbol when clisymbols integrated
 #' @export
 #' @rdname cat_line
-cat_bullet <- function(..., file = stdout()) {
-  cat_line("* ", ..., file = file)
-}
+cat_bullet <- function(..., col = NULL, background_col = NULL, bullet_col = NULL,
+                       file = stdout()) {
+  out <- apply_style(paste(...), col)
+  bullet <- apply_style("*", bullet_col)
 
+  cat_line(paste(bullet, out), background_col = background_col, file = file)
+}
 
 #' @export
 #' @rdname cat_line

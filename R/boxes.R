@@ -102,8 +102,6 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
   assert_that(is_padding_or_margin(padding))
   assert_that(is_padding_or_margin(margin))
   float <- match.arg(float)
-  assert_that(is_col(background_col))
-  assert_that(is_col(border_col))
   align <- match.arg(align)
 
   if (length(padding) == 1) {
@@ -124,25 +122,8 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
     make_space(margin[2])
   }
 
-  color_border <- function(x) {
-    if (is.function(border_col)) {
-      border_col(x)
-    } else if (is.character(border_col)) {
-      crayon::make_style(border_col)(x)
-    } else {
-      x
-    }
-  }
-
-  color_content <- function(x) {
-    if (is.function(background_col)) {
-      background_col(x)
-    } else if (is.character(background_col)) {
-      crayon::make_style(background_col, bg = TRUE)(x)
-    } else {
-      x
-    }
-  }
+  color_border <- function(x) apply_style(x, border_col)
+  color_content <- function(x) apply_style(x, background_col, bg = TRUE)
 
   label <- c(rep("", padding[3]), label, rep("", padding[1]))
 

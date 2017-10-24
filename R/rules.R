@@ -93,10 +93,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
                  line_col = NULL, width = console_width()) {
 
   options <- as.list(environment())
-
-  options$line <- get_line_char(options$line)
-  if (is.character(line_col)) line_col <- crayon::make_style(line_col)
-  if (is.function(line_col)) options$line <- line_col(options$line)
+  options$line <- apply_style(get_line_char(options$line), line_col)
 
   res <- if (nchar(center)) {
     if (nchar(left) || nchar(right)) {
