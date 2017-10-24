@@ -1,7 +1,6 @@
+cli
+================
 
-
-
-# cli
 
 > Helpers for Developing Command Line Interfaces
 
@@ -16,299 +15,279 @@ It can draw rules and boxes to make headers or footers in console output,
 and tree structures. It includes a set of Unicode characters, with fallbacks
 on systems that do not support them.
 
-## Installation
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [Unicode characters](#unicode-characters)
+    -   [Rules](#rules)
+    -   [Boxes](#boxes)
+    -   [Trees](#trees)
+-   [License](#license)
 
-```r
+Installation
+------------
+
+``` r
 devtools::install_github("r-lib/cli")
 ```
 
-## Usage
- 
+Usage
+-----
 
-```r
+``` r
 library(cli)
 ```
 
-
-
 ### Unicode characters
 
-Inspired by (and mostly copied from) the
-[figures](https://github.com/sindresorhus/figures) JavaScript project.
+Inspired by (and mostly copied from) the [figures](https://github.com/sindresorhus/figures) JavaScript project.
 
-
-```
-#> ✔	tick                      ↑	arrow_up               
-#> ✖	cross                     ↓	arrow_down             
-#> ★	star                      ←	arrow_left             
-#> ▇	square                    →	arrow_right            
-#> ◻	square_small              ◉	radio_on               
-#> ◼	square_small_filled       ◯	radio_off              
-#> ◯	circle                    ☒	checkbox_on            
-#> ◉	circle_filled             ☐	checkbox_off           
-#> ◌	circle_dotted             ⓧ	checkbox_circle_on     
-#> ◎	circle_double             Ⓘ	checkbox_circle_off    
-#> ⓞ	circle_circle             ❓	fancy_question_mark    
-#> ⓧ	circle_cross              ≠	neq                    
-#> Ⓘ	circle_pipe               ≥	geq                    
-#> ?⃝	circle_question_mark      ≤	leq                    
-#> ●	bullet                    ×	times                  
-#> ․	dot                       ▔	upper_block_1          
-#> ─	line                      ▀	upper_block_4          
-#> ═	double_line               ▁	lower_block_1          
-#> …	ellipsis                  ▂	lower_block_2          
-#> ❯	pointer                   ▃	lower_block_3          
-#> ℹ	info                      ▄	lower_block_4          
-#> ⚠	warning                   ▅	lower_block_5          
-#> ☰	menu                      ▆	lower_block_6          
-#> ☺	smiley                    ▇	lower_block_7          
-#> ෴	mustache                  █	lower_block_8          
-#> ♥	heart                     █	full_block
-```
-
+    #> ✔    tick                      ↑ arrow_up               
+    #> ✖    cross                     ↓ arrow_down             
+    #> ★    star                      ← arrow_left             
+    #> ▇    square                    → arrow_right            
+    #> ◻    square_small              ◉ radio_on               
+    #> ◼    square_small_filled       ◯ radio_off              
+    #> ◯    circle                    ☒ checkbox_on            
+    #> ◉    circle_filled             ☐ checkbox_off           
+    #> ◌    circle_dotted             ⓧ checkbox_circle_on     
+    #> ◎    circle_double             Ⓘ checkbox_circle_off    
+    #> ⓞ    circle_circle             ❓ fancy_question_mark    
+    #> ⓧ    circle_cross              ≠ neq                    
+    #> Ⓘ    circle_pipe               ≥ geq                    
+    #> ?⃝   circle_question_mark      ≤ leq                    
+    #> ●    bullet                    × times                  
+    #> ․    dot                       ▔ upper_block_1          
+    #> ─    line                      ▀ upper_block_4          
+    #> ═    double_line               ▁ lower_block_1          
+    #> …    ellipsis                  ▂ lower_block_2          
+    #> ❯    pointer                   ▃ lower_block_3          
+    #> ℹ    info                      ▄ lower_block_4          
+    #> ⚠    warning                   ▅ lower_block_5          
+    #> ☰    menu                      ▆ lower_block_6          
+    #> ☺    smiley                    ▇ lower_block_7          
+    #> ෴    mustache                  █ lower_block_8          
+    #> ♥    heart                     █ full_block
 
 ### Rules
 
 Simple rule
 
-
-```r
+``` r
 rule()
 ```
 
-![plot of chunk rule](man/figures/rule-1.png)
+![](man/figures/rule-1.png)
 
 Double rule
 
-
-```r
+``` r
 rule(line = 2)
 ```
 
-![plot of chunk rule-double](man/figures/rule-double-1.png)
+![](man/figures/rule-double-1.png)
 
 Bars
 
-
-```r
+``` r
 rule(line = "bar2")
 ```
 
-![plot of chunk rule-bars](man/figures/rule-bars-1.png)
+![](man/figures/rule-bars-1.png)
 
-```r
+``` r
 rule(line = "bar5")
 ```
 
-![plot of chunk rule-bars](man/figures/rule-bars-2.png)
+![](man/figures/rule-bars-2.png)
 
 Left label
 
-
-```r
+``` r
 rule(left = "Results")
 ```
 
-![plot of chunk rule-left](man/figures/rule-left-1.png)
+![](man/figures/rule-left-1.png)
 
 Centered label
 
-
-```r
+``` r
 rule(center = " * RESULTS * ")
 ```
 
-![plot of chunk rule-center](man/figures/rule-center-1.png)
+![](man/figures/rule-center-1.png)
 
 Colored labels
 
-
-```r
+``` r
 rule(center = crayon::red(" * RESULTS * "))
 ```
 
-![plot of chunk rule-color](man/figures/rule-color-1.png)
+![](man/figures/rule-color-1.png)
 
 Colored line
 
-
-```r
+``` r
 rule(center = crayon::red(" * RESULTS * "), line_col = "red")
 ```
 
-![plot of chunk rule-color-line](man/figures/rule-color-line-1.png)
+![](man/figures/rule-color-line-1.png)
 
 Custom line
 
-
-```r
+``` r
 rule(center = "TITLE", line = "~")
 ```
 
-![plot of chunk rule-line-custom](man/figures/rule-line-custom-1.png)
+![](man/figures/rule-line-custom-1.png)
 
 More custom line
 
-
-```r
+``` r
 rule(center = "TITLE", line = crayon::blue("~-"))
 ```
 
-![plot of chunk rule-line-custom-2](man/figures/rule-line-custom-2-1.png)
-Even more custom line
+![](man/figures/rule-line-custom-2-1.png) Even more custom line
 
-
-```r
+``` r
 rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
   line = "\u2582", line_col = "orange")
 ```
 
-![plot of chunk rule-line-custom-3](man/figures/rule-line-custom-3-1.png)
+![](man/figures/rule-line-custom-3-1.png)
 
 ### Boxes
 
 Default box
 
-
-```r
+``` r
 boxx("Hello there!")
 ```
 
-![plot of chunk box](man/figures/box-1.png)
+![](man/figures/box-1.png)
 
 Change border style
 
-
-```r
+``` r
 boxx("Hello there!", border_style = "double")
 ```
 
-![plot of chunk box-border-style](man/figures/box-border-style-1.png)
+![](man/figures/box-border-style-1.png)
 
 Multiple lines
 
-
-```r
+``` r
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
-![plot of chunk box-lines](man/figures/box-lines-1.png)
+![](man/figures/box-lines-1.png)
 
 Padding
 
-
-```r
+``` r
 boxx("Hello there!", padding = 1)
 ```
 
-![plot of chunk box-padding](man/figures/box-padding-1.png)
+![](man/figures/box-padding-1.png)
 
-```r
+``` r
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-padding](man/figures/box-padding-2.png)
+![](man/figures/box-padding-2.png)
 
 Margin
 
-
-```r
+``` r
 boxx("Hello there!", margin = 1)
 ```
 
-![plot of chunk box-margin](man/figures/box-margin-1.png)
+![](man/figures/box-margin-1.png)
 
-```r
+``` r
 boxx("Hello there!", margin = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-margin](man/figures/box-margin-2.png)
+![](man/figures/box-margin-2.png)
 
-```r
+``` r
 boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5))
 ```
 
-![plot of chunk box-margin](man/figures/box-margin-3.png)
+![](man/figures/box-margin-3.png)
 
 Floating
 
-
-```r
+``` r
 boxx("Hello there!", padding = 1, float = "center")
 ```
 
-![plot of chunk box-floating](man/figures/box-floating-1.png)
+![](man/figures/box-floating-1.png)
 
-```r
+``` r
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
-![plot of chunk box-floating](man/figures/box-floating-2.png)
+![](man/figures/box-floating-2.png)
 
 Text color
 
-
-```r
+``` r
 boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-![plot of chunk box-color](man/figures/box-color-1.png)
+![](man/figures/box-color-1.png)
 
 Backgorund color
 
-
-```r
+``` r
 boxx("Hello there!", padding = 1, background_col = "brown")
 ```
 
-![plot of chunk box-bgcolor](man/figures/box-bgcolor-1.png)
+![](man/figures/box-bgcolor-1.png)
 
-```r
+``` r
 boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
 ```
 
-![plot of chunk box-bgcolor](man/figures/box-bgcolor-2.png)
+![](man/figures/box-bgcolor-2.png)
 
 Border color
 
-
-```r
+``` r
 boxx("Hello there!", padding = 1, border_col = "green")
 ```
 
-![plot of chunk box-border-color](man/figures/box-border-color-1.png)
+![](man/figures/box-border-color-1.png)
 
-```r
+``` r
 boxx("Hello there!", padding = 1, border_col = crayon::red)
 ```
 
-![plot of chunk box-border-color](man/figures/box-border-color-2.png)
+![](man/figures/box-border-color-2.png)
 
 Label alignment
 
-
-```r
+``` r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
 ```
 
-![plot of chunk box-label-align](man/figures/box-label-align-1.png)
+![](man/figures/box-label-align-1.png)
 
-```r
+``` r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
 ```
 
-![plot of chunk box-label-align](man/figures/box-label-align-2.png)
+![](man/figures/box-label-align-2.png)
 
-```r
+``` r
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
-![plot of chunk box-label-align](man/figures/box-label-align-3.png)
+![](man/figures/box-label-align-3.png)
 
 A very customized box
 
-
-```r
+``` r
 star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
@@ -321,15 +300,13 @@ boxx(
 )
 ```
 
-![plot of chunk box-customized](man/figures/box-customized-1.png)
+![](man/figures/box-customized-1.png)
 
 ### Trees
 
-You can specify the tree with a two column data frame, containing the
-node ids/labels, and the list of their children.
+You can specify the tree with a two column data frame, containing the node ids/labels, and the list of their children.
 
-
-```r
+``` r
 data <- data.frame(
   stringsAsFactors = FALSE,
   package = c("processx", "backports", "assertthat", "Matrix",
@@ -351,13 +328,11 @@ data <- data.frame(
 tree(data, root = "rcmdcheck")
 ```
 
-![plot of chunk tree](man/figures/tree-1.png)
+![](man/figures/tree-1.png)
 
-An optional third column may contain custom labels. These can be colored
-as well:
+An optional third column may contain custom labels. These can be colored as well:
 
-
-```r
+``` r
 data$label <- paste(data$package,
   crayon::blurred(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
@@ -369,8 +344,9 @@ data$label[roots] <- crayon::cyan(crayon::italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
 
-![plot of chunk tree-color](man/figures/tree-color-1.png)
+![](man/figures/tree-color-1.png)
 
-## License
+License
+-------
 
 MIT © RStudio
