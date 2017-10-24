@@ -100,7 +100,7 @@ boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 
 ## A very customized box
-star <- clisymbols::symbol$star
+star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
   crayon::white(label),

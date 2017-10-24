@@ -8,7 +8,7 @@ knitr::opts_chunk$set(
 
 # cli
 
-> Draw Boxes, Rules, Trees in the R Console
+> Helpers for Developing Command Line Interfaces
 
 [![Linux Build Status](https://api.travis-ci.org/r-lib/cli.svg?branch=master)](https://travis-ci.org/r-lib/cli)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/cli?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cli)
@@ -17,9 +17,9 @@ knitr::opts_chunk$set(
 [![Coverage Status](https://img.shields.io/codecov/c/github/r-lib/cli/master.svg)](https://codecov.io/github/r-lib/cli?branch=master)
 
 It integrates well with `crayon` for coloring the boxes or their content,
-and `clisymbols` to include Unicode characters in the boxes. It can also
-draw rules to make headers or footers in console output, and tree
-structures.
+It can draw rules and boxes to make headers or footers in console output,
+and tree structures. It includes a set of Unicode characters, with fallbacks
+on systems that do not support them.
 
 ## Installation
 
@@ -38,6 +38,26 @@ options(crayon.enabled = TRUE)
 options(crayon.colors = 256)
 crayon::num_colors(forget = TRUE)
 ```
+
+### Unicode characters
+
+Inspired by (and mostly copied from) the
+[figures](https://github.com/sindresorhus/figures) JavaScript project.
+
+```{r symbols, echo = FALSE, render=ansistrings:::knit_print.html}
+rpad <- function(x, width) {
+  w <- nchar(x, type = "width")
+  paste0(x, strrep(" ", width - w))
+}
+chars <- rpad(paste0(symbol, "\t", names(symbol)), 25)
+if (length(chars) %% 2) chars <- c(chars, "")
+chars <- paste(
+  sep = "   ",
+  chars[1:(length(chars)/2)],
+  chars[(length(chars)/2 + 1):length(chars)])
+cat(chars, sep = "\n")
+```
+
 
 ### Rules
 
@@ -98,10 +118,8 @@ rule(center = "TITLE", line = crayon::blue("~-"))
 Even more custom line
 
 ```{r rule-line-custom-3, render=ansistrings:::knit_print.html}
-rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
-  clisymbols::symbol$star, " "),
-  line = "\u2582",
-  line_color = "orange")
+rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
+  line = "\u2582", line_color = "orange")
 ```
 
 ### Boxes
@@ -177,7 +195,7 @@ boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 A very customized box
 
 ```{r box-customized, render=ansistrings:::knit_print.html}
-star <- clisymbols::symbol$star
+star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
   crayon::white(label),
