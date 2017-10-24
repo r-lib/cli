@@ -8,8 +8,8 @@
 list_border_styles()
 
 boxx(label, border_style = "single", padding = 1, margin = 0,
-  float = c("left", "center", "right"), background_color = NULL,
-  border_color = NULL, align = c("left", "center", "right"),
+  float = c("left", "center", "right"), background_col = NULL,
+  border_col = NULL, align = c("left", "center", "right"),
   width = getOption("width"))
 }
 \arguments{
@@ -31,12 +31,12 @@ interpreted as \code{c(x, 3*x, x, 3*x)}.}
 \item{float}{Whether to display the box on the \code{"left"}, \code{"center"}, or
 the \code{"right"} of the screen.}
 
-\item{background_color}{Background color of the inside of the box.
+\item{background_col}{Background color of the inside of the box.
 Either a \code{crayon} style function, or a color name which will be used
 in \code{\link[crayon:make_style]{crayon::make_style()}} to create a \emph{background} style
 (i.e. \code{bg = TRUE} is used).}
 
-\item{border_color}{Color of the border. Either a \code{crayon} style
+\item{border_col}{Color of the border. Either a \code{crayon} style
 function or a color name that is passed to \code{\link[crayon:make_style]{crayon::make_style()}}.}
 
 \item{align}{Alignment of the label within the box: \code{"left"},
@@ -87,12 +87,12 @@ boxx("Hello there!", padding = 1, float = "right")
 boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
 
 ## Backgorund color
-boxx("Hello there!", padding = 1, background_color = "brown")
-boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
+boxx("Hello there!", padding = 1, background_col = "brown")
+boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
 
 ## Border color
-boxx("Hello there!", padding = 1, border_color = "green")
-boxx("Hello there!", padding = 1, border_color = crayon::red)
+boxx("Hello there!", padding = 1, border_col = "green")
+boxx("Hello there!", padding = 1, border_col = crayon::red)
 
 ## Label alignment
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
@@ -107,7 +107,7 @@ boxx(
   border_style="round",
   padding = 1,
   float = "center",
-  border_color = "tomato3",
-  background_color="darkolivegreen"
+  border_col = "tomato3",
+  background_col="darkolivegreen"
 )
 }

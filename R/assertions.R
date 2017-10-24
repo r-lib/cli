@@ -27,11 +27,11 @@ on_failure(is_padding_or_margin) <- function(call, env) {
   paste0(deparse(call$x), " must be an integer of length one or four")
 }
 
-is_color <- function(x) {
+is_col <- function(x) {
   is.null(x) || is_string(x) || is.function(x)
 }
 
-on_failure(is_color) <- function(call, env) {
+on_failure(is_col) <- function(call, env) {
   paste0(deparse(call$x), " must be a color name, or a crayon style")
 }
 
