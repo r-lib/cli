@@ -10,8 +10,8 @@
 \usage{
 cat_line(..., col = NULL, background_col = NULL, file = stdout())
 
-cat_bullet(..., col = NULL, background_col = NULL, bullet_col = NULL,
-  file = stdout())
+cat_bullet(..., col = NULL, background_col = NULL, bullet = "bullet",
+  bullet_col = NULL, file = stdout())
 
 cat_boxx(..., file = stdout())
 
@@ -29,6 +29,8 @@ bullets respectively.}
 
 \item{file}{Output destination. Defaults to standard output.}
 
+\item{bullet}{Name of bullet character. Indexes into \link{symbols}}
+
 \item{x}{An object to print.}
 }
 \description{
@@ -37,6 +39,7 @@ they all set \code{sep = ""}, and \code{cat_line()} automatically adds a newline
 }
 \examples{
 cat_line("This is ", "a ", "line of text.", col = "red")
-cat_bullet(letters[1:5], bullet_col = "green")
+cat_bullet(letters[1:5])
+cat_bullet(letters[1:5], bullet = "tick", bullet_col = "green")
 cat_rule()
 }

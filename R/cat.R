@@ -7,13 +7,15 @@
 #' @param ... For `cat_line()` and `cat_bullet()`, paste'd together with
 #'   `collapse = "\n"`. For `cat_rule()` and `cat_boxx()` passed on to
 #'   [rule()] and [boxx()] respectively.
+#' @param bullet Name of bullet character. Indexes into [symbols]
 #' @param col,background_col,bullet_col Colours for text, background, and
 #'   bullets respectively.
 #' @param x An object to print.
 #' @param file Output destination. Defaults to standard output.
 #' @examples
 #' cat_line("This is ", "a ", "line of text.", col = "red")
-#' cat_bullet(letters[1:5], bullet_col = "green")
+#' cat_bullet(letters[1:5])
+#' cat_bullet(letters[1:5], bullet = "tick", bullet_col = "green")
 #' cat_rule()
 cat_line <- function(..., col = NULL, background_col = NULL, file = stdout()) {
   out <- paste0(..., collapse = "\n")
@@ -25,10 +27,11 @@ cat_line <- function(..., col = NULL, background_col = NULL, file = stdout()) {
 
 #' @export
 #' @rdname cat_line
-cat_bullet <- function(..., col = NULL, background_col = NULL, bullet_col = NULL,
+cat_bullet <- function(..., col = NULL, background_col = NULL,
+                       bullet = "bullet", bullet_col = NULL,
                        file = stdout()) {
-  out <- apply_style(paste(...), col)
-  bullet <- apply_style(symbol$bullet, bullet_col)
+  out <- apply_style(paste0(...), col)
+  bullet <- apply_style(symbol[[bullet]], bullet_col)
 
   cat_line(paste(bullet, out), background_col = background_col, file = file)
 }
