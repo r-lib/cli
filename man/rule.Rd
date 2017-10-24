@@ -81,8 +81,8 @@ rule(center = "TITLE", line = "~")
 rule(center = "TITLE", line = crayon::blue("~-"))
 
 ## Even more custom line
-rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
-  clisymbols::symbol$star, " "),
+rule(center = crayon::bgRed(" ", symbol$star, "TITLE",
+  symbol$star, " "),
   line = "\\u2582",
   line_color = "orange")
 }

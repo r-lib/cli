@@ -1,5 +1,4 @@
 
-#' @importFrom clisymbols symbol
 #' @importFrom crayon col_substring
 
 make_line <- function(x, char = symbol$line) {
@@ -85,8 +84,8 @@ make_line <- function(x, char = symbol$line) {
 #' rule(center = "TITLE", line = crayon::blue("~-"))
 #'
 #' ## Even more custom line
-#' rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
-#'   clisymbols::symbol$star, " "),
+#' rule(center = crayon::bgRed(" ", symbol$star, "TITLE",
+#'   symbol$star, " "),
 #'   line = "\u2582",
 #'   line_color = "orange")
 

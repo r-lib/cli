@@ -1,7 +1,9 @@
 
+
+
 # cli
 
-> Draw Boxes, Rules, Trees in the R Console
+> Helpers for Developing Command Line Interfaces
 
 [![Linux Build Status](https://api.travis-ci.org/r-lib/cli.svg?branch=master)](https://travis-ci.org/r-lib/cli)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/cli?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cli)
@@ -10,9 +12,9 @@
 [![Coverage Status](https://img.shields.io/codecov/c/github/r-lib/cli/master.svg)](https://codecov.io/github/r-lib/cli?branch=master)
 
 It integrates well with `crayon` for coloring the boxes or their content,
-and `clisymbols` to include Unicode characters in the boxes. It can also
-draw rules to make headers or footers in console output, and tree
-structures.
+It can draw rules and boxes to make headers or footers in console output,
+and tree structures. It includes a set of Unicode characters, with fallbacks
+on systems that do not support them.
 
 ## Installation
 
@@ -27,6 +29,42 @@ devtools::install_github("r-lib/cli")
 library(cli)
 ```
 
+
+
+### Unicode characters
+
+Inspired by (and mostly copied from) the
+[figures](https://github.com/sindresorhus/figures) JavaScript project.
+
+
+```
+#> ✔	tick                      ↑	arrow_up               
+#> ✖	cross                     ↓	arrow_down             
+#> ★	star                      ←	arrow_left             
+#> ▇	square                    →	arrow_right            
+#> ◻	square_small              ◉	radio_on               
+#> ◼	square_small_filled       ◯	radio_off              
+#> ◯	circle                    ☒	checkbox_on            
+#> ◉	circle_filled             ☐	checkbox_off           
+#> ◌	circle_dotted             ⓧ	checkbox_circle_on     
+#> ◎	circle_double             Ⓘ	checkbox_circle_off    
+#> ⓞ	circle_circle             ❓	fancy_question_mark    
+#> ⓧ	circle_cross              ≠	neq                    
+#> Ⓘ	circle_pipe               ≥	geq                    
+#> ?⃝	circle_question_mark      ≤	leq                    
+#> ●	bullet                    ×	times                  
+#> ․	dot                       ▔	upper_block_1          
+#> ─	line                      ▀	upper_block_4          
+#> ═	double_line               ▁	lower_block_1          
+#> …	ellipsis                  ▂	lower_block_2          
+#> ❯	pointer                   ▃	lower_block_3          
+#> ℹ	info                      ▄	lower_block_4          
+#> ⚠	warning                   ▅	lower_block_5          
+#> ☰	menu                      ▆	lower_block_6          
+#> ☺	smiley                    ▇	lower_block_7          
+#> ෴	mustache                  █	lower_block_8          
+#> ♥	heart                     █	full_block
+```
 
 
 ### Rules
@@ -121,10 +159,8 @@ Even more custom line
 
 
 ```r
-rule(center = crayon::bgRed(" ", clisymbols::symbol$star, "TITLE",
-  clisymbols::symbol$star, " "),
-  line = "\u2582",
-  line_color = "orange")
+rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
+  line = "\u2582", line_color = "orange")
 ```
 
 ![plot of chunk rule-line-custom-3](man/figures/rule-line-custom-3-1.png)
@@ -273,7 +309,7 @@ A very customized box
 
 
 ```r
-star <- clisymbols::symbol$star
+star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
   crayon::white(label),
