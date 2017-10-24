@@ -1,14 +1,9 @@
----
-output: github_document
----
-
-
 
 # cli
 
 > Draw Boxes, Rules, Trees in the R Console
 
-[![Linux Build Status](https://travis-ci.org/r-lib/cli?branch=master)](https://travis-ci.org/r-lib/cli)
+[![Linux Build Status](https://api.travis-ci.org/r-lib/cli.svg?branch=master)](https://travis-ci.org/r-lib/cli)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/cli?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cli)
 [![](http://www.r-pkg.org/badges/version/cli)](http://www.r-pkg.org/pkg/cli)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/cli)](http://www.r-pkg.org/pkg/cli)
