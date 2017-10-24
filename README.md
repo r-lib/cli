@@ -37,34 +37,32 @@ Inspired by (and mostly copied from) the
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
 
 
-```
-#> ✔	tick                      ↑	arrow_up               
-#> ✖	cross                     ↓	arrow_down             
-#> ★	star                      ←	arrow_left             
-#> ▇	square                    →	arrow_right            
-#> ◻	square_small              ◉	radio_on               
-#> ◼	square_small_filled       ◯	radio_off              
-#> ◯	circle                    ☒	checkbox_on            
-#> ◉	circle_filled             ☐	checkbox_off           
-#> ◌	circle_dotted             ⓧ	checkbox_circle_on     
-#> ◎	circle_double             Ⓘ	checkbox_circle_off    
-#> ⓞ	circle_circle             ❓	fancy_question_mark    
-#> ⓧ	circle_cross              ≠	neq                    
-#> Ⓘ	circle_pipe               ≥	geq                    
-#> ?⃝	circle_question_mark      ≤	leq                    
-#> ●	bullet                    ×	times                  
-#> ․	dot                       ▔	upper_block_1          
-#> ─	line                      ▀	upper_block_4          
-#> ═	double_line               ▁	lower_block_1          
-#> …	ellipsis                  ▂	lower_block_2          
-#> ❯	pointer                   ▃	lower_block_3          
-#> ℹ	info                      ▄	lower_block_4          
-#> ⚠	warning                   ▅	lower_block_5          
-#> ☰	menu                      ▆	lower_block_6          
-#> ☺	smiley                    ▇	lower_block_7          
-#> ෴	mustache                  █	lower_block_8          
-#> ♥	heart                     █	full_block
-```
+ ✔	tick                      ↑	arrow_up               
+ ✖	cross                     ↓	arrow_down             
+ ★	star                      ←	arrow_left             
+ ▇	square                    →	arrow_right            
+ ◻	square_small              ◉	radio_on               
+ ◼	square_small_filled       ◯	radio_off              
+ ◯	circle                    ☒	checkbox_on            
+ ◉	circle_filled             ☐	checkbox_off           
+ ◌	circle_dotted             ⓧ	checkbox_circle_on     
+ ◎	circle_double             Ⓘ	checkbox_circle_off    
+ ⓞ	circle_circle             ❓	fancy_question_mark    
+ ⓧ	circle_cross              ≠	neq                    
+ Ⓘ	circle_pipe               ≥	geq                    
+ ?⃝	circle_question_mark      ≤	leq                    
+ ●	bullet                    ×	times                  
+ ․	dot                       ▔	upper_block_1          
+ ─	line                      ▀	upper_block_4          
+ ═	double_line               ▁	lower_block_1          
+ …	ellipsis                  ▂	lower_block_2          
+ ❯	pointer                   ▃	lower_block_3          
+ ℹ	info                      ▄	lower_block_4          
+ ⚠	warning                   ▅	lower_block_5          
+ ☰	menu                      ▆	lower_block_6          
+ ☺	smiley                    ▇	lower_block_7          
+ ෴	mustache                  █	lower_block_8          
+ ♥	heart                     █	full_block
 
 
 ### Rules
