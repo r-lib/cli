@@ -27,7 +27,7 @@ make_line <- function(x, char = symbol$line) {
 #'
 #' To color the labels, use the functions from the `crayon` package
 #' directly, see examples below. To color the line, either use the
-#' `crayon` colors directly, or the `line_color` option.
+#' `crayon` colors directly, or the `line_col` option.
 #'
 #' @param left Label to show on the left. It interferes with the `center`
 #'   label, only at most one of them can be present.
@@ -39,7 +39,7 @@ make_line <- function(x, char = symbol$line) {
 #'   It can also `1` or `2`, to request a single line (Unicode, if
 #'   available), or a double line. Some strings are interpreted specially,
 #'   see *Line styles* below.
-#' @param line_color Either a color name (used in [crayon::make_style()]),
+#' @param line_col Either a color name (used in [crayon::make_style()]),
 #'   or a style function from `crayon`, to color the line.
 #' @param width Width of the rule. Defaults to the `width` option, see
 #'   [base::options()].
@@ -75,7 +75,7 @@ make_line <- function(x, char = symbol$line) {
 #' rule(center = crayon::red(" * RESULTS * "))
 #'
 #' ## Colored line
-#' rule(center = crayon::red(" * RESULTS * "), line_color = "red")
+#' rule(center = crayon::red(" * RESULTS * "), line_col = "red")
 #'
 #' ## Custom line
 #' rule(center = "TITLE", line = "~")
@@ -87,16 +87,16 @@ make_line <- function(x, char = symbol$line) {
 #' rule(center = crayon::bgRed(" ", symbol$star, "TITLE",
 #'   symbol$star, " "),
 #'   line = "\u2582",
-#'   line_color = "orange")
+#'   line_col = "orange")
 
 rule <- function(left = "", center = "", right = "", line = 1,
-                 line_color = NULL, width = console_width()) {
+                 line_col = NULL, width = console_width()) {
 
   options <- as.list(environment())
 
   options$line <- get_line_char(options$line)
-  if (is.character(line_color)) line_color <- crayon::make_style(line_color)
-  if (is.function(line_color)) options$line <- line_color(options$line)
+  if (is.character(line_col)) line_col <- crayon::make_style(line_col)
+  if (is.function(line_col)) options$line <- line_col(options$line)
 
   res <- if (nchar(center)) {
     if (nchar(left) || nchar(right)) {

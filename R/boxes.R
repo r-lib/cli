@@ -15,11 +15,11 @@
 #'   interpreted as `c(x, 3*x, x, 3*x)`.
 #' @param float Whether to display the box on the `"left"`, `"center"`, or
 #'   the `"right"` of the screen.
-#' @param background_color Background color of the inside of the box.
+#' @param background_col Background color of the inside of the box.
 #'   Either a `crayon` style function, or a color name which will be used
 #'   in [crayon::make_style()] to create a *background* style
 #'   (i.e. `bg = TRUE` is used).
-#' @param border_color Color of the border. Either a `crayon` style
+#' @param border_col Color of the border. Either a `crayon` style
 #'   function or a color name that is passed to [crayon::make_style()].
 #' @param align Alignment of the label within the box: `"left"`,
 #'   `"center"`, or `"right"`.
@@ -65,12 +65,12 @@
 #' boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
 #'
 #' ## Backgorund color
-#' boxx("Hello there!", padding = 1, background_color = "brown")
-#' boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
+#' boxx("Hello there!", padding = 1, background_col = "brown")
+#' boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
 #'
 #' ## Border color
-#' boxx("Hello there!", padding = 1, border_color = "green")
-#' boxx("Hello there!", padding = 1, border_color = crayon::red)
+#' boxx("Hello there!", padding = 1, border_col = "green")
+#' boxx("Hello there!", padding = 1, border_col = crayon::red)
 #'
 #' ## Label alignment
 #' boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
@@ -85,13 +85,13 @@
 #'   border_style="round",
 #'   padding = 1,
 #'   float = "center",
-#'   border_color = "tomato3",
-#'   background_color="darkolivegreen"
+#'   border_col = "tomato3",
+#'   background_col="darkolivegreen"
 #' )
 
 boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  float = c("left", "center", "right"),
-                 background_color = NULL, border_color = NULL,
+                 background_col = NULL, border_col = NULL,
                  align = c("left", "center", "right"),
                  width = getOption("width")) {
 
@@ -102,8 +102,8 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
   assert_that(is_padding_or_margin(padding))
   assert_that(is_padding_or_margin(margin))
   float <- match.arg(float)
-  assert_that(is_color(background_color))
-  assert_that(is_color(border_color))
+  assert_that(is_col(background_col))
+  assert_that(is_col(border_col))
   align <- match.arg(align)
 
   if (length(padding) == 1) {
@@ -125,20 +125,20 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
   }
 
   color_border <- function(x) {
-    if (is.function(border_color)) {
-      border_color(x)
-    } else if (is.character(border_color)) {
-      crayon::make_style(border_color)(x)
+    if (is.function(border_col)) {
+      border_col(x)
+    } else if (is.character(border_col)) {
+      crayon::make_style(border_col)(x)
     } else {
       x
     }
   }
 
   color_content <- function(x) {
-    if (is.function(background_color)) {
-      background_color(x)
-    } else if (is.character(background_color)) {
-      crayon::make_style(background_color, bg = TRUE)(x)
+    if (is.function(background_col)) {
+      background_col(x)
+    } else if (is.character(background_col)) {
+      crayon::make_style(background_col, bg = TRUE)(x)
     } else {
       x
     }

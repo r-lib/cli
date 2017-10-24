@@ -119,28 +119,28 @@ test_that("right label", {
   )
 })
 
-test_that("line_color", {
+test_that("line_col", {
 
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {
       expect_true(crayon::has_style(
-        rule(line_color = "red")
+        rule(line_col = "red")
       ))
       expect_true(crayon::has_style(
-        rule(left = "left", line_color = "red")
+        rule(left = "left", line_col = "red")
       ))
       expect_true(crayon::has_style(
-        rule(left = "left", right = "right", line_color = "red")
+        rule(left = "left", right = "right", line_col = "red")
       ))
       expect_true(crayon::has_style(
-        rule(center = "center", line_color = "red")
+        rule(center = "center", line_col = "red")
       ))
       expect_true(crayon::has_style(
-        rule(right = "right", line_color = "red")
+        rule(right = "right", line_col = "red")
       ))
 
       expect_true(crayon::has_style(
-        rule(line_color = crayon::red)
+        rule(line_col = crayon::red)
       ))
     }
   )

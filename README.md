@@ -131,7 +131,7 @@ Colored line
 
 
 ```r
-rule(center = crayon::red(" * RESULTS * "), line_color = "red")
+rule(center = crayon::red(" * RESULTS * "), line_col = "red")
 ```
 
 ![plot of chunk rule-color-line](man/figures/rule-color-line-1.png)
@@ -158,7 +158,7 @@ Even more custom line
 
 ```r
 rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
-  line = "\u2582", line_color = "orange")
+  line = "\u2582", line_col = "orange")
 ```
 
 ![plot of chunk rule-line-custom-3](man/figures/rule-line-custom-3-1.png)
@@ -256,13 +256,13 @@ Backgorund color
 
 
 ```r
-boxx("Hello there!", padding = 1, background_color = "brown")
+boxx("Hello there!", padding = 1, background_col = "brown")
 ```
 
 ![plot of chunk box-bgcolor](man/figures/box-bgcolor-1.png)
 
 ```r
-boxx("Hello there!", padding = 1, background_color = crayon::bgRed)
+boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
 ```
 
 ![plot of chunk box-bgcolor](man/figures/box-bgcolor-2.png)
@@ -271,13 +271,13 @@ Border color
 
 
 ```r
-boxx("Hello there!", padding = 1, border_color = "green")
+boxx("Hello there!", padding = 1, border_col = "green")
 ```
 
 ![plot of chunk box-border-color](man/figures/box-border-color-1.png)
 
 ```r
-boxx("Hello there!", padding = 1, border_color = crayon::red)
+boxx("Hello there!", padding = 1, border_col = crayon::red)
 ```
 
 ![plot of chunk box-border-color](man/figures/box-border-color-2.png)
@@ -314,8 +314,8 @@ boxx(
   border_style="round",
   padding = 1,
   float = "center",
-  border_color = "tomato3",
-  background_color="darkolivegreen"
+  border_col = "tomato3",
+  background_col="darkolivegreen"
 )
 ```
 

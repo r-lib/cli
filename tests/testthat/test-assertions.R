@@ -44,17 +44,17 @@ test_that("is_padding_or_margin", {
   }
 })
 
-test_that("is_color", {
+test_that("is_col", {
   good <- list("red", "orange", NULL, crayon::red)
   bad <- list(c("red", "orange"), character(), NA_character_)
 
   for (g in good) {
-    expect_true(is_color(g))
-    expect_silent(assert_that(is_color(g)))
+    expect_true(is_col(g))
+    expect_silent(assert_that(is_col(g)))
   }
   for (b in bad) {
-    expect_false(is_color(b))
-    expect_error(assert_that(is_color(b)),
+    expect_false(is_col(b))
+    expect_error(assert_that(is_col(b)),
                  "must be a color name, or a crayon style")
   }
 })

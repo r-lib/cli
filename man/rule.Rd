@@ -4,7 +4,7 @@
 \alias{rule}
 \title{Make a rule with one or two text labels}
 \usage{
-rule(left = "", center = "", right = "", line = 1, line_color = NULL,
+rule(left = "", center = "", right = "", line = 1, line_col = NULL,
   width = console_width())
 }
 \arguments{
@@ -22,7 +22,7 @@ It can also \code{1} or \code{2}, to request a single line (Unicode, if
 available), or a double line. Some strings are interpreted specially,
 see \emph{Line styles} below.}
 
-\item{line_color}{Either a color name (used in \code{\link[crayon:make_style]{crayon::make_style()}}),
+\item{line_col}{Either a color name (used in \code{\link[crayon:make_style]{crayon::make_style()}}),
 or a style function from \code{crayon}, to color the line.}
 
 \item{width}{Width of the rule. Defaults to the \code{width} option, see
@@ -38,7 +38,7 @@ left and right side.
 \details{
 To color the labels, use the functions from the \code{crayon} package
 directly, see examples below. To color the line, either use the
-\code{crayon} colors directly, or the \code{line_color} option.
+\code{crayon} colors directly, or the \code{line_col} option.
 }
 \section{Line styles}{
 
@@ -72,7 +72,7 @@ rule(center = " * RESULTS * ")
 rule(center = crayon::red(" * RESULTS * "))
 
 ## Colored line
-rule(center = crayon::red(" * RESULTS * "), line_color = "red")
+rule(center = crayon::red(" * RESULTS * "), line_col = "red")
 
 ## Custom line
 rule(center = "TITLE", line = "~")
@@ -84,5 +84,5 @@ rule(center = "TITLE", line = crayon::blue("~-"))
 rule(center = crayon::bgRed(" ", symbol$star, "TITLE",
   symbol$star, " "),
   line = "\\u2582",
-  line_color = "orange")
+  line_col = "orange")
 }

@@ -162,10 +162,10 @@ test_that("float", {
   )
 })
 
-test_that("background_color", {
+test_that("background_col", {
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {
-      bx <- boxx("label", background_color = "red")
+      bx <- boxx("label", background_col = "red")
       expect_true(crayon::has_style(bx))
       expect_equal(
         crayon::strip_style(unclass(bx)),
@@ -176,7 +176,7 @@ test_that("background_color", {
               "└───────────┘"),
       )
 
-      bx <- boxx("label", background_color = crayon::red)
+      bx <- boxx("label", background_col = crayon::red)
       expect_true(crayon::has_style(bx))
       expect_equal(
         crayon::strip_style(unclass(bx)),
@@ -190,10 +190,10 @@ test_that("background_color", {
   )
 })
 
-test_that("border_color", {
+test_that("border_col", {
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {
-      bx <- boxx("label", border_color = "red")
+      bx <- boxx("label", border_col = "red")
       expect_true(crayon::has_style(bx))
       expect_equal(
         crayon::strip_style(unclass(bx)),
@@ -204,7 +204,7 @@ test_that("border_color", {
               "└───────────┘"),
       )
 
-      bx <- boxx("label", border_color = crayon::red)
+      bx <- boxx("label", border_col = crayon::red)
       expect_true(crayon::has_style(bx))
       expect_equal(
         crayon::strip_style(unclass(bx)),
