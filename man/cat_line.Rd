@@ -8,9 +8,9 @@
 \alias{cat_print}
 \title{\code{cat()} helpers}
 \usage{
-cat_line(..., col = NULL, bg_col = NULL, file = stdout())
+cat_line(..., col = NULL, background_col = NULL, file = stdout())
 
-cat_bullet(..., col = NULL, bg_col = NULL, bullet_col = NULL,
+cat_bullet(..., col = NULL, background_col = NULL, bullet_col = NULL,
   file = stdout())
 
 cat_boxx(..., file = stdout())
@@ -24,6 +24,9 @@ cat_print(x, file = stdout())
 \code{collapse = "\n"}. For \code{cat_rule()} and \code{cat_boxx()} passed on to
 \code{\link[=rule]{rule()}} and \code{\link[=boxx]{boxx()}} respectively.}
 
+\item{col, background_col, bullet_col}{Colours for text, background, and
+bullets respectively.}
+
 \item{file}{Output destination. Defaults to standard output.}
 
 \item{x}{An object to print.}
@@ -31,4 +34,9 @@ cat_print(x, file = stdout())
 \description{
 These helpers provide useful wrappers around \code{\link[=cat]{cat()}}: most importantly
 they all set \code{sep = ""}, and \code{cat_line()} automatically adds a newline.
+}
+\examples{
+cat_line("This is ", "a ", "line of text.", col = "red")
+cat_bullet(letters[1:5], bullet_col = "green")
+cat_rule()
 }

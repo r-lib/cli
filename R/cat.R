@@ -7,9 +7,11 @@
 #' @param ... For `cat_line()` and `cat_bullet()`, paste'd together with
 #'   `collapse = "\n"`. For `cat_rule()` and `cat_boxx()` passed on to
 #'   [rule()] and [boxx()] respectively.
+#' @param col,background_col,bullet_col Colours for text, background, and
+#'   bullets respectively.
 #' @param x An object to print.
 #' @param file Output destination. Defaults to standard output.
-#' @example
+#' @examples
 #' cat_line("This is ", "a ", "line of text.", col = "red")
 #' cat_bullet(letters[1:5], bullet_col = "green")
 #' cat_rule()
