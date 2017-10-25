@@ -15,6 +15,8 @@ It can draw rules and boxes to make headers or footers in console output,
 and tree structures. It includes a set of Unicode characters, with fallbacks
 on systems that do not support them.
 
+---
+
 -   [Installation](#installation)
 -   [Usage](#usage)
     -   [Unicode characters](#unicode-characters)

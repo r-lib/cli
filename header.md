@@ -11,3 +11,5 @@ It integrates well with `crayon` for coloring the boxes or their content,
 It can draw rules and boxes to make headers or footers in console output,
 and tree structures. It includes a set of Unicode characters, with fallbacks
 on systems that do not support them.
+
+---
