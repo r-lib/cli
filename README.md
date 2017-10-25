@@ -73,7 +73,9 @@ Inspired by (and mostly copied from) the [figures](https://github.com/sindresorh
 
 ### Spinners
 
-See `list_spinners()` and `get_spinner()`.
+See `list_spinners()` and `get_spinner()`. From the awesome
+[cli-spinners](https://github.com/sindresorhus/cli-spinners#readme)
+project.
 
 ![](man/figures/spinners.gif)
 
