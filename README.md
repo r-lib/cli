@@ -20,6 +20,7 @@ on systems that do not support them.
 -   [Installation](#installation)
 -   [Usage](#usage)
     -   [Unicode characters](#unicode-characters)
+    -   [Spinners](#spinners)
     -   [Rules](#rules)
     -   [Boxes](#boxes)
     -   [Trees](#trees)
@@ -69,6 +70,12 @@ Inspired by (and mostly copied from) the [figures](https://github.com/sindresorh
     #> ☺    smiley                    ▇ lower_block_7          
     #> ෴    mustache                  █ lower_block_8          
     #> ♥    heart                     █ full_block
+
+### Spinners
+
+See `list_spinners()` and `get_spinner()`.
+
+![](man/figures/spinners.gif)
 
 ### Rules
 

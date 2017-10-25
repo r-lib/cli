@@ -19,6 +19,10 @@ vcapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
   vapply(X, FUN, FUN.VALUE = character(1), ..., USE.NAMES = USE.NAMES)
 }
 
+viapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+  vapply(X, FUN, FUN.VALUE = integer(1), ..., USE.NAMES = USE.NAMES)
+}
+
 ruler <- function(width = console_width()) {
   x <- seq_len(width)
   y <- rep("-", length(x))
@@ -28,4 +32,14 @@ ruler <- function(width = console_width()) {
 
   cat(y, "\n", sep = "")
   cat(x %% 10, "\n", sep = "")
+}
+
+rpad <- function(x, width) {
+  w <- nchar(x, type = "width")
+  paste0(x, strrep(" ", max(width - w, 0)))
+}
+
+lpad <- function(x, width) {
+  w <- nchar(x, type = "width")
+  paste0(strrep(" ", max(width - w, 0)), x)
 }
