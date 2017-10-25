@@ -92,6 +92,15 @@ make_line <- function(x, char = symbol$line) {
 rule <- function(left = "", center = "", right = "", line = 1,
                  line_col = NULL, width = console_width()) {
 
+  assert_that(
+    is_string(left),
+    is_string(center),
+    is_string(right),
+    is_string(line) || line == 1 || line == 2,
+    is_col(line_col),
+    is_count(width)
+  )
+
   options <- as.list(environment())
   options$line <- apply_style(get_line_char(options$line), line_col)
 

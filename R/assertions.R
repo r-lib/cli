@@ -44,3 +44,10 @@ on_failure(is_count) <- function(call, env) {
   paste0(deparse(call$x),
          " must be a count (length 1 non-negative integer)")
 }
+
+is_tree_style <- function(x) {
+  is.list(x) &&
+    !is.null(names(x)) &&
+    all(sort(names(x)) == sort(c("h", "v", "l", "j"))) &&
+    all(sapply(x, is_string))
+}

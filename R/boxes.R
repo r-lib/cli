@@ -93,7 +93,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  float = c("left", "center", "right"),
                  background_col = NULL, border_col = NULL,
                  align = c("left", "center", "right"),
-                 width = getOption("width")) {
+                 width = console_width()) {
 
   label <- as.character(label)
   widest <- max(col_nchar(label), 0)

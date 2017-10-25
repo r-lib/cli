@@ -15,11 +15,6 @@ fancy_boxes <- function() {
   getOption("cli.unicode") %||% l10n_info()$`UTF-8`
 }
 
-vcapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
-  vapply(X, FUN, FUN.VALUE = character(1), ..., USE.NAMES = USE.NAMES)
-}
-
-
 apply_style <- function(text, style, bg = FALSE) {
   if (is.function(style)) {
     style(text)
@@ -30,4 +25,33 @@ apply_style <- function(text, style, bg = FALSE) {
   } else {
     stop("Not a colour name or crayon style", call. = FALSE)
   }
+}
+
+vcapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+  vapply(X, FUN, FUN.VALUE = character(1), ..., USE.NAMES = USE.NAMES)
+}
+
+viapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+  vapply(X, FUN, FUN.VALUE = integer(1), ..., USE.NAMES = USE.NAMES)
+}
+
+ruler <- function(width = console_width()) {
+  x <- seq_len(width)
+  y <- rep("-", length(x))
+
+  y[x %% 5 == 0] <- "+"
+  y[x %% 10 == 0] <- crayon::bold(as.character((x[x %% 10 == 0] %/% 10) %% 10))
+
+  cat(y, "\n", sep = "")
+  cat(x %% 10, "\n", sep = "")
+}
+
+rpad <- function(x, width) {
+  w <- nchar(x, type = "width")
+  paste0(x, strrep(" ", max(width - w, 0)))
+}
+
+lpad <- function(x, width) {
+  w <- nchar(x, type = "width")
+  paste0(strrep(" ", max(width - w, 0)), x)
 }

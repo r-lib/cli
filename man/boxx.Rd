@@ -10,7 +10,7 @@ list_border_styles()
 boxx(label, border_style = "single", padding = 1, margin = 0,
   float = c("left", "center", "right"), background_col = NULL,
   border_col = NULL, align = c("left", "center", "right"),
-  width = getOption("width"))
+  width = console_width())
 }
 \arguments{
 \item{label}{Label to show, a character vector. Each element will be
