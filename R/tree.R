@@ -54,7 +54,7 @@
 #' tree(data, root = "rcmdcheck")
 
 tree <- function(data, root = data[[1]][[1]], style = NULL,
-                 width = getOption("width")) {
+                 width = console_width()) {
   assert_that(
     is.data.frame(data), ncol(data) >= 2,
     is_string(root),
