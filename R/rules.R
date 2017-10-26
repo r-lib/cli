@@ -1,7 +1,7 @@
 
 #' @importFrom crayon col_substring
 
-make_line <- function(x, char = symbol$line) {
+make_line <- function(x, char = symbol$line, col = NULL) {
 
   ## Easiest to handle this specially
   if (x <= 0) return("")
@@ -10,14 +10,12 @@ make_line <- function(x, char = symbol$line) {
 
   ## We handle the simple case differently, to make it faster
   if (cw == 1) {
-    paste(rep(char, x), collapse = "")
-
+    line <- paste(rep(char, x), collapse = "")
   } else {
-    col_substring(
-      paste(rep(char, ceiling(x / cw)), collapse = ""),
-      1, x
-    )
+    line <- substr(paste(rep(char, ceiling(x / cw)), collapse = ""), 1, x)
   }
+
+  apply_style(line, col)
 }
 
 #' Make a rule with one or two text labels
@@ -110,7 +108,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
   right <- apply_style(right, col)
 
   options <- as.list(environment())
-  options$line <- apply_style(get_line_char(options$line), line_col)
+  options$line <- get_line_char(options$line)
 
   res <- if (nchar(center)) {
     if (nchar(left) || nchar(right)) {
@@ -159,7 +157,7 @@ get_line_char <- function(line) {
 }
 
 rule_line <- function(o) {
-  make_line(o$width, o$line)
+  make_line(o$width, o$line, o$line_col)
 }
 
 #' @importFrom crayon col_nchar
@@ -173,9 +171,9 @@ rule_center <- function(o) {
   ndashes <- o$width - ncc
 
   paste0(
-    make_line(ceiling(ndashes / 2), o$line),
+    make_line(ceiling(ndashes / 2), o$line, o$line_col),
     o$center,
-    make_line(floor(ndashes / 2), o$line)
+    make_line(floor(ndashes / 2), o$line, o$line_col)
   )
 }
 
@@ -183,9 +181,9 @@ rule_left <- function(o) {
   ncl <- col_nchar(o$left, "width")
 
   paste0(
-    make_line(2, get_line_char(o$line)),
+    make_line(2, get_line_char(o$line), o$line_col),
     " ", o$left, " ",
-    make_line(o$width - ncl - 4, o$line)
+    make_line(o$width - ncl - 4, o$line, o$line_col)
   )
 }
 
@@ -193,9 +191,9 @@ rule_right <- function(o) {
   ncr <- col_nchar(o$right, "width")
 
   paste0(
-    make_line(o$width - ncr - 4, o$line),
+    make_line(o$width - ncr - 4, o$line, o$line_col),
     " ", o$right, " ",
-    make_line(2, o$line)
+    make_line(2, o$line, o$line_col)
   )
 }
 
@@ -208,11 +206,11 @@ rule_left_right <- function(o) {
   if (ncl + ncr + 10 > o$width) return(rule_left(o))
 
   paste0(
-    make_line(2, o$line),
+    make_line(2, o$line, o$line_col),
     " ", o$left, " ",
     make_line(o$width - ncl - ncr - 8, o$line),
     " ", o$right, " ",
-    make_line(2, o$line)
+    make_line(2, o$line, o$line_col)
   )
 }
 
