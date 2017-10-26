@@ -208,7 +208,7 @@ rule_left_right <- function(o) {
   paste0(
     make_line(2, o$line, o$line_col),
     " ", o$left, " ",
-    make_line(o$width - ncl - ncr - 8, o$line),
+    make_line(o$width - ncl - ncr - 8, o$line, o$line_col),
     " ", o$right, " ",
     make_line(2, o$line, o$line_col)
   )
