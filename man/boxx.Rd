@@ -8,8 +8,8 @@
 list_border_styles()
 
 boxx(label, border_style = "single", padding = 1, margin = 0,
-  float = c("left", "center", "right"), background_col = NULL,
-  border_col = NULL, align = c("left", "center", "right"),
+  float = c("left", "center", "right"), col = NULL, background_col = NULL,
+  border_col = col, align = c("left", "center", "right"),
   width = console_width())
 }
 \arguments{
@@ -30,6 +30,9 @@ interpreted as \code{c(x, 3*x, x, 3*x)}.}
 
 \item{float}{Whether to display the box on the \code{"left"}, \code{"center"}, or
 the \code{"right"} of the screen.}
+
+\item{col}{Color of text, and default border color. Either a \code{crayon} style
+function or a color name that is passed to \code{\link[crayon:make_style]{crayon::make_style()}}.}
 
 \item{background_col}{Background color of the inside of the box.
 Either a \code{crayon} style function, or a color name which will be used

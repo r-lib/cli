@@ -16,6 +16,9 @@ fancy_boxes <- function() {
 }
 
 apply_style <- function(text, style, bg = FALSE) {
+  if (identical(text, ""))
+    return(text)
+
   if (is.function(style)) {
     style(text)
   } else if (is.character(style)) {

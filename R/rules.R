@@ -39,6 +39,8 @@ make_line <- function(x, char = symbol$line) {
 #'   It can also `1` or `2`, to request a single line (Unicode, if
 #'   available), or a double line. Some strings are interpreted specially,
 #'   see *Line styles* below.
+#' @param col Color of text, and default line color. Either a `crayon` style
+#'   function or a color name that is passed to [crayon::make_style()].
 #' @param line_col Either a color name (used in [crayon::make_style()]),
 #'   or a style function from `crayon`, to color the line.
 #' @param width Width of the rule. Defaults to the `width` option, see
@@ -90,16 +92,21 @@ make_line <- function(x, char = symbol$line) {
 #'   line_col = "orange")
 
 rule <- function(left = "", center = "", right = "", line = 1,
-                 line_col = NULL, width = console_width()) {
+                 col = NULL, line_col = col, width = console_width()) {
 
   assert_that(
     is_string(left),
     is_string(center),
     is_string(right),
     is_string(line) || line == 1 || line == 2,
+    is_col(col),
     is_col(line_col),
     is_count(width)
   )
+
+  left <- apply_style(left, col)
+  center <- apply_style(center, col)
+  right <- apply_style(right, col)
 
   options <- as.list(environment())
   options$line <- apply_style(get_line_char(options$line), line_col)

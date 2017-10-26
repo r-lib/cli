@@ -4,8 +4,8 @@
 \alias{rule}
 \title{Make a rule with one or two text labels}
 \usage{
-rule(left = "", center = "", right = "", line = 1, line_col = NULL,
-  width = console_width())
+rule(left = "", center = "", right = "", line = 1, col = NULL,
+  line_col = col, width = console_width())
 }
 \arguments{
 \item{left}{Label to show on the left. It interferes with the \code{center}
@@ -21,6 +21,9 @@ label, only at most one of them can be present.}
 It can also \code{1} or \code{2}, to request a single line (Unicode, if
 available), or a double line. Some strings are interpreted specially,
 see \emph{Line styles} below.}
+
+\item{col}{Color of text, and default line color. Either a \code{crayon} style
+function or a color name that is passed to \code{\link[crayon:make_style]{crayon::make_style()}}.}
 
 \item{line_col}{Either a color name (used in \code{\link[crayon:make_style]{crayon::make_style()}}),
 or a style function from \code{crayon}, to color the line.}
