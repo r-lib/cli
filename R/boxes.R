@@ -19,6 +19,8 @@
 #'   Either a `crayon` style function, or a color name which will be used
 #'   in [crayon::make_style()] to create a *background* style
 #'   (i.e. `bg = TRUE` is used).
+#' @param col Color of text, and default border color. Either a `crayon` style
+#'   function or a color name that is passed to [crayon::make_style()].
 #' @param border_col Color of the border. Either a `crayon` style
 #'   function or a color name that is passed to [crayon::make_style()].
 #' @param align Alignment of the label within the box: `"left"`,
@@ -91,11 +93,11 @@
 
 boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  float = c("left", "center", "right"),
-                 background_col = NULL, border_col = NULL,
+                 col = NULL, background_col = NULL, border_col = col,
                  align = c("left", "center", "right"),
                  width = console_width()) {
 
-  label <- as.character(label)
+  label <- apply_style(as.character(label), col)
   widest <- max(col_nchar(label), 0)
 
   assert_that(is_border_style(border_style))

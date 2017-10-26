@@ -1,7 +1,7 @@
 
 #' @importFrom crayon col_substring
 
-make_line <- function(x, char = symbol$line) {
+make_line <- function(x, char = symbol$line, col = NULL) {
 
   ## Easiest to handle this specially
   if (x <= 0) return("")
@@ -10,14 +10,12 @@ make_line <- function(x, char = symbol$line) {
 
   ## We handle the simple case differently, to make it faster
   if (cw == 1) {
-    paste(rep(char, x), collapse = "")
-
+    line <- paste(rep(char, x), collapse = "")
   } else {
-    col_substring(
-      paste(rep(char, ceiling(x / cw)), collapse = ""),
-      1, x
-    )
+    line <- substr(paste(rep(char, ceiling(x / cw)), collapse = ""), 1, x)
   }
+
+  apply_style(line, col)
 }
 
 #' Make a rule with one or two text labels
@@ -39,8 +37,10 @@ make_line <- function(x, char = symbol$line) {
 #'   It can also `1` or `2`, to request a single line (Unicode, if
 #'   available), or a double line. Some strings are interpreted specially,
 #'   see *Line styles* below.
-#' @param line_col Either a color name (used in [crayon::make_style()]),
-#'   or a style function from `crayon`, to color the line.
+#' @param col Color of text, and default line color. Either a `crayon` style
+#'   function or a color name that is passed to [crayon::make_style()].
+#' @param line_col,background_col Either a color name (used in [crayon::make_style()]),
+#'   or a style function from `crayon`, to color the line and background.
 #' @param width Width of the rule. Defaults to the `width` option, see
 #'   [base::options()].
 #' @return Character scalar, the rule.
@@ -90,19 +90,25 @@ make_line <- function(x, char = symbol$line) {
 #'   line_col = "orange")
 
 rule <- function(left = "", center = "", right = "", line = 1,
-                 line_col = NULL, width = console_width()) {
+                 col = NULL, line_col = col, background_col = NULL,
+                 width = console_width()) {
 
   assert_that(
     is_string(left),
     is_string(center),
     is_string(right),
     is_string(line) || line == 1 || line == 2,
+    is_col(col),
     is_col(line_col),
     is_count(width)
   )
 
+  left <- apply_style(left, col)
+  center <- apply_style(center, col)
+  right <- apply_style(right, col)
+
   options <- as.list(environment())
-  options$line <- apply_style(get_line_char(options$line), line_col)
+  options$line <- get_line_char(options$line)
 
   res <- if (nchar(center)) {
     if (nchar(left) || nchar(right)) {
@@ -125,6 +131,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
   }
 
   res <- col_substr(res, 1, width)
+  res <- apply_style(res, background_col, bg = TRUE)
 
   class(res) <- unique(c("rule", class(res), "character"))
   res
@@ -150,7 +157,7 @@ get_line_char <- function(line) {
 }
 
 rule_line <- function(o) {
-  make_line(o$width, o$line)
+  make_line(o$width, o$line, o$line_col)
 }
 
 #' @importFrom crayon col_nchar
@@ -164,9 +171,9 @@ rule_center <- function(o) {
   ndashes <- o$width - ncc
 
   paste0(
-    make_line(ceiling(ndashes / 2), o$line),
+    make_line(ceiling(ndashes / 2), o$line, o$line_col),
     o$center,
-    make_line(floor(ndashes / 2), o$line)
+    make_line(floor(ndashes / 2), o$line, o$line_col)
   )
 }
 
@@ -174,9 +181,9 @@ rule_left <- function(o) {
   ncl <- col_nchar(o$left, "width")
 
   paste0(
-    make_line(2, get_line_char(o$line)),
+    make_line(2, get_line_char(o$line), o$line_col),
     " ", o$left, " ",
-    make_line(o$width - ncl - 4, o$line)
+    make_line(o$width - ncl - 4, o$line, o$line_col)
   )
 }
 
@@ -184,9 +191,9 @@ rule_right <- function(o) {
   ncr <- col_nchar(o$right, "width")
 
   paste0(
-    make_line(o$width - ncr - 4, o$line),
+    make_line(o$width - ncr - 4, o$line, o$line_col),
     " ", o$right, " ",
-    make_line(2, o$line)
+    make_line(2, o$line, o$line_col)
   )
 }
 
@@ -199,11 +206,11 @@ rule_left_right <- function(o) {
   if (ncl + ncr + 10 > o$width) return(rule_left(o))
 
   paste0(
-    make_line(2, o$line),
+    make_line(2, o$line, o$line_col),
     " ", o$left, " ",
-    make_line(o$width - ncl - ncr - 8, o$line),
+    make_line(o$width - ncl - ncr - 8, o$line, o$line_col),
     " ", o$right, " ",
-    make_line(2, o$line)
+    make_line(2, o$line, o$line_col)
   )
 }
 
