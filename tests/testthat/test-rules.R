@@ -164,6 +164,8 @@ test_that("get_line_char", {
 })
 
 test_that("print.rule", {
+  mockery::stub(rule, "console_width", 20)
   r <- rule("foo")
-  expect_output(print(r), rebox(unclass(r)), fixed = TRUE)
+  expect_output(print(r), rebox("── foo ─────────────"),
+                fixed = TRUE)
 })
