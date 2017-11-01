@@ -167,24 +167,27 @@ test_that("background_col", {
     list(crayon.enabled = TRUE, crayon.colors = 256), {
       bx <- boxx("label", background_col = "red")
       expect_true(crayon::has_style(bx))
-      expect_equal(
-        crayon::strip_style(unclass(bx)),
+      out <- crayon::strip_style(unclass(bx))
+      expect_output(
+        cat(crayon::strip_style(unclass(bx))),
         rebox("┌───────────┐",
               "│           │",
               "│   label   │",
               "│           │",
               "└───────────┘"),
+	fixed = TRUE
       )
 
       bx <- boxx("label", background_col = crayon::red)
       expect_true(crayon::has_style(bx))
-      expect_equal(
-        crayon::strip_style(unclass(bx)),
+      expect_output(
+        cat(crayon::strip_style(unclass(bx))),
         rebox("┌───────────┐",
               "│           │",
               "│   label   │",
               "│           │",
               "└───────────┘"),
+	fixed = TRUE
       )
     }
   )
@@ -195,24 +198,26 @@ test_that("border_col", {
     list(crayon.enabled = TRUE, crayon.colors = 256), {
       bx <- boxx("label", border_col = "red")
       expect_true(crayon::has_style(bx))
-      expect_equal(
-        crayon::strip_style(unclass(bx)),
+      expect_output(
+        cat(crayon::strip_style(unclass(bx))),
         rebox("┌───────────┐",
               "│           │",
               "│   label   │",
               "│           │",
               "└───────────┘"),
+	fixed = TRUE
       )
 
       bx <- boxx("label", border_col = crayon::red)
       expect_true(crayon::has_style(bx))
-      expect_equal(
-        crayon::strip_style(unclass(bx)),
+      expect_output(
+        cat(crayon::strip_style(unclass(bx))),
         rebox("┌───────────┐",
               "│           │",
               "│   label   │",
               "│           │",
               "└───────────┘"),
+	fixed = TRUE
       )
     }
   )

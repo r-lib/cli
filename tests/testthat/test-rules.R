@@ -165,5 +165,5 @@ test_that("get_line_char", {
 
 test_that("print.rule", {
   r <- rule("foo")
-  expect_output(print(r), unclass(r), fixed = TRUE)
+  expect_output(print(r), rebox(unclass(r)), fixed = TRUE)
 })
