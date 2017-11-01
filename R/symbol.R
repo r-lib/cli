@@ -22,6 +22,15 @@
 
 symbol <- list()
 
+dummy <- function() { }
+
+rm(symbol)
+makeActiveBinding(
+  "symbol",
+  function() if (fancy_boxes()) symbol_utf8 else symbol_win,
+  environment(dummy)
+)
+
 symbol_utf8 <- list(
   "tick" = '\u2714',
   "cross" = '\u2716',
@@ -139,13 +148,3 @@ symbol_win <- list(
 
   "full_block" = "\u2588"
 )
-
-.onLoad <- function(libname, pkgname) {
-  if (fancy_boxes()) {
-    symbol <<- symbol_utf8
-  } else {
-    symbol <<- symbol_win
-  }
-
-  invisible()
-}
