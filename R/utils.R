@@ -12,7 +12,7 @@ strrep <- function(x, ...) {
 }
 
 fancy_boxes <- function() {
-  getOption("cli.unicode") %||% l10n_info()$`UTF-8`
+  isTRUE(getOption("cli.unicode")) || l10n_info()$`UTF-8`
 }
 
 apply_style <- function(text, style, bg = FALSE) {
