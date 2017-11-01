@@ -10,6 +10,12 @@
 #' @export
 
 console_width <- function() {
-  width <- Sys.getenv("RSTUDIO_CONSOLE_WIDTH", getOption("width", 80))
+  width <- getOption(
+    "cli.width",
+    Sys.getenv(
+      "RSTUDIO_CONSOLE_WIDTH",
+      getOption("width", 80)
+    )
+  )
   as.integer(width)
 }
