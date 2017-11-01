@@ -27,3 +27,4 @@ get_spinner("shark")
 Other spinners: \code{\link{demo_spinners}},
   \code{\link{list_spinners}}
 }
+\concept{spinners}
