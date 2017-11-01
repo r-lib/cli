@@ -98,7 +98,7 @@ symbol_win <- list(
   "circle_question_mark" = '(?)',
   "bullet" = '*',
   "dot" = '.',
-  "line" = '\u2500',
+  "line" = '-',
   "double_line" = "=",
   "ellipsis" = '...',
   "multiply" = 'x',
