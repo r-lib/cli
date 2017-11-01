@@ -63,19 +63,18 @@ Inspired by (and mostly copied from) the [figures](https://github.com/sindresorh
     #> ─    line                      ▀ upper_block_4          
     #> ═    double_line               ▁ lower_block_1          
     #> …    ellipsis                  ▂ lower_block_2          
-    #> ❯    pointer                   ▃ lower_block_3          
-    #> ℹ    info                      ▄ lower_block_4          
-    #> ⚠    warning                   ▅ lower_block_5          
-    #> ☰    menu                      ▆ lower_block_6          
-    #> ☺    smiley                    ▇ lower_block_7          
-    #> ෴    mustache                  █ lower_block_8          
-    #> ♥    heart                     █ full_block
+    #> ×    multiply                  ▃ lower_block_3          
+    #> ❯    pointer                   ▄ lower_block_4          
+    #> ℹ    info                      ▅ lower_block_5          
+    #> ⚠    warning                   ▆ lower_block_6          
+    #> ☰    menu                      ▇ lower_block_7          
+    #> ☺    smiley                    █ lower_block_8          
+    #> ෴    mustache                  █ full_block             
+    #> ♥    heart
 
 ### Spinners
 
-See `list_spinners()` and `get_spinner()`. From the awesome
-[cli-spinners](https://github.com/sindresorhus/cli-spinners#readme)
-project.
+See `list_spinners()` and `get_spinner()`. From the awesome [cli-spinners](https://github.com/sindresorhus/cli-spinners#readme) project.
 
 ![](man/figures/spinners.gif)
 
@@ -133,12 +132,20 @@ Colored labels
 rule(center = crayon::red(" * RESULTS * "))
 ```
 
+![](man/figures/rule-color-label-1.png)
+
+Colored label and line
+
+``` r
+rule(center = " * RESULTS * ", col = "red")
+```
+
 ![](man/figures/rule-color-1.png)
 
 Colored line
 
 ``` r
-rule(center = crayon::red(" * RESULTS * "), line_col = "red")
+rule(center = " * RESULTS * ", line_col = "red")
 ```
 
 ![](man/figures/rule-color-line-1.png)
@@ -154,10 +161,12 @@ rule(center = "TITLE", line = "~")
 More custom line
 
 ``` r
-rule(center = "TITLE", line = crayon::blue("~-"))
+rule(center = "TITLE", line = "~-", line_col = "blue")
 ```
 
-![](man/figures/rule-line-custom-2-1.png) Even more custom line
+![](man/figures/rule-line-custom-2-1.png)
+
+Even more custom line
 
 ``` r
 rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
