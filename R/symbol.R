@@ -141,7 +141,7 @@ symbol_win <- list(
 )
 
 .onLoad <- function(libname, pkgname) {
-  if (l10n_info()$`UTF-8`) {
+  if (fancy_boxes()) {
     symbol <<- symbol_utf8
   } else {
     symbol <<- symbol_win
