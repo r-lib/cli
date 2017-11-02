@@ -12,7 +12,9 @@ strrep <- function(x, ...) {
 }
 
 fancy_boxes <- function() {
-  isTRUE(getOption("cli.unicode")) || l10n_info()$`UTF-8`
+  # We don't always have all symbols even on Unicode platforms
+  # (example: LaTeX output).
+  isTRUE(getOption("cli.unicode", default = l10n_info()$`UTF-8`))
 }
 
 apply_style <- function(text, style, bg = FALSE) {
