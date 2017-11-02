@@ -87,7 +87,21 @@ symbol_utf8 <- list(
   "lower_block_7" = "\u2587",
   "lower_block_8" = "\u2588",
 
-  "full_block" = "\u2588"
+  "full_block" = "\u2588",
+
+  "superscript_0" = "\u2070",
+  "superscript_1" = "\u00b9",
+  "superscript_2" = "\u00b2",
+  "superscript_3" = "\u00b3",
+  "superscript_4" = "\u2074",
+  "superscript_5" = "\u2075",
+  "superscript_6" = "\u2076",
+  "superscript_7" = "\u2077",
+  "superscript_8" = "\u2078",
+  "superscript_9" = "\u2079",
+
+  "superscript_minus" = "\u207b",
+  "superscript_plus" = "\u207a"
 )
 
 symbol_win <- list(
@@ -146,5 +160,19 @@ symbol_win <- list(
   "lower_block_7" = "\u2588",
   "lower_block_8" = "\u2588",
 
-  "full_block" = "\u2588"
+  "full_block" = "\u2588",
+
+  "superscript_0" = "0",
+  "superscript_1" = "1",
+  "superscript_2" = "2",
+  "superscript_3" = "3",
+  "superscript_4" = "4",
+  "superscript_5" = "5",
+  "superscript_6" = "6",
+  "superscript_7" = "7",
+  "superscript_8" = "8",
+  "superscript_9" = "9",
+
+  "superscript_minus" = "-",
+  "superscript_plus" = "+"
 )
