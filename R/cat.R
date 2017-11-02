@@ -22,7 +22,7 @@ cat_line <- function(..., col = NULL, background_col = NULL, file = stdout()) {
   out <- apply_style(out, col)
   out <- apply_style(out, background_col, bg = TRUE)
 
-  cat(out, "\n", sep = "", file = file)
+  cat(out, "\n", sep = "", file = file, append = TRUE)
 }
 
 #' @export
