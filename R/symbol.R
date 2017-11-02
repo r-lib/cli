@@ -89,19 +89,19 @@ symbol_utf8 <- list(
 
   "full_block" = "\u2588",
 
-  "superscript_0" = "\u2070",
-  "superscript_1" = "\u00b9",
-  "superscript_2" = "\u00b2",
-  "superscript_3" = "\u00b3",
-  "superscript_4" = "\u2074",
-  "superscript_5" = "\u2075",
-  "superscript_6" = "\u2076",
-  "superscript_7" = "\u2077",
-  "superscript_8" = "\u2078",
-  "superscript_9" = "\u2079",
+  "sup_0" = "\u2070",
+  "sup_1" = "\u00b9",
+  "sup_2" = "\u00b2",
+  "sup_3" = "\u00b3",
+  "sup_4" = "\u2074",
+  "sup_5" = "\u2075",
+  "sup_6" = "\u2076",
+  "sup_7" = "\u2077",
+  "sup_8" = "\u2078",
+  "sup_9" = "\u2079",
 
-  "superscript_minus" = "\u207b",
-  "superscript_plus" = "\u207a"
+  "sup_minus" = "\u207b",
+  "sup_plus" = "\u207a"
 )
 
 symbol_win <- list(
@@ -162,17 +162,17 @@ symbol_win <- list(
 
   "full_block" = "\u2588",
 
-  "superscript_0" = "0",
-  "superscript_1" = "1",
-  "superscript_2" = "2",
-  "superscript_3" = "3",
-  "superscript_4" = "4",
-  "superscript_5" = "5",
-  "superscript_6" = "6",
-  "superscript_7" = "7",
-  "superscript_8" = "8",
-  "superscript_9" = "9",
+  "sup_0" = "0",
+  "sup_1" = "1",
+  "sup_2" = "2",
+  "sup_3" = "3",
+  "sup_4" = "4",
+  "sup_5" = "5",
+  "sup_6" = "6",
+  "sup_7" = "7",
+  "sup_8" = "8",
+  "sup_9" = "9",
 
-  "superscript_minus" = "-",
-  "superscript_plus" = "+"
+  "sup_minus" = "-",
+  "sup_plus" = "+"
 )
