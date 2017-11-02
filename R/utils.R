@@ -13,10 +13,8 @@ strrep <- function(x, ...) {
 
 fancy_boxes <- function() {
   # We don't always have all symbols even on Unicode platforms
-  # (example: LaTeX output).  This is why we need to make this
-  # fully configurable, the platform info is used as a default
-  # setting in .onLoad().
-  isTRUE(getOption("cli.unicode"))
+  # (example: LaTeX output).
+  isTRUE(getOption("cli.unicode", default = l10n_info()$`UTF-8`))
 }
 
 apply_style <- function(text, style, bg = FALSE) {
