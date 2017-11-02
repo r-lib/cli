@@ -165,10 +165,10 @@ test_that("get_line_char", {
 
 test_that("print.rule", {
   withr::with_options(
-    list(cli_width = 20),
-    expect_output(
-      print(rule("foo")),
-      rebox("── foo ─────────────"),
-      fixed = TRUE)
+    list(cli.width = 20), {
+      out <- capt(rule("foo"))
+      exp <- rebox("── foo ─────────────")
+      expect_equal(out, exp)
+    }
   )
 })
