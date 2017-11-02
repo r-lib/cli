@@ -7,7 +7,7 @@ library(cli)
 
 withr::with_options(
   list(cli.unicode = FALSE),
-  test_check("cli", filter = "rules", reporter = "summary")
+  test_check("cli", reporter = "summary")
 )
 
 withr::with_options(
