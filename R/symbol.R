@@ -86,7 +86,21 @@ symbol_utf8 <- list(
   "lower_block_7" = "\u2587",
   "lower_block_8" = "\u2588",
 
-  "full_block" = "\u2588"
+  "full_block" = "\u2588",
+
+  "sup_0" = "\u2070",
+  "sup_1" = "\u00b9",
+  "sup_2" = "\u00b2",
+  "sup_3" = "\u00b3",
+  "sup_4" = "\u2074",
+  "sup_5" = "\u2075",
+  "sup_6" = "\u2076",
+  "sup_7" = "\u2077",
+  "sup_8" = "\u2078",
+  "sup_9" = "\u2079",
+
+  "sup_minus" = "\u207b",
+  "sup_plus" = "\u207a"
 )
 
 symbol_win <- list(
@@ -144,5 +158,19 @@ symbol_win <- list(
   "lower_block_7" = "\u2588",
   "lower_block_8" = "\u2588",
 
-  "full_block" = "\u2588"
+  "full_block" = "\u2588",
+
+  "sup_0" = "0",
+  "sup_1" = "1",
+  "sup_2" = "2",
+  "sup_3" = "3",
+  "sup_4" = "4",
+  "sup_5" = "5",
+  "sup_6" = "6",
+  "sup_7" = "7",
+  "sup_8" = "8",
+  "sup_9" = "9",
+
+  "sup_minus" = "-",
+  "sup_plus" = "+"
 )
