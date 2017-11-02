@@ -10,6 +10,7 @@
 #'
 #' On Windows they have a fallback to less fancy symbols.
 #'
+#' @name symbol
 #' @aliases symbol
 #' @export symbol
 #'
@@ -19,17 +20,18 @@
 #' ## All symbols
 #' cat(paste(format(names(symbol), width=20),
 #'   unlist(symbol)), sep = "\n")
-
-symbol <- list()
+NULL
 
 dummy <- function() { }
 
-rm(symbol)
-makeActiveBinding(
-  "symbol",
-  function() if (fancy_boxes()) symbol_utf8 else symbol_win,
-  environment(dummy)
-)
+.onLoad <- function(libname, pkgname) {
+  pkgenv <- environment(dummy)
+  makeActiveBinding(
+    "symbol",
+    function() if (fancy_boxes()) symbol_utf8 else symbol_win,
+    pkgenv
+  )
+}
 
 symbol_utf8 <- list(
   "tick" = '\u2714',

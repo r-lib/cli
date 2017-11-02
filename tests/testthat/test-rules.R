@@ -147,17 +147,17 @@ test_that("line_col", {
 })
 
 test_that("get_line_char", {
-  expect_equal(get_line_char(1), symbol$line)
-  expect_equal(get_line_char(2), symbol$double_line)
+  expect_equal(get_line_char(1), cli::symbol$line)
+  expect_equal(get_line_char(2), cli::symbol$double_line)
 
-  expect_equal(get_line_char("bar1"), symbol$lower_block_1)
-  expect_equal(get_line_char("bar2"), symbol$lower_block_2)
-  expect_equal(get_line_char("bar3"), symbol$lower_block_3)
-  expect_equal(get_line_char("bar4"), symbol$lower_block_4)
-  expect_equal(get_line_char("bar5"), symbol$lower_block_5)
-  expect_equal(get_line_char("bar6"), symbol$lower_block_6)
-  expect_equal(get_line_char("bar7"), symbol$lower_block_7)
-  expect_equal(get_line_char("bar8"), symbol$lower_block_8)
+  expect_equal(get_line_char("bar1"), cli::symbol$lower_block_1)
+  expect_equal(get_line_char("bar2"), cli::symbol$lower_block_2)
+  expect_equal(get_line_char("bar3"), cli::symbol$lower_block_3)
+  expect_equal(get_line_char("bar4"), cli::symbol$lower_block_4)
+  expect_equal(get_line_char("bar5"), cli::symbol$lower_block_5)
+  expect_equal(get_line_char("bar6"), cli::symbol$lower_block_6)
+  expect_equal(get_line_char("bar7"), cli::symbol$lower_block_7)
+  expect_equal(get_line_char("bar8"), cli::symbol$lower_block_8)
 
   expect_equal(get_line_char("xxx"), "xxx")
   expect_equal(get_line_char(c("x", "y", "z")), "xyz")
