@@ -7,6 +7,8 @@ rule_class <- function(x) {
 
 rebox <- function(...) {
   bx <- as.character(c(...))
+  ## Older versions of testthat do not set the encoding on the
+  ## parsed files, so we set it manually here
   Encoding(bx) <- "UTF-8"
 
   if (! fancy_boxes()){
@@ -23,8 +25,8 @@ rebox <- function(...) {
     bx <- chartr("\u2553\u2556\u255c\u2559\u2551\u2500", "++++|-", bx)
 
     ## double-single
-    bx <- chartr("\u2552\u2555\u255b\u2558\u2502\u2550", "++++|-", bx)    
+    bx <- chartr("\u2552\u2555\u255b\u2558\u2502\u2550", "++++|-", bx)
   }
 
-  paste(enc2native(bx), collapse = "\n")
+  paste(bx, collapse = "\n")
 }
