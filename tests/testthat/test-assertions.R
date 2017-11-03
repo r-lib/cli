@@ -6,7 +6,7 @@ test_that("is_string", {
   strings <- list("foo", "", "111", "1", "-", "NA")
   not_strings <- list(1, character(), NA_character_, NA,
                       c("foo", NA), c("1", "2"), NULL)
-  
+
   for (p in strings) {
     expect_true(is_string(p))
     expect_silent(assert_that(is_string(p)))
@@ -74,4 +74,25 @@ test_that("is_count", {
     expect_false(is_count(n))
     expect_error(assert_that(is_count(n)), "must be a count")
   }
+})
+
+test_that("is_tree_style", {
+  good <- list(
+    list(h = "1", v = "2", l = "3", j = "4"),
+    list(j = "4", v = "2", h = "1", l = "3")
+  )
+  bad <- list(
+    NULL,
+    1:4,
+    c(h = "1", v = "2", l = "3", j = "4"),
+    list(h = "1", v = "2", l = "3", j = "4", x = "10"),
+    list(h = "1", v = c("2", "3"), l = "3", j = "4"),
+    list(h = "1", v = "2", l = character(), j = "4"),
+    list(h = "1", v = "2", l = 3, j = "4"),
+    list("1", v = "2", l = "3", j = "4"),
+    list("1", "2", "3", "4")
+  )
+
+  for (x in good) expect_true (is_tree_style(x))
+  for (x in bad ) expect_false(is_tree_style(x))
 })

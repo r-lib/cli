@@ -47,6 +47,7 @@ on_failure(is_count) <- function(call, env) {
 
 is_tree_style <- function(x) {
   is.list(x) &&
+    length(x) == 4 &&
     !is.null(names(x)) &&
     all(sort(names(x)) == sort(c("h", "v", "l", "j"))) &&
     all(sapply(x, is_string))
