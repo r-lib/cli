@@ -68,7 +68,7 @@ fallback <- function(bx, mode) {
     bx <- chartr("\u2552\u2555\u255b\u2558\u2502\u2550", "++++|-", bx)
 
     ## Bullets
-    bx <- chartr("●", "*", bx)
+    bx <- chartr("\u25CF", "*", bx)
 
   } else if (mode == "tree") {
     bx <- chartr("\u2500\u2502\u2514\u251c", "-|\\+", bx)
