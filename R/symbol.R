@@ -24,6 +24,7 @@ NULL
 
 dummy <- function() { }
 
+## nocov start
 .onLoad <- function(libname, pkgname) {
   pkgenv <- environment(dummy)
   makeActiveBinding(
@@ -32,6 +33,7 @@ dummy <- function() { }
     pkgenv
   )
 }
+## nocov end
 
 symbol_utf8 <- list(
   "tick" = '\u2714',

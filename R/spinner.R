@@ -57,6 +57,8 @@ list_spinners <- function() {
   spinners$name
 }
 
+## nocov start
+
 #' Show a demo of some (by default all) spinners
 #'
 #' Each spinner is shown for about 2-3 seconds.
@@ -139,3 +141,5 @@ demo_spinners_terminal <- function() {
   }
 
 }
+
+## nocov end
