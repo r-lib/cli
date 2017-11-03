@@ -50,7 +50,7 @@ cat_rule <- function(..., file = stdout()) {
 
 #' @export
 #' @rdname cat_line
-cat_print <- function(x, file = stdout()) {
+cat_print <- function(x, file = "") {
   if (!identical(file, "")) {
     sink(file)
     on.exit(sink(NULL))
