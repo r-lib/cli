@@ -51,12 +51,16 @@ ruler <- function(width = console_width()) {
   cat(x %% 10, "\n", sep = "")
 }
 
-rpad <- function(x, width) {
+rpad <- function(x, width = NULL) {
+  if (!length(x)) return(x)
   w <- nchar(x, type = "width")
-  paste0(x, strrep(" ", max(width - w, 0)))
+  if (is.null(width)) width <- max(w)
+  paste0(x, strrep(" ", pmax(width - w, 0)))
 }
 
-lpad <- function(x, width) {
+lpad <- function(x, width = NULL) {
+  if (!length(x)) return(x)
   w <- nchar(x, type = "width")
-  paste0(strrep(" ", max(width - w, 0)), x)
+  if (is.null(width)) width <- max(w)
+  paste0(strrep(" ", pmax(width - w, 0)), x)
 }
