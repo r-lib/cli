@@ -33,7 +33,7 @@ get_spinner <- function(which = NULL) {
   assert_that(is.null(which) || is_string(which))
 
   if (is.null(which)) {
-    which <- if (fancy_boxes()) "dots" else "line"
+    which <- if (is_utf8_output()) "dots" else "line"
   }
 
   row <- match(which, spinners$name)

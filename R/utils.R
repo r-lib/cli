@@ -11,10 +11,18 @@ strrep <- function(x, ...) {
   res
 }
 
-fancy_boxes <- function() {
-  # We don't always have all symbols even on Unicode platforms
-  # (example: LaTeX output).
-  isTRUE(getOption("cli.unicode", default = l10n_info()$`UTF-8`))
+is_utf8_output <- function() {
+  opt <- getOption("cli.unicode", NULL)
+  if (! is.null(opt)) {
+    isTRUE(opt)
+  } else {
+    l10n_info()$`UTF-8` && !is_latex_output()
+  }
+}
+
+is_latex_output <- function() {
+  if (!("knitr" %in% loadedNamespaces())) return(FALSE)
+  get("is_latex_output", asNamespace("knitr"))()
 }
 
 apply_style <- function(text, style, bg = FALSE) {

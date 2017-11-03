@@ -63,7 +63,7 @@ box_styles <- function() {
   ## If the platform is not UTF-8, then we replace the styles that have
   ## Unicode characters, with the classic style.
 
-  if (!fancy_boxes()) {
+  if (!is_utf8_output()) {
     for (n in setdiff(names(styles), c("classic", "none"))) {
       styles[[n]] <- styles[["classic"]]
     }

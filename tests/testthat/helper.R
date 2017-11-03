@@ -36,7 +36,7 @@ rebox <- function(..., mode = c("box", "tree")) {
   bx <- paste(bx, collapse = "\n")
 
   utf8 <- l10n_info()$`UTF-8`
-  on <- fancy_boxes()
+  on <- is_utf8_output()
 
   if (utf8 && on) {
     bx

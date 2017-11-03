@@ -2,7 +2,7 @@
 context("spinners")
 
 test_that("get_spinner", {
-  if (fancy_boxes()) {
+  if (is_utf8_output()) {
     expect_equal(get_spinner()$name, "dots")
   } else {
     expect_equal(get_spinner()$name, "line")

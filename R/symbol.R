@@ -29,7 +29,7 @@ dummy <- function() { }
   pkgenv <- environment(dummy)
   makeActiveBinding(
     "symbol",
-    function() if (fancy_boxes()) symbol_utf8 else symbol_win,
+    function() if (is_utf8_output()) symbol_utf8 else symbol_win,
     pkgenv
   )
 }

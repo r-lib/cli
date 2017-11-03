@@ -103,7 +103,7 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
 }
 
 box_chars <- function() {
-  if (fancy_boxes()) {
+  if (is_utf8_output()) {
     list(
       "h" = "\u2500",                   # horizontal
       "v" = "\u2502",                   # vertical
