@@ -53,26 +53,51 @@ fallback <- function(bx, mode) {
 
   if (mode == "box") {
     ## single
-    bx <- chartr("\u250c\u2510\u2518\u2514\u2502\u2500", "++++|-", bx)
+    bx <- chartr(
+      c("\u250c", "\u2510", "\u2518", "\u2514", "\u2502", "\u2500"),
+      c("+", "+", "+", "+", "|", "-"), bx)
 
     ## double
-    bx <- chartr("\u2554\u2557\u255d\u255a\u2551\u2550", "++++|-", bx)
+    bx <- chartr(
+      c("\u2554", "\u2557", "\u255d", "\u255a", "\u2551", "\u2550"),
+      c("+", "+", "+", "+", "|", "-"), bx)
 
     ## round
-    bx <- chartr("\u256d\u256e\u256f\u2570\u2502\u2500", "++++|-", bx)
+    bx <- chartr(
+      c("\u256d", "\u256e", "\u256f", "\u2570", "\u2502", "\u2500"),
+      c("+", "+", "+", "+", "|", "-"), bx)
 
     ## single-double
-    bx <- chartr("\u2553\u2556\u255c\u2559\u2551\u2500", "++++|-", bx)
+    bx <- chartr(
+      c("\u2553", "\u2556", "\u255c", "\u2559", "\u2551", "\u2500"),
+      c("+", "+", "+", "+", "|", "-"), bx)
 
     ## double-single
-    bx <- chartr("\u2552\u2555\u255b\u2558\u2502\u2550", "++++|-", bx)
+    bx <- chartr(
+      c("\u2552", "\u2555", "\u255b", "\u2558", "\u2502", "\u2550"),
+      c("+", "+", "+", "+", "|", "-"), bx)
 
     ## Bullets
     bx <- chartr("\u25CF", "*", bx)
 
   } else if (mode == "tree") {
-    bx <- chartr("\u2500\u2502\u2514\u251c", "-|\\+", bx)
+    bx <- chartr(
+      c("\u2500", "\u2502", "\u2514", "\u251c"),
+      c("-", "|", "\\", "+"), bx)
   }
 
   bx
+}
+
+chartr <- function(old, new, x) {
+  assertthat::assert_that(
+    is.character(old),
+    is.character(new),
+    is.character(x),
+    length(old) == length(new)
+  )
+  for (i in seq_along(old)) {
+    x <- gsub(old[i], new[i], x, fixed = TRUE)
+  }
+  x
 }
