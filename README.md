@@ -44,33 +44,39 @@ library(cli)
 
 Inspired by (and mostly copied from) the [figures](https://github.com/sindresorhus/figures) JavaScript project.
 
-    #> ✔    tick                      ↑ arrow_up               
-    #> ✖    cross                     ↓ arrow_down             
-    #> ★    star                      ← arrow_left             
-    #> ▇    square                    → arrow_right            
-    #> ◻    square_small              ◉ radio_on               
-    #> ◼    square_small_filled       ◯ radio_off              
-    #> ◯    circle                    ☒ checkbox_on            
-    #> ◉    circle_filled             ☐ checkbox_off           
-    #> ◌    circle_dotted             ⓧ checkbox_circle_on     
-    #> ◎    circle_double             Ⓘ checkbox_circle_off    
-    #> ⓞ    circle_circle             ❓ fancy_question_mark    
-    #> ⓧ    circle_cross              ≠ neq                    
-    #> Ⓘ    circle_pipe               ≥ geq                    
-    #> ?⃝   circle_question_mark      ≤ leq                    
-    #> ●    bullet                    × times                  
-    #> ․    dot                       ▔ upper_block_1          
-    #> ─    line                      ▀ upper_block_4          
-    #> ═    double_line               ▁ lower_block_1          
-    #> …    ellipsis                  ▂ lower_block_2          
-    #> ×    multiply                  ▃ lower_block_3          
-    #> ❯    pointer                   ▄ lower_block_4          
-    #> ℹ    info                      ▅ lower_block_5          
-    #> ⚠    warning                   ▆ lower_block_6          
-    #> ☰    menu                      ▇ lower_block_7          
-    #> ☺    smiley                    █ lower_block_8          
-    #> ෴    mustache                  █ full_block             
-    #> ♥    heart
+    #> ✔    tick                      ☒ checkbox_on            
+    #> ✖    cross                     ☐ checkbox_off           
+    #> ★    star                      ⓧ checkbox_circle_on     
+    #> ▇    square                    Ⓘ checkbox_circle_off    
+    #> ◻    square_small              ❓ fancy_question_mark    
+    #> ◼    square_small_filled       ≠ neq                    
+    #> ◯    circle                    ≥ geq                    
+    #> ◉    circle_filled             ≤ leq                    
+    #> ◌    circle_dotted             × times                  
+    #> ◎    circle_double             ▔ upper_block_1          
+    #> ⓞ    circle_circle             ▀ upper_block_4          
+    #> ⓧ    circle_cross              ▁ lower_block_1          
+    #> Ⓘ    circle_pipe               ▂ lower_block_2          
+    #> ?⃝   circle_question_mark      ▃ lower_block_3          
+    #> ●    bullet                    ▄ lower_block_4          
+    #> ․    dot                       ▅ lower_block_5          
+    #> ─    line                      ▆ lower_block_6          
+    #> ═    double_line               ▇ lower_block_7          
+    #> …    ellipsis                  █ lower_block_8          
+    #> …    continue                  █ full_block             
+    #> ❯    pointer                   ⁰ sup_0                  
+    #> ℹ    info                      ¹ sup_1                  
+    #> ⚠    warning                   ² sup_2                  
+    #> ☰    menu                      ³ sup_3                  
+    #> ☺    smiley                    ⁴ sup_4                  
+    #> ෴    mustache                  ⁵ sup_5                  
+    #> ♥    heart                     ⁶ sup_6                  
+    #> ↑    arrow_up                  ⁷ sup_7                  
+    #> ↓    arrow_down                ⁸ sup_8                  
+    #> ←    arrow_left                ⁹ sup_9                  
+    #> →    arrow_right               ⁻ sup_minus              
+    #> ◉    radio_on                  ⁺ sup_plus               
+    #> ◯    radio_off
 
 ### Spinners
 
