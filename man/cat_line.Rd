@@ -17,7 +17,7 @@ cat_boxx(..., file = stdout())
 
 cat_rule(..., file = stdout())
 
-cat_print(x, file = stdout())
+cat_print(x, file = "")
 }
 \arguments{
 \item{...}{For \code{cat_line()} and \code{cat_bullet()}, paste'd together with

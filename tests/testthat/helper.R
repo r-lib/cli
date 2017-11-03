@@ -7,6 +7,10 @@ capt <- function(expr) {
   paste(capture.output(print(expr)), collapse = "\n")
 }
 
+capt0 <- function(expr) {
+  paste(capture.output(expr), collapse = "\n")
+}
+
 capt_cat <- function(expr) {
   paste(capture.output(cat(expr)), collapse = "\n")
 }
@@ -59,6 +63,9 @@ fallback <- function(bx) {
 
   ## double-single
   bx <- chartr("\u2552\u2555\u255b\u2558\u2502\u2550", "++++|-", bx)
+
+  ## Bullets
+  bx <- chartr("●", "*", bx)
 
   bx
 }
