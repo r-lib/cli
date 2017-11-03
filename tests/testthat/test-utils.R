@@ -46,3 +46,43 @@ test_that("lpad", {
   expect_equal(lpad("foo"), "foo")
   expect_equal(lpad(c("foo", "foobar")), c("   foo", "foobar"))
 })
+
+test_that("is_utf8_output", {
+
+  mockery::stub(
+    is_utf8_output, "l10n_info",
+    list(MBCS = TRUE, `UTF-8` = TRUE, `Latin-1` = FALSE)
+  )
+  withr::with_options(
+    list(cli.unicode = NULL),
+    expect_true(is_utf8_output())
+  )
+
+  mockery::stub(
+    is_utf8_output, "l10n_info",
+    list(MBCS = FALSE, `UTF-8` = FALSE, `Latin-1` = TRUE)
+  )
+  withr::with_options(
+    list(cli.unicode = NULL),
+    expect_false(is_utf8_output())
+  )
+})
+
+test_that("is_latex_output", {
+
+  mockery::stub(is_latex_output, "loadedNamespaces", "foobar")
+  expect_false(is_latex_output())
+
+  mockery::stub(is_latex_output, "loadedNamespaces", "knitr")
+  mockery::stub(
+    is_latex_output, "get",
+    function(x, ...) {
+      if (x == "is_latex_output") {
+        function() TRUE
+      } else {
+        base::get(x, ...)
+      }
+    }
+  )
+  expect_true(is_latex_output())
+})
