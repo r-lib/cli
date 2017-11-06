@@ -14,9 +14,13 @@ get_spinner(which = NULL)
 \item{which}{The name of the chosen spinner. The default depends on
 whether the platform supports Unicode.}
 
+\item{x}{spinner object.}
+
 \item{spinner_width}{Width of spinner.}
 
 \item{glue_template}{Template for \code{\link[glue:glue_data]{glue::glue_data()}}.}
+
+\item{...}{Other arguments are ignored.}
 }
 \value{
 A list with entries: \code{name}, \code{interval}: the suggested update

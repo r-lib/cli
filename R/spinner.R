@@ -51,8 +51,10 @@ get_spinner <- function(which = NULL) {
 }
 
 #' @rdname get_spinner
+#' @param x spinner object.
 #' @param spinner_width Width of spinner.
 #' @param glue_template Template for [glue::glue_data()].
+#' @param ... Other arguments are ignored.
 #' @export
 print.spinner <- function(x, spinner_width = 10, glue_template = "{frames}", ...) {
   interval <- x$interval / 1000
