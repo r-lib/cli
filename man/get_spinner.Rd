@@ -2,13 +2,21 @@
 % Please edit documentation in R/spinner.R
 \name{get_spinner}
 \alias{get_spinner}
+\alias{print.spinner}
 \title{Character vector to put a spinner on the screen}
 \usage{
 get_spinner(which = NULL)
+
+\method{print}{spinner}(x, spinner_width = 10, glue_template = "{frames}",
+  ...)
 }
 \arguments{
 \item{which}{The name of the chosen spinner. The default depends on
 whether the platform supports Unicode.}
+
+\item{spinner_width}{Width of spinner.}
+
+\item{glue_template}{Template for \code{\link[glue:glue_data]{glue::glue_data()}}.}
 }
 \value{
 A list with entries: \code{name}, \code{interval}: the suggested update
@@ -22,6 +30,7 @@ taste.
 \examples{
 get_spinner()
 get_spinner("shark")
+str(get_spinner("shark"))
 }
 \seealso{
 Other spinners: \code{\link{demo_spinners}},

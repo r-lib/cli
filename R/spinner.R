@@ -28,6 +28,7 @@ usethis::use_data(spinners, internal = TRUE)
 #' @examples
 #' get_spinner()
 #' get_spinner("shark")
+#' str(get_spinner("shark"))
 
 get_spinner <- function(which = NULL) {
   assert_that(is.null(which) || is_string(which))
@@ -37,10 +38,34 @@ get_spinner <- function(which = NULL) {
   }
 
   row <- match(which, spinners$name)
-  list(
-    name = which,
-    interval = spinners$interval[[row]],
-    frames = spinners$frames[[row]])
+  if (!is.na(row)) {
+    structure(
+      list(
+        name = which,
+        interval = spinners$interval[[row]],
+        frames = spinners$frames[[row]]),
+      class = "spinner")
+  } else {
+    NULL
+  }
+}
+
+#' @rdname get_spinner
+#' @param spinner_width Width of spinner.
+#' @param glue_template Template for [glue::glue_data()].
+#' @export
+print.spinner <- function(x, spinner_width = 10, glue_template = "{frames}", ...) {
+  interval <- x$interval / 1000
+  x$frames <- rpad(x$frames, width = spinner_width)
+  frames <- glue::glue_data(x, glue_template)
+  cycles <- max(round(2.5 / ((length(frames) - 1) * interval)), 1)
+  for (i in 1:(length(frames) * cycles) - 1) {
+    fr <- unclass(frames[i %% length(frames) + 1])
+    cat("\r")
+    cat(fr)
+    Sys.sleep(interval)
+  }
+  cat("\n")
 }
 
 #' List all available spinners
@@ -84,15 +109,7 @@ demo_spinners <- function(which = NULL) {
 
   for (w in which) {
     sp <- get_spinner(w)
-    interval <- sp$interval / 1000
-    frames <- sp$frames
-    cycles <- max(round(2.5 / ((length(frames) - 1) * interval)), 1)
-    for (i in 1:(length(frames) * cycles) - 1) {
-      fr <- unclass(frames[i %% length(frames) + 1])
-      cat("\r", rpad(fr, width = 10), w, sep = "")
-      Sys.sleep(interval)
-    }
-    cat("\n")
+    print(sp, glue_template = "{frames}{name}")
   }
 }
 
