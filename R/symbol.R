@@ -22,19 +22,6 @@
 #'   unlist(symbol)), sep = "\n")
 NULL
 
-dummy <- function() { }
-
-## nocov start
-.onLoad <- function(libname, pkgname) {
-  pkgenv <- environment(dummy)
-  makeActiveBinding(
-    "symbol",
-    function() if (is_utf8_output()) symbol_utf8 else symbol_win,
-    pkgenv
-  )
-}
-## nocov end
-
 symbol_utf8 <- list(
   "tick" = '\u2714',
   "cross" = '\u2716',
