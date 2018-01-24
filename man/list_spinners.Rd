@@ -20,4 +20,3 @@ get_spinner(list_spinners()[1])
 Other spinners: \code{\link{demo_spinners}},
   \code{\link{get_spinner}}
 }
-\concept{spinners}
