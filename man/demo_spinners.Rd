@@ -21,4 +21,3 @@ Each spinner is shown for about 2-3 seconds.
 Other spinners: \code{\link{get_spinner}},
   \code{\link{list_spinners}}
 }
-\concept{spinners}
