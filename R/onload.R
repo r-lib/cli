@@ -3,7 +3,6 @@
 
 dummy <- function() { }
 
-#' @export cli
 cli <- NULL
 
 .onLoad <- function(libname, pkgname) {

@@ -3,6 +3,10 @@
 
 inline_list <- NULL
 
+#' @importFrom utils globalVariables
+
+if (getRversion() >= "2.15.1") globalVariables(c("self", "private"))
+
 create_inline_list <- function() {
   list(
     code = inline_code,
