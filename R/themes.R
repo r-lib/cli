@@ -1,6 +1,6 @@
 
 #' @importFrom crayon combine_styles underline bold italic
-#'   green red yellow cyan
+#'   green red yellow cyan magenta blue
 
 cli_default_theme <- function() {
   list(
@@ -31,6 +31,19 @@ cli_default_theme <- function() {
     ),
     alert_info = list(
       marker = symbol$info,
-      fmt = cyan)
+      fmt = cyan),
+
+    inline_emph = list(fmt = italic),
+    inline_strong = list(fmt = bold),
+    inline_code = list(before = "`", after = "`", fmt = magenta),
+    inline_pkg = list(fmt = magenta),
+    inline_fun = list(fmt = magenta, after = "()"),
+    inline_arg = list(fmt = magenta),
+    inline_key = list(before = "<", after = ">", fmt = magenta),
+    inline_file = list(fmt = magenta),
+    inline_email = list(fmt = magenta),
+    inline_url = list(before = "<", after = ">", fmt = blue),
+    inline_var = list(fmt = magenta),
+    inline_envvar = list(fmt = magenta)
   )
 }
