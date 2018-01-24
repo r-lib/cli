@@ -1,5 +1,6 @@
 
 #' @importFrom R6 R6Class
+#' @export
 
 cli_class <- R6Class(
   "cli_class",
@@ -18,24 +19,24 @@ cli_class <- R6Class(
       cli_par(self, private),
 
     ## Text, wrapped
-    text = function(text)
-      cli_text(self, private, text),
+    text = function(..., .envir = parent.frame())
+      cli_text(self, private, ..., .envir = .envir),
 
     ## Text, not wrapped
-    verbatim = function(text)
-      cli_verbatim(self, private, text),
+    verbatim = function(..., .envir = parent.frame())
+      cli_verbatim(self, private, ..., .envir = .envir),
 
     ## Markdow(ish) text, wrapped: emphasis, strong emphasis, links, code
-    md_text = function(text)
-      cli_md_text(self, private, text),
+    md_text = function(..., .envir = parent.frame())
+      cli_md_text(self, private, ..., .envir = .envir),
 
     ## Headers
-    h1 = function(text)
-      cli_h1(self, private, text),
-    h2 = function(text)
-      cli_h2(self, private, text),
-    h3 = function(text)
-      cli_h3(self, private, text),
+    h1 = function(text, .envir = parent.frame())
+      cli_h1(self, private, text, .envir = .envir),
+    h2 = function(text, .envir = parent.frame())
+      cli_h2(self, private, text, .envir = .envir),
+    h3 = function(text, .envir = parent.frame())
+      cli_h3(self, private, text, .envir = .envir),
 
     ## Block quote
     quote = function(quote, citation = NULL)
@@ -58,14 +59,14 @@ cli_class <- R6Class(
       cli_table(self, private, cells),
 
     ## Alerts
-    alert_success = function(text)
-      cli_alert(self, private, "alert_success", text),
-    alert_danger = function(text)
-      cli_alert(self, private, "alert_danger", text),
-    alert_warning = function(text)
-      cli_alert(self, private, "alert_warning", text),
-    alert_info = function(text)
-      cli_alert(self, private, "alert_info", text),
+    alert_success = function(text, .envir = parent.frame())
+      cli_alert(self, private, "alert_success", text, .envir = .envir),
+    alert_danger = function(text, .envir = parent.frame())
+      cli_alert(self, private, "alert_danger", text, .envir = .envir),
+    alert_warning = function(text, .envir = parent.frame())
+      cli_alert(self, private, "alert_warning", text, .envir = .envir),
+    alert_info = function(text, .envir = parent.frame())
+      cli_alert(self, private, "alert_info", text, .envir = .envir),
 
     ## Progress bars
     progress_bar = function(...)
@@ -76,6 +77,9 @@ cli_class <- R6Class(
     stream = NULL,
     theme = NULL,
     state = list(),
+
+    inline = function(..., .envir)
+      cli__inline(self, private, ..., .envir = .envir),
 
     cat = function(lines, sep = "")
       cli__cat(self, private, lines, sep),
@@ -108,36 +112,41 @@ cli_par <- function(self, private) {
 
 ## Text -------------------------------------------------------------
 
-cli_text <- function(self, private, text) {
-  text <- strwrap(text)
+#' @importFrom ansistrings ansi_strwrap
+
+cli_text <- function(self, private, ..., .envir) {
+  text <- private$inline(..., .envir = .envir)
+  text <- ansi_strwrap(text)
   private$cat_ln(text)
   invisible(self)
 }
 
-cli_verbatim <- function(self, private, text) {
+cli_verbatim <- function(self, private, ..., .envir) {
+  text <- private$inline(..., .envir = .envir)
   private$cat_ln(text)
   invisible(self)
 }
 
-cli_md_text <- function(self, private, text) {
+cli_md_text <- function(self, private, ..., .envir) {
   stop("Markdown text is not implemented yet")
 }
 
 ## Headers ----------------------------------------------------------
 
-cli_h1 <- function(self, private, text) {
-  cli__header(self, private, "h1", text)
+cli_h1 <- function(self, private, text, .envir) {
+  cli__header(self, private, "h1", text, .envir)
 }
 
-cli_h2 <- function(self, private, text) {
-  cli__header(self, private, "h2", text)
+cli_h2 <- function(self, private, text, .envir) {
+  cli__header(self, private, "h2", text, .envir)
 }
 
-cli_h3 <- function(self, private, text) {
-  cli__header(self, private, "h3", text)
+cli_h3 <- function(self, private, text, .envir) {
+  cli__header(self, private, "h3", text, .envir)
 }
 
-cli__header <- function(self, private, type, text) {
+cli__header <- function(self, private, type, text, .envir) {
+  text <- private$inline(text, .envir = .envir)
   style <- private$theme[[type]]
   private$cat(strrep("\n", style$margin$top %||% 0))
   if (is.function(style$fmt)) text <- style$fmt(text)
@@ -180,7 +189,8 @@ cli_table <- function(self, private, cells) {
 
 ## Alerts -----------------------------------------------------------
 
-cli_alert <- function(self, private, type, text) {
+cli_alert <- function(self, private, type, text, .envir) {
+  text <- private$inline(text, .envir = .envir)
   style <- private$theme[[type]]
   text[1] <- paste0(style$marker, " ", text[1])
   if (is.function(style$fmt)) text <- style$fmt(text)
