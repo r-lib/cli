@@ -1,4 +1,15 @@
 
+#' The default command line interface instant
+#'
+#' TODO
+#'
+#' @export
+cli <- NULL
+
+#' Create a command line interface
+#'
+#' TODO
+#'
 #' @importFrom R6 R6Class
 #' @export
 
