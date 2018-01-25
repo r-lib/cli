@@ -33,6 +33,13 @@ cli_default_theme <- function() {
       marker = symbol$info,
       fmt = cyan),
 
+    par = list(bottom = 1),
+    itemize = list(left = 2),
+    enumerate = list(left = 2),
+    describe = list(left = 2),
+    item = list(),
+    code = list(),
+
     inline_emph = list(fmt = italic),
     inline_strong = list(fmt = bold),
     inline_code = list(before = "`", after = "`", fmt = magenta),

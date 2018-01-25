@@ -25,9 +25,13 @@ cli_class <- R6Class(
     set_theme = function(theme)
       cli_set_theme(self, private, theme),
 
+    ## Close container(s)
+    end = function(id = NULL)
+      cli_end(self, private, id),
+
     ## Paragraphs
-    par = function()
-      cli_par(self, private),
+    par = function(.auto_close = TRUE, .envir = parent.frame())
+      cli_par(self, private, .auto_close = .auto_close, .envir = .envir),
 
     ## Text, wrapped
     text = function(..., .envir = parent.frame())
@@ -54,16 +58,23 @@ cli_class <- R6Class(
       cli_quote(self, private, quote, citation),
 
     ## Lists
-    itemize = function(items)
-      cli_quote(self, private, items),
-    enumerate = function(items)
-      cli_quote(self, private, items),
-    describe = function(items)
-      cli_describe(self, private, items),
+    itemize = function(items, .auto_close = TRUE, .envir = parent.frame())
+      cli_itemize(self, private, items, .auto_close = .auto_close,
+                  .envir = .envir),
+    enumerate = function(items, .auto_close = TRUE, .envir = parent.frame())
+      cli_enumerate(self, private, items, .auto_close = .auto_close,
+                    .envir = .envir),
+    describe = function(items, .auto_close = TRUE, .envir = parent.frame())
+      cli_describe(self, private, items, .auto_close = .auto_close,
+                   .envir = .envir),
+    item = function(..., .auto_close = TRUE, .envir = parent.frame())
+      cli_item(self, private, ..., .auto_close = .auto_close,
+               .envir = .envir),
 
     ## Code
-    code = function(lines)
-      cli_code(self, private, lines),
+    code = function(lines, .auto_close = TRUE, .envir = parent.frame())
+      cli_code(self, private, lines, .auto_close = .auto_close,
+               .envir = .envir),
 
     ## Tables
     table = function(cells)
@@ -87,15 +98,24 @@ cli_class <- R6Class(
   private = list(
     stream = NULL,
     theme = NULL,
-    state = list(),
+    margin = 0,
+    state = list("base" = list(
+      type = "base",
+      style = list(left = 0, right = 0, fmt = identity)
+    )),
+
+    vspace = function(n = 1)
+      cli__vspace(self, private, n),
 
     inline = function(..., .envir)
       cli__inline(self, private, ..., .envir = .envir),
 
+    get_width = function()
+      cli__get_width(self, private),
     cat = function(lines, sep = "")
       cli__cat(self, private, lines, sep),
     cat_ln = function(lines)
-      cli__cat(self, private, lines, sep = "\n")
+      cli__cat_ln(self, private, lines)
   )
 )
 
@@ -115,19 +135,13 @@ cli_set_theme <- function(self, private, theme) {
   stop("Themes are not implemented yet")
 }
 
-## Paragraph --------------------------------------------------------
-
-cli_par <- function(self, private) {
-  stop("Paragraphs are not implemented yet")
-}
-
 ## Text -------------------------------------------------------------
 
 #' @importFrom ansistrings ansi_strwrap
 
 cli_text <- function(self, private, ..., .envir) {
   text <- private$inline(..., .envir = .envir)
-  text <- ansi_strwrap(text)
+  text <- ansi_strwrap(text, width = private$get_width())
   private$cat_ln(text)
   invisible(self)
 }
@@ -170,26 +184,6 @@ cli__header <- function(self, private, type, text, .envir) {
 
 cli_quote <- function(self, private, quote, citation) {
   stop("Quotes are not implemented yet")
-}
-
-## Lists ------------------------------------------------------------
-
-cli_itemize <- function(self, private, items) {
-  stop("Lists are not implemented yet")
-}
-
-cli_enumerate <- function(self, private, items) {
-  stop("Lists are not implemented yet")
-}
-
-cli_describe <- function(self, private, items) {
-  stop("Lists are not implemented yet")
-}
-
-## Code -------------------------------------------------------------
-
-cli_code <- function(self, private, lines) {
-  stop("Code is not implemented yet")
 }
 
 ## Table ------------------------------------------------------------
