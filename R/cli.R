@@ -58,17 +58,20 @@ cli_class <- R6Class(
       cli_quote(self, private, quote, citation),
 
     ## Lists
-    itemize = function(items, .auto_close = TRUE, .envir = parent.frame())
+    itemize = function(items = NULL, .auto_close = TRUE,
+                       .envir = parent.frame())
       cli_itemize(self, private, items, .auto_close = .auto_close,
                   .envir = .envir),
-    enumerate = function(items, .auto_close = TRUE, .envir = parent.frame())
+    enumerate = function(items = NULL, .auto_close = TRUE,
+                         .envir = parent.frame())
       cli_enumerate(self, private, items, .auto_close = .auto_close,
                     .envir = .envir),
-    describe = function(items, .auto_close = TRUE, .envir = parent.frame())
+    describe = function(items = NULL, .auto_close = TRUE,
+                        .envir = parent.frame())
       cli_describe(self, private, items, .auto_close = .auto_close,
                    .envir = .envir),
-    item = function(..., .auto_close = TRUE, .envir = parent.frame())
-      cli_item(self, private, ..., .auto_close = .auto_close,
+    item = function(items, .auto_close = TRUE, .envir = parent.frame())
+      cli_item(self, private, items, .auto_close = .auto_close,
                .envir = .envir),
 
     ## Code
@@ -104,18 +107,25 @@ cli_class <- R6Class(
       style = list(left = 0, right = 0, fmt = identity)
     )),
 
+    xtext = function(..., .envir, indent)
+      cli__xtext(self, private, ..., .envir = .envir, indent = indent),
+
     vspace = function(n = 1)
       cli__vspace(self, private, n),
 
     inline = function(..., .envir)
       cli__inline(self, private, ..., .envir = .envir),
 
+    item_text = function(type, name, text, cnt_id, .envir)
+      cli__item_text(self, private, type, name, text, cnt_id,
+                     .envir = .envir),
+
     get_width = function()
       cli__get_width(self, private),
     cat = function(lines, sep = "")
       cli__cat(self, private, lines, sep),
-    cat_ln = function(lines)
-      cli__cat_ln(self, private, lines)
+    cat_ln = function(lines, indent = 0)
+      cli__cat_ln(self, private, lines, indent)
   )
 )
 
@@ -140,10 +150,7 @@ cli_set_theme <- function(self, private, theme) {
 #' @importFrom ansistrings ansi_strwrap
 
 cli_text <- function(self, private, ..., .envir) {
-  text <- private$inline(..., .envir = .envir)
-  text <- ansi_strwrap(text, width = private$get_width())
-  private$cat_ln(text)
-  invisible(self)
+  private$xtext(..., .envir = .envir)
 }
 
 cli_verbatim <- function(self, private, ..., .envir) {

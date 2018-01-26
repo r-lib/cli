@@ -34,10 +34,10 @@ cli_default_theme <- function() {
       fmt = cyan),
 
     par = list(bottom = 1),
-    itemize = list(left = 2),
-    enumerate = list(left = 2),
-    describe = list(left = 2),
-    item = list(),
+    itemize = list(left = 0),
+    enumerate = list(left = 0),
+    describe = list(left = 0),
+    item = list(left = 2),
     code = list(),
 
     inline_emph = list(fmt = italic),

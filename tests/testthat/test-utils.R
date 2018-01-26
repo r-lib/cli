@@ -86,3 +86,42 @@ test_that("is_latex_output", {
   )
   expect_true(is_latex_output())
 })
+
+test_that("dedent", {
+  cases <- list(
+    list("", 0, ""),
+    list("", 1, ""),
+    list("", 2, ""),
+    list("x", 0, "x"),
+    list("x", 1, "x"),
+    list("x", 2, "x"),
+    list("xx", 0, "xx"),
+    list("xx", 1, "xx"),
+    list("xx", 2, "xx"),
+    list("foobar", 0, "foobar"),
+    list("foobar", 1, "foobar"),
+    list("foobar", 2, "foobar"),
+
+    list(" ", 0, " "),
+    list(" ", 1, ""),
+    list(" ", 2, ""),
+    list("  ", 0, "  "),
+    list("  ", 1, " "),
+    list("  ", 2, ""),
+    list(" x", 0, " x"),
+    list(" x", 1, "x"),
+    list(" x", 2, "x"),
+    list("  x", 0, "  x"),
+    list("  x", 1, " x"),
+    list("  x", 2, "x"),
+
+    list(" x  y", 3, "x  y"),
+    list(" x  y", 4, "x  y"),
+    list(" x  y", 5, "x  y"),
+    list(" x  ", 3, "x  "),
+    list(" x  ", 4, "x  "),
+    list(" x  ", 5, "x  ")
+  )
+
+  for (c in cases) expect_identical(dedent(c[[1]], c[[2]]), c[[3]])
+})
