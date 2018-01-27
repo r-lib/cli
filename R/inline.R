@@ -24,6 +24,7 @@ create_inline_list <- function() {
   )
 }
 
+## TODO: rewrite with css-like theme support
 
 inline_generic <- function(x, style) {
   xx <- paste0(style$before, x, style$after)
