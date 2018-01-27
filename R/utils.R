@@ -60,6 +60,10 @@ viapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
   vapply(X, FUN, FUN.VALUE = integer(1), ..., USE.NAMES = USE.NAMES)
 }
 
+vlapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+  vapply(X, FUN, FUN.VALUE = logical(1), ..., USE.NAMES = USE.NAMES)
+}
+
 ruler <- function(width = console_width()) {
   x <- seq_len(width)
   y <- rep("-", length(x))
@@ -100,3 +104,11 @@ dedent <- function(x, n = 2) {
   first_not_space <- head(c(which(d_n_space == 0), n + 1), 1)
   col_substr(x, first_not_space, nchar(x))
 }
+
+new_uuid <- (function() {
+  cnt <- 0
+  function() {
+    cnt <<- cnt + 1
+    paste0("cli", cnt)
+  }
+})()

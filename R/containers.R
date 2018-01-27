@@ -1,10 +1,9 @@
 
-#' @importFrom uuid UUIDgenerate
 #' @importFrom withr defer
+#' @importFrom xml2 xml_add_child
 
-cli__container_start <- function(self, private, container, .auto_close,
-                                 .envir) {
-  id <- UUIDgenerate()
+cli__container_start <- function(self, private, tag, .auto_close, .envir) {
+  id <- new_uuid()
   if (.auto_close && !identical(.envir, globalenv())) {
     defer(
       cli__container_end(self, private, id),
@@ -13,44 +12,52 @@ cli__container_start <- function(self, private, container, .auto_close,
     )
   }
 
-  ## Mix the current style with the container's style
-  old <- tail(private$state, 1)[[1]]$style
-  container$style$left <- (container$style$left %||% 0) + old$left
-  container$style$right <- (container$style$right %||% 0) + old$right
-  container$style$fmt <- if (is.null(container$style$fmt)) {
-    old$fmt
-  } else {
-    function(x) container$style$fmt(old$fmt(x))
-  }
+  private$state$current <- xml_add_child(
+    private$state$current, tag, id = id)
 
-  private$state <- c(
-    private$state,
-    structure(list(container), names = id)
-  )
+  matching_styles <- private$match_theme(
+    glue("descendant-or-self::*[@id = '{id}']"))
+  new_styles <- private$theme[
+    setdiff(matching_styles, private$get_matching_styles())]
+  private$state$matching_styles <-
+    c(private$state$matching_styles,
+      structure(list(matching_styles), names = id))
+
+  new_style <- private$get_style()
+  for (st in new_styles) new_style <- merge_styles(new_style, st)
+  private$state$styles <-
+    c(private$state$styles, structure(list(new_style), names = id))
 
   invisible(id)
 }
 
+#' @importFrom xml2 xml_find_first xml_name xml_remove xml_parent
+#'   xml_attr
+#' @importFrom utils head
+
 cli__container_end <- function(self, private, id) {
-  ## don't remove first element, "base"
-  if (length(private$state) == 1) return(invisible())
+  ## Do not remove the <body>
+  if (xml_name(private$state$current) == "body") return(invisible(self))
 
-  ## defaults to the last container
-  id <- id %||% tail(c(NA, names(private$state)), 1)
+  ## Defaults to last container
+  id <- id %||% xml_attr(private$state$current, "id")
 
-  ## what to remove?
-  wh <- match(id, names(private$state))
-  if (is.na(wh)) return(invisible())
+  ## Do we have 'id' at all?
+  cnt <- xml_find_first(
+    private$state$doc,
+    glue("descendant-or-self::*[@id = '{id}']"))
+  if (is.na(xml_name(cnt))) return(invisible(self))
 
-  ## bottom margins, we just use the maximum
-  bottom <- max(viapply(
-    private$state[wh:length(private$state)],
-    function(x) as.integer(x$style$bottom %||% 0L)
-  ))
-  private$vspace(bottom)
+  ## Remove the whole subtree of 'cnt', pointer is on its parent
+  private$state$current <- xml_parent(cnt)
+  xml_remove(cnt)
 
-  ## update state
-  private$state <- head(private$state, wh - 1)
+  ## Remove styles as well
+  del_from <- match(id, names(private$state$matching_styles))
+  private$state$matching_styles <-
+    head(private$state$matching_styles, del_from - 1)
+  private$state$styles <-
+    head(private$state$styles, del_from - 1)
 
   invisible(self)
 }
@@ -58,62 +65,58 @@ cli__container_end <- function(self, private, id) {
 ## Paragraph --------------------------------------------------------
 
 cli_par <- function(self, private, .auto_close, .envir) {
-  container <- list(type = "par", style = private$theme[["par"]])
-  cli__container_start(self, private, container, .auto_close, .envir)
+  cli__container_start(self, private, "par", .auto_close, .envir)
 }
 
 ## Lists ------------------------------------------------------------
 
-cli_itemize <- function(self, private, items, .auto_close, .envir) {
-  container <- list(type = "itemize", style = private$theme[["itemize"]])
-  id <- cli__container_start(self, private, container, .auto_close, .envir)
-  if (length(items)) self$end(self$item(items))
+cli_ul <- function(self, private, items, .auto_close, .envir) {
+  id <- cli__container_start(self, private, "ul", .auto_close, .envir)
+  if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_enumerate <- function(self, private, items, .auto_close, .envir) {
-  container <- list(
-    type = "enumerate",
-    style = private$theme[["enumerate"]],
-    counter = 0L)
-  id <- cli__container_start(self, private, container, .auto_close, .envir)
-  if (length(items)) self$end(self$item(items))
+cli_ol <- function(self, private, items, .auto_close, .envir) {
+  id <- cli__container_start(self, private, "ol", .auto_close, .envir)
+  if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_describe <- function(self, private, items, .auto_close, .envir) {
-  container <- list(type = "describe", style = private$theme[["describe"]])
-  id <- cli__container_start(self, private, container, .auto_close, .envir)
-  if (length(items)) self$end(self$item(items))
+cli_dl <- function(self, private, items, .auto_close, .envir) {
+  id <- cli__container_start(self, private, "dl", .auto_close, .envir)
+  if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_item <- function(self, private, items, .auto_close, .envir) {
-  num_cont <- length(private$state)
+#' @importFrom xml2 xml_parent xml_path xml_attr
+
+cli_it <- function(self, private, items, .auto_close, .envir) {
 
   ## check the last active list container
-  types <- vcapply(private$state, "[[", "type")
-  lc <- tail_na(which(types %in% c("itemize", "enumerate", "describe")))
+  last <- private$state$current
+  while (! xml_name(last) %in% c("ul", "ol", "dl", "body")) {
+    prev <- last
+    last <- xml_parent(last)
+  }
 
   ## if not the last container, close the ones below it
-  if (!is.na(lc) && lc != num_cont) {
-    close_id <- names(private$state)[lc + 1]
-    self$end(close_id)
+  if (xml_name(last) != "body" &&
+      xml_path(last) != xml_path(private$state$current)) {
+    self$end(xml_attr(prev, "id"))
   }
 
-  ## if none, then create an itemize container
-  if (is.na(lc)) {
-    cnt_id <- self$itemize(.auto_close = .auto_close, .envir = .envir)
-    type <- "itemize"
+  ## if none, then create an ul container
+  if (xml_name(last) == "body") {
+    cnt_id <- self$ul(.auto_close = .auto_close, .envir = .envir)
+    type <- "ul"
   } else {
-    type <- types[lc]
-    cnt_id <- names(private$state)[lc]
+    cnt_id <- xml_attr(last, "id")
+    type <- xml_name(last)
   }
 
-  container <- list(type = "item", style = private$theme[["item"]])
   i <- 1
   repeat {
-    id <- cli__container_start(self, private, container, .auto_close, .envir)
+    id <- cli__container_start(self, private, "it", .auto_close, .envir)
     if (i > length(items)) break
     private$item_text(type, names(items)[i], items[[i]], cnt_id,
                       .envir = .envir)
@@ -127,12 +130,13 @@ cli_item <- function(self, private, items, .auto_close, .envir) {
 cli__item_text <- function(self, private, type, name, text, cnt_id,
                            .envir) {
 
-  head <- if (type == "itemize") {
+  head <- if (type == "ul") {
     "* "
-  } else if (type == "enumerate") {
-    private$state[[cnt_id]]$counter <- private$state[[cnt_id]]$counter + 1L
-    paste0(private$state[[cnt_id]]$counter, ". ")
-  } else if (type == "describe") {
+  } else if (type == "ol") {
+    private$state$styles[[cnt_id]]$counter <-
+      (private$state$styles[[cnt_id]]$counter %||% 0) + 1L
+    paste0(private$state$styles[[cnt_id]]$counter, ". ")
+  } else if (type == "dl") {
     paste0(name, ": ")
   }
   text[1] <- paste0(head, text[1])

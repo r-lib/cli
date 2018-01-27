@@ -7,7 +7,7 @@ cli__xtext <- function(self, private, ..., .envir, indent) {
 }
 
 cli__get_width <- function(self, private) {
-  style <- tail(private$state, 1)[[1]]$style
+  style <- private$get_style()
   left <- style$left %||% 0
   right <- style$right %||% 0
   console_width() - left - right
@@ -19,7 +19,7 @@ cli__cat <- function(self, private, lines, sep) {
 }
 
 cli__cat_ln <- function(self, private, lines, indent) {
-  style <- tail(private$state, 1)[[1]]$style
+  style <- private$get_style()
 
   ## left margin
   left <- style$left %||% 0

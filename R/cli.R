@@ -16,7 +16,7 @@ cli <- NULL
 cli_class <- R6Class(
   "cli_class",
   public = list(
-    initialize = function(stream = stdout(), theme = cli_default_theme())
+    initialize = function(stream = stdout(), theme = NULL)
       cli_init(self, private, stream, theme),
 
     ## Themes
@@ -54,25 +54,22 @@ cli_class <- R6Class(
       cli_h3(self, private, text, .envir = .envir),
 
     ## Block quote
-    quote = function(quote, citation = NULL)
-      cli_quote(self, private, quote, citation),
+    blockquote = function(quote, citation = NULL)
+      cli_blockquote(self, private, quote, citation),
 
     ## Lists
-    itemize = function(items = NULL, .auto_close = TRUE,
-                       .envir = parent.frame())
-      cli_itemize(self, private, items, .auto_close = .auto_close,
-                  .envir = .envir),
-    enumerate = function(items = NULL, .auto_close = TRUE,
-                         .envir = parent.frame())
-      cli_enumerate(self, private, items, .auto_close = .auto_close,
-                    .envir = .envir),
-    describe = function(items = NULL, .auto_close = TRUE,
-                        .envir = parent.frame())
-      cli_describe(self, private, items, .auto_close = .auto_close,
-                   .envir = .envir),
-    item = function(items, .auto_close = TRUE, .envir = parent.frame())
-      cli_item(self, private, items, .auto_close = .auto_close,
-               .envir = .envir),
+    ul = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
+      cli_ul(self, private, items, .auto_close = .auto_close,
+             .envir = .envir),
+    ol = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
+      cli_ol(self, private, items, .auto_close = .auto_close,
+             .envir = .envir),
+    dl = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
+      cli_old(self, private, items, .auto_close = .auto_close,
+              .envir = .envir),
+    it = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
+      cli_it(self, private, items, .auto_close = .auto_close,
+             .envir = .envir),
 
     ## Code
     code = function(lines, .auto_close = TRUE, .envir = parent.frame())
@@ -102,10 +99,12 @@ cli_class <- R6Class(
     stream = NULL,
     theme = NULL,
     margin = 0,
-    state = list("base" = list(
-      type = "base",
-      style = list(left = 0, right = 0, fmt = identity)
-    )),
+    state = NULL,
+
+    get_matching_styles = function()
+      tail(private$state$matching_styles, 1)[[1]],
+    get_style = function()
+      tail(private$state$styles, 1)[[1]],
 
     xtext = function(..., .envir, indent)
       cli__xtext(self, private, ..., .envir = .envir, indent = indent),
@@ -125,13 +124,29 @@ cli_class <- R6Class(
     cat = function(lines, sep = "")
       cli__cat(self, private, lines, sep),
     cat_ln = function(lines, indent = 0)
-      cli__cat_ln(self, private, lines, indent)
+      cli__cat_ln(self, private, lines, indent),
+
+    match_theme = function(element_path)
+      cli__match_theme(self, private, element_path)
   )
 )
 
+#' @importFrom xml2 read_html xml_find_first
+
 cli_init <- function(self, private, stream, theme) {
   private$stream <- stream
-  private$theme <- theme
+  private$theme <- theme_create(c(cli_default_theme(), theme))
+  private$state <-
+    list(doc = read_html("<html><body id=\"body\"></body></html>"))
+  private$state$current <- xml_find_first(private$state$doc, "./body")
+
+  private$state$matching_styles <-
+    list(body = private$match_theme("./body"))
+  root_styles <- private$theme[ private$state$matching_styles[[1]] ]
+  root_style <- list()
+  for (st in root_styles) root_style <- merge_styles(root_style, st)
+  private$state$styles <- list(body = root_style)
+
   invisible(self)
 }
 
@@ -180,16 +195,16 @@ cli_h3 <- function(self, private, text, .envir) {
 cli__header <- function(self, private, type, text, .envir) {
   text <- private$inline(text, .envir = .envir)
   style <- private$theme[[type]]
-  private$cat(strrep("\n", style$margin$top %||% 0))
+  private$cat(strrep("\n", style$top %||% 0))
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
-  private$cat(strrep("\n", style$margin$bottom %||% 0))
+  private$cat(strrep("\n", style$bottom %||% 0))
   invisible(self)
 }
 
 ## Block quote ------------------------------------------------------
 
-cli_quote <- function(self, private, quote, citation) {
+cli_blockquote <- function(self, private, quote, citation) {
   stop("Quotes are not implemented yet")
 }
 
