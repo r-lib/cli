@@ -24,60 +24,61 @@ create_inline_list <- function() {
   )
 }
 
-## TODO: rewrite with css-like theme support
-
-inline_generic <- function(x, style) {
+inline_generic <- function(x, self, private, tag = "span", class = NA) {
+  cli__container_start(self, private, tag, .auto_close = TRUE,
+                       .envir = environment(), class = class)
+  style <- private$get_style()
   xx <- paste0(style$before, x, style$after)
   if (!is.null(style$fmt)) xx <- style$fmt(xx)
   xx
 }
 
 inline_code <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_code)
+  inline_generic(x, self, private, tag = "code")
 }
 
 inline_emph <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_emph)
+  inline_generic(x, self, private, tag = "emph")
 }
 
 inline_strong <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_strong)
+  inline_generic(x, self, private, tag = "strong")
 }
 
 inline_pkg <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_pkg)
+  inline_generic(x, self, private, class = "pkg")
 }
 
 inline_fun <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_fun)
+  inline_generic(x, self, private, class = "fun")
 }
 
 inline_arg <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_arg)
+  inline_generic(x, self, private, class = "arg")
 }
 
 inline_key <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_key)
+  inline_generic(x, self, private, class = "key")
 }
 
 inline_file <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_file)
+  inline_generic(x, self, private, class = "file")
 }
 
 inline_email <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_email)
+  inline_generic(x, self, private, class = "email")
 }
 
 inline_url <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_url)
+  inline_generic(x, self, private, class = "url")
 }
 
 inline_var <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_var)
+  inline_generic(x, self, private, class = "var")
 }
 
 inline_envvar <- function(x, self, private) {
-  inline_generic(x, private$theme$inline_envvar)
+  inline_generic(x, self, private, class = "envvar")
 }
 
 #' @importFrom glue collapse
