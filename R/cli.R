@@ -98,11 +98,11 @@ cli_class <- R6Class(
                 .envir = .envir),
     alert_warning = function(text, id = NULL, class = NULL,
                              .envir = parent.frame())
-      cli_alert(self, private, "alert-warning", id, class, text,
+      cli_alert(self, private, "alert-warning", text, id, class,
                 .envir = .envir),
     alert_info = function(text, id = NULL, class = NULL,
                           .envir = parent.frame())
-      cli_alert(self, private, "alert-info", id, class, text,
+      cli_alert(self, private, "alert-info", text, id, class,
                 .envir = .envir),
 
     ## Progress bars
@@ -212,7 +212,6 @@ cli__header <- function(self, private, type, text, id, class, .envir) {
                        .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
-  private$vspace(style$top %||% 0)
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)
@@ -238,7 +237,7 @@ cli_alert <- function(self, private, type, text, id, class, .envir) {
                        .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
-  text[1] <- paste0(style$marker, " ", text[1])
+  text[1] <- paste0(style$before, text[1], style$after)
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)

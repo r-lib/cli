@@ -1,61 +1,60 @@
 
-#' @importFrom crayon combine_styles underline bold italic
-#'   green red yellow cyan magenta blue
-
 cli_default_theme <- function() {
   list(
     body = list(),
 
     h1 = list(
-      fmt = combine_styles(bold, italic),
-      top = 1,
-      bottom = 1),
+      "font-weight" = "bold",
+      "font-style" = "italic",
+      "margin-top" = 1,
+      "margin-bottom" = 1),
     h2 = list(
-      fmt = bold,
-      top = 1,
-      bottom = 1),
+      "font-weight" = "bold",
+      "margin-top" = 1,
+      "margin-bottom" = 1),
     h3 = list(
-      fmt = underline,
-      top = 1,
-      bottom = 0),
+      "text-decoration" = "underline",
+      "margin-top" = 1),
 
     ".alert-success" = list(
-      marker = symbol$tick,
-      fmt = green
+      before = paste0(symbol$tick, " "),
+      color = "green"
     ),
     ".alert-danger" = list(
-      marker = symbol$cross,
-      fmt = red
+      before = paste0(symbol$cross, " "),
+      color = "red"
     ),
     ".alert-warning" = list(
-      marker = symbol$warning,
-      fmt = yellow
+      before = paste0(symbol$warning, " "),
+      color = "yellow"
     ),
     ".alert-info" = list(
-      marker = symbol$info,
-      fmt = cyan),
+      before = paste0(symbol$info, " "),
+      color = "cyan"),
 
-    par = list(bottom = 1),
-    ul = list(left = 0),
-    ol = list(left = 0),
-    dl = list(left = 0),
-    it = list(left = 2),
+    par = list("margin-bottom" = 1),
+    ul = list("list-style-type" = symbol$bullet),
+    "ul ul" = list("list-style-type" = symbol$circle),
+    "ul ul ul" = list("list-style-type" = symbol$line),
+    ol = list(),
+    dl = list(),
+    it = list("margin-left" = 2),
     .code = list(),
 
-    emph = list(fmt = italic),
-    strong = list(fmt = bold),
-    code = list(before = "`", after = "`", fmt = magenta),
+    emph = list("font-style" = "italic"),
+    strong = list("font-weight" = "bold"),
+    code = list(before = "`", after = "`", color = "magenta"),
 
-    .pkg = list(fmt = magenta),
-    .fun = list(fmt = magenta, after = "()"),
-    .arg = list(fmt = magenta),
-    .key = list(before = "<", after = ">", fmt = magenta),
-    .file = list(fmt = magenta),
-    .path = list(fmt = magenta),
-    .email = list(fmt = magenta),
-    .url = list(before = "<", after = ">", fmt = blue),
-    .var = list(fmt = magenta),
-    .envvar = list(fmt = magenta)
+    .pkg = list(color = "magenta"),
+    .fun = list(color = "magenta", after = "()"),
+    .arg = list(color = "magenta"),
+    .key = list(before = "<", after = ">", color = "magenta"),
+    .file = list(color = "magenta"),
+    .path = list(color = "magenta"),
+    .email = list(color = "magenta"),
+    .url = list(before = "<", after = ">", color = "blue"),
+    .var = list(color = "magenta"),
+    .envvar = list(color = "magenta")
   )
 }
 
@@ -63,7 +62,40 @@ cli_default_theme <- function() {
 
 theme_create <- function(theme) {
   names(theme) <- css_to_xpath(names(theme))
+  theme[] <- lapply(theme, create_formatter)
   theme
+}
+
+#' @importFrom crayon bold italic underline make_style combine_styles
+
+create_formatter <- function(x) {
+  is_bold <- identical(x[["font-weight"]], "bold")
+  is_italic <- identical(x[["font-style"]], "italic")
+  is_underline <- identical(x[["text-decoration"]], "underline")
+  is_color <- "color" %in% names(x)
+  is_bg_color <- "background-color" %in% names(x)
+
+  if (!is_bold && !is_italic && !is_underline && !is_color
+      && !is_bg_color) return(x)
+
+  fmt <- c(
+    if (is_bold) list(bold),
+    if (is_italic) list(italic),
+    if (is_underline) list(underline),
+    if (is_color) make_style(x[["color"]]),
+    if (is_bg_color) make_style(x[["background-color"]])
+  )
+
+  new_fmt <- do.call(combine_styles, fmt)
+
+  if (is.null(x[["fmt"]])) {
+    x[["fmt"]] <- new_fmt
+  } else {
+    orig_fmt <- x[["fmt"]]
+    x[["fmt"]] <- function(x) orig_fmt(new_fmt(x))
+  }
+
+  x
 }
 
 #' @importFrom xml2 xml_path xml_find_all
@@ -83,14 +115,14 @@ cli__match_theme <- function(self, private, element_path) {
 
 merge_styles <- function(old, new) {
   ## margins are additive, rest is updated, counter is reset
-  top <- (old$top %||% 0L) + (new$top %||% 0L)
-  bottom <- (old$bottom %||% 0L) + (new$bottom %||% 0L)
-  left <- (old$left %||% 0L) + (new$left %||% 0L)
-  right <- (old$right %||% 0L) + (new$right %||% 0L)
-  counter <- new$counter %||% 0L
+  top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
+  bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)
+  left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
+  right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
+  start <- new$start %||% 1L
 
   mrg <- modifyList(old, new)
-  mrg[c("top", "bottom", "left", "right", "counter")] <-
-    list(top, bottom, left, right, counter)
+  mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
+        "start")] <- list(top, bottom, left, right, start)
   mrg
 }
