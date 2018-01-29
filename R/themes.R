@@ -51,6 +51,7 @@ cli_default_theme <- function() {
     .arg = list(fmt = magenta),
     .key = list(before = "<", after = ">", fmt = magenta),
     .file = list(fmt = magenta),
+    .path = list(fmt = magenta),
     .email = list(fmt = magenta),
     .url = list(before = "<", after = ">", fmt = blue),
     .var = list(fmt = magenta),

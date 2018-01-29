@@ -17,6 +17,7 @@ create_inline_list <- function() {
     arg = inline_arg,
     key = inline_key,
     file = inline_file,
+    path = inline_path,
     email = inline_email,
     url = inline_url,
     var = inline_var,
@@ -63,6 +64,10 @@ inline_key <- function(x, self, private) {
 
 inline_file <- function(x, self, private) {
   inline_generic(x, self, private, class = "file")
+}
+
+inline_path <- function(x, self, private) {
+  inline_generic(x, self, private, class = "path")
 }
 
 inline_email <- function(x, self, private) {
