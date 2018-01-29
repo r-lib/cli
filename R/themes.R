@@ -83,7 +83,7 @@ create_formatter <- function(x) {
     if (is_italic) list(italic),
     if (is_underline) list(underline),
     if (is_color) make_style(x[["color"]]),
-    if (is_bg_color) make_style(x[["background-color"]])
+    if (is_bg_color) make_style(x[["background-color"]], bg = TRUE)
   )
 
   new_fmt <- do.call(combine_styles, fmt)
