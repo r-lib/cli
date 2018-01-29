@@ -8,8 +8,8 @@ cli__xtext <- function(self, private, ..., .envir, indent) {
 
 cli__get_width <- function(self, private) {
   style <- private$get_style()
-  left <- style$left %||% 0
-  right <- style$right %||% 0
+  left <- style$`margin-left` %||% 0
+  right <- style$`margin-right` %||% 0
   console_width() - left - right
 }
 
@@ -22,7 +22,7 @@ cli__cat_ln <- function(self, private, lines, indent) {
   style <- private$get_style()
 
   ## left margin
-  left <- style$left %||% 0
+  left <- style$`margin-left` %||% 0
   if (length(lines) && left) lines <- paste0(strrep(" ", left), lines)
 
   ## indent or negative indent
