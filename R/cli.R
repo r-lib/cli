@@ -168,11 +168,11 @@ cli_init <- function(self, private, stream, theme) {
 ## Themes -----------------------------------------------------------
 
 cli_get_theme <- function(self, private) {
-  stop("Themes are not implemented yet")
+  stop("Theme manipulation is not implemented yet")
 }
 
 cli_set_theme <- function(self, private, theme) {
-  stop("Themes are not implemented yet")
+  stop("Theme manipulation is not implemented yet")
 }
 
 ## Text -------------------------------------------------------------
