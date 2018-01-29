@@ -212,10 +212,9 @@ cli__header <- function(self, private, type, text, id, class, .envir) {
                        .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
-  private$cat(strrep("\n", style$top %||% 0))
+  private$vspace(style$top %||% 0)
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
-  private$cat(strrep("\n", style$bottom %||% 0))
   invisible(self)
 }
 
