@@ -58,8 +58,15 @@ cli__container_end <- function(self, private, id) {
   private$state$current <- xml_parent(cnt)
   xml_remove(cnt)
 
-  ## Remove styles as well
+  ## Bottom margin
   del_from <- match(id, names(private$state$matching_styles))
+  bottom <- max(viapply(
+    private$state$styles[del_from:length(private$state$styles)],
+    function(x) as.integer(x$bottom %||% 0L)
+  ))
+  private$vspace(bottom)
+
+  ## Remove styles as well
   private$state$matching_styles <-
     head(private$state$matching_styles, del_from - 1)
   private$state$styles <-
