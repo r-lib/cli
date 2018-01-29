@@ -1,7 +1,9 @@
 
 cli__xtext <- function(self, private, ..., .envir, indent) {
+  style <- private$get_style()
   text <- private$inline(..., .envir = .envir)
   text <- ansi_strwrap(text, width = private$get_width())
+  if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text, indent = indent)
   invisible(self)
 }
