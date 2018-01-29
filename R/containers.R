@@ -2,7 +2,8 @@
 #' @importFrom withr defer
 #' @importFrom xml2 xml_add_child
 
-cli__container_start <- function(self, private, tag, .auto_close, .envir) {
+cli__container_start <- function(self, private, tag, .auto_close, .envir,
+                                 class = NA_character_) {
   id <- new_uuid()
   if (.auto_close && !identical(.envir, globalenv())) {
     defer(
@@ -12,8 +13,13 @@ cli__container_start <- function(self, private, tag, .auto_close, .envir) {
     )
   }
 
-  private$state$current <- xml_add_child(
-    private$state$current, tag, id = id)
+  if (is.na(class)) {
+    private$state$current <- xml_add_child(
+      private$state$current, tag, id = id)
+  } else {
+    private$state$current <- xml_add_child(
+      private$state$current, tag, id = id, class = class)
+  }
 
   matching_styles <- private$match_theme(
     glue("descendant-or-self::*[@id = '{id}']"))

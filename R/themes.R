@@ -19,19 +19,19 @@ cli_default_theme <- function() {
       top = 1,
       bottom = 0),
 
-    .alert_success = list(
+    ".alert-success" = list(
       marker = symbol$tick,
       fmt = green
     ),
-    .alert_danger = list(
+    ".alert-danger" = list(
       marker = symbol$cross,
       fmt = red
     ),
-    .alert_warning = list(
+    ".alert-warning" = list(
       marker = symbol$warning,
       fmt = yellow
     ),
-    .alert_info = list(
+    ".alert-info" = list(
       marker = symbol$info,
       fmt = cyan),
 
