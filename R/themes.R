@@ -32,7 +32,7 @@ cli_default_theme <- function() {
       before = paste0(symbol$info, " "),
       color = "cyan"),
 
-    par = list("margin-bottom" = 1),
+    par = list("margin-top" = 1, "margin-bottom" = 1),
     ul = list("list-style-type" = symbol$bullet),
     "ul ul" = list("list-style-type" = symbol$circle),
     "ul ul ul" = list("list-style-type" = symbol$line),
