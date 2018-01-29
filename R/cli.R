@@ -121,7 +121,7 @@ cli_class <- R6Class(
     get_style = function()
       tail(private$state$styles, 1)[[1]],
 
-    xtext = function(..., .envir, indent)
+    xtext = function(..., .envir, indent = 0)
       cli__xtext(self, private, ..., .envir = .envir, indent = indent),
 
     vspace = function(n = 1)
