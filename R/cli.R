@@ -30,8 +30,10 @@ cli_class <- R6Class(
       cli_end(self, private, id),
 
     ## Paragraphs
-    par = function(.auto_close = TRUE, .envir = parent.frame())
-      cli_par(self, private, .auto_close = .auto_close, .envir = .envir),
+    par = function(id = NULL, class = NULL, .auto_close = TRUE,
+                   .envir = parent.frame())
+      cli_par(self, private, id, class, .auto_close = .auto_close,
+              .envir = .envir),
 
     ## Text, wrapped
     text = function(..., .envir = parent.frame())
@@ -46,49 +48,62 @@ cli_class <- R6Class(
       cli_md_text(self, private, ..., .envir = .envir),
 
     ## Headers
-    h1 = function(text, .envir = parent.frame())
-      cli_h1(self, private, text, .envir = .envir),
-    h2 = function(text, .envir = parent.frame())
-      cli_h2(self, private, text, .envir = .envir),
-    h3 = function(text, .envir = parent.frame())
-      cli_h3(self, private, text, .envir = .envir),
+    h1 = function(text, id = NULL, class = NULL, .envir = parent.frame())
+      cli_h1(self, private, text, id, class, .envir = .envir),
+    h2 = function(text, id = NULL, class = NULL, .envir = parent.frame())
+      cli_h2(self, private, text, id, class, .envir = .envir),
+    h3 = function(text, id = NULL, class = NULL, .envir = parent.frame())
+      cli_h3(self, private, text, id, class, .envir = .envir),
 
     ## Block quote
-    blockquote = function(quote, citation = NULL)
-      cli_blockquote(self, private, quote, citation),
+    blockquote = function(quote, citation = NULL, id = NULL, class = NULL)
+      cli_blockquote(self, private, quote, citation, id, class),
 
     ## Lists
-    ul = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
-      cli_ul(self, private, items, .auto_close = .auto_close,
+    ul = function(items = NULL, id = NULL, class = NULL,
+                  .auto_close = TRUE, .envir = parent.frame())
+      cli_ul(self, private, items, id, class, .auto_close = .auto_close,
              .envir = .envir),
-    ol = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
-      cli_ol(self, private, items, .auto_close = .auto_close,
+    ol = function(items = NULL, id = NULL, class = NULL,
+                  .auto_close = TRUE, .envir = parent.frame())
+      cli_ol(self, private, items, id, class, .auto_close = .auto_close,
              .envir = .envir),
-    dl = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
-      cli_old(self, private, items, .auto_close = .auto_close,
+    dl = function(items = NULL, id = NULL, class = NULL,
+                  .auto_close = TRUE, .envir = parent.frame())
+      cli_old(self, private, items, id, class, .auto_close = .auto_close,
               .envir = .envir),
-    it = function(items = NULL, .auto_close = TRUE, .envir = parent.frame())
-      cli_it(self, private, items, .auto_close = .auto_close,
+    it = function(items = NULL, id = NULL, class = NULL,
+                  .auto_close = TRUE, .envir = parent.frame())
+      cli_it(self, private, items, id, class, .auto_close = .auto_close,
              .envir = .envir),
 
     ## Code
-    code = function(lines, .auto_close = TRUE, .envir = parent.frame())
-      cli_code(self, private, lines, .auto_close = .auto_close,
+    code = function(lines, id = NULL, class = NULL,
+                    .auto_close = TRUE, .envir = parent.frame())
+      cli_code(self, private, lines, class, .auto_close = .auto_close,
                .envir = .envir),
 
     ## Tables
-    table = function(cells)
-      cli_table(self, private, cells),
+    table = function(cells, id = NULL, class = NULL)
+      cli_table(self, private, cells, class),
 
     ## Alerts
-    alert_success = function(text, .envir = parent.frame())
-      cli_alert(self, private, "alert-success", text, .envir = .envir),
-    alert_danger = function(text, .envir = parent.frame())
-      cli_alert(self, private, "alert-danger", text, .envir = .envir),
-    alert_warning = function(text, .envir = parent.frame())
-      cli_alert(self, private, "alert-warning", text, .envir = .envir),
-    alert_info = function(text, .envir = parent.frame())
-      cli_alert(self, private, "alert-info", text, .envir = .envir),
+    alert_success = function(text, id = NULL, class = NULL,
+                             .envir = parent.frame())
+      cli_alert(self, private, "alert-success", text, id, class,
+                .envir = .envir),
+    alert_danger = function(text, id = NULL, class = NULL,
+                            .envir = parent.frame())
+      cli_alert(self, private, "alert-danger", text, id, class,
+                .envir = .envir),
+    alert_warning = function(text, id = NULL, class = NULL,
+                             .envir = parent.frame())
+      cli_alert(self, private, "alert-warning", id, class, text,
+                .envir = .envir),
+    alert_info = function(text, id = NULL, class = NULL,
+                          .envir = parent.frame())
+      cli_alert(self, private, "alert-info", id, class, text,
+                .envir = .envir),
 
     ## Progress bars
     progress_bar = function(...)
@@ -180,20 +195,20 @@ cli_md_text <- function(self, private, ..., .envir) {
 
 ## Headers ----------------------------------------------------------
 
-cli_h1 <- function(self, private, text, .envir) {
-  cli__header(self, private, "h1", text, .envir)
+cli_h1 <- function(self, private, text, id, class, .envir) {
+  cli__header(self, private, "h1", text, id, class, .envir)
 }
 
-cli_h2 <- function(self, private, text, .envir) {
-  cli__header(self, private, "h2", text, .envir)
+cli_h2 <- function(self, private, text, id, class, .envir) {
+  cli__header(self, private, "h2", text, id, class, .envir)
 }
 
-cli_h3 <- function(self, private, text, .envir) {
-  cli__header(self, private, "h3", text, .envir)
+cli_h3 <- function(self, private, text, id, class, .envir) {
+  cli__header(self, private, "h3", text, id, class, .envir)
 }
 
-cli__header <- function(self, private, type, text, .envir) {
-  cli__container_start(self, private, type,
+cli__header <- function(self, private, type, text, id, class, .envir) {
+  cli__container_start(self, private, type, id = id, class = class,
                        .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
@@ -206,21 +221,22 @@ cli__header <- function(self, private, type, text, .envir) {
 
 ## Block quote ------------------------------------------------------
 
-cli_blockquote <- function(self, private, quote, citation) {
+cli_blockquote <- function(self, private, quote, citation, id, class) {
   stop("Quotes are not implemented yet")
 }
 
 ## Table ------------------------------------------------------------
 
-cli_table <- function(self, private, cells) {
+cli_table <- function(self, private, cells, id, class) {
   stop("Tables are not implemented yet")
 }
 
 ## Alerts -----------------------------------------------------------
 
-cli_alert <- function(self, private, type, text, .envir) {
-  cli__container_start(self, private, "div", class = type,
-                       .auto_close = TRUE, .envir = environment())
+cli_alert <- function(self, private, type, text, id, class, .envir) {
+  cli__container_start(self, private, "div", id = id,
+                       class = paste(class, type), .auto_close = TRUE,
+                       .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
   text[1] <- paste0(style$marker, " ", text[1])

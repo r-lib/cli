@@ -3,8 +3,8 @@
 #' @importFrom xml2 xml_add_child
 
 cli__container_start <- function(self, private, tag, .auto_close, .envir,
-                                 class = NA_character_) {
-  id <- new_uuid()
+                                 class = NULL, id = NULL) {
+  id <- id %||% new_uuid()
   if (.auto_close && !identical(.envir, globalenv())) {
     defer(
       cli__container_end(self, private, id),
@@ -13,7 +13,7 @@ cli__container_start <- function(self, private, tag, .auto_close, .envir,
     )
   }
 
-  if (is.na(class)) {
+  if (is.null(class)) {
     private$state$current <- xml_add_child(
       private$state$current, tag, id = id)
   } else {
@@ -70,33 +70,36 @@ cli__container_end <- function(self, private, id) {
 
 ## Paragraph --------------------------------------------------------
 
-cli_par <- function(self, private, .auto_close, .envir) {
-  cli__container_start(self, private, "par", .auto_close, .envir)
+cli_par <- function(self, private, id, class, .auto_close, .envir) {
+  cli__container_start(self, private, "par", .auto_close, .envir, class, id)
 }
 
 ## Lists ------------------------------------------------------------
 
-cli_ul <- function(self, private, items, .auto_close, .envir) {
-  id <- cli__container_start(self, private, "ul", .auto_close, .envir)
+cli_ul <- function(self, private, items, id, class, .auto_close, .envir) {
+  id <- cli__container_start(self, private, "ul", id = id, class = class,
+                             .auto_close, .envir)
   if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_ol <- function(self, private, items, .auto_close, .envir) {
-  id <- cli__container_start(self, private, "ol", .auto_close, .envir)
+cli_ol <- function(self, private, items, id, class, .auto_close, .envir) {
+  id <- cli__container_start(self, private, "ol", id = id, class = class,
+                             .auto_close, .envir)
   if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
-cli_dl <- function(self, private, items, .auto_close, .envir) {
-  id <- cli__container_start(self, private, "dl", .auto_close, .envir)
+cli_dl <- function(self, private, items, id, class, .auto_close, .envir) {
+  id <- cli__container_start(self, private, "dl", id = id, class = class,
+                             .auto_close, .envir)
   if (length(items)) self$end(self$it(items))
   invisible(id)
 }
 
 #' @importFrom xml2 xml_parent xml_path xml_attr
 
-cli_it <- function(self, private, items, .auto_close, .envir) {
+cli_it <- function(self, private, items, id, class, .auto_close, .envir) {
 
   ## check the last active list container
   last <- private$state$current
@@ -122,7 +125,8 @@ cli_it <- function(self, private, items, .auto_close, .envir) {
 
   i <- 1
   repeat {
-    id <- cli__container_start(self, private, "it", .auto_close, .envir)
+    id <- cli__container_start(self, private, "it", id = id, class = class,
+                               .auto_close, .envir)
     if (i > length(items)) break
     private$item_text(type, names(items)[i], items[[i]], cnt_id,
                       .envir = .envir)
@@ -151,7 +155,7 @@ cli__item_text <- function(self, private, type, name, text, cnt_id,
 
 ## Code -------------------------------------------------------------
 
-cli_code <- function(self, private, lines, .auto_close, .envir) {
+cli_code <- function(self, private, lines, id, class, .auto_close, .envir) {
   stop("Code is not implemented yet")
 }
 
