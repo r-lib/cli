@@ -16,7 +16,7 @@ cli <- NULL
 cli_class <- R6Class(
   "cli_class",
   public = list(
-    initialize = function(stream = stdout(), theme = NULL)
+    initialize = function(stream = stdout(), theme = getOption("cli.theme"))
       cli_init(self, private, stream, theme),
 
     ## Themes
