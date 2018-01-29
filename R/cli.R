@@ -184,7 +184,9 @@ cli_text <- function(self, private, ..., .envir) {
 }
 
 cli_verbatim <- function(self, private, ..., .envir) {
+  style <- private$get_style()
   text <- private$inline(..., .envir = .envir)
+  if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)
 }
