@@ -172,6 +172,8 @@ cli_init <- function(self, private, stream, theme) {
   for (st in root_styles) root_style <- merge_styles(root_style, st)
   private$state$styles <- list(body = root_style)
 
+  private$state$xstyles <- character()
+
   invisible(self)
 }
 
