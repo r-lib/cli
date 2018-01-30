@@ -70,10 +70,20 @@ cli__container_end <- function(self, private, id) {
   private$vspace(bottom)
 
   ## Remove styles as well
+  deleted_styles <- tail(names(private$state$matching_styles),
+                         -(del_from - 1))
   private$state$matching_styles <-
     head(private$state$matching_styles, del_from - 1)
   private$state$styles <-
     head(private$state$styles, del_from - 1)
+
+  ## Styles that are to be removed when the container ends
+  xstyles <- na.omit(private$state$xstyles[deleted_styles])
+  if (length(xstyles)) {
+    private$raw_themes[xstyles] <- NULL
+    private$theme <- theme_create(private$raw_themes)
+    private$state$xstyles <- setdiff(private$state$xstyles, xstyles)
+  }
 
   invisible(self)
 }
@@ -81,7 +91,13 @@ cli__container_end <- function(self, private, id) {
 ## div --------------------------------------------------------------
 
 cli_div <- function(self, private, id, class, style, .auto_close, .envir) {
-  cli_container_start(self, private, "div", .auto_close, .envir, class, id)
+  style_id <- self$add_theme(style)
+  container_id <- cli__container_start(self, private, "div",
+                                       .auto_close, .envir, class, id)
+  private$state$xstyles <-
+    c(private$state$xstyles, structure(style_id, names = container_id))
+
+  container_id
 }
 
 ## Paragraph --------------------------------------------------------
