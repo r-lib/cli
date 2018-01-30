@@ -20,14 +20,21 @@ cli_class <- R6Class(
       cli_init(self, private, stream, theme),
 
     ## Themes
-    get_theme = function()
-      cli_get_theme(self, private),
-    set_theme = function(theme)
-      cli_set_theme(self, private, theme),
+    list_themes = function()
+      cli_list_themes(self, private),
+    add_theme = function(theme)
+      cli_add_theme(self, private, theme),
+    remove_theme = function(id)
+      cli_remove_theme(self, private, id),
 
     ## Close container(s)
     end = function(id = NULL)
       cli_end(self, private, id),
+
+    ## Generic container
+    div = function(id = NULL, class = NULL, style = NULL,
+                   .auto_close = TRUE, .envir = parent.frame())
+      cli_div(self, private, id, class, style, .auto_close, .envir),
 
     ## Paragraphs
     par = function(id = NULL, class = NULL, .auto_close = TRUE,
@@ -112,6 +119,7 @@ cli_class <- R6Class(
 
   private = list(
     stream = NULL,
+    raw_themes = NULL,
     theme = NULL,
     margin = 0,
     state = NULL,
@@ -150,7 +158,9 @@ cli_class <- R6Class(
 
 cli_init <- function(self, private, stream, theme) {
   private$stream <- stream
-  private$theme <- theme_create(c(cli_default_theme(), theme))
+  private$raw_themes <- list(
+    default = cli_default_theme(), optional = theme)
+  private$theme <- theme_create(private$raw_themes)
   private$state <-
     list(doc = read_html("<html><body id=\"body\"></body></html>"))
   private$state$current <- xml_find_first(private$state$doc, "./body")
@@ -163,16 +173,6 @@ cli_init <- function(self, private, stream, theme) {
   private$state$styles <- list(body = root_style)
 
   invisible(self)
-}
-
-## Themes -----------------------------------------------------------
-
-cli_get_theme <- function(self, private) {
-  stop("Theme manipulation is not implemented yet")
-}
-
-cli_set_theme <- function(self, private, theme) {
-  stop("Theme manipulation is not implemented yet")
 }
 
 ## Text -------------------------------------------------------------

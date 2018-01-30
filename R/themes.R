@@ -1,4 +1,23 @@
 
+cli_list_themes <- function(self, private) {
+  private$raw_themes
+}
+
+cli_add_theme <- function(self, private, theme) {
+  id <- new_uuid()
+  private$raw_themes <-
+    c(private$raw_themes, structure(list(theme), names = id))
+  private$theme <- theme_create(private$raw_themes)
+  id
+}
+
+cli_remove_theme <- function(self, private, id) {
+  if (! id %in% names(private$raw_themes)) return(invisible(FALSE))
+  private$raw_themes[[id]] <- NULL
+  private$theme <- theme_create(private$raw_themes)
+  invisible(TRUE)
+}
+
 cli_default_theme <- function() {
   list(
     body = list(),
@@ -61,9 +80,10 @@ cli_default_theme <- function() {
 #' @importFrom selectr css_to_xpath
 
 theme_create <- function(theme) {
-  names(theme) <- css_to_xpath(names(theme))
-  theme[] <- lapply(theme, create_formatter)
-  theme
+  mtheme <- unlist(theme, recursive = FALSE, use.names = FALSE)
+  names(mtheme) <- css_to_xpath(unlist(lapply(theme, names)))
+  mtheme[] <- lapply(mtheme, create_formatter)
+  mtheme
 }
 
 #' @importFrom crayon bold italic underline make_style combine_styles

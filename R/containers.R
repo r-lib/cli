@@ -78,6 +78,12 @@ cli__container_end <- function(self, private, id) {
   invisible(self)
 }
 
+## div --------------------------------------------------------------
+
+cli_div <- function(self, private, id, class, style, .auto_close, .envir) {
+  cli_container_start(self, private, "div", .auto_close, .envir, class, id)
+}
+
 ## Paragraph --------------------------------------------------------
 
 cli_par <- function(self, private, id, class, .auto_close, .envir) {
