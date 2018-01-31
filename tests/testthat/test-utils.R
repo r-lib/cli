@@ -125,3 +125,29 @@ test_that("dedent", {
 
   for (c in cases) expect_identical(dedent(c[[1]], c[[2]]), c[[3]])
 })
+
+test_that("tail_na", {
+  cases <- list(
+    list(1:4, 4L),
+    list(1, 1),
+    list(double(), NA_real_),
+    list(character(), NA_character_)
+  )
+
+  for (i in seq_along(cases)) {
+    c <- cases[[i]]
+    expect_identical(tail_na(c[[1]]), c[[2]], info = i)
+  }
+
+  cases2 <- list(
+    list(1:4, 2, 3:4),
+    list(1, 2, c(NA_real_, 1)),
+    list(double(), 2, c(NA_real_, NA_real_)),
+    list(character(), 2, c(NA_character_, NA_character_))
+  )
+
+  for (i in seq_along(cases2)) {
+    c <- cases2[[i]]
+    expect_identical(tail_na(c[[1]], c[[2]]), c[[3]], info = i)
+  }
+})
