@@ -7,6 +7,7 @@ inline_list <- NULL
 
 if (getRversion() >= "2.15.1") globalVariables(c("self", "private"))
 
+## nocov start
 create_inline_list <- function() {
   list(
     code = inline_code,
@@ -24,6 +25,7 @@ create_inline_list <- function() {
     envvar = inline_envvar
   )
 }
+#nocov end
 
 inline_generic <- function(x, self, private, tag = "span", class = NA) {
   cli__container_start(self, private, tag, .auto_close = TRUE,
