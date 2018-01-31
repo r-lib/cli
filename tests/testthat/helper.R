@@ -3,8 +3,9 @@ rule_class <- function(x) {
   structure(x, class = c("rule", "character"))
 }
 
-capt <- function(expr) {
-  paste(capture.output(print(expr)), collapse = "\n")
+capt <- function(expr, print_it = TRUE) {
+  pr <- if (print_it) print else identity
+  paste(capture.output(pr(expr)), collapse = "\n")
 }
 
 capt0 <- function(expr) {
