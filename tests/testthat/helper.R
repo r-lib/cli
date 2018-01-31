@@ -102,3 +102,5 @@ chartr <- function(old, new, x) {
   }
   x
 }
+
+clix <- cli_class$new(stream = "", theme = NULL)
