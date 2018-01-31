@@ -92,7 +92,7 @@ lpad <- function(x, width = NULL) {
 #' @importFrom utils tail
 
 tail_na <- function(x, n = 1) {
-  tail(c(NA, x), n)
+  tail(c(rep(NA, n), x), n)
 }
 
 #' @importFrom crayon col_substr
