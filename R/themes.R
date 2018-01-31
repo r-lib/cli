@@ -134,6 +134,10 @@ cli__match_theme <- function(self, private, element_path) {
 #' @importFrom utils modifyList
 
 merge_styles <- function(old, new) {
+  modifyList(old, new)
+}
+
+merge_embedded_styles <- function(old, new) {
   ## margins are additive, rest is updated, counter is reset
   top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
   bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)

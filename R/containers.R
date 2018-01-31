@@ -29,8 +29,9 @@ cli__container_start <- function(self, private, tag, .auto_close, .envir,
     c(private$state$matching_styles,
       structure(list(matching_styles), names = id))
 
-  new_style <- private$get_style()
+  new_style <- list()
   for (st in new_styles) new_style <- merge_styles(new_style, st)
+  new_style <- merge_embedded_styles(private$get_style(), new_style)
   private$state$styles <-
     c(private$state$styles, structure(list(new_style), names = id))
 
