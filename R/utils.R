@@ -112,3 +112,7 @@ new_uuid <- (function() {
     paste0("cli", cnt)
   }
 })()
+
+na.omit <- function(x) {
+  if (is.atomic(x)) x[!is.na(x)] else x
+}
