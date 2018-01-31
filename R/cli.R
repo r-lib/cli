@@ -77,8 +77,8 @@ cli_class <- R6Class(
              .envir = .envir),
     dl = function(items = NULL, id = NULL, class = NULL,
                   .auto_close = TRUE, .envir = parent.frame())
-      cli_old(self, private, items, id, class, .auto_close = .auto_close,
-              .envir = .envir),
+      cli_dl(self, private, items, id, class, .auto_close = .auto_close,
+             .envir = .envir),
     it = function(items = NULL, id = NULL, class = NULL,
                   .auto_close = TRUE, .envir = parent.frame())
       cli_it(self, private, items, id, class, .auto_close = .auto_close,
