@@ -114,7 +114,10 @@ cli_class <- R6Class(
 
     ## Progress bars
     progress_bar = function(...)
-      cli_progress_bar(self, private, ...)
+      cli_progress_bar(self, private, ...),
+
+    reset = function()
+      cli_reset(self, private)
   ),
 
   private = list(
@@ -251,4 +254,11 @@ cli_alert <- function(self, private, type, text, id, class, .envir) {
 
 cli_progress_bar <- function(self, private, ...) {
   stop("Progress bars are not implemented yet")
+}
+
+## Other ------------------------------------------------------------
+
+cli_reset <- function(self, private) {
+  private$margin <- 0
+  invisible(self)
 }
