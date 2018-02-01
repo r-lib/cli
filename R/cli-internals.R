@@ -39,7 +39,12 @@ cli__cat_ln <- function(self, private, lines, indent) {
   ## zero out margin
   private$margin <- 0
 
-  cat(lines, file = private$stream, sep = "\n")
+  bar <- private$get_progress_bar()
+  if (is.null(bar)) {
+    cat(lines, file = private$stream, sep = "\n")
+  } else {
+    bar$message(lines, set_width = FALSE)
+  }
 }
 
 cli__vspace <- function(self, private, n) {

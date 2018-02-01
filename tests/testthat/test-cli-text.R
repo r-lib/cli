@@ -42,7 +42,3 @@ test_that("blockquote is not implemented yet", {
 test_that("table is not implemented yet", {
   expect_error(clix$table(iris), "not implemented")
 })
-
-test_that("progress bars are not implemented yet", {
-  expect_error(clix$progress_bar(), "not implemented")
-})

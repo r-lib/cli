@@ -153,7 +153,13 @@ cli_class <- R6Class(
       cli__cat_ln(self, private, lines, indent),
 
     match_theme = function(element_path)
-      cli__match_theme(self, private, element_path)
+      cli__match_theme(self, private, element_path),
+
+    progress_bars = list(),
+    get_progress_bar = function()
+      cli__get_progress_bar(self, private),
+    cleanup_progress_bars = function()
+      cli__cleanup_progress_bars(self, private)
   )
 )
 
@@ -248,12 +254,6 @@ cli_alert <- function(self, private, type, text, id, class, .envir) {
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)
-}
-
-## Progress bar -----------------------------------------------------
-
-cli_progress_bar <- function(self, private, ...) {
-  stop("Progress bars are not implemented yet")
 }
 
 ## Other ------------------------------------------------------------

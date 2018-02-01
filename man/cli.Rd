@@ -4,7 +4,7 @@
 \name{cli}
 \alias{cli}
 \title{The default command line interface instant}
-\format{An object of class \code{cli_class} (inherits from \code{R6}) of length 25.}
+\format{An object of class \code{cli_class} (inherits from \code{R6}) of length 28.}
 \usage{
 cli
 }
