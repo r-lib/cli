@@ -95,6 +95,8 @@ cli_class <- R6Class(
       cli_table(self, private, cells, class),
 
     ## Alerts
+    alert = function(text, id = NULL, class = NULL, .envir = parent.frame())
+      cli_alert(self, private, "alert", text, id, class, .envir = .envir),
     alert_success = function(text, id = NULL, class = NULL,
                              .envir = parent.frame())
       cli_alert(self, private, "alert-success", text, id, class,
@@ -246,8 +248,8 @@ cli_table <- function(self, private, cells, id, class) {
 
 cli_alert <- function(self, private, type, text, id, class, .envir) {
   cli__container_start(self, private, "div", id = id,
-                       class = paste(class, type), .auto_close = TRUE,
-                       .envir = environment())
+                       class = paste(class, "alert", type),
+                       .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
   text[1] <- paste0(style$before, text[1], style$after)

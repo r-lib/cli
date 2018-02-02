@@ -1,6 +1,12 @@
 
 context("cli alerts")
 
+test_that("generic", {
+  clix$div(style = list(".alert" = list(before = "GENERIC! ")))
+  out <- capt(clix$alert("wow"), print_it = FALSE)
+  expect_match(out, "GENERIC")
+})
+
 test_that("success", {
   clix$div(style = list(".alert-success" = list(before = "SUCCESS! ")))
   out <- capt(clix$alert_success("wow"), print_it = FALSE)

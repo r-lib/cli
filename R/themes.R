@@ -35,6 +35,9 @@ cli_default_theme <- function() {
       "text-decoration" = "underline",
       "margin-top" = 1),
 
+    ".alert" = list(
+      before = paste0(symbol$arrow_right, " ")
+    ),
     ".alert-success" = list(
       before = paste0(symbol$tick, " "),
       color = "green"
