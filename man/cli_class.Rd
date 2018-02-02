@@ -3,12 +3,154 @@
 \docType{data}
 \name{cli_class}
 \alias{cli_class}
+\alias{cli}
 \title{Create a command line interface}
-\format{An object of class \code{R6ClassGenerator} of length 24.}
+\format{\code{cli_class} is an R6 class that represents a command line interface
+(CLI). It has methods that represent high-level, logical CLI building
+blocks. The main advantage of this, is that the actual formatting of
+the output is decoupled from the structure of the output, and it is
+defined elsewhere, in themes (see \link{cli-themes}).}
 \usage{
 cli_class
 }
 \description{
-TODO
+\code{cli} is a \code{cli_class} object that is created automatically when the
+package is loaded. You can use it to create a consistent command line
+interface.
 }
+\section{Usage}{
+\preformatted{cli <- cli_class$new(stream = "", theme = getOption("cli.theme"))
+
+cli$text(..., .envir = parent.frame())
+cli$verbatim(..., .envir = parent.frame())
+
+cli$h1(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$h2(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$h3(text, id = NULL, class = NULL, .envir = parent.frame())
+
+cli$div(id = NULL, class = NULL, theme = NULL, .auto_close = TRUE,
+        .envir = parent.frame())
+cli$par(id = NULL, class = NULL, .auto_close = TRUE,
+        .envir = parent.frame())
+cli$end(id = NULL)
+
+cli$ul(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+       .envir = parent.frame())
+cli$ol(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+       .envir = parent.frame())
+cli$dl(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+       .envir = parent.frame())
+cli$it(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+       .envir = parent.frame())
+
+cli$alert(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$alert_success(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$alert_danger(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$alert_warning(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$alert_info(text, id = NULL, class = NULL, .envir = parent.frame())
+
+cli$progress_bar(...)
+
+cli$list_themes()
+cli$add_theme(theme)
+cli$remove_theme(id)
+}
+}
+
+\section{Arguments}{
+
+\itemize{
+\item \code{stream}: The connection to print the output to. The default is \code{""},
+which means the standard output of the R process, unless it is
+redirected by \code{\link[base:sink]{base::sink()}}.
+\item \code{theme}: A named list representing a theme. See more in at
+\link{cli-themes}.
+\item \code{...}: For \code{$text()} and \code{$verbatim()} it is concatenated to a
+single piece of text.
+
+For \code{$progress_bar()} the arguments are forwarded to create a
+\link[progress:progress_bar]{progress::progress_bar} object. See Section 'Progress Bars' for
+details.
+\item \code{.envir}: The environment in which \code{\link[glue:glue]{glue::glue()}} substitutions are
+performed. For containers this is also the environment that will auto
+close the container if \code{.auto_close} is \code{TRUE}.
+\item \code{text}: Text to output.
+\item \code{id}: Id of the container or element. This id can be referenced in
+theme selectors, and also in \code{$end()} methods.
+
+For \code{$end()} it is the id of the container to close. If omitted, the
+last open container is used.
+\item \code{class}: Class of the element. This can be used in theme selectors.
+\item \code{.auto_close}: Whether to automatically close a container, when the
+caller function exits (the \code{.envir} environment is removed from the
+stack).
+\item \code{items}: Character vector, each element will be a list item.
+}
+}
+
+\section{Details}{
+
+
+\code{$new()} creates a new command line interface.
+
+\code{$text()} outputs text, that is automatically wrapped to the screen
+width.
+
+\code{$verbatim()} outputs text, as is, without wrapping it.
+
+\code{$h1()}, \code{$h2()} and \code{$h3()} create headers.
+
+\code{$div()} creates a container, with an additional theme, possibly.
+It returns the id of the container.
+
+\code{$par()} creates a paragraph, which is a generic container.
+It returns the id of the container.
+
+\code{$end()} closes a container, either the one with specified id, or
+the last active one, if no id is specified.
+
+\code{$ul()} creates an un-ordered list. A list is a container, and \code{$ul()}
+returns the id of the container. You can use the \code{$it()} method to
+create the items of the list.
+
+\code{$ol()} creates an ordered list. A list is a container and \code{$ul()}
+returns the id of the container. You can use the \code{$it()} method to
+create the items of the list.
+
+\code{$dl()} creates an description list. A list is a container and \code{$ul()}
+returns the id of the container. You can use the \code{$it()} method to
+create the items of the list.
+
+\code{$it()} creates a list item. If there is no active list container when
+\code{$it()} is called, it creates an un-ordered list (i.e. \code{$ul()}).
+\code{$it()} creates a container for the item itself, so \code{$text()}, etc.
+following an \code{$it()} will add more text to the last item.
+
+\code{$alert()} creates a generic alert. This can be themed with an extra
+class. There are four predefined alert styles, which also have shortcut
+methods: \code{$alert_success()}, \code{$alert_danger()}, \code{$alert_warning()} and
+\code{$alert_info()}.
+
+\code{$progress_bar} creates a progressbar using \link[progress:progress_bar]{progress::progress_bar}.
+See more in the 'Progress Bars' Section.
+
+\code{$list_themes()} returns all active themes, in a list. The names of the
+list elements are the theme ids. See more at \link{cli-themes}.
+
+\code{$add_theme()} adds a new theme. It returns the id of the new theme.
+See more at \link{cli-themes}.
+
+\code{$remove_theme()} removes the theme with the specified id. See more at
+\link{cli-themes}.
+}
+
+\section{Progress Bars}{
+
+\code{cli_class} integrates with progress bars from the progress package.
+Create you progress bar with the \code{cli_class$progress_bar()} method,
+and then you can use all the other \code{cli_class} methods to create output.
+The progress bar will be automatically kept at the last line of your
+output.
+}
+
 \keyword{datasets}

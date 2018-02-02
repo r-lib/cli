@@ -1,15 +1,150 @@
 
-#' The default command line interface instant
-#'
-#' TODO
-#'
 #' @export
 cli <- NULL
 
 #' Create a command line interface
 #'
-#' TODO
+#' @format
+#' `cli_class` is an R6 class that represents a command line interface
+#' (CLI). It has methods that represent high-level, logical CLI building
+#' blocks. The main advantage of this, is that the actual formatting of
+#' the output is decoupled from the structure of the output, and it is
+#' defined elsewhere, in themes (see [cli-themes]).
 #'
+#' @description
+#' `cli` is a `cli_class` object that is created automatically when the
+#' package is loaded. You can use it to create a consistent command line
+#' interface.
+#'
+#' @section Usage:
+#' ```
+#' cli <- cli_class$new(stream = "", theme = getOption("cli.theme"))
+#'
+#' cli$text(..., .envir = parent.frame())
+#' cli$verbatim(..., .envir = parent.frame())
+#'
+#' cli$h1(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$h2(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$h3(text, id = NULL, class = NULL, .envir = parent.frame())
+#'
+#' cli$div(id = NULL, class = NULL, theme = NULL, .auto_close = TRUE,
+#'         .envir = parent.frame())
+#' cli$par(id = NULL, class = NULL, .auto_close = TRUE,
+#'         .envir = parent.frame())
+#' cli$end(id = NULL)
+#'
+#' cli$ul(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#'        .envir = parent.frame())
+#' cli$ol(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#'        .envir = parent.frame())
+#' cli$dl(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#'        .envir = parent.frame())
+#' cli$it(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
+#'        .envir = parent.frame())
+#'
+#' cli$alert(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$alert_success(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$alert_danger(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$alert_warning(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$alert_info(text, id = NULL, class = NULL, .envir = parent.frame())
+#'
+#' cli$progress_bar(...)
+#'
+#' cli$list_themes()
+#' cli$add_theme(theme)
+#' cli$remove_theme(id)
+#' ```
+#'
+#' @section Arguments:
+#' * `stream`: The connection to print the output to. The default is `""`,
+#'   which means the standard output of the R process, unless it is
+#'   redirected by [base::sink()].
+#' * `theme`: A named list representing a theme. See more in at
+#'   [cli-themes].
+#' * `...`: For `$text()` and `$verbatim()` it is concatenated to a
+#'   single piece of text.
+#'
+#'   For `$progress_bar()` the arguments are forwarded to create a
+#'   [progress::progress_bar] object. See Section 'Progress Bars' for
+#'   details.
+#' * `.envir`: The environment in which [glue::glue()] substitutions are
+#'   performed. For containers this is also the environment that will auto
+#'   close the container if `.auto_close` is `TRUE`.
+#' * `text`: Text to output.
+#' * `id`: Id of the container or element. This id can be referenced in
+#'   theme selectors, and also in `$end()` methods.
+#'
+#'   For `$end()` it is the id of the container to close. If omitted, the
+#'   last open container is used.
+#' * `class`: Class of the element. This can be used in theme selectors.
+#' * `.auto_close`: Whether to automatically close a container, when the
+#'   caller function exits (the `.envir` environment is removed from the
+#'   stack).
+#' * `items`: Character vector, each element will be a list item.
+#'
+#' @section Details:
+#'
+#' `$new()` creates a new command line interface.
+#'
+#' `$text()` outputs text, that is automatically wrapped to the screen
+#'  width.
+#'
+#' `$verbatim()` outputs text, as is, without wrapping it.
+#'
+#' `$h1()`, `$h2()` and `$h3()` create headers.
+#'
+#' `$div()` creates a container, with an additional theme, possibly.
+#' It returns the id of the container.
+#'
+#' `$par()` creates a paragraph, which is a generic container.
+#' It returns the id of the container.
+#'
+#' `$end()` closes a container, either the one with specified id, or
+#' the last active one, if no id is specified.
+#'
+#' `$ul()` creates an un-ordered list. A list is a container, and `$ul()`
+#' returns the id of the container. You can use the `$it()` method to
+#' create the items of the list.
+#'
+#' `$ol()` creates an ordered list. A list is a container and `$ul()`
+#' returns the id of the container. You can use the `$it()` method to
+#' create the items of the list.
+#'
+#' `$dl()` creates an description list. A list is a container and `$ul()`
+#' returns the id of the container. You can use the `$it()` method to
+#' create the items of the list.
+#'
+#' `$it()` creates a list item. If there is no active list container when
+#' `$it()` is called, it creates an un-ordered list (i.e. `$ul()`).
+#' `$it()` creates a container for the item itself, so `$text()`, etc.
+#' following an `$it()` will add more text to the last item.
+#'
+#' `$alert()` creates a generic alert. This can be themed with an extra
+#' class. There are four predefined alert styles, which also have shortcut
+#' methods: `$alert_success()`, `$alert_danger()`, `$alert_warning()` and
+#' `$alert_info()`.
+#'
+#' `$progress_bar` creates a progressbar using [progress::progress_bar].
+#' See more in the 'Progress Bars' Section.
+#'
+#' `$list_themes()` returns all active themes, in a list. The names of the
+#' list elements are the theme ids. See more at [cli-themes].
+#'
+#' `$add_theme()` adds a new theme. It returns the id of the new theme.
+#' See more at [cli-themes].
+#'
+#' `$remove_theme()` removes the theme with the specified id. See more at
+#' [cli-themes].
+#'
+#' @section Progress Bars:
+#' `cli_class` integrates with progress bars from the progress package.
+#' Create you progress bar with the `cli_class$progress_bar()` method,
+#' and then you can use all the other `cli_class` methods to create output.
+#' The progress bar will be automatically kept at the last line of your
+#' output.
+#'
+#' @name cli_class
+#' @aliases cli
 #' @importFrom R6 R6Class
 #' @export
 

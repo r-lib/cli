@@ -1,4 +1,39 @@
 
+#' Themes for command line interfaces (CLIs)
+#'
+#' A cli theme is a named list. The names of the list elements are
+#' CSS selectors that define whith CLI elements each style element applies
+#' to. See <https://www.w3schools.com/cssref/css_selectors.asp> for a
+#' reference on CSS selectors. We will also show some examples below.
+#'
+#' Themes can come from three sources:
+#' * The builtin theme of the cli package.
+#' * The theme from the `cli.theme` option. (At the time when the
+#'   `cli_class` object is created.)
+#' * Themes added with he `add_theme()` method.
+#'
+#' @section Examples:
+#' Color of headers, that are only active in paragraphs with an
+#' 'output' class:
+#' ```
+#' list(
+#'   "par.output h1" = list("background-color" = "red", color = "#e0e0e0"),
+#'   "par.output h2" = list("background-color" = "orange", color = "#e0e0e0"),
+#'   "par.output h3" = list("background-color" = "blue", color = "#e0e0e0")
+#' )
+#' ```
+#'
+#' Create a custom alert type:
+#' ```
+#' list(
+#'   ".alert-start" = list(before = symbol$play),
+#'   ".alert-stop"  = list(before = symbol$stop)
+#' )
+#' ```
+#'
+#' @name cli-themes
+NULL
+
 cli_list_themes <- function(self, private) {
   private$raw_themes
 }
