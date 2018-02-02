@@ -92,7 +92,11 @@ symbol_utf8 <- list(
   "sup_9" = "\u2079",
 
   "sup_minus" = "\u207b",
-  "sup_plus" = "\u207a"
+  "sup_plus" = "\u207a",
+
+  "play" = "\u25b6",
+  "stop" = "\u25a0",
+  "record" = "\u25cf"
 )
 
 symbol_win <- list(
@@ -165,5 +169,9 @@ symbol_win <- list(
   "sup_9" = "9",
 
   "sup_minus" = "-",
-  "sup_plus" = "+"
+  "sup_plus" = "+",
+
+  "play" = ">",
+  "stop" = "#",
+  "record" = "o"
 )

@@ -44,39 +44,40 @@ library(cli)
 
 Inspired by (and mostly copied from) the [figures](https://github.com/sindresorhus/figures) JavaScript project.
 
-    #> ✔    tick                      ☒ checkbox_on            
-    #> ✖    cross                     ☐ checkbox_off           
-    #> ★    star                      ⓧ checkbox_circle_on     
-    #> ▇    square                    Ⓘ checkbox_circle_off    
-    #> ◻    square_small              ❓ fancy_question_mark    
-    #> ◼    square_small_filled       ≠ neq                    
-    #> ◯    circle                    ≥ geq                    
-    #> ◉    circle_filled             ≤ leq                    
-    #> ◌    circle_dotted             × times                  
-    #> ◎    circle_double             ▔ upper_block_1          
-    #> ⓞ    circle_circle             ▀ upper_block_4          
-    #> ⓧ    circle_cross              ▁ lower_block_1          
-    #> Ⓘ    circle_pipe               ▂ lower_block_2          
-    #> ?⃝   circle_question_mark      ▃ lower_block_3          
-    #> ●    bullet                    ▄ lower_block_4          
-    #> ․    dot                       ▅ lower_block_5          
-    #> ─    line                      ▆ lower_block_6          
-    #> ═    double_line               ▇ lower_block_7          
-    #> …    ellipsis                  █ lower_block_8          
-    #> …    continue                  █ full_block             
-    #> ❯    pointer                   ⁰ sup_0                  
-    #> ℹ    info                      ¹ sup_1                  
-    #> ⚠    warning                   ² sup_2                  
-    #> ☰    menu                      ³ sup_3                  
-    #> ☺    smiley                    ⁴ sup_4                  
-    #> ෴    mustache                  ⁵ sup_5                  
-    #> ♥    heart                     ⁶ sup_6                  
-    #> ↑    arrow_up                  ⁷ sup_7                  
-    #> ↓    arrow_down                ⁸ sup_8                  
-    #> ←    arrow_left                ⁹ sup_9                  
-    #> →    arrow_right               ⁻ sup_minus              
-    #> ◉    radio_on                  ⁺ sup_plus               
-    #> ◯    radio_off
+    #> ✔    tick                      ☐ checkbox_off           
+    #> ✖    cross                     ⓧ checkbox_circle_on     
+    #> ★    star                      Ⓘ checkbox_circle_off    
+    #> ▇    square                    ❓ fancy_question_mark    
+    #> ◻    square_small              ≠ neq                    
+    #> ◼    square_small_filled       ≥ geq                    
+    #> ◯    circle                    ≤ leq                    
+    #> ◉    circle_filled             × times                  
+    #> ◌    circle_dotted             ▔ upper_block_1          
+    #> ◎    circle_double             ▀ upper_block_4          
+    #> ⓞ    circle_circle             ▁ lower_block_1          
+    #> ⓧ    circle_cross              ▂ lower_block_2          
+    #> Ⓘ    circle_pipe               ▃ lower_block_3          
+    #> ?⃝   circle_question_mark      ▄ lower_block_4          
+    #> ●    bullet                    ▅ lower_block_5          
+    #> ․    dot                       ▆ lower_block_6          
+    #> ─    line                      ▇ lower_block_7          
+    #> ═    double_line               █ lower_block_8          
+    #> …    ellipsis                  █ full_block             
+    #> …    continue                  ⁰ sup_0                  
+    #> ❯    pointer                   ¹ sup_1                  
+    #> ℹ    info                      ² sup_2                  
+    #> ⚠    warning                   ³ sup_3                  
+    #> ☰    menu                      ⁴ sup_4                  
+    #> ☺    smiley                    ⁵ sup_5                  
+    #> ෴    mustache                  ⁶ sup_6                  
+    #> ♥    heart                     ⁷ sup_7                  
+    #> ↑    arrow_up                  ⁸ sup_8                  
+    #> ↓    arrow_down                ⁹ sup_9                  
+    #> ←    arrow_left                ⁻ sup_minus              
+    #> →    arrow_right               ⁺ sup_plus               
+    #> ◉    radio_on                  ▶ play                   
+    #> ◯    radio_off                 ■ stop                   
+    #> ☒    checkbox_on               ● record
 
 ### Spinners
 
