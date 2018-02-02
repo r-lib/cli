@@ -91,12 +91,12 @@ cli__container_end <- function(self, private, id) {
 
 ## div --------------------------------------------------------------
 
-cli_div <- function(self, private, id, class, style, .auto_close, .envir) {
-  style_id <- self$add_theme(style)
+cli_div <- function(self, private, id, class, theme, .auto_close, .envir) {
+  theme_id <- self$add_theme(theme)
   container_id <- cli__container_start(self, private, "div",
                                        .auto_close, .envir, class, id)
   private$state$xstyles <-
-    c(private$state$xstyles, structure(style_id, names = container_id))
+    c(private$state$xstyles, structure(theme_id, names = container_id))
 
   container_id
 }

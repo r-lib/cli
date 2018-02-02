@@ -3,7 +3,7 @@ context("cli headers")
 
 test_that("headers", {
   clix$reset()
-  clix$div(class = "testcli", style = test_style())
+  clix$div(class = "testcli", theme = test_style())
 
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
     out <- capt(clix$h1("HEADER"), print_it = FALSE)

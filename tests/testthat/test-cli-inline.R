@@ -4,7 +4,7 @@ context("cli inline")
 special_style <- list(before = "<<<", after = ">>>", color = "cyan")
 
 test_that("emph", {
-  clix$div(style = list(emph = special_style))
+  clix$div(theme = list(emph = special_style))
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
     out <- capt(clix$text("This is {emph it} really."), print_it = FALSE)
     expect_true(crayon::has_style(out))
@@ -14,7 +14,7 @@ test_that("emph", {
 })
 
 test_that("strong", {
-  clix$div(style = list(strong = special_style))
+  clix$div(theme = list(strong = special_style))
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
     out <- capt(clix$text("This is {strong it} really."), print_it = FALSE)
     expect_true(crayon::has_style(out))
@@ -24,7 +24,7 @@ test_that("strong", {
 })
 
 test_that("code", {
-  clix$div(style = list(code = special_style))
+  clix$div(theme = list(code = special_style))
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
     out <- capt(clix$text("This is {code !!it} really."), print_it = FALSE)
     expect_true(crayon::has_style(out))
@@ -40,7 +40,7 @@ test_that("inline classes", {
 
   do <- function(class) {
     clix$div(
-      style = structure(list(special_style), names = paste0(".", class)))
+      theme = structure(list(special_style), names = paste0(".", class)))
     withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
       txt <- glue::glue("This is {<class> it} really",
                         .open = "<", .close = ">")

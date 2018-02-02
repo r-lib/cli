@@ -32,9 +32,9 @@ cli_class <- R6Class(
       cli_end(self, private, id),
 
     ## Generic container
-    div = function(id = NULL, class = NULL, style = NULL,
+    div = function(id = NULL, class = NULL, theme = NULL,
                    .auto_close = TRUE, .envir = parent.frame())
-      cli_div(self, private, id, class, style, .auto_close, .envir),
+      cli_div(self, private, id, class, theme, .auto_close, .envir),
 
     ## Paragraphs
     par = function(id = NULL, class = NULL, .auto_close = TRUE,

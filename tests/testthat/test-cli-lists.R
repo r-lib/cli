@@ -2,7 +2,7 @@
 context("cli lists")
 
 test_that("ul", {
-  clix$div(style = list(ul = list("list-style-type" = "*")))
+  clix$div(theme = list(ul = list("list-style-type" = "*")))
   lid <- clix$ul()
   out <- capt({
     clix$it("foo")
@@ -13,7 +13,7 @@ test_that("ul", {
 })
 
 test_that("ol", {
-  clix$div(style = list(ol = list()))
+  clix$div(theme = list(ol = list()))
   lid <- clix$ol()
   out <- capt({
     clix$it("foo")
@@ -24,7 +24,7 @@ test_that("ol", {
 })
 
 test_that("ul ul", {
-  clix$div(style = list(
+  clix$div(theme = list(
     ul = list("list-style-type" = "*"),
     "ul ul" = list("list-style-type" = "-"),
     it = list("margin-left" = 2)
@@ -43,7 +43,7 @@ test_that("ul ul", {
 })
 
 test_that("ul ol", {
-  clix$div(style = list(
+  clix$div(theme = list(
     ul = list("list-style-type" = "*"),
     it = list("margin-left" = 2)
   ))
@@ -61,7 +61,7 @@ test_that("ul ol", {
 })
 
 test_that("ol ol", {
-  clix$div(style = list(
+  clix$div(theme = list(
     it = list("margin-left" = 2)
   ))
   lid <- clix$ol()
@@ -78,7 +78,7 @@ test_that("ol ol", {
 })
 
 test_that("ol ul", {
-  clix$div(style = list(
+  clix$div(theme = list(
     ul = list("list-style-type" = "*"),
     it = list("margin-left" = 2)
   ))
@@ -96,7 +96,7 @@ test_that("ol ul", {
 })
 
 test_that("starting with an item", {
-  clix$div(style = list(ul = list("list-style-type" = "*")))
+  clix$div(theme = list(ul = list("list-style-type" = "*")))
   out <- capt({
     clix$it("foo")
     clix$it(c("bar", "foobar"))
@@ -105,7 +105,7 @@ test_that("starting with an item", {
 })
 
 test_that("ol, with first item", {
-  clix$div(style = list(ol = list()))
+  clix$div(theme = list(ol = list()))
   out <- capt({
     lid <- clix$ol("foo")
     clix$it(c("bar", "foobar"))
@@ -115,7 +115,7 @@ test_that("ol, with first item", {
 })
 
 test_that("ul, with first item", {
-  clix$div(style = list(ul = list("list-style-type" = "*")))
+  clix$div(theme = list(ul = list("list-style-type" = "*")))
   out <- capt({
     lid <- clix$ul("foo")
     clix$it(c("bar", "foobar"))
@@ -125,7 +125,7 @@ test_that("ul, with first item", {
 })
 
 test_that("dl", {
-  clix$div(style = list(ul = list()))
+  clix$div(theme = list(ul = list()))
   lid <- clix$dl()
   out <- capt({
     clix$it(c(this = "foo"))
@@ -136,7 +136,7 @@ test_that("dl", {
 })
 
 test_that("dl dl", {
-  clix$div(style = list(
+  clix$div(theme = list(
     it = list("margin-left" = 2)
   ))
   lid <- clix$dl()
@@ -153,7 +153,7 @@ test_that("dl dl", {
 })
 
 test_that("dl ol", {
-  clix$div(style = list(
+  clix$div(theme = list(
     it = list("margin-left" = 2)
   ))
   lid <- clix$dl()
@@ -170,7 +170,7 @@ test_that("dl ol", {
 })
 
 test_that("dl ul", {
-  clix$div(style = list(
+  clix$div(theme = list(
     ul = list("list-style-type" = "*"),
     it = list("margin-left" = 2)
   ))
@@ -188,7 +188,7 @@ test_that("dl ul", {
 })
 
 test_that("ol dl", {
-  clix$div(style = list(
+  clix$div(theme = list(
     it = list("margin-left" = 2)
   ))
   lid <- clix$ol()
@@ -205,7 +205,7 @@ test_that("ol dl", {
 })
 
 test_that("ul dl", {
-  clix$div(style = list(
+  clix$div(theme = list(
     ul = list("list-style-type" = "*"),
     it = list("margin-left" = 2)
   ))
@@ -223,7 +223,7 @@ test_that("ul dl", {
 })
 
 test_that("dl, with first item", {
-  clix$div(style = list(ul = list()))
+  clix$div(theme = list(ul = list()))
   out <- capt({
     lid <- clix$dl(c(this = "foo"))
     clix$it(c(that = "bar", other = "foobar"))

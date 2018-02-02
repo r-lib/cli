@@ -3,7 +3,7 @@ context("cli text")
 
 test_that("text is wrapped", {
   clix$reset()
-  clix$div(class = "testcli", style = test_style())
+  clix$div(class = "testcli", theme = test_style())
 
   withr::with_options(c(cli.width = 60), {
     capt(clix$h1("Header"))
@@ -15,7 +15,7 @@ test_that("text is wrapped", {
 
 test_that("verbatim text is not wrapped", {
   clix$reset()
-  clix$div(class = "testcli", style = test_style())
+  clix$div(class = "testcli", theme = test_style())
 
   withr::with_options(c(cli.width = 60), {
     capt(clix$h1("Header"))
