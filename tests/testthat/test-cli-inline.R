@@ -3,44 +3,14 @@ context("cli inline")
 
 special_style <- list(before = "<<<", after = ">>>", color = "cyan")
 
-test_that("emph", {
-  clix$div(theme = list(emph = special_style))
-  withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
-    out <- capt(clix$text("This is {emph it} really."), print_it = FALSE)
-    expect_true(crayon::has_style(out))
-    expect_match(crayon::strip_style(out), "<<<it>>>")
-    expect_match(out, start(crayon::make_style("cyan")), fixed = TRUE)
-  })
-})
-
-test_that("strong", {
-  clix$div(theme = list(strong = special_style))
-  withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
-    out <- capt(clix$text("This is {strong it} really."), print_it = FALSE)
-    expect_true(crayon::has_style(out))
-    expect_match(crayon::strip_style(out), "<<<it>>>")
-    expect_match(out, start(crayon::make_style("cyan")), fixed = TRUE)
-  })
-})
-
-test_that("code", {
-  clix$div(theme = list(code = special_style))
-  withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
-    out <- capt(clix$text("This is {code !!it} really."), print_it = FALSE)
-    expect_true(crayon::has_style(out))
-    expect_match(crayon::strip_style(out), "<<<!!it>>>")
-    expect_match(out, start(crayon::make_style("cyan")), fixed = TRUE)
-  })
-})
-
 test_that("inline classes", {
   classes <- c(
-    "pkg", "fun", "arg", "key", "file", "path", "email",
-    "url", "var", "envvar")
+    "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
+    "email", "url", "var", "envvar")
 
   do <- function(class) {
     clix$div(
-      theme = structure(list(special_style), names = paste0(".", class)))
+      theme = structure(list(special_style), names = paste0("span.", class)))
     withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
       txt <- glue::glue("This is {<class> it} really",
                         .open = "<", .close = ">")

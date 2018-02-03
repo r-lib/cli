@@ -2,7 +2,7 @@
 context("cli containers")
 
 test_that("auto closing", {
-  clix$div(theme = list(".xx emph" = list(before = "itsu:")))
+  clix$div(theme = list(".xx .emph" = list(before = "itsu:")))
   f <- function() {
     capt(clix$par(class = "xx"))
     out <- capt(clix$text("foo {emph blah} bar"), print_it = FALSE)
@@ -16,7 +16,7 @@ test_that("auto closing", {
 })
 
 test_that("opt out of auto closing", {
-  clix$div(theme = list(".xx emph" = list(before = "itsu:")))
+  clix$div(theme = list(".xx .emph" = list(before = "itsu:")))
   id <- NULL
   f <- function() {
     capt(id <<- clix$par(class = "xx", .auto_close = FALSE))
@@ -39,7 +39,7 @@ test_that("opt out of auto closing", {
 })
 
 test_that("auto closing with special env", {
-  clix$div(theme = list(".xx emph" = list(before = "itsu:")))
+  clix$div(theme = list(".xx .emph" = list(before = "itsu:")))
   id <- NULL
   f <- function() {
     g()
@@ -64,7 +64,7 @@ test_that("auto closing with special env", {
 
 test_that("div with special style", {
   f <- function() {
-    clix$div(theme = list(".xx emph" = list(before = "itsu:")))
+    clix$div(theme = list(".xx .emph" = list(before = "itsu:")))
     capt(clix$par(class = "xx"))
     out <- capt(clix$text("foo {emph blah} bar"), print_it = FALSE)
     expect_match(out, "itsu:", fixed = TRUE)

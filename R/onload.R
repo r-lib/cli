@@ -13,8 +13,6 @@ cli <- NULL
     pkgenv
   )
 
-  assign("inline_list", create_inline_list(), envir = pkgenv)
-
   cli <- cli_class$new()
   assign("cli", cli, envir = pkgenv)
 }

@@ -7,85 +7,13 @@ inline_list <- NULL
 
 if (getRversion() >= "2.15.1") globalVariables(c("self", "private"))
 
-## nocov start
-create_inline_list <- function() {
-  list(
-    code = inline_code,
-    emph = inline_emph,
-    strong = inline_strong,
-    pkg = inline_pkg,
-    fun = inline_fun,
-    arg = inline_arg,
-    key = inline_key,
-    file = inline_file,
-    path = inline_path,
-    email = inline_email,
-    url = inline_url,
-    var = inline_var,
-    envvar = inline_envvar
-  )
-}
-#nocov end
-
-inline_generic <- function(x, self, private, tag = "span", class = NA) {
-  cli__container_start(self, private, tag, .auto_close = TRUE,
+inline_generic <- function(self, private, class, x) {
+  cli__container_start(self, private, "span", .auto_close = TRUE,
                        .envir = environment(), class = class)
   style <- private$get_style()
   xx <- paste0(style$before, x, style$after)
   if (!is.null(style$fmt)) xx <- style$fmt(xx)
   xx
-}
-
-inline_code <- function(x, self, private) {
-  inline_generic(x, self, private, tag = "code")
-}
-
-inline_emph <- function(x, self, private) {
-  inline_generic(x, self, private, tag = "emph")
-}
-
-inline_strong <- function(x, self, private) {
-  inline_generic(x, self, private, tag = "strong")
-}
-
-inline_pkg <- function(x, self, private) {
-  inline_generic(x, self, private, class = "pkg")
-}
-
-inline_fun <- function(x, self, private) {
-  inline_generic(x, self, private, class = "fun")
-}
-
-inline_arg <- function(x, self, private) {
-  inline_generic(x, self, private, class = "arg")
-}
-
-inline_key <- function(x, self, private) {
-  inline_generic(x, self, private, class = "key")
-}
-
-inline_file <- function(x, self, private) {
-  inline_generic(x, self, private, class = "file")
-}
-
-inline_path <- function(x, self, private) {
-  inline_generic(x, self, private, class = "path")
-}
-
-inline_email <- function(x, self, private) {
-  inline_generic(x, self, private, class = "email")
-}
-
-inline_url <- function(x, self, private) {
-  inline_generic(x, self, private, class = "url")
-}
-
-inline_var <- function(x, self, private) {
-  inline_generic(x, self, private, class = "var")
-}
-
-inline_envvar <- function(x, self, private) {
-  inline_generic(x, self, private, class = "envvar")
 }
 
 #' @importFrom glue collapse
@@ -108,8 +36,7 @@ inline_transformer <- function(code, envir) {
   funname <- captures[[1]]
   text <- captures[[2]]
   out <- glue(text, .envir = envir, .transformer = inline_transformer)
-  fun <- inline_list[[funname]] %||% get(funname, envir = envir)
-  fun(out, self, private)
+  inline_generic(self, private, funname, out)
 }
 
 cli__inline <- function(self, private, ..., .envir) {

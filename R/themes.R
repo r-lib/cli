@@ -98,20 +98,20 @@ cli_default_theme <- function() {
     it = list("margin-left" = 2),
     .code = list(),
 
-    emph = list("font-style" = "italic"),
-    strong = list("font-weight" = "bold"),
-    code = list(before = "`", after = "`", color = "magenta"),
+    span.emph = list("font-style" = "italic"),
+    span.strong = list("font-weight" = "bold"),
+    span.code = list(before = "`", after = "`", color = "magenta"),
 
-    .pkg = list(color = "magenta"),
-    .fun = list(color = "magenta", after = "()"),
-    .arg = list(color = "magenta"),
-    .key = list(before = "<", after = ">", color = "magenta"),
-    .file = list(color = "magenta"),
-    .path = list(color = "magenta"),
-    .email = list(color = "magenta"),
-    .url = list(before = "<", after = ">", color = "blue"),
-    .var = list(color = "magenta"),
-    .envvar = list(color = "magenta")
+    span.pkg = list(color = "magenta"),
+    span.fun = list(color = "magenta", after = "()"),
+    span.arg = list(color = "magenta"),
+    span.key = list(before = "<", after = ">", color = "magenta"),
+    span.file = list(color = "magenta"),
+    span.path = list(color = "magenta"),
+    span.email = list(color = "magenta"),
+    span.url = list(before = "<", after = ">", color = "blue"),
+    span.var = list(color = "magenta"),
+    span.envvar = list(color = "magenta")
   )
 }
 
