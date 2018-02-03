@@ -95,3 +95,11 @@ test_that("margin is squashed", {
 test_that("code is not implemented yet", {
   expect_error(clix$code(letters), "not implemented")
 })
+
+test_that("before and after work properly", {
+  clix$div(theme = list(
+    "div.alert-success::before" = list(content ="!!!")
+  ))
+  out <- capt(clix$alert_success("{pkg foobar} is good"), print_it = FALSE)
+  expect_match(out, "!!!", fixed = TRUE)
+})

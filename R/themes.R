@@ -213,23 +213,22 @@ merge_styles <- function(old, new) {
 }
 
 merge_embedded_styles <- function(oldstyle, newstyle) {
-  for (wh in c("main", "before", "after")) {
-    old <- oldstyle[[wh]]
-    new <- newstyle[[wh]]
+  old <- oldstyle$main
+  new <- newstyle$main
+  ## margins are additive, rest is updated, counter is reset
+  top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
+  bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)
+  left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
+  right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
+  start <- new$start %||% 1L
 
-    ## margins are additive, rest is updated, counter is reset
-    top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
-    bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)
-    left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
-    right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
-    start <- new$start %||% 1L
+  mrg <- modifyList(old, new)
+  mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
+        "start")] <- list(top, bottom, left, right, start)
+  oldstyle$main <- mrg
 
-    mrg <- modifyList(old, new)
-    mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
-          "start")] <- list(top, bottom, left, right, start)
-
-    oldstyle[[wh]] <- mrg
-  }
+  oldstyle$before <- newstyle$before
+  oldstyle$after <- newstyle$after
 
   oldstyle
 }
