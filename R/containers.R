@@ -24,19 +24,21 @@ cli__container_start <- function(self, private, tag, .auto_close, .envir,
   matching_styles <- private$match_theme(
     glue("descendant-or-self::*[@id = '{id}']"))
   new_styles <- private$theme[
-    setdiff(matching_styles, private$get_matching_styles())]
+    setdiff(matching_styles, private$get_matching_styles()), ]
   private$state$matching_styles <-
     c(private$state$matching_styles,
       structure(list(matching_styles), names = id))
 
-  new_style <- list()
-  for (st in new_styles) new_style <- merge_styles(new_style, st)
+  new_style <- list(main = list(), before = list(), after = list())
+  for (i in seq_len(nrow(new_styles))) {
+    new_style <- merge_styles(new_style, new_styles[i, ])
+  }
   new_style <- merge_embedded_styles(private$get_style(), new_style)
   private$state$styles <-
     c(private$state$styles, structure(list(new_style), names = id))
 
   ## Top margin, if any
-  private$vspace(new_style$`margin-top` %||% 0)
+  private$vspace(new_style$main$`margin-top` %||% 0)
 
   invisible(id)
 }
@@ -66,7 +68,7 @@ cli__container_end <- function(self, private, id) {
   del_from <- match(id, names(private$state$matching_styles))
   bottom <- max(viapply(
     private$state$styles[del_from:length(private$state$styles)],
-    function(x) as.integer(x$`margin-bottom` %||% 0L)
+    function(x) as.integer(x$main$`margin-bottom` %||% 0L)
   ))
   private$vspace(bottom)
 
@@ -173,13 +175,13 @@ cli_it <- function(self, private, items, id, class, .auto_close, .envir) {
 cli__item_text <- function(self, private, type, name, text, cnt_id,
                            .envir) {
 
-  style <- private$get_style()
+  style <- private$get_style()$main
   head <- if (type == "ul") {
     paste0(style$`list-style-type` %||% "*", " ")
   } else if (type == "ol") {
-    res <- paste0(private$state$styles[[cnt_id]]$start %||% 1L, ". ")
-    private$state$styles[[cnt_id]]$start <-
-      (private$state$styles[[cnt_id]]$start %||% 1L) + 1L
+    res <- paste0(private$state$styles[[cnt_id]]$main$start %||% 1L, ". ")
+    private$state$styles[[cnt_id]]$main$start <-
+      (private$state$styles[[cnt_id]]$main$start %||% 1L) + 1L
     res
   } else if (type == "dl") {
     paste0(name, ": ")

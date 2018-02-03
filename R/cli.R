@@ -313,9 +313,11 @@ cli_init <- function(self, private, stream, theme) {
 
   private$state$matching_styles <-
     list(body = private$match_theme("./body"))
-  root_styles <- private$theme[ private$state$matching_styles[[1]] ]
-  root_style <- list()
-  for (st in root_styles) root_style <- merge_styles(root_style, st)
+  root_styles <- private$theme[private$state$matching_styles[[1]], ]
+  root_style <- list(main = list(), before = list(), after = list())
+  for (i in seq_len(nrow(root_styles))) {
+    root_style <- merge_styles(root_style, root_styles[i,])
+  }
   private$state$styles <- list(body = root_style)
 
   private$state$xstyles <- character()
@@ -332,7 +334,7 @@ cli_text <- function(self, private, ..., .envir) {
 }
 
 cli_verbatim <- function(self, private, ..., .envir) {
-  style <- private$get_style()
+  style <- private$get_style()$main
   text <- private$inline(..., .envir = .envir)
   if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
@@ -361,7 +363,7 @@ cli__header <- function(self, private, type, text, id, class, .envir) {
   cli__container_start(self, private, type, id = id, class = class,
                        .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
-  style <- private$get_style()
+  style <- private$get_style()$main
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)
@@ -387,8 +389,8 @@ cli_alert <- function(self, private, type, text, id, class, .envir) {
                        .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
-  text[1] <- paste0(style$before, text[1], style$after)
-  if (is.function(style$fmt)) text <- style$fmt(text)
+  text[1] <- paste0(style$before$content, text[1], style$after$content)
+  if (is.function(style$main$fmt)) text <- style$main$fmt(text)
   private$cat_ln(text)
   invisible(self)
 }

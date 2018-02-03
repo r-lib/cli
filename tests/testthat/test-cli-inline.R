@@ -1,16 +1,26 @@
 
 context("cli inline")
 
-special_style <- list(before = "<<<", after = ">>>", color = "cyan")
-
 test_that("inline classes", {
   classes <- c(
     "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
     "email", "url", "var", "envvar")
 
   do <- function(class) {
-    clix$div(
-      theme = structure(list(special_style), names = paste0("span.", class)))
+
+    special_style <- structure(
+      list(
+        list(color = "cyan"),
+        list(content = "<<<"),
+        list(content =">>>")),
+      names = c(
+        paste0("span.", class),
+        paste0("span.", class, "::before"),
+        paste0("span.", class, "::after")
+      )
+    )
+
+    clix$div(theme = special_style)
     withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
       txt <- glue::glue("This is {<class> it} really",
                         .open = "<", .close = ">")

@@ -25,9 +25,11 @@ test_that("default theme is valid", {
 })
 
 test_that("explicit formatter is used, and combined", {
-  id <- clix$add_theme(list(span.emph = list(
-    fmt = function(x) paste0("(((", x, ")))"),
-    before = "<<", after = ">>")))
+  id <- clix$add_theme(list(
+    "span.emph" = list(fmt = function(x) paste0("(((", x, ")))")),
+    "span.emph::before" = list(content = "<<"),
+    "span.emph::after" = list(content = ">>")
+  ))
   on.exit(clix$remove_theme(id), add = TRUE)
   out <- capt(clix$text("this is {emph it}, really"), print_it = FALSE)
   expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)

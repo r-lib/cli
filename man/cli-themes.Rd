@@ -29,8 +29,8 @@ Color of headers, that are only active in paragraphs with an
 }
 
 Create a custom alert type:\preformatted{list(
-  ".alert-start" = list(before = symbol$play),
-  ".alert-stop"  = list(before = symbol$stop)
+  ".alert-start::before" = list(content = symbol$play),
+  ".alert-stop::before"  = list(content = symbol$stop)
 )
 }
 }

@@ -26,8 +26,8 @@
 #' Create a custom alert type:
 #' ```
 #' list(
-#'   ".alert-start" = list(before = symbol$play),
-#'   ".alert-stop"  = list(before = symbol$stop)
+#'   ".alert-start::before" = list(content = symbol$play),
+#'   ".alert-stop::before"  = list(content = symbol$stop)
 #' )
 #' ```
 #'
@@ -70,24 +70,33 @@ cli_default_theme <- function() {
       "text-decoration" = "underline",
       "margin-top" = 1),
 
-    ".alert" = list(
-      before = paste0(symbol$arrow_right, " ")
+    ".alert::before" = list(
+      content = paste0(symbol$arrow_right, " ")
     ),
     ".alert-success" = list(
-      before = paste0(symbol$tick, " "),
       color = "green"
     ),
+    ".alert-success::before" = list(
+      content = paste0(symbol$tick, " ")
+    ),
     ".alert-danger" = list(
-      before = paste0(symbol$cross, " "),
       color = "red"
     ),
+    ".alert-danger::before" = list(
+      content = paste0(symbol$cross, " ")
+    ),
     ".alert-warning" = list(
-      before = paste0(symbol$warning, " "),
       color = "yellow"
     ),
+    ".alert-warning::before" = list(
+      content = paste0(symbol$warning, " ")
+    ),
     ".alert-info" = list(
-      before = paste0(symbol$info, " "),
-      color = "cyan"),
+      color = "cyan"
+    ),
+    ".alert-info::before" = list(
+      content = paste0(symbol$info, " ")
+    ),
 
     par = list("margin-top" = 1, "margin-bottom" = 1),
     ul = list("list-style-type" = symbol$bullet),
@@ -100,16 +109,23 @@ cli_default_theme <- function() {
 
     span.emph = list("font-style" = "italic"),
     span.strong = list("font-weight" = "bold"),
-    span.code = list(before = "`", after = "`", color = "magenta"),
+    span.code = list(color = "magenta"),
+    "span.code::before" = list(content = "`"),
+    "span.code::after" = list(content = "`"),
 
     span.pkg = list(color = "magenta"),
-    span.fun = list(color = "magenta", after = "()"),
+    span.fun = list(color = "magenta"),
+    "span.fun::after" = list(content = "()"),
     span.arg = list(color = "magenta"),
-    span.key = list(before = "<", after = ">", color = "magenta"),
+    span.key = list(color = "magenta"),
+    "span.key::before" = list(content = "<"),
+    "span.key::after" = list(content = ">"),
     span.file = list(color = "magenta"),
     span.path = list(color = "magenta"),
     span.email = list(color = "magenta"),
-    span.url = list(before = "<", after = ">", color = "blue"),
+    span.url = list(color = "blue"),
+    "span.url::before" = list(content = "<"),
+    "span.url::after" = list(content = ">"),
     span.var = list(color = "magenta"),
     span.envvar = list(color = "magenta")
   )
@@ -117,11 +133,31 @@ cli_default_theme <- function() {
 
 #' @importFrom selectr css_to_xpath
 
+to_xpath <- function(sel) {
+  sel2 <- sub(":?:before$", "", sel)
+  sel3 <- sub(":?:after$", "", sel2)
+  css_to_xpath(sel3)
+}
+
+get_selector_mode <- function(sel) {
+  ifelse(grepl(":?:before$", sel), "before",
+         ifelse(grepl(":?:after$", sel), "after", "main"))
+}
+
 theme_create <- function(theme) {
   mtheme <- unlist(theme, recursive = FALSE, use.names = FALSE)
-  names(mtheme) <- css_to_xpath(unlist(lapply(theme, names)))
   mtheme[] <- lapply(mtheme, create_formatter)
-  mtheme
+  selectors <- unlist(lapply(theme, names))
+  res <- data.frame(
+    stringsAsFactors = FALSE,
+    selector = selectors,
+    xpath = to_xpath(selectors),
+    mode = get_selector_mode(selectors),
+    style = I(mtheme)
+  )
+
+  rownames(res) <- NULL
+  res
 }
 
 #' @importFrom crayon bold italic underline make_style combine_styles
@@ -161,7 +197,7 @@ create_formatter <- function(x) {
 cli__match_theme <- function(self, private, element_path) {
   el <- xml_find_first(private$state$doc, element_path)
   paths <- lapply(
-    names(private$theme),
+    private$theme$xpath,
     function(xp) {
       vcapply(xml_find_all(private$state$doc, xp), xml_path)
     }
@@ -172,19 +208,28 @@ cli__match_theme <- function(self, private, element_path) {
 #' @importFrom utils modifyList
 
 merge_styles <- function(old, new) {
-  modifyList(old, new)
+  old[[new$mode]] <- modifyList(as.list(old[[new$mode]]), new$style[[1]])
+  old
 }
 
-merge_embedded_styles <- function(old, new) {
-  ## margins are additive, rest is updated, counter is reset
-  top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
-  bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)
-  left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
-  right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
-  start <- new$start %||% 1L
+merge_embedded_styles <- function(oldstyle, newstyle) {
+  for (wh in c("main", "before", "after")) {
+    old <- oldstyle[[wh]]
+    new <- newstyle[[wh]]
 
-  mrg <- modifyList(old, new)
-  mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
-        "start")] <- list(top, bottom, left, right, start)
-  mrg
+    ## margins are additive, rest is updated, counter is reset
+    top <- (old$`margin-top` %||% 0L) + (new$`margin-top` %||% 0L)
+    bottom <- (old$`margin-bottom` %||% 0L) + (new$`margin-bottom` %||% 0L)
+    left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
+    right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
+    start <- new$start %||% 1L
+
+    mrg <- modifyList(old, new)
+    mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
+          "start")] <- list(top, bottom, left, right, start)
+
+    oldstyle[[wh]] <- mrg
+  }
+
+  oldstyle
 }

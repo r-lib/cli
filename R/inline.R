@@ -11,8 +11,8 @@ inline_generic <- function(self, private, class, x) {
   cli__container_start(self, private, "span", .auto_close = TRUE,
                        .envir = environment(), class = class)
   style <- private$get_style()
-  xx <- paste0(style$before, x, style$after)
-  if (!is.null(style$fmt)) xx <- style$fmt(xx)
+  xx <- paste0(style$before$content, x, style$after$content)
+  if (!is.null(style$main$fmt)) xx <- style$main$fmt(xx)
   xx
 }
 

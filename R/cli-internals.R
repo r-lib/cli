@@ -1,6 +1,6 @@
 
 cli__xtext <- function(self, private, ..., .envir, indent) {
-  style <- private$get_style()
+  style <- private$get_style()$main
   text <- private$inline(..., .envir = .envir)
   text <- ansi_strwrap(text, width = private$get_width())
   if (!is.null(style$fmt)) text <- style$fmt(text)
@@ -9,7 +9,7 @@ cli__xtext <- function(self, private, ..., .envir, indent) {
 }
 
 cli__get_width <- function(self, private) {
-  style <- private$get_style()
+  style <- private$get_style()$main
   left <- style$`margin-left` %||% 0
   right <- style$`margin-right` %||% 0
   console_width() - left - right
@@ -21,7 +21,7 @@ cli__cat <- function(self, private, lines, sep) {
 }
 
 cli__cat_ln <- function(self, private, lines, indent) {
-  style <- private$get_style()
+  style <- private$get_style()$main
 
   ## left margin
   left <- style$`margin-left` %||% 0
