@@ -25,7 +25,7 @@ test_that("default theme is valid", {
 })
 
 test_that("explicit formatter is used, and combined", {
-  id <- clix$add_theme(list(emph = list(
+  id <- clix$add_theme(list(span.emph = list(
     fmt = function(x) paste0("(((", x, ")))"),
     before = "<<", after = ">>")))
   on.exit(clix$remove_theme(id), add = TRUE)
