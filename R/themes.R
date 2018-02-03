@@ -73,29 +73,17 @@ cli_default_theme <- function() {
     ".alert::before" = list(
       content = paste0(symbol$arrow_right, " ")
     ),
-    ".alert-success" = list(
-      color = "green"
-    ),
     ".alert-success::before" = list(
-      content = paste0(symbol$tick, " ")
-    ),
-    ".alert-danger" = list(
-      color = "red"
+      content = paste0(crayon::green(symbol$tick), " ")
     ),
     ".alert-danger::before" = list(
-      content = paste0(symbol$cross, " ")
-    ),
-    ".alert-warning" = list(
-      color = "yellow"
+      content = paste0(crayon::red(symbol$cross), " ")
     ),
     ".alert-warning::before" = list(
-      content = paste0(symbol$warning, " ")
-    ),
-    ".alert-info" = list(
-      color = "cyan"
+      content = paste0(crayon::yellow(symbol$warning), " ")
     ),
     ".alert-info::before" = list(
-      content = paste0(symbol$info, " ")
+      content = paste0(crayon::cyan(symbol$info), " ")
     ),
 
     par = list("margin-top" = 1, "margin-bottom" = 1),
