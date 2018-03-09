@@ -53,7 +53,7 @@ cli_remove_theme <- function(self, private, id) {
   invisible(TRUE)
 }
 
-cli_default_theme <- function() {
+cli_builtin_theme <- function() {
   list(
     body = list(),
 
