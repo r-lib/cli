@@ -305,7 +305,7 @@ cli_class <- R6Class(
 cli_init <- function(self, private, stream, theme) {
   private$stream <- stream
   private$raw_themes <- list(
-    default = cli_default_theme(), optional = theme)
+    default = cli_builtin_theme(), optional = theme)
   private$theme <- theme_create(private$raw_themes)
   private$state <-
     list(doc = read_html("<html><body id=\"body\"></body></html>"))

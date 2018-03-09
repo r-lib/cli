@@ -19,7 +19,7 @@ test_that("add/remove/list themes", {
 
 test_that("default theme is valid", {
   expect_error({
-    id <- clix$add_theme(cli_default_theme())
+    id <- clix$add_theme(cli_builtin_theme())
     clix$remove_theme(id)
   }, NA)
 })
