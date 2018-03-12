@@ -7,9 +7,16 @@
 
 default_theme <- function() {
   list(
-    ".alert-start" = list(
-      before = paste0(symbol$arrow_right, " ")),
-    span.version = list(color = "magenta"),
-    span.timestamp = list(color = "cyan")
+    ".alert-start::before" = list(
+      content = paste0(symbol$arrow_right, " ")),
+    span.pkg = list(
+      color = "blue",
+      "font-weight" = "bold"),
+    span.version = list(color = "blue"),
+    span.timestamp = list(color = "grey"),
+    "span.timestamp::before" = list(
+      content = "["),
+    "span.timestamp::after" = list(
+      content = "]")
   )
 }
