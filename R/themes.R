@@ -38,11 +38,18 @@ cli_list_themes <- function(self, private) {
   private$raw_themes
 }
 
-cli_add_theme <- function(self, private, theme) {
+cli_add_theme <- function(self, private, theme, .auto_remove, .envir) {
   id <- new_uuid()
   private$raw_themes <-
     c(private$raw_themes, structure(list(theme), names = id))
   private$theme <- theme_create(private$raw_themes)
+  if (.auto_remove && !identical(.envir, globalenv())) {
+    defer(
+      cli_remove_theme(self, private, id),
+      envir = .envir,
+      priority = "first"
+    )
+  }
   id
 }
 

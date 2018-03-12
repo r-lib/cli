@@ -52,7 +52,7 @@ cli$alert_info(text, id = NULL, class = NULL, .envir = parent.frame())
 cli$progress_bar(...)
 
 cli$list_themes()
-cli$add_theme(theme)
+cli$add_theme(theme, .auto_remove = TRUE, .envir = parent.frame())
 cli$remove_theme(id)
 }
 }
@@ -83,6 +83,9 @@ last open container is used.
 \item \code{class}: Class of the element. This can be used in theme selectors.
 \item \code{.auto_close}: Whether to automatically close a container, when the
 caller function exits (the \code{.envir} environment is removed from the
+stack).
+\item \code{.auto_remove}: Whether to automatically remove the theme when the
+called function exits (the \code{.envir} environment is removed from the
 stack).
 \item \code{items}: Character vector, each element will be a list item.
 }
