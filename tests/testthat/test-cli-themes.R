@@ -17,6 +17,20 @@ test_that("add/remove/list themes", {
   expect_false(id %in% names(clix$list_themes()))
 })
 
+test_that("auto-remove themes", {
+  f <- function() {
+    id <- clix$add_theme(
+      list(".green" = list(color = "green")),
+      .auto_remove = TRUE)
+    on.exit(clix$remove_theme(id), add = TRUE)
+    expect_true(id %in% names(clix$list_themes()))
+    id
+  }
+
+  id <- f()
+  expect_false(id %in% names(clix$list_themes()))
+})
+
 test_that("default theme is valid", {
   expect_error({
     id <- clix$add_theme(cli_builtin_theme())
