@@ -17,9 +17,23 @@ test_that("add/remove/list themes", {
   expect_false(id %in% names(clix$list_themes()))
 })
 
+test_that("auto-remove themes", {
+  f <- function() {
+    id <- clix$add_theme(
+      list(".green" = list(color = "green")),
+      .auto_remove = TRUE)
+    on.exit(clix$remove_theme(id), add = TRUE)
+    expect_true(id %in% names(clix$list_themes()))
+    id
+  }
+
+  id <- f()
+  expect_false(id %in% names(clix$list_themes()))
+})
+
 test_that("default theme is valid", {
   expect_error({
-    id <- clix$add_theme(cli_default_theme())
+    id <- clix$add_theme(cli_builtin_theme())
     clix$remove_theme(id)
   }, NA)
 })
@@ -33,4 +47,12 @@ test_that("explicit formatter is used, and combined", {
   on.exit(clix$remove_theme(id), add = TRUE)
   out <- capt(clix$text("this is {emph it}, really"), print_it = FALSE)
   expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)
+})
+
+test_that("default theme", {
+  def <- default_theme()
+  expect_true(is.list(def))
+  expect_false(is.null(names(def)))
+  expect_true(all(names(def) != ""))
+  expect_true(all(vlapply(def, is.list)))
 })

@@ -51,7 +51,7 @@ cli <- NULL
 #' cli$progress_bar(...)
 #'
 #' cli$list_themes()
-#' cli$add_theme(theme)
+#' cli$add_theme(theme, .auto_remove = TRUE, .envir = parent.frame())
 #' cli$remove_theme(id)
 #' ```
 #'
@@ -79,6 +79,9 @@ cli <- NULL
 #' * `class`: Class of the element. This can be used in theme selectors.
 #' * `.auto_close`: Whether to automatically close a container, when the
 #'   caller function exits (the `.envir` environment is removed from the
+#'   stack).
+#' * `.auto_remove`: Whether to automatically remove the theme when the
+#'   called function exits (the `.envir` environment is removed from the
 #'   stack).
 #' * `items`: Character vector, each element will be a list item.
 #'
@@ -157,8 +160,8 @@ cli_class <- R6Class(
     ## Themes
     list_themes = function()
       cli_list_themes(self, private),
-    add_theme = function(theme)
-      cli_add_theme(self, private, theme),
+    add_theme = function(theme, .auto_remove = TRUE, .envir = parent.frame())
+      cli_add_theme(self, private, theme, .auto_remove, .envir),
     remove_theme = function(id)
       cli_remove_theme(self, private, id),
 
@@ -305,7 +308,7 @@ cli_class <- R6Class(
 cli_init <- function(self, private, stream, theme) {
   private$stream <- stream
   private$raw_themes <- list(
-    default = cli_default_theme(), optional = theme)
+    default = cli_builtin_theme(), optional = theme)
   private$theme <- theme_create(private$raw_themes)
   private$state <-
     list(doc = read_html("<html><body id=\"body\"></body></html>"))
