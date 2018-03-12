@@ -48,3 +48,11 @@ test_that("explicit formatter is used, and combined", {
   out <- capt(clix$text("this is {emph it}, really"), print_it = FALSE)
   expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)
 })
+
+test_that("default theme", {
+  def <- default_theme()
+  expect_true(is.list(def))
+  expect_false(is.null(names(def)))
+  expect_true(all(names(def) != ""))
+  expect_true(all(vlapply(def, is.list)))
+})
