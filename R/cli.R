@@ -42,11 +42,16 @@ cli <- NULL
 #' cli$it(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
 #'        .envir = parent.frame())
 #'
-#' cli$alert(text, id = NULL, class = NULL, .envir = parent.frame())
-#' cli$alert_success(text, id = NULL, class = NULL, .envir = parent.frame())
-#' cli$alert_danger(text, id = NULL, class = NULL, .envir = parent.frame())
-#' cli$alert_warning(text, id = NULL, class = NULL, .envir = parent.frame())
-#' cli$alert_info(text, id = NULL, class = NULL, .envir = parent.frame())
+#' cli$alert(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' cli$alert_success(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' cli$alert_danger(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' cli$alert_warning(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
+#' cli$alert_info(text, id = NULL, class = NULL, wrap = FALSE,
+#'        .envir = parent.frame())
 #'
 #' cli$progress_bar(...)
 #'
@@ -77,6 +82,8 @@ cli <- NULL
 #'   For `$end()` it is the id of the container to close. If omitted, the
 #'   last open container is used.
 #' * `class`: Class of the element. This can be used in theme selectors.
+#' * `wrap`: Whether to wrap the text of the alert, if longer than the
+#'    screen width.
 #' * `.auto_close`: Whether to automatically close a container, when the
 #'   caller function exits (the `.envir` environment is removed from the
 #'   stack).
@@ -233,23 +240,25 @@ cli_class <- R6Class(
       cli_table(self, private, cells, class),
 
     ## Alerts
-    alert = function(text, id = NULL, class = NULL, .envir = parent.frame())
-      cli_alert(self, private, "alert", text, id, class, .envir = .envir),
-    alert_success = function(text, id = NULL, class = NULL,
-                             .envir = parent.frame())
-      cli_alert(self, private, "alert-success", text, id, class,
+    alert = function(text, id = NULL, class = NULL, wrap = FALSE,
+                     .envir = parent.frame())
+      cli_alert(self, private, "alert", text, id, class, wrap,
                 .envir = .envir),
-    alert_danger = function(text, id = NULL, class = NULL,
+    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE,
+                             .envir = parent.frame())
+      cli_alert(self, private, "alert-success", text, id, class, wrap,
+                .envir = .envir),
+    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE,
                             .envir = parent.frame())
-      cli_alert(self, private, "alert-danger", text, id, class,
+      cli_alert(self, private, "alert-danger", text, id, class, wrap,
                 .envir = .envir),
-    alert_warning = function(text, id = NULL, class = NULL,
+    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE,
                              .envir = parent.frame())
-      cli_alert(self, private, "alert-warning", text, id, class,
+      cli_alert(self, private, "alert-warning", text, id, class, wrap,
                 .envir = .envir),
-    alert_info = function(text, id = NULL, class = NULL,
+    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE,
                           .envir = parent.frame())
-      cli_alert(self, private, "alert-info", text, id, class,
+      cli_alert(self, private, "alert-info", text, id, class, wrap,
                 .envir = .envir),
 
     ## Progress bars
@@ -386,14 +395,16 @@ cli_table <- function(self, private, cells, id, class) {
 
 ## Alerts -----------------------------------------------------------
 
-cli_alert <- function(self, private, type, text, id, class, .envir) {
+cli_alert <- function(self, private, type, text, id, class, wrap, .envir) {
   cli__container_start(self, private, "div", id = id,
                        class = paste(class, "alert", type),
                        .auto_close = TRUE, .envir = environment())
   text <- private$inline(text, .envir = .envir)
   style <- private$get_style()
-  text[1] <- paste0(style$before$content, text[1], style$after$content)
+  text[1] <- paste0(style$before$content, text[1])
+  text[length(text)] <- paste0(text[length(text)], style$after$content)
   if (is.function(style$main$fmt)) text <- style$main$fmt(text)
+  if (wrap) text <- ansi_strwrap(text, exdent = 2)
   private$cat_ln(text)
   invisible(self)
 }

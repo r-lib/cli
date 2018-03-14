@@ -43,11 +43,16 @@ cli$dl(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
 cli$it(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
        .envir = parent.frame())
 
-cli$alert(text, id = NULL, class = NULL, .envir = parent.frame())
-cli$alert_success(text, id = NULL, class = NULL, .envir = parent.frame())
-cli$alert_danger(text, id = NULL, class = NULL, .envir = parent.frame())
-cli$alert_warning(text, id = NULL, class = NULL, .envir = parent.frame())
-cli$alert_info(text, id = NULL, class = NULL, .envir = parent.frame())
+cli$alert(text, id = NULL, class = NULL, wrap = FALSE,
+       .envir = parent.frame())
+cli$alert_success(text, id = NULL, class = NULL, wrap = FALSE,
+       .envir = parent.frame())
+cli$alert_danger(text, id = NULL, class = NULL, wrap = FALSE,
+       .envir = parent.frame())
+cli$alert_warning(text, id = NULL, class = NULL, wrap = FALSE,
+       .envir = parent.frame())
+cli$alert_info(text, id = NULL, class = NULL, wrap = FALSE,
+       .envir = parent.frame())
 
 cli$progress_bar(...)
 
@@ -81,6 +86,8 @@ theme selectors, and also in \code{$end()} methods.
 For \code{$end()} it is the id of the container to close. If omitted, the
 last open container is used.
 \item \code{class}: Class of the element. This can be used in theme selectors.
+\item \code{wrap}: Whether to wrap the text of the alert, if longer than the
+screen width.
 \item \code{.auto_close}: Whether to automatically close a container, when the
 caller function exits (the \code{.envir} environment is removed from the
 stack).
