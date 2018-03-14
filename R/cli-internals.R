@@ -49,7 +49,7 @@ cli__cat_ln <- function(self, private, lines, indent) {
 
 cli__vspace <- function(self, private, n) {
   if (private$margin < n) {
-    cat(strrep("\n", n - private$margin), sep = "")
+    cat(strrep("\n", n - private$margin), file = private$stream, sep = "")
     private$margin <- n
   }
 }
