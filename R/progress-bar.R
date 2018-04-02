@@ -2,7 +2,7 @@
 #' @importFrom progress progress_bar
 
 cli_progress_bar <- function(self, private, ...) {
-  stream <- private$stream
+  stream <- stderr()
   if (!nzchar(stream)) stream <- stdout()
   bar <- progress_bar$new(..., stream = stream,
     width = private$get_width())

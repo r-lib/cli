@@ -6,21 +6,21 @@ test_that("headers", {
   clix$div(class = "testcli", theme = test_style())
 
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
-    out <- capt(clix$h1("HEADER"), print_it = FALSE)
+    out <- capt0(clix$h1("HEADER"))
     expect_true(crayon::has_style(out))
-    expect_equal(crayon::strip_style(out), "\nHEADER\n")
+    expect_equal(crayon::strip_style(out), "\nHEADER\n\n")
 
-    out <- capt(clix$h2("Header"), print_it = FALSE)
+    out <- capt0(clix$h2("Header"))
+    expect_true(crayon::has_style(out))
+    expect_equal(crayon::strip_style(out), "Header\n\n")
+
+    out <- capt0(clix$h3("Header"))
     expect_true(crayon::has_style(out))
     expect_equal(crayon::strip_style(out), "Header\n")
 
-    out <- capt(clix$h3("Header"), print_it = FALSE)
-    expect_true(crayon::has_style(out))
-    expect_equal(crayon::strip_style(out), "Header")
-
     x <- "foobar"
     xx <- 100
-    out <- capt(clix$h2("{xx}. header: {x}"), print_it = FALSE)
-    expect_equal(crayon::strip_style(out), "\n100. header: foobar\n")
+    out <- capt0(clix$h2("{xx}. header: {x}"))
+    expect_equal(crayon::strip_style(out), "\n100. header: foobar\n\n")
   })
 })

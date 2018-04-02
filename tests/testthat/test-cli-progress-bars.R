@@ -6,7 +6,7 @@ test_that("progress bars", {
 
   withr::with_options(
     list(cli.width = 40, crayon.enabled = FALSE, crayon.colors = 1), {
-    out <- capt({
+    out <- capt0({
       clix$verbatim("so far so good: {x}")
       bar <- clix$progress_bar(total = 5, force = TRUE, show_after = 0)
       bar$tick()
@@ -17,7 +17,7 @@ test_that("progress bars", {
       bar$tick()
       bar$tick()
       clix$verbatim("aaaaand we are done")
-    }, print_it = FALSE)
+    })
   })
 
   out <- strsplit(out, "\n", fixed = TRUE)[[1]]

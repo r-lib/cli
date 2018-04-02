@@ -27,7 +27,7 @@ test_that("viapply", {
 })
 
 test_that("ruler", {
-  out <- capt0(ruler(20))
+  out <- capt00(ruler(20))
   exp <- rebox(
     "----+----1----+----2",
     "12345678901234567890"

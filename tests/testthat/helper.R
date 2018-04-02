@@ -3,13 +3,26 @@ rule_class <- function(x) {
   structure(x, class = c("rule", "character"))
 }
 
+capture_messages <- function(expr) {
+  msgs <- character()
+  i <- 0
+  suppressMessages(withCallingHandlers(
+    expr,
+    message = function(e) msgs[[i <<- i + 1]] <<- conditionMessage(e)))
+  paste0(msgs, collapse = "")
+}
+
 capt <- function(expr, print_it = TRUE) {
   pr <- if (print_it) print else identity
   paste(capture.output(pr(expr)), collapse = "\n")
 }
 
+capt00 <- function(expr) {
+  capt(expr, print_it = FALSE)
+}
+
 capt0 <- function(expr) {
-  paste(capture.output(expr), collapse = "\n")
+  capture_messages(expr)
 }
 
 capt_cat <- function(expr) {
@@ -103,4 +116,4 @@ chartr <- function(old, new, x) {
   x
 }
 
-clix <- cli_class$new(stream = "", theme = NULL)
+clix <- cli_class$new(theme = NULL)

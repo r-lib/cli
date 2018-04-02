@@ -24,7 +24,7 @@ test_that("inline classes", {
     withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
       txt <- glue::glue("This is {<class> it} really",
                         .open = "<", .close = ">")
-      out <- capt(clix$text(txt), print_it = FALSE)
+      out <- capt0(clix$text(txt))
       expect_true(crayon::has_style(out))
       expect_match(crayon::strip_style(out), "<<<it>>>", info = class)
       expect_match(out, start(crayon::make_style("cyan")), fixed = TRUE, info = class)
