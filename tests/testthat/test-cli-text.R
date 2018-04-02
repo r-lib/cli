@@ -6,8 +6,9 @@ test_that("text is wrapped", {
   clix$div(class = "testcli", theme = test_style())
 
   withr::with_options(c(cli.width = 60), {
-    capt(clix$h1("Header"))
-    out <- capt(clix$text(lorem_ipsum()), print_it = FALSE)
+    capt0(clix$h1("Header"))
+    out <- capt0(clix$text(lorem_ipsum()))
+    out <- strsplit(out, "\n")[[1]]
     len <- nchar(strsplit(out, "\n", fixed = TRUE)[[1]])
     expect_true(all(len <= 60))
   })
@@ -18,10 +19,10 @@ test_that("verbatim text is not wrapped", {
   clix$div(class = "testcli", theme = test_style())
 
   withr::with_options(c(cli.width = 60), {
-    capt(clix$h1("Header"))
+    capt0(clix$h1("Header"))
     txt <- strrep("1234567890 ", 20)
-    out <- capt(clix$verbatim(txt), print_it = FALSE)
-    expect_equal(out, txt)
+    out <- capt0(clix$verbatim(txt))
+    expect_equal(out, paste0(txt, "\n"))
   })
 })
 

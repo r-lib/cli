@@ -7,9 +7,9 @@ test_that("add/remove/list themes", {
   expect_true(id %in% names(clix$list_themes()))
 
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
-    capt(clix$par(class = "green"))
-    out <- capt(clix$text(lorem_ipsum()), print_it = FALSE)
-    capt(clix$end())
+    capt0(clix$par(class = "green"))
+    out <- capt0(clix$text(lorem_ipsum()))
+    capt0(clix$end())
     expect_true(grepl(start(crayon::make_style("green")), out, fixed = TRUE))
   })
 
@@ -45,7 +45,7 @@ test_that("explicit formatter is used, and combined", {
     "span.emph::after" = list(content = ">>")
   ))
   on.exit(clix$remove_theme(id), add = TRUE)
-  out <- capt(clix$text("this is {emph it}, really"), print_it = FALSE)
+  out <- capt0(clix$text("this is {emph it}, really"))
   expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)
 })
 

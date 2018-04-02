@@ -15,8 +15,8 @@ cli__get_width <- function(self, private) {
   console_width() - left - right
 }
 
-cli__cat <- function(self, private, lines, sep) {
-  cat(lines, file = private$stream, sep = sep)
+cli__cat <- function(self, private, lines) {
+  message(lines, appendLF = FALSE)
   private$margin <- 0
 }
 
@@ -41,7 +41,7 @@ cli__cat_ln <- function(self, private, lines, indent) {
 
   bar <- private$get_progress_bar()
   if (is.null(bar)) {
-    cat(lines, file = private$stream, sep = "\n")
+    message(paste0(lines, "\n"), appendLF = FALSE)
   } else {
     bar$message(lines, set_width = FALSE)
   }
@@ -49,7 +49,7 @@ cli__cat_ln <- function(self, private, lines, indent) {
 
 cli__vspace <- function(self, private, n) {
   if (private$margin < n) {
-    cat(strrep("\n", n - private$margin), file = private$stream, sep = "")
+    message(strrep("\n", n - private$margin), appendLF = FALSE)
     private$margin <- n
   }
 }

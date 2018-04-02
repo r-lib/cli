@@ -18,7 +18,7 @@ cli <- NULL
 #'
 #' @section Usage:
 #' ```
-#' cli <- cli_class$new(stream = "", theme = getOption("cli.theme"))
+#' cli <- cli_class$new(theme = getOption("cli.theme"))
 #'
 #' cli$text(..., .envir = parent.frame())
 #' cli$verbatim(..., .envir = parent.frame())
@@ -61,9 +61,6 @@ cli <- NULL
 #' ```
 #'
 #' @section Arguments:
-#' * `stream`: The connection to print the output to. The default is `""`,
-#'   which means the standard output of the R process, unless it is
-#'   redirected by [base::sink()].
 #' * `theme`: A named list representing a theme. See more in at
 #'   [cli-themes].
 #' * `...`: For `$text()` and `$verbatim()` it is concatenated to a
@@ -161,8 +158,8 @@ cli <- NULL
 cli_class <- R6Class(
   "cli_class",
   public = list(
-    initialize = function(stream = stdout(), theme = getOption("cli.theme"))
-      cli_init(self, private, stream, theme),
+    initialize = function(theme = getOption("cli.theme"))
+      cli_init(self, private, theme),
 
     ## Themes
     list_themes = function()
@@ -270,7 +267,6 @@ cli_class <- R6Class(
   ),
 
   private = list(
-    stream = NULL,
     raw_themes = NULL,
     theme = NULL,
     margin = 0,
@@ -296,8 +292,8 @@ cli_class <- R6Class(
 
     get_width = function()
       cli__get_width(self, private),
-    cat = function(lines, sep = "")
-      cli__cat(self, private, lines, sep),
+    cat = function(lines)
+      cli__cat(self, private, lines),
     cat_ln = function(lines, indent = 0)
       cli__cat_ln(self, private, lines, indent),
 
@@ -314,8 +310,7 @@ cli_class <- R6Class(
 
 #' @importFrom xml2 read_html xml_find_first
 
-cli_init <- function(self, private, stream, theme) {
-  private$stream <- stream
+cli_init <- function(self, private, theme) {
   private$raw_themes <- list(
     default = cli_builtin_theme(), optional = theme)
   private$theme <- theme_create(private$raw_themes)
