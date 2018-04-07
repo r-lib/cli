@@ -107,3 +107,7 @@ new_uuid <- (function() {
 na.omit <- function(x) {
   if (is.atomic(x)) x[!is.na(x)] else x
 }
+
+env_set <- function(env) {
+  !is.na(Sys.getenv(env, NA_character_))
+}

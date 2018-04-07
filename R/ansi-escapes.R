@@ -117,12 +117,16 @@ ansi$scroll_down <- function() paste0(ESC, "T")
 ansi$clear_screen <- function() "\u001Bc"
 ansi$beep <- function() BEL
 
-ansi$link <- function(text, url) {
+ansi$link <- function(text, url, stream = stderr()) {
   assert_that(
     is_string(text),
     is_string(url))
 
-  paste0(OSC, "8", SEP, SEP, url, BEL, text, OSC, "8", SEP, SEP, BEL)
+  if (supports_hyperlinks(stream)) {
+    paste0(OSC, "8", SEP, SEP, url, BEL, text, OSC, "8", SEP, SEP, BEL)
+  } else {
+    paste0(text, " (", url, ")")
+  }
 }
 
 #' @importFrom  base64enc base64encode
