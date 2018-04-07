@@ -19,7 +19,7 @@ package is loaded. You can use it to create a consistent command line
 interface.
 }
 \section{Usage}{
-\preformatted{cli <- cli_class$new(stream = "", theme = getOption("cli.theme"))
+\preformatted{cli <- cli_class$new(theme = getOption("cli.theme"))
 
 cli$text(..., .envir = parent.frame())
 cli$verbatim(..., .envir = parent.frame())
@@ -65,9 +65,6 @@ cli$remove_theme(id)
 \section{Arguments}{
 
 \itemize{
-\item \code{stream}: The connection to print the output to. The default is \code{""},
-which means the standard output of the R process, unless it is
-redirected by \code{\link[base:sink]{base::sink()}}.
 \item \code{theme}: A named list representing a theme. See more in at
 \link{cli-themes}.
 \item \code{...}: For \code{$text()} and \code{$verbatim()} it is concatenated to a
