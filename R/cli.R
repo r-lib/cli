@@ -334,8 +334,6 @@ cli_init <- function(self, private, theme) {
 
 ## Text -------------------------------------------------------------
 
-#' @importFrom ansistrings ansi_strwrap
-
 cli_text <- function(self, private, ..., .envir) {
   private$xtext(..., .envir = .envir)
 }
@@ -390,6 +388,8 @@ cli_table <- function(self, private, cells, id, class) {
 
 ## Alerts -----------------------------------------------------------
 
+#' @importFrom fansi strwrap_ctl
+
 cli_alert <- function(self, private, type, text, id, class, wrap, .envir) {
   cli__container_start(self, private, "div", id = id,
                        class = paste(class, "alert", type),
@@ -399,7 +399,7 @@ cli_alert <- function(self, private, type, text, id, class, wrap, .envir) {
   text[1] <- paste0(style$before$content, text[1])
   text[length(text)] <- paste0(text[length(text)], style$after$content)
   if (is.function(style$main$fmt)) text <- style$main$fmt(text)
-  if (wrap) text <- ansi_strwrap(text, exdent = 2)
+  if (wrap) text <- strwrap_ctl(text, exdent = 2)
   private$cat_ln(text)
   invisible(self)
 }

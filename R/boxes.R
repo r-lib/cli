@@ -98,7 +98,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  width = console_width()) {
 
   label <- apply_style(as.character(label), col)
-  widest <- max(col_nchar(label), 0)
+  widest <- max(nchar_ctl(label), 0)
 
   assert_that(is_border_style(border_style))
   assert_that(is_padding_or_margin(padding))
@@ -143,7 +143,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
   side <- color_border(chars$vertical)
 
   pad_left <- make_space(padding[2])
-  pad_right <- make_space(content_width - col_nchar(label) - padding[2])
+  pad_right <- make_space(content_width - nchar_ctl(label) - padding[2])
   middle <- paste0(mar_left, side,
                    color_content(paste0(pad_left, label, pad_right)), side)
 

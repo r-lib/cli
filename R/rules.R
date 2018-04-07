@@ -6,7 +6,7 @@ make_line <- function(x, char = symbol$line, col = NULL) {
   ## Easiest to handle this specially
   if (x <= 0) return("")
 
-  cw <- col_nchar(char, "width")
+  cw <- nchar_ctl(char, "width")
 
   ## We handle the simple case differently, to make it faster
   if (cw == 1) {
@@ -160,13 +160,13 @@ rule_line <- function(o) {
   make_line(o$width, o$line, o$line_col)
 }
 
-#' @importFrom crayon col_nchar
+#' @importFrom fansi nchar_ctl
 
 rule_center <- function(o) {
 
   o$center <- col_substring(o$center, 1, o$width - 4)
   o$center <- paste0(" ", o$center, " ")
-  ncc <- col_nchar(o$center, "width")
+  ncc <- nchar_ctl(o$center, "width")
 
   ndashes <- o$width - ncc
 
@@ -178,7 +178,7 @@ rule_center <- function(o) {
 }
 
 rule_left <- function(o) {
-  ncl <- col_nchar(o$left, "width")
+  ncl <- nchar_ctl(o$left, "width")
 
   paste0(
     make_line(2, get_line_char(o$line), o$line_col),
@@ -188,7 +188,7 @@ rule_left <- function(o) {
 }
 
 rule_right <- function(o) {
-  ncr <- col_nchar(o$right, "width")
+  ncr <- nchar_ctl(o$right, "width")
 
   paste0(
     make_line(o$width - ncr - 4, o$line, o$line_col),
@@ -199,8 +199,8 @@ rule_right <- function(o) {
 
 rule_left_right <- function(o) {
 
-  ncl <- col_nchar(o$left, "width")
-  ncr <- col_nchar(o$right,  "width")
+  ncl <- nchar_ctl(o$left, "width")
+  ncr <- nchar_ctl(o$right,  "width")
 
   ## -- (ncl) -- (ncr) --
   if (ncl + ncr + 10 > o$width) return(rule_left(o))
