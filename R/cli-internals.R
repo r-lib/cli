@@ -1,8 +1,10 @@
 
+#' @importFrom fansi strwrap_ctl
+
 cli__xtext <- function(self, private, ..., .envir, indent) {
   style <- private$get_style()$main
   text <- private$inline(..., .envir = .envir)
-  text <- ansi_strwrap(text, width = private$get_width())
+  text <- strwrap_ctl(text, width = private$get_width())
   if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text, indent = indent)
   invisible(self)
