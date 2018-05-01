@@ -62,7 +62,8 @@ cli__container_end <- function(self, private, id) {
 
   ## Remove the whole subtree of 'cnt', pointer is on its parent
   private$state$current <- xml_parent(cnt)
-  xml_remove(cnt)
+  xml_remove(cnt, free = TRUE)
+  rm(cnt)
 
   ## Bottom margin
   del_from <- match(id, names(private$state$matching_styles))
