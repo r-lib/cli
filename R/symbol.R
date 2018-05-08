@@ -1,4 +1,3 @@
-
 #' Various handy symbols to use in a command line UI
 #'
 #' @usage
@@ -15,10 +14,10 @@
 #' @export symbol
 #'
 #' @examples
-#' cat(symbol$check, " SUCCESS\n", symbol$cross, " FAILURE\n", sep="")
+#' cat(symbol$tick, " SUCCESS\n", symbol$cross, " FAILURE\n", sep = "")
 #'
 #' ## All symbols
-#' cat(paste(format(names(symbol), width=20),
+#' cat(paste(format(names(symbol), width = 20),
 #'   unlist(symbol)), sep = "\n")
 NULL
 
