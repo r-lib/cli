@@ -9,7 +9,13 @@ cli <- NULL
   pkgenv <- environment(dummy)
   makeActiveBinding(
     "symbol",
-    function() if (is_utf8_output()) symbol_utf8 else symbol_win,
+    function() if (is_utf8_output()) {
+      symbol_utf8
+    } else if (Sys.info()[["sysname"]] == "Linux") {
+      symbol_bytes
+    } else {
+      symbol_win
+    },
     pkgenv
   )
 
