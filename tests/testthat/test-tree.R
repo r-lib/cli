@@ -40,4 +40,24 @@ test_that("tree", {
     "└─rprojroot",
     "  └─backports")
   expect_equal(out, exp)
+
+  # Check that trees with apparent circularity error nicely
+  data <- data.frame(
+    stringsAsFactors = FALSE,
+    X = c("a", "b", "c","d", "e", "f", "g", "h", "j"),
+    Y = I(list(
+      c("b", "e", "f"),
+      c("d", "g"),
+      character(0),
+      c("a", "h"),
+      character(0),
+      character(0),
+      character(0),
+      c("j"),
+      character(0)
+    ))
+  )
+
+  expect_warning(tree(data), "Endless loop found in tree: a -> b -> d -> a")
+
 })
