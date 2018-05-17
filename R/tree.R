@@ -67,7 +67,7 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
   labels <- if (ncol(data) >= 3) data[[3]] else data[[1]]
   res <- character()
 
-  pt <- function(root, n = integer(), mx = integer()) {
+  pt <- function(root, n = integer(), mx = integer(), used = character()) {
 
     num_root <- match(root, data[[1]])
 
@@ -88,9 +88,15 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
 
     res <<- c(res, paste0(paste(prefix, collapse = ""), labels[[num_root]]))
 
-    children <- data[[2]][[num_root]]
-    for (d in seq_along(children)) {
-      pt(children[[d]], c(n, d), c(mx, length(children)))
+    if (root %in% used) {
+      warning(call. = FALSE,
+              "Endless loop found in tree: ",
+              paste0(c(used, root), collapse = " -> "))
+    } else {
+      children <- data[[2]][[num_root]]
+      for (d in seq_along(children)) {
+        pt(children[[d]], c(n, d), c(mx, length(children)), c(used, root))
+      }
     }
   }
 
