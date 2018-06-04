@@ -16,7 +16,14 @@ inline_generic <- function(self, private, class, x) {
   xx
 }
 
-#' @importFrom glue collapse
+collapse <- function(...) {
+  glue_ver <- package_version(getNamespaceVersion(asNamespace("glue")))
+  if (glue_ver <= package_version("1.2.0")) {
+    getNamespace("glue")$collapse(...)
+  } else  {
+    getNamespace("glue")$glue_collapse(...)
+  }
+}
 
 inline_transformer <- function(code, envir) {
   res <- tryCatch(
