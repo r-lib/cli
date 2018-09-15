@@ -1,7 +1,5 @@
 
-# 1.0.0.9000
-
-* Integrated CLI output, using `cli_class` and `cli`
+# devel
 
 # 1.0.0
 
