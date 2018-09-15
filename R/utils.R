@@ -87,6 +87,7 @@ tail_na <- function(x, n = 1) {
 }
 
 #' @importFrom crayon col_substr
+#' @importFrom utils head
 
 dedent <- function(x, n = 2) {
   first_n_char <- strsplit(col_substr(x, 1, n), "")[[1]]

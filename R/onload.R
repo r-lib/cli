@@ -12,9 +12,6 @@ cli <- NULL
     function() if (is_utf8_output()) symbol_utf8 else symbol_win,
     pkgenv
   )
-
-  cli <- cli_class$new()
-  assign("cli", cli, envir = pkgenv)
 }
 
 ## nocov end

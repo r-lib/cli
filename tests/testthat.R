@@ -7,12 +7,12 @@ library(cli)
 
 withr::with_options(
   list(cli.unicode = FALSE),
-  test_check("cli", reporter = "summary")
+  test_check("cli")
 )
 
 withr::with_options(
   list(cli.unicode = TRUE),
-  test_check("cli", reporter = "summary")
+  test_check("cli")
 )
 
 has_locale <- function(l) {
@@ -28,6 +28,6 @@ has_locale <- function(l) {
 if (l10n_info()$`UTF-8` && has_locale("en_US.ISO8859-1")) {
   withr::with_locale(
     c(LC_CTYPE = "en_US.ISO8859-1"),
-    test_check("cli", reporter = "summary")
+    test_check("cli")
   )
 }

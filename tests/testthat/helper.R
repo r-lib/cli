@@ -115,5 +115,3 @@ chartr <- function(old, new, x) {
   }
   x
 }
-
-clix <- cli_class$new(theme = NULL)

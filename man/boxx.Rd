@@ -8,9 +8,9 @@
 list_border_styles()
 
 boxx(label, border_style = "single", padding = 1, margin = 0,
-  float = c("left", "center", "right"), col = NULL, background_col = NULL,
-  border_col = col, align = c("left", "center", "right"),
-  width = console_width())
+  float = c("left", "center", "right"), col = NULL,
+  background_col = NULL, border_col = col, align = c("left",
+  "center", "right"), width = console_width())
 }
 \arguments{
 \item{label}{Label to show, a character vector. Each element will be

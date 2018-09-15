@@ -4,7 +4,8 @@
 \alias{tree}
 \title{Draw a tree}
 \usage{
-tree(data, root = data[[1]][[1]], style = NULL, width = console_width())
+tree(data, root = data[[1]][[1]], style = NULL,
+  width = console_width())
 }
 \arguments{
 \item{data}{Data frame that contains the tree structure.
