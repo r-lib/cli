@@ -28,6 +28,10 @@ is_latex_output <- function() {
   get("is_latex_output", asNamespace("knitr"))()
 }
 
+is_windows <-  function() {
+  .Platform$OS.type == "windows"
+}
+
 apply_style <- function(text, style, bg = FALSE) {
   if (identical(text, ""))
     return(text)
