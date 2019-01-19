@@ -7,7 +7,7 @@
 #' @param ... For `cat_line()` and `cat_bullet()`, paste'd together with
 #'   `collapse = "\n"`. For `cat_rule()` and `cat_boxx()` passed on to
 #'   [rule()] and [boxx()] respectively.
-#' @param bullet Name of bullet character. Indexes into [symbols]
+#' @param bullet Name of bullet character. Indexes into [symbol]
 #' @param col,background_col,bullet_col Colours for text, background, and
 #'   bullets respectively.
 #' @param x An object to print.

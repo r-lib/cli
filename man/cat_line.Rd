@@ -29,7 +29,7 @@ bullets respectively.}
 
 \item{file}{Output destination. Defaults to standard output.}
 
-\item{bullet}{Name of bullet character. Indexes into \link{symbols}}
+\item{bullet}{Name of bullet character. Indexes into \link{symbol}}
 
 \item{x}{An object to print.}
 }

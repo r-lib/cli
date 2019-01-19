@@ -11,7 +11,7 @@ Flag, whether cli uses UTF-8 characters.
 }
 \description{
 UTF-8 cli characters can be turned on by setting the \code{cli.unicode}
-option to \code{TRUE}. They can be turned on by setting if to \code{FALSE}.
+option to \code{TRUE}. They can be turned off by setting if to \code{FALSE}.
 If this option is not set, then \code{\link[base:l10n_info]{base::l10n_info()}} is used to detect
 UTF-8 support.
 }
