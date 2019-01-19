@@ -12,7 +12,9 @@ cli <- NULL
     function() {
       ## If `cli.unicode` is set we use that
       opt <- getOption("cli.unicode",  NULL)
-      if (!is.null(opt)) return(isTRUE(opt))
+      if (!is.null(opt)) {
+        if (isTRUE(opt)) return(symbol_utf8) else return(symbol_ascii)
+      }
 
       ## Otherwise we try to auto-detect
       if (is_utf8_output()) {
