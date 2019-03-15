@@ -1,6 +1,9 @@
 
 # devel
 
+* New is_dynamic_tty() function detects if `\r` should be used for a
+  stream (#62).
+
 * Now `symbol` always uses ASCII symbols when the `cli.unicode` option is
   set to `FALSE`.
 
