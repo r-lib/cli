@@ -17,16 +17,14 @@ on systems that do not support them.
 
 ---
 
--   [Installation](#installation)
--   [Usage](#usage)
-    -   [Unicode characters](#unicode-characters)
-    -   [Spinners](#spinners)
-    -   [Rules](#rules)
-    -   [Boxes](#boxes)
-    -   [Trees](#trees)
--   [License](#license)
-
----
+  - [Installation](#installation)
+  - [Usage](#usage)
+      - [Unicode characters](#unicode-characters)
+      - [Spinners](#spinners)
+      - [Rules](#rules)
+      - [Boxes](#boxes)
+      - [Trees](#trees)
+  - [License](#license)
 
 # Installation
 
@@ -53,40 +51,42 @@ library(cli)
 Inspired by (and mostly copied from) the
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
 
-    #> ✔    tick                      ☐ checkbox_off           
-    #> ✖    cross                     ⓧ checkbox_circle_on     
-    #> ★    star                      Ⓘ checkbox_circle_off    
-    #> ▇    square                    ❓ fancy_question_mark    
-    #> ◻    square_small              ≠ neq                    
-    #> ◼    square_small_filled       ≥ geq                    
-    #> ◯    circle                    ≤ leq                    
-    #> ◉    circle_filled             × times                  
-    #> ◌    circle_dotted             ▔ upper_block_1          
-    #> ◎    circle_double             ▀ upper_block_4          
-    #> ⓞ    circle_circle             ▁ lower_block_1          
-    #> ⓧ    circle_cross              ▂ lower_block_2          
-    #> Ⓘ    circle_pipe               ▃ lower_block_3          
-    #> ?⃝   circle_question_mark      ▄ lower_block_4          
-    #> ●    bullet                    ▅ lower_block_5          
-    #> ․    dot                       ▆ lower_block_6          
-    #> ─    line                      ▇ lower_block_7          
-    #> ═    double_line               █ lower_block_8          
-    #> …    ellipsis                  █ full_block             
-    #> …    continue                  ⁰ sup_0                  
-    #> ❯    pointer                   ¹ sup_1                  
-    #> ℹ    info                      ² sup_2                  
-    #> ⚠    warning                   ³ sup_3                  
-    #> ☰    menu                      ⁴ sup_4                  
-    #> ☺    smiley                    ⁵ sup_5                  
-    #> ෴    mustache                  ⁶ sup_6                  
-    #> ♥    heart                     ⁷ sup_7                  
-    #> ↑    arrow_up                  ⁸ sup_8                  
-    #> ↓    arrow_down                ⁹ sup_9                  
-    #> ←    arrow_left                ⁻ sup_minus              
-    #> →    arrow_right               ⁺ sup_plus               
-    #> ◉    radio_on                  ▶ play                   
-    #> ◯    radio_off                 ■ stop                   
-    #> ☒    checkbox_on               ● record
+    #> ✔    tick                      Ⓘ checkbox_circle_off    
+    #> ✖    cross                     ❓ fancy_question_mark    
+    #> ★    star                      ≠ neq                    
+    #> ▇    square                    ≥ geq                    
+    #> ◻    square_small              ≤ leq                    
+    #> ◼    square_small_filled       × times                  
+    #> ◯    circle                    ▔ upper_block_1          
+    #> ◉    circle_filled             ▀ upper_block_4          
+    #> ◌    circle_dotted             ▁ lower_block_1          
+    #> ◎    circle_double             ▂ lower_block_2          
+    #> ⓞ    circle_circle             ▃ lower_block_3          
+    #> ⓧ    circle_cross              ▄ lower_block_4          
+    #> Ⓘ    circle_pipe               ▅ lower_block_5          
+    #> ?⃝   circle_question_mark      ▆ lower_block_6          
+    #> ●    bullet                    ▇ lower_block_7          
+    #> ․    dot                       █ lower_block_8          
+    #> ─    line                      █ full_block             
+    #> ═    double_line               ⁰ sup_0                  
+    #> …    ellipsis                  ¹ sup_1                  
+    #> …    continue                  ² sup_2                  
+    #> ❯    pointer                   ³ sup_3                  
+    #> ℹ    info                      ⁴ sup_4                  
+    #> ⚠    warning                   ⁵ sup_5                  
+    #> ☰    menu                      ⁶ sup_6                  
+    #> ☺    smiley                    ⁷ sup_7                  
+    #> ෴    mustache                  ⁸ sup_8                  
+    #> ♥    heart                     ⁹ sup_9                  
+    #> ↑    arrow_up                  ⁻ sup_minus              
+    #> ↓    arrow_down                ⁺ sup_plus               
+    #> ←    arrow_left                ▶ play                   
+    #> →    arrow_right               ■ stop                   
+    #> ◉    radio_on                  ● record                 
+    #> ◯    radio_off                 ‒ figure_dash            
+    #> ☒    checkbox_on               – en_dash                
+    #> ☐    checkbox_off              — em_dash                
+    #> ⓧ    checkbox_circle_on
 
 ## Spinners
 
@@ -184,8 +184,7 @@ rule(center = "TITLE", line = "~-", line_col = "blue")
 
 ![](man/figures/rule-line-custom-2-1.png)<!-- -->
 
-Even more custom
-line
+Even more custom line
 
 ``` r
 rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
