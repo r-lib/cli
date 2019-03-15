@@ -13,7 +13,7 @@ is_rstudio <- function() {
 
 is_rstudio_stdx <- function(stream) {
   interactive() &&
-    is_r_studio() &&
+    is_rstudio() &&
     (is_stdout(stream) || is_stderr(stream))
 }
 
