@@ -95,7 +95,11 @@ symbol_utf8 <- list(
 
   "play" = "\u25b6",
   "stop" = "\u25a0",
-  "record" = "\u25cf"
+  "record" = "\u25cf",
+
+  "figure_dash" = "\u2012",
+  "en_dash" = "\u2013",
+  "em_dash" = "\u2014"
 )
 
 symbol_win <- list(
@@ -172,7 +176,11 @@ symbol_win <- list(
 
   "play" = ">",
   "stop" = "#",
-  "record" = "o"
+  "record" = "o",
+
+  "figure_dash" = "-",
+  "en_dash" = "--",
+  "em_dash" = "---"
 )
 
 symbol_ascii <- list(
@@ -249,5 +257,9 @@ symbol_ascii <- list(
 
   "play" = ">",
   "stop" = "#",
-  "record" = "o"
+  "record" = "o",
+
+  "figure_dash" = "-",
+  "en_dash" = "--",
+  "em_dash" = "---"
 )
