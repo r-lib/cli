@@ -4,8 +4,7 @@
 \alias{make_ansi_style}
 \title{Create a new ANSI style}
 \usage{
-make_ansi_style(..., bg = FALSE, grey = FALSE,
-  colors = crayon::num_colors())
+make_ansi_style(..., bg = FALSE, grey = FALSE, colors = NULL)
 }
 \arguments{
 \item{...}{The style to create. See details and examples below.}
@@ -31,6 +30,9 @@ All arguments are passed to \code{\link[crayon:make_style]{crayon::make_style()}
 Details below.
 }
 \details{
+Note that the crayon package (at least version 1.3.4) must be installed
+for styling text.
+
 The styles (elements of \code{...}) can be any of the
 following:
 \itemize{

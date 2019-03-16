@@ -1,4 +1,75 @@
 
+cli_data <- new.env(parent = emptyenv())
+
+has_crayon <- function() {
+  if (!is.null(x <- cli_data$has_crayon)) return(x)
+  cli_data$has_crayon <- has_crayon_update()
+  cli_data$has_crayon
+}
+
+has_crayon_update <- function() {
+  if (!is.na(Sys.getenv("NO_COLOR", NA))) return(FALSE)
+  tryCatch(
+    package_version(getNamespaceVersion("crayon"))[[1]] >= "1.3.4",
+    error = function(e) FALSE)
+}
+
+num_colors <- function() {
+  if (has_crayon()) crayon::num_colors() else 1L
+}
+
+cray_make_style <- function(...) {
+  if (has_crayon()) {
+    crayon::make_style(...)
+  } else {
+    function(x) x
+  }
+}
+
+cray_combine_styles <- function(...) {
+  if (has_crayon()) {
+    crayon::combine_styles(...)
+  } else {
+    function(x) x
+  }
+}
+
+text_align <- function(text, width = getOption("width"),
+                       align = c("left", "center", "right"),
+                       type = "width") {
+  align <- match.arg(align)
+  nc <- nchar(text, type = type)
+
+  if (!length(text)) return(text)
+
+  if (align == "left") {
+    paste0(text, make_space(width - nc))
+  } else if (align == "center") {
+    paste0(
+      make_space(ceiling((width - nc)/2)),
+      text,
+      make_space(floor((width - nc)/2)))
+  } else {
+    paste0(make_space(width - nc), text)
+  }
+}
+
+col_align <- function(...) {
+  if (has_crayon()) crayon::col_align(...) else text_align(...)
+}
+
+col_nchar <- function(...) {
+  if (has_crayon()) crayon::col_nchar(...) else nchar(...)
+}
+
+col_substr <- function(...) {
+  if (has_crayon()) crayon::col_substr(...) else substr(...)
+}
+
+col_substring <- function(...) {
+  if (has_crayon()) crayon::col_substring(...) else substring(...)
+}
+
 cray_wrapper_fun <- function(style) {
   style
   fun <- function(...) {
@@ -10,8 +81,18 @@ cray_wrapper_fun <- function(style) {
   fun
 }
 
+## This runs at install time (!), so it cannot itself refer to crayon
+
 cray_wrapper <- function(name) {
-  cray_wrapper_fun(asNamespace("crayon")[[name]])
+  name
+  fun <- function(...) {
+    txt <- paste0(...)
+    atxt <- if (has_crayon()) asNamespace("crayon")[[name]](txt) else txt
+    structure(atxt, class = "ansi_string")
+  }
+  class(fun) <- "ansi_style"
+  attr(fun, "crayon_style") <- name
+  fun
 }
 
 #' @export
@@ -29,6 +110,9 @@ print.ansi_string <- function(x, ...) {
 #' Create a function that can be used to add ANSI styles to text.
 #' All arguments are passed to [crayon::make_style()], but see the
 #' Details below.
+#'
+#' Note that the crayon package (at least version 1.3.4) must be installed
+#' for styling text.
 #'
 #' @param ... The style to create. See details and examples below.
 #' @param bg Whether the color applies to the background.
@@ -69,14 +153,13 @@ print.ansi_string <- function(x, ...) {
 #' orange("foobar")
 #' cat(orange("foobar"))
 
-make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
-                            colors = crayon::num_colors()) {
-
+make_ansi_style <- function(..., bg = FALSE, grey = FALSE, colors = NULL) {
+  colors <- colors %||% num_colors()
   dots <- lapply(list(...), function(x) {
     if (identical(x, "dim")) return("blurred") else x
   })
   args <- c(dots, list(bg = bg , grey = grey, colors = colors))
-  style <- do.call(crayon::make_style, args)
+  style <- do.call(cray_make_style, args)
   cray_wrapper_fun(style)
 }
 
@@ -101,6 +184,9 @@ print.ansi_style <- function(x, ...) {
 #'
 #' It does make sense to combine different kind of styles,
 #' e.g. background color, foreground color, bold font.
+#'
+#' Note that the crayon package (at least version 1.3.4) must be installed
+#' for styling text.
 #'
 #' @param ... The styles to combine. For character strings, the
 #'   [make_ansi_style()] function is used to create a style first.
@@ -127,10 +213,21 @@ print.ansi_style <- function(x, ...) {
 combine_ansi_styles <- function(...) {
   args <- list(...)
   args <- lapply(args, function(x) {
-    if (inherits(x, "ansi_style")) attr(x, "crayon_style") else x
+    if (inherits(x, "ansi_style")) get_crayon_style(x) else x
   })
-  style <- do.call(crayon::combine_styles, args)
+  style <- do.call(cray_combine_styles, args)
   cray_wrapper_fun(style)
+}
+
+get_crayon_style <- function(x) {
+  style <- attr(x, "crayon_style")
+  if (is.character(style)) {
+    if (has_crayon()) {
+      asNamespace("crayon")[[style]]
+    } else {
+      function(x) x
+    }
+  }
 }
 
 #' ANSI colored text
@@ -138,6 +235,9 @@ combine_ansi_styles <- function(...) {
 #' cli has a number of functions to color and style text at the command
 #' line. These all use the crayon package under the hood, but provide a
 #' slightly simpler interface.
+#'
+#' Note that the crayon package (at least version 1.3.4) must be installed
+#' for styling text.
 #'
 #' The `col_*` functions change the (foreground) color to the text.
 #' These are the eight original ANSI colors. Note that in some terminals,

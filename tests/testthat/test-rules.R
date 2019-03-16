@@ -120,6 +120,7 @@ test_that("right label", {
 })
 
 test_that("line_col", {
+  if (!has_crayon()) { expect_true(TRUE); return() }
 
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {

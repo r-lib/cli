@@ -37,9 +37,8 @@ test_that("we fall back for ANSI 8 if needed", {
 })
 
 test_that("we can create a style from an R color", {
-
+  if (!has_crayon()) { expect_true(TRUE); return() }
   red4 <- make_ansi_style("red4")
   red_text <- red4("text")
   expect_true(!crayon::has_color() || crayon::has_style(red_text))
-
 })

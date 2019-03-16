@@ -100,6 +100,9 @@ line. These all use the crayon package under the hood, but provide a
 slightly simpler interface.
 }
 \details{
+Note that the crayon package (at least version 1.3.4) must be installed
+for styling text.
+
 The \code{col_*} functions change the (foreground) color to the text.
 These are the eight original ANSI colors. Note that in some terminals,
 they might actually look differently, as terminals have their own

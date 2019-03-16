@@ -6,6 +6,8 @@ test_that("cat_line", {
   exp <- rebox("This is a line of text.")
   expect_equal(out, exp)
 
+  if (!has_crayon()) return()
+
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {
       out <- capt00(cat_line("This is ", "a ", "line of text.", col = "red"))
