@@ -7,8 +7,16 @@ is_stderr <- function(stream) {
   identical(stream, stderr()) && sink.number("message") == 2
 }
 
+is_stdx <- function(stream){
+  is_stdout(stream) || is_stderr(stream)
+}
+
 is_rstudio <- function() {
   Sys.getenv("RSTUDIO") == 1
+}
+
+is_rstudio_terminal <- function() {
+  Sys.getenv("RSTUDIO_TERM", "") != ""
 }
 
 is_rstudio_stdx <- function(stream) {
@@ -25,6 +33,10 @@ is_rapp_stdx <- function(stream) {
   interactive() &&
     is_rapp() &&
     (is_stdout(stream) || is_stderr(stream))
+}
+
+is_emacs <- function() {
+  Sys.getenv("EMACS") != "" || Sys.getenv("INSIDE_EMACS") != ""
 }
 
 is_rkward <- function() {
@@ -65,6 +77,7 @@ is_rkward_stdx <- function(stream) {
 #' Note that it defaults to the standard _error_ stream, since
 #' informative messages are typically printed there.
 #'
+#' @family terminal capabilities
 #' @export
 #' @examples
 #' is_dynamic_tty()
@@ -88,4 +101,75 @@ is_dynamic_tty <- function(stream = stderr()) {
     is_rstudio_stdx(stream) ||
     is_rapp_stdx(stream) ||
     is_rkward_stdx(stream)
+}
+
+ANSI_ESC <- "\u001B["
+ANSI_HIDE_CURSOR <- paste0(ANSI_ESC, "?25l")
+ANSI_SHOW_CURSOR <- paste0(ANSI_ESC, "?25h")
+
+#' Detect if a stream support ANSI escape characters
+#'
+#' We check that all of the following hold:
+#' * The stream is a terminal.
+#' * The platform is Unix.
+#' * R is not running inside R.app (the macOS GUI).
+#' * R is not running inside RStudio.
+#' * R is not running inside Emacs.
+#' * The terminal is not "dumb".
+#' * `stream` is either the standard output or the standard error stream.
+#'
+#' @param stream The stream to check.
+#' @return `TRUE` or `FALSE`.
+#'
+#' @family terminal capabilities
+#' @export
+#' @examples
+#' is_ansi_tty()
+
+is_ansi_tty <- function(stream = stderr()) {
+  isatty(stream) &&
+    .Platform$OS.type == "unix" &&
+    !is_rapp() &&
+    (!is_rstudio() || is_rstudio_terminal()) &&
+    !is_emacs() &&
+    Sys.getenv("TERM", "") != "dumb" &&
+    is_stdx(stream)
+}
+
+#' Hide/show cursor in a terminal
+#'
+#' This only works in terminal emulators. In other environments, it
+#' does nothing.
+#'
+#' `ansi_hide_cursor()` hides the cursor.
+#'
+#' `ansi_show_cursor()` shows the cursor.
+#'
+#' `ansi_with_hidden_cursor()` temporarily hides the cursor for
+#' evaluating an expression.
+#'
+#' @param stream The stream of the terminal to output the ANSI sequence to.
+#' @param expr R expression to evaluate.
+#'
+#' @family terminal capabiltiies
+#' @export
+
+ansi_hide_cursor <- function(stream = stderr()) {
+  if (is_ansi_tty(stream)) cat(ANSI_HIDE_CURSOR, file = stream)
+}
+
+#' @export
+#' @name ansi_hide_cursor
+
+ansi_show_cursor <- function(stream = stderr()) {
+  if (is_ansi_tty(stream)) cat(ANSI_SHOW_CURSOR, file = stream)
+}
+
+#' @export
+#' @name ansi_hide_cursor
+
+ansi_with_hidden_cursor <- function(expr, stream = stderr()) {
+  ansi_hide_cursor(stream)
+  on.exit(ansi_show_cursor(), add = TRUE)
+  expr
 }

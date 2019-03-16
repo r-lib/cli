@@ -41,3 +41,7 @@ the macOS R app, or RKWard IDE, \code{TRUE} is returned.
 is_dynamic_tty()
 is_dynamic_tty(stdout())
 }
+\seealso{
+Other terminal capabilities: \code{\link{is_ansi_tty}}
+}
+\concept{terminal capabilities}
