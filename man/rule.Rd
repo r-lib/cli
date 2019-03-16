@@ -22,11 +22,13 @@ It can also \code{1} or \code{2}, to request a single line (Unicode, if
 available), or a double line. Some strings are interpreted specially,
 see \emph{Line styles} below.}
 
-\item{col}{Color of text, and default line color. Either a \code{crayon} style
-function or a color name that is passed to \code{\link[crayon:make_style]{crayon::make_style()}}.}
+\item{col}{Color of text, and default line color. Either an ANSI style
+function (see \link{ansi-styles}), or a color name that is passed
+to \code{\link[=make_ansi_style]{make_ansi_style()}}.}
 
-\item{line_col, background_col}{Either a color name (used in \code{\link[crayon:make_style]{crayon::make_style()}}),
-or a style function from \code{crayon}, to color the line and background.}
+\item{line_col, background_col}{Either a color name (used in
+\code{\link[=make_ansi_style]{make_ansi_style()}}), or a style function (see \link{ansi-styles}), to
+color the line and background.}
 
 \item{width}{Width of the rule. Defaults to the \code{width} option, see
 \code{\link[base:options]{base::options()}}.}
@@ -39,9 +41,10 @@ The rule can include either a centered text label, or labels on the
 left and right side.
 }
 \details{
-To color the labels, use the functions from the \code{crayon} package
-directly, see examples below. To color the line, either use the
-\code{crayon} colors directly, or the \code{line_col} option.
+To color the labels, use the functions \code{col_*}, \code{bg_*} and \code{style_*}
+functions, see \link{ansi-styles}, and the examples below.
+To color the line, either these functions directly, or the \code{line_col}
+option.
 }
 \section{Line styles}{
 
@@ -72,19 +75,19 @@ rule(left = "Results")
 rule(center = " * RESULTS * ")
 
 ## Colored labels
-rule(center = crayon::red(" * RESULTS * "))
+rule(center = col_red(" * RESULTS * "))
 
 ## Colored line
-rule(center = crayon::red(" * RESULTS * "), line_col = "red")
+rule(center = col_red(" * RESULTS * "), line_col = "red")
 
 ## Custom line
 rule(center = "TITLE", line = "~")
 
 ## More custom line
-rule(center = "TITLE", line = crayon::blue("~-"))
+rule(center = "TITLE", line = col_blue("~-"))
 
 ## Even more custom line
-rule(center = crayon::bgRed(" ", symbol$star, "TITLE",
+rule(center = bg_red(" ", symbol$star, "TITLE",
   symbol$star, " "),
   line = "\\u2582",
   line_col = "orange")

@@ -140,7 +140,7 @@ test_that("line_col", {
       ))
 
       expect_true(crayon::has_style(
-        rule(line_col = crayon::red)
+        rule(line_col = col_red)
       ))
     }
   )

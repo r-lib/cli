@@ -39,11 +39,11 @@ apply_style <- function(text, style, bg = FALSE) {
   if (is.function(style)) {
     style(text)
   } else if (is.character(style)) {
-    crayon::make_style(style, bg = bg)(text)
+    make_ansi_style(style, bg = bg)(text)
   } else if (is.null(style)) {
     text
   } else {
-    stop("Not a colour name or crayon style", call. = FALSE)
+    stop("Not a colour name or ANSI style function", call. = FALSE)
   }
 }
 
@@ -64,7 +64,7 @@ ruler <- function(width = console_width()) {
   y <- rep("-", length(x))
 
   y[x %% 5 == 0] <- "+"
-  y[x %% 10 == 0] <- crayon::bold(as.character((x[x %% 10 == 0] %/% 10) %% 10))
+  y[x %% 10 == 0] <- style_bold(as.character((x[x %% 10 == 0] %/% 10) %% 10))
 
   cat(y, "\n", sep = "")
   cat(x %% 10, "\n", sep = "")

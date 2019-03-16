@@ -14,8 +14,8 @@ boxx(label, border_style = "single", padding = 1, margin = 0,
 }
 \arguments{
 \item{label}{Label to show, a character vector. Each element will be
-in a new line. You can color it using the \code{crayon} packag, see
-examples below.}
+in a new line. You can color it using the \code{col_*}, \code{bg_*} and
+\code{style_*} functions, see \link{ansi-styles} and the examples below.}
 
 \item{border_style}{String that specifies the border style.
 \code{list_border_styles} lists all current styles.}
@@ -31,16 +31,18 @@ interpreted as \code{c(x, 3*x, x, 3*x)}.}
 \item{float}{Whether to display the box on the \code{"left"}, \code{"center"}, or
 the \code{"right"} of the screen.}
 
-\item{col}{Color of text, and default border color. Either a \code{crayon} style
-function or a color name that is passed to \code{\link[crayon:make_style]{crayon::make_style()}}.}
+\item{col}{Color of text, and default border color. Either a style
+function (see \link{ansi-styles}) or a color name that is passed to
+\code{\link[=make_ansi_style]{make_ansi_style()}}.}
 
 \item{background_col}{Background color of the inside of the box.
-Either a \code{crayon} style function, or a color name which will be used
-in \code{\link[crayon:make_style]{crayon::make_style()}} to create a \emph{background} style
+Either a style function (see \link{ansi-styles}), or a color name which
+will be used in \code{\link[=make_ansi_style]{make_ansi_style()}} to create a \emph{background} style
 (i.e. \code{bg = TRUE} is used).}
 
-\item{border_col}{Color of the border. Either a \code{crayon} style
-function or a color name that is passed to \code{\link[crayon:make_style]{crayon::make_style()}}.}
+\item{border_col}{Color of the border. Either a style function
+(see \link{ansi-styles}) or a color name that is passed to
+\code{\link[=make_ansi_style]{make_ansi_style()}}.}
 
 \item{align}{Alignment of the label within the box: \code{"left"},
 \code{"center"}, or \code{"right"}.}
@@ -87,15 +89,15 @@ boxx("Hello there!", padding = 1, float = "center")
 boxx("Hello there!", padding = 1, float = "right")
 
 ## Text color
-boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
+boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 
 ## Backgorund color
 boxx("Hello there!", padding = 1, background_col = "brown")
-boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
+boxx("Hello there!", padding = 1, background_col = bg_red)
 
 ## Border color
 boxx("Hello there!", padding = 1, border_col = "green")
-boxx("Hello there!", padding = 1, border_col = crayon::red)
+boxx("Hello there!", padding = 1, border_col = col_red)
 
 ## Label alignment
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
@@ -106,7 +108,7 @@ boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
-  crayon::white(label),
+  col_white(label),
   border_style="round",
   padding = 1,
   float = "center",

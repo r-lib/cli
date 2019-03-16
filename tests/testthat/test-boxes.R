@@ -157,7 +157,7 @@ test_that("background_col", {
         "└───────────┘")
       expect_equal(out, exp)
 
-      bx <- boxx("label", background_col = crayon::red)
+      bx <- boxx("label", background_col = col_red)
       expect_true(crayon::has_style(bx))
       out <- capt_cat(crayon::strip_style(unclass(bx)))
       exp <- rebox(
@@ -185,7 +185,7 @@ test_that("border_col", {
         "└───────────┘")
       expect_equal(out, exp)
 
-      bx <- boxx("label", border_col = crayon::red)
+      bx <- boxx("label", border_col = col_red)
       expect_true(crayon::has_style(bx))
       out <- capt_cat(crayon::strip_style(unclass(bx)))
       exp <- rebox(

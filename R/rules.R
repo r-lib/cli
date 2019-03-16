@@ -23,9 +23,10 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #' The rule can include either a centered text label, or labels on the
 #' left and right side.
 #'
-#' To color the labels, use the functions from the `crayon` package
-#' directly, see examples below. To color the line, either use the
-#' `crayon` colors directly, or the `line_col` option.
+#' To color the labels, use the functions `col_*`, `bg_*` and `style_*`
+#' functions, see [ansi-styles], and the examples below.
+#' To color the line, either these functions directly, or the `line_col`
+#' option.
 #'
 #' @param left Label to show on the left. It interferes with the `center`
 #'   label, only at most one of them can be present.
@@ -37,10 +38,12 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #'   It can also `1` or `2`, to request a single line (Unicode, if
 #'   available), or a double line. Some strings are interpreted specially,
 #'   see *Line styles* below.
-#' @param col Color of text, and default line color. Either a `crayon` style
-#'   function or a color name that is passed to [crayon::make_style()].
-#' @param line_col,background_col Either a color name (used in [crayon::make_style()]),
-#'   or a style function from `crayon`, to color the line and background.
+#' @param col Color of text, and default line color. Either an ANSI style
+#'   function (see [ansi-styles]), or a color name that is passed
+#'   to [make_ansi_style()].
+#' @param line_col,background_col Either a color name (used in
+#'   [make_ansi_style()]), or a style function (see [ansi-styles]), to
+#'   color the line and background.
 #' @param width Width of the rule. Defaults to the `width` option, see
 #'   [base::options()].
 #' @return Character scalar, the rule.
@@ -72,19 +75,19 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #' rule(center = " * RESULTS * ")
 #'
 #' ## Colored labels
-#' rule(center = crayon::red(" * RESULTS * "))
+#' rule(center = col_red(" * RESULTS * "))
 #'
 #' ## Colored line
-#' rule(center = crayon::red(" * RESULTS * "), line_col = "red")
+#' rule(center = col_red(" * RESULTS * "), line_col = "red")
 #'
 #' ## Custom line
 #' rule(center = "TITLE", line = "~")
 #'
 #' ## More custom line
-#' rule(center = "TITLE", line = crayon::blue("~-"))
+#' rule(center = "TITLE", line = col_blue("~-"))
 #'
 #' ## Even more custom line
-#' rule(center = crayon::bgRed(" ", symbol$star, "TITLE",
+#' rule(center = bg_red(" ", symbol$star, "TITLE",
 #'   symbol$star, " "),
 #'   line = "\u2582",
 #'   line_col = "orange")

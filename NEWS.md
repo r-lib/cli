@@ -1,6 +1,11 @@
 
 # devel
 
+* cli has now functions to add ANSI styles to text. These use the crayon
+  package internally, and provide a simpler interface. See the `col_*`,
+  `bg_*`, `style_*` and also the `make_ansi_style()` and
+  `combine_ansi_styles()` functions (#51).
+
 * New is_dynamic_tty() function detects if `\r` should be used for a
   stream (#62).
 

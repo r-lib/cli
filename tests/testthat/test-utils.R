@@ -10,7 +10,7 @@ test_that("make_space", {
 test_that("apply_style", {
   expect_error(
     apply_style("text", raw(0)),
-    "Not a colour name or crayon style"
+    "Not a colour name or ANSI style"
   )
 })
 
