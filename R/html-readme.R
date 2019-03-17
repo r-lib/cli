@@ -9,7 +9,7 @@ knit_print.html <- function(x, zoom = 2, ...) {
   on.exit(unlink(image_file), add = TRUE)
   cat(html, file = html_file)
   if (!file.exists(font_file)) {
-    download.file(
+    utils::download.file(
       "https://cdn.jsdelivr.net/gh/r-lib/cli@master/tools/Menlo-Regular.ttf",
       font_file)
   }

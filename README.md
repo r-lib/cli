@@ -147,7 +147,7 @@ rule(center = " * RESULTS * ")
 Colored labels
 
 ``` r
-rule(center = crayon::red(" * RESULTS * "))
+rule(center = col_red(" * RESULTS * "))
 ```
 
 ![](man/figures/rule-color-label-1.png)<!-- -->
@@ -187,7 +187,7 @@ rule(center = "TITLE", line = "~-", line_col = "blue")
 Even more custom line
 
 ``` r
-rule(center = crayon::bgRed(" ", symbol$star, "TITLE", symbol$star, " "),
+rule(center = bg_red(" ", symbol$star, "TITLE", symbol$star, " "),
   line = "\u2582", line_col = "orange")
 ```
 
@@ -270,7 +270,7 @@ boxx("Hello there!", padding = 1, float = "right")
 Text color
 
 ``` r
-boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
+boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 ```
 
 ![](man/figures/box-color-1.png)<!-- -->
@@ -284,7 +284,7 @@ boxx("Hello there!", padding = 1, background_col = "brown")
 ![](man/figures/box-bgcolor-1.png)<!-- -->
 
 ``` r
-boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
+boxx("Hello there!", padding = 1, background_col = bg_red)
 ```
 
 ![](man/figures/box-bgcolor-2.png)<!-- -->
@@ -298,7 +298,7 @@ boxx("Hello there!", padding = 1, border_col = "green")
 ![](man/figures/box-border-color-1.png)<!-- -->
 
 ``` r
-boxx("Hello there!", padding = 1, border_col = crayon::red)
+boxx("Hello there!", padding = 1, border_col = col_red)
 ```
 
 ![](man/figures/box-border-color-2.png)<!-- -->
@@ -329,7 +329,7 @@ A very customized box
 star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
-  crayon::white(label),
+  col_white(label),
   border_style="round",
   padding = 1,
   float = "center",
@@ -374,13 +374,13 @@ as well:
 
 ``` r
 data$label <- paste(data$package,
-  crayon::blurred(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
+  style_dim(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
     "2.2.2", "1.3.4", "1.0.2", "0.6.12", "2.2.1", "1.2.1.9002",
     "1.0.0.9000", "2.0.1", "0.20-35"), ")"))
   )
 roots <- ! data$package %in% unlist(data$dependencies)
-data$label[roots] <- crayon::cyan(crayon::italic(data$label[roots]))
+data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
 

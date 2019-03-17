@@ -3,8 +3,8 @@
 #' Draw a banner-like box in the console
 #'
 #' @param label Label to show, a character vector. Each element will be
-#'   in a new line. You can color it using the `crayon` packag, see
-#'   examples below.
+#'   in a new line. You can color it using the `col_*`, `bg_*` and
+#'   `style_*` functions, see [ansi-styles] and the examples below.
 #' @param border_style String that specifies the border style.
 #'   `list_border_styles` lists all current styles.
 #' @param padding Padding within the box. Either an integer vector of
@@ -16,13 +16,15 @@
 #' @param float Whether to display the box on the `"left"`, `"center"`, or
 #'   the `"right"` of the screen.
 #' @param background_col Background color of the inside of the box.
-#'   Either a `crayon` style function, or a color name which will be used
-#'   in [crayon::make_style()] to create a *background* style
+#'   Either a style function (see [ansi-styles]), or a color name which
+#'   will be used in [make_ansi_style()] to create a *background* style
 #'   (i.e. `bg = TRUE` is used).
-#' @param col Color of text, and default border color. Either a `crayon` style
-#'   function or a color name that is passed to [crayon::make_style()].
-#' @param border_col Color of the border. Either a `crayon` style
-#'   function or a color name that is passed to [crayon::make_style()].
+#' @param col Color of text, and default border color. Either a style
+#'   function (see [ansi-styles]) or a color name that is passed to
+#'   [make_ansi_style()].
+#' @param border_col Color of the border. Either a style function
+#'   (see [ansi-styles]) or a color name that is passed to
+#'   [make_ansi_style()].
 #' @param align Alignment of the label within the box: `"left"`,
 #'   `"center"`, or `"right"`.
 #' @param width Width of the screen, defaults to `getOption("width")`.
@@ -64,15 +66,15 @@
 #' boxx("Hello there!", padding = 1, float = "right")
 #'
 #' ## Text color
-#' boxx(crayon::cyan("Hello there!"), padding = 1, float = "center")
+#' boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 #'
 #' ## Backgorund color
 #' boxx("Hello there!", padding = 1, background_col = "brown")
-#' boxx("Hello there!", padding = 1, background_col = crayon::bgRed)
+#' boxx("Hello there!", padding = 1, background_col = bg_red)
 #'
 #' ## Border color
 #' boxx("Hello there!", padding = 1, border_col = "green")
-#' boxx("Hello there!", padding = 1, border_col = crayon::red)
+#' boxx("Hello there!", padding = 1, border_col = col_red)
 #'
 #' ## Label alignment
 #' boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
@@ -83,7 +85,7 @@
 #' star <- symbol$star
 #' label <- c(paste(star, "Hello", star), "  there!")
 #' boxx(
-#'   crayon::white(label),
+#'   col_white(label),
 #'   border_style="round",
 #'   padding = 1,
 #'   float = "center",
