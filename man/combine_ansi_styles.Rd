@@ -25,9 +25,6 @@ applied will be used.
 
 It does make sense to combine different kind of styles,
 e.g. background color, foreground color, bold font.
-
-Note that the crayon package (at least version 1.3.4) must be installed
-for styling text.
 }
 \examples{
 ## Use style names

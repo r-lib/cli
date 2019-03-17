@@ -38,6 +38,7 @@
 #' which makes the boxes ugly.
 #'
 #' @export
+#' @importFrom crayon col_align
 #' @examples
 #' ## Simple box
 #' boxx("Hello there!")

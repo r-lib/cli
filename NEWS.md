@@ -6,10 +6,6 @@
   `bg_*`, `style_*` and also the `make_ansi_style()` and
   `combine_ansi_styles()` functions (#51).
 
-* The crayon package is now an optional dependency. If it cannot be loaded,
-  then the cli ANSI styling functions do not add ANSI sequences to the
-  text, but otherwise work the same way.
-
 * New is_dynamic_tty() function detects if `\r` should be used for a
   stream (#62).
 

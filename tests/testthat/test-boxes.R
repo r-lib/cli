@@ -144,7 +144,6 @@ test_that("float", {
 })
 
 test_that("background_col", {
-  if (!has_crayon()) { expect_true(TRUE); return() }
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {
       bx <- boxx("label", background_col = "red")
@@ -173,7 +172,6 @@ test_that("background_col", {
 })
 
 test_that("border_col", {
-  if (!has_crayon()) { expect_true(TRUE); return() }
   withr::with_options(
     list(crayon.enabled = TRUE, crayon.colors = 256), {
       bx <- boxx("label", border_col = "red")

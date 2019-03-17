@@ -1,4 +1,6 @@
 
+#' @importFrom crayon col_substring
+
 make_line <- function(x, char = symbol$line, col = NULL) {
 
   ## Easiest to handle this specially
@@ -53,6 +55,7 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
 #'
 #' @export
+#' @importFrom crayon col_substr
 #' @examples
 #'
 #' ## Simple rule
@@ -159,6 +162,8 @@ get_line_char <- function(line) {
 rule_line <- function(o) {
   make_line(o$width, o$line, o$line_col)
 }
+
+#' @importFrom crayon col_nchar
 
 rule_center <- function(o) {
 

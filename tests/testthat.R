@@ -1,8 +1,19 @@
 library(testthat)
 library(cli)
 
+## Run the tests in fancy mode and non-fancy mode as well
 ## Also, run them in latin1 encoding as well, this is for Unix,
 ## because Windows encoding names are different.
+
+withr::with_options(
+  list(cli.unicode = FALSE),
+  test_check("cli")
+)
+
+withr::with_options(
+  list(cli.unicode = TRUE),
+  test_check("cli")
+)
 
 has_locale <- function(l) {
   has <- TRUE

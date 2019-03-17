@@ -1,8 +1,8 @@
 
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
-make_space <- function(len, filling = " ") {
-  strrep(filling, len)
+make_space <- function(len) {
+  strrep(" ", len)
 }
 
 strrep <- function(x, times) {
@@ -90,6 +90,7 @@ tail_na <- function(x, n = 1) {
   tail(c(rep(NA, n), x), n)
 }
 
+#' @importFrom crayon col_substr
 #' @importFrom utils head
 
 dedent <- function(x, n = 2) {

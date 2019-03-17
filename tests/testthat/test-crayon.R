@@ -9,8 +9,6 @@ test_that("Classes", {
   expect_equal(class(style_underline("foo")), "ansi_string")
 })
 
-if (!has_crayon()) return()
-
 test_that("Coloring and highlighting works", {
   expect_equal(c(style_underline("foo")), "\u001b[4mfoo\u001b[24m")
   expect_equal(c(col_red("foo")), "\u001b[31mfoo\u001b[39m")
