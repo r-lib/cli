@@ -18,6 +18,6 @@ get_spinner(list_spinners()[1])
 }
 \seealso{
 Other spinners: \code{\link{demo_spinners}},
-  \code{\link{get_spinner}}
+  \code{\link{get_spinner}}, \code{\link{make_spinner}}
 }
 \concept{spinners}
