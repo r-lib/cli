@@ -47,6 +47,7 @@ Create a spinner
 }
 \examples{
 ## Default spinner
+\donttest{
 sp1 <- make_spinner()
 fun_with_spinner <- function() {
   lapply(1:100, function(x) { sp1$spin(); Sys.sleep(0.05) })
@@ -69,6 +70,7 @@ fun_with_spinner3 <- function() {
   sp2$finish()
 }
 ansi_with_hidden_cursor(fun_with_spinner3())
+}
 }
 \seealso{
 Other spinners: \code{\link{demo_spinners}},
