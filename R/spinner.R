@@ -83,11 +83,9 @@ list_spinners <- function() {
 #'
 #' The spinner is automatically throttled to its ideal update frequency.
 #'
-#' @family spinners
-#' @export
-#' @examples
+#' @section Examples:
+#' ```
 #' ## Default spinner
-#' \donttest{
 #' sp1 <- make_spinner()
 #' fun_with_spinner <- function() {
 #'   lapply(1:100, function(x) { sp1$spin(); Sys.sleep(0.05) })
@@ -110,7 +108,10 @@ list_spinners <- function() {
 #'   sp2$finish()
 #' }
 #' ansi_with_hidden_cursor(fun_with_spinner3())
-#' }
+#' ```
+#'
+#' @family spinners
+#' @export
 
 make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
                          static = c("dots", "print", "print_line",

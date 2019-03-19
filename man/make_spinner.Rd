@@ -45,9 +45,8 @@ The spinner is automatically throttled to its ideal update frequency.
 \description{
 Create a spinner
 }
-\examples{
-## Default spinner
-\donttest{
+\section{Examples}{
+\preformatted{## Default spinner
 sp1 <- make_spinner()
 fun_with_spinner <- function() {
   lapply(1:100, function(x) { sp1$spin(); Sys.sleep(0.05) })
@@ -72,6 +71,7 @@ fun_with_spinner3 <- function() {
 ansi_with_hidden_cursor(fun_with_spinner3())
 }
 }
+
 \seealso{
 Other spinners: \code{\link{demo_spinners}},
   \code{\link{get_spinner}}, \code{\link{list_spinners}}
