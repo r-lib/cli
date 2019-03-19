@@ -1,5 +1,5 @@
 
-# devel
+# cli 1.1.0
 
 * cli has now functions to add ANSI styles to text. These use the crayon
   package internally, and provide a simpler interface. See the `col_*`,
@@ -30,6 +30,6 @@
 * Fall back to ASCII only characters on non-Windows platforms without
   UTF-8 support, and also in LaTeX when running knitr (#34).
 
-# 1.0.0
+# cli 1.0.0
 
 First public release.
