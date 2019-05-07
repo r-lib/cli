@@ -90,7 +90,7 @@ is_dynamic_tty <- function(stream = stderr()) {
   }
 
   ## Env var?
-  if (x <- Sys.getenv("R_CLI_DYNAMIC", "") != "") {
+  if ((x <- Sys.getenv("R_CLI_DYNAMIC", "")) != "") {
     return(isTRUE(as.logical(x)))
   }
 
