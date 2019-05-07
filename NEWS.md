@@ -1,6 +1,9 @@
 
 # dev
 
+* Fix a bug in `is_dynamic_tty()`, setting `R_CLI_DYNAMIC="FALSE"` now
+  properly turns dynamic tty off (#70).
+
 # cli 1.1.0
 
 * cli has now functions to add ANSI styles to text. These use the crayon
