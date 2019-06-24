@@ -21,8 +21,9 @@ capt00 <- function(expr) {
   capt(expr, print_it = FALSE)
 }
 
-capt0 <- function(expr) {
-  capture_messages(expr)
+capt0 <- function(expr, strip_style = FALSE) {
+  out <- capture_messages(expr)    
+  if  (strip_style) crayon::strip_style(out) else out
 }
 
 capt_cat <- function(expr) {

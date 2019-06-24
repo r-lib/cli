@@ -112,3 +112,7 @@ new_uuid <- (function() {
 na.omit <- function(x) {
   if (is.atomic(x)) x[!is.na(x)] else x
 }
+
+last <- function(x) {
+  tail(x, 1)[[1]]
+}
