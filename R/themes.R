@@ -48,20 +48,20 @@ builtin_theme <- function() {
       "text-decoration" = "underline",
       "margin-top" = 1),
 
-    ".alert::before" = list(
-      content = paste0(symbol$arrow_right, " ")
+    ".alert" = list(
+      before = paste0(symbol$arrow_right, " ")
     ),
-    ".alert-success::before" = list(
-      content = paste0(crayon::green(symbol$tick), " ")
+    ".alert-success" = list(
+      before = paste0(crayon::green(symbol$tick), " ")
     ),
-    ".alert-danger::before" = list(
-      content = paste0(crayon::red(symbol$cross), " ")
+    ".alert-danger" = list(
+      before = paste0(crayon::red(symbol$cross), " ")
     ),
-    ".alert-warning::before" = list(
-      content = paste0(crayon::yellow("!"), " ")
+    ".alert-warning" = list(
+      before = paste0(crayon::yellow("!"), " ")
     ),
-    ".alert-info::before" = list(
-      content = paste0(crayon::cyan(symbol$info), " ")
+    ".alert-info" = list(
+      before = paste0(crayon::cyan(symbol$info), " ")
     ),
 
     par = list("margin-top" = 1, "margin-bottom" = 1),
@@ -75,23 +75,16 @@ builtin_theme <- function() {
 
     span.emph = list("font-style" = "italic"),
     span.strong = list("font-weight" = "bold"),
-    span.code = list(color = "magenta"),
-    "span.code::before" = list(content = "`"),
-    "span.code::after" = list(content = "`"),
+    span.code = list(before = "`", after = "`", color = "magenta"),
 
     span.pkg = list(color = "magenta"),
-    span.fun = list(color = "magenta"),
-    "span.fun::after" = list(content = "()"),
+    span.fun = list(after = "()", color = "magenta"),
     span.arg = list(color = "magenta"),
-    span.key = list(color = "magenta"),
-    "span.key::before" = list(content = "<"),
-    "span.key::after" = list(content = ">"),
+    span.key = list(before = "<", after = ">", color = "magenta"),
     span.file = list(color = "magenta"),
     span.path = list(color = "magenta"),
     span.email = list(color = "magenta"),
-    span.url = list(color = "blue"),
-    "span.url::before" = list(content = "<"),
-    "span.url::after" = list(content = ">"),
+    span.url = list(before = "<", after = ">", color = "blue"),
     span.var = list(color = "magenta"),
     span.envvar = list(color = "magenta")
   )

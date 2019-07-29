@@ -99,27 +99,25 @@ simple_theme <- function(dark = "auto") {
 
     ".alert-danger" = list(
       "background-color" = "red",
-      color = "white"
+      color = "white",
+      before = paste0(symbol$cross, " ")
     ),
-    ".alert-danger::before" = list(
-      content = paste0(symbol$cross, " ")
-    ),
+
     ".alert-warning" = list(
       color = "orange",
-      "font-weight" = "bold"),
-    ".alert-warning::before" = list(
-      content = paste0("!", " ")
+      "font-weight" = "bold",
+      before = paste0("!", " ")
     ),
 
-    ".alert-success::before" = list(
-      content = paste0(crayon::green(symbol$tick), " ")
+    ".alert-success" = list(
+      before = paste0(crayon::green(symbol$tick), " ")
     ),
-    ".alert-info::before" = list(
-      content = paste0(crayon::cyan(symbol$info), " ")
+    ".alert-info" = list(
+      before = paste0(crayon::cyan(symbol$info), " ")
     ),
 
-    ".alert-start::before" = list(
-      content = paste0(symbol$arrow_right, " ")),
+    ".alert-start" = list(
+      before = paste0(symbol$arrow_right, " ")),
 
     span.pkg = list(
       color = "blue",
@@ -127,8 +125,8 @@ simple_theme <- function(dark = "auto") {
     span.version = list(color = "blue"),
 
     .code = simple_theme_code(dark),
-    "span.code::before" = list(content = "`"),
-    "span.code::after" = list(content = "`"),
+    "span.code" = list(before = "`"),
+    "span.code" = list(after = "`"),
 
     ".r-code" = list(
       fmt = simple_theme_r_code(dark),
@@ -138,26 +136,19 @@ simple_theme <- function(dark = "auto") {
     span.emph = simple_theme_emph(),
     span.strong = list("font-weight" = "bold", "font-style" = "italic"),
 
-    span.fun = simple_theme_code(dark),
-    "span.fun::after" = list(content = "()"),
+    span.fun = modifyList(simple_theme_code(dark), list(after = "()")),
     span.arg = simple_theme_code(dark),
-    span.key = simple_theme_code(dark),
-    "span.key::before" = list(content = "<"),
-    "span.key::after" = list(content = ">"),
+    span.key = modifyList(simple_theme_code(dark),
+                          list(before = "<", after = ">")),
     span.file = simple_theme_file(),
     span.path = simple_theme_file(),
     span.email = simple_theme_url(),
-    span.url = simple_theme_url(),
-    "span.url::before" = list(content = "<"),
-    "span.url::after" = list(content = ">"),
+    span.url = modifyList(simple_theme_url(),
+                          list(before = "<", after = ">")),
     span.var = simple_theme_code(dark),
     span.envvar = simple_theme_code(dark),
 
-    span.timestamp = list(color = "grey"),
-    "span.timestamp::before" = list(
-      content = "["),
-    "span.timestamp::after" = list(
-      content = "]")
+    span.timestamp = list(before = "[", after = "]", color = "grey"),
   )
 }
 
