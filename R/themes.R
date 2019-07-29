@@ -121,3 +121,99 @@ create_formatter <- function(x) {
 
   x
 }
+
+#' Parse a CSS3-like selector
+#'
+#' This is the rather small subset of CSS3 that is supported:
+#'
+#' Selectors:
+#'
+#' * Type selectors, e.g. `input` selects all `<input>` elements.
+#' * Class selectors, e.g. `.index` selects any element that has a class
+#'   of "index".
+#' * ID selector. `#toc` will match the element that has the ID "toc".
+#'
+#' Combinators:
+#'
+#' * Descendant combinator, i.e. the space, that combinator selects nodes
+#'   that are descendants of the first element. E.g. `div span` will match
+#'   all `<span>` elements that are inside a `<div>` element.
+#'
+#' @param x CSS3-like selector string.
+#'
+#' @keywords internal
+
+parse_selector <- function(x) {
+  lapply(strsplit(x, " ", fixed = TRUE)[[1]], parse_selector_node)
+}
+
+parse_selector_node <- function(x) {
+
+  parse_ids <- function(y) {
+    r <- strsplit(y, "#", fixed = TRUE)[[1]]
+    if (length(r) > 1) r[-1] <- paste0("#", r[-1])
+    r
+  }
+
+  parts <- strsplit(x, ".", fixed = TRUE)[[1]]
+  if (length(parts) > 1) parts[-1] <- paste0(".", parts[-1])
+  parts <- unlist(lapply(parts, parse_ids))
+  parts <- parts[parts != ""]
+
+  m_cls <- grepl("^\\.", parts)
+  m_ids <- grepl("^#", parts)
+
+  list(tag = as.character(unique(parts[!m_cls & !m_ids])),
+       class = str_tail(unique(parts[m_cls])),
+       id = str_tail(unique(parts[m_ids])))
+}
+
+#' Match a selector node to a container
+#'
+#' @param node Selector node, as parsed by `parse_selector_node()`.
+#' @param cnt Container node, has elements `tag`, `id`, `class`.
+#'
+#' The selector node matches the container, if all these hold:
+#'
+#' * The id of the selector is missing or unique.
+#' * The tag of the selector is missing or unique.
+#' * The id of the container is missing or unique.
+#' * The tag of the container is unique.
+#' * If the selector specifies an id, it matches the id of the container.
+#' * If the selector specifies a tag, it matxhes the tag of the container.
+#' * If the selector specifies class names, the container has all these
+#'   classes.
+#'
+#' @keywords internal
+
+match_selector_node <- function(node, cnt) {
+  if (length(node$id) > 1 || length(cnt$id) > 1) return(FALSE)
+  if (length(node$tag) > 1 || length(cnt$tag) > 1) return(FALSE)
+  all(node$id %in% cnt$id) &&
+    all(node$tag %in% cnt$tag) &&
+    all(node$class %in% cnt$class)
+}
+
+#' Match a selector to a container stack
+#'
+#' @param sels A list of selector nodes.
+#' @param cnts A list of container nodes.
+#'
+#' The last selector in the list must match the last container, so we
+#' do the matching from the back. This is because we use this function
+#' to calculate the style of newly encountered containers.
+
+match_selector <- function(sels, cnts) {
+  sptr <- length(sels)
+  cptr <- length(cnts)
+  while (sptr != 0L && sptr <= cptr) {
+    if (match_selector_node(sels[[sptr]], cnts[[cptr]])) {
+      sptr <- sptr - 1L
+      cptr <- cptr - 1L
+    } else {
+      cptr <- cptr - 1L
+    }
+  }
+
+  sptr == 0
+}

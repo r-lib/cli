@@ -116,3 +116,7 @@ na.omit <- function(x) {
 last <- function(x) {
   tail(x, 1)[[1]]
 }
+
+str_tail <- function(x) {
+  substr(x, 2, nchar(x))
+}
