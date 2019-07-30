@@ -115,14 +115,14 @@ NULL
 #' CLI themes
 #'
 #' CLI elements can be styled via a CSS-like language of selectors and
-#' properties. Note that while most of the CSS3 language is supported,
+#' properties. Only a small subset of CSS3 is supported, and
 #' a lot visual properties cannot be implemented on a terminal, so these
-#' will be ignored.
+#' will be ignored as well.
 #'
 #' @section Adding themes:
 #' The style of an element is calculated from themes from four sources.
-#' These form a stack, and the styles on the top of the stack take
-#' precedence, over styles in the bottom.
+#' These form a stack, and the themes on the top of the stack take
+#' precedence, over themes in the bottom.
 #'
 #' 1. The cli package has a builtin theme. This is always active.
 #'    See [builtin_theme()].
@@ -139,8 +139,14 @@ NULL
 #'
 #' @section Writing themes:
 #' A theme is a named list of lists. The name of each entry is a CSS
-#' selector. Most features of CSS selectors are supported here:, for a
-#' complete reference, see the selectr package.
+#' selector. Only a subset of CSS is supported:
+#' * Type selectors, e.g. `input` selects all `<input>` elements.
+#' * Class selectors, e.g. `.index` selects any element that has a class
+#'   of "index".
+#' * ID selector. `#toc` will match the element that has the ID "toc".
+#' * The descendant combinator, i.e. the space, that selects nodes
+#'   that are descendants of the first element. E.g. `div span` will match
+#'   all `<span>` elements that are inside a `<div>` element.
 #'
 #' The content of a theme list entry is another named list, where the
 #' names are CSS properties, e.g. `color`, or `font-weight` or
