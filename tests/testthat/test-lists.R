@@ -29,8 +29,7 @@ test_that("ol", {
 test_that("ul ul", {
   cli_div(theme = list(
     ul = list("list-style-type" = "*"),
-    "ul ul" = list("list-style-type" = "-"),
-    it = list("margin-left" = 2)
+    "ul ul" = list("list-style-type" = "-", "margin-left" = 2)
   ))
   lid <- cli_ul()
   out <- capt0({
@@ -59,13 +58,14 @@ test_that("ul ol", {
     cli_end(lid2)
     cli_it("2")
   }, strip_style = TRUE)
-  expect_equal(out, "* 1\n  1. 1 1\n  2. 1 2\n  3. 1 3\n* 2\n")
+  expect_equal(out, "  * 1\n  1. 1 1\n  2. 1 2\n  3. 1 3\n  * 2\n")
   cli_end(lid)
 })
 
 test_that("ol ol", {
   cli_div(theme = list(
-    it = list("margin-left" = 2)
+    "it" = list("margin-left" = 2),
+    "it it" = list("margin-left" = 2)
   ))
   lid <- cli_ol()
   out <- capt0({
@@ -76,14 +76,13 @@ test_that("ol ol", {
     cli_end(lid2)
     cli_it("2")
   }, strip_style = TRUE)
-  expect_equal(out, "1. 1\n  1. 1 1\n  2. 1 2\n  3. 1 3\n2. 2\n")
+  expect_equal(out, "  1. 1\n    1. 1 1\n    2. 1 2\n    3. 1 3\n  2. 2\n")
   cli_end(lid)
 })
 
 test_that("ol ul", {
   cli_div(theme = list(
-    ul = list("list-style-type" = "*"),
-    it = list("margin-left" = 2)
+    ul = list("list-style-type" = "*", "margin-left" = 2)
   ))
   lid <- cli_ol()
   out <- capt0({
@@ -151,7 +150,7 @@ test_that("dl dl", {
     cli_end(lid2)
     cli_it(c(b = "2"))
   }, strip_style = TRUE)
-  expect_equal(out, "a: 1\n  a-a: 1 1\n  a-b: 1 2\n  a-c: 1 3\nb: 2\n")
+  expect_equal(out, "  a: 1\n  a-a: 1 1\n  a-b: 1 2\n  a-c: 1 3\n  b: 2\n")
   cli_end(lid)
 })
 
@@ -168,7 +167,7 @@ test_that("dl ol", {
     cli_end(lid2)
     cli_it(c(b = "2"))
   }, strip_style = TRUE)
-  expect_equal(out, "a: 1\n  1. 1 1\n  2. 1 2\n  3. 1 3\nb: 2\n")
+  expect_equal(out, "  a: 1\n  1. 1 1\n  2. 1 2\n  3. 1 3\n  b: 2\n")
   cli_end(lid)
 })
 
@@ -186,7 +185,7 @@ test_that("dl ul", {
     cli_end(lid2)
     cli_it(c(b = "2"))
   }, strip_style = TRUE)
-  expect_equal(out, "a: 1\n  * 1 1\n  * 1 2\n  * 1 3\nb: 2\n")
+  expect_equal(out, "  a: 1\n  * 1 1\n  * 1 2\n  * 1 3\n  b: 2\n")
   cli_end(lid)
 })
 
@@ -203,7 +202,7 @@ test_that("ol dl", {
     cli_end(lid2)
     cli_it("2")
   }, strip_style = TRUE)
-  expect_equal(out, "1. 1\n  a-a: 1 1\n  a-b: 1 2\n  a-c: 1 3\n2. 2\n")
+  expect_equal(out, "  1. 1\n  a-a: 1 1\n  a-b: 1 2\n  a-c: 1 3\n  2. 2\n")
   cli_end(lid)
 })
 
@@ -221,7 +220,7 @@ test_that("ul dl", {
     cli_end(lid2)
     cli_it("2")
   }, strip_style = TRUE)
-  expect_equal(out, "* 1\n  a-a: 1 1\n  a-b: 1 2\n  a-c: 1 3\n* 2\n")
+  expect_equal(out, "  * 1\n  a-a: 1 1\n  a-b: 1 2\n  a-c: 1 3\n  * 2\n")
   cli_end(lid)
 })
 

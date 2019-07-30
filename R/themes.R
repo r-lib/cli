@@ -60,12 +60,11 @@ builtin_theme <- function() {
     ),
 
     par = list("margin-top" = 1, "margin-bottom" = 1),
-    ul = list("list-style-type" = symbol$bullet),
-    "ul ul" = list("list-style-type" = symbol$circle),
-    "ul ul ul" = list("list-style-type" = symbol$line),
+    ul = list("list-style-type" = symbol$bullet, "margin-left" = 0),
+    "ul ul" = list("list-style-type" = symbol$circle, "margin-left" = 2),
+    "ul ul ul" = list("list-style-type" = symbol$line, "margin-left" = 4),
     ol = list(),
     dl = list(),
-    it = list("margin-left" = 2),
     .code = list(),
 
     span.emph = list("font-style" = "italic"),

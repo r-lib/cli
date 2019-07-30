@@ -6,20 +6,24 @@ add_child <- function(x, tag, ...) {
 #' @importFrom glue glue
 
 clii__container_start <- function(self, private, tag, class = NULL,
-                                  id = NULL) {
+                                  id = NULL, theme = NULL) {
 
   id <- id %||% new_uuid()
   if (!length(class)) class <- ""
   class <- setdiff(unique(strsplit(class, " ", fixed = TRUE)[[1]]), "")
 
-  private$doc <- add_child(private$doc, tag, id = id, class = class)
+  private$doc <- add_child(private$doc, tag, id = id, class = class,
+                           theme = theme)
 
   ## Go over all themes, and collect the selectors that match the
   ## current element
   new_sels <- list()
-  for (theme in private$themes) {
+  for (t in seq_along(private$themes)) {
+    theme <- private$themes[[t]]
     for (i in seq_len(nrow(theme))) {
-      if (match_selector(theme$parsed[[i]], private$doc)) {
+      if (is.na(theme$cnt[i]) &&
+          match_selector(theme$parsed[[i]], private$doc)) {
+        private$themes[[t]]$cnt[i] <- id
         new_sels <- modifyList(new_sels, theme$style[[i]])
       }
     }
@@ -37,19 +41,23 @@ clii__container_start <- function(self, private, tag, class = NULL,
 #' @importFrom stats na.omit
 
 clii__container_end <- function(self, private, id) {
-  ## Do not remove the <body>
-  if (last(private$doc)$tag == "body") return(invisible(self))
-
   ## Defaults to last container
-  if (is.null(id) || is.na(id)) {
-    id <- last(private$doc)$id
-  }
+  if (is.null(id) || is.na(id)) id <- last(private$doc)$id
+
+  ## Do not remove the <body>
+  if (id == "body") return(invisible(self))
 
   ## Do we have 'id' at all?
   wh <- which(vlapply(private$doc, function(x) identical(x$id, id)))[1]
   if (is.na(wh)) return(invisible(self))
 
-  ## Remove the whole subtree of 'cnt', pointer is on its parent
+  ## ids to remove
+  del_ids <- unlist(lapply(tail(private$doc, - (wh - 1L)), "[[", "id"))
+
+  ## themes to remove
+  del_thm <- unlist(lapply(tail(private$doc, - (wh - 1L)), "[[", "theme"))
+
+  ## Remove the whole subtree of 'cnt'
   private$doc <- head(private$doc, wh - 1L)
 
   ## Bottom margin
@@ -60,8 +68,17 @@ clii__container_end <- function(self, private, id) {
   ))
   private$vspace(bottom)
 
-  ## Remove styles as well
+  ## Remove styles
   private$styles <- head(private$styles, del_from - 1L)
+
+  ## Remove claimed styles that are not used any more
+  for (t in seq_along(private$themes)) {
+    m <- private$themes[[t]]$cnt %in% del_ids
+    private$themes[[t]]$cnt[m] <- NA_character_
+  }
+
+  ## Remove themes
+  private$themes <- private$themes[setdiff(names(private$themes), del_thm)]
 
   invisible(self)
 }
@@ -70,7 +87,7 @@ clii__container_end <- function(self, private, id) {
 
 clii_div <- function(self, private, id, class, theme) {
   theme_id <- self$add_theme(theme)
-  clii__container_start(self, private, "div", class, id)
+  clii__container_start(self, private, "div", class, id, theme = theme_id)
   id
 }
 
@@ -151,7 +168,7 @@ clii__item_text <- function(self, private, type, name, cnt_id, ..., .list) {
   } else if (type == "dl") {
     paste0(name, ": ")
   }
-  private$xtext(.list = c(list(head), list(...), .list), indent = -2)
+  private$xtext(.list = c(list(head), list(...), .list), indent = 0)
 }
 
 ## Code -------------------------------------------------------------
