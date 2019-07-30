@@ -94,6 +94,7 @@ cliapp <- R6Class(
     doc = NULL,
     themes = NULL,
     styles = NULL,
+    delayed_item = NULL,
 
     margin = 0,
     output = NULL,
