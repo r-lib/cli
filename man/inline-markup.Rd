@@ -78,8 +78,8 @@ cli_end()
 ## Adding a new class
 cli_div(theme = list(
   span.myclass = list(color = "lightgrey"),
-  "span.myclass::before" = list(content = "["),
-  "span.myclass::after" = list(content = "]")))
+  "span.myclass" = list(before = "["),
+  "span.myclass" = list(after = "]")))
 cli_text("This is {myclass in brackets}.")
 cli_end()
 }

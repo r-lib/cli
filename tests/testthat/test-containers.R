@@ -5,7 +5,7 @@ setup(start_app())
 teardown(stop_app())
 
 test_that("auto closing", {
-  cli_div(theme = list(".xx .emph::before" = list(content = "itsu:")))
+  cli_div(theme = list(".xx .emph" = list(before = "itsu:")))
   id <- ""
   out <- ""
   f <- function() {
@@ -21,7 +21,7 @@ test_that("auto closing", {
 })
 
 test_that("opt out of auto closing", {
-  cli_div(theme = list(".xx .emph::before" = list(content = "itsu:")))
+  cli_div(theme = list(".xx .emph" = list(before = "itsu:")))
   id <- NULL
   f <- function() {
     capt0(id <<- cli_par(class = "xx", .auto_close = FALSE))
@@ -44,7 +44,7 @@ test_that("opt out of auto closing", {
 })
 
 test_that("auto closing with special env", {
-  cli_div(theme = list(".xx .emph::before" = list(content = "itsu:")))
+  cli_div(theme = list(".xx .emph" = list(before = "itsu:")))
   id <- NULL
   f <- function() {
     g()
@@ -69,7 +69,7 @@ test_that("auto closing with special env", {
 
 test_that("div with special style", {
   f <- function() {
-    cli_div(theme = list(".xx .emph::before" = list(content = "itsu:")))
+    cli_div(theme = list(".xx .emph" = list(before = "itsu:")))
     capt0(cli_par(class = "xx"))
     out <- capt0(cli_text("foo {emph blah} bar"))
     expect_match(out, "itsu:", fixed = TRUE)
@@ -98,7 +98,7 @@ test_that("margin is squashed", {
 
 test_that("before and after work properly", {
   cli_div(theme = list(
-    "div.alert-success::before" = list(content ="!!!")
+    "div.alert-success" = list(before ="!!!")
   ))
   out <- capt0(cli_alert_success("{pkg foobar} is good"))
   expect_match(out, "!!!", fixed = TRUE)

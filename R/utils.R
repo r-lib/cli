@@ -120,3 +120,7 @@ last <- function(x) {
 str_tail <- function(x) {
   substr(x, 2, nchar(x))
 }
+
+push <- function(l, el, name = NULL) {
+  c(l, structure(list(el), names = name))
+}

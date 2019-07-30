@@ -2,7 +2,7 @@
 #' @importFrom fansi strwrap_ctl
 
 clii__xtext <- function(self, private, ..., .list, indent) {
-  style <- private$get_style()$main
+  style <- private$get_current_style()
   text <- private$inline(..., .list = .list)
   text <- strwrap_ctl(text, width = private$get_width())
   if (!is.null(style$fmt)) text <- style$fmt(text)
@@ -11,7 +11,7 @@ clii__xtext <- function(self, private, ..., .list, indent) {
 }
 
 clii__get_width <- function(self, private) {
-  style <- private$get_style()$main
+  style <- private$get_current_style()
   left <- style$`margin-left` %||% 0
   right <- style$`margin-right` %||% 0
   console_width() - left - right
@@ -32,7 +32,7 @@ clii__cat_ln <- function(self, private, lines, indent) {
     return(private$item_text(item$type, NULL, item$cnt_id, .list = lines))
   }
 
-  style <- private$get_style()$main
+  style <- private$get_current_style()
 
   ## left margin
   left <- style$`margin-left` %||% 0

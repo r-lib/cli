@@ -10,9 +10,9 @@ if (getRversion() >= "2.15.1") globalVariables(c("self", "private"))
 inline_generic <- function(self, private, class, x) {
   id <- clii__container_start(self, private, "span", class = class)
   on.exit(clii__container_end(self, private, id), add = TRUE)
-  style <- private$get_style()
-  xx <- paste0(style$before$content, x, style$after$content)
-  if (!is.null(style$main$fmt)) xx <- style$main$fmt(xx)
+  style <- private$get_current_style()
+  xx <- paste0(style$before, x, style$after)
+  if (!is.null(style$fmt)) xx <- style$fmt(xx)
   xx
 }
 

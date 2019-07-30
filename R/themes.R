@@ -1,23 +1,18 @@
 
 clii_list_themes <- function(self, private) {
-  stop("not implemented")
-  private$raw_themes
+  private$themes
 }
 
 clii_add_theme <- function(self, private, theme) {
-  stop("not implemented")
   id <- new_uuid()
-  private$raw_themes <-
-    c(private$raw_themes, structure(list(theme), names = id))
-  private$theme <- theme_create(private$raw_themes)
+  private$themes <-
+    c(private$themes, structure(list(theme_create(theme)), names = id))
   id
 }
 
 clii_remove_theme <- function(self, private, id) {
-  stop("not implemented")
-  if (! id %in% names(private$raw_themes)) return(invisible(FALSE))
-  private$raw_themes[[id]] <- NULL
-  private$theme <- theme_create(private$raw_themes)
+  if (! id %in% names(private$themes)) return(invisible(FALSE))
+  private$themes[[id]] <- NULL
   invisible(TRUE)
 }
 
@@ -90,6 +85,22 @@ builtin_theme <- function() {
   )
 }
 
+theme_create <- function(theme) {
+  mtheme <- theme
+  mtheme[] <- lapply(mtheme, create_formatter)
+  selectors <- names(theme)
+  res <- data.frame(
+    stringsAsFactors = FALSE,
+    selector = as.character(selectors),
+    parsed = I(lapply(selectors, parse_selector) %||% list()),
+    style = I(mtheme %||% list()),
+    cnt = rep(NA_character_, length(selectors))
+  )
+
+  rownames(res) <- NULL
+  res
+}
+
 #' @importFrom crayon bold italic underline make_style combine_styles
 
 create_formatter <- function(x) {
@@ -120,6 +131,22 @@ create_formatter <- function(x) {
   }
 
   x
+}
+
+#' @importFrom utils modifyList
+
+merge_embedded_styles <- function(old, new) {
+  ## side margins are additive, rest is updated, counter is reset
+  top <- new$`margin-top` %||% 0L
+  bottom <- new$`margin-bottom` %||% 0L
+  left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
+  right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
+  start <- new$start %||% 1L
+
+  mrg <- modifyList(old, new)
+  mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
+        "start")] <- list(top, bottom, left, right, start)
+  mrg
 }
 
 #' Parse a CSS3-like selector

@@ -91,15 +91,15 @@ cliapp <- R6Class(
   ),
 
   private = list(
+    doc = NULL,
+    themes = NULL,
+    styles = NULL,
+
     margin = 0,
-    state = NULL,
     output = NULL,
 
-    get_matching_styles = function()
-      tail(private$state$matching_styles, 1)[[1]],
-    get_style = function()
-      # tail(private$state$styles, 1)[[1]],
-      list(),
+    get_current_style = function()
+      tail(private$styles, 1)[[1]],
 
     xtext = function(..., .list = NULL, indent = 0)
       clii__xtext(self, private, ..., .list = .list, indent = indent),
@@ -120,9 +120,6 @@ cliapp <- R6Class(
     cat_ln = function(lines, indent = 0)
       clii__cat_ln(self, private, lines, indent),
 
-    match_theme = function(element_path)
-      clii__match_theme(self, private, element_path),
-
     progress_bars = list(),
     get_progress_bar = function()
       clii__get_progress_bar(self, private),
@@ -132,10 +129,16 @@ cliapp <- R6Class(
 )
 
 clii_init <- function(self, private, theme, user_theme, output) {
+  private$doc <- list()
   private$output <- output
-  private$state$current <-
-    list(list(tag = "body", id = "body", class = character()))
-  # TODO self$add_theme(user_theme)
+  private$styles <- NULL
+
+  self$add_theme(builtin_theme())
+  self$add_theme(theme)
+  self$add_theme(user_theme)
+
+  clii__container_start(self, private, "body", id = "body")
+
   invisible(self)
 }
 
@@ -148,7 +151,7 @@ clii_text <- function(self, private, ...) {
 }
 
 clii_verbatim <- function(self, private, ..., .envir) {
-  style <- private$get_style()$main
+  style <- private$get_current_style()
   text <- paste(unlist(list(...), use.names = FALSE), collapse = "\n")
   if (!is.null(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
@@ -178,7 +181,7 @@ clii__header <- function(self, private, type, text, id, class) {
   clii__container_start(self, private, type, id = id, class = class)
   on.exit(clii__container_end(self, private, id), add = TRUE)
   text <- private$inline(text)
-  style <- private$get_style()$main
+  style <- private$get_current_style()
   if (is.function(style$fmt)) text <- style$fmt(text)
   private$cat_ln(text)
   invisible(self)
@@ -203,10 +206,10 @@ clii_alert <- function(self, private, type, text, id, class, wrap) {
                        class = paste(class, "alert", type))
   on.exit(clii__container_end(self, private, id), add = TRUE)
   text <- private$inline(text)
-  style <- private$get_style()
-  text[1] <- paste0(style$before$content, text[1])
-  text[length(text)] <- paste0(text[length(text)], style$after$content)
-  if (is.function(style$main$fmt)) text <- style$main$fmt(text)
+  style <- private$get_current_style()
+  text[1] <- paste0(style$before, text[1])
+  text[length(text)] <- paste0(text[length(text)], style$after)
+  if (is.function(style$fmt)) text <- style$fmt(text)
   if (wrap) text <- strwrap_ctl(text, exdent = 2)
   private$cat_ln(text)
   invisible(self)

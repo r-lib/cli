@@ -29,10 +29,10 @@ test_that("default theme is valid", {
 
 test_that("explicit formatter is used, and combined", {
   id <- default_app()$add_theme(list(
-    "span.emph" = list(fmt = function(x) paste0("(((", x, ")))")),
-    "span.emph::before" = list(content = "<<"),
-    "span.emph::after" = list(content = ">>")
-  ))
+    "span.emph" = list(
+      fmt = function(x) paste0("(((", x, ")))"),
+      before = "<<", after = ">>")
+    ))
   on.exit(default_app()$remove_theme(id), add = TRUE)
   out <- capt0(cli_text("this is {emph it}, really"))
   expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)
@@ -47,8 +47,8 @@ test_that("simple theme", {
 })
 
 test_that("user's override", {
-  custom <- list(".alert::before" = list(content = "custom:"))
-  override <- list(".alert::before" = list(content = "override:"))
+  custom <- list(".alert" = list(before = "custom:"))
+  override <- list(".alert" = list(after = "override:"))
 
   start_app(theme = custom)
   out <- capt0(cli_alert("Alert!"))

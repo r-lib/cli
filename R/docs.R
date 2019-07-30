@@ -77,8 +77,8 @@
 #' ## Adding a new class
 #' cli_div(theme = list(
 #'   span.myclass = list(color = "lightgrey"),
-#'   "span.myclass::before" = list(content = "["),
-#'   "span.myclass::after" = list(content = "]")))
+#'   "span.myclass" = list(before = "["),
+#'   "span.myclass" = list(after = "]")))
 #' cli_text("This is {myclass in brackets}.")
 #' cli_end()
 NULL
@@ -147,10 +147,6 @@ NULL
 #' `margin-left`, and the list entries themselves define the values of
 #' the properties. See [builtin_theme()] and [simple_theme()] for examples.
 #'
-#' @section CSS pseudo elements:
-#' Currently only the `::before` and `::after` pseudo elements are
-#' supported.
-#'
 #' @section Formatter callbacks:
 #' For flexibility, themes may also define formatter functions, with
 #' property name `fmt`. These will be called once the other styles are
@@ -160,8 +156,9 @@ NULL
 #' @section Supported properties:
 #' Right now only a limited set of properties are supported. These include
 #' left, right, top and bottom margins, background and foreground colors,
-#' bold and italic fonts, underlined text. The `content` property is
-#' supported to insert text via `::before` and `::after` selectors.
+#' bold and italic fonts, underlined text. The `before` and `after`
+#' properties are supported to insert text before and after the
+#' content of the element.
 #'
 #' More properties might be adder later.
 #'
@@ -182,8 +179,8 @@ NULL
 #' Create a custom alert type:
 #' ```
 #' list(
-#'   ".alert-start::before" = list(content = symbol$play),
-#'   ".alert-stop::before"  = list(content = symbol$stop)
+#'   ".alert-start" = list(before = symbol$play),
+#'   ".alert-stop"  = list(before = symbol$stop)
 #' )
 #' ```
 #' @name themes

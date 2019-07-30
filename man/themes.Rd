@@ -42,12 +42,6 @@ names are CSS properties, e.g. \code{color}, or \code{font-weight} or
 the properties. See \code{\link[=builtin_theme]{builtin_theme()}} and \code{\link[=simple_theme]{simple_theme()}} for examples.
 }
 
-\section{CSS pseudo elements}{
-
-Currently only the \code{::before} and \code{::after} pseudo elements are
-supported.
-}
-
 \section{Formatter callbacks}{
 
 For flexibility, themes may also define formatter functions, with
@@ -60,8 +54,9 @@ output, i.e. \emph{not} on container elements.
 
 Right now only a limited set of properties are supported. These include
 left, right, top and bottom margins, background and foreground colors,
-bold and italic fonts, underlined text. The \code{content} property is
-supported to insert text via \code{::before} and \code{::after} selectors.
+bold and italic fonts, underlined text. The \code{before} and \code{after}
+properties are supported to insert text before and after the
+content of the element.
 
 More properties might be adder later.
 
@@ -80,8 +75,8 @@ Color of headers, that are only active in paragraphs with an
 }
 
 Create a custom alert type:\preformatted{list(
-  ".alert-start::before" = list(content = symbol$play),
-  ".alert-stop::before"  = list(content = symbol$stop)
+  ".alert-start" = list(before = symbol$play),
+  ".alert-stop"  = list(before = symbol$stop)
 )
 }
 }

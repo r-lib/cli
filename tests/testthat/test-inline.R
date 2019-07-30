@@ -14,12 +14,12 @@ test_that("inline classes", {
     special_style <- structure(
       list(
         list(color = "cyan"),
-        list(content = "<<<"),
-        list(content =">>>")),
+        list(before = "<<<"),
+        list(after =">>>")),
       names = c(
         paste0("span.", class),
-        paste0("span.", class, "::before"),
-        paste0("span.", class, "::after")
+        paste0("span.", class),
+        paste0("span.", class)
       )
     )
 

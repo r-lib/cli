@@ -148,7 +148,7 @@ simple_theme <- function(dark = "auto") {
     span.var = simple_theme_code(dark),
     span.envvar = simple_theme_code(dark),
 
-    span.timestamp = list(before = "[", after = "]", color = "grey"),
+    span.timestamp = list(before = "[", after = "]", color = "grey")
   )
 }
 
