@@ -166,7 +166,9 @@ merge_embedded_styles <- function(old, new) {
   mrg <- modifyList(old, new)
   mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
         "start")] <- list(top, bottom, left, right, start)
-  mrg
+
+  ## Formatter needs to be re-generated
+  create_formatter(mrg)
 }
 
 #' Parse a CSS3-like selector
