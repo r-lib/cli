@@ -9,6 +9,8 @@
 #'
 #' On Windows they have a fallback to less fancy symbols.
 #'
+#' `list_symbols()` prints a table with all symbols to the screen.
+#'
 #' @name symbol
 #' @aliases symbol
 #' @export symbol
@@ -263,3 +265,20 @@ symbol_ascii <- list(
   "en_dash" = "--",
   "em_dash" = "---"
 )
+
+#' @export
+#' @rdname symbol
+
+list_symbols <- function() {
+  rpad <- function(x, width) {
+    w <- nchar(x, type = "width")
+    paste0(x, strrep(" ", width - w))
+  }
+  chars <- rpad(paste0(symbol, "\t", names(symbol)), 25)
+  if (length(chars) %% 2) chars <- c(chars, "")
+  chars <- paste(
+  sep = "   ",
+  chars[1:(length(chars)/2)],
+  chars[(length(chars)/2 + 1):length(chars)])
+  cat(chars, sep = "\n")
+}
