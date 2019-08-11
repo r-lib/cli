@@ -1,19 +1,62 @@
 ---
 title: cli
 output:
-  github_document:
+  md_document:
+    variant: markdown_github
     toc: true
     toc_depth: 3
     includes:
       before_body: header.md
+  html_document:
+    toc: true
+    toc_depth: 3
+always_allow_html: yes
 ---
 
-```{r, setup, echo = FALSE, message = FALSE}
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
 knitr::opts_chunk$set(
+  collapse = TRUE,
   comment = "#>",
-  fig.path = "tools/figures/"
+  fig.path = "man/figures/README",
+  out.width = "100%",
+  cache = TRUE
 )
+# Turn on ANSI colors
+options(
+    crayon.enabled = TRUE,
+    crayon.colors = 256)
+crayon::num_colors(forget = TRUE)
+asciicast::init_knitr_engine(
+  startup = quote({
+    library(cli)
+    set.seed(1) }),
+  echo = TRUE,
+  echo_input = FALSE)
+# asciicast output defaults
+options(
+    asciicast_knitr_svg = TRUE,
+    asciicast_at = "end",
+    asciicast_typing_speed = 0,
+    asciicast_padding = 20,
+    asciicast_window = FALSE,
+    asciicast_omit_last_line = FALSE,
+    asciicast_cursor = FALSE,
+    width = 100,
+    asciicast_rows = "auto",
+    asciicast_cols = 100)
 ```
+
+# Features
+
+* Build a CLI using semantic elements: headers, lists, alerts, paragraphs.
+* Theming via a CSS-like language.
+* Terminal colors via the [crayon](https://github.com/r-lib/crayon) package.
+* Create CLI elements in subprocesses, using the
+  [callr](https://github.com/r-lib/callr) package.
+* All CLI text can contain interpreted string literals, via the
+  [glue](https://github.com/tidyverse/glue) package.
 
 # Installation
 
@@ -23,194 +66,507 @@ Install the stable version from CRAN:
 install.packages("cli")
 ```
 
-Install the development version from GitHub:
+# Building a command line interface
 
-```r
-source("https://install-github.me/r-lib/cli")
-```
-
-# Usage
- 
-```{r}
+```{r, cache = FALSE}
 library(cli)
 ```
 
-```{r echo = FALSE, results = "hide"}
-options(crayon.enabled = TRUE)
-options(crayon.colors = 256)
-crayon::num_colors(forget = TRUE)
+To start building a CLI, so can simply start using the `cli_*` functions
+to create various CLI elements. Their exact formatting depends on the
+current theme, see 'Theming' below.
+
+## Alerts
+
+Alerts are typically short messages. cli has four types of alerts (success,
+info, warning, danger) and also a generic alert type:
+
+```{asciicast}
+cli_alert_success("Updated database.")
 ```
+
+```{asciicast}
+cli_alert_info("Reopened database.")
+```
+
+```{asciicast}
+cli_alert_warning("Cannot reach GitHub, using local database cache.")
+```
+
+```{asciicast}
+cli_alert_danger("Failed to connect to database.")
+```
+
+```{asciicast}
+cli_alert("A generic alert")
+```
+
+## Text
+
+Text is automatically wrapped to the terminal width.
+
+```{asciicast}
+cli_text(cli:::lorem_ipsum())
+```
+
+## Paragraphs
+
+Paragraphs break the output. The default theme inserts an empty line
+before and after paragraphs, but only a single empty line is added between
+two paragraphs.
+
+```{asciicast}
+fun <- function() {
+  cli_par()
+  cli_text("This is some text.")
+  cli_text("Some more text.")
+  cli_end()
+  cli_par()
+  cli_text("Already a new paragraph.")
+  cli_end()
+}
+fun()
+```
+
+`cli_end()` closes the latest open paragraph (or other open container).
+
+## Auto-closing containers
+
+If a paragraph (or other container, see 'Generic containers' later), is
+opened within a function, cli automatically closes it at the end of the
+function, by default. So in the previous example the last `cli_end()` call
+is not needed. Use `.auto_close = TRUE` in `cli_par()` to leave the
+paragraph open after its calling function returns.
+
+## Headers
+
+cli suppports three levels of headers. This is how they look in the default
+theme. The default theme adds an empty line before headers, and an empty
+line after `cli_h1()` and `cli_h2()`.
+
+```{asciicast}
+cli_h1("Header 1")
+```
+
+```{asciicast}
+cli_h2("Header 2")
+```
+
+```{asciicast}
+cli_h3("Header 3")
+```
+
+## Interpolation
+
+All cli text is treated as a glue template, with special formatters
+available (see the 'Inline text formatting' Section):
+
+```{asciicast}
+size <- 123143123
+dt <- 1.3454
+cli_alert_info(c(
+  "Downloaded {prettyunits::pretty_bytes(size)} in ",
+  "{prettyunits::pretty_sec(dt)}"))
+```
+
+## Inline text formatting
+
+To define inline markup, you can use the regular glue braces, and
+immeadiately after the opening brace, supply the name of the markup
+formatter, e.g. for emphasised text, the formatter is called `emph`.
+Some examples are below, see `?"inline-markup"` for details.
+
+```{asciicast}
+fun <- function() {
+  cli_ul()
+  cli_it("{emph Emphasized} text")
+  cli_it("{strong Strong} importance")
+  cli_it("A piece of code: {code sum(a) / length(a)}")
+  cli_it("A package name: {pkg cli}")
+  cli_it("A function name: {fun cli_text}")
+  cli_it("A function argument: {arg text}")
+  cli_it("A keyboard key: press {key ENTER}")
+  cli_it("A file name: {file /usr/bin/env}")
+  cli_it("An email address: {email bugs.bunny@acme.com}")
+  cli_it("A URL: {url https://acme.com}")
+  cli_it("A variable name: {var mtcars}")
+  cli_it("An environment variable: {envvar R_LIBS}")
+}
+fun()
+```
+
+To combine inline markup and string interpolation, you need to add another
+set of braces:
+
+```{asciicast}
+dlurl <- "https://httpbin.org/status/404"
+cli_alert_danger("Failed to download {url {dlurl}}.")
+```
+
+## Lists
+
+cli has three types of list: ordered, unordered and definition lists, see
+`cli_ol()`, `cli_ul()` amd `cli_dl()`:
+
+```{asciicast}
+cli_ol(c("item 1", "item 2", "item 3"))
+```
+
+```{asciicast}
+cli_ul(c("item 1", "item 2", "item 3"))
+```
+
+```{asciicast}
+cli_dl(c("item 1" = "description 1", "item 2" = "description 2",
+         "item 3" = "description 3"))
+```
+
+Item text is wrapped to the terminal width:
+
+```{asciicast}
+cli_ul(c("item 1" = cli:::lorem_paragraph(1, 20),
+         "item 2" = cli:::lorem_paragraph(1, 20)))
+```
+
+### Adding list items iteratively
+
+Items can be added one by one:
+
+```{asciicast}
+fun <- function() {
+  lid <- cli_ul()
+  cli_it("Item 1")
+  cli_it("Item 2")
+  cli_it("Item 3")
+  cli_end(lid)
+}
+fun()
+```
+
+The `cli_ul()` call creates a list container, and because its items are
+not specified, it leaves the container open. Then items can be added one
+by one. (The last `cli_end()` is not necessary, because by default
+containers auto-close when their calling function exits.)
+
+### Adding text to an item iteratively
+
+`cli_it()` creates a new container for the list item, within the list
+container. You can keep adding text to the item, until the
+container is closed via `cli_end()` or a new `cli_it()`, which closes
+the current item container, and creates another one for the new item:
+
+```{asciicast}
+fun <- function() {
+  cli_ul()
+  cli_it("First item")
+  cli_text("This is still the first item")
+  cli_it("This is the second item")
+}
+fun()
+```
+
+### Nested lists
+
+To create nested lists, open nested containers:
+
+```{asciicast}
+fun <- function() {
+  cli_ol()
+  cli_it("Item 1")
+  ulid <- cli_ul()
+  cli_it("Subitem 1")
+  cli_it("Subitem 2")
+  cli_end(ulid)
+  cli_it("Item 2")
+  cli_end()
+}
+fun()
+```
+
+In `cli_end(olid)`, the `olid` is necessary, otherwise `cli_end()` would
+only close the container of the list item.
+
+# Theming
+
+The looks of the various CLI elements can be changed via themes.
+The cli package comes with a simple built-in theme, and new themes can
+be added as well.
+
+## Tags, ids and classes
+
+Similarly to HTML document, the elements of a CLI form a tree of nodes.
+Each node has exactly one tag, at most one id, and optionally a set of
+classes. E.g. `cli_par()` creates a node with a `<p>` tag, `cli_ol()`
+creates a node with an `<ol>` tag, etc. Here is an example CLI tree. It
+always starts with a `<body>` tag with id `"body"`, this is created
+automatically.
+
+```
+<body id="body">
+  <par>
+    <ol>
+      <it>
+        <span class="pkg">
+```
+
+A cli theme is a named list, where the names are selectors based on tag
+names, ids and classes, and the elements of the list are style declarations.
+For example, the style of `<h1>` tags looks like this in the built-in theme:
+
+```{asciicast}
+builtin_theme()$h1
+```
+
+See also `?cli::themes` for the reference and `?cli::simple_theme` for
+an example theme.
+
+## Generic containers
+
+`cli_div()` is a generic container, that does not produce any output, but
+it can add a new theme. This theme is removed when the `<div>` node is
+closed. (Like other containers, `cli_div()` auto-closes when the calling
+function exits.)
+
+```{asciicast}
+fun <- function() {
+  cli_div(theme = list (.alert = list(color = "red")))
+  cli_alert("This will be red")
+  cli_end()
+  cli_alert("Back to normal color")
+}
+fun()
+```
+
+## Theming inline markup
+
+The inline markup formatters always use a `<span>` tag, and add the name
+of the formatter as a class.
+
+```{asciicast}
+fun <- function() {
+  cli_div(theme = list(span.emph = list(color = "orange")))
+  cli_text("This is very {emph important}")
+  cli_end()
+  cli_text("Back to the {emph previous theme}")
+}
+fun()
+```
+
+# CLI messages
+
+All `cli_*()` functions are implemented using standard R conditions.
+For example a `cli_alert()` call emits an R condition with class
+`cli_message`. These messages can be caught, muffled, transfered from a
+subprocess to the main R process.
+
+When a cli function is called:
+1. cli throws a `cli_message` condition.
+2. If this condition is caught and muffled (via the `muffleMessage`
+   restart), then nothing else happens.
+3. Otherwise the `cli.default_handler` option is checked and if this is
+   a function, then it is called with the message.
+4. If the `cli.default_handler` option is not set, or it is not a function,
+   the default cli handler is called, which shows the text, alert, header,
+   etc. on the screen, using the standard R `message()` function.
+
+```{asciicast}
+tryCatch(cli_h1("Header"), cli_message = function(x) x)
+suppressMessages(cli_text("Not shown"))
+```
+
+# Subprocesses
+
+If `cli_*()` commands are invoked in a subprocess via
+`callr::r_session` (see https://callr.r-lib.org), then they are
+automatically copied to the main R process:
+
+```{asciicast}
+rs <- callr::r_session$new()
+rs$run(function() {
+  cli::cli_text("This is subprocess {emph {Sys.getpid()}} from {pkg callr}")
+  Sys.getpid()
+})
+invisible(rs$close())
+```
+
+# Non-semantic CLI
+
+While the primary way of using cli is the `cli_*()` functions that generate
+semantic CLI elements, you can also use cli functions that create
+terminal output directly.
 
 ## Unicode characters
 
-Inspired by (and mostly copied from) the
-[figures](https://github.com/sindresorhus/figures) JavaScript project.
+The `symbol` variable includes some Unicode characters that are often
+useful in CLI messages. They automatically fall back to ASCII symbols
+if the platform does not support them. You can use these symbols both
+with the semantic `cli_*()` functions and directly.
 
-```{r symbols, echo = FALSE}
-rpad <- function(x, width) {
-  w <- nchar(x, type = "width")
-  paste0(x, strrep(" ", width - w))
-}
-chars <- rpad(paste0(symbol, "\t", names(symbol)), 25)
-if (length(chars) %% 2) chars <- c(chars, "")
-chars <- paste(
-  sep = "   ",
-  chars[1:(length(chars)/2)],
-  chars[(length(chars)/2 + 1):length(chars)])
-cat(chars, sep = "\n")
+```{asciicast}
+options(asciicast_theme = list(font_family =
+  c("Monaco", "'Fira Code'", "Consolas", "Menlo",
+    "'Bitstream Vera Sans Mono'", "'Powerline Symbols'", "monospace")))
 ```
 
-## Spinners
+```{asciicast}
+cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")
+```
 
-See `list_spinners()` and `get_spinner()`. From the awesome
-[cli-spinners](https://github.com/sindresorhus/cli-spinners#readme)
-project.
+Here is a list of all symbols:
 
-![](tools/figures/spinners.gif)
+```{asciicast}
+list_symbols()
+```
+
+```{r include = FALSE}
+options(asciicast_theme = NULL)
+```
+
+Most symbols were inspired by (and copied from) the awesome
+[figures](https://github.com/sindresorhus/figures) JavaScript project.
 
 ## Rules
 
-Simple rule
+### Simple rule, double rule, bars
 
-```{r rule, render=cli:::knit_print.html}
+```{asciicast}
 rule()
 ```
 
-Double rule
-
-```{r rule-double, render=cli:::knit_print.html}
+```{asciicast}
 rule(line = 2)
 ```
 
-Bars
-
-```{r rule-bars, render=cli:::knit_print.html}
+```{asciicast}
 rule(line = "bar2")
+```
+
+```{asciicast}
 rule(line = "bar5")
 ```
 
-Left label
-
-```{r rule-left, render=cli:::knit_print.html}
-rule(left = "Results")
-```
-
-Centered label
-
-```{r rule-center, render=cli:::knit_print.html}
-rule(center = " * RESULTS * ")
-```
-
-Colored labels
-
-```{r rule-color-label, render=cli:::knit_print.html}
-rule(center = col_red(" * RESULTS * "))
-```
-
-Colored label and line
-
-```{r rule-color, render=cli:::knit_print.html}
-rule(center = " * RESULTS * ", col = "red")
-```
-
-Colored line
-
-```{r rule-color-line, render=cli:::knit_print.html}
-rule(center = " * RESULTS * ", line_col = "red")
-```
-
-Custom line
-
-```{r rule-line-custom, render=cli:::knit_print.html}
+```{asciicast}
 rule(center = "TITLE", line = "~")
 ```
 
-More custom line
+### Labels
 
-```{r rule-line-custom-2, render=cli:::knit_print.html}
+```{asciicast}
+rule(left = "Results")
+```
+
+```{asciicast}
+rule(center = " * RESULTS * ")
+```
+
+### Colors
+
+```{asciicast}
+rule(center = col_red(" * RESULTS * "))
+```
+
+```{asciicast}
+rule(center = " * RESULTS * ", col = "red")
+```
+
+```{asciicast}
+rule(center = " * RESULTS * ", line_col = "red")
+```
+
+```{asciicast}
 rule(center = "TITLE", line = "~-", line_col = "blue")
 ```
 
-Even more custom line
-
-```{r rule-line-custom-3, render=cli:::knit_print.html}
+```{asciicast}
 rule(center = bg_red(" ", symbol$star, "TITLE", symbol$star, " "),
   line = "\u2582", line_col = "orange")
 ```
 
 ## Boxes
 
-Default box
-
-```{r box, render=cli:::knit_print.html}
+```{asciicast}
 boxx("Hello there!")
 ```
 
-Change border style
+### Change border style
 
-```{r box-border-style, render=cli:::knit_print.html}
+```{asciicast}
 boxx("Hello there!", border_style = "double")
 ```
 
-Multiple lines
+### Multiple lines of text
 
-```{r box-lines, render=cli:::knit_print.html}
+```{asciicast}
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
-Padding
+### Padding and margin
 
-```{r box-padding, render=cli:::knit_print.html}
+```{asciicast}
 boxx("Hello there!", padding = 1)
+```
+
+```{asciicast}
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-Margin
-
-```{r box-margin, render=cli:::knit_print.html}
+```{asciicast}
 boxx("Hello there!", margin = 1)
-boxx("Hello there!", margin = c(1, 5, 1, 5))
-boxx("Hello there!", padding = 1, margin = c(1, 5, 1, 5))
 ```
 
-Floating
+```{asciicast}
+boxx("Hello there!", margin = c(1, 5, 1, 5))
+```
 
-```{r box-floating, render=cli:::knit_print.html}
+### Floating
+
+```{asciicast}
 boxx("Hello there!", padding = 1, float = "center")
+```
+
+```{asciicast}
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
-Text color
+### Colors
 
-```{r box-color, render=cli:::knit_print.html}
+```{asciicast}
 boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-Backgorund color
-
-```{r box-bgcolor, render=cli:::knit_print.html}
+```{asciicast}
 boxx("Hello there!", padding = 1, background_col = "brown")
+```
+
+```{asciicast}
 boxx("Hello there!", padding = 1, background_col = bg_red)
 ```
 
-Border color
-
-```{r box-border-color, render=cli:::knit_print.html}
+```{asciicast}
 boxx("Hello there!", padding = 1, border_col = "green")
+```
+
+```{asciicast}
 boxx("Hello there!", padding = 1, border_col = col_red)
 ```
 
-Label alignment
+### Label alignment
 
-```{r box-label-align, render=cli:::knit_print.html}
+```{asciicast}
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
+```
+
+```{asciicast}
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
+```
+
+```{asciicast}
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
-A very customized box
+### A very customized box
 
-```{r box-customized, render=cli:::knit_print.html}
+```{asciicast}
 star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
@@ -228,7 +584,7 @@ boxx(
 You can specify the tree with a two column data frame, containing the
 node ids/labels, and the list of their children.
 
-```{r tree, render=cli:::knit_print.html}
+```{asciicast}
 data <- data.frame(
   stringsAsFactors = FALSE,
   package = c("processx", "backports", "assertthat", "Matrix",
@@ -253,9 +609,9 @@ tree(data, root = "rcmdcheck")
 An optional third column may contain custom labels. These can be colored
 as well:
 
-```{r tree-color, render=cli:::knit_print.html}
+```{asciicast}
 data$label <- paste(data$package,
-  style_dim(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
+  col_grey(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
     "2.2.2", "1.3.4", "1.0.2", "0.6.12", "2.2.1", "1.2.1.9002",
     "1.0.0.9000", "2.0.1", "0.20-35"), ")"))

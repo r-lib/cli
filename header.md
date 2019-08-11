@@ -1,4 +1,6 @@
 
+# cli
+
 > Helpers for Developing Command Line Interfaces
 
 [![Linux Build Status](https://api.travis-ci.org/r-lib/cli.svg?branch=master)](https://travis-ci.org/r-lib/cli)
@@ -7,9 +9,11 @@
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/cli)](http://www.r-pkg.org/pkg/cli)
 [![Coverage Status](https://img.shields.io/codecov/c/github/r-lib/cli/master.svg)](https://codecov.io/github/r-lib/cli?branch=master)
 
-It integrates well with `crayon` for coloring the boxes or their content,
-It can draw rules and boxes to make headers or footers in console output,
-and tree structures. It includes a set of Unicode characters, with fallbacks
-on systems that do not support them.
+A suite of tools to build attractive command line interfaces
+(CLIs), from semantic elements: headers, lists, alerts, paragraphs,
+etc. Supports theming via a CSS-like language. It also contains a
+number of lower level CLI elements: rules, boxes, trees, and
+Unicode symbols with ASCII alternatives. It integrates with the
+crayon package to support ANSI terminal colors.
 
 ---
