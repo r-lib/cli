@@ -18,15 +18,15 @@ cliapp <- R6Class(
       clii_remove_theme(self, private, id),
 
     ## Close container(s)
-    end = function(id)
+    end = function(id = NULL)
       clii_end(self, private, id),
 
     ## Generic container
-    div = function(id, class = NULL, theme = NULL)
+    div = function(id = NULL, class = NULL, theme = NULL)
       clii_div(self, private, id, class, theme),
 
     ## Paragraphs
-    par = function(id, class = NULL)
+    par = function(id = NULL, class = NULL)
       clii_par(self, private, id, class),
 
     ## Text, wrapped
@@ -42,11 +42,11 @@ cliapp <- R6Class(
       clii_md_text(self, private, ...),
 
     ## Headers
-    h1 = function(text, id, class = NULL)
+    h1 = function(text, id = NULL, class = NULL)
       clii_h1(self, private, text, id, class),
-    h2 = function(text, id, class = NULL)
+    h2 = function(text, id = NULL, class = NULL)
       clii_h2(self, private, text, id, class),
-    h3 = function(text, id, class = NULL)
+    h3 = function(text, id = NULL, class = NULL)
       clii_h3(self, private, text, id, class),
 
     ## Block quote
@@ -56,37 +56,37 @@ cliapp <- R6Class(
     ## Lists
     ul = function(items = NULL, id = NULL, class = NULL, .close = TRUE)
       clii_ul(self, private, items, id, class, .close),
-    ol = function(items = NULL, id, class = NULL, .close = TRUE)
+    ol = function(items = NULL, id = NULL, class = NULL, .close = TRUE)
       clii_ol(self, private, items, id, class, .close),
-    dl = function(items = NULL, id, class = NULL, .close = TRUE)
+    dl = function(items = NULL, id = NULL, class = NULL, .close = TRUE)
       clii_dl(self, private, items, id, class, .close),
     it = function(items = NULL, id = NULL, class = NULL)
       clii_it(self, private, items, id, class),
 
     ## Code
-    code = function(lines, id, class = NULL)
+    code = function(lines, id = NULL, class = NULL)
       clii_code(self, private, lines, class),
 
     ## Tables
-    table = function(cells, id, class = NULL)
+    table = function(cells, id = NULL, class = NULL)
       clii_table(self, private, cells, class),
 
     ## Alerts
-    alert = function(text, id, class = NULL, wrap = FALSE)
+    alert = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(self, private, "alert", text, id, class, wrap),
-    alert_success = function(text, id, class = NULL, wrap = FALSE)
+    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(self, private, "alert-success", text, id, class, wrap),
-    alert_danger = function(text, id, class = NULL, wrap = FALSE)
+    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(self, private, "alert-danger", text, id, class, wrap),
-    alert_warning = function(text, id, class = NULL, wrap = FALSE)
+    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(self, private, "alert-warning", text, id, class, wrap),
-    alert_info = function(text, id, class = NULL, wrap = FALSE)
+    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(self, private, "alert-info", text, id, class, wrap),
 
     ## Progress bars
-    progress_bar = function(id, ...)
+    progress_bar = function(id = NULL, ...)
       clii_progress_bar(self, private, id, ...),
-    progress = function(id, operation, ...)
+    progress = function(id = NULL, operation, ...)
       clii_progress(self, private, id, operation, ...)
   ),
 
