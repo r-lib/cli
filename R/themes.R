@@ -1,4 +1,25 @@
 
+#' List the currently active themes
+#'
+#' If there is no active app, then it calls [start_app()].
+#'
+#' @return A list of data frames with the active themes.
+#' Each data frame row is a style that applies to selected CLI tree nodes.
+#' Each data frame has columns:
+#' * `selector`: The original CSS-like selector string. See [themes].
+#' * `parsed`: The parsed selector, as used by cli for matching to nodes.
+#' * `style`: The original style.
+#' * `cnt`: The id of the container the style is currently applied to, or
+#'   `NA` if the style is not used.
+#'
+#' @export
+#' @seealso themes
+
+cli_list_themes <- function() {
+  app <- default_app() %||% start_app()
+  app$list_themes()
+}
+
 clii_list_themes <- function(self, private) {
   private$themes
 }
