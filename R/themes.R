@@ -20,20 +20,20 @@ cli_list_themes <- function() {
   app$list_themes()
 }
 
-clii_list_themes <- function(self, private) {
-  private$themes
+clii_list_themes <- function(app) {
+  app$themes
 }
 
-clii_add_theme <- function(self, private, theme) {
+clii_add_theme <- function(app, theme) {
   id <- new_uuid()
-  private$themes <-
-    c(private$themes, structure(list(theme_create(theme)), names = id))
+  app$themes <-
+    c(app$themes, structure(list(theme_create(theme)), names = id))
   id
 }
 
-clii_remove_theme <- function(self, private, id) {
-  if (! id %in% names(private$themes)) return(invisible(FALSE))
-  private$themes[[id]] <- NULL
+clii_remove_theme <- function(app, id) {
+  if (! id %in% names(app$themes)) return(invisible(FALSE))
+  app$themes[[id]] <- NULL
   invisible(TRUE)
 }
 

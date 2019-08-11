@@ -1,28 +1,28 @@
 
 #' @importFrom progress progress_bar
 
-clii_progress_bar <- function(self, private, id, ...) {
+clii_progress_bar <- function(app, id, ...) {
   stream <- stderr()
   if (!nzchar(stream)) stream <- stdout()
   bar <- progress_bar$new(
     ..., stream = stream,
-    width = private$get_width())
+    width = app$get_width())
   stbar <- list(bar)
   names(stbar) <- id
-  private$progress_bars <- c(private$progress_bars, stbar)
-  private$cleanup_progress_bars()
+  app$progress_bars <- c(app$progress_bars, stbar)
+  app$cleanup_progress_bars()
   invisible()
 }
 
-clii__get_progress_bar <- function(self, private) {
-  finished <- vlapply(private$progress_bars, function(x) x$finished)
+clii__get_progress_bar <- function(app) {
+  finished <- vlapply(app$progress_bars, function(x) x$finished)
   last <- tail_na(which(!finished))
-  if (is.na(last)) NULL else private$progress_bars[[last]]
+  if (is.na(last)) NULL else app$progress_bars[[last]]
 }
 
-clii__cleanup_progress_bars <- function(self, private) {
-  finished <- vlapply(private$progress_bars, function(x) x$finished)
-  private$progress_bars <- private$progress_bars[!finished]
+clii__cleanup_progress_bars <- function(app) {
+  finished <- vlapply(app$progress_bars, function(x) x$finished)
+  app$progress_bars <- app$progress_bars[!finished]
 }
 
 cli__remote_progress_bar <- function(id) {
@@ -48,13 +48,13 @@ cli__remote_progress_bar <- function(id) {
   bar
 }
 
-clii_progress <- function(self, private, id, operation, ...) {
-  if (!id %in% names(private$progress_bars)) return()
-  bar <- private$progress_bars[[id]]
+clii_progress <- function(app, id, operation, ...) {
+  if (!id %in% names(app$progress_bars)) return()
+  bar <- app$progress_bars[[id]]
   if (bar$finished) {
-    private$progress_bars[[id]] <- NULL
+    app$progress_bars[[id]] <- NULL
   } else {
     bar[[operation]](...)
   }
-  if (bar$finished) private$progress_bars[[id]] <- NULL
+  if (bar$finished) app$progress_bars[[id]] <- NULL
 }

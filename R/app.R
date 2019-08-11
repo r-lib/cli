@@ -30,7 +30,7 @@ start_app <- function(theme = getOption("cli.theme"),
                       output = c("message", "stdout"), .auto_close = TRUE,
                       .envir = parent.frame()) {
 
-  app <- cliapp$new(
+  app <- cliapp(
     theme = theme,
     user_theme = getOption("cli.user_theme"),
     output = match.arg(output))

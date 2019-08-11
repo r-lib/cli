@@ -1,38 +1,38 @@
 
 #' @importFrom fansi strwrap_ctl
 
-clii__xtext <- function(self, private, ..., .list, indent) {
-  style <- private$get_current_style()
-  text <- private$inline(..., .list = .list)
-  text <- strwrap_ctl(text, width = private$get_width())
+clii__xtext <- function(app, ..., .list, indent) {
+  style <- app$get_current_style()
+  text <- app$inline(..., .list = .list)
+  text <- strwrap_ctl(text, width = app$get_width())
   if (!is.null(style$fmt)) text <- style$fmt(text)
-  private$cat_ln(text, indent = indent)
-  invisible(self)
+  app$cat_ln(text, indent = indent)
+  invisible(app)
 }
 
-clii__get_width <- function(self, private) {
-  style <- private$get_current_style()
+clii__get_width <- function(app) {
+  style <- app$get_current_style()
   left <- style$`margin-left` %||% 0
   right <- style$`margin-right` %||% 0
   console_width() - left - right
 }
 
-clii__cat <- function(self, private, lines) {
-  if (private$output == "message") {
+clii__cat <- function(app, lines) {
+  if (app$output == "message") {
     clii__message(lines, appendLF = FALSE)
   }  else {
     cat(lines, sep = "")
   }
-  private$margin <- 0
+  app$margin <- 0
 }
 
-clii__cat_ln <- function(self, private, lines, indent) {
-  if (!is.null(item <- private$state$delayed_item)) {
-    private$state$delayed_item <- NULL
-    return(private$item_text(item$type, NULL, item$cnt_id, .list = lines))
+clii__cat_ln <- function(app, lines, indent) {
+  if (!is.null(item <- app$state$delayed_item)) {
+    app$state$delayed_item <- NULL
+    return(app$item_text(item$type, NULL, item$cnt_id, .list = lines))
   }
 
-  style <- private$get_current_style()
+  style <- app$get_current_style()
 
   ## left margin
   left <- style$`margin-left` %||% 0
@@ -48,11 +48,11 @@ clii__cat_ln <- function(self, private, lines, indent) {
   }
 
   ## zero out margin
-  private$margin <- 0
+  app$margin <- 0
 
-  bar <- private$get_progress_bar()
+  bar <- app$get_progress_bar()
   if (is.null(bar)) {
-    if (private$output == "message") {
+    if (app$output == "message") {
       clii__message(paste0(lines, "\n"), appendLF = FALSE)
     } else {
       cat(paste0(lines, "\n"), sep = "")
@@ -64,15 +64,15 @@ clii__cat_ln <- function(self, private, lines, indent) {
   }
 }
 
-clii__vspace <- function(self, private, n) {
-  if (private$margin < n) {
-    sp <- strrep("\n", n - private$margin)
-    if (private$output == "message") {
+clii__vspace <- function(app, n) {
+  if (app$margin < n) {
+    sp <- strrep("\n", n - app$margin)
+    if (app$output == "message") {
       clii__message(sp, appendLF = FALSE)
     } else {
       cat(sp)
     }
-    private$margin <- n
+    app$margin <- n
   }
 }
 

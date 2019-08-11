@@ -1,6 +1,10 @@
 
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
+new_class <- function(class_name, ...) {
+  structure(as.environment(list(...)), class = class_name)
+}
+
 make_space <- function(len) {
   strrep(" ", len)
 }
