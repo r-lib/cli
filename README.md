@@ -30,11 +30,6 @@ crayon package to support ANSI terminal colors.
     -   [Interpolation](#interpolation)
     -   [Inline text formatting](#inline-text-formatting)
     -   [Lists](#lists)
-        -   [Adding list items
-            iteratively](#adding-list-items-iteratively)
-        -   [Adding text to an item
-            iteratively](#adding-text-to-an-item-iteratively)
-        -   [Nested lists](#nested-lists)
 -   [Theming](#theming)
     -   [Tags, ids and classes](#tags-ids-and-classes)
     -   [Generic containers](#generic-containers)
@@ -44,18 +39,7 @@ crayon package to support ANSI terminal colors.
 -   [Non-semantic CLI](#non-semantic-cli)
     -   [Unicode characters](#unicode-characters)
     -   [Rules](#rules)
-        -   [Simple rule, double rule,
-            bars](#simple-rule-double-rule-bars)
-        -   [Labels](#labels)
-        -   [Colors](#colors)
     -   [Boxes](#boxes)
-        -   [Change border style](#change-border-style)
-        -   [Multiple lines of text](#multiple-lines-of-text)
-        -   [Padding and margin](#padding-and-margin)
-        -   [Floating](#floating)
-        -   [Colors](#colors-1)
-        -   [Label alignment](#label-alignment)
-        -   [A very customized box](#a-very-customized-box)
     -   [Trees](#trees)
 -   [License](#license)
 
@@ -434,14 +418,17 @@ example a `cli_alert()` call emits an R condition with class
 `cli_message`. These messages can be caught, muffled, transfered from a
 subprocess to the main R process.
 
-When a cli function is called: 1. cli throws a `cli_message` condition.
-2. If this condition is caught and muffled (via the `muffleMessage`
-restart), then nothing else happens. 3. Otherwise the
-`cli.default_handler` option is checked and if this is a function, then
-it is called with the message. 4. If the `cli.default_handler` option is
-not set, or it is not a function, the default cli handler is called,
-which shows the text, alert, header, etc. on the screen, using the
-standard R `message()` function.
+When a cli function is called:
+
+1.  cli throws a `cli_message` condition.
+2.  If this condition is caught and muffled (via the `muffleMessage`
+    restart), then nothing else happens.
+3.  Otherwise the `cli.default_handler` option is checked and if this is
+    a function, then it is called with the message.
+4.  If the `cli.default_handler` option is not set, or it is not a
+    function, the default cli handler is called, which shows the text,
+    alert, header, etc. on the screen, using the standard R `message()`
+    function.
 
 ``` asciicast
 tryCatch(cli_h1("Header"), cli_message = function(x) x)
