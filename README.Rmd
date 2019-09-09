@@ -45,7 +45,8 @@ options(
     asciicast_cursor = FALSE,
     width = 100,
     asciicast_rows = "auto",
-    asciicast_cols = 100)
+    asciicast_cols = 100,
+    asciicast_end_wait = 0)
 ```
 
 # Features
@@ -390,6 +391,118 @@ rs$run(function() {
 invisible(rs$close())
 ```
 
+# Utility functions
+
+## ANSI colors
+
+cli defines wrapper functions to the crayon package, to create ANSI colored
+and styled output in the console. `col_*` functions change the foreground
+color, `bg_*` functions change the background color, and `style_*` functions
+change the style of the text in some way.
+
+These functions concatenate their arguments using `paste0()`, and add
+the `ansi_string` class to their result:
+
+```{asciicast}
+cat(col_red("This ", "is ", "red."))
+```
+
+Foreground colors:
+
+```{asciicast}
+cli_ul(c(
+  col_black("black"),
+  col_blue("blue"),
+  col_cyan("cyan"),
+  col_green("green"),
+  col_magenta("magenta"),
+  col_red("red"),
+  col_white("white"),
+  col_yellow("yellow"),
+  col_grey("grey")
+))
+```
+
+Note that these might actually look different depending on your terminal
+theme. Background colors:
+
+```{asciicast}
+cli_ul(c(
+  bg_black("black background"),
+  bg_blue("blue background"),
+  bg_cyan("cyan background"),
+  bg_green("green background"),
+  bg_magenta("magenta background"),
+  bg_red("red background"),
+  bg_white("white background"),
+  bg_yellow("yellow background")
+))
+```
+
+Text styles:
+
+```{asciicast}
+cli_ul(c(
+  style_dim("dim style"),
+  style_blurred("blurred style"),
+  style_bold("bold style"),
+  style_hidden("hidden style"),
+  style_inverse("inverse style"),
+  style_italic("italic style"),
+  style_reset("reset style"),
+  style_strikethrough("strikethrough style"),
+  style_underline("underline style")
+))
+```
+
+Not all `style_*` functions are supported by all terminals.
+
+Colors, background colors and styles can be combined:
+
+```{asciicast}
+bg_white(style_bold(col_red("TITLE")))
+```
+
+`make_ansi_style()` can create custom colors, assuming your terminal
+supports them. `combine_ansi_styles()` combines several styles into a
+function:
+
+```{asciicast}
+col_warn <- combine_ansi_styles(make_ansi_style("pink"), style_bold)
+col_warn("This is a warning in pink!")
+cat(col_warn("This is a warning in pink!"))
+```
+
+## Console capabilities
+
+Query the console width:
+```{asciicast}
+console_width()
+```
+
+Query if the console supports ansi escapes:
+```{asciicast}
+is_ansi_tty()
+```
+
+Hide the cursor, if the console supports it (no-op otherwise):
+```{asciicast}
+ansi_hide_cursor()
+ansi_show_cursor()
+```
+
+See also `ansi_with_hidden_cursor()`.
+
+Query if the console supports `\r`:
+```{asciicast}
+is_dynamic_tty()
+```
+
+Query if the console supports UTF-8 output:
+```{asciicast}
+is_utf8_output()
+```
+
 # Non-semantic CLI
 
 While the primary way of using cli is the `cli_*()` functions that generate
@@ -425,6 +538,8 @@ options(asciicast_theme = NULL)
 
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
+
+cli defines wrapper functions to
 
 ## Rules
 
@@ -620,6 +735,36 @@ data$label <- paste(data$package,
 roots <- ! data$package %in% unlist(data$dependencies)
 data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
+```
+
+## Spinners
+
+See `list_spinners()` and `get_spinner()`. From the awesome
+[cli-spinners](https://github.com/sindresorhus/cli-spinners#readme)
+project.
+
+```{asciicast}
+list_spinners()
+```
+
+```{asciicast}
+get_spinner("dots")
+```
+
+```{r, include = FALSE, cache = FALSE}
+options(asciicast_at = NULL)
+```
+
+```{asciicast}
+ansi_with_hidden_cursor(demo_spinners("dots"))
+```
+
+```{asciicast}
+ansi_with_hidden_cursor(demo_spinners("clock"))
+```
+
+```{r, include = FALSE, cache = FALSE}
+options(asciicast_at = "end")
 ```
 
 # License
