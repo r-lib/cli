@@ -20,10 +20,9 @@ clii__get_width <- function(app) {
 clii__cat <- function(app, lines) {
   if (app$output == "message") {
     clii__message(lines, appendLF = FALSE)
-  }  else {
+  } else {
     cat(lines, sep = "")
   }
-  app$margin <- 0
 }
 
 clii__cat_ln <- function(app, lines, indent) {
@@ -52,11 +51,10 @@ clii__cat_ln <- function(app, lines, indent) {
 
   bar <- app$get_progress_bar()
   if (is.null(bar)) {
-    if (app$output == "message") {
-      clii__message(paste0(lines, "\n"), appendLF = FALSE)
-    } else {
-      cat(paste0(lines, "\n"), sep = "")
-    }
+    if (length(app$status_bar)) clii__clear_status_bar(app)
+    app$cat(paste0(paste0(lines, "\n"), collapse = ""))
+    if (length(app$status_bar)) app$cat(paste0(app$status_bar[[1]]$content))
+
   } else {
     msg <- paste(lines, sep = "\n")
     msg <- crayon::reset(msg)

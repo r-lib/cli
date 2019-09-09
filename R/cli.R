@@ -416,7 +416,11 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()
 
   if (.auto_close && !is.null(.envir) && !identical(.envir, .GlobalEnv)) {
-    defer(cli_end(id = args$id), envir = .envir, priority = "first")
+    if (type == "status") {
+      defer(cli_status_clear(id = args$id), envir = .envir, priority = "first")
+    } else {
+      defer(cli_end(id = args$id), envir = .envir, priority = "first")
+    }
   }
 
   cond <- list(message = paste("cli message", type),

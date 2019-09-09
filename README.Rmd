@@ -287,6 +287,51 @@ fun()
 In `cli_end(olid)`, the `olid` is necessary, otherwise `cli_end()` would
 only close the container of the list item.
 
+## The status bar
+
+cli supports creating a status bar in the last line of the console, if
+the terminal supports the carriage return control character to move the
+cursor to the beginning of the line. This is supported in all terminals,
+in RStudio, Emacs, RGui, R.app, etc. It is not supported if the output is a
+file, e.g. typically on CI systems.
+
+`cli_status()` creates a new status bar, `cli_status_update()` updates a
+status bar, and `cli_status_clear()` clears it. `cli_status()` returns an
+id, that can be used in `cli_status_update()` and `cli_status_clear()` to
+refer to the right status bar.
+
+While it is possible to create multiple status bars, on a typical terminal
+only one of them can be shown at any time. cli by default shows the one
+that was last created or updated.
+
+While the status bar is active, cli can still produce output, as normal.
+This output is created "above" the status bar, which is always kept in the
+last line of the screen. See the following example:
+
+```{r, include = FALSE, cache = FALSE}
+options(asciicast_at = NULL, asciicast_end_wait = 30)
+```
+
+```{asciicast}
+f <- function() {
+  cli_alert_info("About to start downloads.")
+  sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
+  for (i in 9:1) {
+    Sys.sleep(0.5)
+    if (i == 5) cli_alert_success("Already half-way!")
+    cli_status_update(id = sb,
+      "{symbol$arrow_right} Got {10-i} files, downloading {i}")
+  }
+  cli_status_clear(id = sb)
+  cli_alert_success("Downloads done.")
+}
+f()
+```
+
+```{r, include = FALSE, cache = FALSE}
+options(asciicast_at = "end", asciicast_end_wait = 0)
+```
+
 # Theming
 
 The looks of the various CLI elements can be changed via themes.
@@ -538,8 +583,6 @@ options(asciicast_theme = NULL)
 
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
-
-cli defines wrapper functions to
 
 ## Rules
 
