@@ -2,16 +2,21 @@
 % Please edit documentation in R/symbol.R
 \name{symbol}
 \alias{symbol}
+\alias{list_symbols}
 \title{Various handy symbols to use in a command line UI}
 \format{A named list, see \code{names(symbol)} for all sign names.}
 \usage{
 symbol
+
+list_symbols()
 }
 \description{
 Various handy symbols to use in a command line UI
 }
 \details{
 On Windows they have a fallback to less fancy symbols.
+
+\code{list_symbols()} prints a table with all symbols to the screen.
 }
 \examples{
 cat(symbol$tick, " SUCCESS\\n", symbol$cross, " FAILURE\\n", sep = "")

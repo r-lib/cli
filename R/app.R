@@ -1,0 +1,76 @@
+
+cliappenv <- new.env()
+cliappenv$stack <- list()
+cliappenv$pid <- Sys.getpid()
+
+#' Start, stop, query the default cli application
+#'
+#' `start_app` creates an app, and places it on the top of the app stack.
+#'
+#' `stop_app` removes the top app, or multiple apps from the app stack.
+#'
+#' `default_app` returns the default app, the one on the top of the stack.
+#'
+#' @param theme Theme to use.
+#' @param output How to print the output.
+#' @param .auto_close Whether to stop the app, when the calling frame
+#'   is destroyed.
+#' @param .envir The environment to use, instead of the calling frame,
+#'   to trigger the stop of the app.
+#' @param app App to stop. If `NULL`, the current default app is stopped.
+#'   Otherwise we find the supplied app in the app stack, and remote it,
+#'   together with all the apps above it.
+#' @return
+#'   `start_app` returns the new app, `default_app` returns the default app.
+#'   `stop_app` does not return anything.
+#'
+#' @export
+
+start_app <- function(theme = getOption("cli.theme"),
+                      output = c("message", "stdout"), .auto_close = TRUE,
+                      .envir = parent.frame()) {
+
+  app <- cliapp(
+    theme = theme,
+    user_theme = getOption("cli.user_theme"),
+    output = match.arg(output))
+  cliappenv$stack[[length(cliappenv$stack) + 1]] <- app
+
+  if (.auto_close && !identical(.envir, globalenv())) {
+    defer(stop_app(app = app), envir = .envir, priority = "first")
+  }
+
+  invisible(app)
+}
+
+#' @export
+#' @importFrom utils head
+#' @name start_app
+
+stop_app <- function(app = NULL) {
+  if (is.null(app)) {
+    cliappenv$stack <- head(cliappenv$stack, -1)
+
+  } else {
+    if (!inherits(app, "cliapp")) stop("Not a CLI app")
+    ndl <- format.default(app)
+    nms <- vapply(cliappenv$stack, format.default, character(1))
+    if (! ndl %in% app) {
+      warning("No app to end")
+      return()
+    }
+    wh <- which(nms == ndl)[1]
+    cliappenv$stack <- head(cliappenv$stack, wh - 1)
+  }
+
+  invisible()
+}
+
+#' @export
+#' @importFrom utils tail
+#' @name start_app
+
+default_app <- function() {
+  top <- tail(cliappenv$stack, 1)
+  if (length(top)) top[[1]] else NULL
+}

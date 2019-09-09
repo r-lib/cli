@@ -1,6 +1,10 @@
 
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
+new_class <- function(class_name, ...) {
+  structure(as.environment(list(...)), class = class_name)
+}
+
 make_space <- function(len) {
   strrep(" ", len)
 }
@@ -111,4 +115,16 @@ new_uuid <- (function() {
 
 na.omit <- function(x) {
   if (is.atomic(x)) x[!is.na(x)] else x
+}
+
+last <- function(x) {
+  tail(x, 1)[[1]]
+}
+
+str_tail <- function(x) {
+  substr(x, 2, nchar(x))
+}
+
+push <- function(l, el, name = NULL) {
+  c(l, structure(list(el), names = name))
 }

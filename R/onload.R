@@ -5,6 +5,9 @@ dummy <- function() { }
 
 cli <- NULL
 
+clienv <- new.env()
+clienv$pid <- Sys.getpid()
+
 .onLoad <- function(libname, pkgname) {
   pkgenv <- environment(dummy)
   makeActiveBinding(
@@ -29,6 +32,10 @@ cli <- NULL
     },
     pkgenv
   )
+
+  if (is.null(getOption("callr.condition_handler_cli_message"))) {
+    options(callr.condition_handler_cli_message = cli__default_handler)
+  }
 }
 
 ## nocov end
