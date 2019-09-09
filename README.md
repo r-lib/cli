@@ -30,6 +30,7 @@ crayon package to support ANSI terminal colors.
     -   [Interpolation](#interpolation)
     -   [Inline text formatting](#inline-text-formatting)
     -   [Lists](#lists)
+    -   [The status bar](#the-status-bar)
 -   [Theming](#theming)
     -   [Tags, ids and classes](#tags-ids-and-classes)
     -   [Generic containers](#generic-containers)
@@ -339,6 +340,46 @@ fun()
 In `cli_end(olid)`, the `olid` is necessary, otherwise `cli_end()` would
 only close the container of the list item.
 
+The status bar
+--------------
+
+cli supports creating a status bar in the last line of the console, if
+the terminal supports the carriage return control character to move the
+cursor to the beginning of the line. This is supported in all terminals,
+in RStudio, Emacs, RGui, R.app, etc. It is not supported if the output
+is a file, e.g. typically on CI systems.
+
+`cli_status()` creates a new status bar, `cli_status_update()` updates a
+status bar, and `cli_status_clear()` clears it. `cli_status()` returns
+an id, that can be used in `cli_status_update()` and
+`cli_status_clear()` to refer to the right status bar.
+
+While it is possible to create multiple status bars, on a typical
+terminal only one of them can be shown at any time. cli by default shows
+the one that was last created or updated.
+
+While the status bar is active, cli can still produce output, as normal.
+This output is created “above” the status bar, which is always kept in
+the last line of the screen. See the following example:
+
+``` asciicast
+f <- function() {
+  cli_alert_info("About to start downloads.")
+  sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
+  for (i in 9:1) {
+    Sys.sleep(0.5)
+    if (i == 5) cli_alert_success("Already half-way!")
+    cli_status_update(id = sb,
+      "{symbol$arrow_right} Got {10-i} files, downloading {i}")
+  }
+  cli_status_clear(id = sb)
+  cli_alert_success("Downloads done.")
+}
+f()
+```
+
+<img src="man/figures/README/unnamed-chunk-24.svg" width="100%" />
+
 Theming
 =======
 
@@ -371,7 +412,7 @@ the built-in theme:
 builtin_theme()$h1
 ```
 
-<img src="man/figures/README/unnamed-chunk-23.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-26.svg" width="100%" />
 
 See also `?cli::themes` for the reference and `?cli::simple_theme` for
 an example theme.
@@ -394,7 +435,7 @@ fun <- function() {
 fun()
 ```
 
-<img src="man/figures/README/unnamed-chunk-24.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-27.svg" width="100%" />
 
 Theming inline markup
 ---------------------
@@ -412,7 +453,7 @@ fun <- function() {
 fun()
 ```
 
-<img src="man/figures/README/unnamed-chunk-25.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-28.svg" width="100%" />
 
 CLI messages
 ============
@@ -439,7 +480,7 @@ tryCatch(cli_h1("Header"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-26.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-29.svg" width="100%" />
 
 Subprocesses
 ============
@@ -457,7 +498,7 @@ rs$run(function() {
 invisible(rs$close())
 ```
 
-<img src="man/figures/README/unnamed-chunk-27.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-30.svg" width="100%" />
 
 Utility functions
 =================
@@ -477,7 +518,7 @@ the `ansi_string` class to their result:
 cat(col_red("This ", "is ", "red."))
 ```
 
-<img src="man/figures/README/unnamed-chunk-28.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-31.svg" width="100%" />
 
 Foreground colors:
 
@@ -495,7 +536,7 @@ cli_ul(c(
 ))
 ```
 
-<img src="man/figures/README/unnamed-chunk-29.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-32.svg" width="100%" />
 
 Note that these might actually look different depending on your terminal
 theme. Background colors:
@@ -513,7 +554,7 @@ cli_ul(c(
 ))
 ```
 
-<img src="man/figures/README/unnamed-chunk-30.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-33.svg" width="100%" />
 
 Text styles:
 
@@ -531,7 +572,7 @@ cli_ul(c(
 ))
 ```
 
-<img src="man/figures/README/unnamed-chunk-31.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-34.svg" width="100%" />
 
 Not all `style_*` functions are supported by all terminals.
 
@@ -541,7 +582,7 @@ Colors, background colors and styles can be combined:
 bg_white(style_bold(col_red("TITLE")))
 ```
 
-<img src="man/figures/README/unnamed-chunk-32.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-35.svg" width="100%" />
 
 `make_ansi_style()` can create custom colors, assuming your terminal
 supports them. `combine_ansi_styles()` combines several styles into a
@@ -553,7 +594,7 @@ col_warn("This is a warning in pink!")
 cat(col_warn("This is a warning in pink!"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-33.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-36.svg" width="100%" />
 
 Console capabilities
 --------------------
@@ -564,7 +605,7 @@ Query the console width:
 console_width()
 ```
 
-<img src="man/figures/README/unnamed-chunk-34.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-37.svg" width="100%" />
 
 Query if the console supports ansi escapes:
 
@@ -572,7 +613,7 @@ Query if the console supports ansi escapes:
 is_ansi_tty()
 ```
 
-<img src="man/figures/README/unnamed-chunk-35.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-38.svg" width="100%" />
 
 Hide the cursor, if the console supports it (no-op otherwise):
 
@@ -581,7 +622,7 @@ ansi_hide_cursor()
 ansi_show_cursor()
 ```
 
-<img src="man/figures/README/unnamed-chunk-36.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-39.svg" width="100%" />
 
 See also `ansi_with_hidden_cursor()`.
 
@@ -591,7 +632,7 @@ Query if the console supports `\r`:
 is_dynamic_tty()
 ```
 
-<img src="man/figures/README/unnamed-chunk-37.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-40.svg" width="100%" />
 
 Query if the console supports UTF-8 output:
 
@@ -599,7 +640,7 @@ Query if the console supports UTF-8 output:
 is_utf8_output()
 ```
 
-<img src="man/figures/README/unnamed-chunk-38.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-41.svg" width="100%" />
 
 Non-semantic CLI
 ================
@@ -622,13 +663,13 @@ options(asciicast_theme = list(font_family =
     "'Bitstream Vera Sans Mono'", "'Powerline Symbols'", "monospace")))
 ```
 
-<img src="man/figures/README/unnamed-chunk-39.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-42.svg" width="100%" />
 
 ``` asciicast
 cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")
 ```
 
-<img src="man/figures/README/unnamed-chunk-40.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-43.svg" width="100%" />
 
 Here is a list of all symbols:
 
@@ -636,12 +677,10 @@ Here is a list of all symbols:
 list_symbols()
 ```
 
-<img src="man/figures/README/unnamed-chunk-41.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-44.svg" width="100%" />
 
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
-
-cli defines wrapper functions to
 
 Rules
 -----
@@ -652,31 +691,31 @@ Rules
 rule()
 ```
 
-<img src="man/figures/README/unnamed-chunk-43.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-46.svg" width="100%" />
 
 ``` asciicast
 rule(line = 2)
 ```
 
-<img src="man/figures/README/unnamed-chunk-44.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-47.svg" width="100%" />
 
 ``` asciicast
 rule(line = "bar2")
 ```
 
-<img src="man/figures/README/unnamed-chunk-45.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-48.svg" width="100%" />
 
 ``` asciicast
 rule(line = "bar5")
 ```
 
-<img src="man/figures/README/unnamed-chunk-46.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-49.svg" width="100%" />
 
 ``` asciicast
 rule(center = "TITLE", line = "~")
 ```
 
-<img src="man/figures/README/unnamed-chunk-47.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-50.svg" width="100%" />
 
 ### Labels
 
@@ -684,13 +723,13 @@ rule(center = "TITLE", line = "~")
 rule(left = "Results")
 ```
 
-<img src="man/figures/README/unnamed-chunk-48.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-51.svg" width="100%" />
 
 ``` asciicast
 rule(center = " * RESULTS * ")
 ```
 
-<img src="man/figures/README/unnamed-chunk-49.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-52.svg" width="100%" />
 
 ### Colors
 
@@ -698,32 +737,32 @@ rule(center = " * RESULTS * ")
 rule(center = col_red(" * RESULTS * "))
 ```
 
-<img src="man/figures/README/unnamed-chunk-50.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-53.svg" width="100%" />
 
 ``` asciicast
 rule(center = " * RESULTS * ", col = "red")
 ```
 
-<img src="man/figures/README/unnamed-chunk-51.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-54.svg" width="100%" />
 
 ``` asciicast
 rule(center = " * RESULTS * ", line_col = "red")
 ```
 
-<img src="man/figures/README/unnamed-chunk-52.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-55.svg" width="100%" />
 
 ``` asciicast
 rule(center = "TITLE", line = "~-", line_col = "blue")
 ```
 
-<img src="man/figures/README/unnamed-chunk-53.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-56.svg" width="100%" />
 
 ``` asciicast
 rule(center = bg_red(" ", symbol$star, "TITLE", symbol$star, " "),
   line = "\u2582", line_col = "orange")
 ```
 
-<img src="man/figures/README/unnamed-chunk-54.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-57.svg" width="100%" />
 
 Boxes
 -----
@@ -732,7 +771,7 @@ Boxes
 boxx("Hello there!")
 ```
 
-<img src="man/figures/README/unnamed-chunk-55.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-58.svg" width="100%" />
 
 ### Change border style
 
@@ -740,7 +779,7 @@ boxx("Hello there!")
 boxx("Hello there!", border_style = "double")
 ```
 
-<img src="man/figures/README/unnamed-chunk-56.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-59.svg" width="100%" />
 
 ### Multiple lines of text
 
@@ -748,7 +787,7 @@ boxx("Hello there!", border_style = "double")
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
-<img src="man/figures/README/unnamed-chunk-57.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-60.svg" width="100%" />
 
 ### Padding and margin
 
@@ -756,25 +795,25 @@ boxx(c("Hello", "there!"), padding = 1)
 boxx("Hello there!", padding = 1)
 ```
 
-<img src="man/figures/README/unnamed-chunk-58.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-61.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-<img src="man/figures/README/unnamed-chunk-59.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-62.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", margin = 1)
 ```
 
-<img src="man/figures/README/unnamed-chunk-60.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-63.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", margin = c(1, 5, 1, 5))
 ```
 
-<img src="man/figures/README/unnamed-chunk-61.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-64.svg" width="100%" />
 
 ### Floating
 
@@ -782,13 +821,13 @@ boxx("Hello there!", margin = c(1, 5, 1, 5))
 boxx("Hello there!", padding = 1, float = "center")
 ```
 
-<img src="man/figures/README/unnamed-chunk-62.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-65.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
-<img src="man/figures/README/unnamed-chunk-63.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-66.svg" width="100%" />
 
 ### Colors
 
@@ -796,31 +835,31 @@ boxx("Hello there!", padding = 1, float = "right")
 boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-<img src="man/figures/README/unnamed-chunk-64.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-67.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, background_col = "brown")
 ```
 
-<img src="man/figures/README/unnamed-chunk-65.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-68.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, background_col = bg_red)
 ```
 
-<img src="man/figures/README/unnamed-chunk-66.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-69.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, border_col = "green")
 ```
 
-<img src="man/figures/README/unnamed-chunk-67.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-70.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, border_col = col_red)
 ```
 
-<img src="man/figures/README/unnamed-chunk-68.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-71.svg" width="100%" />
 
 ### Label alignment
 
@@ -828,19 +867,19 @@ boxx("Hello there!", padding = 1, border_col = col_red)
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
 ```
 
-<img src="man/figures/README/unnamed-chunk-69.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-72.svg" width="100%" />
 
 ``` asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
 ```
 
-<img src="man/figures/README/unnamed-chunk-70.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-73.svg" width="100%" />
 
 ``` asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
-<img src="man/figures/README/unnamed-chunk-71.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-74.svg" width="100%" />
 
 ### A very customized box
 
@@ -857,7 +896,7 @@ boxx(
 )
 ```
 
-<img src="man/figures/README/unnamed-chunk-72.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-75.svg" width="100%" />
 
 Trees
 -----
@@ -887,7 +926,7 @@ data <- data.frame(
 tree(data, root = "rcmdcheck")
 ```
 
-<img src="man/figures/README/unnamed-chunk-73.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-76.svg" width="100%" />
 
 An optional third column may contain custom labels. These can be colored
 as well:
@@ -904,7 +943,7 @@ data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
 
-<img src="man/figures/README/unnamed-chunk-74.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-77.svg" width="100%" />
 
 Spinners
 --------
@@ -917,25 +956,25 @@ project.
 list_spinners()
 ```
 
-<img src="man/figures/README/unnamed-chunk-75.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-78.svg" width="100%" />
 
 ``` asciicast
 get_spinner("dots")
 ```
 
-<img src="man/figures/README/unnamed-chunk-76.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-79.svg" width="100%" />
 
 ``` asciicast
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-78.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-81.svg" width="100%" />
 
 ``` asciicast
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-79.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-82.svg" width="100%" />
 
 License
 =======

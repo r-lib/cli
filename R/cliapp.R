@@ -83,6 +83,14 @@ cliapp <- function(theme = getOption("cli.theme"),
     alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(app, "alert-info", text, id, class, wrap),
 
+    ## Status bar
+    status = function(id = NULL, ..., .keep = FALSE)
+      clii_status(app, id, ..., .keep = .keep),
+    status_clear = function(id = NULL)
+      clii_status_clear(app, id),
+    status_update = function(id = NULL, ...)
+      clii_status_update(app, id, ...),
+
     ## Progress bars
     progress_bar = function(id = NULL, ...)
       clii_progress_bar(app, id, ...),
@@ -93,6 +101,7 @@ cliapp <- function(theme = getOption("cli.theme"),
     themes = NULL,
     styles = NULL,
     delayed_item = NULL,
+    status_bar = list(),
 
     margin = 0,
     output = NULL,
