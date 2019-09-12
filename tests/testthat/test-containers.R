@@ -10,13 +10,13 @@ test_that("auto closing", {
   out <- ""
   f <- function() {
     capt0(id <<- cli_par(class = "xx"))
-    out <<- capt0(cli_text("foo {emph blah} bar"))
+    out <<- capt0(cli_text("foo {.emph blah} bar"))
   }
 
   capt0(f())
   expect_match(out, "itsu:", fixed = TRUE)
 
-  out <- capt0(cli_text("foo {emph blah} bar"))
+  out <- capt0(cli_text("foo {.emph blah} bar"))
   expect_false(grepl("itsu:", out, fixed = TRUE))
 })
 
@@ -25,21 +25,21 @@ test_that("opt out of auto closing", {
   id <- NULL
   f <- function() {
     capt0(id <<- cli_par(class = "xx", .auto_close = FALSE))
-    out <- capt0(cli_text("foo {emph blah} bar"))
+    out <- capt0(cli_text("foo {.emph blah} bar"))
     expect_match(out, "itsu:", fixed = TRUE)
   }
 
   capt0(f())
 
   ## Still active
-  out <- capt0(cli_text("foo {emph blah} bar"))
+  out <- capt0(cli_text("foo {.emph blah} bar"))
   expect_match(out, "itsu:", fixed = TRUE)
 
   ## close explicitly
   expect_false(is.null(id))
   capt0(cli_end(id))
 
-  out <- capt0(cli_text("foo {emph blah} bar"))
+  out <- capt0(cli_text("foo {.emph blah} bar"))
   expect_false(grepl("itsu:", out, fixed = TRUE))
 })
 
@@ -49,21 +49,21 @@ test_that("auto closing with special env", {
   f <- function() {
     g()
     ## Still active
-    out <- capt0(cli_text("foo {emph blah} bar"))
+    out <- capt0(cli_text("foo {.emph blah} bar"))
     expect_match(out, "itsu:", fixed = TRUE)
   }
 
   g <- function() {
     capt0(id <<- cli_par(class = "xx", .auto_close = TRUE,
                         .envir = parent.frame()))
-    out <- capt0(cli_text("foo {emph blah} bar"))
+    out <- capt0(cli_text("foo {.emph blah} bar"))
     expect_match(out, "itsu:", fixed = TRUE)
   }
 
   capt0(f())
 
   ## Not active any more
-  out <- capt0(cli_text("foo {emph blah} bar"))
+  out <- capt0(cli_text("foo {.emph blah} bar"))
   expect_false(grepl("itsu:", out, fixed = TRUE))
 })
 
@@ -71,14 +71,14 @@ test_that("div with special style", {
   f <- function() {
     cli_div(theme = list(".xx .emph" = list(before = "itsu:")))
     capt0(cli_par(class = "xx"))
-    out <- capt0(cli_text("foo {emph blah} bar"))
+    out <- capt0(cli_text("foo {.emph blah} bar"))
     expect_match(out, "itsu:", fixed = TRUE)
   }
 
   capt0(f())
 
   ## Not active any more
-  out <- capt0(cli_text("foo {emph blah} bar"))
+  out <- capt0(cli_text("foo {.emph blah} bar"))
   expect_false(grepl("itsu:", out, fixed = TRUE))
 })
 
@@ -100,6 +100,6 @@ test_that("before and after work properly", {
   cli_div(theme = list(
     "div.alert-success" = list(before ="!!!")
   ))
-  out <- capt0(cli_alert_success("{pkg foobar} is good"))
+  out <- capt0(cli_alert_success("{.pkg foobar} is good"))
   expect_match(out, "!!!", fixed = TRUE)
 })

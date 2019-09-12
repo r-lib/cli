@@ -19,8 +19,8 @@ load_packages <- function() {
     library(docopt) },
     error = function(e) {
       cli_alert_danger(
-            "The {pkg glue}, {pkg httr}, {pkg jsonlite}, {pkg prettyunits},",
-            " {pkg parsedate} and {pkg docopt} packages are needed!")
+            "The {.pkg glue}, {.pkg httr}, {.pkg jsonlite}, {.pkg prettyunits},",
+            " {.pkg parsedate} and {.pkg docopt} packages are needed!")
       q(save = "no", status = 1)
     })
 }
@@ -108,10 +108,10 @@ format_result <- function(result) {
   pkg <- result$package
   ago <- vague_dt(Sys.time() - parse_iso_8601(result$date))
   cli_it()
-  cli_text("{pkg {pkg$Package}} {pkg$Version} --
-           {ago} by {emph {pkg$Maintainer}}")
+  cli_text("{.pkg {pkg$Package}} {pkg$Version} --
+           {ago} by {.emph {pkg$Maintainer}}")
   cli_text("{pkg$Title}")
-  cli_text("{url https://r-pkg.org/pkg/{pkg$Package}}")
+  cli_text("{.url https://r-pkg.org/pkg/{pkg$Package}}")
 }
 
 if (is.null(sys.calls())) {

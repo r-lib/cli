@@ -15,20 +15,21 @@ details.
 
 In addition to regular glue interpolation, cli can also add classes
 to parts of the text, and these classes can be used in themes. For
-example\preformatted{cli_text("This is {emph important}.")
+example\preformatted{cli_text("This is {.emph important}.")
 }
 
 adds a class to the "important" word, class "emph". Note that in this
-cases the string within the braces is not a valid R expression. If you
-want to mix classes with interpolation, add another pair of braces:\preformatted{adjective <- "great"
-cli_text("This is {emph {adjective}}.")
+case the string within the braces is usually not a valid R expression.
+If you want to mix classes with interpolation, add another pair of
+braces:\preformatted{adjective <- "great"
+cli_text("This is {.emph {adjective}}.")
 }
 
 An inline class will always create a \code{span} element internally. So in
 themes, you can use the \code{span.emph} CSS selector to change how inline
 text is emphasized:\preformatted{cli_div(theme = list(span.emph = list(color = "red")))
 adjective <- "nice and red"
-cli_text("This is {emph {adjective}}.")
+cli_text("This is {.emph {adjective}}.")
 }
 }
 
@@ -61,18 +62,18 @@ using them, see the example below.
 \examples{
 ## Some inline markup examples
 cli_ul()
-cli_it("{emph Emphasized} text")
-cli_it("{strong Strong} importance")
-cli_it("A piece of code: {code sum(a) / length(a)}")
-cli_it("A package name: {pkg cli}")
-cli_it("A function name: {fun cli_text}")
-cli_it("A function argument: {arg text}")
-cli_it("A keyboard key: press {key ENTER}")
-cli_it("A file name: {file /usr/bin/env}")
-cli_it("An email address: {email bugs.bunny@acme.com}")
-cli_it("A URL: {url https://acme.com}")
-cli_it("A variable name: {var mtcars}")
-cli_it("An environment variable: {envvar R_LIBS}")
+cli_it("{.emph Emphasized} text")
+cli_it("{.strong Strong} importance")
+cli_it("A piece of code: {.code sum(a) / length(a)}")
+cli_it("A package name: {.pkg cli}")
+cli_it("A function name: {.fun cli_text}")
+cli_it("A function argument: {.arg text}")
+cli_it("A keyboard key: press {.key ENTER}")
+cli_it("A file name: {.file /usr/bin/env}")
+cli_it("An email address: {.email bugs.bunny@acme.com}")
+cli_it("A URL: {.url https://acme.com}")
+cli_it("A variable name: {.var mtcars}")
+cli_it("An environment variable: {.envvar R_LIBS}")
 cli_end()
 
 ## Adding a new class
@@ -80,6 +81,6 @@ cli_div(theme = list(
   span.myclass = list(color = "lightgrey"),
   "span.myclass" = list(before = "["),
   "span.myclass" = list(after = "]")))
-cli_text("This is {myclass in brackets}.")
+cli_text("This is {.myclass in brackets}.")
 cli_end()
 }

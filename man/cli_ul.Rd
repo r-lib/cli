@@ -47,7 +47,7 @@ cli_end()
 ## Complex item, added gradually.
 cli_ul()
 cli_it()
-cli_verbatim("Beginning of the {emph first} item")
+cli_verbatim("Beginning of the {.emph first} item")
 cli_text("Still the first item")
 cli_end()
 cli_it("Second item")

@@ -38,16 +38,16 @@ cli_alert_success("Success alert")
 cli_alert("Alert for starting a process or computation",
   class = "alert-start")
 
-cli_text("Packages and versions: {pkg cli} {version 1.0.0}.")
-cli_text("Time intervals: {timestamp 3.4s}")
+cli_text("Packages and versions: {.pkg cli} {.version 1.0.0}.")
+cli_text("Time intervals: {.timestamp 3.4s}")
 
-cli_text("{emph Emphasis} and  {strong strong emphasis}")
+cli_text("{.emph Emphasis} and  {.strong strong emphasis}")
 
-cli_text("This is a piece of code: {code sum(x) / length(x)}")
-cli_text("Function names: {fun cli::simple_theme} and {arg arguments}.")
+cli_text("This is a piece of code: {.code sum(x) / length(x)}")
+cli_text("Function names: {.fun cli::simple_theme} and {.arg arguments}.")
 
-cli_text("Files: {file /usr/bin/env}")
-cli_text("URLs: {url https://r-project.org}")
+cli_text("Files: {.file /usr/bin/env}")
+cli_text("URLs: {.url https://r-project.org}")
 
 cli_h2("Longer code chunk")
 cli_par(class = "r-code")

@@ -40,8 +40,8 @@ Alerts are typically short status messages.
 \examples{
 
 cli_alert("Cannot lock package library.")
-cli_alert_success("Package {pkg cli} installed successfully.")
-cli_alert_danger("Could not download {pkg cli}.")
+cli_alert_success("Package {.pkg cli} installed successfully.")
+cli_alert_danger("Could not download {.pkg cli}.")
 cli_alert_warning("Internet seems to be unreacheable.")
 cli_alert_info("Downloaded 1.45MiB of data")
 }

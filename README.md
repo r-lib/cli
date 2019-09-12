@@ -206,26 +206,26 @@ cli_alert_info(c(
 Inline text formatting
 ----------------------
 
-To define inline markup, you can use the regular glue braces, and
-immeadiately after the opening brace, supply the name of the markup
-formatter, e.g. for emphasised text, the formatter is called `emph`.
-Some examples are below, see `?"inline-markup"` for details.
+To define inline markup, you can use the regular glue braces, and after
+the opening brace, supply the name of the markup formatter with a
+leading dot, e.g. for emphasised text, you use `.emph`. Some examples
+are below, see `?"inline-markup"` for details.
 
 ``` asciicast
 fun <- function() {
   cli_ul()
-  cli_it("{emph Emphasized} text")
-  cli_it("{strong Strong} importance")
-  cli_it("A piece of code: {code sum(a) / length(a)}")
-  cli_it("A package name: {pkg cli}")
-  cli_it("A function name: {fun cli_text}")
-  cli_it("A function argument: {arg text}")
-  cli_it("A keyboard key: press {key ENTER}")
-  cli_it("A file name: {file /usr/bin/env}")
-  cli_it("An email address: {email bugs.bunny@acme.com}")
-  cli_it("A URL: {url https://acme.com}")
-  cli_it("A variable name: {var mtcars}")
-  cli_it("An environment variable: {envvar R_LIBS}")
+  cli_it("{.emph Emphasized} text")
+  cli_it("{.strong Strong} importance")
+  cli_it("A piece of code: {.code sum(a) / length(a)}")
+  cli_it("A package name: {.pkg cli}")
+  cli_it("A function name: {.fun cli_text}")
+  cli_it("A function argument: {.arg text}")
+  cli_it("A keyboard key: press {.key ENTER}")
+  cli_it("A file name: {.file /usr/bin/env}")
+  cli_it("An email address: {.email bugs.bunny@acme.com}")
+  cli_it("A URL: {.url https://acme.com}")
+  cli_it("A variable name: {.var mtcars}")
+  cli_it("An environment variable: {.envvar R_LIBS}")
 }
 fun()
 ```
@@ -237,7 +237,7 @@ another set of braces:
 
 ``` asciicast
 dlurl <- "https://httpbin.org/status/404"
-cli_alert_danger("Failed to download {url {dlurl}}.")
+cli_alert_danger("Failed to download {.url {dlurl}}.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-15.svg" width="100%" />
@@ -446,9 +446,9 @@ of the formatter as a class.
 ``` asciicast
 fun <- function() {
   cli_div(theme = list(span.emph = list(color = "orange")))
-  cli_text("This is very {emph important}")
+  cli_text("This is very {.emph important}")
   cli_end()
-  cli_text("Back to the {emph previous theme}")
+  cli_text("Back to the {.emph previous theme}")
 }
 fun()
 ```
@@ -492,7 +492,7 @@ the main R process:
 ``` asciicast
 rs <- callr::r_session$new()
 rs$run(function() {
-  cli::cli_text("This is subprocess {emph {Sys.getpid()}} from {pkg callr}")
+  cli::cli_text("This is subprocess {.emph {Sys.getpid()}} from {.pkg callr}")
   Sys.getpid()
 })
 invisible(rs$close())

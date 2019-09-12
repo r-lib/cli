@@ -29,13 +29,13 @@ subject <- "world"
 cli_text("{greeting} {subject}!")
 
 ## Inline theming
-cli_text("The {fun cli_text} function in the {pkg cli} package")
+cli_text("The {.fun cli_text} function in the {.pkg cli} package")
 
 ## Use within container elements
 ul <- cli_ul()
 cli_it()
-cli_text("{emph First} item")
+cli_text("{.emph First} item")
 cli_it()
-cli_text("{emph Second} item")
+cli_text("{.emph Second} item")
 cli_end(ul)
 }

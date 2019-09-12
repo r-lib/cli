@@ -22,14 +22,14 @@
 #' cli_text("{greeting} {subject}!")
 #'
 #' ## Inline theming
-#' cli_text("The {fun cli_text} function in the {pkg cli} package")
+#' cli_text("The {.fun cli_text} function in the {.pkg cli} package")
 #'
 #' ## Use within container elements
 #' ul <- cli_ul()
 #' cli_it()
-#' cli_text("{emph First} item")
+#' cli_text("{.emph First} item")
 #' cli_it()
-#' cli_text("{emph Second} item")
+#' cli_text("{.emph Second} item")
 #' cli_end(ul)
 
 cli_text <- function(..., .envir = parent.frame()) {
@@ -199,7 +199,7 @@ cli_end <- function(id = NULL) {
 #' ## Complex item, added gradually.
 #' cli_ul()
 #' cli_it()
-#' cli_verbatim("Beginning of the {emph first} item")
+#' cli_verbatim("Beginning of the {.emph first} item")
 #' cli_text("Still the first item")
 #' cli_end()
 #' cli_it("Second item")
@@ -311,7 +311,7 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #' ## Complex item, added gradually.
 #' cli_ul()
 #' cli_it()
-#' cli_verbatim("Beginning of the {emph first} item")
+#' cli_verbatim("Beginning of the {.emph first} item")
 #' cli_text("Still the first item")
 #' cli_end()
 #' cli_it("Second item")
@@ -341,8 +341,8 @@ cli_it <- function(items = NULL, id = NULL, class = NULL,
 #' @examples
 #'
 #' cli_alert("Cannot lock package library.")
-#' cli_alert_success("Package {pkg cli} installed successfully.")
-#' cli_alert_danger("Could not download {pkg cli}.")
+#' cli_alert_success("Package {.pkg cli} installed successfully.")
+#' cli_alert_danger("Could not download {.pkg cli}.")
 #' cli_alert_warning("Internet seems to be unreacheable.")
 #' cli_alert_info("Downloaded 1.45MiB of data")
 

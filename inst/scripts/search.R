@@ -15,7 +15,7 @@ load_packages <- function() {
     library(prettyunits)
     error = function(e) {
       cli_alert_danger(
-            "The {pkg pkgsearch}, {pkg prettyunits} and {pkg docopt} packages are needed!")
+            "The {.pkg pkgsearch}, {.pkg prettyunits} and {.pkg docopt} packages are needed!")
       q(save = "no", status = 1)
     }
   })
@@ -55,11 +55,11 @@ format_result <- function(obj, from, size) {
 format_hit <- function(hit) {
   ago <- vague_dt(Sys.time() - hit$date)
   cli_it()
-  cli_text("{pkg {hit$package}} {hit$version}  --
-          {emph {hit$title}}")
+  cli_text("{.pkg {hit$package}} {hit$version}  --
+          {.emph {hit$title}}")
   cli_par()
   cli_text(hit$description)
-  cli_text("{emph {ago} by {hit$maintainer_name}}")
+  cli_text("{.emph {ago} by {hit$maintainer_name}}")
 }
 
 parse_arguments <- function() {

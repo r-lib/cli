@@ -34,7 +34,7 @@ test_that("output while status bar is active", {
 test_that("interpolation", {
   f <- function() {
     cli_div(theme = list("span.pkg" = list("before" = "{", after = "}")))
-    cli_status("You see 1+1={1+1}, this is {pkg cli}")
+    cli_status("You see 1+1={1+1}, this is {.pkg cli}")
     cli_status_clear()
   }
   out <- crayon::strip_style(capt0(f()))

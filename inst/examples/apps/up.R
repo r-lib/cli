@@ -14,7 +14,7 @@ load_packages <- function() {
     library(async)
     library(docopt) },
     error = function(e) {
-      cli_alert_danger("The {pkg async} and {pkg docopt} packages are needed!")
+      cli_alert_danger("The {.pkg async} and {.pkg docopt} packages are needed!")
       q(save = "no", status = 1)
     })
 }
@@ -26,14 +26,14 @@ up <- function(urls, timeout = 5) {
     http_head(url, ...)$
       then(function(res) {
         if (res$status_code < 300) {
-          cli_alert_success("{url {url}} ({res$times[['total']]}s)")
+          cli_alert_success("{.url {url}} ({res$times[['total']]}s)")
         } else {
-          cli_alert_danger("{url {url}} (HTTP {res$status_code})")
+          cli_alert_danger("{.url {url}} (HTTP {res$status_code})")
         }
       })$
       catch(error = function(err) {
         e <- if (grepl("timed out", err$message)) "timed out" else "error"
-        cli_alert_danger("{url {url}} ({e})")
+        cli_alert_danger("{.url {url}} ({e})")
       })
   })
 

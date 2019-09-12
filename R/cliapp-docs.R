@@ -12,16 +12,17 @@
 #' example
 #'
 #' ```
-#' cli_text("This is {emph important}.")
+#' cli_text("This is {.emph important}.")
 #' ```
 #'
 #' adds a class to the "important" word, class "emph". Note that in this
-#' cases the string within the braces is not a valid R expression. If you
-#' want to mix classes with interpolation, add another pair of braces:
+#' case the string within the braces is usually not a valid R expression.
+#' If you want to mix classes with interpolation, add another pair of
+#' braces:
 #'
 #' ```
 #' adjective <- "great"
-#' cli_text("This is {emph {adjective}}.")
+#' cli_text("This is {.emph {adjective}}.")
 #' ```
 #'
 #' An inline class will always create a `span` element internally. So in
@@ -31,7 +32,7 @@
 #' ```
 #' cli_div(theme = list(span.emph = list(color = "red")))
 #' adjective <- "nice and red"
-#' cli_text("This is {emph {adjective}}.")
+#' cli_text("This is {.emph {adjective}}.")
 #' ```
 #'
 #' @section Classes:
@@ -60,18 +61,18 @@
 #' @examples
 #' ## Some inline markup examples
 #' cli_ul()
-#' cli_it("{emph Emphasized} text")
-#' cli_it("{strong Strong} importance")
-#' cli_it("A piece of code: {code sum(a) / length(a)}")
-#' cli_it("A package name: {pkg cli}")
-#' cli_it("A function name: {fun cli_text}")
-#' cli_it("A function argument: {arg text}")
-#' cli_it("A keyboard key: press {key ENTER}")
-#' cli_it("A file name: {file /usr/bin/env}")
-#' cli_it("An email address: {email bugs.bunny@acme.com}")
-#' cli_it("A URL: {url https://acme.com}")
-#' cli_it("A variable name: {var mtcars}")
-#' cli_it("An environment variable: {envvar R_LIBS}")
+#' cli_it("{.emph Emphasized} text")
+#' cli_it("{.strong Strong} importance")
+#' cli_it("A piece of code: {.code sum(a) / length(a)}")
+#' cli_it("A package name: {.pkg cli}")
+#' cli_it("A function name: {.fun cli_text}")
+#' cli_it("A function argument: {.arg text}")
+#' cli_it("A keyboard key: press {.key ENTER}")
+#' cli_it("A file name: {.file /usr/bin/env}")
+#' cli_it("An email address: {.email bugs.bunny@acme.com}")
+#' cli_it("A URL: {.url https://acme.com}")
+#' cli_it("A variable name: {.var mtcars}")
+#' cli_it("An environment variable: {.envvar R_LIBS}")
 #' cli_end()
 #'
 #' ## Adding a new class
@@ -79,7 +80,7 @@
 #'   span.myclass = list(color = "lightgrey"),
 #'   "span.myclass" = list(before = "["),
 #'   "span.myclass" = list(after = "]")))
-#' cli_text("This is {myclass in brackets}.")
+#' cli_text("This is {.myclass in brackets}.")
 #' cli_end()
 NULL
 

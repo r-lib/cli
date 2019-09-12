@@ -24,7 +24,7 @@ inline_transformer <- function(code, envir) {
   if (!inherits(res, "error")) return(res)
 
   code <- glue_collapse(code, "\n")
-  m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
+  m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
   has_match <- m != -1
   if (!has_match) stop(res)
 
@@ -46,7 +46,7 @@ cmd_transformer <- function(code, envir) {
   if (!inherits(res, "error")) return(res)
 
   code <- glue_collapse(code, "\n")
-  m <- regexpr("(?s)^([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
+  m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
   has_match <- m != -1
   if (!has_match) stop(res)
 
@@ -57,7 +57,7 @@ cmd_transformer <- function(code, envir) {
   text <- captures[[2]]
 
   out <- glue(text, .envir = envir, .transformer = cmd_transformer)
-  paste0("{", funname, " ", out, "}")
+  paste0("{.", funname, " ", out, "}")
 }
 
 glue_cmd <- function(..., .envir) {
