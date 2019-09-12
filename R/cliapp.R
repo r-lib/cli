@@ -41,7 +41,7 @@ cliapp <- function(theme = getOption("cli.theme"),
     md_text = function(...)
       clii_md_text(app, ...),
 
-    ## Headers
+    ## Headings
     h1 = function(text, id = NULL, class = NULL)
       clii_h1(app, text, id, class),
     h2 = function(text, id = NULL, class = NULL)
@@ -174,21 +174,21 @@ clii_md_text <- function(app, ...) {
   stop("Markdown text is not implemented yet")
 }
 
-## Headers ----------------------------------------------------------
+## Headings ----------------------------------------------------------
 
 clii_h1 <- function(app, text, id, class) {
-  clii__header(app, "h1", text, id, class)
+  clii__heading(app, "h1", text, id, class)
 }
 
 clii_h2 <- function(app, text, id, class) {
-  clii__header(app, "h2", text, id, class)
+  clii__heading(app, "h2", text, id, class)
 }
 
 clii_h3 <- function(app, text, id, class) {
-  clii__header(app, "h3", text, id, class)
+  clii__heading(app, "h3", text, id, class)
 }
 
-clii__header <- function(app, type, text, id, class) {
+clii__heading <- function(app, type, text, id, class) {
   id <- new_uuid()
   clii__container_start(app, type, id = id, class = class)
   on.exit(clii__container_end(app, id), add = TRUE)

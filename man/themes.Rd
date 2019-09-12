@@ -74,7 +74,7 @@ details.
 
 \section{Examples}{
 
-Color of headers, that are only active in paragraphs with an
+Color of headings, that are only active in paragraphs with an
 'output' class:\preformatted{list(
   "par.output h1" = list("background-color" = "red", color = "#e0e0e0"),
   "par.output h2" = list("background-color" = "orange", color = "#e0e0e0"),

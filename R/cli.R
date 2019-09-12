@@ -52,11 +52,11 @@ cli_verbatim <- function(..., .envir = parent.frame()) {
   cli__message("verbatim", c(list(...), list(.envir = .envir)))
 }
 
-#' CLI headers
+#' CLI headings
 #'
-#' @param text Text of the header. It can contain inline markup.
-#' @param id Id of the header element, string. It can be used in themes.
-#' @param class Class of the header element,  string. It can be used in
+#' @param text Text of the heading. It can contain inline markup.
+#' @param id Id of the heading element, string. It can be used in themes.
+#' @param class Class of the heading element, string. It can be used in
 #'   themes.
 #' @param .envir Environment to evaluate the glue expressions in.
 #' 

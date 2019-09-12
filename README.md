@@ -26,7 +26,7 @@ crayon package to support ANSI terminal colors.
     -   [Text](#text)
     -   [Paragraphs](#paragraphs)
     -   [Auto-closing containers](#auto-closing-containers)
-    -   [Headers](#headers)
+    -   [Headings](#headings)
     -   [Interpolation](#interpolation)
     -   [Inline text formatting](#inline-text-formatting)
     -   [Lists](#lists)
@@ -52,7 +52,7 @@ crayon package to support ANSI terminal colors.
 Features
 ========
 
--   Build a CLI using semantic elements: headers, lists, alerts,
+-   Build a CLI using semantic elements: headings, lists, alerts,
     paragraphs.
 -   Theming via a CSS-like language.
 -   Terminal colors via the [crayon](https://github.com/r-lib/crayon)
@@ -162,27 +162,27 @@ function, by default. So in the previous example the last `cli_end()`
 call is not needed. Use `.auto_close = TRUE` in `cli_par()` to leave the
 paragraph open after its calling function returns.
 
-Headers
--------
+Headings
+--------
 
-cli suppports three levels of headers. This is how they look in the
-default theme. The default theme adds an empty line before headers, and
+cli suppports three levels of headings. This is how they look in the
+default theme. The default theme adds an empty line before headings, and
 an empty line after `cli_h1()` and `cli_h2()`.
 
 ``` asciicast
-cli_h1("Header 1")
+cli_h1("Heading 1")
 ```
 
 <img src="man/figures/README/unnamed-chunk-10.svg" width="100%" />
 
 ``` asciicast
-cli_h2("Header 2")
+cli_h2("Heading 2")
 ```
 
 <img src="man/figures/README/unnamed-chunk-11.svg" width="100%" />
 
 ``` asciicast
-cli_h3("Header 3")
+cli_h3("Heading 3")
 ```
 
 <img src="man/figures/README/unnamed-chunk-12.svg" width="100%" />
@@ -470,11 +470,11 @@ When a cli function is called:
     a function, then it is called with the message.
 4.  If the `cli.default_handler` option is not set, or it is not a
     function, the default cli handler is called, which shows the text,
-    alert, header, etc. on the screen, using the standard R `message()`
+    alert, heading, etc. on the screen, using the standard R `message()`
     function.
 
 ``` asciicast
-tryCatch(cli_h1("Header"), cli_message = function(x) x)
+tryCatch(cli_h1("Heading"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))
 ```
 
