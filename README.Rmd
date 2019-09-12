@@ -447,7 +447,7 @@ These functions concatenate their arguments using `paste0()`, and add
 the `ansi_string` class to their result:
 
 ```{asciicast}
-cat(col_red("This ", "is ", "red."))
+cat(col_red("This ", "is ", "red."), sep = "\n")
 ```
 
 Foreground colors:
@@ -529,7 +529,7 @@ is_ansi_tty()
 ```
 
 Hide the cursor, if the console supports it (no-op otherwise):
-```{asciicast}
+```{r}
 ansi_hide_cursor()
 ansi_show_cursor()
 ```
@@ -558,12 +558,6 @@ The `symbol` variable includes some Unicode characters that are often
 useful in CLI messages. They automatically fall back to ASCII symbols
 if the platform does not support them. You can use these symbols both
 with the semantic `cli_*()` functions and directly.
-
-```{asciicast}
-options(asciicast_theme = list(font_family =
-  c("Monaco", "'Fira Code'", "Consolas", "Menlo",
-    "'Bitstream Vera Sans Mono'", "'Powerline Symbols'", "monospace")))
-```
 
 ```{asciicast}
 cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")

@@ -513,7 +513,7 @@ These functions concatenate their arguments using `paste0()`, and add
 the `ansi_string` class to their result:
 
 ``` asciicast
-cat(col_red("This ", "is ", "red."))
+cat(col_red("This ", "is ", "red."), sep = "\n")
 ```
 
 <img src="man/figures/README/unnamed-chunk-31.svg" width="100%" />
@@ -615,12 +615,10 @@ is_ansi_tty()
 
 Hide the cursor, if the console supports it (no-op otherwise):
 
-``` asciicast
+``` r
 ansi_hide_cursor()
 ansi_show_cursor()
 ```
-
-<img src="man/figures/README/unnamed-chunk-39.svg" width="100%" />
 
 See also `ansi_with_hidden_cursor()`.
 
@@ -656,18 +654,10 @@ the platform does not support them. You can use these symbols both with
 the semantic `cli_*()` functions and directly.
 
 ``` asciicast
-options(asciicast_theme = list(font_family =
-  c("Monaco", "'Fira Code'", "Consolas", "Menlo",
-    "'Bitstream Vera Sans Mono'", "'Powerline Symbols'", "monospace")))
-```
-
-<img src="man/figures/README/unnamed-chunk-42.svg" width="100%" />
-
-``` asciicast
 cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")
 ```
 
-<img src="man/figures/README/unnamed-chunk-43.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-42.svg" width="100%" />
 
 Here is a list of all symbols:
 
@@ -675,7 +665,7 @@ Here is a list of all symbols:
 list_symbols()
 ```
 
-<img src="man/figures/README/unnamed-chunk-44.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-43.svg" width="100%" />
 
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
@@ -689,31 +679,31 @@ Rules
 rule()
 ```
 
-<img src="man/figures/README/unnamed-chunk-46.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-45.svg" width="100%" />
 
 ``` asciicast
 rule(line = 2)
 ```
 
-<img src="man/figures/README/unnamed-chunk-47.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-46.svg" width="100%" />
 
 ``` asciicast
 rule(line = "bar2")
 ```
 
-<img src="man/figures/README/unnamed-chunk-48.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-47.svg" width="100%" />
 
 ``` asciicast
 rule(line = "bar5")
 ```
 
-<img src="man/figures/README/unnamed-chunk-49.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-48.svg" width="100%" />
 
 ``` asciicast
 rule(center = "TITLE", line = "~")
 ```
 
-<img src="man/figures/README/unnamed-chunk-50.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-49.svg" width="100%" />
 
 ### Labels
 
@@ -721,13 +711,13 @@ rule(center = "TITLE", line = "~")
 rule(left = "Results")
 ```
 
-<img src="man/figures/README/unnamed-chunk-51.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-50.svg" width="100%" />
 
 ``` asciicast
 rule(center = " * RESULTS * ")
 ```
 
-<img src="man/figures/README/unnamed-chunk-52.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-51.svg" width="100%" />
 
 ### Colors
 
@@ -735,32 +725,32 @@ rule(center = " * RESULTS * ")
 rule(center = col_red(" * RESULTS * "))
 ```
 
-<img src="man/figures/README/unnamed-chunk-53.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-52.svg" width="100%" />
 
 ``` asciicast
 rule(center = " * RESULTS * ", col = "red")
 ```
 
-<img src="man/figures/README/unnamed-chunk-54.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-53.svg" width="100%" />
 
 ``` asciicast
 rule(center = " * RESULTS * ", line_col = "red")
 ```
 
-<img src="man/figures/README/unnamed-chunk-55.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-54.svg" width="100%" />
 
 ``` asciicast
 rule(center = "TITLE", line = "~-", line_col = "blue")
 ```
 
-<img src="man/figures/README/unnamed-chunk-56.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-55.svg" width="100%" />
 
 ``` asciicast
 rule(center = bg_red(" ", symbol$star, "TITLE", symbol$star, " "),
   line = "\u2582", line_col = "orange")
 ```
 
-<img src="man/figures/README/unnamed-chunk-57.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-56.svg" width="100%" />
 
 Boxes
 -----
@@ -769,7 +759,7 @@ Boxes
 boxx("Hello there!")
 ```
 
-<img src="man/figures/README/unnamed-chunk-58.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-57.svg" width="100%" />
 
 ### Change border style
 
@@ -777,7 +767,7 @@ boxx("Hello there!")
 boxx("Hello there!", border_style = "double")
 ```
 
-<img src="man/figures/README/unnamed-chunk-59.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-58.svg" width="100%" />
 
 ### Multiple lines of text
 
@@ -785,7 +775,7 @@ boxx("Hello there!", border_style = "double")
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
-<img src="man/figures/README/unnamed-chunk-60.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-59.svg" width="100%" />
 
 ### Padding and margin
 
@@ -793,25 +783,25 @@ boxx(c("Hello", "there!"), padding = 1)
 boxx("Hello there!", padding = 1)
 ```
 
-<img src="man/figures/README/unnamed-chunk-61.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-60.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-<img src="man/figures/README/unnamed-chunk-62.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-61.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", margin = 1)
 ```
 
-<img src="man/figures/README/unnamed-chunk-63.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-62.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", margin = c(1, 5, 1, 5))
 ```
 
-<img src="man/figures/README/unnamed-chunk-64.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-63.svg" width="100%" />
 
 ### Floating
 
@@ -819,13 +809,13 @@ boxx("Hello there!", margin = c(1, 5, 1, 5))
 boxx("Hello there!", padding = 1, float = "center")
 ```
 
-<img src="man/figures/README/unnamed-chunk-65.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-64.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
-<img src="man/figures/README/unnamed-chunk-66.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-65.svg" width="100%" />
 
 ### Colors
 
@@ -833,31 +823,31 @@ boxx("Hello there!", padding = 1, float = "right")
 boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-<img src="man/figures/README/unnamed-chunk-67.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-66.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, background_col = "brown")
 ```
 
-<img src="man/figures/README/unnamed-chunk-68.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-67.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, background_col = bg_red)
 ```
 
-<img src="man/figures/README/unnamed-chunk-69.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-68.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, border_col = "green")
 ```
 
-<img src="man/figures/README/unnamed-chunk-70.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-69.svg" width="100%" />
 
 ``` asciicast
 boxx("Hello there!", padding = 1, border_col = col_red)
 ```
 
-<img src="man/figures/README/unnamed-chunk-71.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-70.svg" width="100%" />
 
 ### Label alignment
 
@@ -865,19 +855,19 @@ boxx("Hello there!", padding = 1, border_col = col_red)
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
 ```
 
-<img src="man/figures/README/unnamed-chunk-72.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-71.svg" width="100%" />
 
 ``` asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
 ```
 
-<img src="man/figures/README/unnamed-chunk-73.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-72.svg" width="100%" />
 
 ``` asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
-<img src="man/figures/README/unnamed-chunk-74.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-73.svg" width="100%" />
 
 ### A very customized box
 
@@ -894,7 +884,7 @@ boxx(
 )
 ```
 
-<img src="man/figures/README/unnamed-chunk-75.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-74.svg" width="100%" />
 
 Trees
 -----
@@ -924,7 +914,7 @@ data <- data.frame(
 tree(data, root = "rcmdcheck")
 ```
 
-<img src="man/figures/README/unnamed-chunk-76.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-75.svg" width="100%" />
 
 An optional third column may contain custom labels. These can be colored
 as well:
@@ -941,7 +931,7 @@ data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
 
-<img src="man/figures/README/unnamed-chunk-77.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-76.svg" width="100%" />
 
 Spinners
 --------
@@ -954,25 +944,25 @@ project.
 list_spinners()
 ```
 
-<img src="man/figures/README/unnamed-chunk-78.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-77.svg" width="100%" />
 
 ``` asciicast
 get_spinner("dots")
 ```
 
-<img src="man/figures/README/unnamed-chunk-79.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-78.svg" width="100%" />
 
 ``` asciicast
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-81.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-80.svg" width="100%" />
 
 ``` asciicast
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-82.svg" width="100%" />
+<img src="man/figures/README/unnamed-chunk-81.svg" width="100%" />
 
 License
 =======
