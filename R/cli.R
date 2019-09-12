@@ -22,7 +22,7 @@
 #' cli_text("{greeting} {subject}!")
 #'
 #' ## Inline theming
-#' cli_text("The {.fun cli_text} function in the {.pkg cli} package")
+#' cli_text("The {.fn cli_text} function in the {.pkg cli} package")
 #'
 #' ## Use within container elements
 #' ul <- cli_ul()

@@ -42,7 +42,7 @@
 #' cli_text("{.emph Emphasis} and  {.strong strong emphasis}")
 #'
 #' cli_text("This is a piece of code: {.code sum(x) / length(x)}")
-#' cli_text("Function names: {.fun cli::simple_theme} and {.arg arguments}.")
+#' cli_text("Function names: {.fn cli::simple_theme}")
 #'
 #' cli_text("Files: {.file /usr/bin/env}")
 #' cli_text("URLs: {.url https://r-project.org}")
@@ -137,7 +137,10 @@ simple_theme <- function(dark = "auto") {
     span.strong = list("font-weight" = "bold", "font-style" = "italic"),
 
     span.fun = modifyList(simple_theme_code(dark), list(after = "()")),
+    span.fn = modifyList(simple_theme_code(dark), list(after = "()")),
     span.arg = simple_theme_code(dark),
+    span.kbd = modifyList(simple_theme_code(dark),
+                          list(before = "<", after = ">")),
     span.key = modifyList(simple_theme_code(dark),
                           list(before = "<", after = ">")),
     span.file = simple_theme_file(),

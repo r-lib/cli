@@ -93,8 +93,10 @@ builtin_theme <- function() {
     span.code = list(before = "`", after = "`", color = "magenta"),
 
     span.pkg = list(color = "magenta"),
+    span.fn = list(after = "()", color = "magenta"),
     span.fun = list(after = "()", color = "magenta"),
     span.arg = list(color = "magenta"),
+    span.kbd = list(before = "<", after = ">", color = "magenta"),
     span.key = list(before = "<", after = ">", color = "magenta"),
     span.file = list(color = "magenta"),
     span.path = list(color = "magenta"),
