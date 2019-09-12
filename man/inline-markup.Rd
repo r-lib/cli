@@ -62,18 +62,16 @@ using them, see the example below.
 \examples{
 ## Some inline markup examples
 cli_ul()
-cli_it("{.emph Emphasized} text")
-cli_it("{.strong Strong} importance")
-cli_it("A piece of code: {.code sum(a) / length(a)}")
-cli_it("A package name: {.pkg cli}")
-cli_it("A function name: {.fn cli_text}")
-cli_it("A function argument: {.arg text}")
-cli_it("A keyboard key: press {.kbd ENTER}")
-cli_it("A file name: {.file /usr/bin/env}")
-cli_it("An email address: {.email bugs.bunny@acme.com}")
-cli_it("A URL: {.url https://acme.com}")
-cli_it("A variable name: {.var mtcars}")
-cli_it("An environment variable: {.envvar R_LIBS}")
+cli_li("{.emph Emphasized} text")
+cli_li("{.strong Strong} importance")
+cli_li("A piece of code: {.code sum(a) / length(a)}")
+cli_li("A package name: {.pkg cli}")
+cli_li("A function name: {.fn cli_text}")
+cli_li("A keyboard key: press {.kbd ENTER}")
+cli_li("A file name: {.file /usr/bin/env}")
+cli_li("An email address: {.email bugs.bunny@acme.com}")
+cli_li("A URL: {.url https://acme.com}")
+cli_li("An environment variable: {.envvar R_LIBS}")
 cli_end()
 
 ## Adding a new class

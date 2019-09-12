@@ -101,23 +101,23 @@ clii_par <- function(app, id, class) {
 
 clii_ul <- function(app, items, id, class, .close) {
   id <- clii__container_start(app, "ul", id = id, class = class)
-  if (length(items)) { app$it(items); if (.close) app$end(id) }
+  if (length(items)) { app$li(items); if (.close) app$end(id) }
   invisible(id)
 }
 
 clii_ol <- function(app, items, id, class, .close) {
   id <- clii__container_start(app, "ol", id = id, class = class)
-  if (length(items)) { app$it(items); if (.close) app$end(id) }
+  if (length(items)) { app$li(items); if (.close) app$end(id) }
   invisible(id)
 }
 
 clii_dl <- function(app, items, id, class, .close) {
   id <- clii__container_start(app, "dl", id = id, class = class)
-  if (length(items)) { app$it(items); if (.close) app$end(id) }
+  if (length(items)) { app$li(items); if (.close) app$end(id) }
   invisible(id)
 }
 
-clii_it <- function(app, items, id, class) {
+clii_li <- function(app, items, id, class) {
   id <- id %||% new_uuid()
 
   ## check the last active list container
@@ -143,13 +143,13 @@ clii_it <- function(app, items, id, class) {
 
   if (length(items) > 0) {
     for (i in seq_along(items)) {
-      id <- clii__container_start(app, "it", id = id, class = class)
+      id <- clii__container_start(app, "li", id = id, class = class)
       app$item_text(type, names(items)[i], cnt_id, items[[i]])
       if (i < length(items)) app$end(id)
     }
   } else {
     app$delayed_item <- list(type = type, cnt_id = cnt_id)
-    id <- clii__container_start(app, "it", id = id, class = class)
+    id <- clii__container_start(app, "li", id = id, class = class)
   }
 
   invisible(id)

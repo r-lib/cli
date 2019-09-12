@@ -38,8 +38,8 @@ cli_dl(c(foo = "one", bar = "two", baz = "three"))
 
 ## Adding items one by one
 cli_dl()
-cli_it(c(foo = "one"))
-cli_it(c(bar = "two"))
-cli_it(c(baz = "three"))
+cli_li(c(foo = "one"))
+cli_li(c(bar = "two"))
+cli_li(c(baz = "three"))
 cli_end()
 }

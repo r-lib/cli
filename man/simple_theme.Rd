@@ -44,7 +44,7 @@ cli_text("Time intervals: {.timestamp 3.4s}")
 cli_text("{.emph Emphasis} and  {.strong strong emphasis}")
 
 cli_text("This is a piece of code: {.code sum(x) / length(x)}")
-cli_text("Function names: {.fn cli::simple_theme} and {.arg arguments}.")
+cli_text("Function names: {.fn cli::simple_theme}")
 
 cli_text("Files: {.file /usr/bin/env}")
 cli_text("URLs: {.url https://r-project.org}")

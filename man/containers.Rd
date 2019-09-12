@@ -7,7 +7,7 @@
 Container elements may contain other elements. Currently the following
 commands create container elements: \code{\link[=cli_div]{cli_div()}}, \code{\link[=cli_par]{cli_par()}}, the list
 elements: \code{\link[=cli_ul]{cli_ul()}}, \code{\link[=cli_ol]{cli_ol()}}, \code{\link[=cli_dl]{cli_dl()}}, and list items are
-containers as well: \code{\link[=cli_it]{cli_it()}}.
+containers as well: \code{\link[=cli_li]{cli_li()}}.
 }
 \details{
 Container elements need to be closed with \code{\link[=cli_end]{cli_end()}}. For convenience,

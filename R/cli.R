@@ -26,9 +26,9 @@
 #'
 #' ## Use within container elements
 #' ul <- cli_ul()
-#' cli_it()
+#' cli_li()
 #' cli_text("{.emph First} item")
-#' cli_it()
+#' cli_li()
 #' cli_text("{.emph Second} item")
 #' cli_end(ul)
 
@@ -191,18 +191,18 @@ cli_end <- function(id = NULL) {
 #'
 #' ## Adding items one by one
 #' cli_ul()
-#' cli_it("one")
-#' cli_it("two")
-#' cli_it("three")
+#' cli_li("one")
+#' cli_li("two")
+#' cli_li("three")
 #' cli_end()
 #'
 #' ## Complex item, added gradually.
 #' cli_ul()
-#' cli_it()
+#' cli_li()
 #' cli_verbatim("Beginning of the {.emph first} item")
 #' cli_text("Still the first item")
 #' cli_end()
-#' cli_it("Second item")
+#' cli_li("Second item")
 #' cli_end()
 
 cli_ul <- function(items = NULL, id = NULL, class = NULL,
@@ -230,17 +230,17 @@ cli_ul <- function(items = NULL, id = NULL, class = NULL,
 #' 
 #' ## Adding items one by one
 #' cli_ol()
-#' cli_it("one")
-#' cli_it("two")
-#' cli_it("three")
+#' cli_li("one")
+#' cli_li("two")
+#' cli_li("three")
 #' cli_end()
 #'
 #' ## Nested lists
 #' cli_div(theme = list(ol = list("margin-left" = 2)))
 #' cli_ul()
-#' cli_it("one")
+#' cli_li("one")
 #' cli_ol(c("foo", "bar", "foobar"))
-#' cli_it("two")
+#' cli_li("two")
 #' cli_end()
 #' cli_end()
 
@@ -271,9 +271,9 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
 #' 
 #' ## Adding items one by one
 #' cli_dl()
-#' cli_it(c(foo = "one"))
-#' cli_it(c(bar = "two"))
-#' cli_it(c(baz = "three"))
+#' cli_li(c(foo = "one"))
+#' cli_li(c(bar = "two"))
+#' cli_li(c(baz = "three"))
 #' cli_end()
 
 cli_dl <- function(items = NULL, id = NULL, class = NULL,
@@ -303,24 +303,24 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #' @examples
 #' ## Adding items one by one
 #' cli_ul()
-#' cli_it("one")
-#' cli_it("two")
-#' cli_it("three")
+#' cli_li("one")
+#' cli_li("two")
+#' cli_li("three")
 #' cli_end()
 #'
 #' ## Complex item, added gradually.
 #' cli_ul()
-#' cli_it()
+#' cli_li()
 #' cli_verbatim("Beginning of the {.emph first} item")
 #' cli_text("Still the first item")
 #' cli_end()
-#' cli_it("Second item")
+#' cli_li("Second item")
 #' cli_end()
 
-cli_it <- function(items = NULL, id = NULL, class = NULL,
+cli_li <- function(items = NULL, id = NULL, class = NULL,
                    .auto_close = TRUE, .envir = parent.frame()) {
   cli__message(
-    "it",
+    "li",
     list(
       items = vcapply(items, glue_cmd, .envir = .envir), id = id,
       class = class),

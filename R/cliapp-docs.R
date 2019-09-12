@@ -61,16 +61,16 @@
 #' @examples
 #' ## Some inline markup examples
 #' cli_ul()
-#' cli_it("{.emph Emphasized} text")
-#' cli_it("{.strong Strong} importance")
-#' cli_it("A piece of code: {.code sum(a) / length(a)}")
-#' cli_it("A package name: {.pkg cli}")
-#' cli_it("A function name: {.fn cli_text}")
-#' cli_it("A keyboard key: press {.kbd ENTER}")
-#' cli_it("A file name: {.file /usr/bin/env}")
-#' cli_it("An email address: {.email bugs.bunny@acme.com}")
-#' cli_it("A URL: {.url https://acme.com}")
-#' cli_it("An environment variable: {.envvar R_LIBS}")
+#' cli_li("{.emph Emphasized} text")
+#' cli_li("{.strong Strong} importance")
+#' cli_li("A piece of code: {.code sum(a) / length(a)}")
+#' cli_li("A package name: {.pkg cli}")
+#' cli_li("A function name: {.fn cli_text}")
+#' cli_li("A keyboard key: press {.kbd ENTER}")
+#' cli_li("A file name: {.file /usr/bin/env}")
+#' cli_li("An email address: {.email bugs.bunny@acme.com}")
+#' cli_li("A URL: {.url https://acme.com}")
+#' cli_li("An environment variable: {.envvar R_LIBS}")
 #' cli_end()
 #'
 #' ## Adding a new class
@@ -87,7 +87,7 @@ NULL
 #' Container elements may contain other elements. Currently the following
 #' commands create container elements: [cli_div()], [cli_par()], the list
 #' elements: [cli_ul()], [cli_ol()], [cli_dl()], and list items are
-#' containers as well: [cli_it()].
+#' containers as well: [cli_li()].
 #'
 #' Container elements need to be closed with [cli_end()]. For convenience,
 #' they are have an `.auto_close` argument, which allows automatically

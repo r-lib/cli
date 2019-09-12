@@ -33,9 +33,9 @@ cli_text("The {.fn cli_text} function in the {.pkg cli} package")
 
 ## Use within container elements
 ul <- cli_ul()
-cli_it()
+cli_li()
 cli_text("{.emph First} item")
-cli_it()
+cli_li()
 cli_text("{.emph Second} item")
 cli_end(ul)
 }

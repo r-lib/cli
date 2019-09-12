@@ -54,7 +54,7 @@ format_result <- function(obj, from, size) {
 
 format_hit <- function(hit) {
   ago <- vague_dt(Sys.time() - hit$date)
-  cli_it()
+  cli_li()
   cli_text("{.pkg {hit$package}} {hit$version}  --
           {.emph {hit$title}}")
   cli_par()

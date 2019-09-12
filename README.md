@@ -214,16 +214,16 @@ are below, see `?"inline-markup"` for details.
 ``` asciicast
 fun <- function() {
   cli_ul()
-  cli_it("{.emph Emphasized} text")
-  cli_it("{.strong Strong} importance")
-  cli_it("A piece of code: {.code sum(a) / length(a)}")
-  cli_it("A package name: {.pkg cli}")
-  cli_it("A function name: {.fn cli_text}")
-  cli_it("A keyboard key: press {.kbd ENTER}")
-  cli_it("A file name: {.file /usr/bin/env}")
-  cli_it("An email address: {.email bugs.bunny@acme.com}")
-  cli_it("A URL: {.url https://acme.com}")
-  cli_it("An environment variable: {.envvar R_LIBS}")
+  cli_li("{.emph Emphasized} text")
+  cli_li("{.strong Strong} importance")
+  cli_li("A piece of code: {.code sum(a) / length(a)}")
+  cli_li("A package name: {.pkg cli}")
+  cli_li("A function name: {.fn cli_text}")
+  cli_li("A keyboard key: press {.kbd ENTER}")
+  cli_li("A file name: {.file /usr/bin/env}")
+  cli_li("An email address: {.email bugs.bunny@acme.com}")
+  cli_li("A URL: {.url https://acme.com}")
+  cli_li("An environment variable: {.envvar R_LIBS}")
 }
 fun()
 ```
@@ -281,9 +281,9 @@ Items can be added one by one:
 ``` asciicast
 fun <- function() {
   lid <- cli_ul()
-  cli_it("Item 1")
-  cli_it("Item 2")
-  cli_it("Item 3")
+  cli_li("Item 1")
+  cli_li("Item 2")
+  cli_li("Item 3")
   cli_end(lid)
 }
 fun()
@@ -298,17 +298,17 @@ containers auto-close when their calling function exits.)
 
 ### Adding text to an item iteratively
 
-`cli_it()` creates a new container for the list item, within the list
+`cli_li()` creates a new container for the list item, within the list
 container. You can keep adding text to the item, until the container is
-closed via `cli_end()` or a new `cli_it()`, which closes the current
+closed via `cli_end()` or a new `cli_li()`, which closes the current
 item container, and creates another one for the new item:
 
 ``` asciicast
 fun <- function() {
   cli_ul()
-  cli_it("First item")
+  cli_li("First item")
   cli_text("This is still the first item")
-  cli_it("This is the second item")
+  cli_li("This is the second item")
 }
 fun()
 ```
@@ -322,12 +322,12 @@ To create nested lists, open nested containers:
 ``` asciicast
 fun <- function() {
   cli_ol()
-  cli_it("Item 1")
+  cli_li("Item 1")
   ulid <- cli_ul()
-  cli_it("Subitem 1")
-  cli_it("Subitem 2")
+  cli_li("Subitem 1")
+  cli_li("Subitem 2")
   cli_end(ulid)
-  cli_it("Item 2")
+  cli_li("Item 2")
   cli_end()
 }
 fun()
