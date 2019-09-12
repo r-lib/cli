@@ -92,7 +92,7 @@ test_that("output in child process", {
       }, {
         cli::start_app(theme = cli::simple_theme())
         cli::cli_h1("Title")
-        cli::cli_text("This is generated in the {emph subprocess}.")
+        cli::cli_text("This is generated in the {.emph subprocess}.")
         "foobar"
       }
     )
