@@ -15,7 +15,7 @@ always_allow_html: yes
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r, include = FALSE, cache = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -34,19 +34,6 @@ asciicast::init_knitr_engine(
     set.seed(1) }),
   echo = TRUE,
   echo_input = FALSE)
-# asciicast output defaults
-options(
-    asciicast_knitr_svg = TRUE,
-    asciicast_at = "end",
-    asciicast_typing_speed = 0,
-    asciicast_padding = 20,
-    asciicast_window = FALSE,
-    asciicast_omit_last_line = FALSE,
-    asciicast_cursor = FALSE,
-    width = 100,
-    asciicast_rows = "auto",
-    asciicast_cols = 100,
-    asciicast_end_wait = 0)
 ```
 
 # Features
@@ -306,11 +293,7 @@ While the status bar is active, cli can still produce output, as normal.
 This output is created "above" the status bar, which is always kept in the
 last line of the screen. See the following example:
 
-```{r, include = FALSE, cache = FALSE}
-options(asciicast_at = NULL, asciicast_end_wait = 30)
-```
-
-```{asciicast}
+```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 30)}
 f <- function() {
   cli_alert_info("About to start downloads.")
   sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
@@ -324,10 +307,6 @@ f <- function() {
   cli_alert_success("Downloads done.")
 }
 f()
-```
-
-```{r, include = FALSE, cache = FALSE}
-options(asciicast_at = "end", asciicast_end_wait = 0)
 ```
 
 # Theming
@@ -569,10 +548,6 @@ Here is a list of all symbols:
 list_symbols()
 ```
 
-```{r include = FALSE}
-options(asciicast_theme = NULL)
-```
-
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
 
@@ -786,20 +761,12 @@ list_spinners()
 get_spinner("dots")
 ```
 
-```{r, include = FALSE, cache = FALSE}
-options(asciicast_at = NULL)
-```
-
-```{asciicast}
+```{asciicast, R.options = list(asciicast_at = NULL)}
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
-```{asciicast}
+```{asciicast, R.options = list(asciicast_at = NULL)}
 ansi_with_hidden_cursor(demo_spinners("clock"))
-```
-
-```{r, include = FALSE, cache = FALSE}
-options(asciicast_at = "end")
 ```
 
 # License
