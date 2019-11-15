@@ -17,8 +17,8 @@ test_that("events are properly generated", {
   msgs <- list()
   handler <- function(msg) {
     msgs <<- c(msgs, list(msg))
-    if (!is.null(findRestart("muffleMessage"))) {
-      invokeRestart("muffleMessage")
+    if (!is.null(findRestart("cli_message_handled"))) {
+      invokeRestart("cli_message_handled")
     }
   }
 
@@ -53,8 +53,8 @@ test_that("subprocess with default handler", {
   withr::with_options(list(
     cli.default_handler = function(msg)  {
       msgs <<- c(msgs, list(msg))
-      if (!is.null(findRestart("muffleMessage"))) {
-        invokeRestart("muffleMessage")
+      if (!is.null(findRestart("cli_message_handled"))) {
+        invokeRestart("cli_message_handled")
       }
     }),
     rs$run(do)
@@ -74,26 +74,30 @@ test_that("output in child process", {
   ## This needs callr >= 3.0.0.90001, which is not yet on CRAN
   if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
 
+  # We need to do our own condition handling, otherwise callr will
+  # handle `cli_message` and copy it to the main process.
+  # So on `cli_message` we just call the default handler, which will
+  # call `message()`, and on `message` we'll copy the formatted message
+  # to the main process.
+
   do <- function() {
     options(crayon.enabled = TRUE)
     options(crayon.colors = 256)
     crayon::num_colors(forget = TRUE)
-    withCallingHandlers(
-      cli_message = function(msg) {
-        withCallingHandlers(
-          cli:::cli_server_default(msg),
-          message = function(mmsg) {
-            class(mmsg) <- c("callr_message", "message", "condition")
-            signalCondition(mmsg)
-            invokeRestart("muffleMessage")
-          }
-        )
-        invokeRestart("muffleMessage")
-      }, {
+    withCallingHandlers({
         cli::start_app(theme = cli::simple_theme())
         cli::cli_h1("Title")
         cli::cli_text("This is generated in the {.emph subprocess}.")
         "foobar"
+      },
+      cli_message = function(msg) {
+        withCallingHandlers({
+          cli:::cli_server_default(msg)
+          invokeRestart("cli_message_handled") },
+          message = function(mmsg) {
+            class(mmsg) <- c("callr_message", "message", "condition")
+            signalCondition(mmsg)
+        })
       }
     )
   }
@@ -101,15 +105,18 @@ test_that("output in child process", {
   rs <- callr::r_session$new()
   on.exit(rs$kill(), add = TRUE)
 
+  # Store the formatted messages from callr
+  # We also need to muffle the default handler here
+
   msgs <- list()
   result <- withCallingHandlers(
+    rs$run_with_output(do),
     callr_message = function(msg) {
       msgs <<- c(msgs, list(msg))
-      if (!is.null(findRestart("muffleMessage"))) {
-        invokeRestart("muffleMessage")
+      if (!is.null(msg$muffle) && !is.null(findRestart(msg$muffle))) {
+        invokeRestart(msg$muffle)
       }
-    },
-    rs$run_with_output(do)
+    }
   )
 
   expect_equal(result$stdout, "")

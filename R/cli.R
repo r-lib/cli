@@ -430,7 +430,7 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
   withRestarts({
     signalCondition(cond)
     cli__default_handler(cond)
-  }, muffleMessage = function() NULL)
+  }, cli_message_handled = function() NULL)
 
   invisible(args$id)
 }
