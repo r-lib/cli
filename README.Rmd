@@ -189,6 +189,21 @@ dlurl <- "https://httpbin.org/status/404"
 cli_alert_danger("Failed to download {.url {dlurl}}.")
 ```
 
+## Non-breaking spaces
+
+Use `\u00a0` to create a non-breaking space. E.g. in here we insert some
+non-breaking spaces, and mark them with an `X`, so it is easy to see that
+there are no line breaks at a non-breaking space:
+
+```{asciicast}
+# Make some spaces non-breaking, and mark them with X
+txt <- cli:::lorem_ipsum()
+mch <- gregexpr(txt, pattern = " ", fixed = TRUE)
+nbs <- runif(length(mch[[1]])) < 0.5
+regmatches(txt, mch)[[1]] <- ifelse(nbs, "X\u00a0", " ")
+cli_text(txt)
+```
+
 ## Lists
 
 cli has three types of list: ordered, unordered and definition lists, see
