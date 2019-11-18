@@ -96,6 +96,10 @@ rule <- function(left = "", center = "", right = "", line = 1,
                  col = NULL, line_col = col, background_col = NULL,
                  width = console_width()) {
 
+  try_silently(left <- as.character(left))
+  try_silently(center <- as.character(center))
+  try_silently(right <- as.character(right))
+
   assert_that(
     is_string(left),
     is_string(center),

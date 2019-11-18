@@ -128,3 +128,7 @@ str_tail <- function(x) {
 push <- function(l, el, name = NULL) {
   c(l, structure(list(el), names = name))
 }
+
+try_silently <- function(expr) {
+  suppressWarnings(tryCatch(expr, error = function(x) x))
+}
