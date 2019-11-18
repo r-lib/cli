@@ -4,7 +4,8 @@
 \alias{cli_rule}
 \title{CLI horizontal rule}
 \usage{
-cli_rule(left = "", center = "", right = "")
+cli_rule(left = "", center = "", right = "", id = NULL,
+  .envir = parent.frame())
 }
 \arguments{
 \item{left}{Label to show on the left. It interferes with the \code{center}
@@ -37,8 +38,14 @@ cli_text(packageDescription("cli")$Description)
 cli_rule()
 
 # Theming
-d <- cli_div(theme = list(
-  rule = list(color = "blue", "background-color" = "yellow"))
+d <- cli_div(theme = list(rule = list(
+  color = "blue",
+  "background-color" = "darkgrey",
+  "line-type" = "double")))
 cli_rule("Left", right = "Right")
 cli_end(d)
+
+# Interpolation
+cli_rule(left = "One plus one is {1+1}")
+cli_rule(left = "Package {.pkg mypackage}")
 }

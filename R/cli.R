@@ -410,13 +410,23 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' cli_rule()
 #'
 #' # Theming
-#' d <- cli_div(theme = list(
-#'   rule = list(color = "blue", "background-color" = "yellow"))
+#' d <- cli_div(theme = list(rule = list(
+#'   color = "blue",
+#'   "background-color" = "darkgrey",
+#'   "line-type" = "double")))
 #' cli_rule("Left", right = "Right")
 #' cli_end(d)
+#'
+#' # Interpolation
+#' cli_rule(left = "One plus one is {1+1}")
+#' cli_rule(left = "Package {.pkg mypackage}")
 
-cli_rule <- function(left = "", center = "", right = "") {
-  cli__message("rule", list(left = left, center = center, right = right))
+cli_rule <- function(left = "", center = "", right = "", id = NULL,
+                     .envir = parent.frame()) {
+  cli__message("rule", list(left = glue_cmd(left, .envir = .envir),
+                            center = glue_cmd(center, .envir = .envir),
+                            right = glue_cmd(right, .envir = .envir),
+                            id = id))
 }
 
 #' CLI progress bar
