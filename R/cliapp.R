@@ -83,6 +83,10 @@ cliapp <- function(theme = getOption("cli.theme"),
     alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(app, "alert-info", text, id, class, wrap),
 
+    ## Horizontal rule
+    rule = function(left, center, right)
+      clii_rule(app, left, center, right),
+
     ## Status bar
     status = function(id = NULL, ..., .keep = FALSE)
       clii_status(app, id, ..., .keep = .keep),
@@ -209,6 +213,13 @@ clii_blockquote <- function(app, quote, citation, id, class) {
 
 clii_table <- function(app, cells, id, class) {
   stop("Tables are not implemented yet")
+}
+
+## Rule -------------------------------------------------------------
+
+clii_rule <- function(app, left, center, right) {
+  text <- rule(left, center, right)
+  app$cat_ln(text)
 }
 
 ## Alerts -----------------------------------------------------------

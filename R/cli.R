@@ -7,7 +7,7 @@
 #' @param ... The text to show, in character vectors. They will be
 #'   concatenated into a single string. Newlines are _not_ preserved.
 #' @param .envir Environment to evaluate the glue expressions in.
-#' 
+#'
 #' @export
 #' @examples
 #' cli_text("Hello world!")
@@ -39,11 +39,11 @@ cli_text <- function(..., .envir = parent.frame()) {
 #' CLI verbatim text
 #'
 #' It is not wrapped, but printed as is.
-#' 
+#'
 #' @param ... The text to show, in character vectors. Each element is
 #'   printed on a new line.
 #' @param .envir Environment to evaluate the glue expressions in.
-#' 
+#'
 #' @export
 #' @examples
 #' cli_verbatim("This has\nthree", "lines")
@@ -59,7 +59,7 @@ cli_verbatim <- function(..., .envir = parent.frame()) {
 #' @param class Class of the heading element, string. It can be used in
 #'   themes.
 #' @param .envir Environment to evaluate the glue expressions in.
-#' 
+#'
 #' @export
 #' @examples
 #' cli_h1("Main title")
@@ -101,7 +101,7 @@ cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
 #' @param .envir Environment to evaluate the glue expressions in. It is
 #'   also used to auto-close the container if `.auto_close` is `TRUE`.
 #' @return The id of the new container element, invisibly.
-#' 
+#'
 #' @export
 #' @examples
 #' ## div with custom theme
@@ -133,7 +133,7 @@ cli_div <- function(id = NULL, class = NULL, theme = NULL,
 #' @param class Class name, sting. Can be used in themes.
 #' @inheritParams cli_div
 #' @return The id of the new container element, invisibly.
-#' 
+#'
 #' @export
 #' @examples
 #' id <- cli_par()
@@ -153,7 +153,7 @@ cli_par <- function(id = NULL, class = NULL, .auto_close = TRUE,
 #'
 #' @param id Id of the container to close. If missing, the current
 #' container is closed, if any.
-#' 
+#'
 #' @export
 #' @examples
 #' ## If id is omitted
@@ -183,7 +183,7 @@ cli_end <- function(id = NULL) {
 #'   specified. If `FALSE` then new items can be added to the list.
 #' @inheritParams cli_div
 #' @return The id of the new container element, invisibly.
-#' 
+#'
 #' @export
 #' @examples
 #' ## Specifying the items at the beginning
@@ -222,12 +222,12 @@ cli_ul <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
-#' 
+#'
 #' @export
 #' @examples
 #' ## Specifying the items at the beginning
 #' cli_ol(c("one", "two", "three"))
-#' 
+#'
 #' ## Adding items one by one
 #' cli_ol()
 #' cli_li("one")
@@ -256,19 +256,19 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
 }
 
 #' Definition list
-#' 
+#'
 #' A definition list is a container, see [containers].
 #'
 #' @param items Named character vector, or `NULL`. If not `NULL`, they
 #'   are used as list items.
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
-#' 
+#'
 #' @export
 #' @examples
 #' ## Specifying the items at the beginning
 #' cli_dl(c(foo = "one", bar = "two", baz = "three"))
-#' 
+#'
 #' ## Adding items one by one
 #' cli_dl()
 #' cli_li(c(foo = "one"))
@@ -336,7 +336,7 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
 #' @param class Class of the alert element. Can be used in themes.
 #' @param wrap Whether to auto-wrap the text of the alert.
 #' @param .envir Environment to evaluate the glue expressions in.
-#' 
+#'
 #' @export
 #' @examples
 #'
@@ -388,6 +388,37 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
                                   id = id, class = class, wrap = wrap))
 }
 
+#' CLI horizontal rule
+#'
+#' It can be used to separate parts of the output. The line style of the
+#' rule can be changed via the the `line-type` property. Possible values
+#' are: 
+#'
+#' * `"single"`: (same as `1`), a single line,
+#' * `"double"`: (same as `2`), a double line,
+#' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
+#'
+#' Colors and background colors can similarly changed via a theme, see
+#' examples below.
+#' 
+#' @inheritParams rule
+#'
+#' @export
+#' @examples
+#' cli_rule()
+#' cli_text(packageDescription("cli")$Description)
+#' cli_rule()
+#'
+#' # Theming
+#' d <- cli_div(theme = list(
+#'   rule = list(color = "blue", "background-color" = "yellow"))
+#' cli_rule("Left", right = "Right")
+#' cli_end(d)
+
+cli_rule <- function(left = "", center = "", right = "") {
+  cli__message("rule", list(left = left, center = center, right = right))
+}
+
 #' CLI progress bar
 #'
 #' A progress bar using the progress package
@@ -396,7 +427,7 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' [progress::progress_bar] class.
 #' @return A remote progress bar object that can be used the same way
 #' as [progress::progress_bar], see examples below.
-#' 
+#'
 #' @export
 #' @examples
 #' {

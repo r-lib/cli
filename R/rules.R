@@ -50,6 +50,7 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #'
 #' @section Line styles:
 #' Some strings for the `line` argument are interpreted specially:
+#'
 #' * `"single"`: (same as `1`), a single line,
 #' * `"double"`: (same as `2`), a double line,
 #' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
