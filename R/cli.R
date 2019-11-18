@@ -401,7 +401,9 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' Colors and background colors can similarly changed via a theme, see
 #' examples below.
 #' 
+#' @param .envir Environment to evaluate the glue expressions in.
 #' @inheritParams rule
+#' @inheritParams cli_div
 #'
 #' @export
 #' @examples

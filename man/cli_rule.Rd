@@ -16,6 +16,11 @@ label, only at most one of them can be present.}
 
 \item{right}{Label to show on the right. It interferes with the \code{center}
 label, only at most one of them can be present.}
+
+\item{id}{Element id, a string. If \code{NULL}, then a new id is generated
+and returned.}
+
+\item{.envir}{Environment to evaluate the glue expressions in.}
 }
 \description{
 It can be used to separate parts of the output. The line style of the
