@@ -224,6 +224,8 @@ clii_rule <- function(app, left, center, right, id) {
   clii__container_start(app, "rule", id = id)
   on.exit(clii__container_end(app, id), add = TRUE)
   style <- app$get_current_style()
+  width <- console_width() -
+    nchar_ctl(style$before %||% "") - nchar_ctl(style$after %||% "")
   text <- rule(left, center, right, line = style$`line-type` %||% 1)
   text[1] <- paste0(style$before, text[1])
   text[length(text)] <- paste0(text[length(text)], style$after)
