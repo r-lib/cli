@@ -59,6 +59,14 @@ You can simply add new classes by defining them in the theme, and then
 using them, see the example below.
 }
 
+\section{Collapsing inline vectors}{
+
+
+When cli performs inline text formatting, it automatically collapses
+glue substitutions, after formatting. This is handy to create lists of
+files, packages, etc. See examples below.
+}
+
 \examples{
 ## Some inline markup examples
 cli_ul()
@@ -81,4 +89,9 @@ cli_div(theme = list(
   "span.myclass" = list(after = "]")))
 cli_text("This is {.myclass in brackets}.")
 cli_end()
+
+## Collapsing
+pkgs <- c("pkg1", "pkg2", "pkg3")
+cli_text("Packages: {pkgs}.")
+cli_text("Packages: {.pkg {pkgs}}")
 }
