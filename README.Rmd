@@ -189,6 +189,22 @@ dlurl <- "https://httpbin.org/status/404"
 cli_alert_danger("Failed to download {.url {dlurl}}.")
 ```
 
+## Inline lists of items
+
+When cli performs inline text formatting, it automatically collapses
+glue substitutions, after formatting. This is handy to create lists of
+files, packages, etc.
+
+```{asciicast}
+pkgs <- c("pkg1", "pkg2", "pkg3")
+cli_text("Packages: {pkgs}.")
+```
+
+```{asciicast}
+pkgs <- c("pkg1", "pkg2", "pkg3")
+cli_text("Packages: {.pkg {pkgs}}")
+```
+
 ## Non-breaking spaces
 
 Use `\u00a0` to create a non-breaking space. E.g. in here we insert some

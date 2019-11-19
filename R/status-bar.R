@@ -26,8 +26,12 @@
 
 cli_status <- function(..., .keep = FALSE, .auto_close = TRUE,
                        .envir = parent.frame()) {
-  cli__message("status", list(id = NULL, ..., .keep = .keep),
-               .auto_close = .auto_close, .envir = .envir)
+  cli__message(
+    "status",
+    list(id = NULL, glue_cmd(..., .envir = .envir), .keep = .keep),
+    .auto_close = .auto_close,
+    .envir = .envir
+  )
 }
 
 #' Clear the status bar
@@ -60,9 +64,9 @@ cli_status_update <- function(..., id = NULL, .envir = parent.frame()) {
                                      id = id %||% NA_character_))
 }
 
-clii_status <- function(app, id, ..., .keep = .keep) {
+clii_status <- function(app, id, text, .keep = .keep) {
   app$status_bar[[id]] <- list(content = "", keep = .keep)
-  clii_status_update(app, id, ...)
+  clii_status_update(app, id, text)
 }
 
 clii_status_clear <- function(app, id) {
@@ -101,7 +105,7 @@ clii_status_clear <- function(app, id) {
 
 #' @importFrom fansi substr_ctl
 
-clii_status_update <- function(app, id, ...) {
+clii_status_update <- function(app, id, text) {
   ## If NA then the most recent one
   if (is.na(id)) id <- names(app$status_bar)[1]
 
@@ -112,7 +116,6 @@ clii_status_update <- function(app, id, ...) {
   if (length(app$status_bar)) clii__clear_status_bar(app)
 
   ## Inline styles, take first line and cut it at console width
-  text <- paste(unlist(list(...), use.names = FALSE), collapse = "\n")
   text <- app$inline(text)[1]
   text <- substr_ctl(text, 1, app$get_width() - 1L)
 

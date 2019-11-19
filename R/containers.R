@@ -155,7 +155,7 @@ clii_li <- function(app, items, id, class) {
   invisible(id)
 }
 
-clii__item_text <- function(app, type, name, cnt_id, ..., .list) {
+clii__item_text <- function(app, type, name, cnt_id, text, .list) {
 
   style <- app$get_current_style()
   head <- if (type == "ul") {
@@ -168,7 +168,7 @@ clii__item_text <- function(app, type, name, cnt_id, ..., .list) {
   } else if (type == "dl") {
     paste0(name, ": ")
   }
-  app$xtext(.list = c(list(head), list(...), .list), indent = 0)
+  app$xtext(.list = c(list(glue_delay(head)), list(text), .list), indent = 0)
 }
 
 ## Code -------------------------------------------------------------

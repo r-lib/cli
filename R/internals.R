@@ -1,9 +1,9 @@
 
 #' @importFrom fansi strwrap_ctl
 
-clii__xtext <- function(app, ..., .list, indent) {
+clii__xtext <- function(app, text, .list, indent) {
   style <- app$get_current_style()
-  text <- app$inline(..., .list = .list)
+  text <- app$inline(text, .list = .list)
   text <- strwrap_ctl(text, width = app$get_width())
   if (!is.null(style$fmt)) text <- style$fmt(text)
   app$cat_ln(text, indent = indent)

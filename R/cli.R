@@ -33,7 +33,7 @@
 #' cli_end(ul)
 
 cli_text <- function(..., .envir = parent.frame()) {
-  cli__message("text", as.list(glue_cmd(..., .envir = .envir)))
+  cli__message("text", list(text = glue_cmd(..., .envir = .envir)))
 }
 
 #' CLI verbatim text
@@ -211,7 +211,7 @@ cli_ul <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "ul",
     list(
-      items = vcapply(items, glue_cmd, .envir = .envir), id = id,
+      items = lapply(items, glue_cmd, .envir = .envir), id = id,
       class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
@@ -250,7 +250,7 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "ol",
     list(
-      items = vcapply(items, glue_cmd, .envir = .envir), id = id,
+      items = lapply(items, glue_cmd, .envir = .envir), id = id,
       class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
@@ -282,7 +282,7 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "dl",
     list(
-      items = vcapply(items, glue_cmd, .envir = .envir), id = id,
+      items = lapply(items, glue_cmd, .envir = .envir), id = id,
       class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
@@ -322,7 +322,7 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "li",
     list(
-      items = vcapply(items, glue_cmd, .envir = .envir), id = id,
+      items = lapply(items, glue_cmd, .envir = .envir), id = id,
       class = class),
     .auto_close = .auto_close, .envir = .envir)
 }
