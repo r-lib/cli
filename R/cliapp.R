@@ -30,8 +30,8 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_par(app, id, class),
 
     ## Text, wrapped
-    text = function(...)
-      clii_text(app, ...),
+    text = function(text)
+      clii_text(app, text),
 
     ## Text, not wrapped
     verbatim = function(...)
@@ -88,12 +88,12 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_rule(app, left, center, right, id),
 
     ## Status bar
-    status = function(id = NULL, ..., .keep = FALSE)
-      clii_status(app, id, ..., .keep = .keep),
+    status = function(id = NULL, text, .keep = FALSE)
+      clii_status(app, id, text, .keep = .keep),
     status_clear = function(id = NULL)
       clii_status_clear(app, id),
-    status_update = function(id = NULL, ...)
-      clii_status_update(app, id, ...),
+    status_update = function(id = NULL, text)
+      clii_status_update(app, id, text),
 
     ## Progress bars
     progress_bar = function(id = NULL, ...)
@@ -113,17 +113,17 @@ cliapp <- function(theme = getOption("cli.theme"),
     get_current_style = function()
       tail(app$styles, 1)[[1]],
 
-    xtext = function(..., .list = NULL, indent = 0)
-      clii__xtext(app, ..., .list = .list, indent = indent),
+    xtext = function(text = NULL, .list = NULL, indent = 0)
+      clii__xtext(app, text, .list = .list, indent = indent),
 
     vspace = function(n = 1)
       clii__vspace(app, n),
 
-    inline = function(..., .list = NULL)
-      clii__inline(app, ..., .list = .list),
+    inline = function(text = NULL, .list = NULL)
+      clii__inline(app, text, .list = .list),
 
-    item_text = function(type, name, cnt_id, ..., .list = NULL)
-      clii__item_text(app, type, name, cnt_id, ..., .list = .list),
+    item_text = function(type, name, cnt_id, items = list(), .list = NULL)
+      clii__item_text(app, type, name, cnt_id, items, .list = .list),
 
     get_width = function()
       clii__get_width(app),
@@ -162,8 +162,8 @@ clii_init <- function(app, theme, user_theme, output) {
 
 #' @importFrom fansi strwrap_ctl
 
-clii_text <- function(app, ...) {
-  app$xtext(...)
+clii_text <- function(app, text) {
+  app$xtext(text)
 }
 
 clii_verbatim <- function(app, ..., .envir) {

@@ -131,3 +131,18 @@ test_that("output in child process", {
 
   rs$close()
 })
+
+test_that("substitution in child process", {
+
+  do <- function() {
+    cli::cli_text("This is process {Sys.getpid()}.")
+  }
+
+  rs <- callr::r_session$new()
+  on.exit(rs$kill(), add = TRUE)
+
+  out <- capt0(rs$run(do))
+  expect_match(out, glue::glue("This is process {rs$get_pid()}"))
+
+  rs$close()
+})

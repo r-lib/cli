@@ -1,8 +1,4 @@
 
-#' @importFrom glue glue glue_collapse
-
-inline_list <- NULL
-
 #' @importFrom utils globalVariables
 
 if (getRversion() >= "2.15.1") globalVariables("app")
@@ -15,6 +11,8 @@ inline_generic <- function(app, class, x) {
   if (!is.null(style$fmt)) xx <- style$fmt(xx)
   xx
 }
+
+#' @importFrom glue glue glue_collapse
 
 inline_transformer <- function(code, envir) {
   res <- tryCatch({
@@ -38,39 +36,58 @@ inline_transformer <- function(code, envir) {
   inline_generic(app, funname, out)
 }
 
-cmd_transformer <- function(code, envir) {
-  res <- tryCatch({
-    expr <- parse(text = code, keep.source = FALSE)
-    eval(expr, envir = envir)
-  }, error = function(e) e)
-  if (!inherits(res, "error")) return(res)
+clii__inline <- function(app, text, .list) {
+  ## This makes a copy that can refer to app
+  environment(inline_transformer) <- environment()
+  texts <- c(if (!is.null(text)) list(text), .list)
+  out <- lapply(texts, function(t) {
+    glue(t$str, .envir = t$values %||% emptyenv(), .transformer = inline_transformer)
+  })
+  paste(out, collapse = "")
+}
 
-  code <- glue_collapse(code, "\n")
-  m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
-  has_match <- m != -1
-  if (!has_match) stop(res)
+make_cmd_transformer <- function(values) {
+  values
 
-  starts <- attr(m, "capture.start")
-  ends <- starts + attr(m, "capture.length") - 1L
-  captures <- substring(code, starts, ends)
-  funname <- captures[[1]]
-  text <- captures[[2]]
+  function(code, envir) {
+    res <- tryCatch({
+      expr <- parse(text = code, keep.source = FALSE)
+      eval(expr, envir = envir)
+    }, error = function(e) e)
 
-  out <- glue(text, .envir = envir, .transformer = cmd_transformer)
-  paste0("{.", funname, " ", out, "}")
+    if (!inherits(res, "error")) {
+      id <- paste0("v", length(values))
+      values[[id]] <- res
+      return(paste0("{", id, "}"))
+    }
+
+    code <- glue_collapse(code, "\n")
+    m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
+    has_match <- m != -1
+    if (!has_match) stop(res)
+
+    starts <- attr(m, "capture.start")
+    ends <- starts + attr(m, "capture.length") - 1L
+    captures <- substring(code, starts, ends)
+    funname <- captures[[1]]
+    text <- captures[[2]]
+
+    out <- glue(text, .envir = envir, .transformer = sys.function())
+    paste0("{.", funname, " ", out, "}")
+  }
 }
 
 glue_cmd <- function(..., .envir) {
-  ## This makes a copy that can refer to app
   str <- unlist(list(...), use.names = FALSE)
-  environment(cmd_transformer) <- environment()
-  args <- c(str, list(.envir = .envir, .transformer = cmd_transformer))
-  do.call(glue, args)
+  values <- new.env(parent = emptyenv())
+  transformer <- make_cmd_transformer(values)
+  args <- c(str, list(.envir = .envir, .transformer = transformer))
+  glue_delay(str = do.call(glue, args), values = values)
 }
 
-clii__inline <- function(app, ..., .list) {
-  ## This makes a copy that can refer to app
-  environment(inline_transformer) <- environment()
-  args <- c(list(...), .list, list(.transformer = inline_transformer))
-  do.call(glue, args)
+glue_delay <- function(str, values = NULL) {
+  structure(
+    list(str = str, values = values),
+    class = "cli_glue_delay"
+  )
 }
