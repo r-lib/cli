@@ -158,11 +158,16 @@ create_formatter <- function(x) {
 #' @importFrom utils modifyList
 
 merge_embedded_styles <- function(old, new) {
-  ## side margins are additive, rest is updated, counter is reset
+  # before and after is not inherited,
+  # side margins are additive,
+  # rest is updated, counter is reset
+  old$before <- old$after <- NULL
+
   top <- new$`margin-top` %||% 0L
   bottom <- new$`margin-bottom` %||% 0L
   left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
   right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
+
   start <- new$start %||% 1L
 
   mrg <- modifyList(old, new)
