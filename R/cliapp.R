@@ -1,7 +1,7 @@
 
 cliapp <- function(theme = getOption("cli.theme"),
                    user_theme = getOption("cli.user_theme"),
-                   output = c("message", "stdout")) {
+                   output = c("auto", "message", "stdout", "stderr")) {
 
   app <- new_class(
     "cliapp",
@@ -139,7 +139,8 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii__cleanup_progress_bars(app)
   )
 
-  app$new(theme, user_theme, match.arg(output))
+  if (! inherits(output, "connection")) output <- match.arg(output)
+  app$new(theme, user_theme, output)
 
   app
 }

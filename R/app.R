@@ -27,13 +27,16 @@ cliappenv$pid <- Sys.getpid()
 #' @export
 
 start_app <- function(theme = getOption("cli.theme"),
-                      output = c("message", "stdout"), .auto_close = TRUE,
-                      .envir = parent.frame()) {
+                      output = c("auto", "message", "stdout", "stderr"),
+                      .auto_close = TRUE, .envir = parent.frame()) {
+
+  if (! inherits(output, "connection")) output <- match.arg(output)
 
   app <- cliapp(
     theme = theme,
     user_theme = getOption("cli.user_theme"),
-    output = match.arg(output))
+    output = output
+  )
   cliappenv$stack[[length(cliappenv$stack) + 1]] <- app
 
   if (.auto_close && !identical(.envir, globalenv())) {

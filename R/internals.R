@@ -18,11 +18,7 @@ clii__get_width <- function(app) {
 }
 
 clii__cat <- function(app, lines) {
-  if (app$output == "message") {
-    clii__message(lines, appendLF = FALSE)
-  } else {
-    cat(lines, sep = "")
-  }
+  clii__message(lines, appendLF = FALSE, output = app$output)
 }
 
 clii__cat_ln <- function(app, lines, indent) {
@@ -57,6 +53,7 @@ clii__cat_ln <- function(app, lines, indent) {
 
   } else {
     msg <- paste(lines, sep = "\n")
+    # reset() removes the boldness in macOS terminals
     msg <- crayon::reset(msg)
     bar$message(msg, set_width = FALSE)
   }
@@ -65,17 +62,45 @@ clii__cat_ln <- function(app, lines, indent) {
 clii__vspace <- function(app, n) {
   if (app$margin < n) {
     sp <- strrep("\n", n - app$margin)
-    if (app$output == "message") {
-      clii__message(sp, appendLF = FALSE)
-    } else {
-      cat(sp)
-    }
+    clii__message(sp, appendLF = FALSE, output = app$output)
     app$margin <- n
   }
 }
 
-clii__message <- function(..., domain = NULL, appendLF = TRUE) {
+clii__message <- function(..., domain = NULL, appendLF = TRUE,
+                          output = stderr()) {
+
   msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
-  msg <- crayon::reset(msg)
-  message(msg, appendLF = FALSE)
+
+  if (! inherits(output, "connection")) {
+    output <- switch(
+      output,
+      "auto" = if (is_interactive()) stdout() else stderr(),
+      "message" = ,
+      "stderr" = stderr(),
+      "stdout" = stdout()
+    )
+  }
+
+  withRestarts(muffleMessage = function() NULL, {
+    signalCondition(simpleMessage(msg))
+    cat(msg, file = output, sep = "")
+  })
+}
+
+is_interactive <- function() {
+  opt <- getOption("rlib_interactive")
+  if (isTRUE(opt)) {
+    TRUE
+  } else if (identical(opt, FALSE)) {
+    FALSE
+  } else if (tolower(getOption("knitr.in.progress", "false")) == "true") {
+    FALSE
+  } else if (tolower(getOption("rstudio.notebook.executing", "false")) == "true") {
+    FALSE
+  } else if (identical(Sys.getenv("TESTTHAT"), "true")) {
+    FALSE
+  } else {
+    interactive()
+  }
 }
