@@ -74,7 +74,13 @@ cli_format_method <- function(expr, theme = getOption("cli.theme")) {
   start_app(theme = theme, output = con)
 
   # Run the code
-  expr
+  withCallingHandlers(
+    expr,
+    cli_message = function(msg) {
+      cli_server_default(msg)
+      invokeRestart("cli_message_handled")
+    }
+  )
 
   # Collect the output
   textConnectionValue(con)
