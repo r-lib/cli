@@ -132,3 +132,7 @@ push <- function(l, el, name = NULL) {
 try_silently <- function(expr) {
   suppressWarnings(tryCatch(expr, error = function(x) x))
 }
+
+random_id <- function() {
+  paste(sample(c(letters, LETTERS, 0:9), 7, replace = TRUE), collapse = "")
+}

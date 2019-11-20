@@ -21,10 +21,10 @@ inline_collapse <- function(x) {
 inline_transformer <- local({
   inline_styling <- FALSE
   function(code, envir) {
-    res <- tryCatch({
+    res <- suppressWarnings(tryCatch({
       expr <- parse(text = code, keep.source = FALSE)
       eval(expr, envir = envir)
-    }, error = function(e) e)
+    }, error = function(e) e))
     if (!inherits(res, "error")) {
       if (inline_styling) return(res) else return(inline_collapse(res))
     }
@@ -32,7 +32,7 @@ inline_transformer <- local({
     code <- glue_collapse(code, "\n")
     m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
     has_match <- m != -1
-    if (!has_match) stop(res)
+    if (!has_match) return(paste0("{", code, "}"))
 
     starts <- attr(m, "capture.start")
     ends <- starts + attr(m, "capture.length") - 1L
@@ -42,7 +42,15 @@ inline_transformer <- local({
 
     inline_styling <<- TRUE
     on.exit(inline_styling <<- FALSE, add = TRUE)
-    out <- glue(text, .envir = envir, .transformer = inline_transformer)
+
+    out <- glue(
+      text,
+      .envir = envir,
+      .transformer = inline_transformer,
+      .open = paste0("{", envir$marker),
+      .close = paste0(envir$marker, "}")
+    )
+
     inline_generic(app, funname, out)
   }
 })
@@ -53,13 +61,19 @@ clii__inline <- function(app, text, .list) {
   on.exit(rm(list = "app", envir = environment(inline_transformer)), add = TRUE)
   texts <- c(if (!is.null(text)) list(text), .list)
   out <- lapply(texts, function(t) {
-    glue(t$str, .envir = t$values %||% emptyenv(), .transformer = inline_transformer)
+    glue(
+      t$str,
+      .envir = t$values,
+      .transformer = inline_transformer,
+      .open = paste0("{", t$values$marker),
+      .close = paste0(t$values$marker, "}")
+    )
   })
   paste(out, collapse = "")
 }
 
 make_cmd_transformer <- function(values) {
-  values
+  values$marker <- random_id()
 
   function(code, envir) {
     res <- tryCatch({
@@ -70,7 +84,7 @@ make_cmd_transformer <- function(values) {
     if (!inherits(res, "error")) {
       id <- paste0("v", length(values))
       values[[id]] <- res
-      return(paste0("{", id, "}"))
+      return(paste0("{", values$marker, id, values$marker, "}"))
     }
 
     code <- glue_collapse(code, "\n")
@@ -85,7 +99,7 @@ make_cmd_transformer <- function(values) {
     text <- captures[[2]]
 
     out <- glue(text, .envir = envir, .transformer = sys.function())
-    paste0("{.", funname, " ", out, "}")
+    paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
   }
 }
 

@@ -63,6 +63,27 @@
 #' glue substitutions, after formatting. This is handy to create lists of
 #' files, packages, etc. See examples below.
 #'
+#' @section Escaping `{` and `}`:
+#'
+#' It might happen that you want to pass a string to `cli_*` functions,
+#' and you do not_ want command substitution in that string, because it
+#' might contain `}` and `{` characters. The simplest solution for this is
+#' referring to the string from a template:
+#'
+#' ```
+#' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
+#' cli_alert_warning("{msg}")
+#' ```
+#'
+#' If you want to explicitly escape `{` and `}` characters, just double
+#' them:
+#'
+#' ```
+#' cli_alert_warning("A warning with {{ braces }}")
+#' ```
+#'
+#' See also examples below.
+#'
 #' @name inline-markup
 #' @examples
 #' ## Some inline markup examples
@@ -91,6 +112,12 @@
 #' pkgs <- c("pkg1", "pkg2", "pkg3")
 #' cli_text("Packages: {pkgs}.")
 #' cli_text("Packages: {.pkg {pkgs}}")
+#'
+#' ## Escaping
+#' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
+#' cli_alert_warning("{msg}")
+#'
+#' cli_alert_warning("A warning with {{ braces }}")
 NULL
 
 #' CLI containers

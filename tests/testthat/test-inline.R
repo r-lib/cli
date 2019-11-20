@@ -36,3 +36,38 @@ test_that("inline classes", {
 
   lapply(classes, do)
 })
+
+test_that("{{ and }} can be used for comments", {
+  out <- capt0(cli_text("Escaping {{ works"))
+  expect_equal(out, "Escaping { works\n")
+
+  out <- capt0(cli_text("Escaping }} works"))
+  expect_equal(out, "Escaping } works\n")
+
+  out <- capt0(cli_text("Escaping {{ and }} works"))
+  expect_equal(out, "Escaping { and } works\n")
+
+  out <- capt0(cli_text("Escaping {{{{ works"))
+  expect_equal(out, "Escaping {{ works\n")
+
+  out <- capt0(cli_text("Escaping }}}} works"))
+  expect_equal(out, "Escaping }} works\n")
+
+  out <- capt0(cli_text("Escaping {{{{ and }} works"))
+  expect_equal(out, "Escaping {{ and } works\n")
+
+  out <- capt0(cli_text("Escaping {{{{ and }}}} works"))
+  expect_equal(out, "Escaping {{ and }} works\n")
+
+  out <- capt0(cli_text("Escaping {{ and }}}} works"))
+  expect_equal(out, "Escaping { and }} works\n")
+})
+
+test_that("no glue substitution in expressions that evaluate to a string", {
+  msg <- "Message with special characters like } { }} {{"
+  out <- capt0(cli_text("{msg}"))
+  expect_equal(out, paste0(msg, "\n"))
+
+  out <- capt0(cli_text("{.emph {msg}}"), strip_style = TRUE)
+  expect_equal(out, paste0(msg, "\n"))
+})

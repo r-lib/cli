@@ -67,6 +67,23 @@ glue substitutions, after formatting. This is handy to create lists of
 files, packages, etc. See examples below.
 }
 
+\section{Escaping \verb{\{} and \verb{\}}}{
+
+
+It might happen that you want to pass a string to \verb{cli_*} functions,
+and you do not_ want command substitution in that string, because it
+might contain \verb{\}} and \verb{\{} characters. The simplest solution for this is
+referring to the string from a template:\preformatted{msg <- "Error in if (ncol(dat$y)) \{: argument is of length zero"
+cli_alert_warning("\{msg\}")
+}
+
+If you want to explicitly escape \verb{\{} and \verb{\}} characters, just double
+them:\preformatted{cli_alert_warning("A warning with \{\{ braces \}\}")
+}
+
+See also examples below.
+}
+
 \examples{
 ## Some inline markup examples
 cli_ul()
@@ -94,4 +111,10 @@ cli_end()
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: {pkgs}.")
 cli_text("Packages: {.pkg {pkgs}}")
+
+## Escaping
+msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
+cli_alert_warning("{msg}")
+
+cli_alert_warning("A warning with {{ braces }}")
 }
