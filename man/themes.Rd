@@ -35,13 +35,13 @@ elements are closed.
 A theme is a named list of lists. The name of each entry is a CSS
 selector. Only a subset of CSS is supported:
 \itemize{
-\item Type selectors, e.g. \code{input} selects all \code{<input>} elements.
+\item Type selectors, e.g. \code{input} selects all \verb{<input>} elements.
 \item Class selectors, e.g. \code{.index} selects any element that has a class
 of "index".
-\item ID selector. \code{#toc} will match the element that has the ID "toc".
+\item ID selector. \verb{#toc} will match the element that has the ID "toc".
 \item The descendant combinator, i.e. the space, that selects nodes
-that are descendants of the first element. E.g. \code{div span} will match
-all \code{<span>} elements that are inside a \code{<div>} element.
+that are descendants of the first element. E.g. \verb{div span} will match
+all \verb{<span>} elements that are inside a \verb{<div>} element.
 }
 
 The content of a theme list entry is another named list, where the

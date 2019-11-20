@@ -15,17 +15,17 @@ This is the rather small subset of CSS3 that is supported:
 \details{
 Selectors:
 \itemize{
-\item Type selectors, e.g. \code{input} selects all \code{<input>} elements.
+\item Type selectors, e.g. \code{input} selects all \verb{<input>} elements.
 \item Class selectors, e.g. \code{.index} selects any element that has a class
 of "index".
-\item ID selector. \code{#toc} will match the element that has the ID "toc".
+\item ID selector. \verb{#toc} will match the element that has the ID "toc".
 }
 
 Combinators:
 \itemize{
 \item Descendant combinator, i.e. the space, that combinator selects nodes
-that are descendants of the first element. E.g. \code{div span} will match
-all \code{<span>} elements that are inside a \code{<div>} element.
+that are descendants of the first element. E.g. \verb{div span} will match
+all \verb{<span>} elements that are inside a \verb{<div>} element.
 }
 }
 \keyword{internal}

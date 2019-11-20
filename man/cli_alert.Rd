@@ -8,20 +8,39 @@
 \alias{cli_alert_info}
 \title{CLI alerts}
 \usage{
-cli_alert(text, id = NULL, class = NULL, wrap = FALSE,
-  .envir = parent.frame())
+cli_alert(text, id = NULL, class = NULL, wrap = FALSE, .envir = parent.frame())
 
-cli_alert_success(text, id = NULL, class = NULL, wrap = FALSE,
-  .envir = parent.frame())
+cli_alert_success(
+  text,
+  id = NULL,
+  class = NULL,
+  wrap = FALSE,
+  .envir = parent.frame()
+)
 
-cli_alert_danger(text, id = NULL, class = NULL, wrap = FALSE,
-  .envir = parent.frame())
+cli_alert_danger(
+  text,
+  id = NULL,
+  class = NULL,
+  wrap = FALSE,
+  .envir = parent.frame()
+)
 
-cli_alert_warning(text, id = NULL, class = NULL, wrap = FALSE,
-  .envir = parent.frame())
+cli_alert_warning(
+  text,
+  id = NULL,
+  class = NULL,
+  wrap = FALSE,
+  .envir = parent.frame()
+)
 
-cli_alert_info(text, id = NULL, class = NULL, wrap = FALSE,
-  .envir = parent.frame())
+cli_alert_info(
+  text,
+  id = NULL,
+  class = NULL,
+  wrap = FALSE,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{text}{Text of the alert.}

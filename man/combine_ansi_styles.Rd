@@ -42,7 +42,8 @@ alert <- combine_ansi_styles(
 cat(alert("Warning!"), "\\n")
 }
 \seealso{
-Other ANSI styling: \code{\link{ansi-styles}},
-  \code{\link{make_ansi_style}}
+Other ANSI styling: 
+\code{\link{ansi-styles}},
+\code{\link{make_ansi_style}()}
 }
 \concept{ANSI styling}

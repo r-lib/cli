@@ -4,8 +4,14 @@
 \alias{cli_ul}
 \title{Unordered CLI list}
 \usage{
-cli_ul(items = NULL, id = NULL, class = NULL, .close = TRUE,
-  .auto_close = TRUE, .envir = parent.frame())
+cli_ul(
+  items = NULL,
+  id = NULL,
+  class = NULL,
+  .close = TRUE,
+  .auto_close = TRUE,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{items}{If not \code{NULL}, then a character vector. Each element of

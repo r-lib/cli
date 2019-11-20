@@ -4,8 +4,13 @@
 \alias{cli_li}
 \title{CLI list item(s)}
 \usage{
-cli_li(items = NULL, id = NULL, class = NULL, .auto_close = TRUE,
-  .envir = parent.frame())
+cli_li(
+  items = NULL,
+  id = NULL,
+  class = NULL,
+  .auto_close = TRUE,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{items}{Character vector of items, or \code{NULL}.}

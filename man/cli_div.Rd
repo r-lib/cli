@@ -4,8 +4,13 @@
 \alias{cli_div}
 \title{Generic CLI container}
 \usage{
-cli_div(id = NULL, class = NULL, theme = NULL, .auto_close = TRUE,
-  .envir = parent.frame())
+cli_div(
+  id = NULL,
+  class = NULL,
+  theme = NULL,
+  .auto_close = TRUE,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{id}{Element id, a string. If \code{NULL}, then a new id is generated

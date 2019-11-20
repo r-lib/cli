@@ -4,8 +4,13 @@
 \alias{cli_rule}
 \title{CLI horizontal rule}
 \usage{
-cli_rule(left = "", center = "", right = "", id = NULL,
-  .envir = parent.frame())
+cli_rule(
+  left = "",
+  center = "",
+  right = "",
+  id = NULL,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{left}{Label to show on the left. It interferes with the \code{center}

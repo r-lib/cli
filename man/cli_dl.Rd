@@ -4,8 +4,14 @@
 \alias{cli_dl}
 \title{Definition list}
 \usage{
-cli_dl(items = NULL, id = NULL, class = NULL, .close = TRUE,
-  .auto_close = TRUE, .envir = parent.frame())
+cli_dl(
+  items = NULL,
+  id = NULL,
+  class = NULL,
+  .close = TRUE,
+  .auto_close = TRUE,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{items}{Named character vector, or \code{NULL}. If not \code{NULL}, they

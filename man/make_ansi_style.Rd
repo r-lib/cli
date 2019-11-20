@@ -4,8 +4,7 @@
 \alias{make_ansi_style}
 \title{Create a new ANSI style}
 \usage{
-make_ansi_style(..., bg = FALSE, grey = FALSE,
-  colors = crayon::num_colors())
+make_ansi_style(..., bg = FALSE, grey = FALSE, colors = crayon::num_colors())
 }
 \arguments{
 \item{...}{The style to create. See details and examples below.}
@@ -35,7 +34,7 @@ The styles (elements of \code{...}) can be any of the
 following:
 \itemize{
 \item An R color name, see \code{\link[grDevices:colors]{grDevices::colors()}}.
-\item A 6- or 8-digit hexa color string, e.g. \code{#ff0000} means
+\item A 6- or 8-digit hexa color string, e.g. \verb{#ff0000} means
 red. Transparency (alpha channel) values are ignored.
 \item A one-column matrix with three rows for the red, green
 and blue channels, as returned by \code{\link[grDevices:col2rgb]{grDevices::col2rgb()}}.
@@ -57,7 +56,8 @@ orange("foobar")
 cat(orange("foobar"))
 }
 \seealso{
-Other ANSI styling: \code{\link{ansi-styles}},
-  \code{\link{combine_ansi_styles}}
+Other ANSI styling: 
+\code{\link{ansi-styles}},
+\code{\link{combine_ansi_styles}()}
 }
 \concept{ANSI styling}

@@ -100,16 +100,16 @@ line. These all use the crayon package under the hood, but provide a
 slightly simpler interface.
 }
 \details{
-The \code{col_*} functions change the (foreground) color to the text.
+The \verb{col_*} functions change the (foreground) color to the text.
 These are the eight original ANSI colors. Note that in some terminals,
 they might actually look differently, as terminals have their own
 settings for how to show them.
 
-The \code{bg_*} functions change the background color of the text.
+The \verb{bg_*} functions change the background color of the text.
 These are the eight original ANSI background colors. These, too, can
 vary in appearence, depending on terminal settings.
 
-The \code{style_*} functions apply other styling to the text. The currently
+The \verb{style_*} functions apply other styling to the text. The currently
 supported styling funtions are:
 \itemize{
 \item \code{style_reset()} to remove any style, including color,
@@ -152,7 +152,8 @@ cat(note("Note: no such directory.\\n"))
 
 }
 \seealso{
-Other ANSI styling: \code{\link{combine_ansi_styles}},
-  \code{\link{make_ansi_style}}
+Other ANSI styling: 
+\code{\link{combine_ansi_styles}()},
+\code{\link{make_ansi_style}()}
 }
 \concept{ANSI styling}

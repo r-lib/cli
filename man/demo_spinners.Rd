@@ -18,7 +18,9 @@ Each spinner is shown for about 2-3 seconds.
 }
 }
 \seealso{
-Other spinners: \code{\link{get_spinner}},
-  \code{\link{list_spinners}}, \code{\link{make_spinner}}
+Other spinners: 
+\code{\link{get_spinner}()},
+\code{\link{list_spinners}()},
+\code{\link{make_spinner}()}
 }
 \concept{spinners}

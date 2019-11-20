@@ -6,8 +6,12 @@
 \alias{default_app}
 \title{Start, stop, query the default cli application}
 \usage{
-start_app(theme = getOption("cli.theme"), output = c("auto", "message",
-  "stdout", "stderr"), .auto_close = TRUE, .envir = parent.frame())
+start_app(
+  theme = getOption("cli.theme"),
+  output = c("auto", "message", "stdout", "stderr"),
+  .auto_close = TRUE,
+  .envir = parent.frame()
+)
 
 stop_app(app = NULL)
 

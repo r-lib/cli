@@ -15,21 +15,21 @@ details.
 
 In addition to regular glue interpolation, cli can also add classes
 to parts of the text, and these classes can be used in themes. For
-example\preformatted{cli_text("This is {.emph important}.")
+example\preformatted{cli_text("This is \{.emph important\}.")
 }
 
 adds a class to the "important" word, class "emph". Note that in this
 case the string within the braces is usually not a valid R expression.
 If you want to mix classes with interpolation, add another pair of
 braces:\preformatted{adjective <- "great"
-cli_text("This is {.emph {adjective}}.")
+cli_text("This is \{.emph \{adjective\}\}.")
 }
 
 An inline class will always create a \code{span} element internally. So in
 themes, you can use the \code{span.emph} CSS selector to change how inline
 text is emphasized:\preformatted{cli_div(theme = list(span.emph = list(color = "red")))
 adjective <- "nice and red"
-cli_text("This is {.emph {adjective}}.")
+cli_text("This is \{.emph \{adjective\}\}.")
 }
 }
 

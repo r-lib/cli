@@ -21,7 +21,8 @@ Id of the status bar container.
 Update the status bar
 }
 \seealso{
-Other status bar: \code{\link{cli_status_clear}},
-  \code{\link{cli_status}}
+Other status bar: 
+\code{\link{cli_status_clear}()},
+\code{\link{cli_status}()}
 }
 \concept{status bar}

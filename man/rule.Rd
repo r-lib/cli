@@ -4,8 +4,16 @@
 \alias{rule}
 \title{Make a rule with one or two text labels}
 \usage{
-rule(left = "", center = "", right = "", line = 1, col = NULL,
-  line_col = col, background_col = NULL, width = console_width())
+rule(
+  left = "",
+  center = "",
+  right = "",
+  line = 1,
+  col = NULL,
+  line_col = col,
+  background_col = NULL,
+  width = console_width()
+)
 }
 \arguments{
 \item{left}{Label to show on the left. It interferes with the \code{center}
@@ -41,7 +49,7 @@ The rule can include either a centered text label, or labels on the
 left and right side.
 }
 \details{
-To color the labels, use the functions \code{col_*}, \code{bg_*} and \code{style_*}
+To color the labels, use the functions \verb{col_*}, \verb{bg_*} and \verb{style_*}
 functions, see \link{ansi-styles}, and the examples below.
 To color the line, either these functions directly, or the \code{line_col}
 option.

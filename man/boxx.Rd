@@ -7,15 +7,23 @@
 \usage{
 list_border_styles()
 
-boxx(label, border_style = "single", padding = 1, margin = 0,
-  float = c("left", "center", "right"), col = NULL,
-  background_col = NULL, border_col = col, align = c("left",
-  "center", "right"), width = console_width())
+boxx(
+  label,
+  border_style = "single",
+  padding = 1,
+  margin = 0,
+  float = c("left", "center", "right"),
+  col = NULL,
+  background_col = NULL,
+  border_col = col,
+  align = c("left", "center", "right"),
+  width = console_width()
+)
 }
 \arguments{
 \item{label}{Label to show, a character vector. Each element will be
-in a new line. You can color it using the \code{col_*}, \code{bg_*} and
-\code{style_*} functions, see \link{ansi-styles} and the examples below.}
+in a new line. You can color it using the \verb{col_*}, \verb{bg_*} and
+\verb{style_*} functions, see \link{ansi-styles} and the examples below.}
 
 \item{border_style}{String that specifies the border style.
 \code{list_border_styles} lists all current styles.}

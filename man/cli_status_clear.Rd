@@ -16,7 +16,8 @@ status bar container), then the status bar is not cleared. If \code{NULL}
 Clear the status bar
 }
 \seealso{
-Other status bar: \code{\link{cli_status_update}},
-  \code{\link{cli_status}}
+Other status bar: 
+\code{\link{cli_status_update}()},
+\code{\link{cli_status}()}
 }
 \concept{status bar}

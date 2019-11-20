@@ -4,8 +4,7 @@
 \alias{cli_par}
 \title{CLI paragraph}
 \usage{
-cli_par(id = NULL, class = NULL, .auto_close = TRUE,
-  .envir = parent.frame())
+cli_par(id = NULL, class = NULL, .auto_close = TRUE, .envir = parent.frame())
 }
 \arguments{
 \item{id}{Element id, a string. If \code{NULL}, then a new id is generated

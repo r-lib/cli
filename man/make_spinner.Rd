@@ -4,8 +4,12 @@
 \alias{make_spinner}
 \title{Create a spinner}
 \usage{
-make_spinner(which = NULL, stream = stderr(), template = "{spin}",
-  static = c("dots", "print", "print_line", "silent"))
+make_spinner(
+  which = NULL,
+  stream = stderr(),
+  template = "{spin}",
+  static = c("dots", "print", "print_line", "silent")
+)
 }
 \arguments{
 \item{which}{The name of the chosen spinner. The default depends on
@@ -20,7 +24,7 @@ spinner itself will be substituted for \code{{spin}}. See example below.}
 \item{static}{What to do if the terminal does not support dynamic
 displays:
 \itemize{
-\item \code{"dots"}: show a dot for each \code{$spin()} call.
+\item \code{"dots"}: show a dot for each \verb{$spin()} call.
 \item \code{"print"}: just print the frames of the spinner, one after another.
 \item \code{"print_line"}: print the frames of the spinner, each on its own line.
 \item \code{"silent"} do not print anything, just the \code{template}.
@@ -32,10 +36,10 @@ its methods below.
 
 \code{cli_spinner} methods:
 \itemize{
-\item \code{$spin()}: output the next frame of the spinner.
-\item \code{$finish()}: terminate the spinner. Depending on terminal capabilities
+\item \verb{$spin()}: output the next frame of the spinner.
+\item \verb{$finish()}: terminate the spinner. Depending on terminal capabilities
 this removes the spinner from the screen. Spinners can be reused,
-you can start calling the \code{$spin()} method again.
+you can start calling the \verb{$spin()} method again.
 }
 
 All methods return the spinner object itself, invisibly.
@@ -48,32 +52,34 @@ Create a spinner
 \section{Examples}{
 \preformatted{## Default spinner
 sp1 <- make_spinner()
-fun_with_spinner <- function() {
-  lapply(1:100, function(x) { sp1$spin(); Sys.sleep(0.05) })
+fun_with_spinner <- function() \{
+  lapply(1:100, function(x) \{ sp1$spin(); Sys.sleep(0.05) \})
   sp1$finish()
-}
+\}
 ansi_with_hidden_cursor(fun_with_spinner())
 
 ## Spinner with a template
-sp2 <- make_spinner(template = "Computing {spin}")
-fun_with_spinner2 <- function() {
-  lapply(1:100, function(x) { sp2$spin(); Sys.sleep(0.05) })
+sp2 <- make_spinner(template = "Computing \{spin\}")
+fun_with_spinner2 <- function() \{
+  lapply(1:100, function(x) \{ sp2$spin(); Sys.sleep(0.05) \})
   sp2$finish()
-}
+\}
 ansi_with_hidden_cursor(fun_with_spinner2())
 
 ## Custom spinner
-sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading {spin}")
-fun_with_spinner3 <- function() {
-  lapply(1:100, function(x) { sp3$spin(); Sys.sleep(0.05) })
+sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading \{spin\}")
+fun_with_spinner3 <- function() \{
+  lapply(1:100, function(x) \{ sp3$spin(); Sys.sleep(0.05) \})
   sp2$finish()
-}
+\}
 ansi_with_hidden_cursor(fun_with_spinner3())
 }
 }
 
 \seealso{
-Other spinners: \code{\link{demo_spinners}},
-  \code{\link{get_spinner}}, \code{\link{list_spinners}}
+Other spinners: 
+\code{\link{demo_spinners}()},
+\code{\link{get_spinner}()},
+\code{\link{list_spinners}()}
 }
 \concept{spinners}

@@ -10,8 +10,14 @@
 \usage{
 cat_line(..., col = NULL, background_col = NULL, file = stdout())
 
-cat_bullet(..., col = NULL, background_col = NULL, bullet = "bullet",
-  bullet_col = NULL, file = stdout())
+cat_bullet(
+  ...,
+  col = NULL,
+  background_col = NULL,
+  bullet = "bullet",
+  bullet_col = NULL,
+  file = stdout()
+)
 
 cat_boxx(..., file = stdout())
 
@@ -21,7 +27,7 @@ cat_print(x, file = "")
 }
 \arguments{
 \item{...}{For \code{cat_line()} and \code{cat_bullet()}, paste'd together with
-\code{collapse = "\n"}. For \code{cat_rule()} and \code{cat_boxx()} passed on to
+\code{collapse = "\\n"}. For \code{cat_rule()} and \code{cat_boxx()} passed on to
 \code{\link[=rule]{rule()}} and \code{\link[=boxx]{boxx()}} respectively.}
 
 \item{col, background_col, bullet_col}{Colours for text, background, and

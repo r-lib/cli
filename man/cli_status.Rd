@@ -4,8 +4,7 @@
 \alias{cli_status}
 \title{Update the status bar}
 \usage{
-cli_status(..., .keep = FALSE, .auto_close = TRUE,
-  .envir = parent.frame())
+cli_status(..., .keep = FALSE, .auto_close = TRUE, .envir = parent.frame())
 }
 \arguments{
 \item{...}{The text to show, in character vectors. They will be
@@ -36,7 +35,8 @@ intact by all semantic cli output.
 Use \code{\link[=cli_status_clear]{cli_status_clear()}} to clear the status bar.
 }
 \seealso{
-Other status bar: \code{\link{cli_status_clear}},
-  \code{\link{cli_status_update}}
+Other status bar: 
+\code{\link{cli_status_clear}()},
+\code{\link{cli_status_update}()}
 }
 \concept{status bar}

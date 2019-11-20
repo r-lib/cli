@@ -4,8 +4,14 @@
 \alias{cli_ol}
 \title{Ordered CLI list}
 \usage{
-cli_ol(items = NULL, id = NULL, class = NULL, .close = TRUE,
-  .auto_close = TRUE, .envir = parent.frame())
+cli_ol(
+  items = NULL,
+  id = NULL,
+  class = NULL,
+  .close = TRUE,
+  .auto_close = TRUE,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{items}{If not \code{NULL}, then a character vector. Each element of

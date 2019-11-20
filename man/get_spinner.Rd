@@ -24,7 +24,9 @@ get_spinner()
 get_spinner("shark")
 }
 \seealso{
-Other spinners: \code{\link{demo_spinners}},
-  \code{\link{list_spinners}}, \code{\link{make_spinner}}
+Other spinners: 
+\code{\link{demo_spinners}()},
+\code{\link{list_spinners}()},
+\code{\link{make_spinner}()}
 }
 \concept{spinners}

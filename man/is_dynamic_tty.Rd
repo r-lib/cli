@@ -2,7 +2,7 @@
 % Please edit documentation in R/tty.R
 \name{is_dynamic_tty}
 \alias{is_dynamic_tty}
-\title{Detect whether a stream supports \code{\\r} (Carriage return)}
+\title{Detect whether a stream supports \verb{\\\\r} (Carriage return)}
 \usage{
 is_dynamic_tty(stream = stderr())
 }
@@ -12,14 +12,14 @@ Note that it defaults to the standard \emph{error} stream, since
 informative messages are typically printed there.}
 }
 \description{
-In a terminal, \code{\\r} moves the cursor to the first position of the
-same line. It is also supported by most R IDEs. \code{\\r} is typically
+In a terminal, \verb{\\\\r} moves the cursor to the first position of the
+same line. It is also supported by most R IDEs. \verb{\\\\r} is typically
 used to achive a more dynamic, less cluttered user interface, e.g.
 to create progress bars.
 }
 \details{
-If the output is directed to a file, then \code{\\r} characters are typically
-unwanted. This function detects if \code{\\r} can be used for the given
+If the output is directed to a file, then \verb{\\\\r} characters are typically
+unwanted. This function detects if \verb{\\\\r} can be used for the given
 stream or not.
 
 The detection mechanism is as follows:
@@ -42,6 +42,7 @@ is_dynamic_tty()
 is_dynamic_tty(stdout())
 }
 \seealso{
-Other terminal capabilities: \code{\link{is_ansi_tty}}
+Other terminal capabilities: 
+\code{\link{is_ansi_tty}()}
 }
 \concept{terminal capabilities}
