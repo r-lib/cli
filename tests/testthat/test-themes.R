@@ -50,13 +50,13 @@ test_that("user's override", {
   custom <- list(".alert" = list(before = "custom:"))
   override <- list(".alert" = list(after = "override:"))
 
-  start_app(theme = custom)
+  start_app(theme = custom, .auto_close = FALSE)
   out <- capt0(cli_alert("Alert!"))
   expect_match(out, "custom:")
   stop_app()
 
   withr::with_options(list(cli.user_theme = override), {
-    start_app(theme = custom)
+    start_app(theme = custom, .auto_close = FALSE)
     out <- capt0(cli_alert("Alert!"))
     expect_match(out, "override:")
     stop_app()

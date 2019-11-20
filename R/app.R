@@ -58,7 +58,7 @@ stop_app <- function(app = NULL) {
     if (!inherits(app, "cliapp")) stop("Not a CLI app")
     ndl <- format.default(app)
     nms <- vapply(cliappenv$stack, format.default, character(1))
-    if (! ndl %in% app) {
+    if (! ndl %in% nms) {
       warning("No app to end")
       return()
     }

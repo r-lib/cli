@@ -73,7 +73,6 @@ cli_format_method <- function(expr, theme = getOption("cli.theme")) {
   on.exit(close(con), add = TRUE)
   start_app(theme = theme, output = con)
 
-
   # Run the code
   expr
 
