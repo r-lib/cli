@@ -4,7 +4,13 @@
 \alias{tree}
 \title{Draw a tree}
 \usage{
-tree(data, root = data[[1]][[1]], style = NULL, width = console_width())
+tree(
+  data,
+  root = data[[1]][[1]],
+  style = NULL,
+  width = console_width(),
+  trim = FALSE
+)
 }
 \arguments{
 \item{data}{Data frame that contains the tree structure.
@@ -18,6 +24,10 @@ may contain the text to print to annotate the node.}
 
 \item{width}{Maximum width of the output. Defaults to the \code{width}
 option, see \code{\link[base:options]{base::options()}}.}
+
+\item{trim}{Whether to avoid traversing the same nodes multiple times.
+If \code{TRUE} and \code{data} has a \code{trimmed} column, then that is used for
+printing repeated noded.}
 }
 \value{
 Character vector, the lines of the tree drawing.
@@ -53,7 +63,7 @@ data <- data.frame(
 tree(data)
 tree(data, root = "rcmdcheck")
 
-## Colored nodes
+# Colored nodes
 data$label <- paste(data$package,
   style_dim(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
@@ -64,4 +74,50 @@ roots <- ! data$package \%in\% unlist(data$dependencies)
 data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data)
 tree(data, root = "rcmdcheck")
+
+# Trimming
+pkgdeps <- list(
+  "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",
+    "R6@2.4.0", "Rcpp@1.0.2", "rlang@0.4.0", "tibble@2.1.3",
+    "tidyselect@0.2.5"),
+  "assertthat@0.2.1" = character(),
+  "glue@1.3.1" = character(),
+  "magrittr@1.5" = character(),
+  "pkgconfig@2.0.3" = character(),
+  "R6@2.4.0" = character(),
+  "Rcpp@1.0.2" = character(),
+  "rlang@0.4.0" = character(),
+  "tibble@2.1.3" = c("cli@1.1.0", "crayon@1.3.4", "fansi@0.4.0",
+     "pillar@1.4.2", "pkgconfig@2.0.3", "rlang@0.4.0"),
+  "cli@1.1.0" = c("assertthat@0.2.1", "crayon@1.3.4"),
+  "crayon@1.3.4" = character(),
+  "fansi@0.4.0" = character(),
+  "pillar@1.4.2" = c("cli@1.1.0", "crayon@1.3.4", "fansi@0.4.0",
+     "rlang@0.4.0", "utf8@1.1.4", "vctrs@0.2.0"),
+  "utf8@1.1.4" = character(),
+  "vctrs@0.2.0" = c("backports@1.1.5", "ellipsis@0.3.0",
+     "digest@0.6.21", "glue@1.3.1", "rlang@0.4.0", "zeallot@0.1.0"),
+  "backports@1.1.5" = character(),
+  "ellipsis@0.3.0" = c("rlang@0.4.0"),
+  "digest@0.6.21" = character(),
+  "glue@1.3.1" = character(),
+  "zeallot@0.1.0" = character(),
+  "tidyselect@0.2.5" = c("glue@1.3.1", "purrr@1.3.1", "rlang@0.4.0",
+     "Rcpp@1.0.2"),
+  "purrr@0.3.3" = c("magrittr@1.5", "rlang@0.4.0")
+)
+
+pkgs <- data.frame(
+  stringsAsFactors = FALSE,
+  name = names(pkgdeps),
+  deps = I(unname(pkgdeps))
+)
+
+tree(pkgs)
+tree(pkgs, trim = TRUE)
+
+# Mark the trimmed nodes
+pkgs$label <- pkgs$name
+pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
+tree(pkgs, trim = TRUE)
 }
