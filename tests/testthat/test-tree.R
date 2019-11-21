@@ -61,3 +61,85 @@ test_that("tree", {
   expect_warning(tree(data), "Endless loop found in tree: a -> b -> d -> a")
 
 })
+
+test_that("trimming", {
+
+  pkgdeps <- list(
+    "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",
+      "R6@2.4.0", "Rcpp@1.0.2", "rlang@0.4.0", "tibble@2.1.3",
+      "tidyselect@0.2.5"),
+    "assertthat@0.2.1" = character(),
+    "glue@1.3.1" = character(),
+    "magrittr@1.5" = character(),
+    "pkgconfig@2.0.3" = character(),
+    "R6@2.4.0" = character(),
+    "Rcpp@1.0.2" = character(),
+    "rlang@0.4.0" = character(),
+    "tibble@2.1.3" = c("cli@1.1.0", "crayon@1.3.4", "fansi@0.4.0",
+       "pillar@1.4.2", "pkgconfig@2.0.3", "rlang@0.4.0"),
+    "cli@1.1.0" = c("assertthat@0.2.1", "crayon@1.3.4"),
+    "crayon@1.3.4" = character(),
+    "fansi@0.4.0" = character(),
+    "pillar@1.4.2" = c("cli@1.1.0", "crayon@1.3.4", "fansi@0.4.0",
+       "rlang@0.4.0", "utf8@1.1.4", "vctrs@0.2.0"),
+    "utf8@1.1.4" = character(),
+    "vctrs@0.2.0" = c("backports@1.1.5", "ellipsis@0.3.0",
+       "digest@0.6.21", "glue@1.3.1", "rlang@0.4.0", "zeallot@0.1.0"),
+    "backports@1.1.5" = character(),
+    "ellipsis@0.3.0" = c("rlang@0.4.0"),
+    "digest@0.6.21" = character(),
+    "glue@1.3.1" = character(),
+    "zeallot@0.1.0" = character(),
+    "tidyselect@0.2.5" = c("glue@1.3.1", "purrr@1.3.1", "rlang@0.4.0",
+       "Rcpp@1.0.2"),
+    "purrr@0.3.3" = c("magrittr@1.5", "rlang@0.4.0")
+  )
+
+  pkgs <- data.frame(
+    stringsAsFactors = FALSE,
+    name = names(pkgdeps),
+    deps = I(unname(pkgdeps))
+  )
+  pkgs$label <- pkgs$name
+  pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
+
+  out <- capt(tree(pkgs, trim = TRUE))
+
+  exp <- rebox(mode = "tree",
+    "dplyr@0.8.3",
+    "├─assertthat@0.2.1",
+    "├─glue@1.3.1",
+    "├─magrittr@1.5",
+    "├─R6@2.4.0",
+    "├─Rcpp@1.0.2",
+    "├─rlang@0.4.0",
+    "├─tibble@2.1.3",
+    "│ ├─cli@1.1.0",
+    "│ │ ├─assertthat@0.2.1  (trimmed)",
+    "│ │ └─crayon@1.3.4",
+    "│ ├─crayon@1.3.4  (trimmed)",
+    "│ ├─fansi@0.4.0",
+    "│ ├─pillar@1.4.2",
+    "│ │ ├─cli@1.1.0  (trimmed)",
+    "│ │ ├─crayon@1.3.4  (trimmed)",
+    "│ │ ├─fansi@0.4.0  (trimmed)",
+    "│ │ ├─rlang@0.4.0  (trimmed)",
+    "│ │ ├─utf8@1.1.4",
+    "│ │ └─vctrs@0.2.0",
+    "│ │   ├─backports@1.1.5",
+    "│ │   ├─ellipsis@0.3.0",
+    "│ │   │ └─rlang@0.4.0  (trimmed)",
+    "│ │   ├─digest@0.6.21",
+    "│ │   ├─glue@1.3.1  (trimmed)",
+    "│ │   ├─rlang@0.4.0  (trimmed)",
+    "│ │   └─zeallot@0.1.0",
+    "│ ├─pkgconfig@2.0.3",
+    "│ └─rlang@0.4.0  (trimmed)",
+    "└─tidyselect@0.2.5",
+    "  ├─glue@1.3.1  (trimmed)",
+    "  ├─rlang@0.4.0  (trimmed)",
+    "  └─Rcpp@1.0.2  (trimmed)"
+  )
+
+  expect_equal(out, exp)
+})
