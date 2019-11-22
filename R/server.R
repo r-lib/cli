@@ -5,7 +5,7 @@ cli_server_default <- function(msg) {
 
 cli_server_default_safe <- function(msg) {
   type <- as.character(msg$type)[1]
-  app <- default_app() %||% start_app()
+  app <- default_app() %||% start_app(.auto_close = FALSE)
   do.call(app[[type]], msg$args)
 }
 
