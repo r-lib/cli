@@ -16,6 +16,9 @@
 #' @param style Optional box style list.
 #' @param width Maximum width of the output. Defaults to the `width`
 #'   option, see [base::options()].
+#' @param trim Whether to avoid traversing the same nodes multiple times.
+#'   If `TRUE` and `data` has a `trimmed` column, then that is used for
+#'   printing repeated noded.
 #' @return Character vector, the lines of the tree drawing.
 #'
 #' @export
@@ -41,7 +44,7 @@
 #' tree(data)
 #' tree(data, root = "rcmdcheck")
 #'
-#' ## Colored nodes
+#' # Colored nodes
 #' data$label <- paste(data$package,
 #'   style_dim(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
 #'     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
@@ -52,9 +55,55 @@
 #' data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 #' tree(data)
 #' tree(data, root = "rcmdcheck")
+#'
+#' # Trimming
+#' pkgdeps <- list(
+#'   "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",
+#'     "R6@2.4.0", "Rcpp@1.0.2", "rlang@0.4.0", "tibble@2.1.3",
+#'     "tidyselect@0.2.5"),
+#'   "assertthat@0.2.1" = character(),
+#'   "glue@1.3.1" = character(),
+#'   "magrittr@1.5" = character(),
+#'   "pkgconfig@2.0.3" = character(),
+#'   "R6@2.4.0" = character(),
+#'   "Rcpp@1.0.2" = character(),
+#'   "rlang@0.4.0" = character(),
+#'   "tibble@2.1.3" = c("cli@1.1.0", "crayon@1.3.4", "fansi@0.4.0",
+#'      "pillar@1.4.2", "pkgconfig@2.0.3", "rlang@0.4.0"),
+#'   "cli@1.1.0" = c("assertthat@0.2.1", "crayon@1.3.4"),
+#'   "crayon@1.3.4" = character(),
+#'   "fansi@0.4.0" = character(),
+#'   "pillar@1.4.2" = c("cli@1.1.0", "crayon@1.3.4", "fansi@0.4.0",
+#'      "rlang@0.4.0", "utf8@1.1.4", "vctrs@0.2.0"),
+#'   "utf8@1.1.4" = character(),
+#'   "vctrs@0.2.0" = c("backports@1.1.5", "ellipsis@0.3.0",
+#'      "digest@0.6.21", "glue@1.3.1", "rlang@0.4.0", "zeallot@0.1.0"),
+#'   "backports@1.1.5" = character(),
+#'   "ellipsis@0.3.0" = c("rlang@0.4.0"),
+#'   "digest@0.6.21" = character(),
+#'   "glue@1.3.1" = character(),
+#'   "zeallot@0.1.0" = character(),
+#'   "tidyselect@0.2.5" = c("glue@1.3.1", "purrr@1.3.1", "rlang@0.4.0",
+#'      "Rcpp@1.0.2"),
+#'   "purrr@0.3.3" = c("magrittr@1.5", "rlang@0.4.0")
+#' )
+#'
+#' pkgs <- data.frame(
+#'   stringsAsFactors = FALSE,
+#'   name = names(pkgdeps),
+#'   deps = I(unname(pkgdeps))
+#' )
+#'
+#' tree(pkgs)
+#' tree(pkgs, trim = TRUE)
+#'
+#' # Mark the trimmed nodes
+#' pkgs$label <- pkgs$name
+#' pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
+#' tree(pkgs, trim = TRUE)
 
 tree <- function(data, root = data[[1]][[1]], style = NULL,
-                 width = console_width()) {
+                 width = console_width(), trim = FALSE) {
   assert_that(
     is.data.frame(data), ncol(data) >= 2,
     is_string(root),
@@ -65,11 +114,15 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
   style <- style %||% box_chars()
 
   labels <- if (ncol(data) >= 3) data[[3]] else data[[1]]
+  trimlabs <- data$trimmed %||% labels
+
+  seen <- character()
   res <- character()
 
   pt <- function(root, n = integer(), mx = integer(), used = character()) {
 
     num_root <- match(root, data[[1]])
+    if (is.na(num_root)) return()
 
     level <- length(n) - 1
     prefix <- vcapply(seq_along(n), function(i) {
@@ -86,13 +139,17 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
       }
     })
 
-    res <<- c(res, paste0(paste(prefix, collapse = ""), labels[[num_root]]))
+    root_seen <- root %in% seen
+    root_lab <- if (trim && root_seen) trimlabs[[num_root]] else labels[[num_root]]
+    res <<- c(res, paste0(paste(prefix, collapse = ""), root_lab))
 
-    if (root %in% used) {
+    # Detect infinite loops
+    if (!trim && root %in% used) {
       warning(call. = FALSE,
               "Endless loop found in tree: ",
               paste0(c(used, root), collapse = " -> "))
-    } else {
+    } else if (! trim || ! root_seen) {
+      seen <<- c(seen, root)
       children <- data[[2]][[num_root]]
       for (d in seq_along(children)) {
         pt(children[[d]], c(n, d), c(mx, length(children)), c(used, root))
