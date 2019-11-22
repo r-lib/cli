@@ -392,7 +392,7 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #'
 #' It can be used to separate parts of the output. The line style of the
 #' rule can be changed via the the `line-type` property. Possible values
-#' are: 
+#' are:
 #'
 #' * `"single"`: (same as `1`), a single line,
 #' * `"double"`: (same as `2`), a double line,
@@ -400,7 +400,7 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #'
 #' Colors and background colors can similarly changed via a theme, see
 #' examples below.
-#' 
+#'
 #' @param .envir Environment to evaluate the glue expressions in.
 #' @inheritParams rule
 #' @inheritParams cli_div
@@ -429,6 +429,28 @@ cli_rule <- function(left = "", center = "", right = "", id = NULL,
                             center = glue_cmd(center, .envir = .envir),
                             right = glue_cmd(right, .envir = .envir),
                             id = id))
+}
+
+#' CLI block quote
+#'
+#' A section that is quoted from another source. It is typically indented.
+#'
+#' @param quote Text of the quotation.
+#' @param citation Source of the quotation, typically a link or the name
+#'   of a person.
+#' @inheritParams cli_div
+
+cli_blockquote <- function(quote, citation = NULL, id = NULL,
+                           class = NULL, .envir = parent.frame()) {
+  cli__message(
+    "blockquote",
+    list(
+      quote = glue_cmd(quote, .envir = .envir),
+      citation = glue_cmd(citation, .envir = .envir),
+      id = id,
+      class = class
+    )
+  )
 }
 
 #' CLI progress bar

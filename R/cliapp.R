@@ -208,7 +208,12 @@ clii__heading <- function(app, type, text, id, class) {
 ## Block quote ------------------------------------------------------
 
 clii_blockquote <- function(app, quote, citation, id, class) {
-  stop("Quotes are not implemented yet")
+  c1 <- clii__container_start(app, "blockquote", id = id, class = class)
+  on.exit(clii__container_end(app, id), add = TRUE)
+  app$xtext(quote)
+
+  c2 <- clii__container_start(app, "cite", id = new_uuid())
+  app$xtext(citation)
 }
 
 ## Table ------------------------------------------------------------

@@ -95,6 +95,13 @@ builtin_theme <- function() {
     "dl ul" = list("padding-left" = 2),
     "dl dl" = list("padding-left" = 2),
 
+    blockquote = list("padding-left" = 4L, "padding-right" = 10L,
+                      "font-style" = "italic", "margin-top" = 1L,
+                      "margin-bottom" = 1L, before = symbol$dquote_left,
+                      after = symbol$dquote_right),
+    "blockquote cite" = list(before = paste0(symbol$em_dash, " "),
+                             "font-style" = "italic", "font-weight" = "bold"),
+
     .code = list(),
 
     span.emph = list("font-style" = "italic"),
