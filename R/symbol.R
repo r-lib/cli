@@ -101,7 +101,12 @@ symbol_utf8 <- list(
 
   "figure_dash" = "\u2012",
   "en_dash" = "\u2013",
-  "em_dash" = "\u2014"
+  "em_dash" = "\u2014",
+
+  "dquote_left" = "\u201c",
+  "dquote_right" = "\u201d",
+  "squote_left" = "\u2018",
+  "squote_right" = "\u2019"
 )
 
 symbol_win <- list(
@@ -182,7 +187,12 @@ symbol_win <- list(
 
   "figure_dash" = "-",
   "en_dash" = "--",
-  "em_dash" = "---"
+  "em_dash" = "---",
+
+  "dquote_left" = "\"",
+  "dquote_right" = "\"",
+  "squote_left" = "'",
+  "squote_right" = "'"
 )
 
 symbol_ascii <- list(
@@ -263,7 +273,12 @@ symbol_ascii <- list(
 
   "figure_dash" = "-",
   "en_dash" = "--",
-  "em_dash" = "---"
+  "em_dash" = "---",
+
+  "dquote_left" = "\"",
+  "dquote_right" = "\"",
+  "squote_left" = "'",
+  "squote_right" = "'"
 )
 
 #' @export
