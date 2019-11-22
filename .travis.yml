@@ -2,11 +2,6 @@ language: r
 sudo: false
 cache: packages
 
-dist: xenial
-addons:
-  apt:
-    packages: libnode-dev
-
 matrix:
   include:
    - r: 3.2
@@ -23,6 +18,10 @@ matrix:
        skip_cleanup: true
        on:
          condition: $TRAVIS_BRANCH == "feature/pkgdown" || $TRAVIS_BRANCH == "master" || -n $TRAVIS_TAG
+     dist: xenial
+     addons:
+       apt:
+         packages: libnode-dev
    - r: devel
 
 after_success:
