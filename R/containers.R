@@ -158,17 +158,23 @@ clii_li <- function(app, items, id, class) {
 clii__item_text <- function(app, type, name, cnt_id, text, .list) {
 
   style <- app$get_current_style()
+  cnt_style <- app$styles[[cnt_id]]
+
   head <- if (type == "ul") {
     paste0(style$`list-style-type` %||% "*", " ")
   } else if (type == "ol") {
-    res <- paste0(app$styles[[cnt_id]]$start %||% 1L, ". ")
-    app$styles[[cnt_id]]$start <-
-      (app$styles[[cnt_id]]$start %||% 1L) + 1L
+    res <- paste0(cnt_style$start %||% 1L, ". ")
+    app$styles[[cnt_id]]$start <- (cnt_style$start %||% 1L) + 1L
     res
   } else if (type == "dl") {
     paste0(name, ": ")
   }
-  app$xtext(.list = c(list(glue_delay(head)), list(text), .list), indent = 0)
+
+  app$xtext(
+    .list = c(list(glue_delay(head)), list(text), .list),
+    indent = - style$`padding-left` %||% 0,
+    padding = cnt_style$`padding-left` %||% 0
+  )
 }
 
 ## Code -------------------------------------------------------------

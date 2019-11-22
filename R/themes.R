@@ -81,11 +81,20 @@ builtin_theme <- function() {
     ),
 
     par = list("margin-top" = 1, "margin-bottom" = 1),
-    ul = list("list-style-type" = symbol$bullet, "margin-left" = 0),
-    "ul ul" = list("list-style-type" = symbol$circle, "margin-left" = 2),
-    "ul ul ul" = list("list-style-type" = symbol$line, "margin-left" = 4),
-    ol = list(),
-    dl = list(),
+    li = list("padding-left" = 2),
+    ul = list("list-style-type" = symbol$bullet, "padding-left" = 0),
+    "ul ul" = list("list-style-type" = symbol$circle, "padding-left" = 2),
+    "ul ul ul" = list("list-style-type" = symbol$line),
+
+    "ul ul" = list("padding-left" = 2),
+    "ul dl" = list("padding-left" = 2),
+    "ol ol" = list("padding-left" = 2),
+    "ol ul" = list("padding-left" = 2),
+    "ol dl" = list("padding-left" = 2),
+    "dl ol" = list("padding-left" = 2),
+    "dl ul" = list("padding-left" = 2),
+    "dl dl" = list("padding-left" = 2),
+
     .code = list(),
 
     span.emph = list("font-style" = "italic"),

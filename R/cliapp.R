@@ -113,8 +113,9 @@ cliapp <- function(theme = getOption("cli.theme"),
     get_current_style = function()
       tail(app$styles, 1)[[1]],
 
-    xtext = function(text = NULL, .list = NULL, indent = 0)
-      clii__xtext(app, text, .list = .list, indent = indent),
+    xtext = function(text = NULL, .list = NULL, indent = 0, padding = 0)
+      clii__xtext(app, text, .list = .list, indent = indent,
+                  padding = padding),
 
     vspace = function(n = 1)
       clii__vspace(app, n),
@@ -125,12 +126,12 @@ cliapp <- function(theme = getOption("cli.theme"),
     item_text = function(type, name, cnt_id, items = list(), .list = NULL)
       clii__item_text(app, type, name, cnt_id, items, .list = .list),
 
-    get_width = function()
-      clii__get_width(app),
+    get_width = function(extra = 0)
+      clii__get_width(app, extra),
     cat = function(lines)
       clii__cat(app, lines),
-    cat_ln = function(lines, indent = 0)
-      clii__cat_ln(app, lines, indent),
+    cat_ln = function(lines, indent = 0, padding = 0)
+      clii__cat_ln(app, lines, indent, padding),
 
     progress_bars = list(),
     get_progress_bar = function()
