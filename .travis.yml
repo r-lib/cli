@@ -10,14 +10,15 @@ matrix:
    - r: 3.5
    - r: release
      before_cache:
-       - Rscript -e 'remotes::install_cran("r-lib/pkgdown")'
+       - Rscript -e 'remotes::install_cran("pkgdown")'
        - Rscript -e 'remotes::install_github("r-lib/asciicast")'
      deploy:
        provider: script
        script: Rscript -e 'pkgdown::deploy_site_github()'
        skip_cleanup: true
        on:
-         condition: $TRAVIS_BRANCH == "feature/pkgdown" || $TRAVIS_BRANCH == "master" || -n $TRAVIS_TAG
+         all_branches: true
+         condition: $TRAVIS_BRANCH =~ ^(master|feature/pkgdown)$
      dist: xenial
      addons:
        apt:
