@@ -109,7 +109,7 @@ new_uuid <- (function() {
   cnt <- 0
   function() {
     cnt <<- cnt + 1
-    paste0("cli", cnt)
+    paste0("cli-", clienv$pid, "-", cnt)
   }
 })()
 
