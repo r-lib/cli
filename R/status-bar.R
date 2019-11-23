@@ -10,6 +10,8 @@
 #' @param ... The text to show, in character vectors. They will be
 #'   concatenated into a single string. Long lines are cut to
 #'   [console_width()].
+#' @param class The class of the special `div` container that will be
+#'   used for the status bar.
 #' @param .keep What to do when this status bar is cleared. If `TRUE` then
 #'   the content of this status bar is kept, as regular cli output (the
 #'   screen is scrolled up if needed). If `FALSE`, then this status bar
@@ -24,11 +26,16 @@
 #' @family status bar
 #' @export
 
-cli_status <- function(..., .keep = FALSE, .auto_close = TRUE,
-                       .envir = parent.frame()) {
+cli_status <- function(..., class = "statusbar", .keep = FALSE,
+                       .auto_close = TRUE, .envir = parent.frame()) {
   cli__message(
     "status",
-    list(id = NULL, glue_cmd(..., .envir = .envir), .keep = .keep),
+    list(
+      id = NULL,
+      glue_cmd(..., .envir = .envir),
+      class = class,
+      .keep = .keep
+    ),
     .auto_close = .auto_close,
     .envir = .envir
   )
@@ -64,8 +71,19 @@ cli_status_update <- function(..., id = NULL, .envir = parent.frame()) {
                                      id = id %||% NA_character_))
 }
 
-clii_status <- function(app, id, text, .keep = .keep) {
-  app$status_bar[[id]] <- list(content = "", keep = .keep)
+clii_status <- function(app, id, text, class, .keep) {
+  bar_app <- cliapp(
+    theme = NULL,
+    user_theme = NULL,
+    output = app$output
+  )
+  bar_app$themes <- app$themes
+  clii__container_start(bar_app, "div", class = class, id = id)
+  app$status_bar[[id]] <- list(
+    app = bar_app,
+    content = "",
+    keep = .keep
+  )
   clii_status_update(app, id, text)
 }
 
@@ -115,18 +133,26 @@ clii_status_update <- function(app, id, text) {
   ## Otherwise clear line
   if (length(app$status_bar)) clii__clear_status_bar(app)
 
-  ## Inline styles, take first line and cut it at console width
-  text <- app$inline(text)[1]
-  text <- substr_ctl(text, 1, app$get_width() - 1L)
+  ## Format the line
+  content <- ""
+  withCallingHandlers(
+    app$status_bar[[id]]$app$xtext(text),
+    message = function(msg) {
+      content <<- paste0(content, msg$message)
+      invokeRestart("muffleMessage")
+    }
+  )
+
+  content <- strsplit(content, "\r?\n")[[1]][1]
 
   ## Update status bar, put it in front
-  app$status_bar[[id]]$content <- text
+  app$status_bar[[id]]$content <- content
   app$status_bar <- c(
     app$status_bar[id],
     app$status_bar[setdiff(names(app$status_bar), id)])
 
   ## New content
-  app$cat(text)
+  app$cat(content)
 }
 
 #' @importFrom fansi nchar_ctl

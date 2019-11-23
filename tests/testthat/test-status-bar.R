@@ -94,8 +94,8 @@ test_that("truncating", {
   }
   out <- crayon::strip_style(capt0(f()))
   expect_equal(out, paste0(
-    "\r\rEiusmod enim mollit aute aliquip Lorem ",
-    "\r                                       \r"))
+    "\r\rEiusmod enim mollit aute aliquip Lorem",
+    "\r                                      \r"))
 })
 
 test_that("ansi colors and clearing", {
@@ -108,4 +108,16 @@ test_that("ansi colors and clearing", {
   out <- capt0(f())
   expect_match(out, "\033[31m", fixed = TRUE)
   expect_match(out, "\r           \r", fixed = TRUE)
+})
+
+test_that("theming status bar", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("status1", class = "alert-info")
+    cli_text("out2")
+    cli_status_update("status2", id = sb)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  out2 <- crayon::strip_style(capt0(cli_alert_info("status1")))
+  expect_match(out, str_trim(out2), fixed = TRUE)
 })
