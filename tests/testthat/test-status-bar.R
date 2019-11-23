@@ -113,7 +113,7 @@ test_that("ansi colors and clearing", {
 test_that("theming status bar", {
   f <- function() {
     cli_text("out1")
-    sb <- cli_status("status1", class = "alert-info")
+    sb <- cli_status("{.alert-info status1}")
     cli_text("out2")
     cli_status_update("status2", id = sb)
   }

@@ -10,8 +10,6 @@
 #' @param ... The text to show, in character vectors. They will be
 #'   concatenated into a single string. Long lines are cut to
 #'   [console_width()].
-#' @param class The class of the special `div` container that will be
-#'   used for the status bar.
 #' @param .keep What to do when this status bar is cleared. If `TRUE` then
 #'   the content of this status bar is kept, as regular cli output (the
 #'   screen is scrolled up if needed). If `FALSE`, then this status bar
@@ -26,16 +24,11 @@
 #' @family status bar
 #' @export
 
-cli_status <- function(..., class = "statusbar", .keep = FALSE,
-                       .auto_close = TRUE, .envir = parent.frame()) {
+cli_status <- function(..., .keep = FALSE, .auto_close = TRUE,
+                       .envir = parent.frame()) {
   cli__message(
     "status",
-    list(
-      id = NULL,
-      glue_cmd(..., .envir = .envir),
-      class = class,
-      .keep = .keep
-    ),
+    list(id = NULL, glue_cmd(..., .envir = .envir), .keep = .keep),
     .auto_close = .auto_close,
     .envir = .envir
   )
@@ -78,7 +71,7 @@ clii_status <- function(app, id, text, class, .keep) {
     output = app$output
   )
   bar_app$themes <- app$themes
-  clii__container_start(bar_app, "div", class = class, id = id)
+  clii__container_start(bar_app, "div", class = "statusbar", id = id)
   app$status_bar[[id]] <- list(
     app = bar_app,
     content = "",

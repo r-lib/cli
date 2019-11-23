@@ -4,21 +4,12 @@
 \alias{cli_status}
 \title{Update the status bar}
 \usage{
-cli_status(
-  ...,
-  class = "statusbar",
-  .keep = FALSE,
-  .auto_close = TRUE,
-  .envir = parent.frame()
-)
+cli_status(..., .keep = FALSE, .auto_close = TRUE, .envir = parent.frame())
 }
 \arguments{
 \item{...}{The text to show, in character vectors. They will be
 concatenated into a single string. Long lines are cut to
 \code{\link[=console_width]{console_width()}}.}
-
-\item{class}{The class of the special \code{div} container that will be
-used for the status bar.}
 
 \item{.keep}{What to do when this status bar is cleared. If \code{TRUE} then
 the content of this status bar is kept, as regular cli output (the
