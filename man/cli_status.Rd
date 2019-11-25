@@ -4,11 +4,19 @@
 \alias{cli_status}
 \title{Update the status bar}
 \usage{
-cli_status(..., .keep = FALSE, .auto_close = TRUE, .envir = parent.frame())
+cli_status(
+  msg,
+  msg_done = paste(msg, "... done"),
+  msg_failed = paste(msg, "... failed"),
+  .keep = FALSE,
+  .auto_close = TRUE,
+  .envir = parent.frame(),
+  .auto_result = c("clear", "done", "failed")
+)
 }
 \arguments{
-\item{...}{The text to show, in character vectors. They will be
-concatenated into a single string. Long lines are cut to
+\item{msg}{The text to show, a character vector. It will be
+collapsed into a single string, and the first line is kept and cut to
 \code{\link[=console_width]{console_width()}}.}
 
 \item{.keep}{What to do when this status bar is cleared. If \code{TRUE} then
@@ -22,6 +30,8 @@ specified).}
 
 \item{.envir}{Environment to evaluate the glue expressions in. It is
 also used to auto-clear the status bar if ‘.auto_close’ is ‘TRUE’.}
+
+\item{.on_close}{What to do when auto-closing the status bar.}
 }
 \value{
 The id of the new status bar container element, invisibly.
@@ -38,5 +48,10 @@ Use \code{\link[=cli_status_clear]{cli_status_clear()}} to clear the status bar.
 Other status bar: 
 \code{\link{cli_status_clear}()},
 \code{\link{cli_status_update}()}
+}
+\examples{
+# "\link{mean}"
+# "\link{mean}"
+"\link{mean}"
 }
 \concept{status bar}
