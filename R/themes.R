@@ -274,6 +274,8 @@ match_selector_node <- function(node, cnt) {
 #' The last selector in the list must match the last container, so we
 #' do the matching from the back. This is because we use this function
 #' to calculate the style of newly encountered containers.
+#'
+#' @keywords internal
 
 match_selector <- function(sels, cnts) {
   sptr <- length(sels)

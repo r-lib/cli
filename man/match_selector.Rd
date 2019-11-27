@@ -18,3 +18,4 @@ to calculate the style of newly encountered containers.}
 \description{
 Match a selector to a container stack
 }
+\keyword{internal}

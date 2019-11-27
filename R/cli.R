@@ -435,6 +435,7 @@ cli_rule <- function(left = "", center = "", right = "", id = NULL,
 #'
 #' A section that is quoted from another source. It is typically indented.
 #'
+#' @export
 #' @param quote Text of the quotation.
 #' @param citation Source of the quotation, typically a link or the name
 #'   of a person.

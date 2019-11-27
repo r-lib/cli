@@ -1,4 +1,13 @@
 
+#' Semantic CLI
+#'
+#' TODO
+#' 
+#' @name introduction
+#' @examples
+#' # TODO
+NULL
+
 #' CLI inline markup
 #'
 #' @section Command substitution:
