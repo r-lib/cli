@@ -140,3 +140,9 @@ random_id <- function() {
 str_trim <- function(x) {
   sub("^\\s+", "", sub("\\s+$", "", x))
 }
+
+has_asciicast_support <- function() {
+ tryCatch({
+   asNamespace("asciicast")$is_recording_supported()
+ }, error = function(e) FALSE)
+}
