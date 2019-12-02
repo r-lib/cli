@@ -136,3 +136,7 @@ try_silently <- function(expr) {
 random_id <- function() {
   paste(sample(c(letters, LETTERS, 0:9), 7, replace = TRUE), collapse = "")
 }
+
+str_trim <- function(x) {
+  sub("^\\s+", "", sub("\\s+$", "", x))
+}
