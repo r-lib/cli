@@ -134,7 +134,7 @@ col_blue("Hello ", "world!")
 cat(col_blue("Hello ", "world!"))
 
 cat("... to highlight the", col_red("search term"),
-    "in a block of text\\n")
+    "in a block of text\n")
 
 ## Style stack properly
 cat(col_green(
@@ -146,9 +146,9 @@ cat(col_green(
 error <- combine_ansi_styles("red", "bold")
 warn <- combine_ansi_styles("magenta", "underline")
 note <- col_cyan
-cat(error("Error: subscript out of bounds!\\n"))
-cat(warn("Warning: shorter argument was recycled.\\n"))
-cat(note("Note: no such directory.\\n"))
+cat(error("Error: subscript out of bounds!\n"))
+cat(warn("Warning: shorter argument was recycled.\n"))
+cat(note("Note: no such directory.\n"))
 
 }
 \seealso{

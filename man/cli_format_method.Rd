@@ -55,7 +55,7 @@ format.r_package <- function(x, ...) {
 
 # Now the print method is easy:
 print.r_package <- function(x, ...) {
-  cat(format(x, ...), sep = "\\n")
+  cat(format(x, ...), sep = "\n")
 }
 
 # Try it out

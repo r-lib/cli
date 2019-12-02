@@ -177,8 +177,7 @@ Documentation
 -------------
 
 See at <https://cli.r-lib.org/> and also in the installed package:
-`?introduction`, `?"inline-markup"`, `?containers`, `?themes`,
-`?pluralization`.
+`?"inline-markup"`, `?containers`, `?themes`, `?pluralization`.
 
 License
 =======
