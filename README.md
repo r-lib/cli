@@ -166,8 +166,9 @@ cli_alert_info(c(
 Pluralization support.
 
 ``` asciicast
-nfiles <- 3; ndirs <- 1
-cli_text("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")
+nfiles <- 3
+ndirs <- 1
+cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-13.svg" width="100%" />
