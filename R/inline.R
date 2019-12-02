@@ -72,43 +72,71 @@ clii__inline <- function(app, text, .list) {
   paste(out, collapse = "")
 }
 
+inline_regex <- function() "(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)"
+
 make_cmd_transformer <- function(values) {
   values$marker <- random_id()
+  values$qty <- NA_integer_
 
   function(code, envir) {
     res <- tryCatch({
       expr <- parse(text = code, keep.source = FALSE)
-      eval(expr, envir = envir)
+      eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
     }, error = function(e) e)
 
     if (!inherits(res, "error")) {
       id <- paste0("v", length(values))
       values[[id]] <- res
+      values$qty <- make_quantity(res)
       return(paste0("{", values$marker, id, values$marker, "}"))
     }
 
-    code <- glue_collapse(code, "\n")
-    m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
-    has_match <- m != -1
-    if (!has_match) stop(res)
+    # plurals
+    if (substr(code, 1, 1) == "?") {
+      if (is.na(values$qty)) stop("Unknown quantity for pluralization")
+      parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
+      if (length(parts) == 1) {
+        if (values$qty != 1) parts[1] else ""
+      } else if (length(parts == 2)) {
+        if (values$qty == 1) parts[1] else parts[2]
+      } else if (length(parts == 3)) {
+        if (values$qty == 0) {
+          parts[1]
+        } else if (values$qty == 1) {
+          parts[2]
+        } else {
+          parts[3]
+        }
+      } else {
+        stop("Invalid pluralization directive: `", code, "`")
+      }
 
-    starts <- attr(m, "capture.start")
-    ends <- starts + attr(m, "capture.length") - 1L
-    captures <- substring(code, starts, ends)
-    funname <- captures[[1]]
-    text <- captures[[2]]
+    } else {
+      # inline styles
+      m <- regexpr(inline_regex(), code, perl = TRUE)
+      has_match <- m != -1
+      if (!has_match) stop(res)
 
-    out <- glue(text, .envir = envir, .transformer = sys.function())
-    paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
+      starts <- attr(m, "capture.start")
+      ends <- starts + attr(m, "capture.length") - 1L
+      captures <- substring(code, starts, ends)
+      funname <- captures[[1]]
+      text <- captures[[2]]
+
+      out <- glue(text, .envir = envir, .transformer = sys.function())
+      paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
+    }
   }
 }
 
 glue_cmd <- function(..., .envir) {
-  str <- unlist(list(...), use.names = FALSE)
+  str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  args <- c(str, list(.envir = .envir, .transformer = transformer))
-  glue_delay(str = do.call(glue, args), values = values)
+  glue_delay(
+    str = glue(str, .envir = .envir, .transformer = transformer),
+    values = values
+  )
 }
 
 glue_delay <- function(str, values = NULL) {
