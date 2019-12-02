@@ -223,7 +223,7 @@ lazyrmd <- local({
 
   create_if_needed <- function(path, conf) {
     if (!file.exists(path)) file.create(path)
-    if (conf == "no-code") {
+    if (identical(conf, "no-code")) {
       code_file <- sub("\\.html$", ".R", path)
       cat("# Dummy file for static vignette\n", file = code_file)
     }
