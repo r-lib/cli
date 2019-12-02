@@ -143,6 +143,7 @@ str_trim <- function(x) {
 
 has_asciicast_support <- function() {
  tryCatch({
-   asNamespace("asciicast")$is_recording_supported()
+   asNamespace("asciicast")$is_recording_supported() &&
+     asNamespace("asciicast")$is_svg_supported()
  }, error = function(e) FALSE)
 }
