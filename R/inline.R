@@ -77,6 +77,9 @@ inline_regex <- function() "(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)"
 make_cmd_transformer <- function(values) {
   values$marker <- random_id()
   values$qty <- NA_integer_
+  values$num_subst <- 0L
+  values$postprocess <- FALSE
+  values$pmarkers <- list()
 
   function(code, envir) {
     res <- tryCatch({
@@ -88,28 +91,13 @@ make_cmd_transformer <- function(values) {
       id <- paste0("v", length(values))
       values[[id]] <- res
       values$qty <- make_quantity(res)
+      values$num_subst <- values$num_subst + 1L
       return(paste0("{", values$marker, id, values$marker, "}"))
     }
 
     # plurals
     if (substr(code, 1, 1) == "?") {
-      if (is.na(values$qty)) stop("Unknown quantity for pluralization")
-      parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
-      if (length(parts) == 1) {
-        if (values$qty != 1) parts[1] else ""
-      } else if (length(parts == 2)) {
-        if (values$qty == 1) parts[1] else parts[2]
-      } else if (length(parts == 3)) {
-        if (values$qty == 0) {
-          parts[1]
-        } else if (values$qty == 1) {
-          parts[2]
-        } else {
-          parts[3]
-        }
-      } else {
-        stop("Invalid pluralization directive: `", code, "`")
-      }
+      return(parse_plural(code, values))
 
     } else {
       # inline styles
@@ -133,8 +121,9 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
+  pstr <- glue(str, .envir = .envir, .transformer = transformer)
   glue_delay(
-    str = glue(str, .envir = .envir, .transformer = transformer),
+    str = post_process_plurals(pstr, values),
     values = values
   )
 }

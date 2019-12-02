@@ -103,5 +103,28 @@ test_that("pluralization and style", {
 })
 
 test_that("post-processing", {
+  cases <- list(
+    list("Package{?s}: {0}", "Packages: 0"),
+    list("Package{?s}: {1}", "Package: 1"),
+    list("Package{?s}: {2}", "Packages: 2")
+  )
+  for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
 
+  pkgs <- function(n) glue("pkg{seq_len(n)}")
+  cases <- list(
+    list("Package{?s}: {pkgs(1)}", "Package: pkg1"),
+    list("Package{?s}: {pkgs(2)}", "Packages: pkg1 and pkg2")
+  )
+  for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+})
+
+test_that("post-processing errors", {
+  expect_error(
+    cli_text("package{?s}"),
+    "Cannot pluralize without a quantity"
+  )
+  expect_error(
+    cli_text("package{?s} {5} {10}"),
+    "Multiple quantities for pluralization"
+  )
 })
