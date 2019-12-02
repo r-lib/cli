@@ -89,8 +89,9 @@ make_cmd_transformer <- function(values) {
 
     if (!inherits(res, "error")) {
       id <- paste0("v", length(values))
+      if (length(res) == 0) res <- qty(0)
       values[[id]] <- res
-      values$qty <- make_quantity(res)
+      values$qty <- res
       values$num_subst <- values$num_subst + 1L
       return(paste0("{", values$marker, id, values$marker, "}"))
     }

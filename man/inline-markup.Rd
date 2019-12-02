@@ -84,6 +84,16 @@ them:\preformatted{cli_alert_warning("A warning with \{\{ braces \}\}")
 See also examples below.
 }
 
+\section{Pluralization}{
+
+
+All cli commands that emit text support pluralization. Some examples:\preformatted{cli_alert_info("Found \{ndirs\} diretor\{?y/ies\} and \{nfiles\} file\{?s\}.")
+cli_text("Will install \{length(pkgs)\} package\{?s\}: \{.pkg \{pkgs\}\}")
+}
+
+See \link{pluralization} for details.
+}
+
 \examples{
 ## Some inline markup examples
 cli_ul()

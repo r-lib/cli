@@ -1,4 +1,11 @@
 
+#' CLI pluralization
+#'
+#' @name pluralization
+#' @family pluralization
+#' @includeRmd man/chunks/pluralization.Rmd
+NULL
+
 make_quantity <- function(object) {
   val <- if (is.numeric(object)) {
     stopifnot(length(object) == 1)
@@ -8,8 +15,16 @@ make_quantity <- function(object) {
   }
 }
 
-#' @rdname pluralize
+#' Pluralization helper functions
+#'
+#' @rdname pluralization-helpers
+#' @param expr For `no()` it is an expression that is printed as "no" in
+#'   cli expressions, it is interpreted as a zero quantity. For `qty()`
+#'   an expression that sets the pluralization quantity without printing
+#'   anything. See examples below.
+#'
 #' @export
+#' @family pluralization
 
 no <- function(expr) {
   stopifnot(is.numeric(expr), length(expr) == 1, !is.na(expr))
@@ -22,10 +37,10 @@ no <- function(expr) {
 #' @export
 
 as.character.cli_no <- function(x, ...) {
-  if (x == 0) "no" else as.character(unclass(x))
+  if (make_quantity(x) == 0) "no" else as.character(unclass(x))
 }
 
-#' @rdname pluralize
+#' @rdname pluralization-helpers
 #' @export
 
 qty <- function(expr) {
@@ -41,17 +56,12 @@ as.character.cli_noprint <- function(x, ...) {
   ""
 }
 
-#' @export
-
-pluralize <- function(..., .envir = parent.frame()) {
-  TODO
-}
-
 parse_plural <- function(code, values) {
   # If we have the quantity already, then process it now.
   # Otherwise we put in a marker for it, and request post-processing.
-  if (!is.na(values$qty)) {
-    process_plural(values$qty, code)
+  qty <- make_quantity(values$qty)
+  if (!is.na(qty)) {
+    process_plural(qty, code)
   } else {
     values$postprocess <- TRUE
     id <- random_id()
@@ -64,9 +74,9 @@ process_plural <- function(qty, code) {
   parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
   if (length(parts) == 1) {
     if (qty != 1) parts[1] else ""
-  } else if (length(parts == 2)) {
+  } else if (length(parts) == 2) {
     if (qty == 1) parts[1] else parts[2]
-  } else if (length(parts == 3)) {
+  } else if (length(parts) == 3) {
     if (qty == 0) {
       parts[1]
     } else if (qty == 1) {
@@ -88,9 +98,10 @@ post_process_plurals <- function(str, values) {
     stop("Multiple quantities for pluralization")
   }
 
+  qty <- make_quantity(values$qty)
   for (i in seq_along(values$pmarkers)) {
     mark <- values$pmarkers[i]
-    str <- sub(names(mark), process_plural(values$qty, mark[[1]]), str)
+    str <- sub(names(mark), process_plural(qty, mark[[1]]), str)
   }
 
   str

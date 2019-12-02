@@ -84,6 +84,17 @@
 #'
 #' See also examples below.
 #'
+#' @section Pluralization:
+#'
+#' All cli commands that emit text support pluralization. Some examples:
+#'
+#' ```
+#' cli_alert_info("Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}.")
+#' cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
+#' ```
+#'
+#' See [pluralization] for details.
+#'
 #' @name inline-markup
 #' @examples
 #' ## Some inline markup examples
