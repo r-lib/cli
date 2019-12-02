@@ -12,7 +12,7 @@ clienv$pid <- Sys.getpid()
 
   lazyrmd$onload_hook(
     local = "if-newer",
-    ci = function() has_asciicast_support(),
+    ci = function() has_asciicast_support() && getRversion() >= "3.3",
     cran = FALSE
   )
 
