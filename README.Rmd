@@ -53,10 +53,11 @@ crayon package to support ANSI terminal colors.
 * Build a CLI using semantic elements: headings, lists, alerts, paragraphs.
 * Theming via a CSS-like language.
 * Terminal colors via the [crayon](https://github.com/r-lib/crayon) package.
-* Create CLI elements in subprocesses, using the
+* Create cli elements in subprocesses, using the
   [callr](https://github.com/r-lib/callr) package.
-* All CLI text can contain interpreted string literals, via the
+* All cli text can contain interpreted string literals, via the
   [glue](https://github.com/tidyverse/glue) package.
+* Support for pluralized messages.
 
 # Installation
 
@@ -66,9 +67,111 @@ Install the stable version from CRAN:
 install.packages("cli")
 ```
 
-## Usage
+## Short tour
 
-TODO
+Some of the more commonly used cli elements, and features.
+
+### Short alert messages
+
+One liner messages to inform or warn.
+
+```{asciicast}
+pkgs <- c("foo", "bar", "foobar")
+cli_alert_success("Downloaded {length(pkgs)} packages.")
+```
+
+```{asciicast}
+db_url <- "example.com:port"
+cli_alert_info("Reopened database {.url {db_url}}x.")
+```
+
+```{asciicast}
+cli_alert_warning("Cannot reach GitHub, using local database cache.")
+```
+
+```{asciicast}
+cli_alert_danger("Failed to connect to database.")
+```
+
+```{asciicast}
+cli_alert("A generic alert")
+```
+
+### Headings
+
+Three levels of headings.
+
+```{asciicast}
+cli_h1("Heading 1")
+```
+
+```{asciicast}
+cli_h2("Heading 2")
+```
+
+```{asciicast}
+cli_h3("Heading 3")
+```
+
+### Lists
+
+Ordered, unordered and description lists, that can be nested.
+
+```{asciicast}
+fun <- function() {
+  cli_ol()
+  cli_li("Item 1")
+  ulid <- cli_ul()
+  cli_li("Subitem 1")
+  cli_li("Subitem 2")
+  cli_end(ulid)
+  cli_li("Item 2")
+  cli_end()
+}
+fun()
+```
+
+### Themes
+
+Theming via a CSS-like language.
+
+```{asciicast}
+fun <- function() {
+  cli_div(theme = list(span.emph = list(color = "orange")))
+  cli_text("This is very {.emph important}")
+  cli_end()
+  cli_text("Back to the {.emph previous theme}")
+}
+fun()
+```
+
+### Command substitution
+
+Automatic command substitution via the
+[glue](https://github.com/tidyverse/glue) package.
+
+```{asciicast}
+size <- 123143123
+dt <- 1.3454
+cli_alert_info(c(
+  "Downloaded {prettyunits::pretty_bytes(size)} in ",
+  "{prettyunits::pretty_sec(dt)}"))
+```
+
+### Pluralization
+
+Pluralization support.
+
+```{asciicast}
+nfiles <- 3; ndirs <- 1
+cli_text("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")
+```
+
+## Documentation
+
+See at [https://cli.r-lib.org/](https://cli.r-lib.org/) and also in the
+installed package: `?introduction`, `?"inline-markup"`, `?containers`,
+`?themes`, `?pluralization`.
 
 # License
 

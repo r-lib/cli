@@ -32,10 +32,11 @@ Features
 -   Theming via a CSS-like language.
 -   Terminal colors via the [crayon](https://github.com/r-lib/crayon)
     package.
--   Create CLI elements in subprocesses, using the
+-   Create cli elements in subprocesses, using the
     [callr](https://github.com/r-lib/callr) package.
--   All CLI text can contain interpreted string literals, via the
+-   All cli text can contain interpreted string literals, via the
     [glue](https://github.com/tidyverse/glue) package.
+-   Support for pluralized messages.
 
 Installation
 ============
@@ -46,10 +47,137 @@ Install the stable version from CRAN:
 install.packages("cli")
 ```
 
-Usage
------
+Short tour
+----------
 
-TODO
+Some of the more commonly used cli elements, and features.
+
+### Short alert messages
+
+One liner messages to inform or warn.
+
+``` asciicast
+pkgs <- c("foo", "bar", "foobar")
+cli_alert_success("Downloaded {length(pkgs)} packages.")
+```
+
+<img src="man/figures/README/unnamed-chunk-2.svg" width="100%" />
+
+``` asciicast
+db_url <- "example.com:port"
+cli_alert_info("Reopened database {.url {db_url}}x.")
+```
+
+<img src="man/figures/README/unnamed-chunk-3.svg" width="100%" />
+
+``` asciicast
+cli_alert_warning("Cannot reach GitHub, using local database cache.")
+```
+
+<img src="man/figures/README/unnamed-chunk-4.svg" width="100%" />
+
+``` asciicast
+cli_alert_danger("Failed to connect to database.")
+```
+
+<img src="man/figures/README/unnamed-chunk-5.svg" width="100%" />
+
+``` asciicast
+cli_alert("A generic alert")
+```
+
+<img src="man/figures/README/unnamed-chunk-6.svg" width="100%" />
+
+### Headings
+
+Three levels of headings.
+
+``` asciicast
+cli_h1("Heading 1")
+```
+
+<img src="man/figures/README/unnamed-chunk-7.svg" width="100%" />
+
+``` asciicast
+cli_h2("Heading 2")
+```
+
+<img src="man/figures/README/unnamed-chunk-8.svg" width="100%" />
+
+``` asciicast
+cli_h3("Heading 3")
+```
+
+<img src="man/figures/README/unnamed-chunk-9.svg" width="100%" />
+
+### Lists
+
+Ordered, unordered and description lists, that can be nested.
+
+``` asciicast
+fun <- function() {
+  cli_ol()
+  cli_li("Item 1")
+  ulid <- cli_ul()
+  cli_li("Subitem 1")
+  cli_li("Subitem 2")
+  cli_end(ulid)
+  cli_li("Item 2")
+  cli_end()
+}
+fun()
+```
+
+<img src="man/figures/README/unnamed-chunk-10.svg" width="100%" />
+
+### Themes
+
+Theming via a CSS-like language.
+
+``` asciicast
+fun <- function() {
+  cli_div(theme = list(span.emph = list(color = "orange")))
+  cli_text("This is very {.emph important}")
+  cli_end()
+  cli_text("Back to the {.emph previous theme}")
+}
+fun()
+```
+
+<img src="man/figures/README/unnamed-chunk-11.svg" width="100%" />
+
+### Command substitution
+
+Automatic command substitution via the
+[glue](https://github.com/tidyverse/glue) package.
+
+``` asciicast
+size <- 123143123
+dt <- 1.3454
+cli_alert_info(c(
+  "Downloaded {prettyunits::pretty_bytes(size)} in ",
+  "{prettyunits::pretty_sec(dt)}"))
+```
+
+<img src="man/figures/README/unnamed-chunk-12.svg" width="100%" />
+
+### Pluralization
+
+Pluralization support.
+
+``` asciicast
+nfiles <- 3; ndirs <- 1
+cli_text("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")
+```
+
+<img src="man/figures/README/unnamed-chunk-13.svg" width="100%" />
+
+Documentation
+-------------
+
+See at <https://cli.r-lib.org/> and also in the installed package:
+`?introduction`, `?"inline-markup"`, `?containers`, `?themes`,
+`?pluralization`.
 
 License
 =======
