@@ -65,7 +65,7 @@ cli_alert_success("Downloaded {length(pkgs)} packages.")
 
 ``` asciicast
 db_url <- "example.com:port"
-cli_alert_info("Reopened database {.url {db_url}}x.")
+cli_alert_info("Reopened database {.url {db_url}}.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-3.svg" width="100%" />
