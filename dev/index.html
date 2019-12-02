@@ -111,8 +111,9 @@
 <li>Build a CLI using semantic elements: headings, lists, alerts, paragraphs.</li>
 <li>Theming via a CSS-like language.</li>
 <li>Terminal colors via the <a href="https://github.com/r-lib/crayon">crayon</a> package.</li>
-<li>Create CLI elements in subprocesses, using the <a href="https://github.com/r-lib/callr">callr</a> package.</li>
-<li>All CLI text can contain interpreted string literals, via the <a href="https://github.com/tidyverse/glue">glue</a> package.</li>
+<li>Create cli elements in subprocesses, using the <a href="https://github.com/r-lib/callr">callr</a> package.</li>
+<li>All cli text can contain interpreted string literals, via the <a href="https://github.com/tidyverse/glue">glue</a> package.</li>
+<li>Support for pluralized messages.</li>
 </ul>
 </div>
 <div id="installation" class="section level1">
@@ -120,10 +121,92 @@
 <a href="#installation" class="anchor"></a>Installation</h1>
 <p>Install the stable version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"cli"</span>)</a></code></pre></div>
-<div id="usage" class="section level2">
+<div id="short-tour" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>TODO</p>
+<a href="#short-tour" class="anchor"></a>Short tour</h2>
+<p>Some of the more commonly used cli elements, and features.</p>
+<div id="short-alert-messages" class="section level3">
+<h3 class="hasAnchor">
+<a href="#short-alert-messages" class="anchor"></a>Short alert messages</h3>
+<p>One liner messages to inform or warn.</p>
+<pre class="asciicast"><code>pkgs &lt;- c("foo", "bar", "foobar")
+cli_alert_success("Downloaded {length(pkgs)} packages.")</code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-2.svg" width="100%"></p>
+<pre class="asciicast"><code>db_url &lt;- "example.com:port"
+cli_alert_info("Reopened database {.url {db_url}}x.")</code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-3.svg" width="100%"></p>
+<pre class="asciicast"><code><a href="reference/cli_alert.html">cli_alert_warning("Cannot reach GitHub, using local database cache.")</a></code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-4.svg" width="100%"></p>
+<pre class="asciicast"><code><a href="reference/cli_alert.html">cli_alert_danger("Failed to connect to database.")</a></code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-5.svg" width="100%"></p>
+<pre class="asciicast"><code><a href="reference/cli_alert.html">cli_alert("A generic alert")</a></code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-6.svg" width="100%"></p>
+</div>
+<div id="headings" class="section level3">
+<h3 class="hasAnchor">
+<a href="#headings" class="anchor"></a>Headings</h3>
+<p>Three levels of headings.</p>
+<pre class="asciicast"><code><a href="reference/cli_h1.html">cli_h1("Heading 1")</a></code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-7.svg" width="100%"></p>
+<pre class="asciicast"><code><a href="reference/cli_h1.html">cli_h2("Heading 2")</a></code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-8.svg" width="100%"></p>
+<pre class="asciicast"><code><a href="reference/cli_h1.html">cli_h3("Heading 3")</a></code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-9.svg" width="100%"></p>
+</div>
+<div id="lists" class="section level3">
+<h3 class="hasAnchor">
+<a href="#lists" class="anchor"></a>Lists</h3>
+<p>Ordered, unordered and description lists, that can be nested.</p>
+<pre class="asciicast"><code>fun &lt;- function() {
+  cli_ol()
+  cli_li("Item 1")
+  ulid &lt;- cli_ul()
+  cli_li("Subitem 1")
+  cli_li("Subitem 2")
+  cli_end(ulid)
+  cli_li("Item 2")
+  cli_end()
+}
+fun()</code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-10.svg" width="100%"></p>
+</div>
+<div id="themes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#themes" class="anchor"></a>Themes</h3>
+<p>Theming via a CSS-like language.</p>
+<pre class="asciicast"><code>fun &lt;- function() {
+  cli_div(theme = list(span.emph = list(color = "orange")))
+  cli_text("This is very {.emph important}")
+  cli_end()
+  cli_text("Back to the {.emph previous theme}")
+}
+fun()</code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-11.svg" width="100%"></p>
+</div>
+<div id="command-substitution" class="section level3">
+<h3 class="hasAnchor">
+<a href="#command-substitution" class="anchor"></a>Command substitution</h3>
+<p>Automatic command substitution via the <a href="https://github.com/tidyverse/glue">glue</a> package.</p>
+<pre class="asciicast"><code>size &lt;- 123143123
+dt &lt;- 1.3454
+cli_alert_info(c(
+  "Downloaded {prettyunits::pretty_bytes(size)} in ",
+  "{prettyunits::pretty_sec(dt)}"))</code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-12.svg" width="100%"></p>
+</div>
+<div id="pluralization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pluralization" class="anchor"></a>Pluralization</h3>
+<p>Pluralization support.</p>
+<pre class="asciicast"><code>nfiles &lt;- 3; ndirs &lt;- 1
+cli_text("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")</code></pre>
+<p><img src="reference/figures/README/unnamed-chunk-13.svg" width="100%"></p>
+</div>
+</div>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h2>
+<p>See at <a href="https://cli.r-lib.org/" class="uri">https://cli.r-lib.org/</a> and also in the installed package: <code><a href="reference/introduction.html">?introduction</a></code>, <code><a href="reference/inline-markup.html">?"inline-markup"</a></code>, <code><a href="reference/containers.html">?containers</a></code>, <code><a href="reference/themes.html">?themes</a></code>, <code><a href="reference/pluralization.html">?pluralization</a></code>.</p>
 </div>
 </div>
 <div id="license" class="section level1">
