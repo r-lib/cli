@@ -19,9 +19,9 @@ On Windows they have a fallback to less fancy symbols.
 \code{list_symbols()} prints a table with all symbols to the screen.
 }
 \examples{
-cat(symbol$tick, " SUCCESS\\n", symbol$cross, " FAILURE\\n", sep = "")
+cat(symbol$tick, " SUCCESS\n", symbol$cross, " FAILURE\n", sep = "")
 
 ## All symbols
 cat(paste(format(names(symbol), width = 20),
-  unlist(symbol)), sep = "\\n")
+  unlist(symbol)), sep = "\n")
 }

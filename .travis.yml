@@ -2,13 +2,38 @@ language: r
 sudo: false
 cache: packages
 
-r:
- - 3.2
- - 3.3
- - 3.4
- - oldrel
- - release
- - devel
+dist: xenial
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:cran/v8'
+    packages:
+      - libnode-dev
+
+r_github_packages:
+  - r-lib/cli@feature/pkgdown
+
+matrix:
+  include:
+   - r: 3.2
+   - r: 3.3
+   - r: 3.4
+   - r: 3.5
+   - r: release
+     before_cache:
+       - Rscript -e 'remotes::install_cran("pkgdown")'
+     deploy:
+       provider: script
+       script: Rscript -e 'pkgdown::deploy_site_github()'
+       skip_cleanup: true
+       on:
+         all_branches: true
+         condition: $TRAVIS_BRANCH =~ ^(master|feature/pkgdown)$
+     dist: xenial
+     addons:
+       apt:
+         packages: libnode-dev
+   - r: devel
 
 after_success:
   - test $TRAVIS_R_VERSION_STRING = "release" && Rscript -e 'covr::codecov()'

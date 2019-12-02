@@ -16,5 +16,5 @@ printed on a new line.}
 It is not wrapped, but printed as is.
 }
 \examples{
-cli_verbatim("This has\\nthree", "lines")
+cli_verbatim("This has\nthree", "lines")
 }

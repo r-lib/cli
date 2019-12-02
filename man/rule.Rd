@@ -97,6 +97,6 @@ rule(center = "TITLE", line = col_blue("~-"))
 ## Even more custom line
 rule(center = bg_red(" ", symbol$star, "TITLE",
   symbol$star, " "),
-  line = "\\u2582",
+  line = "\u2582",
   line_col = "orange")
 }

@@ -9,6 +9,13 @@ clienv <- new.env()
 clienv$pid <- Sys.getpid()
 
 .onLoad <- function(libname, pkgname) {
+
+  lazyrmd$onload_hook(
+    local = "if-newer",
+    ci = function() has_asciicast_support() && getRversion() >= "3.3",
+    cran = FALSE
+  )
+
   pkgenv <- environment(dummy)
   makeActiveBinding(
     "symbol",
