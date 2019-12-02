@@ -143,9 +143,9 @@ markup with a preceding \code{{}} substitution, and error is thrown.
 }
 }
 
-\subsection{Substitution markup}{
+\subsection{Pluralization markup}{
 \enumerate{
-\item Substitution markup start with \verb{\{?} and ends with \verb{\}}. It may not
+\item Pluralization markup start with \verb{\{?} and ends with \verb{\}}. It may not
 contain \verb{\{} and \verb{\}} characters, so it may not contains \code{{}}
 substitutions either.
 \item Alternative words or suffixes are separated by \code{/}.
