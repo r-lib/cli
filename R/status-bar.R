@@ -37,6 +37,8 @@
 #' @param .auto_result What to do when auto-closing the status bar.
 #' @return The id of the new status bar container element, invisibly.
 #'
+#' @seealso [cli_process_start] for a higher level interface to the
+#'   startus bar, that adds automatic styling.
 #' @family status bar
 #' @export
 
@@ -120,6 +122,123 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
       msg_failed = if (!is.null(msg_failed)) glue_cmd(msg_failed, .envir = .envir),
       id = id %||% NA_character_
     )
+  )
+}
+
+#' Indicate the start and termination of some computation in the status bar
+#'
+#' Typically you call `cli_process_start()` to start the process, and then
+#' `cli_process_done()` when it is done. If an error happens before
+#' `cli_process_fone()` is called, then cli automatically shows the message
+#' for unsuccessful termination.
+#'
+#' If you handle the errors of the process or computation, then you can do
+#' the opposite: call `cli_process_start()` with `on_exit = "done"`, and
+#' in the error handler call `cli_process_failed()`. cli will automatically
+#' call `cli_process_done()` on successful termination, when the calling
+#' function finishes.
+#'
+#' See examples below.
+#'
+#' @param msg The message to show to indicate the start of the process or
+#'   compuration. It will be collapsed into a single string, and the first
+#'   line is kept and cut to [console_width()].
+#' @param msg_done The message to use for successful termination.
+#' @param msg_failed The message to use for unsuccessful termination.
+#' @param on_exit Whether this process should fail or terminate
+#'   successfully when the calling function (or the environment in `.envir`)
+#'   exits.x
+#' @param msg_class The style class to add to the message. Use an empty
+#'   string to suppress styling.
+#' @param done_class The style class to add to the successful termination
+#'   message. Use an empty string to suppress styling.a
+#' @param failed_class The style class to add to the unsuccessful
+#'   termination message. Use an empty string to suppress styling.a
+#' @inheritParams cli_status
+#' @return Id of the status bar container.
+#'
+#' @family status bar
+#' @export
+#' @examples
+#'
+#' ## Failure by default
+#' fun <- function() {
+#'   cli_process_start("Calculating")
+#'   if (interactive()) Sys.sleep(1)
+#'   if (runif(1) < 0.5) stop("Failed")
+#'   cli_process_done()
+#' }
+#' tryCatch(fun(), error = function(err) err)
+#'
+#' ## Success by default
+#' fun2 <- function() {
+#'   cli_process_start("Calculating", on_exit = "done")
+#'   tryCatch({
+#'     if (interactive()) Sys.sleep(1)
+#'     if (runif(1) < 0.5) stop("Failed")
+#'   }, error = function(err) cli_process_failed())
+#' }
+#' fun2()
+
+cli_process_start <- function(msg, msg_done = paste(msg, "... done"),
+                              msg_failed = paste(msg, "... failed"),
+                              on_exit = c("failed", "done"),
+                              msg_class = ".alert-info",
+                              done_class = ".alert-success",
+                              failed_class = ".alert-danger",
+                              .auto_close = TRUE, .envir = parent.frame()) {
+
+  # Force the defaults, because we might modify msg
+  msg_done
+  msg_failed
+
+  if (length(msg_class) > 0 && msg_class != "") {
+    msg <- paste0("{", msg_class, " ", msg, "}")
+  }
+  if (length(done_class) > 0 && done_class != "") {
+    msg_done <- paste0("{", done_class, " ", msg_done, "}")
+  }
+  if (length(failed_class) > 0 && failed_class != "") {
+    msg_failed <- paste0("{", failed_class, " ", msg_failed, "}")
+  }
+
+  cli_status(msg, msg_done, msg_failed, .auto_close = .auto_close,
+             .envir = .envir, .auto_result = match.arg(on_exit))
+}
+
+#' @param id Id of the status bar container to clear. If `id` is not the id
+#'   of the current status bar (because it was overwritten by another
+#'   status bar container), then the status bar is not cleared. If `NULL`
+#'   (the default) then the status bar is always cleared.
+#'
+#' @rdname cli_process_start
+#' @export
+
+cli_process_done <- function(id = NULL, msg_done = NULL,
+                             .envir = parent.frame(),
+                             done_class = ".alert-success") {
+
+  if (!is.null(msg_done) && length(done_class) > 0 && done_class != "") {
+    msg_done <- paste0("{", done_class, " ", msg_done, "}")
+  }
+  cli_status_clear(id, result = "done", msg_done = msg_done, .envir = .envir)
+}
+
+#' @rdname cli_process_start
+#' @export
+
+cli_process_failed <- function(id = NULL, msg = NULL, msg_failed = NULL,
+                               .envir = parent.frame(),
+                               failed_class = ".alert-danger") {
+  if (!is.null(msg_failed) && length(failed_class) > 0 &&
+      failed_class != "") {
+    msg_failed <- paste0("{", failed_class, " ", msg_failed, "}")
+  }
+  cli_status_clear(
+    id,
+    result = "failed",
+    msg_failed = msg_failed,
+    .envir = .envir
   )
 }
 

@@ -217,3 +217,25 @@ test_that("auto close with styling", {
   out2 <- crayon::strip_style(capt0(f2()))
   expect_match(out2, "status1 ... done\n")
 })
+
+test_that("process auto close with success", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_process_start("status1", on_exit = "done")
+    cli_text("out2")
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "status1 ... done")
+})
+
+test_that("process auto close with failure", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_process_start("status1", on_exit = "failed")
+    if (is_interactive()) Sys.sleep(2)
+    cli_text("out2")
+    if (is_interactive()) Sys.sleep(2)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "status1 ... failed")
+})

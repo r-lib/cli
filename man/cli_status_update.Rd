@@ -35,6 +35,7 @@ Update the status bar
 }
 \seealso{
 Other status bar: 
+\code{\link{cli_process_start}()},
 \code{\link{cli_status_clear}()},
 \code{\link{cli_status}()}
 }
