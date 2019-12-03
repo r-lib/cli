@@ -191,8 +191,8 @@ test_that("auto close with styling", {
     cli_text("out1")
     sb <- cli_status(
       msg = "{.alert-info status1}",
-      msg_done = "{.alert-success status1}",
-      msg_failed = "{.alert-danger status1}",
+      msg_done = "{.alert-success status1 ... done}",
+      msg_failed = "{.alert-danger status1 ... failed}",
       .auto_result = "failed"
     )
     if (is_interactive()) Sys.sleep(1)
@@ -206,8 +206,8 @@ test_that("auto close with styling", {
     cli_text("out1")
     sb <- cli_status(
       msg = "{.alert-info status1}",
-      msg_done = "{.alert-success status1}",
-      msg_failed = "{.alert-danger status1}",
+      msg_done = "{.alert-success status1 ... done}",
+      msg_failed = "{.alert-danger status1 ... failed}",
       .auto_result = "done"
     )
     if (is_interactive()) Sys.sleep(1)
