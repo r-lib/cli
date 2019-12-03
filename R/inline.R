@@ -30,7 +30,7 @@ inline_transformer <- local({
     }
 
     code <- glue_collapse(code, "\n")
-    m <- regexpr("(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)", code, perl = TRUE)
+    m <- regexpr(inline_regex(), code, perl = TRUE)
     has_match <- m != -1
     if (!has_match) return(paste0("{", code, "}"))
 
@@ -72,7 +72,7 @@ clii__inline <- function(app, text, .list) {
   paste(out, collapse = "")
 }
 
-inline_regex <- function() "(?s)^[.]([[:alnum:]_]+)[[:space:]]+(.+)"
+inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.+)"
 
 make_cmd_transformer <- function(values) {
   values$marker <- random_id()

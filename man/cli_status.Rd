@@ -4,12 +4,31 @@
 \alias{cli_status}
 \title{Update the status bar}
 \usage{
-cli_status(..., .keep = FALSE, .auto_close = TRUE, .envir = parent.frame())
+cli_status(
+  msg,
+  msg_done = paste(msg, "... done"),
+  msg_failed = paste(msg, "... failed"),
+  .keep = FALSE,
+  .auto_close = TRUE,
+  .envir = parent.frame(),
+  .auto_result = c("clear", "done", "failed")
+)
 }
 \arguments{
-\item{...}{The text to show, in character vectors. They will be
-concatenated into a single string. Long lines are cut to
-\code{\link[=console_width]{console_width()}}.}
+\item{msg}{The text to show, a character vector. It will be
+collapsed into a single string, and the first line is kept and cut to
+\code{\link[=console_width]{console_width()}}. The message is often associated with the start of
+a calculation.}
+
+\item{msg_done}{The message to use when the message is cleared, when
+the calculation finishes successfully. If \code{.auto_close} is \code{TRUE}
+and \code{.auto_result} is \code{"done"}, then this is printed automatically
+then the calling function (or \code{.envir}) finishes.}
+
+\item{msg_failed}{The message to use when the message is cleared, when
+the calculation finishes unsuccessfully. If \code{.auto_close} is \code{TRUE}
+and \code{.auto_result} is \code{"failed"}, then this is printed automatically
+then the calling function (or \code{.envir}) finishes.}
 
 \item{.keep}{What to do when this status bar is cleared. If \code{TRUE} then
 the content of this status bar is kept, as regular cli output (the
@@ -21,7 +40,9 @@ function finishes (or ‘.envir’ is removed from the stack, if
 specified).}
 
 \item{.envir}{Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status bar if ‘.auto_close’ is ‘TRUE’.}
+also used to auto-clear the status bar if \code{.auto_close} is `TRUE.}
+
+\item{.auto_result}{What to do when auto-closing the status bar.}
 }
 \value{
 The id of the new status bar container element, invisibly.
@@ -33,9 +54,19 @@ intact by all semantic cli output.
 }
 \details{
 Use \code{\link[=cli_status_clear]{cli_status_clear()}} to clear the status bar.
+
+Often status messages are associated with processes. E.g. the app starts
+downloading a large file, so it sets the status bar accordingly. Once the
+download is done (or failed), the app typically updates the status bar
+again. cli automates much of this, via the \code{msg_done}, \code{msg_failed}, and
+\code{.auto_result} arguments. See examples below.
 }
 \seealso{
+\link{cli_process_start} for a higher level interface to the
+startus bar, that adds automatic styling.
+
 Other status bar: 
+\code{\link{cli_process_start}()},
 \code{\link{cli_status_clear}()},
 \code{\link{cli_status_update}()}
 }

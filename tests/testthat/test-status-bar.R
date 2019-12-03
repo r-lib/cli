@@ -94,8 +94,8 @@ test_that("truncating", {
   }
   out <- crayon::strip_style(capt0(f()))
   expect_equal(out, paste0(
-    "\r\rEiusmod enim mollit aute aliquip Lorem ",
-    "\r                                       \r"))
+    "\r\rEiusmod enim mollit aute aliquip Lorem",
+    "\r                                      \r"))
 })
 
 test_that("ansi colors and clearing", {
@@ -108,4 +108,134 @@ test_that("ansi colors and clearing", {
   out <- capt0(f())
   expect_match(out, "\033[31m", fixed = TRUE)
   expect_match(out, "\r           \r", fixed = TRUE)
+})
+
+test_that("theming status bar", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("{.alert-info status1}")
+    cli_text("out2")
+    cli_status_update("status2", id = sb)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  out2 <- crayon::strip_style(capt0(cli_alert_info("status1")))
+  expect_match(out, str_trim(out2), fixed = TRUE)
+})
+
+test_that("successful termination", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("status1")
+    cli_text("out2")
+    cli_status_clear(result = "done")
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_equal(out, paste0(
+    "out1\n",
+    "\r\rstatus1",
+    "\r       \rout2\nstatus1",
+    "\r       \rstatus1 ... done\n"
+  ))
+})
+
+test_that("terminate with failed", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("status1")
+    cli_text("out2")
+    cli_status_clear(result = "failed")
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_equal(out, paste0(
+    "out1\n",
+    "\r\rstatus1",
+    "\r       \rout2\nstatus1",
+    "\r       \rstatus1 ... failed\n"
+  ))
+})
+
+test_that("auto close with success", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("status1", .auto_result = "done")
+    cli_text("out2")
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_equal(out, paste0(
+    "out1\n",
+    "\r\rstatus1",
+    "\r       \rout2\nstatus1",
+    "\r       \rstatus1 ... done\n"
+  ))
+})
+
+test_that("auto close wtih failure", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("status1", .auto_result = "failed")
+    if (is_interactive()) Sys.sleep(2)
+    cli_text("out2")
+    if (is_interactive()) Sys.sleep(2)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_equal(out, paste0(
+    "out1\n",
+    "\r\rstatus1",
+    "\r       \rout2\nstatus1",
+    "\r       \rstatus1 ... failed\n"
+  ))
+})
+
+test_that("auto close with styling", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status(
+      msg = "{.alert-info status1}",
+      msg_done = "{.alert-success status1 ... done}",
+      msg_failed = "{.alert-danger status1 ... failed}",
+      .auto_result = "failed"
+    )
+    if (is_interactive()) Sys.sleep(1)
+    cli_text("out2")
+    if (is_interactive()) Sys.sleep(1)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "status1 ... failed\n")
+
+  f2 <- function() {
+    cli_text("out1")
+    sb <- cli_status(
+      msg = "{.alert-info status1}",
+      msg_done = "{.alert-success status1 ... done}",
+      msg_failed = "{.alert-danger status1 ... failed}",
+      .auto_result = "done"
+    )
+    if (is_interactive()) Sys.sleep(1)
+    cli_text("out2")
+    if (is_interactive()) Sys.sleep(1)
+  }
+  out2 <- crayon::strip_style(capt0(f2()))
+  expect_match(out2, "status1 ... done\n")
+})
+
+test_that("process auto close with success", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_process_start("status1", on_exit = "done")
+    cli_text("out2")
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "status1 ... done")
+})
+
+test_that("process auto close with failure", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_process_start("status1", on_exit = "failed")
+    if (is_interactive()) Sys.sleep(2)
+    cli_text("out2")
+    if (is_interactive()) Sys.sleep(2)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "status1 ... failed")
 })
