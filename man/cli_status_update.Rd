@@ -4,13 +4,26 @@
 \alias{cli_status_update}
 \title{Update the status bar}
 \usage{
-cli_status_update(..., id = NULL, .envir = parent.frame())
+cli_status_update(
+  id = NULL,
+  msg = NULL,
+  msg_done = NULL,
+  msg_failed = NULL,
+  .envir = parent.frame()
+)
 }
 \arguments{
-\item{...}{Text to update the status bar with.}
-
 \item{id}{Id of the status bar to update. Defaults to the current
 status bar container.}
+
+\item{msg}{Text to update the status bar with. \code{NULL} if you don't want
+to change it.}
+
+\item{msg_done}{Updated "done" message. \code{NULL} if you don't want to
+change it.}
+
+\item{msg_failed}{Updated "failed" message. \code{NULL} if you don't want to
+change it.}
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }

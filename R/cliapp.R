@@ -91,14 +91,14 @@ cliapp <- function(theme = getOption("cli.theme"),
     status = function(id = NULL, msg, msg_done = NULL, msg_failed = NULL,
                       keep, auto_result)
       clii_status(app, id, msg, msg_done, msg_failed, keep, auto_result),
-    status_clear = function(id = NULL, msg_done = NULL, msg_failed = NULL)
-      clii_status_clear(app, id, msg_done, msg_failed),
+    status_clear = function(id = NULL, result, msg_done = NULL, msg_failed = NULL)
+      clii_status_clear(app, id, result, msg_done, msg_failed),
     status_update = function(id = NULL, msg, msg_done = NULL, msg_failed = NULL)
       clii_status_update(app, id, msg, msg_done, msg_failed),
 
     ## Progress bars
     progress_bar = function(id = NULL, ...)
-      clii_progress_bar(app, xid, ...),
+      clii_progress_bar(app, id, ...),
     progress = function(id = NULL, operation, ...)
       clii_progress(app, id, operation, ...),
 

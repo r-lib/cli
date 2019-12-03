@@ -15,8 +15,16 @@
 #'
 #' @param msg The text to show, a character vector. It will be
 #'   collapsed into a single string, and the first line is kept and cut to
-#'   [console_width()].
-#' @param msg_done The message to use when the
+#'   [console_width()]. The message is often associated with the start of
+#'   a calculation.
+#' @param msg_done The message to use when the message is cleared, when
+#'   the calculation finishes successfully. If `.auto_close` is `TRUE`
+#'   and `.auto_result` is `"done"`, then this is printed automatically
+#'   then the calling function (or `.envir`) finishes.
+#' @param msg_failed The message to use when the message is cleared, when
+#'   the calculation finishes unsuccessfully. If `.auto_close` is `TRUE`
+#'   and `.auto_result` is `"failed"`, then this is printed automatically
+#'   then the calling function (or `.envir`) finishes.
 #' @param .keep What to do when this status bar is cleared. If `TRUE` then
 #'   the content of this status bar is kept, as regular cli output (the
 #'   screen is scrolled up if needed). If `FALSE`, then this status bar
@@ -25,8 +33,8 @@
 #'   function finishes (or ‘.envir’ is removed from the stack, if
 #'   specified).
 #' @param .envir Environment to evaluate the glue expressions in. It is
-#'   also used to auto-clear the status bar if ‘.auto_close’ is ‘TRUE’.
-#' @param .on_close What to do when auto-closing the status bar.
+#'   also used to auto-clear the status bar if `.auto_close` is `TRUE.
+#' @param .auto_result What to do when auto-closing the status bar.
 #' @return The id of the new status bar container element, invisibly.
 #'
 #' @family status bar
@@ -58,25 +66,28 @@ cli_status <- function(msg, msg_done = paste(msg, "... done"),
 #'   of the current status bar (because it was overwritten by another
 #'   status bar container), then the status bar is not cleared. If `NULL`
 #'   (the default) then the status bar is always cleared.
+#' @param result Whether to show a message for success or failure or just
+#'   clear the status bar.
 #' @param msg_done If not `NULL`, then the message to use for successful
-#'   process termination.
+#'   process termination. This overrides the message given when the status
+#'   bar was created.
 #' @param msg_failed If not `NULL`, then the message to use for failed
-#'   process termination.
+#'   process termination. This overrides the message give when the status
+#'   bar was created.
+#' @inheritParams cli_status
 #'
 #' @family status bar
 #' @export
 
-cli_status_clear <- function(id = NULL, msg_done = NULL, msg_failed = NULL,
+cli_status_clear <- function(id = NULL, result = c("clear", "done", "failed"),
+                             msg_done = NULL, msg_failed = NULL,
                              .envir = parent.frame()) {
-
-  if (!is.null(msg_done) && !is.null(msg_failed)) {
-    stop("At most one of `msg_done` and `msg_failed` can be non-NULL")
-  }
 
   cli__message(
     "status_clear",
     list(
       id = id %||% NA_character_,
+      result = match.arg(result),
       msg_done = if (!is.null(msg_done)) glue_cmd(msg_done, .envir = .envir),
       msg_failed = if (!is.null(msg_failed)) glue_cmd(msg_failed, .envir = .envir)
     )
@@ -112,36 +123,6 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
   )
 }
 
-#' @export
-
-cli_process_start <- function(msg, done = paste(msg, " ... done."),
-                              failed = paste(msg, " ... failed."),
-                              .auto_close = TRUE,
-                              .envir = parent.frame(),
-                              .on_close = c("done", "failed")) {
-
-  cli_status(msg, .keep = TRUE, .auto_close = .auto_close, .envir = .envir)
-
-  bar <- list(
-    ## This needs to be called for a clean exit
-    done = function() {
-      xsym <- crayon::green(cli::symbol$tick)
-      bar$tick(0, tokens = list(xsym = xsym, xmsg = crayon::reset(msg)))
-      bar$terminate()
-    }
-  )
-
-  ## This will be called automatically, but if called after done(),
-  ## it does not print anything
-  defer({
-    xsym <- crayon::red(cli::symbol$cross)
-    bar$tick(0, tokens = list(xsym = xsym, xmsg = crayon::reset(msg)))
-    bar$terminate()
-  }, envir = envir)
-
-  bar
-}
-
 # -----------------------------------------------------------------------
 
 clii_status <- function(app, id, msg, msg_done, msg_failed, keep,
@@ -164,9 +145,22 @@ clii_status <- function(app, id, msg, msg_done, msg_failed, keep,
   clii_status_update(app, id, msg, msg_done = NULL, msg_failed = NULL)
 }
 
-clii_status_clear <- function(app, id, msg_done, msg_failed) {
-  ## No such status bar?
-  if (!id %in% names(app$status_bar)) return(invisible())
+clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
+  ## If NA then the most recent one
+  if (is.na(id)) id <- names(app$status_bar)[1]
+
+  ## If no active status bar, then ignore
+  if (is.na(id)) return(invisible())
+
+  if (result == "done") {
+    msg <- msg_done %||% app$status_bar[[id]]$msg_done
+    clii_status_update(app, id, msg, NULL, NULL)
+    app$status_bar[[id]]$keep <- TRUE
+  } else if (result == "failed") {
+    msg <- msg_failed %||% app$status_bar[[id]]$msg_failed
+    clii_status_update(app, id, msg, NULL, NULL)
+    app$status_bar[[id]]$keep <- TRUE
+  }
 
   if (names(app$status_bar)[1] == id) {
     ## This is the active one

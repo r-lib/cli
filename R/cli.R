@@ -483,7 +483,8 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
 
   if (.auto_close && !is.null(.envir) && !identical(.envir, .GlobalEnv)) {
     if (type == "status") {
-      defer(cli_status_clear(id = args$id), envir = .envir, priority = "first")
+      defer(cli_status_clear(id = args$id, result = args$auto_result),
+            envir = .envir, priority = "first")
     } else {
       defer(cli_end(id = args$id), envir = .envir, priority = "first")
     }

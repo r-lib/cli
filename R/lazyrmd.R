@@ -72,6 +72,7 @@ lazyrmd <- local({
 
   #' Configure the lazy vignette builder
   #'
+  #' @noRd
   #' @param local Whether/when to build vignettes for local builds.
   #' @param ci Whether/when to build vignettes on the CI(s).
   #' @param cran Whether/when to build vignettes on CRAN.
