@@ -51,6 +51,7 @@
 #' * `url` for a URL.
 #' * `var` for a variable name.
 #' * `envvar` for the name of an environment variable.
+#' * `val` for a "value".
 #'
 #' See examples below.
 #'
@@ -62,6 +63,12 @@
 #' When cli performs inline text formatting, it automatically collapses
 #' glue substitutions, after formatting. This is handy to create lists of
 #' files, packages, etc. See examples below.
+#'
+#' @section Formatting values:
+#'
+#' The `val` inline class formats values. By default (c.f. the builtin
+#' theme), it calls the [cli_format()] generic function, with the current
+#' style as the argument. See [cli_format()] for examples.
 #'
 #' @section Escaping `{` and `}`:
 #'
