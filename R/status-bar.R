@@ -183,9 +183,9 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 cli_process_start <- function(msg, msg_done = paste(msg, "... done"),
                               msg_failed = paste(msg, "... failed"),
                               on_exit = c("failed", "done"),
-                              msg_class = ".alert-info",
-                              done_class = ".alert-success",
-                              failed_class = ".alert-danger",
+                              msg_class = "alert-info",
+                              done_class = "alert-success",
+                              failed_class = "alert-danger",
                               .auto_close = TRUE, .envir = parent.frame()) {
 
   # Force the defaults, because we might modify msg
@@ -193,13 +193,13 @@ cli_process_start <- function(msg, msg_done = paste(msg, "... done"),
   msg_failed
 
   if (length(msg_class) > 0 && msg_class != "") {
-    msg <- paste0("{", msg_class, " ", msg, "}")
+    msg <- paste0("{.", msg_class, " ", msg, "}")
   }
   if (length(done_class) > 0 && done_class != "") {
-    msg_done <- paste0("{", done_class, " ", msg_done, "}")
+    msg_done <- paste0("{.", done_class, " ", msg_done, "}")
   }
   if (length(failed_class) > 0 && failed_class != "") {
-    msg_failed <- paste0("{", failed_class, " ", msg_failed, "}")
+    msg_failed <- paste0("{.", failed_class, " ", msg_failed, "}")
   }
 
   cli_status(msg, msg_done, msg_failed, .auto_close = .auto_close,
@@ -216,10 +216,10 @@ cli_process_start <- function(msg, msg_done = paste(msg, "... done"),
 
 cli_process_done <- function(id = NULL, msg_done = NULL,
                              .envir = parent.frame(),
-                             done_class = ".alert-success") {
+                             done_class = "alert-success") {
 
   if (!is.null(msg_done) && length(done_class) > 0 && done_class != "") {
-    msg_done <- paste0("{", done_class, " ", msg_done, "}")
+    msg_done <- paste0("{.", done_class, " ", msg_done, "}")
   }
   cli_status_clear(id, result = "done", msg_done = msg_done, .envir = .envir)
 }
@@ -229,10 +229,10 @@ cli_process_done <- function(id = NULL, msg_done = NULL,
 
 cli_process_failed <- function(id = NULL, msg = NULL, msg_failed = NULL,
                                .envir = parent.frame(),
-                               failed_class = ".alert-danger") {
+                               failed_class = "alert-danger") {
   if (!is.null(msg_failed) && length(failed_class) > 0 &&
       failed_class != "") {
-    msg_failed <- paste0("{", failed_class, " ", msg_failed, "}")
+    msg_failed <- paste0("{.", failed_class, " ", msg_failed, "}")
   }
   cli_status_clear(
     id,

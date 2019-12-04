@@ -11,9 +11,9 @@ cli_process_start(
   msg_done = paste(msg, "... done"),
   msg_failed = paste(msg, "... failed"),
   on_exit = c("failed", "done"),
-  msg_class = ".alert-info",
-  done_class = ".alert-success",
-  failed_class = ".alert-danger",
+  msg_class = "alert-info",
+  done_class = "alert-success",
+  failed_class = "alert-danger",
   .auto_close = TRUE,
   .envir = parent.frame()
 )
@@ -22,7 +22,7 @@ cli_process_done(
   id = NULL,
   msg_done = NULL,
   .envir = parent.frame(),
-  done_class = ".alert-success"
+  done_class = "alert-success"
 )
 
 cli_process_failed(
@@ -30,7 +30,7 @@ cli_process_failed(
   msg = NULL,
   msg_failed = NULL,
   .envir = parent.frame(),
-  failed_class = ".alert-danger"
+  failed_class = "alert-danger"
 )
 }
 \arguments{
