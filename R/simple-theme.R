@@ -48,7 +48,7 @@
 #' cli_text("URLs: {.url https://r-project.org}")
 #'
 #' cli_h2("Longer code chunk")
-#' cli_par(class = "r-code")
+#' cli_par(class = ".code.R")
 #' cli_verbatim(
 #'   '# window functions are useful for grouped mutates',
 #'   'mtcars %>%',
@@ -57,7 +57,7 @@
 #' cli_end()
 #'
 #' cli_h2("Even longer code chunk")
-#' cli_par(class = "r-code")
+#' cli_par(class = ".code.r")
 #' cli_verbatim(format(ls))
 #' cli_end()
 #'
@@ -128,7 +128,7 @@ simple_theme <- function(dark = "auto") {
     "span.code" = list(before = "`"),
     "span.code" = list(after = "`"),
 
-    ".r-code" = list(
+    ".code.R" = list(
       fmt = simple_theme_r_code(dark),
       "margin-top" = 1,
       "margin-bottom" = 1),
@@ -189,6 +189,7 @@ simple_theme_r_code <- function(dark) {
     )
   }
   function(x) {
+    x <- crayon::strip_style(x)
     lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
     code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
     len <- fansi::nchar_ctl(code)

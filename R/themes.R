@@ -102,7 +102,8 @@ builtin_theme <- function() {
     "blockquote cite" = list(before = paste0(symbol$em_dash, " "),
                              "font-style" = "italic", "font-weight" = "bold"),
 
-    .code = list(),
+    div.code = list(fmt = format_code),
+    div.code.R = list(fmt = format_r_code),
 
     span.emph = list("font-style" = "italic"),
     span.strong = list("font-weight" = "bold"),
@@ -125,6 +126,25 @@ builtin_theme <- function() {
       color = "blue"
     )
   )
+}
+
+format_r_code <- function(x) {
+  x <- crayon::strip_style(x)
+  lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
+  code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
+  format_code(code)
+}
+
+format_code <- function(x) {
+  lines <- c("", unlist(strsplit(x, "\n", fixed = TRUE)), "")
+  len <- fansi::nchar_ctl(lines)
+  width <- console_width()
+  padded <- paste0(" ", lines, strrep(" ", width - len), " ")
+  style <-  crayon::combine_styles(
+    crayon::make_style("#232323", bg = TRUE),
+    crayon::make_style("#d0d0d0")
+  )
+  style(padded)
 }
 
 theme_create <- function(theme) {
