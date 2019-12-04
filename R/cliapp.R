@@ -63,10 +63,6 @@ cliapp <- function(theme = getOption("cli.theme"),
     li = function(items = NULL, id = NULL, class = NULL)
       clii_li(app, items, id, class),
 
-    ## Code
-    code = function(lines, id = NULL, class = NULL)
-      clii_code(app, lines, class),
-
     ## Tables
     table = function(cells, id = NULL, class = NULL)
       clii_table(app, cells, class),

@@ -177,12 +177,6 @@ clii__item_text <- function(app, type, name, cnt_id, text, .list) {
   )
 }
 
-## Code -------------------------------------------------------------
-
-clii_code <- function(app, lines, id, class) {
-  stop("Code is not implemented yet")
-}
-
 ## Close container(s) -----------------------------------------------
 
 clii_end <- function(app, id) {

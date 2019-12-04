@@ -50,7 +50,7 @@ cli_text("Files: {.file /usr/bin/env}")
 cli_text("URLs: {.url https://r-project.org}")
 
 cli_h2("Longer code chunk")
-cli_par(class = "r-code")
+cli_par(class = ".code.R")
 cli_verbatim(
   '# window functions are useful for grouped mutates',
   'mtcars \%>\%',
@@ -59,7 +59,7 @@ cli_verbatim(
 cli_end()
 
 cli_h2("Even longer code chunk")
-cli_par(class = "r-code")
+cli_par(class = ".code.r")
 cli_verbatim(format(ls))
 cli_end()
 

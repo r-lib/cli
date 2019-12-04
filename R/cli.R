@@ -454,6 +454,46 @@ cli_blockquote <- function(quote, citation = NULL, id = NULL,
   )
 }
 
+#' A block of code
+#'
+#' A helper function that creates a `div` with class `code` and then calls
+#' `cli_verbatim()` to output code lines. The builtin theme formats these
+#' containers specially. In particular, it adds syntax highlighting to
+#' valid R code.
+#'
+#' @param lines Chracter vector, each line will be a line of code, and
+#'   newline charactes also create new lines. Note that _no_ glue
+#'   substitution is performed on the code.
+#' @param ... More character vectors, they are appended to `lines`.
+#' @param language Programming language. This is also added as a class,
+#'   in addition to `code`.
+#' @param .auto_close Passed to `cli_div()` when creating the container of
+#'   the code. By default the code container is closed after emitting
+#'   `lines` and `...` via `cli_verbatim()`. You can keep that container
+#'   open with `.auto_close` and/or `.envir`, and then calling
+#'   `cli_verbatim()` to add (more) code. Note that the code will be
+#'   formatted and syntax highlighted separately for each `cli_verbatim()`
+#'   call.
+#' @param .envir Passed to `cli_div()` when creating the container of the
+#'   code.
+#' @return The id of the container that contains the code.
+#'
+#' @export
+#' @examples
+#' cli_code(format(cli::cli_blockquote))
+
+cli_code <- function(lines = NULL, ..., language = "R",
+                     .auto_close = TRUE, .envir = environment()) {
+  lines <- c(lines, unlist(list(...)))
+  id <- cli_div(
+    class = paste("code", language),
+    .auto_close = .auto_close,
+    .envir = .envir
+  )
+  cli_verbatim(lines)
+  invisible(id)
+}
+
 #' CLI progress bar
 #'
 #' A progress bar using the progress package
