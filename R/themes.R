@@ -119,7 +119,11 @@ builtin_theme <- function() {
     span.email = list(color = "magenta"),
     span.url = list(before = "<", after = ">", color = "blue"),
     span.var = list(color = "magenta"),
-    span.envvar = list(color = "magenta")
+    span.envvar = list(color = "magenta"),
+    span.val = list(
+      transform = function(x, ...) cli_format(x, ...),
+      color = "blue"
+    )
   )
 }
 

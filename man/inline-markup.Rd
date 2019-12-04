@@ -51,6 +51,7 @@ The default theme defines the following inline classes:
 \item \code{url} for a URL.
 \item \code{var} for a variable name.
 \item \code{envvar} for the name of an environment variable.
+\item \code{val} for a "value".
 }
 
 See examples below.
@@ -65,6 +66,14 @@ using them, see the example below.
 When cli performs inline text formatting, it automatically collapses
 glue substitutions, after formatting. This is handy to create lists of
 files, packages, etc. See examples below.
+}
+
+\section{Formatting values}{
+
+
+The \code{val} inline class formats values. By default (c.f. the builtin
+theme), it calls the \code{\link[=cli_format]{cli_format()}} generic function, with the current
+style as the argument. See \code{\link[=cli_format]{cli_format()}} for examples.
 }
 
 \section{Escaping \verb{\{} and \verb{\}}}{
