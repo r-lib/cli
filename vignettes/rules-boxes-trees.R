@@ -17,3 +17,6 @@ asciicast::init_knitr_engine(
   echo = TRUE,
   echo_input = FALSE)
 
+## ----setup----------------------------------------------------------------------------------------
+library(cli)
+

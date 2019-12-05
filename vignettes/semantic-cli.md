@@ -51,7 +51,7 @@ cli_alert_success("Updated database.")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-3.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-2.svg" width="100%" />
 
 
 ```asciicast
@@ -59,7 +59,7 @@ cli_alert_info("Reopened database.")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-4.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-3.svg" width="100%" />
 
 
 ```asciicast
@@ -67,7 +67,7 @@ cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-5.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-4.svg" width="100%" />
 
 
 ```asciicast
@@ -75,7 +75,7 @@ cli_alert_danger("Failed to connect to database.")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-6.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-5.svg" width="100%" />
 
 
 ```asciicast
@@ -83,7 +83,7 @@ cli_alert("A generic alert")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-7.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-6.svg" width="100%" />
 
 ## Text
 
@@ -95,7 +95,7 @@ cli_text(cli:::lorem_ipsum())
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-8.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-7.svg" width="100%" />
 
 ## Paragraphs
 
@@ -118,7 +118,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-9.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-8.svg" width="100%" />
 
 `cli_end()` closes the latest open paragraph (or other open container).
 
@@ -142,7 +142,7 @@ cli_h1("Heading 1")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-10.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-9.svg" width="100%" />
 
 
 ```asciicast
@@ -150,7 +150,7 @@ cli_h2("Heading 2")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-11.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-10.svg" width="100%" />
 
 
 ```asciicast
@@ -158,7 +158,7 @@ cli_h3("Heading 3")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-12.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-11.svg" width="100%" />
 
 ## Interpolation
 
@@ -175,7 +175,7 @@ cli_alert_info(c(
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-13.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-12.svg" width="100%" />
 
 ## Inline text formatting
 
@@ -203,7 +203,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-14.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-13.svg" width="100%" />
 
 To combine inline markup and string interpolation, you need to add another
 set of braces:
@@ -215,7 +215,7 @@ cli_alert_danger("Failed to download {.url {dlurl}}.")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-15.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-14.svg" width="100%" />
 
 ## Inline lists of items
 
@@ -230,7 +230,7 @@ cli_text("Packages: {pkgs}.")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-16.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-15.svg" width="100%" />
 
 
 ```asciicast
@@ -239,7 +239,7 @@ cli_text("Packages: {.pkg {pkgs}}")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-17.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-16.svg" width="100%" />
 
 ## Non-breaking spaces
 
@@ -258,7 +258,7 @@ cli_text(txt)
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-18.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-17.svg" width="100%" />
 
 ## Lists
 
@@ -271,7 +271,7 @@ cli_ol(c("item 1", "item 2", "item 3"))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-19.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-18.svg" width="100%" />
 
 
 ```asciicast
@@ -279,7 +279,7 @@ cli_ul(c("item 1", "item 2", "item 3"))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-20.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-19.svg" width="100%" />
 
 
 ```asciicast
@@ -288,7 +288,7 @@ cli_dl(c("item 1" = "description 1", "item 2" = "description 2",
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-21.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-20.svg" width="100%" />
 
 Item text is wrapped to the terminal width:
 
@@ -299,7 +299,7 @@ cli_ul(c("item 1" = cli:::lorem_paragraph(1, 20),
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-22.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-21.svg" width="100%" />
 
 ### Adding list items iteratively
 
@@ -318,7 +318,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-23.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-22.svg" width="100%" />
 
 The `cli_ul()` call creates a list container, and because its items are
 not specified, it leaves the container open. Then items can be added one
@@ -344,7 +344,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-24.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-23.svg" width="100%" />
 
 ### Nested lists
 
@@ -366,7 +366,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-25.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-24.svg" width="100%" />
 
 In `cli_end(olid)`, the `olid` is necessary, otherwise `cli_end()` would
 only close the container of the list item.
@@ -381,7 +381,7 @@ cli_rule(left = "Compiling {.pkg mypackage}")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-26.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-25.svg" width="100%" />
 
 You can use the usual inline markup in the labels of the rule.
 The rule's appearance is specified in the current theme. In particular:
@@ -435,7 +435,7 @@ f()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-27.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-26.svg" width="100%" />
 
 # Theming
 
@@ -470,7 +470,7 @@ builtin_theme()$h1
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-28.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-27.svg" width="100%" />
 
 See also `?cli::themes` for the reference and `?cli::simple_theme` for
 an example theme.
@@ -494,7 +494,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-29.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-28.svg" width="100%" />
 
 ## Theming inline markup
 
@@ -513,7 +513,7 @@ fun()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-30.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-29.svg" width="100%" />
 
 # CLI messages
 
@@ -540,7 +540,7 @@ suppressMessages(cli_text("Not shown"))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-31.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-30.svg" width="100%" />
 
 # Subprocesses
 
@@ -559,7 +559,7 @@ invisible(rs$close())
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-32.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-31.svg" width="100%" />
 
 # Utility functions
 
@@ -579,7 +579,7 @@ cat(col_red("This ", "is ", "red."), sep = "\n")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-33.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-32.svg" width="100%" />
 
 Foreground colors:
 
@@ -599,7 +599,7 @@ cli_ul(c(
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-34.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-33.svg" width="100%" />
 
 Note that these might actually look different depending on your terminal
 theme. Background colors:
@@ -619,7 +619,7 @@ cli_ul(c(
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-35.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-34.svg" width="100%" />
 
 Text styles:
 
@@ -639,7 +639,7 @@ cli_ul(c(
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-36.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-35.svg" width="100%" />
 
 Not all `style_*` functions are supported by all terminals.
 
@@ -651,7 +651,7 @@ bg_white(style_bold(col_red("TITLE")))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-37.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-36.svg" width="100%" />
 
 `make_ansi_style()` can create custom colors, assuming your terminal
 supports them. `combine_ansi_styles()` combines several styles into a
@@ -665,7 +665,7 @@ cat(col_warn("This is a warning in pink!"))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-38.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-37.svg" width="100%" />
 
 ## Console capabilities
 
@@ -676,7 +676,7 @@ console_width()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-39.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-38.svg" width="100%" />
 
 Query if the console supports ansi escapes:
 
@@ -685,7 +685,7 @@ is_ansi_tty()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-40.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-39.svg" width="100%" />
 
 Hide the cursor, if the console supports it (no-op otherwise):
 
@@ -703,7 +703,7 @@ is_dynamic_tty()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-42.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-41.svg" width="100%" />
 
 Query if the console supports UTF-8 output:
 
@@ -712,7 +712,7 @@ is_utf8_output()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-43.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-42.svg" width="100%" />
 
 ## Unicode characters
 
@@ -727,7 +727,7 @@ cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-44.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-43.svg" width="100%" />
 
 Here is a list of all symbols:
 
@@ -737,7 +737,7 @@ list_symbols()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-45.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-44.svg" width="100%" />
 
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
@@ -754,7 +754,7 @@ list_spinners()
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-46.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-45.svg" width="100%" />
 
 
 ```asciicast
@@ -762,7 +762,7 @@ get_spinner("dots")
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-47.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-46.svg" width="100%" />
 
 
 ```asciicast
@@ -770,7 +770,7 @@ ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-48.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-47.svg" width="100%" />
 
 
 ```asciicast
@@ -778,4 +778,4 @@ ansi_with_hidden_cursor(demo_spinners("clock"))
 ```
 
 
-<img src="semantic-cli_files/figure-html//unnamed-chunk-49.svg" width="100%" />
+<img src="semantic-cli_files/figure-html//unnamed-chunk-48.svg" width="100%" />
