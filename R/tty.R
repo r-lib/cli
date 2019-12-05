@@ -1,4 +1,38 @@
 
+is_interactive <- function() {
+  opt <- getOption("rlib_interactive")
+  if (isTRUE(opt)) {
+    TRUE
+  } else if (identical(opt, FALSE)) {
+    FALSE
+  } else if (tolower(getOption("knitr.in.progress", "false")) == "true") {
+    FALSE
+  } else if (tolower(getOption("rstudio.notebook.executing", "false")) == "true") {
+    FALSE
+  } else if (identical(Sys.getenv("TESTTHAT"), "true")) {
+    FALSE
+  } else {
+    interactive()
+  }
+}
+
+#' The connection option that cli would use
+#'
+#' Note that this only refers to the current R process. If the output
+#' is produced in another process, then it is not relevant.
+#'
+#' In interactive sessions the standard output is chosen, othrwise the
+#' standard error is used. This is to avoid painting output messages red
+#' in the R GUIs.
+#'
+#' @return Connection object.
+#'
+#' @export
+
+cli_output_connection <- function() {
+  if (is_interactive()) stdout() else stderr()
+}
+
 is_stdout <- function(stream) {
   identical(stream, stdout()) && sink.number() == 0
 }
@@ -11,17 +45,8 @@ is_stdx <- function(stream){
   is_stdout(stream) || is_stderr(stream)
 }
 
-is_rstudio <- function() {
-  Sys.getenv("RSTUDIO") == 1
-}
-
-is_rstudio_terminal <- function() {
-  Sys.getenv("RSTUDIO_TERM", "") != ""
-}
-
-is_rstudio_stdx <- function(stream) {
-  interactive() &&
-    is_rstudio() &&
+is_rstudio_dynamic_tty <- function(stream) {
+  rstudio$detect()[["dynamic_tty"]] &&
     (is_stdout(stream) || is_stderr(stream))
 }
 
@@ -69,7 +94,7 @@ is_rkward_stdx <- function(stream) {
 #' 4. If `R_CLI_DYNAMIC` is not empty and set to anything else, `FALSE` is
 #'    returned.
 #' 5. If the stream is a terminal, then `TRUE` is returned.
-#' 6. If the stream is hte standard output or error within RStudio,
+#' 6. If the stream is the standard output or error within RStudio,
 #'    the macOS R app, or RKWard IDE, `TRUE` is returned.
 #' 7. Otherwise `FALSE` is returned.
 #'
@@ -83,7 +108,7 @@ is_rkward_stdx <- function(stream) {
 #' is_dynamic_tty()
 #' is_dynamic_tty(stdout())
 
-is_dynamic_tty <- function(stream = stderr()) {
+is_dynamic_tty <- function(stream = cli_output_connection()) {
   ## Option?
   if (!is.null(x <- getOption("cli.dynamic"))) {
     return(isTRUE(x))
@@ -98,7 +123,7 @@ is_dynamic_tty <- function(stream = stderr()) {
   ## RGui has isatty(stdout()) and isatty(stderr()), so we don't need
   ## to check that explicitly
   isatty(stream) ||
-    is_rstudio_stdx(stream) ||
+    is_rstudio_dynamic_tty() ||
     is_rapp_stdx(stream) ||
     is_rkward_stdx(stream)
 }
@@ -127,10 +152,12 @@ ANSI_SHOW_CURSOR <- paste0(ANSI_ESC, "?25h")
 #' is_ansi_tty()
 
 is_ansi_tty <- function(stream = stderr()) {
+  # RStudio is handled separately
+  if (rstudio$detect()[["ansi_tty"]] && is_stdx(stream)) return(TRUE)
+
   isatty(stream) &&
     .Platform$OS.type == "unix" &&
     !is_rapp() &&
-    (!is_rstudio() || is_rstudio_terminal()) &&
     !is_emacs() &&
     Sys.getenv("TERM", "") != "dumb" &&
     is_stdx(stream)

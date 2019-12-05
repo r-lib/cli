@@ -79,7 +79,7 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
   if (! inherits(output, "connection")) {
     output <- switch(
       output,
-      "auto" = if (is_interactive()) stdout() else stderr(),
+      "auto" = cli_output_connection(),
       "message" = ,
       "stderr" = stderr(),
       "stdout" = stdout()
@@ -90,21 +90,4 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
     signalCondition(simpleMessage(msg))
     cat(msg, file = output, sep = "")
   })
-}
-
-is_interactive <- function() {
-  opt <- getOption("rlib_interactive")
-  if (isTRUE(opt)) {
-    TRUE
-  } else if (identical(opt, FALSE)) {
-    FALSE
-  } else if (tolower(getOption("knitr.in.progress", "false")) == "true") {
-    FALSE
-  } else if (tolower(getOption("rstudio.notebook.executing", "false")) == "true") {
-    FALSE
-  } else if (identical(Sys.getenv("TESTTHAT"), "true")) {
-    FALSE
-  } else {
-    interactive()
-  }
 }
