@@ -123,7 +123,7 @@ is_dynamic_tty <- function(stream = cli_output_connection()) {
   ## RGui has isatty(stdout()) and isatty(stderr()), so we don't need
   ## to check that explicitly
   isatty(stream) ||
-    is_rstudio_dynamic_tty() ||
+    is_rstudio_dynamic_tty(stream) ||
     is_rapp_stdx(stream) ||
     is_rkward_stdx(stream)
 }
