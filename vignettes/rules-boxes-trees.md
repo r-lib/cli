@@ -1,7 +1,7 @@
 ---
 title: "Rules, Boxes and Trees"
 author: "Gábor Csárdi"
-date: "`r Sys.Date()`"
+date: "2019-12-05"
 output:
   rmarkdown::html_vignette:
     keep_md: true
@@ -13,27 +13,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE, cache = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  out.width = "100%",
-  cache = TRUE
-)
-# Turn on ANSI colors
-options(
-    crayon.enabled = TRUE,
-    crayon.colors = 256)
-crayon::num_colors(forget = TRUE)
-asciicast::init_knitr_engine(
-  startup = quote({
-    library(cli)
-    set.seed(1) }),
-  echo = TRUE,
-  echo_input = FALSE)
-```
 
-```{r setup}
+
+
+```r
 library(cli)
 ```
 
@@ -50,144 +33,261 @@ instead.
 
 ## Simple rule, double rule, bars
 
-```{asciicast}
+
+```asciicast
 rule()
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-2.svg" width="100%" />
+
+
+```asciicast
 rule(line = 2)
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-3.svg" width="100%" />
+
+
+```asciicast
 rule(line = "bar2")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-4.svg" width="100%" />
+
+
+```asciicast
 rule(line = "bar5")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-5.svg" width="100%" />
+
+
+```asciicast
 rule(center = "TITLE", line = "~")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-6.svg" width="100%" />
+
 ## Labels
 
-```{asciicast}
+
+```asciicast
 rule(left = "Results")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-7.svg" width="100%" />
+
+
+```asciicast
 rule(center = " * RESULTS * ")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-8.svg" width="100%" />
+
 ## Colors
 
-```{asciicast}
+
+```asciicast
 rule(center = col_red(" * RESULTS * "))
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-9.svg" width="100%" />
+
+
+```asciicast
 rule(center = " * RESULTS * ", col = "red")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-10.svg" width="100%" />
+
+
+```asciicast
 rule(center = " * RESULTS * ", line_col = "red")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-11.svg" width="100%" />
+
+
+```asciicast
 rule(center = "TITLE", line = "~-", line_col = "blue")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-12.svg" width="100%" />
+
+
+```asciicast
 rule(center = bg_red(" ", symbol$star, "TITLE", symbol$star, " "),
   line = "\u2582", line_col = "orange")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-13.svg" width="100%" />
+
 # Boxes
 
-```{asciicast}
+
+```asciicast
 boxx("Hello there!")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-14.svg" width="100%" />
+
 ## Change border style
 
-```{asciicast}
+
+```asciicast
 boxx("Hello there!", border_style = "double")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-15.svg" width="100%" />
+
 ## Multiple lines of text
 
-```{asciicast}
+
+```asciicast
 boxx(c("Hello", "there!"), padding = 1)
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-16.svg" width="100%" />
+
 ## Padding and margin
 
-```{asciicast}
+
+```asciicast
 boxx("Hello there!", padding = 1)
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-17.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", padding = c(1, 5, 1, 5))
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-18.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", margin = 1)
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-19.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", margin = c(1, 5, 1, 5))
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-20.svg" width="100%" />
+
 ## Floating
 
-```{asciicast}
+
+```asciicast
 boxx("Hello there!", padding = 1, float = "center")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-21.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", padding = 1, float = "right")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-22.svg" width="100%" />
+
 ## Colors
 
-```{asciicast}
+
+```asciicast
 boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-23.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", padding = 1, background_col = "brown")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-24.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", padding = 1, background_col = bg_red)
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-25.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", padding = 1, border_col = "green")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-26.svg" width="100%" />
+
+
+```asciicast
 boxx("Hello there!", padding = 1, border_col = col_red)
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-27.svg" width="100%" />
+
 ## Label alignment
 
-```{asciicast}
+
+```asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-28.svg" width="100%" />
+
+
+```asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
 ```
 
-```{asciicast}
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-29.svg" width="100%" />
+
+
+```asciicast
 boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-30.svg" width="100%" />
+
 ## A very customized box
 
-```{asciicast}
+
+```asciicast
 star <- symbol$star
 label <- c(paste(star, "Hello", star), "  there!")
 boxx(
@@ -200,12 +300,16 @@ boxx(
 )
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-31.svg" width="100%" />
+
 # Trees
 
 You can specify the tree with a two column data frame, containing the
 node ids/labels, and the list of their children.
 
-```{asciicast}
+
+```asciicast
 data <- data.frame(
   stringsAsFactors = FALSE,
   package = c("processx", "backports", "assertthat", "Matrix",
@@ -227,10 +331,14 @@ data <- data.frame(
 tree(data, root = "rcmdcheck")
 ```
 
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-32.svg" width="100%" />
+
 An optional third column may contain custom labels. These can be colored
 as well:
 
-```{asciicast}
+
+```asciicast
 data$label <- paste(data$package,
   col_grey(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
@@ -241,3 +349,6 @@ roots <- ! data$package %in% unlist(data$dependencies)
 data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 ```
+
+
+<img src="rules-boxes-trees_files/figure-html//unnamed-chunk-33.svg" width="100%" />

@@ -1,7 +1,7 @@
 ---
 title: "Building a Semantic CLI"
 author: "Gábor Csárdi"
-date: "`r Sys.Date()`"
+date: "2019-12-05"
 output:
   rmarkdown::html_vignette:
     keep_md: true
@@ -13,25 +13,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE, cache = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  out.width = "100%",
-  cache = TRUE
-)
-# Turn on ANSI colors
-options(
-    crayon.enabled = TRUE,
-    crayon.colors = 256)
-crayon::num_colors(forget = TRUE)
-asciicast::init_knitr_engine(
-  startup = quote({
-    library(cli)
-    set.seed(1) }),
-  echo = TRUE,
-  echo_input = FALSE)
-```
+
 
 # Introduction
 
@@ -49,7 +31,8 @@ functions and also some common features of them.
 
 # Building a command line interface
 
-```{r, cache = FALSE}
+
+```r
 library(cli)
 ```
 
@@ -62,33 +45,57 @@ current theme, see 'Theming' below.
 Alerts are typically short messages. cli has four types of alerts (success,
 info, warning, danger) and also a generic alert type:
 
-```{asciicast}
+
+```asciicast
 cli_alert_success("Updated database.")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-3.svg" width="100%" />
+
+
+```asciicast
 cli_alert_info("Reopened database.")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-4.svg" width="100%" />
+
+
+```asciicast
 cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-5.svg" width="100%" />
+
+
+```asciicast
 cli_alert_danger("Failed to connect to database.")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-6.svg" width="100%" />
+
+
+```asciicast
 cli_alert("A generic alert")
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-7.svg" width="100%" />
 
 ## Text
 
 Text is automatically wrapped to the terminal width.
 
-```{asciicast}
+
+```asciicast
 cli_text(cli:::lorem_ipsum())
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-8.svg" width="100%" />
 
 ## Paragraphs
 
@@ -96,7 +103,8 @@ Paragraphs break the output. The default theme inserts an empty line
 before and after paragraphs, but only a single empty line is added between
 two paragraphs.
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   cli_par()
   cli_text("This is some text.")
@@ -108,6 +116,9 @@ fun <- function() {
 }
 fun()
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-9.svg" width="100%" />
 
 `cli_end()` closes the latest open paragraph (or other open container).
 
@@ -125,30 +136,46 @@ cli suppports three levels of headings. This is how they look in the default
 theme. The default theme adds an empty line before headings, and an empty
 line after `cli_h1()` and `cli_h2()`.
 
-```{asciicast}
+
+```asciicast
 cli_h1("Heading 1")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-10.svg" width="100%" />
+
+
+```asciicast
 cli_h2("Heading 2")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-11.svg" width="100%" />
+
+
+```asciicast
 cli_h3("Heading 3")
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-12.svg" width="100%" />
 
 ## Interpolation
 
 All cli text is treated as a glue template, with special formatters
 available (see the 'Inline text formatting' Section):
 
-```{asciicast}
+
+```asciicast
 size <- 123143123
 dt <- 1.3454
 cli_alert_info(c(
   "Downloaded {prettyunits::pretty_bytes(size)} in ",
   "{prettyunits::pretty_sec(dt)}"))
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-13.svg" width="100%" />
 
 ## Inline text formatting
 
@@ -157,7 +184,8 @@ after the opening brace, supply the name of the markup formatter with a
 leading dot, e.g. for emphasised text, you use `.emph`.
 Some examples are below, see `?"inline-markup"` for details.
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   cli_ul()
   cli_li("{.emph Emphasized} text")
@@ -174,13 +202,20 @@ fun <- function() {
 fun()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-14.svg" width="100%" />
+
 To combine inline markup and string interpolation, you need to add another
 set of braces:
 
-```{asciicast}
+
+```asciicast
 dlurl <- "https://httpbin.org/status/404"
 cli_alert_danger("Failed to download {.url {dlurl}}.")
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-15.svg" width="100%" />
 
 ## Inline lists of items
 
@@ -188,15 +223,23 @@ When cli performs inline text formatting, it automatically collapses
 glue substitutions, after formatting. This is handy to create lists of
 files, packages, etc.
 
-```{asciicast}
+
+```asciicast
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: {pkgs}.")
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-16.svg" width="100%" />
+
+
+```asciicast
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: {.pkg {pkgs}}")
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-17.svg" width="100%" />
 
 ## Non-breaking spaces
 
@@ -204,7 +247,8 @@ Use `\u00a0` to create a non-breaking space. E.g. in here we insert some
 non-breaking spaces, and mark them with an `X`, so it is easy to see that
 there are no line breaks at a non-breaking space:
 
-```{asciicast}
+
+```asciicast
 # Make some spaces non-breaking, and mark them with X
 txt <- cli:::lorem_ipsum()
 mch <- gregexpr(txt, pattern = " ", fixed = TRUE)
@@ -213,36 +257,56 @@ regmatches(txt, mch)[[1]] <- ifelse(nbs, "X\u00a0", " ")
 cli_text(txt)
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-18.svg" width="100%" />
+
 ## Lists
 
 cli has three types of list: ordered, unordered and definition lists, see
 `cli_ol()`, `cli_ul()` amd `cli_dl()`:
 
-```{asciicast}
+
+```asciicast
 cli_ol(c("item 1", "item 2", "item 3"))
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-19.svg" width="100%" />
+
+
+```asciicast
 cli_ul(c("item 1", "item 2", "item 3"))
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-20.svg" width="100%" />
+
+
+```asciicast
 cli_dl(c("item 1" = "description 1", "item 2" = "description 2",
          "item 3" = "description 3"))
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-21.svg" width="100%" />
+
 Item text is wrapped to the terminal width:
 
-```{asciicast}
+
+```asciicast
 cli_ul(c("item 1" = cli:::lorem_paragraph(1, 20),
          "item 2" = cli:::lorem_paragraph(1, 20)))
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-22.svg" width="100%" />
 
 ### Adding list items iteratively
 
 Items can be added one by one:
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   lid <- cli_ul()
   cli_li("Item 1")
@@ -252,6 +316,9 @@ fun <- function() {
 }
 fun()
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-23.svg" width="100%" />
 
 The `cli_ul()` call creates a list container, and because its items are
 not specified, it leaves the container open. Then items can be added one
@@ -265,7 +332,8 @@ container. You can keep adding text to the item, until the
 container is closed via `cli_end()` or a new `cli_li()`, which closes
 the current item container, and creates another one for the new item:
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   cli_ul()
   cli_li("First item")
@@ -275,11 +343,15 @@ fun <- function() {
 fun()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-24.svg" width="100%" />
+
 ### Nested lists
 
 To create nested lists, open nested containers:
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   cli_ol()
   cli_li("Item 1")
@@ -293,6 +365,9 @@ fun <- function() {
 fun()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-25.svg" width="100%" />
+
 In `cli_end(olid)`, the `olid` is necessary, otherwise `cli_end()` would
 only close the container of the list item.
 
@@ -300,9 +375,13 @@ only close the container of the list item.
 
 `cli_rule()` creates a horizontal rule.
 
-```{asciicast}
+
+```asciicast
 cli_rule(left = "Compiling {.pkg mypackage}")
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-26.svg" width="100%" />
 
 You can use the usual inline markup in the labels of the rule.
 The rule's appearance is specified in the current theme. In particular:
@@ -338,7 +417,8 @@ While the status bar is active, cli can still produce output, as normal.
 This output is created "above" the status bar, which is always kept in the
 last line of the screen. See the following example:
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 30)}
+
+```asciicast
 f <- function() {
   cli_alert_info("About to start downloads.")
   sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
@@ -353,6 +433,9 @@ f <- function() {
 }
 f()
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-27.svg" width="100%" />
 
 # Theming
 
@@ -381,9 +464,13 @@ A cli theme is a named list, where the names are selectors based on tag
 names, ids and classes, and the elements of the list are style declarations.
 For example, the style of `<h1>` tags looks like this in the built-in theme:
 
-```{asciicast}
+
+```asciicast
 builtin_theme()$h1
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-28.svg" width="100%" />
 
 See also `?cli::themes` for the reference and `?cli::simple_theme` for
 an example theme.
@@ -395,7 +482,8 @@ it can add a new theme. This theme is removed when the `<div>` node is
 closed. (Like other containers, `cli_div()` auto-closes when the calling
 function exits.)
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   cli_div(theme = list (.alert = list(color = "red")))
   cli_alert("This will be red")
@@ -405,12 +493,16 @@ fun <- function() {
 fun()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-29.svg" width="100%" />
+
 ## Theming inline markup
 
 The inline markup formatters always use a `<span>` tag, and add the name
 of the formatter as a class.
 
-```{asciicast}
+
+```asciicast
 fun <- function() {
   cli_div(theme = list(span.emph = list(color = "orange")))
   cli_text("This is very {.emph important}")
@@ -419,6 +511,9 @@ fun <- function() {
 }
 fun()
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-30.svg" width="100%" />
 
 # CLI messages
 
@@ -438,10 +533,14 @@ When a cli function is called:
    the default cli handler is called, which shows the text, alert, heading,
    etc. on the screen, using the standard R `message()` function.
 
-```{asciicast}
+
+```asciicast
 tryCatch(cli_h1("Heading"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-31.svg" width="100%" />
 
 # Subprocesses
 
@@ -449,7 +548,8 @@ If `cli_*()` commands are invoked in a subprocess via
 `callr::r_session` (see https://callr.r-lib.org), then they are
 automatically copied to the main R process:
 
-```{asciicast}
+
+```asciicast
 rs <- callr::r_session$new()
 rs$run(function() {
   cli::cli_text("This is subprocess {.emph {Sys.getpid()}} from {.pkg callr}")
@@ -457,6 +557,9 @@ rs$run(function() {
 })
 invisible(rs$close())
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-32.svg" width="100%" />
 
 # Utility functions
 
@@ -470,13 +573,18 @@ change the style of the text in some way.
 These functions concatenate their arguments using `paste0()`, and add
 the `ansi_string` class to their result:
 
-```{asciicast}
+
+```asciicast
 cat(col_red("This ", "is ", "red."), sep = "\n")
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-33.svg" width="100%" />
+
 Foreground colors:
 
-```{asciicast}
+
+```asciicast
 cli_ul(c(
   col_black("black"),
   col_blue("blue"),
@@ -490,10 +598,14 @@ cli_ul(c(
 ))
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-34.svg" width="100%" />
+
 Note that these might actually look different depending on your terminal
 theme. Background colors:
 
-```{asciicast}
+
+```asciicast
 cli_ul(c(
   bg_black("black background"),
   bg_blue("blue background"),
@@ -506,9 +618,13 @@ cli_ul(c(
 ))
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-35.svg" width="100%" />
+
 Text styles:
 
-```{asciicast}
+
+```asciicast
 cli_ul(c(
   style_dim("dim style"),
   style_blurred("blurred style"),
@@ -522,38 +638,58 @@ cli_ul(c(
 ))
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-36.svg" width="100%" />
+
 Not all `style_*` functions are supported by all terminals.
 
 Colors, background colors and styles can be combined:
 
-```{asciicast}
+
+```asciicast
 bg_white(style_bold(col_red("TITLE")))
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-37.svg" width="100%" />
 
 `make_ansi_style()` can create custom colors, assuming your terminal
 supports them. `combine_ansi_styles()` combines several styles into a
 function:
 
-```{asciicast}
+
+```asciicast
 col_warn <- combine_ansi_styles(make_ansi_style("pink"), style_bold)
 col_warn("This is a warning in pink!")
 cat(col_warn("This is a warning in pink!"))
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-38.svg" width="100%" />
+
 ## Console capabilities
 
 Query the console width:
-```{asciicast}
+
+```asciicast
 console_width()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-39.svg" width="100%" />
+
 Query if the console supports ansi escapes:
-```{asciicast}
+
+```asciicast
 is_ansi_tty()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-40.svg" width="100%" />
+
 Hide the cursor, if the console supports it (no-op otherwise):
-```{r}
+
+```r
 ansi_hide_cursor()
 ansi_show_cursor()
 ```
@@ -561,14 +697,22 @@ ansi_show_cursor()
 See also `ansi_with_hidden_cursor()`.
 
 Query if the console supports `\r`:
-```{asciicast}
+
+```asciicast
 is_dynamic_tty()
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-42.svg" width="100%" />
+
 Query if the console supports UTF-8 output:
-```{asciicast}
+
+```asciicast
 is_utf8_output()
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-43.svg" width="100%" />
 
 ## Unicode characters
 
@@ -577,15 +721,23 @@ useful in CLI messages. They automatically fall back to ASCII symbols
 if the platform does not support them. You can use these symbols both
 with the semantic `cli_*()` functions and directly.
 
-```{asciicast}
+
+```asciicast
 cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")
 ```
 
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-44.svg" width="100%" />
+
 Here is a list of all symbols:
 
-```{asciicast}
+
+```asciicast
 list_symbols()
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-45.svg" width="100%" />
 
 Most symbols were inspired by (and copied from) the awesome
 [figures](https://github.com/sindresorhus/figures) JavaScript project.
@@ -596,18 +748,34 @@ See `list_spinners()` and `get_spinner()`. From the awesome
 [cli-spinners](https://github.com/sindresorhus/cli-spinners#readme)
 project.
 
-```{asciicast}
+
+```asciicast
 list_spinners()
 ```
 
-```{asciicast}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-46.svg" width="100%" />
+
+
+```asciicast
 get_spinner("dots")
 ```
 
-```{asciicast, R.options = list(asciicast_at = NULL)}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-47.svg" width="100%" />
+
+
+```asciicast
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
-```{asciicast, R.options = list(asciicast_at = NULL)}
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-48.svg" width="100%" />
+
+
+```asciicast
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```
+
+
+<img src="semantic-cli_files/figure-html//unnamed-chunk-49.svg" width="100%" />
