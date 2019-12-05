@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Detect whether a stream supports <code>\\r</code> (Carriage return) — is_dynamic_tty • cli</title>
+<title>The connection option that cli would use — cli_output_connection • cli</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,9 @@
 
 
 
-<meta property="og:title" content="Detect whether a stream supports <code>\\r</code> (Carriage return) — is_dynamic_tty" />
-<meta property="og:description" content="In a terminal, \\r moves the cursor to the first position of the
-same line. It is also supported by most R IDEs. \\r is typically
-used to achive a more dynamic, less cluttered user interface, e.g.
-to create progress bars." />
+<meta property="og:title" content="The connection option that cli would use — cli_output_connection" />
+<meta property="og:description" content="Note that this only refers to the current R process. If the output
+is produced in another process, then it is not relevant." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,65 +127,34 @@ to create progress bars." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Detect whether a stream supports <code>\\r</code> (Carriage return)</h1>
+    <h1>The connection option that cli would use</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/tty.R'><code>R/tty.R</code></a></small>
-    <div class="hidden name"><code>is_dynamic_tty.Rd</code></div>
+    <div class="hidden name"><code>cli_output_connection.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>In a terminal, <code>\\r</code> moves the cursor to the first position of the
-same line. It is also supported by most R IDEs. <code>\\r</code> is typically
-used to achive a more dynamic, less cluttered user interface, e.g.
-to create progress bars.</p>
+    <p>Note that this only refers to the current R process. If the output
+is produced in another process, then it is not relevant.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_dynamic_tty</span>(<span class='kw'>stream</span> <span class='kw'>=</span> <span class='fu'><a href='cli_output_connection.html'>cli_output_connection</a></span>())</pre>
+    <pre class="usage"><span class='fu'>cli_output_connection</span>()</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>stream</th>
-      <td><p>The stream to inspect, an R connection object.
-Note that it defaults to the standard <em>error</em> stream, since
-informative messages are typically printed there.</p></td>
-    </tr>
-    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Connection object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If the output is directed to a file, then <code>\\r</code> characters are typically
-unwanted. This function detects if <code>\\r</code> can be used for the given
-stream or not.</p>
-<p>The detection mechanism is as follows:</p><ol>
-<li><p>If the <code>cli.dynamic</code> option is set to <code>TRUE</code>, <code>TRUE</code> is returned.</p></li>
-<li><p>If the <code>cli.dynamic</code> option is set to anything else, <code>FALSE</code> is
-returned.</p></li>
-<li><p>If the <code>R_CLI_DYNAMIC</code> environment variable is not empty and set to
-the string <code>"true"</code>, <code>"TRUE"</code> or <code>"True"</code>, <code>TRUE</code> is returned.</p></li>
-<li><p>If <code>R_CLI_DYNAMIC</code> is not empty and set to anything else, <code>FALSE</code> is
-returned.</p></li>
-<li><p>If the stream is a terminal, then <code>TRUE</code> is returned.</p></li>
-<li><p>If the stream is the standard output or error within RStudio,
-the macOS R app, or RKWard IDE, <code>TRUE</code> is returned.</p></li>
-<li><p>Otherwise <code>FALSE</code> is returned.</p></li>
-</ol>
+    <p>In interactive sessions the standard output is chosen, othrwise the
+standard error is used. This is to avoid painting output messages red
+in the R GUIs.</p>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other terminal capabilities: 
-<code><a href='is_ansi_tty.html'>is_ansi_tty</a>()</code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>is_dynamic_tty</span>()</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_dynamic_tty</span>(<span class='fu'><a href='https://rdrr.io/r/base/showConnections.html'>stdout</a></span>())</div><div class='output co'>#&gt; [1] FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
