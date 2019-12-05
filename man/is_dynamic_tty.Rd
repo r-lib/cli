@@ -4,7 +4,7 @@
 \alias{is_dynamic_tty}
 \title{Detect whether a stream supports \verb{\\\\r} (Carriage return)}
 \usage{
-is_dynamic_tty(stream = stderr())
+is_dynamic_tty(stream = cli_output_connection())
 }
 \arguments{
 \item{stream}{The stream to inspect, an R connection object.
@@ -32,7 +32,7 @@ the string \code{"true"}, \code{"TRUE"} or \code{"True"}, \code{TRUE} is returne
 \item If \code{R_CLI_DYNAMIC} is not empty and set to anything else, \code{FALSE} is
 returned.
 \item If the stream is a terminal, then \code{TRUE} is returned.
-\item If the stream is hte standard output or error within RStudio,
+\item If the stream is the standard output or error within RStudio,
 the macOS R app, or RKWard IDE, \code{TRUE} is returned.
 \item Otherwise \code{FALSE} is returned.
 }
