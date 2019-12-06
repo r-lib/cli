@@ -1,12 +1,12 @@
 ---
 title: "CLI pluralization"
 author: "Gábor Csárdi"
-date: "2019-12-05"
+date: "2019-12-06"
 output:
   rmarkdown::html_vignette:
     keep_md: true
 vignette: >
-  %\VignetteIndexEntry{asciicast example vignette}
+  %\VignetteIndexEntry{CLI pluralization}
   %\VignetteEngine{cli::lazyrmd}
   %\VignetteEncoding{UTF-8}
 ---
