@@ -170,6 +170,7 @@ fun <- function() {
   cli_li("An email address: {.email bugs.bunny@acme.com}")
   cli_li("A URL: {.url https://acme.com}")
   cli_li("An environment variable: {.envvar R_LIBS}")
+  cli_li("Some {.field field}")
 }
 fun()
 ```
@@ -180,6 +181,16 @@ set of braces:
 ```{asciicast}
 dlurl <- "https://httpbin.org/status/404"
 cli_alert_danger("Failed to download {.url {dlurl}}.")
+```
+
+`"val"` is a special inline style, that in the default theme calls
+`cli_format()` to tailor the conversion of values to strings. The conversion
+can be themed, see "Theming" below.
+
+```{asciicast}
+cli_div(theme = list(.val = list(digits = 2)))
+cli_text("Some random numbers: {.val {runif(4)}}.")
+cli_end()
 ```
 
 ## Inline lists of items

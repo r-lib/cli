@@ -124,7 +124,8 @@ builtin_theme <- function() {
     span.val = list(
       transform = function(x, ...) cli_format(x, ...),
       color = "blue"
-    )
+    ),
+    span.field = list(color = "green")
   )
 }
 
