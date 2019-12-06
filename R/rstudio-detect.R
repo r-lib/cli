@@ -37,6 +37,10 @@ rstudio <- local({
 
   # -- Auto-detect environment -------------------------------------------
 
+  is_rstudio <- function() {
+    Sys.getenv("RSTUDIO") == "1"
+  }
+
   detect <- function(clear_cache = FALSE) {
     # Cached?
     if (clear_cache) data <<- list()
@@ -161,6 +165,7 @@ rstudio <- local({
   structure(
     list(
       .internal = standalone_env,
+      is_rstudio = is_rstudio,
       detect = detect
     ),
     class = c("standalone_rstudio_detect", "standalone")

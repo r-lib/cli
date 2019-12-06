@@ -23,11 +23,21 @@ clienv$pid <- Sys.getpid()
       ## If `cli.unicode` is set we use that
       opt <- getOption("cli.unicode",  NULL)
       if (!is.null(opt)) {
-        if (isTRUE(opt)) return(symbol_utf8) else return(symbol_ascii)
+        if (isTRUE(opt)) {
+          if (rstudio$is_rstudio()) {
+            return(symbol_rstudio)
+          } else {
+            return(symbol_utf8)
+          }
+        } else {
+          return(symbol_ascii)
+        }
       }
 
       ## Otherwise we try to auto-detect
-      if (is_utf8_output()) {
+      if (rstudio$is_rstudio()) {
+        symbol_rstudio
+      } else if (is_utf8_output()) {
         symbol_utf8
       } else if (is_latex_output()) {
         symbol_ascii

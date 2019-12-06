@@ -109,6 +109,25 @@ symbol_utf8 <- list(
   "squote_right" = "\u2019"
 )
 
+symbol_rstudio <- symbol_utf8
+symbol_rstudio$tick <- "\u2713"
+symbol_rstudio$cross <- "x"
+symbol_rstudio$star <- "\u066d"
+symbol_rstudio$square # ???
+symbol_rstudio$square_small # ???
+symbol_rstudio$suare_small_filled # ???
+symbol_rstudio$circle_circle # ???
+symbol_rstudio$circle_cross # ???
+symbol_rstudio$circle_pipe # ???
+symbol_rstudio$circle_question_mark # ???
+symbol_rstudio$pointer <- ">"
+symbol_rstudio$warning <- "!"
+symbol_rstudio$menu # ???
+symbol_rstudio$mustache # ???
+symbol_rstudio$checkbox_circle_on # ???
+symbol_rstudio$checkbox_circle_off # ???
+symbol_rstudio$fancy_question_mark # ???
+
 symbol_win <- list(
   "tick" = '\u221A',
   "cross" = 'x',
