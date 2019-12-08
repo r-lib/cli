@@ -48,7 +48,7 @@
 #' cli_text("URLs: {.url https://r-project.org}")
 #'
 #' cli_h2("Longer code chunk")
-#' cli_par(class = ".code.R")
+#' cli_par(class = "code R")
 #' cli_verbatim(
 #'   '# window functions are useful for grouped mutates',
 #'   'mtcars %>%',
@@ -57,25 +57,15 @@
 #' cli_end()
 #'
 #' cli_h2("Even longer code chunk")
-#' cli_par(class = ".code.r")
+#' cli_par(class = "code R")
 #' cli_verbatim(format(ls))
 #' cli_end()
 #'
 #' cli_end()
 
-simple_theme <- function(dark = "auto") {
+simple_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 
-  if (dark == "auto") {
-    dark <- if (Sys.getenv("RSTUDIO", "0") == "1") {
-      tryCatch(
-        rstudioapi::getThemeInfo()$dark,
-        error = function(x) FALSE)
-    } else if (is_iterm()) {
-      is_iterm_dark()
-    } else {
-      FALSE
-    }
-  }
+  dark <- detect_dark_theme(dark)
 
   list(
     h1 = list(

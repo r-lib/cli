@@ -4,7 +4,7 @@
 \alias{simple_theme}
 \title{A simple CLI theme}
 \usage{
-simple_theme(dark = "auto")
+simple_theme(dark = getOption("cli_theme_dark", "auto"))
 }
 \arguments{
 \item{dark}{Whether the theme should be optiomized for a dark
@@ -27,9 +27,9 @@ You can also use it temporarily, in a div element:\preformatted{cli_div(theme = 
 \examples{
 cli_div(theme = cli::simple_theme())
 
-cli_h1("Header 1")
-cli_h2("Header 2")
-cli_h3("Header 3")
+cli_h1("Heading 1")
+cli_h2("Heading 2")
+cli_h3("Heading 3")
 
 cli_alert_danger("Danger alert")
 cli_alert_warning("Warning alert")
@@ -50,7 +50,7 @@ cli_text("Files: {.file /usr/bin/env}")
 cli_text("URLs: {.url https://r-project.org}")
 
 cli_h2("Longer code chunk")
-cli_par(class = ".code.R")
+cli_par(class = "code R")
 cli_verbatim(
   '# window functions are useful for grouped mutates',
   'mtcars \%>\%',
@@ -59,7 +59,7 @@ cli_verbatim(
 cli_end()
 
 cli_h2("Even longer code chunk")
-cli_par(class = ".code.r")
+cli_par(class = "code R")
 cli_verbatim(format(ls))
 cli_end()
 

@@ -29,3 +29,6 @@ also used to auto-close the container if \code{.auto_close} is \code{TRUE}.}
 \description{
 A section that is quoted from another source. It is typically indented.
 }
+\examples{
+cli_blockquote(cli:::lorem_ipsum(), citation = "Nobody, ever")
+}

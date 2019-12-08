@@ -45,9 +45,16 @@ clii_remove_theme <- function(app, id) {
 #' @seealso [themes], [simple_theme()].
 #' @return A named list, a CLI theme.
 #'
+#' @param dark Whether to use a dark theme. The `cli_theme_dark` option
+#'   can be used to request a dark theme explicitly. If this is not set,
+#'   or set to `"auto"`, then cli tries to detect a dark theme, this
+#'   works in recent RStudio versions and in iTerm on macOS.
 #' @export
 
-builtin_theme <- function() {
+builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
+
+  dark <- detect_dark_theme(dark)
+
   list(
     body = list(
       "class-map" = list(
@@ -57,16 +64,18 @@ builtin_theme <- function() {
 
     h1 = list(
       "font-weight" = "bold",
-      "font-style" = "italic",
       "margin-top" = 1,
-      "margin-bottom" = 1),
+      "margin-bottom" = 0,
+      fmt = function(x) cli::rule(x, line_col = "cyan")),
     h2 = list(
       "font-weight" = "bold",
       "margin-top" = 1,
-      "margin-bottom" = 1),
+      "margin-bottom" = 1,
+      fmt = function(x) paste0(symbol$line, symbol$line, " ", x, " ",
+                               symbol$line, symbol$line)),
     h3 = list(
-      "text-decoration" = "underline",
-      "margin-top" = 1),
+      "margin-top" = 1,
+      fmt = function(x) paste0(symbol$line, symbol$line, " ", x, " ")),
 
     ".alert" = list(
       before = paste0(symbol$arrow_right, " ")
@@ -84,7 +93,7 @@ builtin_theme <- function() {
       before = paste0(crayon::cyan(symbol$info), " ")
     ),
 
-    par = list("margin-top" = 1, "margin-bottom" = 1),
+    par = list("margin-top" = 0, "margin-bottom" = 1),
     li = list("padding-left" = 2),
     ul = list("list-style-type" = symbol$bullet, "padding-left" = 0),
     "ul ul" = list("list-style-type" = symbol$circle, "padding-left" = 2),
@@ -106,25 +115,26 @@ builtin_theme <- function() {
     "blockquote cite" = list(before = paste0(symbol$em_dash, " "),
                              "font-style" = "italic", "font-weight" = "bold"),
 
-    div.code = list(fmt = format_code),
-    div.code.R = list(fmt = format_r_code),
+    .code = list(fmt = format_code(dark)),
+    .code.R = list(fmt = format_r_code(dark)),
 
     span.emph = list("font-style" = "italic"),
     span.strong = list("font-weight" = "bold"),
-    span.code = list(before = "`", after = "`", color = "magenta"),
+    span.code = theme_code_tick(dark),
 
-    span.pkg = list(color = "magenta"),
-    span.fn = list(after = "()", color = "magenta"),
-    span.fun = list(before = "`", after = "()`", color = "magenta"),
-    span.arg = list(before = "`", after = "`", color = "magenta"),
-    span.kbd = list(before = "<", after = ">", color = "magenta"),
-    span.key = list(before = "<", after = ">", color = "magenta"),
-    span.file = list(color = "magenta"),
-    span.path = list(color = "magenta"),
-    span.email = list(color = "magenta"),
-    span.url = list(before = "<", after = ">", color = "blue"),
-    span.var = list(before = "`", after = "`", color = "magenta"),
-    span.envvar = list(color = "magenta"),
+    span.pkg = list(color = "blue"),
+    span.fn = theme_function(dark),
+    span.fun = theme_function(dark),
+    span.arg = theme_code_tick(dark),
+    span.kbd = list(before = "[", after = "]", color = "blue"),
+    span.key = list(before = "[", after = "]", color = "blue"),
+    span.file = list(color = "blue"),
+    span.path = list(color = "blue"),
+    span.email = list(color = "blue"),
+    span.url = list(before = "<", after = ">", color = "blue",
+                    "font-style" = "italic"),
+    span.var = theme_code_tick(dark),
+    span.envvar = theme_code_tick(dark),
     span.val = list(
       transform = function(x, ...) cli_format(x, ...),
       color = "blue"
@@ -133,23 +143,68 @@ builtin_theme <- function() {
   )
 }
 
-format_r_code <- function(x) {
-  x <- crayon::strip_style(x)
-  lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
-  code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
-  format_code(code)
+detect_dark_theme <- function(dark) {
+  if (dark == "auto") {
+    dark <- if (Sys.getenv("RSTUDIO", "0") == "1") {
+      tryCatch(
+        rstudioapi::getThemeInfo()$dark,
+        error = function(x) FALSE)
+    } else if (is_iterm()) {
+      is_iterm_dark()
+    } else {
+      FALSE
+    }
+  }
+
+  dark
 }
 
-format_code <- function(x) {
-  lines <- c("", unlist(strsplit(x, "\n", fixed = TRUE)), "")
-  len <- fansi::nchar_ctl(lines)
-  width <- console_width()
-  padded <- paste0(" ", lines, strrep(" ", width - len), " ")
-  style <-  crayon::combine_styles(
-    crayon::make_style("#232323", bg = TRUE),
-    crayon::make_style("#d0d0d0")
-  )
-  style(padded)
+theme_code <- function(dark) {
+  if (dark) {
+    list("background-color" = "#232323", color = "#d0d0d0")
+  } else{
+    list("background-color" = "#e8e8e8", color = "#202020")
+  }
+}
+
+theme_code_tick <- function(dark) {
+  modifyList(theme_code(dark), list(before = "`", after = "`"))
+}
+
+theme_function <- function(dark) {
+  modifyList(theme_code(dark), list(before = "`", after = "()`"))
+}
+
+format_r_code <- function(dark) {
+  fun <- format_code(dark)
+  function(x) {
+    x <- crayon::strip_style(x)
+    lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
+    code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
+    fun(code)
+  }
+}
+
+format_code <- function(dark) {
+  dark <- dark
+  style <- if (dark) {
+    crayon::combine_styles(
+      crayon::make_style("#232323", bg = TRUE),
+      crayon::make_style("#d0d0d0")
+    )
+  } else {
+    crayon::combine_styles(
+      crayon::make_style("#e8e8e8", bg = TRUE),
+      crayon::make_style("#202020")
+    )
+  }
+  function(x) {
+    lines <- c("", unlist(strsplit(x, "\n", fixed = TRUE)), "")
+    len <- fansi::nchar_ctl(lines)
+    width <- console_width()
+    padded <- paste0(" ", lines, strrep(" ", width - len), " ")
+    style(padded)
+  }
 }
 
 theme_create <- function(theme) {

@@ -440,6 +440,8 @@ cli_rule <- function(left = "", center = "", right = "", id = NULL,
 #' @param citation Source of the quotation, typically a link or the name
 #'   of a person.
 #' @inheritParams cli_div
+#' @examples
+#' cli_blockquote(cli:::lorem_ipsum(), citation = "Nobody, ever")
 
 cli_blockquote <- function(quote, citation = NULL, id = NULL,
                            class = NULL, .envir = parent.frame()) {
