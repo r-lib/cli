@@ -96,7 +96,7 @@
       <h1>Building a Semantic CLI</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2019-12-06</h4>
+            <h4 class="date">2019-12-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/semantic-cli.Rmd"><code>vignettes/semantic-cli.Rmd</code></a></small>
       <div class="hidden name"><code>semantic-cli.Rmd</code></div>
@@ -385,6 +385,15 @@ fun()</code></pre>
 }
 fun()</code></pre>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-30.svg" width="100%"></p>
+<p>In addition to adding inline markup explicitly, like <code>.emph</code> here, cli can use the class(es) of the substituted expression to style it automatically. This can be configured as part of the theme, in the form of a mapping from the <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> of the expression, to the name of the markup formatter. For example, if we have a <code>filename</code> S3 class, we can make sure that it is always shown as a <code>.file</code> in the cli output:</p>
+<pre class="asciicast"><code>fun &lt;- function() {
+  cli_div(theme = list(body = list("class-map" = list("filename" = "file"))))
+  fns &lt;- structure(c("file1", "file2", "file3"), class = "filename")
+  cli_text("Found some files: {fns}.")
+  cli_end()
+}
+fun()</code></pre>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-31.svg" width="100%"></p>
 </div>
 </div>
 <div id="cli-messages" class="section level1">
@@ -400,7 +409,7 @@ fun()</code></pre>
 </ol>
 <pre class="asciicast"><code><a href="https://rdrr.io/r/base/conditions.html">tryCatch(cli_h1("Heading"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-31.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-32.svg" width="100%"></p>
 </div>
 <div id="subprocesses" class="section level1">
 <h1 class="hasAnchor">
@@ -412,7 +421,7 @@ rs$run(function() {
   Sys.getpid()
 })
 invisible(rs$close())</code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-32.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-33.svg" width="100%"></p>
 </div>
 <div id="utility-functions" class="section level1">
 <h1 class="hasAnchor">
@@ -423,7 +432,7 @@ invisible(rs$close())</code></pre>
 <p>cli defines wrapper functions to the crayon package, to create ANSI colored and styled output in the console. <code>col_*</code> functions change the foreground color, <code>bg_*</code> functions change the background color, and <code>style_*</code> functions change the style of the text in some way.</p>
 <p>These functions concatenate their arguments using <code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code>, and add the <code>ansi_string</code> class to their result:</p>
 <pre class="asciicast"><code><a href="https://rdrr.io/r/base/cat.html">cat(col_red("This ", "is ", "red."), sep = "\n")</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-33.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-34.svg" width="100%"></p>
 <p>Foreground colors:</p>
 <pre class="asciicast"><code><a href="../reference/cli_ul.html">cli_ul(c(
   col_black("black"),
@@ -436,7 +445,7 @@ invisible(rs$close())</code></pre>
   col_yellow("yellow"),
   col_grey("grey")
 ))</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-34.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-35.svg" width="100%"></p>
 <p>Note that these might actually look different depending on your terminal theme. Background colors:</p>
 <pre class="asciicast"><code><a href="../reference/cli_ul.html">cli_ul(c(
   bg_black("black background"),
@@ -448,7 +457,7 @@ invisible(rs$close())</code></pre>
   bg_white("white background"),
   bg_yellow("yellow background")
 ))</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-35.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-36.svg" width="100%"></p>
 <p>Text styles:</p>
 <pre class="asciicast"><code><a href="../reference/cli_ul.html">cli_ul(c(
   style_dim("dim style"),
@@ -461,46 +470,46 @@ invisible(rs$close())</code></pre>
   style_strikethrough("strikethrough style"),
   style_underline("underline style")
 ))</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-36.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-37.svg" width="100%"></p>
 <p>Not all <code>style_*</code> functions are supported by all terminals.</p>
 <p>Colors, background colors and styles can be combined:</p>
 <pre class="asciicast"><code><a href="../reference/ansi-styles.html">bg_white(style_bold(col_red("TITLE")))</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-37.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-38.svg" width="100%"></p>
 <p><code><a href="../reference/make_ansi_style.html">make_ansi_style()</a></code> can create custom colors, assuming your terminal supports them. <code><a href="../reference/combine_ansi_styles.html">combine_ansi_styles()</a></code> combines several styles into a function:</p>
 <pre class="asciicast"><code>col_warn &lt;- combine_ansi_styles(make_ansi_style("pink"), style_bold)
 col_warn("This is a warning in pink!")
 cat(col_warn("This is a warning in pink!"))</code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-38.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-39.svg" width="100%"></p>
 </div>
 <div id="console-capabilities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#console-capabilities" class="anchor"></a>Console capabilities</h2>
 <p>Query the console width:</p>
 <pre class="asciicast"><code><a href="../reference/console_width.html">console_width()</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-39.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-40.svg" width="100%"></p>
 <p>Query if the console supports ansi escapes:</p>
 <pre class="asciicast"><code><a href="../reference/is_ansi_tty.html">is_ansi_tty()</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-40.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-41.svg" width="100%"></p>
 <p>Hide the cursor, if the console supports it (no-op otherwise):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw"><a href="../reference/ansi_hide_cursor.html">ansi_hide_cursor</a></span>()</a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw"><a href="../reference/ansi_hide_cursor.html">ansi_show_cursor</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw"><a href="../reference/ansi_hide_cursor.html">ansi_hide_cursor</a></span>()</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw"><a href="../reference/ansi_hide_cursor.html">ansi_show_cursor</a></span>()</a></code></pre></div>
 <p>See also <code><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor()</a></code>.</p>
 <p>Query if the console supports <code>\r</code>:</p>
 <pre class="asciicast"><code><a href="../reference/is_dynamic_tty.html">is_dynamic_tty()</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-42.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-43.svg" width="100%"></p>
 <p>Query if the console supports UTF-8 output:</p>
 <pre class="asciicast"><code><a href="../reference/is_utf8_output.html">is_utf8_output()</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-43.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-44.svg" width="100%"></p>
 </div>
 <div id="unicode-characters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#unicode-characters" class="anchor"></a>Unicode characters</h2>
 <p>The <code>symbol</code> variable includes some Unicode characters that are often useful in CLI messages. They automatically fall back to ASCII symbols if the platform does not support them. You can use these symbols both with the semantic <code>cli_*()</code> functions and directly.</p>
 <pre class="asciicast"><code><a href="../reference/cli_text.html">cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-44.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-45.svg" width="100%"></p>
 <p>Here is a list of all symbols:</p>
 <pre class="asciicast"><code><a href="../reference/symbol.html">list_symbols()</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-45.svg" width="100%"></p>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-46.svg" width="100%"></p>
 <p>Most symbols were inspired by (and copied from) the awesome <a href="https://github.com/sindresorhus/figures">figures</a> JavaScript project.</p>
 </div>
 <div id="spinners" class="section level2">
@@ -508,13 +517,13 @@ cat(col_warn("This is a warning in pink!"))</code></pre>
 <a href="#spinners" class="anchor"></a>Spinners</h2>
 <p>See <code><a href="../reference/list_spinners.html">list_spinners()</a></code> and <code><a href="../reference/get_spinner.html">get_spinner()</a></code>. From the awesome <a href="https://github.com/sindresorhus/cli-spinners#readme">cli-spinners</a> project.</p>
 <pre class="asciicast"><code><a href="../reference/list_spinners.html">list_spinners()</a></code></pre>
-<p><img src="semantic-cli_files/figure-html/unnamed-chunk-46.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/get_spinner.html">get_spinner("dots")</a></code></pre>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-47.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor(demo_spinners("dots"))</a></code></pre>
+<pre class="asciicast"><code><a href="../reference/get_spinner.html">get_spinner("dots")</a></code></pre>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-48.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor(demo_spinners("clock"))</a></code></pre>
+<pre class="asciicast"><code><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor(demo_spinners("dots"))</a></code></pre>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-49.svg" width="100%"></p>
+<pre class="asciicast"><code><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor(demo_spinners("clock"))</a></code></pre>
+<p><img src="semantic-cli_files/figure-html/unnamed-chunk-50.svg" width="100%"></p>
 </div>
 </div>
   </div>
