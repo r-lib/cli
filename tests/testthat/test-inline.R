@@ -71,3 +71,14 @@ test_that("no glue substitution in expressions that evaluate to a string", {
   out <- capt0(cli_text("{.emph {msg}}"), strip_style = TRUE)
   expect_equal(out, paste0(msg, "\n"))
 })
+
+test_that("S3 class is used for styling", {
+  cli_div(theme = list(
+    body = list("class-map" = list("foo" = "bar")),
+    ".bar" = list(before = "::"))
+  )
+
+  obj <- structure("yep", class = "foo")
+  out <- capt0(cli_text("This is {obj}."))
+  expect_match(out, "::yep")
+})

@@ -431,6 +431,23 @@ fun <- function() {
 fun()
 ```
 
+In addition to adding inline markup explicitly, like `.emph` here,
+cli can use the class(es) of the substituted expression to style it
+automatically. This can be configured as part of the theme, in the form
+of a mapping from the `class()` of the expression, to the name of the
+markup formatter. For example, if we have a `filename` S3 class, we can
+make sure that it is always shown as a `.file` in the cli output:
+
+```{asciicast}
+fun <- function() {
+  cli_div(theme = list(body = list("class-map" = list("filename" = "file"))))
+  fns <- structure(c("file1", "file2", "file3"), class = "filename")
+  cli_text("Found some files: {fns}.")
+  cli_end()
+}
+fun()
+```
+
 # CLI messages
 
 All `cli_*()` functions are implemented using standard R conditions.

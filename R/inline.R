@@ -6,7 +6,7 @@ if (getRversion() >= "2.15.1") globalVariables("app")
 inline_generic <- function(app, class, x, style) {
   xx <- paste0(style$before, x, style$after)
   if (!is.null(style$fmt)) xx <- vcapply(xx, style$fmt)
-  inline_collapse(xx)
+  xx
 }
 
 inline_collapse <- function(x) {
@@ -20,11 +20,24 @@ inline_transformer <- local({
   transform_hook <- function(x, ...) x
   style <- list()
   function(code, envir) {
+    failed <- FALSE
     res <- suppressWarnings(tryCatch({
       expr <- parse(text = code, keep.source = FALSE)
       transform_hook(eval(expr, envir = envir), style = style)
-    }, error = function(e) e))
-    if (!inherits(res, "error")) {
+    }, error = function(e) failed <<- TRUE ))
+
+    if (!failed) {
+      rcls <- class(res)
+      stls <- app$get_current_style()$`class-map`
+      cls <- na.omit(match(rcls, names(stls)))[1]
+      if (!is.na(cls)) {
+        id <- clii__container_start(app, "span", class = stls[[cls]])
+        on.exit(clii__container_end(app, id), add = TRUE)
+        style_save <- style
+        on.exit(style <<- style_save, add = TRUE)
+        style <<- app$get_current_style()
+        res <- inline_generic(app, stls[[cls]], res, style)
+      }
       if (inline_styling) return(res) else return(inline_collapse(res))
     }
 
@@ -61,7 +74,7 @@ inline_transformer <- local({
       .close = paste0(envir$marker, "}")
     )
 
-    inline_generic(app, funname, out, style = style)
+    inline_collapse(inline_generic(app, funname, out, style = style))
   }
 })
 

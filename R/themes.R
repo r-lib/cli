@@ -49,7 +49,11 @@ clii_remove_theme <- function(app, id) {
 
 builtin_theme <- function() {
   list(
-    body = list(),
+    body = list(
+      "class-map" = list(
+        fs_path = "file"
+      )
+    ),
 
     h1 = list(
       "font-weight" = "bold",
@@ -200,7 +204,7 @@ create_formatter <- function(x) {
 
 merge_embedded_styles <- function(old, new) {
   # before and after is not inherited,
-  # side margins are additive,
+  # side margins are additive, class mappings are merged
   # rest is updated, counter is reset
   old$before <- old$after <- NULL
 
@@ -209,11 +213,13 @@ merge_embedded_styles <- function(old, new) {
   left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
   right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
 
+  map <- modifyList(old$`class-map` %||% list(), new$`class-map` %||% list())
+
   start <- new$start %||% 1L
 
   mrg <- modifyList(old, new)
   mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
-        "start")] <- list(top, bottom, left, right, start)
+        "start", "class-map")] <- list(top, bottom, left, right, start, map)
 
   ## Formatter needs to be re-generated
   create_formatter(mrg)

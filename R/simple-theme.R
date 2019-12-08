@@ -25,9 +25,9 @@
 #' @examples
 #' cli_div(theme = cli::simple_theme())
 #'
-#' cli_h1("Header 1")
-#' cli_h2("Header 2")
-#' cli_h3("Header 3")
+#' cli_h1("Heading 1")
+#' cli_h2("Heading 2")
+#' cli_h3("Heading 3")
 #'
 #' cli_alert_danger("Danger alert")
 #' cli_alert_warning("Warning alert")
@@ -123,15 +123,6 @@ simple_theme <- function(dark = "auto") {
       color = "blue",
       "font-weight" = "bold"),
     span.version = list(color = "blue"),
-
-    .code = simple_theme_code(dark),
-    "span.code" = list(before = "`"),
-    "span.code" = list(after = "`"),
-
-    ".code.R" = list(
-      fmt = simple_theme_r_code(dark),
-      "margin-top" = 1,
-      "margin-bottom" = 1),
 
     span.emph = simple_theme_emph(),
     span.strong = list("font-weight" = "bold", "font-style" = "italic"),
