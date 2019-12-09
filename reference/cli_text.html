@@ -158,35 +158,25 @@ concatenated into a single string. Newlines are <em>not</em> preserved.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cli_text</span>(<span class='st'>"Hello world!"</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    Hello world!</span></div><div class='input'><span class='fu'>cli_text</span>(<span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageDescription</a></span>(<span class='st'>"cli"</span>)$<span class='no'>Description</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
+    <pre class="examples"><div class='input'><span class='fu'>cli_text</span>(<span class='st'>"Hello world!"</span>)</div><div class='output co'>#&gt; <span class='message'>    Hello world!</span></div><div class='input'><span class='fu'>cli_text</span>(<span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageDescription</a></span>(<span class='st'>"cli"</span>)$<span class='no'>Description</span>)</div><div class='output co'>#&gt; <span class='message'>    A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
 #&gt; <span class='message'>    semantic elements: headings, lists, alerts, paragraphs, etc. Supports</span>
 #&gt; <span class='message'>    custom themes via a 'CSS'-like language. It also contains a number of lower</span>
 #&gt; <span class='message'>    level 'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with</span>
 #&gt; <span class='message'>    'ASCII' alternatives. It integrates with the 'crayon' package to support</span>
 #&gt; <span class='message'>    'ANSI' terminal colors.</span></div><div class='input'>
 <span class='co'>## Arguments are concatenated</span>
-<span class='fu'>cli_text</span>(<span class='st'>"this"</span>, <span class='st'>"that"</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    thisthat</span></div><div class='input'>
+<span class='fu'>cli_text</span>(<span class='st'>"this"</span>, <span class='st'>"that"</span>)</div><div class='output co'>#&gt; <span class='message'>    thisthat</span></div><div class='input'>
 <span class='co'>## Command substitution</span>
 <span class='no'>greeting</span> <span class='kw'>&lt;-</span> <span class='st'>"Hello"</span>
 <span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='st'>"world"</span>
-<span class='fu'>cli_text</span>(<span class='st'>"{greeting} {subject}!"</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    Hello world!</span></div><div class='input'>
+<span class='fu'>cli_text</span>(<span class='st'>"{greeting} {subject}!"</span>)</div><div class='output co'>#&gt; <span class='message'>    Hello world!</span></div><div class='input'>
 <span class='co'>## Inline theming</span>
-<span class='fu'>cli_text</span>(<span class='st'>"The {.fn cli_text} function in the {.pkg cli} package"</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    The <span style='color: #000000;background-color: #BBBBBB;'>`cli_text()`</span><span> function in the </span><span style='color: #0000BB;'>cli</span><span> package</span></div><div class='input'>
+<span class='fu'>cli_text</span>(<span class='st'>"The {.fn cli_text} function in the {.pkg cli} package"</span>)</div><div class='output co'>#&gt; <span class='message'>    The <span style='color: #000000;background-color: #BBBBBB;'>`cli_text()`</span><span> function in the </span><span style='color: #0000BB;'>cli</span><span> package</span></div><div class='input'>
 <span class='co'>## Use within container elements</span>
-<span class='no'>ul</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cli_ul.html'>cli_ul</a></span>()</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span>()</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='input'><span class='fu'>cli_text</span>(<span class='st'>"{.emph First} item"</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>  </span><span style='font-style: italic;'>First</span><span> item</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span>()</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='input'><span class='fu'>cli_text</span>(<span class='st'>"{.emph Second} item"</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>  </span><span style='font-style: italic;'>Second</span><span> item</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span>(<span class='no'>ul</span>)</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div></span></pre>
+<span class='no'>ul</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cli_ul.html'>cli_ul</a></span>()
+<span class='fu'><a href='cli_li.html'>cli_li</a></span>()
+<span class='fu'>cli_text</span>(<span class='st'>"{.emph First} item"</span>)</div><div class='output co'>#&gt; <span class='message'>  </span><span style='font-style: italic;'>First</span><span> item</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span>()
+<span class='fu'>cli_text</span>(<span class='st'>"{.emph Second} item"</span>)</div><div class='output co'>#&gt; <span class='message'>  </span><span style='font-style: italic;'>Second</span><span> item</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span>(<span class='no'>ul</span>)</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
