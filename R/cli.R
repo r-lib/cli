@@ -496,29 +496,6 @@ cli_code <- function(lines = NULL, ..., language = "R",
   invisible(id)
 }
 
-#' CLI progress bar
-#'
-#' A progress bar using the progress package
-#'
-#' @param ... All arguments are passed to the constuctor of the
-#' [progress::progress_bar] class.
-#' @return A remote progress bar object that can be used the same way
-#' as [progress::progress_bar], see examples below.
-#'
-#' @export
-#' @examples
-#' {
-#'   p <- cli_progress_bar(total = 10)
-#'   cli_alert_info("Starting computation")
-#'   for (i in 1:10) { p$tick(); Sys.sleep(0.2) }
-#'   cli_alert_success("Done")
-#' }
-
-cli_progress_bar <- function(...) {
-  id <- cli__message("progress_bar", list(id = NULL, ...))
-  cli__remote_progress_bar(id)
-}
-
 cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
 
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()

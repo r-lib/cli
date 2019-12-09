@@ -92,12 +92,6 @@ cliapp <- function(theme = getOption("cli.theme"),
     status_update = function(id = NULL, msg, msg_done = NULL, msg_failed = NULL)
       clii_status_update(app, id, msg, msg_done, msg_failed),
 
-    ## Progress bars
-    progress_bar = function(id = NULL, ...)
-      clii_progress_bar(app, id, ...),
-    progress = function(id = NULL, operation, ...)
-      clii_progress(app, id, operation, ...),
-
     doc = NULL,
     themes = NULL,
     styles = NULL,
@@ -128,13 +122,7 @@ cliapp <- function(theme = getOption("cli.theme"),
     cat = function(lines)
       clii__cat(app, lines),
     cat_ln = function(lines, indent = 0, padding = 0)
-      clii__cat_ln(app, lines, indent, padding),
-
-    progress_bars = list(),
-    get_progress_bar = function()
-      clii__get_progress_bar(app),
-    cleanup_progress_bars = function()
-      clii__cleanup_progress_bars(app)
+      clii__cat_ln(app, lines, indent, padding)
   )
 
   if (! inherits(output, "connection")) output <- match.arg(output)
