@@ -1,6 +1,16 @@
 
 # dev
 
+## Semantic command line interface tools
+
+cli 2.0.0 has a new set of functions that help creating a CLI using a set
+of higher level elements: headings, paragraphs, lists, alerts, code blocks,
+etc. The formatting of all elements can be customized via themes.
+See the "Building a semantic CLI" article on the package web site:
+https://cli.r-lib.org
+
+## Bug fixes:
+
 * Fix a bug in `is_dynamic_tty()`, setting `R_CLI_DYNAMIC="FALSE"` now
   properly turns dynamic tty off (#70).
 
