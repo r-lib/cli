@@ -71,7 +71,7 @@ format() method. See examples below." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -85,6 +85,27 @@ format() method. See examples below." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pluralization.html">CLI pluralization</a>
+    </li>
+    <li>
+      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+    </li>
+    <li>
+      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    </li>
+    <li>
+      <a href="../articles/usethis-ui.html">From usethis::ui functions to cli</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -188,13 +209,13 @@ format() method. See examples below." />
 #&gt; [1] "Helpers for Developing Command Line Interfaces"
 #&gt; 
 #&gt; $desc$Version
-#&gt; [1] "1.9.9.9000"
+#&gt; [1] "2.0.0"
 #&gt; 
 #&gt; $desc$`Authors@R`
 #&gt; [1] "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", role = c(\"ctb\")),\n    person(\"Kirill\", \"Müller\", role = c(\"ctb\"))\n    )"
 #&gt; 
 #&gt; $desc$Description
-#&gt; [1] "A suite of tools to build attractive command line interfaces\n    ('CLIs'), from semantic elements: headings, lists, alerts, paragraphs,\n    etc. Supports theming via a 'CSS'-like language. It also contains a\n    number of lower level 'CLI' elements: rules, boxes, trees, and\n    'Unicode' symbols with 'ASCII' alternatives. It integrates with the\n    'crayon' package to support 'ANSI' terminal colors."
+#&gt; [1] "A suite of tools to build attractive command line interfaces\n    ('CLIs'), from semantic elements: headings, lists, alerts, paragraphs,\n    etc. Supports custom themes via a 'CSS'-like language. It also contains a\n    number of lower level 'CLI' elements: rules, boxes, trees, and\n    'Unicode' symbols with 'ASCII' alternatives. It integrates with the\n    'crayon' package to support 'ANSI' terminal colors."
 #&gt; 
 #&gt; $desc$License
 #&gt; [1] "MIT + file LICENSE"
@@ -209,7 +230,7 @@ format() method. See examples below." />
 #&gt; [1] "https://github.com/r-lib/cli/issues"
 #&gt; 
 #&gt; $desc$RoxygenNote
-#&gt; [1] "7.0.0"
+#&gt; [1] "7.0.2"
 #&gt; 
 #&gt; $desc$Roxygen
 #&gt; [1] "list(markdown = TRUE)"
@@ -218,19 +239,22 @@ format() method. See examples below." />
 #&gt; [1] "R (&gt;= 2.10)"
 #&gt; 
 #&gt; $desc$Imports
-#&gt; [1] "assertthat, crayon (&gt;= 1.3.4), glue, methods, utils, progress,\nfansi"
+#&gt; [1] "assertthat, crayon (&gt;= 1.3.4), glue, methods, utils, fansi"
 #&gt; 
 #&gt; $desc$Suggests
-#&gt; [1] "callr, covr, mockery, rstudioapi, prettycode, testthat, withr"
+#&gt; [1] "callr, covr, htmlwidgets, knitr, mockery, rmarkdown,\nrstudioapi, prettycode, testthat, withr"
 #&gt; 
 #&gt; $desc$Encoding
 #&gt; [1] "UTF-8"
+#&gt; 
+#&gt; $desc$VignetteBuilder
+#&gt; [1] "cli"
 #&gt; 
 #&gt; $desc$NeedsCompilation
 #&gt; [1] "no"
 #&gt; 
 #&gt; $desc$Packaged
-#&gt; [1] "2019-11-22 14:29:30 UTC; travis"
+#&gt; [1] "2019-12-09 10:38:31 UTC; travis"
 #&gt; 
 #&gt; $desc$Author
 #&gt; [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb]"
@@ -239,7 +263,7 @@ format() method. See examples below." />
 #&gt; [1] "Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;"
 #&gt; 
 #&gt; $desc$Built
-#&gt; [1] "R 3.6.1; ; 2019-11-22 14:31:04 UTC; unix"
+#&gt; [1] "R 3.6.1; ; 2019-12-09 10:40:08 UTC; unix"
 #&gt; 
 #&gt; attr(,"file")
 #&gt; [1] "/home/travis/R/Library/cli/Meta/package.rds"
@@ -251,11 +275,12 @@ format() method. See examples below." />
 #&gt; [1] "r_package"</div><div class='input'>
 <span class='co'># The formatting of the output depends on the current theme:</span>
 <span class='no'>opt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>cli.theme</span> <span class='kw'>=</span> <span class='fu'><a href='simple_theme.html'>simple_theme</a></span>())
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>new_r_package</span>(<span class='st'>"cli"</span>))</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #0000BB;font-weight: bold;font-style: italic;'>cli</span><span style='color: #00BBBB;font-weight: bold;font-style: italic;'> ─ Helpers for Developing Command Line Interfaces</span><span> </span><span style='color: #00BBBB;'>────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
-#&gt; <span class='message'>semantic elements: headings, lists, alerts, paragraphs, etc. Supports theming</span>
-#&gt; <span class='message'>via a 'CSS'-like language. It also contains a number of lower level 'CLI'</span>
-#&gt; <span class='message'>elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII' alternatives.</span>
-#&gt; <span class='message'>It integrates with the 'crayon' package to support 'ANSI' terminal colors.</span></div><div class='output co'>#&gt; <span class='message'>● Version: 1.9.9.9000</span></div><div class='output co'>#&gt; <span class='message'>● Maintainer: Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;</span></div><div class='output co'>#&gt; <span class='message'>● License: MIT + file LICENSE</span></div><div class='output co'>#&gt; <span class='message'>See more at </span><span style='color: #0000BB;'>&lt;https://github.com/r-lib/cli#readme&gt;</span><span></span></div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>new_r_package</span>(<span class='st'>"cli"</span>))</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='color: #0000BB;font-weight: bold;'>cli</span><span style='color: #00BBBB;font-weight: bold;'> ─ Helpers for Developing Command Line Interfaces</span><span> </span><span style='color: #00BBBB;'>────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
+#&gt; <span class='message'>semantic elements: headings, lists, alerts, paragraphs, etc. Supports custom</span>
+#&gt; <span class='message'>themes via a 'CSS'-like language. It also contains a number of lower level</span>
+#&gt; <span class='message'>'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII'</span>
+#&gt; <span class='message'>alternatives. It integrates with the 'crayon' package to support 'ANSI'</span>
+#&gt; <span class='message'>terminal colors.</span></div><div class='output co'>#&gt; <span class='message'>● Version: 2.0.0</span></div><div class='output co'>#&gt; <span class='message'>● Maintainer: Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;</span></div><div class='output co'>#&gt; <span class='message'>● License: MIT + file LICENSE</span></div><div class='output co'>#&gt; <span class='message'>See more at </span><span style='color: #0000BB;font-style: italic;'>&lt;https://github.com/r-lib/cli#readme&gt;</span><span></span></div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
 #&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='no'>opt</span>)  <span class='co'># &lt;- restore theme</span></div></span></pre>
   </div>

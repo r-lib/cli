@@ -71,7 +71,7 @@ intact by all semantic cli output." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -85,6 +85,27 @@ intact by all semantic cli output." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pluralization.html">CLI pluralization</a>
+    </li>
+    <li>
+      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+    </li>
+    <li>
+      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    </li>
+    <li>
+      <a href="../articles/usethis-ui.html">From usethis::ui functions to cli</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -121,16 +142,39 @@ to show status information, progress bars, etc. The status bar is kept
 intact by all semantic cli output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cli_status</span>(<span class='no'>...</span>, <span class='kw'>.keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.auto_close</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>.envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>())</pre>
+    <pre class="usage"><span class='fu'>cli_status</span>(
+  <span class='no'>msg</span>,
+  <span class='kw'>msg_done</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>msg</span>, <span class='st'>"... done"</span>),
+  <span class='kw'>msg_failed</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>msg</span>, <span class='st'>"... failed"</span>),
+  <span class='kw'>.keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>.auto_close</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>.envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>(),
+  <span class='kw'>.auto_result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"clear"</span>, <span class='st'>"done"</span>, <span class='st'>"failed"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>The text to show, in character vectors. They will be
-concatenated into a single string. Long lines are cut to
-<code><a href='console_width.html'>console_width()</a></code>.</p></td>
+      <th>msg</th>
+      <td><p>The text to show, a character vector. It will be
+collapsed into a single string, and the first line is kept and cut to
+<code><a href='console_width.html'>console_width()</a></code>. The message is often associated with the start of
+a calculation.</p></td>
+    </tr>
+    <tr>
+      <th>msg_done</th>
+      <td><p>The message to use when the message is cleared, when
+the calculation finishes successfully. If <code>.auto_close</code> is <code>TRUE</code>
+and <code>.auto_result</code> is <code>"done"</code>, then this is printed automatically
+then the calling function (or <code>.envir</code>) finishes.</p></td>
+    </tr>
+    <tr>
+      <th>msg_failed</th>
+      <td><p>The message to use when the message is cleared, when
+the calculation finishes unsuccessfully. If <code>.auto_close</code> is <code>TRUE</code>
+and <code>.auto_result</code> is <code>"failed"</code>, then this is printed automatically
+then the calling function (or <code>.envir</code>) finishes.</p></td>
     </tr>
     <tr>
       <th>.keep</th>
@@ -148,7 +192,11 @@ specified).</p></td>
     <tr>
       <th>.envir</th>
       <td><p>Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status bar if ‘.auto_close’ is ‘TRUE’.</p></td>
+also used to auto-clear the status bar if <code>.auto_close</code> is `TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>.auto_result</th>
+      <td><p>What to do when auto-closing the status bar.</p></td>
     </tr>
     </table>
 
@@ -158,9 +206,17 @@ also used to auto-clear the status bar if ‘.auto_close’ is ‘TRUE’.</p></
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Use <code><a href='cli_status_clear.html'>cli_status_clear()</a></code> to clear the status bar.</p>
+<p>Often status messages are associated with processes. E.g. the app starts
+downloading a large file, so it sets the status bar accordingly. Once the
+download is done (or failed), the app typically updates the status bar
+again. cli automates much of this, via the <code>msg_done</code>, <code>msg_failed</code>, and
+<code>.auto_result</code> arguments. See examples below.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other status bar: 
+    <div class='dont-index'><p><a href='cli_process_start.html'>cli_process_start</a> for a higher level interface to the
+startus bar, that adds automatic styling.</p>
+<p>Other status bar: 
+<code><a href='cli_process_start.html'>cli_process_start</a>()</code>,
 <code><a href='cli_status_clear.html'>cli_status_clear</a>()</code>,
 <code><a href='cli_status_update.html'>cli_status_update</a>()</code></p></div>
 

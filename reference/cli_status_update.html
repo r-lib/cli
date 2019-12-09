@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -83,6 +83,27 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/pluralization.html">CLI pluralization</a>
+    </li>
+    <li>
+      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+    </li>
+    <li>
+      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    </li>
+    <li>
+      <a href="../articles/usethis-ui.html">From usethis::ui functions to cli</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -117,19 +138,36 @@
     <p>Update the status bar</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cli_status_update</span>(<span class='no'>...</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>())</pre>
+    <pre class="usage"><span class='fu'>cli_status_update</span>(
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>msg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>msg_done</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>msg_failed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>.envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Text to update the status bar with.</p></td>
-    </tr>
-    <tr>
       <th>id</th>
       <td><p>Id of the status bar to update. Defaults to the current
 status bar container.</p></td>
+    </tr>
+    <tr>
+      <th>msg</th>
+      <td><p>Text to update the status bar with. <code>NULL</code> if you don't want
+to change it.</p></td>
+    </tr>
+    <tr>
+      <th>msg_done</th>
+      <td><p>Updated "done" message. <code>NULL</code> if you don't want to
+change it.</p></td>
+    </tr>
+    <tr>
+      <th>msg_failed</th>
+      <td><p>Updated "failed" message. <code>NULL</code> if you don't want to
+change it.</p></td>
     </tr>
     <tr>
       <th>.envir</th>
@@ -143,6 +181,7 @@ status bar container.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other status bar: 
+<code><a href='cli_process_start.html'>cli_process_start</a>()</code>,
 <code><a href='cli_status_clear.html'>cli_status_clear</a>()</code>,
 <code><a href='cli_status.html'>cli_status</a>()</code></p></div>
 
