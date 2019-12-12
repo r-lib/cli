@@ -1,6 +1,8 @@
 
 # cli development version
 
+* Symbols (`symbol$*`) are now correctly printed in RStudio on Windows (#124).
+
 # cli 2.0.0
 
 ## Semantic command line interface tools
