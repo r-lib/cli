@@ -24,7 +24,7 @@ cli_sitrep <- function() {
   structure(
     list(
       cli_unicode_option = getOption("cli.unicode", NULL),
-      symcol_charset = get_active_symbol_set(),
+      symbol_charset = get_active_symbol_set(),
       console_utf8 = l10n_info()$`UTF-8`,
       latex_active = is_latex_output(),
       num_colors = crayon::num_colors(),

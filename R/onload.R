@@ -35,7 +35,7 @@ clienv$pid <- Sys.getpid()
       }
 
       ## Otherwise we try to auto-detect
-      if (rstudio$is_rstudio()) {
+      if (is_utf8_output() && rstudio$is_rstudio()) {
         symbol_rstudio
       } else if (is_utf8_output()) {
         symbol_utf8
