@@ -3,6 +3,9 @@
 
 * Symbols (`symbol$*`) are now correctly printed in RStudio on Windows (#124).
 
+* The default theme for `cli_code()` output looks better now, especially
+  in RStudio (#123).
+
 # cli 2.0.0
 
 ## Semantic command line interface tools
