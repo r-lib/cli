@@ -270,6 +270,7 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
 
   ## If no active status bar, then ignore
   if (is.na(id)) return(invisible())
+  if (! id %in% names(app$status_bar)) return(invisible())
 
   if (result == "done") {
     msg <- msg_done %||% app$status_bar[[id]]$msg_done
