@@ -159,23 +159,15 @@ simple_theme_file <- function() {
 simple_theme_r_code <- function(dark) {
   dark <- dark
   style <- if (dark) {
-    crayon::combine_styles(
-      crayon::make_style("#232323", bg = TRUE),
-      crayon::make_style("#f0f0f0")
-    )
+    crayon::make_style("#f0f0f0")
   } else {
-    crayon::combine_styles(
-      crayon::make_style("#f8f8f8", bg = TRUE),
-      crayon::make_style("#202020")
-    )
+    crayon::make_style("#202020")
   }
   function(x) {
     x <- crayon::strip_style(x)
     lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
-    code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
-    len <- fansi::nchar_ctl(code)
-    padded <- paste0(" ", code, strrep(" ", max(len) - len), " ")
-    style(padded)
+    fmd <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
+    style(fmt)
   }
 }
 

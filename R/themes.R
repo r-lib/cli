@@ -176,23 +176,16 @@ theme_function <- function(dark) {
 }
 
 format_r_code <- function(dark) {
-  fun <- format_code(dark)
   function(x) {
     x <- crayon::strip_style(x)
     lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
-    code <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
-    fun(code)
+    tryCatch(prettycode::highlight(lines), error = function(x) lines)
   }
 }
 
 format_code <- function(dark) {
-  dark <- dark
   function(x) {
-    lines <- c("", unlist(strsplit(x, "\n", fixed = TRUE)), "")
-    len <- fansi::nchar_ctl(lines)
-    width <- console_width()
-    padded <- paste0(" ", lines, strrep(" ", width - len), " ")
-    padded
+    unlist(strsplit(x, "\n", fixed = TRUE))
   }
 }
 
