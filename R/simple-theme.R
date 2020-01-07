@@ -167,7 +167,7 @@ simple_theme_r_code <- function(dark) {
     x <- crayon::strip_style(x)
     lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
     fmd <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
-    style(fmt)
+    style(fmd)
   }
 }
 
