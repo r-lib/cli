@@ -1,4 +1,6 @@
 
+# development version
+
 # cli 2.0.1
 
 * Symbols (`symbol$*`) are now correctly printed in RStudio on Windows (#124).
