@@ -69,7 +69,7 @@ test_that("collapsing vectors", {
   cases <- list(
     list("The {pkgs(1)} package{?s}", "The pkg1 package"),
     list("The {pkgs(2)} package{?s}", "The pkg1 and pkg2 packages"),
-    list("The {pkgs(3)} package{?s}", "The pkg1, pkg2 and pkg3 packages")
+    list("The {pkgs(3)} package{?s}", "The pkg1, pkg2, and pkg3 packages")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
 })
@@ -95,7 +95,7 @@ test_that("pluralization and style", {
     list("The {.foo {pkgs(2)}} package{?s}",
          "The <pkg1> and <pkg2> packages"),
     list("The {.foo {pkgs(3)}} package{?s}",
-         "The <pkg1>, <pkg2> and <pkg3> packages")
+         "The <pkg1>, <pkg2>, and <pkg3> packages")
   )
   for (c in cases) {
     expect_equal(str_trim(capt0(cli_text(c[[1]]), strip_style = TRUE)), c[[2]])

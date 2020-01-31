@@ -10,7 +10,11 @@ inline_generic <- function(app, class, x, style) {
 }
 
 inline_collapse <- function(x) {
-  glue_collapse(x, sep = ", ", last = " and ")
+  if (length(x) >= 3) {
+    glue_collapse(x, sep = ", ", last = ", and ")
+  } else {
+    glue_collapse(x, sep = ", ", last = " and ")
+  }
 }
 
 #' @importFrom glue glue glue_collapse
@@ -143,6 +147,7 @@ make_cmd_transformer <- function(values) {
 
 glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
+  # str <- glue_collapse(unlist(list(...), use.names = FALSE), sep = ", ", last = ", ")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
   pstr <- glue(str, .envir = .envir, .transformer = transformer)
