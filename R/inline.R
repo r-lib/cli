@@ -10,7 +10,11 @@ inline_generic <- function(app, class, x, style) {
 }
 
 inline_collapse <- function(x) {
-  glue_collapse(x, sep = ", ", last = " and ")
+  if (length(x) >= 3) {
+    glue_collapse(x, sep = ", ", last = ", and ")
+  } else {
+    glue_collapse(x, sep = ", ", last = " and ")
+  }
 }
 
 #' @importFrom glue glue glue_collapse

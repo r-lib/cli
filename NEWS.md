@@ -11,6 +11,8 @@
 * Remove spurious newline after a `cli_process_start()` was cleared
   manually, and also at the end of the function.
 
+* Use Oxford comma when listing 3 or more items (@jonocarroll, #128).
+
 # cli 2.0.0
 
 ## Semantic command line interface tools
