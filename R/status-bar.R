@@ -129,7 +129,7 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #'
 #' Typically you call `cli_process_start()` to start the process, and then
 #' `cli_process_done()` when it is done. If an error happens before
-#' `cli_process_fone()` is called, then cli automatically shows the message
+#' `cli_process_done()` is called, then cli automatically shows the message
 #' for unsuccessful termination.
 #'
 #' If you handle the errors of the process or computation, then you can do
