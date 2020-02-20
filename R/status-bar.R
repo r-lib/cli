@@ -141,7 +141,7 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #' See examples below.
 #'
 #' @param msg The message to show to indicate the start of the process or
-#'   compuration. It will be collapsed into a single string, and the first
+#'   computation. It will be collapsed into a single string, and the first
 #'   line is kept and cut to [console_width()].
 #' @param msg_done The message to use for successful termination.
 #' @param msg_failed The message to use for unsuccessful termination.
