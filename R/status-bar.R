@@ -147,7 +147,7 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #' @param msg_failed The message to use for unsuccessful termination.
 #' @param on_exit Whether this process should fail or terminate
 #'   successfully when the calling function (or the environment in `.envir`)
-#'   exits.x
+#'   exits.
 #' @param msg_class The style class to add to the message. Use an empty
 #'   string to suppress styling.
 #' @param done_class The style class to add to the successful termination
