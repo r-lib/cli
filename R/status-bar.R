@@ -38,7 +38,7 @@
 #' @return The id of the new status bar container element, invisibly.
 #'
 #' @seealso [cli_process_start] for a higher level interface to the
-#'   startus bar, that adds automatic styling.
+#'   status bar, that adds automatic styling.
 #' @family status bar
 #' @export
 
