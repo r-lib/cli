@@ -333,15 +333,10 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
 
   ## Format the line
   content <- ""
-  withCallingHandlers(
-    app$status_bar[[id]]$app$xtext(msg),
-    message = function(msg) {
-      content <<- paste0(content, msg$message)
-      invokeRestart("muffleMessage")
-    }
-  )
-
-  content <- strsplit(content, "\r?\n")[[1]][1]
+  myapp <- app$status_bar[[id]]$app
+  fmsg <- myapp$inline(msg)
+  cfmsg <- strwrap2_ctl(fmsg, width = myapp$get_width(), strip.spaces = FALSE)
+  content <- strsplit(cfmsg, "\r?\n")[[1]][1]
 
   ## Update status bar, put it in front
   app$status_bar[[id]]$content <- content

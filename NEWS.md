@@ -1,6 +1,8 @@
 
 # development version
 
+* The status bar now does not replaces multiple spaces by a single space.
+
 # cli 2.0.1
 
 * Symbols (`symbol$*`) are now correctly printed in RStudio on Windows (#124).

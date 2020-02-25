@@ -94,8 +94,8 @@ test_that("truncating", {
   }
   out <- crayon::strip_style(capt0(f()))
   expect_equal(out, paste0(
-    "\r\rEiusmod enim mollit aute aliquip Lorem",
-    "\r                                      \r"))
+    "\r\rEiusmod enim mollit aute aliquip Lorem ",
+    "\r                                       \r"))
 })
 
 test_that("ansi colors and clearing", {
@@ -238,4 +238,16 @@ test_that("process auto close with failure", {
   }
   out <- crayon::strip_style(capt0(f()))
   expect_match(out, "status1 ... failed")
+})
+
+test_that("Multiple spaces are no condensed in a status bar", {
+  f <- function() {
+    cli_status("* This  is the current  status")
+    cli_status_clear()
+  }
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "* This  is the current  status", fixed = TRUE)
+  out <- crayon::strip_style(capt0(f()))
+  expect_match(out, "* This  is the current  status", fixed = TRUE)
+
 })
