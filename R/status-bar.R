@@ -312,7 +312,7 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
   if (length(app$status_bar)) app$cat(paste0(app$status_bar[[1]]$content))
 }
 
-#' @importFrom fansi substr_ctl
+#' @importFrom fansi substr_ctl strwrap2_ctl
 
 clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   ## If NA then the most recent one
