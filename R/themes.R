@@ -144,17 +144,17 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 }
 
 detect_dark_theme <- function(dark) {
-  if (dark == "auto") {
-    dark <- if (Sys.getenv("RSTUDIO", "0") == "1") {
-      tryCatch(
-        rstudioapi::getThemeInfo()$dark,
-        error = function(x) FALSE)
-    } else if (is_iterm()) {
-      is_iterm_dark()
-    } else {
-      FALSE
+  tryCatch({
+    if (dark == "auto") {
+      dark <- if (Sys.getenv("RSTUDIO", "0") == "1") {
+        rstudioapi::getThemeInfo()$dark
+      } else if (is_iterm()) {
+        is_iterm_dark()
+      } else {
+        FALSE
+      }
     }
-  }
+  }, error = function(e) FALSE)
 
   isTRUE(dark)
 }
