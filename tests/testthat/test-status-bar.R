@@ -252,6 +252,7 @@ test_that("Multiple spaces are no condensed in a status bar", {
 })
 
 test_that("Emojis are cleaned up properly", {
+  skip_on_os("windows")
   f <- function() {
     cli_text("out1")
     sb <- cli_status("\U0001F477")

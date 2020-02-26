@@ -39,6 +39,7 @@ setup_unicode_width_fix <- function() {
 #' @importFrom fansi strwrap_ctl
 
 strwrap_fixed <- function(x, ...) {
+  if (.Platform$OS.type == "windows") return(strwrap_ctl(x, ...))
   if (is.null(clienv$re_bad_char_width)) setup_unicode_width_fix()
   if (clienv$re_bad_char_width == "([])") return(strwrap_ctl(x, ...))
   x <- gsub(clienv$re_bad_char_width, "\\1\\1", x)
@@ -49,6 +50,7 @@ strwrap_fixed <- function(x, ...) {
 #' @importFrom fansi strwrap2_ctl
 
 strwrap2_fixed <- function(x, ...) {
+  if (.Platform$OS.type == "windows") return(strwrap2_ctl(x, ...))
   if (is.null(clienv$re_bad_char_width)) setup_unicode_width_fix()
   if (clienv$re_bad_char_width == "([])") return(strwrap2_ctl(x, ...))
   x <- gsub(clienv$re_bad_char_width, "\\1\\1", x)
@@ -59,6 +61,7 @@ strwrap2_fixed <- function(x, ...) {
 #' @importFrom fansi nchar_ctl
 
 nchar_fixed <- function(x, type = "chars", ...) {
+  if (.Platform$OS.type == "windows") return(nchar_ctl(x, type = type, ...))
   if (type != "width") return(nchar_ctl(x, type = type, ...))
   if (is.null(clienv$re_bad_char_width)) setup_unicode_width_fix()
   if (clienv$re_bad_char_width == "([])") return(nchar_ctl(x, type = type, ...))
