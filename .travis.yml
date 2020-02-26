@@ -10,9 +10,6 @@ addons:
     packages:
       - libnode-dev
 
-r_cran_packages:
-  - remotes
-
 r_github_packages:
   - r-lib/cli
 
@@ -24,6 +21,7 @@ matrix:
    - r: 3.5
    - r: release
      before_install:
+       - Rscript -e 'install.packages("remotes")'
        - Rscript -e 'remotes::install_cran("pkgdown")'
        - Rscript -e 'remotes::install_github("r-lib/asciicast")'
      deploy:
