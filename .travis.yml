@@ -20,7 +20,7 @@ matrix:
    - r: 3.4
    - r: 3.5
    - r: release
-     before_cache:
+     before_install:
        - Rscript -e 'install.packages("remotes")'
        - Rscript -e 'remotes::install_cran("pkgdown")'
        - Rscript -e 'remotes::install_github("r-lib/asciicast")'
@@ -38,6 +38,7 @@ matrix:
    - r: devel
 
 before_install:
+  - Rscript -e 'install.packages("remotes")'
   - Rscript -e 'remotes::install_cran("usethis")'
 
 after_success:

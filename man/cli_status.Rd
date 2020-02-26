@@ -60,6 +60,21 @@ downloading a large file, so it sets the status bar accordingly. Once the
 download is done (or failed), the app typically updates the status bar
 again. cli automates much of this, via the \code{msg_done}, \code{msg_failed}, and
 \code{.auto_result} arguments. See examples below.
+\itemize{
+\item \code{foo}: Often status messages are associated with processes. E.g. the app starts
+downloading a large file, so it sets the status bar accordingly. Once the
+\item \code{bar}: short one
+\item \verb{another one}: Often status messages are associated with processes. E.g. the app starts
+downloading a large file, so it sets the status bar accordingly. Once the
+}
+
+\describe{
+\item{\code{foo}:}{Often status messages are associated with processes. E.g. the app starts
+downloading a large file, so it sets the status bar accordingly. Once the}
+\item{\code{bar}:}{short one}
+\item{\code{another one}:}{Often status messages are associated with processes. E.g. the app starts
+downloading a large file, so it sets the status bar accordingly. Once the}
+}
 }
 \seealso{
 \link{cli_process_start} for a higher level interface to the
