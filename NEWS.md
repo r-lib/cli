@@ -6,6 +6,9 @@
 * cli now does not crash if it fails to detect whether the RStudio theme
   is a dark theme (#138).
 
+* cli now works better with wide Unicode characters, for example emojis.
+  In particular, a status bar containing emojis is cleared properly (#133).
+
 # cli 2.0.1
 
 * Symbols (`symbol$*`) are now correctly printed in RStudio on Windows (#124).
