@@ -156,7 +156,7 @@ detect_dark_theme <- function(dark) {
     }
   }
 
-  dark
+  isTRUE(dark)
 }
 
 theme_code <- function(dark) {
