@@ -249,5 +249,29 @@ test_that("Multiple spaces are no condensed in a status bar", {
   expect_match(out, "* This  is the current  status", fixed = TRUE)
   out <- crayon::strip_style(capt0(f()))
   expect_match(out, "* This  is the current  status", fixed = TRUE)
+})
 
+test_that("Emojis are cleaned up properly", {
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_status("\U0001F477")
+    cli_text("out2")
+    cli_status_update("\u2728", id = sb)
+  }
+  out <- crayon::strip_style(capt0(f()))
+  exps <- c(
+    paste0(
+      "out1\n",
+      "\r\r\U0001F477",
+      "\r  \rout2\n\U0001F477",
+      "\r  \r\u2728",
+      "\r  \r"),
+    paste0(
+      "out1\n",
+      "\r\r<U+0001F477>",
+      "\r  \rout2\n<U+0001F477>",
+      "\r  \r<U+2728>",
+      "\r  \r")
+  )
+  expect_true(out %in% exps)
 })

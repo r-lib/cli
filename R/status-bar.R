@@ -13,6 +13,21 @@
 #' again. cli automates much of this, via the `msg_done`, `msg_failed`, and
 #' `.auto_result` arguments. See examples below.
 #'
+#' + `foo`: Often status messages are associated with processes. E.g. the app starts
+#'   downloading a large file, so it sets the status bar accordingly. Once the
+#' + `bar`: short one
+#' + `another one`: Often status messages are associated with processes. E.g. the app starts
+#' downloading a large file, so it sets the status bar accordingly. Once the
+#'
+#' \describe{
+#' \item{\code{foo}:}{Often status messages are associated with processes. E.g. the app starts
+#'   downloading a large file, so it sets the status bar accordingly. Once the}
+#' \item{\code{bar}:}{short one}
+#' \item{\code{another one}:}{Often status messages are associated with processes. E.g. the app starts
+#' downloading a large file, so it sets the status bar accordingly. Once the}
+#' }
+#'
+#'
 #' @param msg The text to show, a character vector. It will be
 #'   collapsed into a single string, and the first line is kept and cut to
 #'   [console_width()]. The message is often associated with the start of
@@ -312,8 +327,6 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
   if (length(app$status_bar)) app$cat(paste0(app$status_bar[[1]]$content))
 }
 
-#' @importFrom fansi substr_ctl strwrap2_ctl
-
 clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   ## If NA then the most recent one
   if (is.na(id)) id <- names(app$status_bar)[1]
@@ -335,7 +348,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   content <- ""
   myapp <- app$status_bar[[id]]$app
   fmsg <- myapp$inline(msg)
-  cfmsg <- strwrap2_ctl(fmsg, width = myapp$get_width(), strip.spaces = FALSE)
+  cfmsg <- strwrap2_fixed(fmsg, width = myapp$get_width(), strip.spaces = FALSE)
   content <- strsplit(cfmsg, "\r?\n")[[1]][1]
 
   ## Update status bar, put it in front
@@ -348,11 +361,9 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   app$cat(content)
 }
 
-#' @importFrom fansi nchar_ctl
-
 clii__clear_status_bar <- function(app) {
 
   text <- app$status_bar[[1]]$content
-  len <- nchar_ctl(text)
+  len <- nchar_fixed(text, type = "width")
   app$cat(paste0("\r", strrep(" ", len), "\r"))
 }
