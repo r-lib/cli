@@ -146,8 +146,8 @@ NULL
 #' containers as well: [cli_li()].
 #'
 #' Container elements need to be closed with [cli_end()]. For convenience,
-#' they are have an `.auto_close` argument, which allows automatically
-#' closing a container element, when the function that created it
+#' they have an `.auto_close` argument, which instructs the container
+#' element to be closed automatically when the function that created it
 #' terminates (either regularly, or with an error).
 #'
 #' @name containers

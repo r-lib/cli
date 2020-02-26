@@ -38,7 +38,7 @@
 #' @return The id of the new status bar container element, invisibly.
 #'
 #' @seealso [cli_process_start] for a higher level interface to the
-#'   startus bar, that adds automatic styling.
+#'   status bar, that adds automatic styling.
 #' @family status bar
 #' @export
 
@@ -129,7 +129,7 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #'
 #' Typically you call `cli_process_start()` to start the process, and then
 #' `cli_process_done()` when it is done. If an error happens before
-#' `cli_process_fone()` is called, then cli automatically shows the message
+#' `cli_process_done()` is called, then cli automatically shows the message
 #' for unsuccessful termination.
 #'
 #' If you handle the errors of the process or computation, then you can do
@@ -141,13 +141,13 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #' See examples below.
 #'
 #' @param msg The message to show to indicate the start of the process or
-#'   compuration. It will be collapsed into a single string, and the first
+#'   computation. It will be collapsed into a single string, and the first
 #'   line is kept and cut to [console_width()].
 #' @param msg_done The message to use for successful termination.
 #' @param msg_failed The message to use for unsuccessful termination.
 #' @param on_exit Whether this process should fail or terminate
 #'   successfully when the calling function (or the environment in `.envir`)
-#'   exits.x
+#'   exits.
 #' @param msg_class The style class to add to the message. Use an empty
 #'   string to suppress styling.
 #' @param done_class The style class to add to the successful termination
