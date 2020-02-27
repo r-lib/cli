@@ -1,7 +1,7 @@
 
 # development version
 
-* The status bar now does not replaces multiple spaces by a single space.
+* The status bar now does not simplify multiple spaces by a single space.
 
 * cli now does not crash if it fails to detect whether the RStudio theme
   is a dark theme (#138).
@@ -9,7 +9,7 @@
 * cli now works better with wide Unicode characters, for example emojis.
   In particular, a status bar containing emojis is cleared properly (#133).
 
-* The status bar now does now flicker when updated, in terminals (#135).
+* The status bar now does not flicker when updated, in terminals (#135).
 
 # cli 2.0.1
 
