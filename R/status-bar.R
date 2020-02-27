@@ -350,7 +350,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
 clii__clear_status_bar <- function(app) {
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
-    cat(paste0("\r", ANSI_EL), file = output)
+    app$cat(paste0("\r", ANSI_EL))
   } else {
     text <- app$status_bar[[1]]$content
     len <- nchar_fixed(text, type = "width")
