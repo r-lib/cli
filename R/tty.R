@@ -131,6 +131,7 @@ is_dynamic_tty <- function(stream = cli_output_connection()) {
 ANSI_ESC <- "\u001B["
 ANSI_HIDE_CURSOR <- paste0(ANSI_ESC, "?25l")
 ANSI_SHOW_CURSOR <- paste0(ANSI_ESC, "?25h")
+ANSI_EL <- paste0(ANSI_ESC, "K")
 
 #' Detect if a stream support ANSI escape characters
 #'
@@ -152,6 +153,14 @@ ANSI_SHOW_CURSOR <- paste0(ANSI_ESC, "?25h")
 #' is_ansi_tty()
 
 is_ansi_tty <- function(stream = stderr()) {
+  # Option takes precedence
+  opt <- getOption("cli.ansi")
+  if (isTRUE(opt)) {
+    return(TRUE)
+  } else if (identical(opt, FALSE)) {
+    return(FALSE)
+  }
+
   # RStudio is handled separately
   if (rstudio$detect()[["ansi_tty"]] && is_stdx(stream)) return(TRUE)
 

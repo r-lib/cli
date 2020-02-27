@@ -9,6 +9,8 @@
 * cli now works better with wide Unicode characters, for example emojis.
   In particular, a status bar containing emojis is cleared properly (#133).
 
+* The status bar now does now flicker when updated, in terminals (#135).
+
 # cli 2.0.1
 
 * Symbols (`symbol$*`) are now correctly printed in RStudio on Windows (#124).
