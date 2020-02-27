@@ -35,7 +35,7 @@ cli_process_failed(
 }
 \arguments{
 \item{msg}{The message to show to indicate the start of the process or
-compuration. It will be collapsed into a single string, and the first
+computation. It will be collapsed into a single string, and the first
 line is kept and cut to \code{\link[=console_width]{console_width()}}.}
 
 \item{msg_done}{The message to use for successful termination.}
@@ -44,7 +44,7 @@ line is kept and cut to \code{\link[=console_width]{console_width()}}.}
 
 \item{on_exit}{Whether this process should fail or terminate
 successfully when the calling function (or the environment in \code{.envir})
-exits.x}
+exits.}
 
 \item{msg_class}{The style class to add to the message. Use an empty
 string to suppress styling.}
@@ -73,7 +73,7 @@ Id of the status bar container.
 \description{
 Typically you call \code{cli_process_start()} to start the process, and then
 \code{cli_process_done()} when it is done. If an error happens before
-\code{cli_process_fone()} is called, then cli automatically shows the message
+\code{cli_process_done()} is called, then cli automatically shows the message
 for unsuccessful termination.
 }
 \details{
