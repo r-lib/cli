@@ -13,21 +13,6 @@
 #' again. cli automates much of this, via the `msg_done`, `msg_failed`, and
 #' `.auto_result` arguments. See examples below.
 #'
-#' + `foo`: Often status messages are associated with processes. E.g. the app starts
-#'   downloading a large file, so it sets the status bar accordingly. Once the
-#' + `bar`: short one
-#' + `another one`: Often status messages are associated with processes. E.g. the app starts
-#' downloading a large file, so it sets the status bar accordingly. Once the
-#'
-#' \describe{
-#' \item{\code{foo}:}{Often status messages are associated with processes. E.g. the app starts
-#'   downloading a large file, so it sets the status bar accordingly. Once the}
-#' \item{\code{bar}:}{short one}
-#' \item{\code{another one}:}{Often status messages are associated with processes. E.g. the app starts
-#' downloading a large file, so it sets the status bar accordingly. Once the}
-#' }
-#'
-#'
 #' @param msg The text to show, a character vector. It will be
 #'   collapsed into a single string, and the first line is kept and cut to
 #'   [console_width()]. The message is often associated with the start of
@@ -261,15 +246,8 @@ cli_process_failed <- function(id = NULL, msg = NULL, msg_failed = NULL,
 
 clii_status <- function(app, id, msg, msg_done, msg_failed, keep,
                         auto_result) {
-  bar_app <- cliapp(
-    theme = NULL,
-    user_theme = NULL,
-    output = app$output
-  )
-  bar_app$themes <- app$themes
-  clii__container_start(bar_app, "div", class = "statusbar", id = id)
+
   app$status_bar[[id]] <- list(
-    app = bar_app,
     content = "",
     msg_done = msg_done,
     msg_failed = msg_failed,
@@ -341,14 +319,13 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   ## Do we have a new message?
   if (is.null(msg)) return(invisible())
 
-  ## Otherwise clear line
-  if (length(app$status_bar)) clii__clear_status_bar(app)
+  ## Do we need to clear the current content?
+  current <- paste0("", app$status_bar[[1]]$content)
 
   ## Format the line
   content <- ""
-  myapp <- app$status_bar[[id]]$app
-  fmsg <- myapp$inline(msg)
-  cfmsg <- strwrap2_fixed(fmsg, width = myapp$get_width(), strip.spaces = FALSE)
+  fmsg <- app$inline(msg)
+  cfmsg <- strwrap2_fixed(fmsg, width = app$get_width(), strip.spaces = FALSE)
   content <- strsplit(cfmsg, "\r?\n")[[1]][1]
 
   ## Update status bar, put it in front
@@ -357,13 +334,25 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
     app$status_bar[id],
     app$status_bar[setdiff(names(app$status_bar), id)])
 
-  ## New content
-  app$cat(content)
+  ## New content, if it is an ANSI terminal we'll overwrite and clear
+  ## until the end of the line. Otherwise we add some space characters
+  ## to the content to make sure we clear up residual content.
+  output <- get_real_output(app$output)
+  if (is_ansi_tty(output)) {
+    app$cat(paste0("\r", content, ANSI_EL))
+  } else {
+    nsp <- max(nchar_fixed(current) - nchar_fixed(content), 0)
+    app$cat(paste0("\r", content, strrep(" ", nsp)))
+  }
 }
 
 clii__clear_status_bar <- function(app) {
-
-  text <- app$status_bar[[1]]$content
-  len <- nchar_fixed(text, type = "width")
-  app$cat(paste0("\r", strrep(" ", len), "\r"))
+  output <- get_real_output(app$output)
+  if (is_ansi_tty(output)) {
+    cat(paste0("\r", ANSI_EL), file = output)
+  } else {
+    text <- app$status_bar[[1]]$content
+    len <- nchar_fixed(text, type = "width")
+    app$cat(paste0("\r", strrep(" ", len), "\r"))
+  }
 }

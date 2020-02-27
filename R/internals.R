@@ -60,11 +60,7 @@ clii__vspace <- function(app, n) {
   }
 }
 
-clii__message <- function(..., domain = NULL, appendLF = TRUE,
-                          output = stderr()) {
-
-  msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
-
+get_real_output <- function(output) {
   if (! inherits(output, "connection")) {
     output <- switch(
       output,
@@ -74,6 +70,14 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
       "stdout" = stdout()
     )
   }
+  output
+}
+
+clii__message <- function(..., domain = NULL, appendLF = TRUE,
+                          output = stderr()) {
+
+  msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
+  output <- get_real_output(output)
 
   withRestarts(muffleMessage = function() NULL, {
     signalCondition(simpleMessage(msg))
