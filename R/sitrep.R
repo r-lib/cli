@@ -8,6 +8,8 @@
 #'   Windows, or ASCII.
 #' * `console_utf8`: whether the console supports UTF-8. See
 #'   [base::l10n_info()].
+#' * `default_output`: `"stdout"` or `"stderr"`, the default output of the
+#'   semantic cli functions.
 #' * `latex_active`: whether we are inside knitr, creating a LaTeX
 #'   document.
 #' * `num_colors`: number of ANSI colors. See [crayon::num_colors()].
@@ -21,11 +23,13 @@
 #' cli_sitrep()
 
 cli_sitrep <- function() {
+  caps <- cli_capabilities()
   structure(
     list(
       cli_unicode_option = getOption("cli.unicode", NULL),
       symbol_charset = get_active_symbol_set(),
       console_utf8 = l10n_info()$`UTF-8`,
+      default_output = summary(cli_output_connection())$description,
       latex_active = is_latex_output(),
       num_colors = crayon::num_colors(),
       console_width = console_width()),

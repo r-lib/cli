@@ -13,21 +13,6 @@
 #' again. cli automates much of this, via the `msg_done`, `msg_failed`, and
 #' `.auto_result` arguments. See examples below.
 #'
-#' + `foo`: Often status messages are associated with processes. E.g. the app starts
-#'   downloading a large file, so it sets the status bar accordingly. Once the
-#' + `bar`: short one
-#' + `another one`: Often status messages are associated with processes. E.g. the app starts
-#' downloading a large file, so it sets the status bar accordingly. Once the
-#'
-#' \describe{
-#' \item{\code{foo}:}{Often status messages are associated with processes. E.g. the app starts
-#'   downloading a large file, so it sets the status bar accordingly. Once the}
-#' \item{\code{bar}:}{short one}
-#' \item{\code{another one}:}{Often status messages are associated with processes. E.g. the app starts
-#' downloading a large file, so it sets the status bar accordingly. Once the}
-#' }
-#'
-#'
 #' @param msg The text to show, a character vector. It will be
 #'   collapsed into a single string, and the first line is kept and cut to
 #'   [console_width()]. The message is often associated with the start of

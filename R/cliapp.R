@@ -1,13 +1,14 @@
 
 cliapp <- function(theme = getOption("cli.theme"),
                    user_theme = getOption("cli.user_theme"),
-                   output = c("auto", "message", "stdout", "stderr")) {
+                   output = c("auto", "message", "stdout", "stderr"),
+                   capabilities = NULL) {
 
   app <- new_class(
     "cliapp",
 
-    new = function(theme, user_theme, output)
-      clii_init(app, theme, user_theme, output),
+    new = function(theme, user_theme, output, capabilities)
+      clii_init(app, theme, user_theme, output, capabilities),
 
     ## Themes
     list_themes = function()
@@ -126,7 +127,8 @@ cliapp <- function(theme = getOption("cli.theme"),
   )
 
   if (! inherits(output, "connection")) output <- match.arg(output)
-  app$new(theme, user_theme, output)
+  capabilities <- modifyList(cli_capabilities(), capabilities)
+  app$new(theme, user_theme, output, capabilities)
 
   app
 }
