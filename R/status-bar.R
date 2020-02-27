@@ -327,6 +327,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   fmsg <- app$inline(msg)
   cfmsg <- strwrap2_fixed(fmsg, width = app$get_width(), strip.spaces = FALSE)
   content <- strsplit(cfmsg, "\r?\n")[[1]][1]
+  if (is.na(content)) content <- ""
 
   ## Update status bar, put it in front
   app$status_bar[[id]]$content <- content
