@@ -153,7 +153,7 @@ clii_text <- function(app, text) {
 
 clii_verbatim <- function(app, ..., .envir) {
   style <- app$get_current_style()
-  text <- paste(unlist(list(...), use.names = FALSE), collapse = "\n")
+  text <- unlist(strsplit(unlist(list(...)), "\n", fixed = TRUE))
   if (!is.null(style$fmt)) text <- style$fmt(text)
   app$cat_ln(text)
   invisible(app)
