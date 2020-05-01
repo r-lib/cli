@@ -112,8 +112,8 @@ this may appear before or after the pluralization markup. If the message
 contains multiple \code{{}} substitutions \emph{after} pluralization markup, an
 error is thrown.
 
-Similarly, if the message contains no \code{{}} substituions at all, but has
-pluralization markup, and error is thrown.
+Similarly, if the message contains no \code{{}} substitutions at all, but has
+pluralization markup, an error is thrown.
 }
 
 }
@@ -139,20 +139,21 @@ the pluralization quantity for all \verb{\{?\}} markup in the message.
 markup cli uses the quantity of the \code{{}} substitution that precedes
 it.
 \item If a message has multiple \code{{}} substitutions and has pluralization
-markup with a preceding \code{{}} substitution, and error is thrown.
+markup without a preceding \code{{}} substitution, an error is thrown.
 }
 }
 
 \subsection{Pluralization markup}{
 \enumerate{
-\item Pluralization markup start with \verb{\{?} and ends with \verb{\}}. It may not
-contain \verb{\{} and \verb{\}} characters, so it may not contains \code{{}}
+\item Pluralization markup starts with \verb{\{?} and ends with \verb{\}}. It may not
+contain \verb{\{} and \verb{\}} characters, so it may not contain \code{{}}
 substitutions either.
 \item Alternative words or suffixes are separated by \code{/}.
 \item If there is a single alternative, then \emph{nothing} is used if
 \code{quantity == 1} and this single alternative is used if \code{quantity != 1}.
-\item If there are two alternatives, the first one is used for \code{quantity == 1}, the second one for \code{quantity != 1} (include 0).
-\item If there are three alternatives, the first one is used for \code{quantity == 0}, the second for \code{quantity == 1}, and the third otherwise.
+\item If there are two alternatives, the first one is used for \code{quantity == 1}, the second one for \code{quantity != 1} (including `\code{quantity == 0}).
+\item If there are three alternatives, the first one is used for \code{quantity == 0}, the second one for \code{quantity == 1}, and the third one
+otherwise.
 }
 }
 

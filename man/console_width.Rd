@@ -10,7 +10,6 @@ console_width()
 Integer scalar, the console with, in number of characters.
 }
 \description{
-It uses the \code{RSTUDIO_CONSOLE_WIDTH} environment variable, if set.
-Otherwise it uses the \code{width} option. If this is not set either,
-then 80 is used.
+It uses the \code{cli.width} option, if set. Otherwise it uses
+the \code{width} option, if set. Otherwise it return 80.
 }

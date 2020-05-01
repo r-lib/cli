@@ -1,21 +1,17 @@
 
 #' Determine the width of the console
 #'
-#' It uses the `RSTUDIO_CONSOLE_WIDTH` environment variable, if set.
-#' Otherwise it uses the `width` option. If this is not set either,
-#' then 80 is used.
+#' It uses the `cli.width` option, if set. Otherwise it uses
+#' the `width` option, if set. Otherwise it return 80.
 #'
 #' @return Integer scalar, the console with, in number of characters.
-#' 
+#'
 #' @export
 
 console_width <- function() {
   width <- getOption(
     "cli.width",
-    Sys.getenv(
-      "RSTUDIO_CONSOLE_WIDTH",
-      getOption("width", 80)
-    )
+    getOption("width", 80)
   )
   as.integer(width)
 }
