@@ -13,6 +13,9 @@ increases the quality of the messages greatly. In this document we first
 show some pluralization examples that you can use as guidelines.
 Hopefully these are intuitive enough, so that they can be used without
 knowing the exact cli pluralization rules.
+
+If you need pluralization without the semantic cli functions, see the
+\code{pluralize()} function.
 }
 
 \section{Examples}{
@@ -154,6 +157,7 @@ otherwise.
 
 \seealso{
 Other pluralization: 
-\code{\link{no}()}
+\code{\link{no}()},
+\code{\link{pluralize}()}
 }
 \concept{pluralization}

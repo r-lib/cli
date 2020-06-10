@@ -20,6 +20,7 @@ Pluralization helper functions
 }
 \seealso{
 Other pluralization: 
-\code{\link{pluralization}}
+\code{\link{pluralization}},
+\code{\link{pluralize}()}
 }
 \concept{pluralization}

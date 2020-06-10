@@ -11,6 +11,7 @@ test_that("simplest", {
     list("{2} package{?s}", "2 packages")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("irregular", {
@@ -20,6 +21,7 @@ test_that("irregular", {
     list("{2} dictionar{?y/ies}", "2 dictionaries")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("multiple substitutions", {
@@ -29,6 +31,7 @@ test_that("multiple substitutions", {
     list("{2} package{?s} {?is/are} ...", "2 packages are ...")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("multiple quantities", {
@@ -44,6 +47,7 @@ test_that("multiple quantities", {
     list("{2} package{?s} and {2} folder{?s}", "2 packages and 2 folders")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("no()", {
@@ -53,6 +57,7 @@ test_that("no()", {
     list("{no(2)} package{?s}", "2 packages")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("set qty() explicitly", {
@@ -62,6 +67,7 @@ test_that("set qty() explicitly", {
     list("{qty(2)}There {?is/are} {2} package{?s}", "There are 2 packages")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("collapsing vectors", {
@@ -72,6 +78,7 @@ test_that("collapsing vectors", {
     list("The {pkgs(3)} package{?s}", "The pkg1, pkg2, and pkg3 packages")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("pluralization and style", {
@@ -109,6 +116,7 @@ test_that("post-processing", {
     list("Package{?s}: {2}", "Packages: 2")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 
   pkgs <- function(n) glue("pkg{seq_len(n)}")
   cases <- list(
@@ -116,6 +124,7 @@ test_that("post-processing", {
     list("Package{?s}: {pkgs(2)}", "Packages: pkg1 and pkg2")
   )
   for (c in cases) expect_equal(str_trim(capt0(cli_text(c[[1]]))), c[[2]])
+  for (c in cases) expect_equal(pluralize(c[[1]]), c[[2]])
 })
 
 test_that("post-processing errors", {
@@ -124,7 +133,15 @@ test_that("post-processing errors", {
     "Cannot pluralize without a quantity"
   )
   expect_error(
+    pluralize("package{?s}"),
+    "Cannot pluralize without a quantity"
+  )
+  expect_error(
     cli_text("package{?s} {5} {10}"),
+    "Multiple quantities for pluralization"
+  )
+  expect_error(
+    pluralize("package{?s} {5} {10}"),
     "Multiple quantities for pluralization"
   )
 })

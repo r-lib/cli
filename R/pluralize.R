@@ -106,3 +106,82 @@ post_process_plurals <- function(str, values) {
 
   str
 }
+
+#' String templating with pluralization
+#'
+#' `pluralize()` is similar to [glue::glue()], with two differences:
+#' * It supports cli's [pluralization] syntax, using `{?}` markers.
+#' * It collapses substituted vectors into a comma separated string.
+#'
+#' See [pluralization] and some examples below.
+#'
+#' @param ...,.envir,.transformer All arguments are passed to [glue::glue()].
+#'
+#' @export
+#' @family pluralization
+#' @examples
+#' # Regular plurals
+#' nfile <- 0; pluralize("Found {nfile} file{?s}.")
+#' nfile <- 1; pluralize("Found {nfile} file{?s}.")
+#' nfile <- 2; pluralize("Found {nfile} file{?s}.")
+#'
+#' # Irregular plurals
+#' ndir <- 1; pluralize("Found {ndir} director{?y/ies}.")
+#' ndir <- 5; pluralize("Found {ndir} director{?y/ies}.")
+#'
+#' # Use 'no' instead of zero
+#' nfile <- 0; pluralize("Found {no(nfile)} file{?s}.")
+#' nfile <- 1; pluralize("Found {no(nfile)} file{?s}.")
+#' nfile <- 2; pluralize("Found {no(nfile)} file{?s}.")
+#'
+#' # Use the length of character vectors
+#' pkgs <- "pkg1"
+#' pluralize("Will remove the {pkgs} package{?s}.")
+#' pkgs <- c("pkg1", "pkg2", "pkg3")
+#' pluralize("Will remove the {pkgs} package{?s}.")
+#'
+#' pkgs <- character()
+#' pluralize("Will remove {?no/the/the} {pkgs} package{?s}.")
+#' pkgs <- c("pkg1", "pkg2", "pkg3")
+#' pluralize("Will remove {?no/the/the} {pkgs} package{?s}.")
+#'
+#' # Multiple quantities
+#' nfiles <- 3; ndirs <- 1
+#' pluralize("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")
+#'
+#' # Explicit quantities
+#' nupd <- 3; ntotal <- 10
+#' cli_text("{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates")
+
+pluralize <- function(..., .envir = parent.frame(),
+                      .transformer = glue::identity_transformer) {
+
+  values <- new.env(parent = emptyenv())
+  values$empty <- random_id()
+  values$qty <- values$empty
+  values$num_subst <- 0L
+  values$postprocess <- FALSE
+  values$pmarkers <- list()
+
+  tf <- function(text, envir) {
+    if (substr(text, 1, 1) == "?") {
+      if (identical(values$qty, values$empty)) {
+        values$postprocess <- TRUE
+        id <- random_id()
+        values$pmarkers[[id]] <- text
+        return(id)
+      } else {
+        return(process_plural(make_quantity(values$qty), text))
+      }
+
+    } else {
+      values$num_subst <- values$num_subst + 1
+      qty <- .transformer(text, envir)
+      values$qty <- qty
+      return(inline_collapse(qty))
+    }
+  }
+
+  raw <- glue::glue(..., .envir = .envir, .transformer = tf)
+  post_process_plurals(raw, values)
+}
