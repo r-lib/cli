@@ -3,6 +3,9 @@
 
 * `console_width()` works better now in RStudio, and also in terminals.
 
+* New `pluralize()` function to perform pluralization without generating
+  cli output (#155).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.
