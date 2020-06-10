@@ -80,7 +80,9 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
   output <- get_real_output(output)
 
   withRestarts(muffleMessage = function() NULL, {
-    signalCondition(simpleMessage(msg))
+    cond <- simpleMessage(msg)
+    class(cond) <- c("cliMessage", class(cond))
+    signalCondition(cond)
     cat(msg, file = output, sep = "")
   })
 }
