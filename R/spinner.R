@@ -162,6 +162,7 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
       if (throttle()) return()
       line <- sub("{spin}", c_spinner$frames[[c_state]], c_template,
                   fixed = TRUE)
+      clear_line()
       cat("\r", line, sep = "", file = stream)
       inc()
     }
