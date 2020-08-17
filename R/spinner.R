@@ -128,7 +128,7 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
   c_state <- 1L
   c_first <- TRUE
   c_col <- 1L
-  c_width <- console_width()
+  c_width <- 0L
   c_last <- Sys.time() - as.difftime(1, units = "secs")
   c_int <- as.difftime(c_spinner$interval / 1000, units = "secs")
 
@@ -162,7 +162,17 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
       if (throttle()) return()
       line <- sub("{spin}", c_spinner$frames[[c_state]], c_template,
                   fixed = TRUE)
-      cat("\r", line, sep = "", file = stream)
+      line_width <- nchar(line)
+      # extra padding in case the line width has changed
+      # so that we don't get any garbage in the output
+      padding <- if (line_width < c_width) {
+        paste0(rep(" ", line_width), collapse = "")
+      } else {
+        ""
+      }
+      cat("\r", line, padding, sep = "", file = stream)
+      # save the new line width
+      c_width <<- line_width
       inc()
     }
 
@@ -174,7 +184,7 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
         if (throttle()) return()
         cat(".", file = c_stream)
         c_col <<- c_col + 1L
-        if (c_col == c_width) {
+        if (c_col == console_width()) {
           cat("\n", file = c_stream)
           c_col <<- 1L
         }
