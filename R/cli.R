@@ -177,7 +177,7 @@ cli_end <- function(id = NULL) {
 #'   closed by default (see the `.close` argument).
 #' @param id Id of the list container. Can be used for closing it with
 #'   [cli_end()] or in themes. If `NULL`, then an id is generated and
-#'   retuned invisibly.
+#'   returned invisibly.
 #' @param class Class of the list container. Can be used in themes.
 #' @param .close Whether to close the list container if the `items` were
 #'   specified. If `FALSE` then new items can be added to the list.
@@ -294,7 +294,7 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #' @param items Character vector of items, or `NULL`.
 #' @param id Id of the new container. Can be used for closing it with
 #'   [cli_end()] or in themes. If `NULL`, then an id is generated and
-#'   retuned invisibly.
+#'   returned invisibly.
 #' @param class Class of the item container. Can be used in themes.
 #' @inheritParams cli_div
 #' @return The id of the new container element, invisibly.
