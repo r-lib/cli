@@ -1,6 +1,8 @@
 
 # cli development version
 
+* `console_width()` works better now in RStudio, and also in terminals.
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.

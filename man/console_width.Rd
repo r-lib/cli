@@ -10,6 +10,35 @@ console_width()
 Integer scalar, the console with, in number of characters.
 }
 \description{
-It uses the \code{cli.width} option, if set. Otherwise it uses
-the \code{width} option, if set. Otherwise it return 80.
+It uses the \code{cli.width} option, if set. Otherwise it tries to
+determine the size of the terminal or console window.
+}
+\details{
+These are the exact rules:
+\itemize{
+\item If the \code{cli.width} option is set to a positive integer, it is used.
+\item If the \code{cli.width} option is set, but it is not a positive integer,
+and error is thrown.
+}
+
+Then we try to determine the size of the terminal or console window:
+\itemize{
+\item If we are not in RStudio, or we are in an RStudio temrinal,
+then we try to use the \code{ps::ps_tty_size()} function to query the
+terminal size. This might fail if ps is not installed or R is not
+running in a terminal, but failures are ignored.
+\item If we are in the RStudio build pane, then the \code{RSTUDIO_CONSOLE_WIDTH}
+environment variable is used. If the build pane is resized, then this
+environment variable is not accurate any more, and the output might
+get garbled.
+\item We are \emph{not} using the \code{RSTUDIO_CONSOLE_WIDTH} environment variable
+if we are in the RStudio console.
+}
+
+If we cannot determine the size of the terminal or console window, then
+we use the \code{width} option. If the \code{width} option is not set, then
+we return 80L.
+}
+\examples{
+console_width()
 }
