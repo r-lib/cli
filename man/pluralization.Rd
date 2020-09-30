@@ -6,13 +6,7 @@
 \description{
 CLI pluralization
 }
-\seealso{
-Other pluralization: 
-\code{\link{no}()}
-}
-\concept{pluralization}
 \section{Introduction}{
-
 cli has tools to create messages that are printed correctly in singular
 and plural forms. This usually requires minimal extra work, and
 increases the quality of the messages greatly. In this document we first
@@ -20,6 +14,7 @@ show some pluralization examples that you can use as guidelines.
 Hopefully these are intuitive enough, so that they can be used without
 knowing the exact cli pluralization rules.
 }
+
 \section{Examples}{
 \subsection{Pluralization markup}{
 
@@ -72,7 +67,7 @@ cli_text("Will remove the \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1 package.
 }\if{html}{\out{<div class="r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Will remove the \{.pkg \{pkgs\}\} package\{?s\}.")
-}\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1, pkg2 and pkg3 packages.
+}\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1, pkg2, and pkg3 packages.
 }
 
 Note that the length is only used for non-numeric vectors (when
@@ -84,7 +79,7 @@ cli_text("Will remove \{?no/the/the\} \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove no packages.
 }\if{html}{\out{<div class="r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Will remove \{?no/the/the\} \{.pkg \{pkgs\}\} package\{?s\}.")
-}\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1, pkg2 and pkg3 packages.
+}\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1, pkg2, and pkg3 packages.
 }
 
 When the pluralization markup contains three alternatives, like above,
@@ -115,10 +110,9 @@ error is thrown.
 Similarly, if the message contains no \code{{}} substitutions at all, but has
 pluralization markup, an error is thrown.
 }
-
 }
-\section{Rules}{
 
+\section{Rules}{
 The exact rules of cli’s pluralization. There are two sets of rules. The
 first set specifies how a quantity is associated with a \verb{\{?\}}
 pluralization markup. The second set describes how the \verb{\{?\}} is parsed
@@ -156,5 +150,10 @@ substitutions either.
 otherwise.
 }
 }
-
 }
+
+\seealso{
+Other pluralization: 
+\code{\link{no}()}
+}
+\concept{pluralization}

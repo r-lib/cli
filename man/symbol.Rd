@@ -4,7 +4,9 @@
 \alias{symbol}
 \alias{list_symbols}
 \title{Various handy symbols to use in a command line UI}
-\format{A named list, see \code{names(symbol)} for all sign names.}
+\format{
+A named list, see \code{names(symbol)} for all sign names.
+}
 \usage{
 symbol
 
