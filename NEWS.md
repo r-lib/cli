@@ -1,6 +1,10 @@
 
 # cli development version
 
+* New `cli_vec()` function to allow easier formatting of collapsed
+  vectors. It is now also possible to use styling to set the collapsing
+  parameters (#129).
+
 * New `pluralize()` function to perform pluralization without generating
   cli output (#155).
 

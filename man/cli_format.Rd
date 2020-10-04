@@ -44,3 +44,6 @@ divid <- cli_div(theme = list(.val = list(digits = 3)))
 cli_text("{.val {nums}}")
 cli_end(divid)
 }
+\seealso{
+cli_vec
+}
