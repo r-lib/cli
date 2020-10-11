@@ -12,6 +12,10 @@
   `cliMessage` class, so you can easily suppress them without suppressing
   other messages (#156).
 
+* cli prints the output to `stderr()` now, if there is an output or
+  message sink. This is to make interactive and non-interactive sessions
+  consistent (#153).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.

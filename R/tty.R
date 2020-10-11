@@ -30,7 +30,11 @@ is_interactive <- function() {
 #' @export
 
 cli_output_connection <- function() {
-  if (is_interactive()) stdout() else stderr()
+  if (is_interactive() && no_sink()) stdout() else stderr()
+}
+
+no_sink <- function() {
+  sink.number() == 0 && sink.number("message") == 2
 }
 
 is_stdout <- function(stream) {

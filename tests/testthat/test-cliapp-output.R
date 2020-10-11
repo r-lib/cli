@@ -75,3 +75,71 @@ test_that("can also use a connection", {
   expect_true(out$stdout %in% paste0("output:", txt, c("\n", "\r\n")))
   expect_equal(out$stderr, "")
 })
+
+test_that("message if there is a sink", {
+  # if there is an output sink, non-interactive
+  msgs <- NULL
+  tmp <- NULL
+  fun <- function() {
+    sink(tmp <<- tempfile())
+    on.exit(sink(NULL), add = TRUE)
+    cli_text("Hola")
+  }
+  withCallingHandlers(
+    fun(),
+    cliMessage = function(m) msgs <<- c(msgs, list(m))
+  )
+  expect_equal(msgs[[1]]$message, "Hola\n")
+  expect_equal(length(readLines(tmp)), 0)
+
+  # if there is a message sink, non-interactive
+  msgs <- NULL
+  tmp <- tempfile()
+  con <- file(tmp, open = "w+")
+  fun <- function() {
+    sink(con, type = "message")
+    on.exit(sink(NULL, type = "message"), add = TRUE)
+    cat("this\n", file = stderr())
+    cli_text("Hola")
+  }
+  withCallingHandlers(
+    fun(),
+    cliMessage = function(m) msgs <<- c(msgs, list(m))
+  )
+  expect_equal(msgs[[1]]$message, "Hola\n")
+  expect_equal(readLines(tmp), "this")
+
+  withr::local_options(rlib_interactive = TRUE)
+
+  # if there is an output sink, interactive
+  msgs <- NULL
+  tmp <- NULL
+  fun <- function() {
+    sink(tmp <<- tempfile())
+    on.exit(sink(NULL), add = TRUE)
+    cli_text("Hola")
+  }
+  withCallingHandlers(
+    fun(),
+    cliMessage = function(m) msgs <<- c(msgs, list(m))
+  )
+  expect_equal(msgs[[1]]$message, "Hola\n")
+  expect_equal(length(readLines(tmp)), 0)
+
+  # if there is a message sink, interactive
+  msgs <- NULL
+  tmp <- tempfile()
+  con <- file(tmp, open = "w+")
+  fun <- function() {
+    sink(con, type = "message")
+    on.exit(sink(NULL, type = "message"), add = TRUE)
+    cat("this\n", file = stderr())
+    cli_text("Hola")
+  }
+  withCallingHandlers(
+    fun(),
+    cliMessage = function(m) msgs <<- c(msgs, list(m))
+  )
+  expect_equal(msgs[[1]]$message, "Hola\n")
+  expect_equal(readLines(tmp), "this")
+})
