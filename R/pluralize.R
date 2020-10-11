@@ -72,6 +72,7 @@ parse_plural <- function(code, values) {
 
 process_plural <- function(qty, code) {
   parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
+  if (last_character(code) == "/") parts <- c(parts, "")
   if (length(parts) == 1) {
     if (qty != 1) parts[1] else ""
   } else if (length(parts) == 2) {

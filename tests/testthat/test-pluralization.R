@@ -145,3 +145,9 @@ test_that("post-processing errors", {
     "Multiple quantities for pluralization"
   )
 })
+
+test_that("issue 158", {
+  expect_equal(pluralize("{0} word{?A/B/}"), "0 wordA")
+  expect_equal(pluralize("{1} word{?A/B/}"), "1 wordB")
+  expect_equal(pluralize("{9} word{?A/B/}"), "9 word")
+})
