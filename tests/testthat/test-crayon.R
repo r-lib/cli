@@ -41,10 +41,15 @@ test_that("Nested styles of the same type are supported", {
 
 test_that("Reset all styles", {
   st <- combine_ansi_styles("red", bg_green, "underline")
-  expect_equal(
-    c(style_reset(st("foo"), "foo")),
+  ok <- c(
+    paste0(
+      "\033[0m\033[31m\033[42m\033[4mfoo\033[24m\033[49m\033[39m",
+      "foo\033[0m\033[22m\033[23m\033[24m\033[27m\033[28m",
+      "\033[29m\033[39m\033[49m"),
     paste0("\u001b[0m\u001b[31m\u001b[42m\u001b[4mfoo\u001b[24m\u001b[49m",
-           "\u001b[39mfoo\u001b[0m"))
+           "\u001b[39mfoo\u001b[0m")
+  )
+  expect_true(style_reset(st("foo"), "foo") %in% ok)
 })
 
 test_that("Variable number of arguments", {
