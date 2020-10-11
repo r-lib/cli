@@ -16,6 +16,9 @@
   message sink. This is to make interactive and non-interactive sessions
   consistent (#153).
 
+* Pluralization works corrently now if the last alternative is the
+  empty string (#158).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.
