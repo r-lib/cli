@@ -1,10 +1,16 @@
 
 # cli development version
 
-* `console_width()` works better now in RStudio, and also in terminals.
-
 * New `pluralize()` function to perform pluralization without generating
   cli output (#155).
+
+* `console_width()` works better now in RStudio, and also in terminals.
+
+* Styling of verbatim text work properly now (#147, @tzakharko).
+
+* Messages (ie. `message` conditions) coming from cli now have the
+  `cliMessage` class, so you can easily suppress them without suppressing
+  other messages (#156).
 
 # cli 2.0.2
 
