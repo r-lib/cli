@@ -19,6 +19,9 @@
 * Pluralization works corrently now if the last alternative is the
   empty string (#158).
 
+* cli now caches the result of the dark background detection in iTerm on
+  macOS. Reload cli to delete the cache (#131).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.

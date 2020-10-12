@@ -176,17 +176,21 @@ is_iterm <- function() {
 }
 
 is_iterm_dark <- function() {
-  tryCatch(
-    error = function(x) FALSE, {
-      osa <- '
-        tell application "iTerm2"
-          tell current session of current window
-            get background color
-          end tell
-        end tell
-      '
-      out <- system2("osascript", c("-e", shQuote(osa)), stdout = TRUE)
-      nums <- scan(text = gsub(",", "", out), quiet = TRUE)
-      mean(nums) < 20000
-  })
+  if (is.null(clienv[["is_iterm_dark"]])) {
+    clienv$is_iterm_dark <-
+      tryCatch(
+        error = function(x) FALSE, {
+          osa <- '
+            tell application "iTerm2"
+              tell current session of current window
+                get background color
+              end tell
+            end tell
+          '
+          out <- system2("osascript", c("-e", shQuote(osa)), stdout = TRUE)
+          nums <- scan(text = gsub(",", "", out), quiet = TRUE)
+          mean(nums) < 20000
+        })
+  }
+  clienv[["is_iterm_dark"]]
 }
