@@ -166,15 +166,19 @@ make_spinner <- function(which = NULL, stream = "auto", template = "{spin}",
       if (throttle()) return()
       line <- sub("{spin}", c_spinner$frames[[c_state]], c_template,
                   fixed = TRUE)
-      line_width <- nchar(line)
-      # extra padding in case the line width has changed
-      # so that we don't get any garbage in the output
-      padding <- if (line_width < c_width) {
-        paste0(rep(" ", line_width), collapse = "")
+      line_width <- col_nchar(line)
+      if (is_ansi_tty(c_stream)) {
+        cat("\r", line, ANSI_EL, sep = "", file = c_stream)
       } else {
-        ""
+        # extra padding in case the line width has changed
+        # so that we don't get any garbage in the output
+        padding <- if (line_width < c_width) {
+          paste0(rep(" ", line_width), collapse = "")
+        } else {
+          ""
+        }
+        cat("\r", line, padding, sep = "", file = c_stream)
       }
-      cat("\r", line, padding, sep = "", file = stream)
       # save the new line width
       c_width <<- line_width
       inc()
