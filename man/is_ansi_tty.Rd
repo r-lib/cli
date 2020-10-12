@@ -10,7 +10,7 @@ is_ansi_tty(stream = "auto")
 \item{stream}{The stream to inspect or manipulate, an R connection
 object. It can also be a string, one of \code{"auto"}, \code{"message"},
 \code{"stdout"}, \code{"stderr"}. \code{"auto"} will select \code{stdout()} if the session is
-interactive and there are no sinks.}
+interactive and there are no sinks, otherwise it will select \code{stderr()}.}
 }
 \value{
 \code{TRUE} or \code{FALSE}.

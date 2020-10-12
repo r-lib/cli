@@ -105,7 +105,7 @@ is_rkward_stdx <- function(stream) {
 #' @param stream The stream to inspect or manipulate, an R connection
 #' object. It can also be a string, one of `"auto"`, `"message"`,
 #' `"stdout"`, `"stderr"`. `"auto"` will select `stdout()` if the session is
-#' interactive and there are no sinks.
+#' interactive and there are no sinks, otherwise it will select `stderr()`.
 #'
 #' @family terminal capabilities
 #' @export

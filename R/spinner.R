@@ -63,6 +63,10 @@ list_spinners <- function() {
 #'   spinner itself will be substituted for `{spin}`. See example below.
 #' @param stream The stream to use for the spinner. Typically this is
 #'   standard error, or maybe the standard output stream.
+#'   It can also be a string, one of `"auto"`, `"message"`, `"stdout"`,
+#'   `"stderr"`. `"auto"` will select `stdout()` if the session is
+#'   interactive and there are no sinks, otherwise it will select
+#'   `stderr()`.
 #' @param static What to do if the terminal does not support dynamic
 #'   displays:
 #'   * `"dots"`: show a dot for each `$spin()` call.
@@ -113,15 +117,15 @@ list_spinners <- function() {
 #' @family spinners
 #' @export
 
-make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
+make_spinner <- function(which = NULL, stream = "auto", template = "{spin}",
                          static = c("dots", "print", "print_line",
                                     "silent")) {
 
   assert_that(
-    inherits(stream, "connection"),
+    inherits(stream, "connection") || is_string(stream),
     is_string(template))
 
-  c_stream <- stream
+  c_stream <- get_real_output(stream)
   c_spinner <- get_spinner(which)
   c_template <- template
   c_static <- match.arg(static)
@@ -152,11 +156,11 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
     c_first <<- TRUE
     c_col <<- 1L
     c_last <<- Sys.time()
-    if (is_dynamic_tty()) clear_line() else cat("\n", file = c_stream)
+    if (is_dynamic_tty(c_stream)) clear_line() else cat("\n", file = c_stream)
     invisible(c_res)
   }
 
-  if (is_dynamic_tty()) {
+  if (is_dynamic_tty(c_stream)) {
     c_res$spin <- function(template = NULL) {
       if (!is.null(template)) c_template <<- template
       if (throttle()) return()
@@ -196,7 +200,7 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
         if (throttle()) return()
         line <- sub("{spin}", c_spinner$frames[[c_state]], c_template,
                     fixed = TRUE)
-        cat(line, file = stream)
+        cat(line, file = c_stream)
         inc()
       }
     } else if (c_static == "print_line") {
@@ -205,7 +209,7 @@ make_spinner <- function(which = NULL, stream = stderr(), template = "{spin}",
         if (throttle()) return()
         line <- sub("{spin}", c_spinner$frames[[c_state]], c_template,
                     fixed = TRUE)
-        cat(line, "\n", sep = "", file = stream)
+        cat(line, "\n", sep = "", file = c_stream)
         inc()
       }
     } else if (c_static == "silent") {

@@ -6,7 +6,7 @@
 \usage{
 make_spinner(
   which = NULL,
-  stream = stderr(),
+  stream = "auto",
   template = "{spin}",
   static = c("dots", "print", "print_line", "silent")
 )
@@ -16,7 +16,11 @@ make_spinner(
 whether the platform supports Unicode.}
 
 \item{stream}{The stream to use for the spinner. Typically this is
-standard error, or maybe the standard output stream.}
+standard error, or maybe the standard output stream.
+It can also be a string, one of \code{"auto"}, \code{"message"}, \code{"stdout"},
+\code{"stderr"}. \code{"auto"} will select \code{stdout()} if the session is
+interactive and there are no sinks, otherwise it will select
+\code{stderr()}.}
 
 \item{template}{A template string, that will contain the spinner. The
 spinner itself will be substituted for \code{{spin}}. See example below.}
