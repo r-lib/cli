@@ -143,7 +143,7 @@
 
     <pre class="usage"><span class='fu'>make_spinner</span><span class='op'>(</span>
   which <span class='op'>=</span> <span class='cn'>NULL</span>,
-  stream <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/showConnections.html'>stderr</a></span><span class='op'>(</span><span class='op'>)</span>,
+  stream <span class='op'>=</span> <span class='st'>"auto"</span>,
   template <span class='op'>=</span> <span class='st'>"{spin}"</span>,
   static <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dots"</span>, <span class='st'>"print"</span>, <span class='st'>"print_line"</span>, <span class='st'>"silent"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
@@ -159,7 +159,11 @@ whether the platform supports Unicode.</p></td>
     <tr>
       <th>stream</th>
       <td><p>The stream to use for the spinner. Typically this is
-standard error, or maybe the standard output stream.</p></td>
+standard error, or maybe the standard output stream.
+It can also be a string, one of <code>"auto"</code>, <code>"message"</code>, <code>"stdout"</code>,
+<code>"stderr"</code>. <code>"auto"</code> will select <code><a href='https://rdrr.io/r/base/showConnections.html'>stdout()</a></code> if the session is
+interactive and there are no sinks, otherwise it will select
+<code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code>.</p></td>
     </tr>
     <tr>
       <th>template</th>
