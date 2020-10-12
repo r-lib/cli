@@ -37,6 +37,10 @@
 
 * `make_spinner()` clears the line properly now (@tzakharko, #164).
 
+* Semantic cli functions now automatically replace Unicode non-breaking
+  space characters right before output. They are still used to calculate
+  the line breaks, but not outputted (#161).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.

@@ -79,6 +79,9 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
   msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
   output <- get_real_output(output)
 
+  # to avoid non-breaking spaces in files, if output is redirected
+  msg <- gsub("\u00a0", " ", msg, fixed = TRUE)
+
   withRestarts(muffleMessage = function() NULL, {
     cond <- simpleMessage(msg)
     class(cond) <- c("cliMessage", class(cond))
