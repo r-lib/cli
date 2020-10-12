@@ -5,15 +5,15 @@ cli
 
 > Helpers for Developing Command Line Interfaces
 
-[![Linux Build
-Status](https://api.travis-ci.org/r-lib/cli.svg?branch=master)](https://travis-ci.org/r-lib/cli)
-[![Windows Build
-status](https://ci.appveyor.com/api/projects/status/github/r-lib/cli?svg=true)](https://ci.appveyor.com/project/gaborcsardi/cli)
+<!-- badges: start -->
+[![R build
+status](https://github.com/r-lib/cli/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/cli/actions)
 [![](http://www.r-pkg.org/badges/version/cli)](http://www.r-pkg.org/pkg/cli)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/cli)](http://www.r-pkg.org/pkg/cli)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/r-lib/cli/master.svg)](https://codecov.io/github/r-lib/cli?branch=master)
+<!-- badges: end -->
 
 A suite of tools to build attractive command line interfaces (CLIs),
 from semantic elements: headers, lists, alerts, paragraphs, etc.
