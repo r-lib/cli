@@ -27,6 +27,8 @@
   automatically selected to be either `stdout()` or `stderr()`.
   See the manual for details (#144).
 
+* `make_spinner()` clears the line properly now (@tzakharko, #164).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.
