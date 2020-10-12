@@ -82,3 +82,31 @@ test_that("S3 class is used for styling", {
   out <- capt0(cli_text("This is {obj}."))
   expect_match(out, "::yep")
 })
+
+test_that("quoting phrases that don't start or end with letter or number", {
+  x0 <- "good-name"
+  out <- capt0(cli_text("The name is {.file {x0}}."))
+  expect_equal(
+    crayon::strip_style(out),
+    "The name is good-name.\n"
+  )
+
+  x <- "weird-name "
+  out <- capt0(cli_text("The name is {.file {x}}."))
+  expect_equal(
+    crayon::strip_style(out),
+    "The name is 'weird-name '.\n"
+  )
+
+  out <- capt0(cli_text("The name is {.path {x}}."))
+  expect_equal(
+    crayon::strip_style(out),
+    "The name is 'weird-name '.\n"
+  )
+
+  out <- capt0(cli_text("The name is {.email {x}}."))
+  expect_equal(
+    crayon::strip_style(out),
+    "The name is 'weird-name '.\n"
+  )
+})

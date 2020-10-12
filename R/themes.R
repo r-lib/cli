@@ -128,9 +128,9 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     span.arg = theme_code_tick(dark),
     span.kbd = list(before = "[", after = "]", color = "blue"),
     span.key = list(before = "[", after = "]", color = "blue"),
-    span.file = list(color = "blue"),
-    span.path = list(color = "blue"),
-    span.email = list(color = "blue"),
+    span.file = list(color = "blue", fmt = quote_weird_name),
+    span.path = list(color = "blue", fmt = quote_weird_name),
+    span.email = list(color = "blue", fmt = quote_weird_name),
     span.url = list(before = "<", after = ">", color = "blue",
                     "font-style" = "italic"),
     span.var = theme_code_tick(dark),
@@ -141,6 +141,14 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ),
     span.field = list(color = "green")
   )
+}
+
+quote_weird_name <- function(x) {
+  x2 <- crayon::strip_style(x)
+  if (!is_alnum(first_character(x2)) || !is_alnum(last_character(x2))) {
+    x <- paste0("'", x, "'")
+  }
+  x
 }
 
 detect_dark_theme <- function(dark) {
