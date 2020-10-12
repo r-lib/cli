@@ -6,14 +6,17 @@
 \alias{ansi_with_hidden_cursor}
 \title{Hide/show cursor in a terminal}
 \usage{
-ansi_hide_cursor(stream = stderr())
+ansi_hide_cursor(stream = "auto")
 
-ansi_show_cursor(stream = stderr())
+ansi_show_cursor(stream = "auto")
 
-ansi_with_hidden_cursor(expr, stream = stderr())
+ansi_with_hidden_cursor(expr, stream = "auto")
 }
 \arguments{
-\item{stream}{The stream of the terminal to output the ANSI sequence to.}
+\item{stream}{The stream to inspect or manipulate, an R connection
+object. It can also be a string, one of \code{"auto"}, \code{"message"},
+\code{"stdout"}, \code{"stderr"}. \code{"auto"} will select \code{stdout()} if the session is
+interactive and there are no sinks.}
 
 \item{expr}{R expression to evaluate.}
 }

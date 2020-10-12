@@ -4,10 +4,13 @@
 \alias{is_ansi_tty}
 \title{Detect if a stream support ANSI escape characters}
 \usage{
-is_ansi_tty(stream = stderr())
+is_ansi_tty(stream = "auto")
 }
 \arguments{
-\item{stream}{The stream to check.}
+\item{stream}{The stream to inspect or manipulate, an R connection
+object. It can also be a string, one of \code{"auto"}, \code{"message"},
+\code{"stdout"}, \code{"stderr"}. \code{"auto"} will select \code{stdout()} if the session is
+interactive and there are no sinks.}
 }
 \value{
 \code{TRUE} or \code{FALSE}.

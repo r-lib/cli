@@ -102,9 +102,10 @@ is_rkward_stdx <- function(stream) {
 #'    the macOS R app, or RKWard IDE, `TRUE` is returned.
 #' 7. Otherwise `FALSE` is returned.
 #'
-#' @param stream The stream to inspect, an R connection object.
-#' Note that it defaults to the standard _error_ stream, since
-#' informative messages are typically printed there.
+#' @param stream The stream to inspect or manipulate, an R connection
+#' object. It can also be a string, one of `"auto"`, `"message"`,
+#' `"stdout"`, `"stderr"`. `"auto"` will select `stdout()` if the session is
+#' interactive and there are no sinks.
 #'
 #' @family terminal capabilities
 #' @export
@@ -112,7 +113,10 @@ is_rkward_stdx <- function(stream) {
 #' is_dynamic_tty()
 #' is_dynamic_tty(stdout())
 
-is_dynamic_tty <- function(stream = cli_output_connection()) {
+is_dynamic_tty <- function(stream = "auto") {
+
+  stream <- get_real_output(stream)
+
   ## Option?
   if (!is.null(x <- getOption("cli.dynamic"))) {
     return(isTRUE(x))
@@ -148,7 +152,7 @@ ANSI_EL <- paste0(ANSI_ESC, "K")
 #' * The terminal is not "dumb".
 #' * `stream` is either the standard output or the standard error stream.
 #'
-#' @param stream The stream to check.
+#' @inheritParams is_dynamic_tty
 #' @return `TRUE` or `FALSE`.
 #'
 #' @family terminal capabilities
@@ -156,7 +160,10 @@ ANSI_EL <- paste0(ANSI_ESC, "K")
 #' @examples
 #' is_ansi_tty()
 
-is_ansi_tty <- function(stream = stderr()) {
+is_ansi_tty <- function(stream = "auto") {
+
+  stream <- get_real_output(stream)
+
   # Option takes precedence
   opt <- getOption("cli.ansi")
   if (isTRUE(opt)) {
@@ -188,27 +195,30 @@ is_ansi_tty <- function(stream = stderr()) {
 #' `ansi_with_hidden_cursor()` temporarily hides the cursor for
 #' evaluating an expression.
 #'
-#' @param stream The stream of the terminal to output the ANSI sequence to.
+#' @inheritParams is_dynamic_tty
 #' @param expr R expression to evaluate.
 #'
 #' @family terminal capabiltiies
 #' @export
 
-ansi_hide_cursor <- function(stream = stderr()) {
+ansi_hide_cursor <- function(stream = "auto") {
+  stream <- get_real_output(stream)
   if (is_ansi_tty(stream)) cat(ANSI_HIDE_CURSOR, file = stream)
 }
 
 #' @export
 #' @name ansi_hide_cursor
 
-ansi_show_cursor <- function(stream = stderr()) {
+ansi_show_cursor <- function(stream = "auto") {
+  stream <- get_real_output(stream)
   if (is_ansi_tty(stream)) cat(ANSI_SHOW_CURSOR, file = stream)
 }
 
 #' @export
 #' @name ansi_hide_cursor
 
-ansi_with_hidden_cursor <- function(expr, stream = stderr()) {
+ansi_with_hidden_cursor <- function(expr, stream = "auto") {
+  stream <- get_real_output(stream)
   ansi_hide_cursor(stream)
   on.exit(ansi_show_cursor(), add = TRUE)
   expr

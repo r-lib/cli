@@ -22,6 +22,11 @@
 * cli now caches the result of the dark background detection in iTerm on
   macOS. Reload cli to delete the cache (#131).
 
+* The `is_dynamic_tty()`, `is_ansi_tty()` and `ansi_hide_cursor()` and
+  releted functions now default to the `"auto"` stream, which is
+  automatically selected to be either `stdout()` or `stderr()`.
+  See the manual for details (#144).
+
 # cli 2.0.2
 
 * The status bar now does not simplify multiple spaces by a single space.

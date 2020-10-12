@@ -4,12 +4,13 @@
 \alias{is_dynamic_tty}
 \title{Detect whether a stream supports \verb{\\\\r} (Carriage return)}
 \usage{
-is_dynamic_tty(stream = cli_output_connection())
+is_dynamic_tty(stream = "auto")
 }
 \arguments{
-\item{stream}{The stream to inspect, an R connection object.
-Note that it defaults to the standard \emph{error} stream, since
-informative messages are typically printed there.}
+\item{stream}{The stream to inspect or manipulate, an R connection
+object. It can also be a string, one of \code{"auto"}, \code{"message"},
+\code{"stdout"}, \code{"stderr"}. \code{"auto"} will select \code{stdout()} if the session is
+interactive and there are no sinks.}
 }
 \description{
 In a terminal, \verb{\\\\r} moves the cursor to the first position of the
