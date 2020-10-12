@@ -31,6 +31,10 @@
   automatically selected to be either `stdout()` or `stderr()`.
   See the manual for details (#144).
 
+* The default theme now quotes file names, paths, email addresses if they
+  don't start or end with an alphanumeric character or a slash. This is
+  to make it easier to spot names that start or end with a space (#167).
+
 * `make_spinner()` clears the line properly now (@tzakharko, #164).
 
 # cli 2.0.2
