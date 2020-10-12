@@ -8,9 +8,9 @@ cli
 <!-- badges: start -->
 [![R build
 status](https://github.com/r-lib/cli/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/cli/actions)
-[![](http://www.r-pkg.org/badges/version/cli)](http://www.r-pkg.org/pkg/cli)
+[![](https://www.r-pkg.org/badges/version/cli)](https://www.r-pkg.org/pkg/cli)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/cli)](http://www.r-pkg.org/pkg/cli)
+downloads](https://cranlogs.r-pkg.org/badges/cli)](https://www.r-pkg.org/pkg/cli)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/r-lib/cli/master.svg)](https://codecov.io/github/r-lib/cli?branch=master)
 <!-- badges: end -->
