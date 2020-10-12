@@ -38,8 +38,9 @@
 * `make_spinner()` clears the line properly now (@tzakharko, #164).
 
 * Semantic cli functions now automatically replace Unicode non-breaking
-  space characters right before output. They are still used to calculate
-  the line breaks, but not outputted (#161).
+  space characters (`\u00a0`) with regular space characters, right before
+  output. They are still used to calculate the line breaks, but not
+  outputted (#161).
 
 # cli 2.0.2
 
