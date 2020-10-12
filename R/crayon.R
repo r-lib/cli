@@ -158,7 +158,7 @@ combine_ansi_styles <- function(...) {
 #' * `style_underline()`,
 #' * `style_inverse()`,
 #' * `style_hidden()`,
-#' * `style_strikethrough() (not widely supported).
+#' * `style_strikethrough()` (not widely supported).
 #'
 #' The style functions take any number of character vectors as arguments,
 #' and they concatenate them using `paste0()` before adding the style.
