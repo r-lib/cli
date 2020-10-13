@@ -41,6 +41,8 @@
   space characters (`\u00a0`) with regular space characters, right before
   output. They are still used to calculate the line breaks, but not
   outputted (#161).
+* Progress bars now respect `is_dynamic_tty()` and do not output `\r` when this
+  is false (@jimhester, #177)
 
 # cli 2.0.2
 

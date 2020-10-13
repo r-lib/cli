@@ -341,7 +341,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
     app$cat(paste0("\r", content, ANSI_EL))
-  } else {
+  } else if (is_dynamic_tty(output)) {
     nsp <- max(nchar_fixed(current) - nchar_fixed(content), 0)
     app$cat(paste0("\r", content, strrep(" ", nsp)))
   }
@@ -351,7 +351,7 @@ clii__clear_status_bar <- function(app) {
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
     app$cat(paste0("\r", ANSI_EL))
-  } else {
+  } else if (is_dynamic_tty(output)) {
     text <- app$status_bar[[1]]$content
     len <- nchar_fixed(text, type = "width")
     app$cat(paste0("\r", strrep(" ", len), "\r"))
