@@ -63,13 +63,13 @@ cli_format.numeric <- function(x, style = list(), ...) {
 #' Add custom cli style to a vector
 #'
 #' @details
-#' You can this function to change the default parameters of
+#' You can use this function to change the default parameters of
 #' [glue::glue_collapse()], see an example below.
 #'
 #' The style is added as an attribute, so operations that remove
 #' attributes will remove the style as well.
 #'
-#' @param x Vector, that will we collapsed by cli.
+#' @param x Vector that will be collapsed by cli.
 #' @param style Style to apply to the vector. It is used as a theme on
 #' a `span` element that is created for the vector. You can set `vec_sep`
 #' and `vec_last` to modify the `sep` and `last` arguments of
