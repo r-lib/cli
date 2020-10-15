@@ -345,7 +345,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
     nsp <- max(nchar_fixed(current) - nchar_fixed(content), 0)
     app$cat(paste0("\r", content, strrep(" ", nsp)))
   } else {
-    app$cat(content)
+    app$cat(paste0(content, "\n"))
   }
 }
 
