@@ -6,7 +6,7 @@ on.exit(options(op))
 options(crayon.enabled = TRUE)
 
 test_that("Classes", {
-  expect_equal(class(style_underline("foo")), "ansi_string")
+  expect_equal(class(style_underline("foo")), c("ansi_string", "character"))
 })
 
 test_that("Coloring and highlighting works", {

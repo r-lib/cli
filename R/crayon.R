@@ -3,7 +3,7 @@ cray_wrapper_fun <- function(style) {
   style
   fun <- function(...) {
     txt <- paste0(...)
-    structure(style(txt), class = "ansi_string")
+    structure(style(txt), class = c("ansi_string", "character"))
   }
   class(fun) <- "ansi_style"
   attr(fun, "crayon_style") <- style

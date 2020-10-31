@@ -1,6 +1,10 @@
 
 # cli development version
 
+* ANSI strings created by `col_*`, `bg_*` and `style_*` now also add the
+  `character` class to the result. This fixes issues with code that
+  expect `character` objects.
+
 # cli 2.1.0
 
 * New `cli_vec()` function to allow easier formatting of collapsed
