@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CLI list item(s) — cli_li • cli</title>
+<title>Check if a string has some ANSI styling — ansi_has_any • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="CLI list item(s) — cli_li" />
-<meta property="og:description" content="A list item is a container, see containers." />
+<meta property="og:title" content="Check if a string has some ANSI styling — ansi_has_any" />
+<meta property="og:description" content="Check if a string has some ANSI styling" />
 
 
 <meta name="robots" content="noindex">
@@ -132,73 +132,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>CLI list item(s)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cli.R'><code>R/cli.R</code></a></small>
-    <div class="hidden name"><code>cli_li.Rd</code></div>
+    <h1>Check if a string has some ANSI styling</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/crayonex.R'><code>R/crayonex.R</code></a></small>
+    <div class="hidden name"><code>ansi_has_any.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A list item is a container, see <a href='containers.html'>containers</a>.</p>
+    <p>Check if a string has some ANSI styling</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cli_li</span><span class='op'>(</span>
-  items <span class='op'>=</span> <span class='cn'>NULL</span>,
-  id <span class='op'>=</span> <span class='cn'>NULL</span>,
-  class <span class='op'>=</span> <span class='cn'>NULL</span>,
-  .auto_close <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='va'>string</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>items</th>
-      <td><p>Character vector of items, or <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>id</th>
-      <td><p>Id of the new container. Can be used for closing it with
-<code><a href='cli_end.html'>cli_end()</a></code> or in themes. If <code>NULL</code>, then an id is generated and
-returned invisibly.</p></td>
-    </tr>
-    <tr>
-      <th>class</th>
-      <td><p>Class of the item container. Can be used in themes.</p></td>
-    </tr>
-    <tr>
-      <th>.auto_close</th>
-      <td><p>Whether to close the container, when the calling
-function finishes (or <code>.envir</code> is removed, if specified).</p></td>
-    </tr>
-    <tr>
-      <th>.envir</th>
-      <td><p>Environment to evaluate the glue expressions in. It is
-also used to auto-close the container if <code>.auto_close</code> is <code>TRUE</code>.</p></td>
+      <th>string</th>
+      <td><p>The string to check. It can also be a character
+vector.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The id of the new container element, invisibly.</p>
+    <p>Logical vector, <code>TRUE</code> for the strings that have some
+ANSI styling.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other low level ANSI functions: 
+<code><a href='ansi_hide_cursor.html'>ansi_hide_cursor</a>()</code>,
+<code><a href='ansi_regex.html'>ansi_regex</a>()</code>,
+<code><a href='ansi_strip.html'>ansi_strip</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Adding items one by one</span>
-<span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>cli_li</span><span class='op'>(</span><span class='st'>"one"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>● one</span></div><div class='input'><span class='fu'>cli_li</span><span class='op'>(</span><span class='st'>"two"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>● two</span></div><div class='input'><span class='fu'>cli_li</span><span class='op'>(</span><span class='st'>"three"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>● three</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## Complex item, added gradually.</span>
-<span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>cli_li</span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='cli_verbatim.html'>cli_verbatim</a></span><span class='op'>(</span><span class='st'>"Beginning of the {.emph first} item"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  Beginning of the {.emph first} item</span></div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Still the first item"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  Still the first item</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>cli_li</span><span class='op'>(</span><span class='st'>"Second item"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ◯ Second item</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## The second one has style if crayon is enabled</span>
+<span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
