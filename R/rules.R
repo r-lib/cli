@@ -1,12 +1,10 @@
 
-#' @importFrom crayon col_substring
-
 make_line <- function(x, char = symbol$line, col = NULL) {
 
   ## Easiest to handle this specially
   if (x <= 0) return("")
 
-  cw <- col_nchar(char, "width")
+  cw <- ansi_nchar(char, "width")
 
   ## We handle the simple case differently, to make it faster
   if (cw == 1) {
@@ -56,7 +54,6 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
 #'
 #' @export
-#' @importFrom crayon col_substr
 #' @examples
 #'
 #' ## Simple rule
@@ -138,7 +135,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
     rule_line(options)
   }
 
-  res <- col_substr(res, 1, width)
+  res <- ansi_substr(res, 1, width)
   res <- apply_style(res, background_col, bg = TRUE)
 
   class(res) <- unique(c("rule", class(res), "character"))
@@ -168,13 +165,11 @@ rule_line <- function(o) {
   make_line(o$width, o$line, o$line_col)
 }
 
-#' @importFrom crayon col_nchar
-
 rule_center <- function(o) {
 
-  o$center <- col_substring(o$center, 1, o$width - 4)
+  o$center <- ansi_substring(o$center, 1, o$width - 4)
   o$center <- paste0(" ", o$center, " ")
-  ncc <- col_nchar(o$center, "width")
+  ncc <- ansi_nchar(o$center, "width")
 
   ndashes <- o$width - ncc
 
@@ -186,7 +181,7 @@ rule_center <- function(o) {
 }
 
 rule_left <- function(o) {
-  ncl <- col_nchar(o$left, "width")
+  ncl <- ansi_nchar(o$left, "width")
 
   paste0(
     make_line(2, get_line_char(o$line), o$line_col),
@@ -196,7 +191,7 @@ rule_left <- function(o) {
 }
 
 rule_right <- function(o) {
-  ncr <- col_nchar(o$right, "width")
+  ncr <- ansi_nchar(o$right, "width")
 
   paste0(
     make_line(o$width - ncr - 4, o$line, o$line_col),
@@ -207,8 +202,8 @@ rule_right <- function(o) {
 
 rule_left_right <- function(o) {
 
-  ncl <- col_nchar(o$left, "width")
-  ncr <- col_nchar(o$right,  "width")
+  ncl <- ansi_nchar(o$left, "width")
+  ncr <- ansi_nchar(o$right,  "width")
 
   ## -- (ncl) -- (ncr) --
   if (ncl + ncr + 10 > o$width) return(rule_left(o))

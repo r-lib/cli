@@ -94,15 +94,14 @@ tail_na <- function(x, n = 1) {
   tail(c(rep(NA, n), x), n)
 }
 
-#' @importFrom crayon col_substr
 #' @importFrom utils head
 
 dedent <- function(x, n = 2) {
-  first_n_char <- strsplit(col_substr(x, 1, n), "")[[1]]
+  first_n_char <- strsplit(ansi_substr(x, 1, n), "")[[1]]
   n_space <- cumsum(first_n_char == " ")
   d_n_space <- diff(c(0, n_space))
   first_not_space <- head(c(which(d_n_space == 0), n + 1), 1)
-  col_substr(x, first_not_space, nchar(x))
+  ansi_substr(x, first_not_space, nchar(x))
 }
 
 new_uuid <- (function() {

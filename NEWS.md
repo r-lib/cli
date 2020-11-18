@@ -5,6 +5,10 @@
   `character` class to the result. This fixes issues with code that
   expect `character` objects.
 
+* New functions to manipulate ANSI strings: `ansi_aling()`,
+  `ansi_has_any()`, `ansi_nchar()`, `ansi_regex()`, `ansi_strip()`,
+  `ansi_strsplit()`, `ansi_substr()`, `ansi_substring()`.
+
 # cli 2.1.0
 
 * New `cli_vec()` function to allow easier formatting of collapsed

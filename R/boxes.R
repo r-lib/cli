@@ -38,7 +38,6 @@
 #' which makes the boxes ugly.
 #'
 #' @export
-#' @importFrom crayon col_align
 #' @examples
 #' ## Simple box
 #' boxx("Hello there!")
@@ -100,7 +99,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
                  width = console_width()) {
 
   label <- apply_style(as.character(label), col)
-  widest <- max(col_nchar(label), 0)
+  widest <- max(ansi_nchar(label), 0)
 
   assert_that(is_border_style(border_style))
   assert_that(is_padding_or_margin(padding))
@@ -115,7 +114,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
     margin <- c(margin, margin * 3, margin, margin * 3)
   }
 
-  label <- col_align(label, align = align, width = widest)
+  label <- ansi_align(label, align = align, width = widest)
   content_width <- widest + padding[2] + padding[4]
 
   mar_left <- if (float == "center") {
@@ -145,7 +144,7 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
   side <- color_border(chars$vertical)
 
   pad_left <- make_space(padding[2])
-  pad_right <- make_space(content_width - col_nchar(label) - padding[2])
+  pad_right <- make_space(content_width - ansi_nchar(label) - padding[2])
   middle <- paste0(mar_left, side,
                    color_content(paste0(pad_left, label, pad_right)), side)
 

@@ -7,7 +7,7 @@
 cli_vec(x, style = list())
 }
 \arguments{
-\item{x}{Vector, that will we collapsed by cli.}
+\item{x}{Vector that will be collapsed by cli.}
 
 \item{style}{Style to apply to the vector. It is used as a theme on
 a \code{span} element that is created for the vector. You can set \code{vec_sep}
@@ -18,7 +18,7 @@ and \code{vec_last} to modify the \code{sep} and \code{last} arguments of
 Add custom cli style to a vector
 }
 \details{
-You can this function to change the default parameters of
+You can use this function to change the default parameters of
 \code{\link[glue:glue_collapse]{glue::glue_collapse()}}, see an example below.
 
 The style is added as an attribute, so operations that remove

@@ -1,4 +1,11 @@
 
+#' @importFrom crayon reset bold blurred italic underline inverse
+#'   hidden strikethrough
+#' @importFrom crayon black red green yellow blue magenta cyan
+#'   white silver
+#' @importFrom crayon bgBlack bgRed bgGreen bgYellow bgBlue bgMagenta
+#'   bgCyan bgWhite
+
 cray_wrapper_fun <- function(style) {
   style
   fun <- function(...) {
@@ -109,6 +116,7 @@ print.ansi_style <- function(x, ...) {
 #'
 #' @family ANSI styling
 #' @export
+#' @importFrom crayon combine_styles
 #' @examples
 #' ## Use style names
 #' alert <- combine_ansi_styles("bold", "red4")

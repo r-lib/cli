@@ -17,7 +17,7 @@ cli_li(
 
 \item{id}{Id of the new container. Can be used for closing it with
 \code{\link[=cli_end]{cli_end()}} or in themes. If \code{NULL}, then an id is generated and
-retuned invisibly.}
+returned invisibly.}
 
 \item{class}{Class of the item container. Can be used in themes.}
 
