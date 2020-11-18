@@ -120,7 +120,7 @@ show a bright, high intensity text instead,
 \item \code{style_underline()},
 \item \code{style_inverse()},
 \item \code{style_hidden()},
-\item `style_strikethrough() (not widely supported).
+\item \code{style_strikethrough()} (not widely supported).
 }
 
 The style functions take any number of character vectors as arguments,
