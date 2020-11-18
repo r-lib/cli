@@ -199,6 +199,7 @@ is_ansi_tty <- function(stream = "auto") {
 #' @param expr R expression to evaluate.
 #'
 #' @family terminal capabiltiies
+#' @family low level ANSI functions
 #' @export
 
 ansi_hide_cursor <- function(stream = "auto") {

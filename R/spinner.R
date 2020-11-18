@@ -166,7 +166,7 @@ make_spinner <- function(which = NULL, stream = "auto", template = "{spin}",
       if (throttle()) return()
       line <- sub("{spin}", c_spinner$frames[[c_state]], c_template,
                   fixed = TRUE)
-      line_width <- col_nchar(line)
+      line_width <- ansi_nchar(line)
       if (is_ansi_tty(c_stream)) {
         cat("\r", line, ANSI_EL, sep = "", file = c_stream)
       } else {

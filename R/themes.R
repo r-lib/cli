@@ -213,7 +213,7 @@ theme_create <- function(theme) {
   res
 }
 
-#' @importFrom crayon bold italic underline make_style combine_styles
+#' @importFrom crayon combine_styles make_style
 
 create_formatter <- function(x) {
   is_bold <- identical(x[["font-weight"]], "bold")
@@ -226,9 +226,9 @@ create_formatter <- function(x) {
       && !is_bg_color) return(x)
 
   fmt <- c(
-    if (is_bold) list(bold),
-    if (is_italic) list(italic),
-    if (is_underline) list(underline),
+    if (is_bold) list(crayon::bold),
+    if (is_italic) list(crayon::italic),
+    if (is_underline) list(crayon::underline),
     if (is_color) make_style(x[["color"]]),
     if (is_bg_color) make_style(x[["background-color"]], bg = TRUE)
   )

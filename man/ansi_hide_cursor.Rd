@@ -32,4 +32,11 @@ does nothing.
 \code{ansi_with_hidden_cursor()} temporarily hides the cursor for
 evaluating an expression.
 }
+\seealso{
+Other low level ANSI functions: 
+\code{\link{ansi_has_any}()},
+\code{\link{ansi_regex}()},
+\code{\link{ansi_strip}()}
+}
+\concept{low level ANSI functions}
 \concept{terminal capabiltiies}
