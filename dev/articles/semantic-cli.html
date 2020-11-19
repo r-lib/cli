@@ -416,9 +416,10 @@ suppressMessages(cli_text("Not shown"))</a></code></pre>
 <div id="subprocesses" class="section level1">
 <h1 class="hasAnchor">
 <a href="#subprocesses" class="anchor"></a>Subprocesses</h1>
-<p>If <code>cli_*()</code> commands are invoked in a subprocess via <code><a href="https://rdrr.io/pkg/callr/man/r_session.html">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="uri">https://callr.r-lib.org</a>), then they are automatically copied to the main R process:</p>
+<p>If <code>cli_*()</code> commands are invoked in a subprocess via <code><a href="https://rdrr.io/pkg/callr/man/r_session.html">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="uri">https://callr.r-lib.org</a>), and the <code>cli.message_class</code> option is set to <code>"callr_message"</code>, then cli messages are automatically copied to the main R process:</p>
 <pre class="asciicast"><code>rs &lt;- callr::r_session$new()
 rs$run(function() {
+  options(cli.message_class = "callr_message")
   cli::cli_text("This is subprocess {.emph {Sys.getpid()}} from {.pkg callr}")
   Sys.getpid()
 })
