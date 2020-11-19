@@ -1,15 +1,23 @@
 
 test_that("ansi_has_any works", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(
+    crayon.enabled = TRUE,
+    crayon.colors = 256,
+    cli.hyperlink = TRUE
+  ))
   expect_false(ansi_has_any("foobar"))
   for (sym in ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")) {
     fun <- get(sym, envir = asNamespace("cli"))
-    expect_true(ansi_has_any(fun("foobar")))
+    expect_true(ansi_has_any(fun("foo", "bar")))
   }
 })
 
 test_that("ansi_strip works", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(
+    crayon.enabled = TRUE,
+    crayon.colors = 256,
+    cli.hyperlink = TRUE
+  ))
   expect_equal("", ansi_strip(""))
   expect_equal("foobar", ansi_strip("foobar"))
   expect_equal(
@@ -20,7 +28,8 @@ test_that("ansi_strip works", {
 
   for (sym in ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")) {
     fun <- get(sym, envir = asNamespace("cli"))
-    expect_equal("foobar", ansi_strip(fun("foobar")))
+    ans <- if (sym == "style_hyperlink") "foo" else "foobar"
+    expect_equal(ans, ansi_strip(fun("foo", "bar")))
   }
 })
 
@@ -271,4 +280,13 @@ test_that("ansi_align", {
   expect_equal(
     ansi_align(c("foo", "\u6210\u4ea4\u65e5", "", "a"), 6, "right"),
     c("   foo", "\u6210\u4ea4\u65e5", "      ", "     a"))
+})
+
+test_that("stripping hyperlinks", {
+  withr::local_options(list(cli.hyperlink = TRUE))
+  x <- unclass(style_hyperlink("foo", "https://r-pkg.org"))
+  expect_equal(
+    ansi_strip(paste0("1111-", x, "-2222-", x, "-333")),
+    "1111-foo-2222-foo-333"
+  )
 })

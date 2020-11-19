@@ -14,7 +14,9 @@ ansi_regex <- function() {
   paste0(
     "(?:(?:\\x{001b}\\[)|\\x{009b})",
     "(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])",
-    "|\\x{001b}[A-M]"
+    "|\\x{001b}[A-M]",
+    # this is for hyperlinks, we must be non-greedy
+    "|\\x{001b}\\]8;;.*?\\x{0007}"
   )
 }
 
