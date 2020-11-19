@@ -77,7 +77,13 @@ cli_format_method <- function(expr, theme = getOption("cli.theme")) {
   withCallingHandlers(
     expr,
     cli_message = function(msg) {
-      cli_server_default(msg)
+      withCallingHandlers(
+        cli_server_default(msg),
+        cliMessage = function(msg2) {
+          cat(conditionMessage(msg2), file = con, sep = "")
+          invokeRestart("muffleMessage")
+        }
+      )
       invokeRestart("cli_message_handled")
     }
   )

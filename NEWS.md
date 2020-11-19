@@ -1,6 +1,9 @@
 
 # cli development version
 
+* `cli_format_method()` now works properly in knitr, and other environments
+  that catch message conditions (#159).
+
 * ANSI strings created by `col_*`, `bg_*` and `style_*` now also add the
   `character` class to the result. This fixes issues with code that
   expect `character` objects.
