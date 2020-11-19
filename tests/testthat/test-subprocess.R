@@ -6,6 +6,7 @@ test_that("events are properly generated", {
   if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
 
   do <- function() {
+    options(cli.message_class = "callr_message")
     cli::cli_div()
     cli::cli_h1("title")
     cli::cli_text("text")
@@ -41,6 +42,7 @@ test_that("subprocess with default handler", {
   if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
 
   do <- function() {
+    options(cli.message_class = "callr_message")
     cli::cli_div()
     cli::cli_h1("title")
     cli::cli_text("text")
@@ -123,7 +125,6 @@ test_that("output in child process", {
   expect_equal(result$stderr, "")
   expect_identical(result$result, "foobar")
   expect_null(result$error)
-  lapply(msgs, expect_s3_class, "callr_message")
   str <- paste(vcapply(msgs, "[[", "message"), collapse = "")
   expect_true(crayon::has_style(str))
   expect_match(str, "Title")
@@ -135,6 +136,7 @@ test_that("output in child process", {
 test_that("substitution in child process", {
 
   do <- function() {
+    options(cli.message_class = "callr_message")
     cli::cli_text("This is process {Sys.getpid()}.")
   }
 
