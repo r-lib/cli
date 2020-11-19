@@ -158,3 +158,7 @@ first_character <- function(x) {
 is_alnum <- function(x) {
   x %in% c(letters, LETTERS, 0:9, "/")
 }
+
+os_type <- function() {
+  .Platform$OS.type
+}

@@ -1,6 +1,9 @@
 
 # cli development version
 
+* New `style_hyperlink()` function to add hyperlinks, on terminals that
+  support them.
+
 * `cli_format_method()` now works properly in knitr, and other environments
   that catch message conditions (#159).
 
