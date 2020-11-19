@@ -474,12 +474,14 @@ suppressMessages(cli_text("Not shown"))
 # Subprocesses
 
 If `cli_*()` commands are invoked in a subprocess via
-`callr::r_session` (see https://callr.r-lib.org), then they are
-automatically copied to the main R process:
+`callr::r_session` (see https://callr.r-lib.org), and the
+`cli.message_class` option is set to `"callr_message"`, then cli messages
+are automatically copied to the main R process:
 
 ```{asciicast}
 rs <- callr::r_session$new()
 rs$run(function() {
+  options(cli.message_class = "callr_message")
   cli::cli_text("This is subprocess {.emph {Sys.getpid()}} from {.pkg callr}")
   Sys.getpid()
 })

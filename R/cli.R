@@ -511,14 +511,18 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
 
   cond <- list(message = paste("cli message", type),
                type = type, args = args, pid = clienv$pid)
-  class(cond) <- c("cli_message", "callr_message", "condition")
+
+  class(cond) <- c(
+    getOption("cli.message_class"),
+    "cli_message",
+    "condition"
+  )
 
   withRestarts(
   {
     signalCondition(cond)
     cli__default_handler(cond)
   },
-  callr_message_handled = function() NULL,
   cli_message_handled = function() NULL)
 
   invisible(args$id)
