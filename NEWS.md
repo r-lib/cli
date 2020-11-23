@@ -1,5 +1,5 @@
 
-# cli development version
+# cli 2.2.0
 
 * New `style_hyperlink()` function to add hyperlinks, on terminals that
   support them.
