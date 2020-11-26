@@ -6,7 +6,7 @@
 \usage{
 ansi_align(
   text,
-  width = getOption("width"),
+  width = console_width(),
   align = c("left", "center", "right"),
   type = "width"
 )

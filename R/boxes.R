@@ -27,7 +27,7 @@
 #'   [make_ansi_style()].
 #' @param align Alignment of the label within the box: `"left"`,
 #'   `"center"`, or `"right"`.
-#' @param width Width of the screen, defaults to `getOption("width")`.
+#' @param width Width of the screen, defaults to [console_width()].
 #'
 #' @section About fonts and terminal settings:
 #' The boxes might or might not look great in your terminal, depending

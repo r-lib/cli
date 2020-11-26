@@ -333,7 +333,7 @@ ansi_strsplit <- function(x, split, ...) {
 #' ansi_align(col_red("foobar"), 20, "center")
 #' ansi_align(col_red("foobar"), 20, "right")
 
-ansi_align <- function(text, width = getOption("width"),
+ansi_align <- function(text, width = console_width(),
                       align = c("left", "center", "right"),
                       type = "width") {
 
