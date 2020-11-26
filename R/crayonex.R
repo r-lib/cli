@@ -397,7 +397,21 @@ strrep <- function (x, times) {
   )
 }
 
+#' Remove leading and/or trailing whitespace from an ANSI string
+#'
+#' This function is similar to [base::trimws()] but works on ANSI strings,
+#' and keeps color and other styling.
+#'
+#' @param x ANSI string vector.
+#' @param which Whether to remove leading or trailing whitespace or both.
+#' @return ANSI string, with the whitespace removed.
+#'
 #' @export
+#' @examples
+#' trimws(paste0("   ", col_red("I am red"), "   "))
+#' ansi_trim_ws(paste0("   ", col_red("I am red"), "   "))
+#' trimws(col_red("   I am red   "))
+#' ansi_trim_ws(col_red("   I am red   "))
 
 ansi_trim_ws <- function(x, which = c("both", "left", "right")) {
 
@@ -428,7 +442,31 @@ ansi_trim_ws <- function(x, which = c("both", "left", "right")) {
   ansi_string(x)
 }
 
+#' Wrap an ANSI styled string to a certain width
+#'
+#' This function is similar to [base::strwrap()], but works on ANSI
+#' styled strings, and leaves the styling intact.
+#'
+#' @param x ANSI string.
+#' @param width Width to wrap to.
+#' @param indent Indentation of the first line of each paragraph.
+#' @param exdent Indentation of the subsequent lines of each paragraph.
+#' @param simplify Whether to return all wrapped strings in a single
+#'   charcter vector, or wrap each element of `x` independently and return
+#'   a list.
+#' @return If `simplify` is `FALSE`, then a list of character vectors,
+#'   each an ANSI string. Otherwise a single ANSI string vector.
+#'
 #' @export
+#' @examples
+#' text <- cli:::lorem_ipsum()
+#' # Highlight some words, that start with 's'
+#' rexp <- gregexpr("\\b([sS][a-zA-Z]+)\\b", text)
+#' regmatches(text, rexp) <- lapply(regmatches(text, rexp), col_red)
+#' cat(text)
+#'
+#' wrp <- ansi_strwrap(text, width = 40)
+#' cat(wrp, sep = "\n")
 
 ansi_strwrap <- function(x, width = console_width(), indent = 0,
                          exdent = 0, simplify = TRUE) {
