@@ -1,6 +1,9 @@
 
 # cli development version
 
+* `ansi_substr()`, `ansi_substring()`, `ansi_strsplit()`, `ansi_align()`
+  now always return `ansi_string` objects.
+
 # cli 2.2.0
 
 * New `style_hyperlink()` function to add hyperlinks, on terminals that

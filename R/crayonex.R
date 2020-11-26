@@ -1,4 +1,10 @@
 
+ansi_string <- function(x) {
+  if (!is.character(x)) x <- as.character(x)
+  class(x) <- unique(c("ansi_string", class(x)))
+  x
+}
+
 #' Perl comparible regular expression that matches ANSI escape
 #' sequences
 #'
@@ -169,7 +175,7 @@ ansi_nchar <- function(x, ...) {
 
 ansi_substr <- function(x, start, stop) {
   if (!is.character(x)) x <- as.character(x)
-  if (!length(x)) return(x)
+  if (!length(x)) return(ansi_string(x))
   start <- as.integer(start)
   stop <- as.integer(stop)
   if (!length(start) || !length(stop)) {
@@ -195,7 +201,9 @@ ansi_substr_internal <- function(x, mapper, start, stop) {
   ansi_aft <- vapply(regmatches(aft, gregexpr(ansi_regex(), aft)),
                      paste, collapse = "", FUN.VALUE = "")
 
-  paste(sep = "", ansi_bef, base::substr(x, nstart, nstop), ansi_aft)
+  ansi_string(
+    paste(sep = "", ansi_bef, base::substr(x, nstart, nstop), ansi_aft)
+  )
 }
 
 #' Substring(s) of an ANSI colored string
@@ -321,7 +329,7 @@ ansi_strsplit <- function(x, split, ...) {
     chunks[!zero.chunks], x[!zero.chunks], SIMPLIFY = FALSE,
     FUN = function(tab, xx) ansi_substring(xx, tab[, "start"], tab[, "end"])
   )
-  res
+  lapply(res, ansi_string)
 }
 
 #' Align an ANSI colored string
@@ -346,9 +354,9 @@ ansi_align <- function(text, width = console_width(),
   align <- match.arg(align)
   nc <- ansi_nchar(text, type = type)
 
-  if (!length(text)) return(text)
+  if (!length(text)) return(ansi_string(text))
 
-  if (align == "left") {
+  res <- if (align == "left") {
     paste0(text, make_space(width - nc))
 
   } else if (align == "center") {
@@ -359,6 +367,8 @@ ansi_align <- function(text, width = console_width(),
   } else {
     paste0(make_space(width - nc), text)
   }
+
+  ansi_string(res)
 }
 
 make_space <- function(num, filling = " ") {
@@ -393,7 +403,7 @@ ansi_trim_ws <- function(x, which = c("both", "left", "right")) {
 
   if (!is.character(x)) x <- as.character(x)
   which <- match.arg(which)
-  if (!length(x)) return(x)
+  if (!length(x)) return(ansi_string(x))
 
   sl <- 0L
   if (which %in% c("both", "left")) {
@@ -415,7 +425,7 @@ ansi_trim_ws <- function(x, which = c("both", "left", "right")) {
     x <- ansi_substr(x, 1 + sl, ansi_nchar(x) - rl)
   }
 
-  x
+  ansi_string(x)
 }
 
 #' @export
@@ -424,7 +434,9 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
                          exdent = 0, simplify = TRUE) {
 
   if (!is.character(x)) x <- as.character(x)
-  if (length(x) == 0) return(x)
+  if (length(x) == 0) {
+    return(ansi_string(x))
+  }
   if (length(x) > 1) {
     wrp <- lapply(x, ansi_strwrap, width = width, indent = indent,
                   exdent = exdent, simplify = FALSE)
@@ -448,7 +460,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
   xs <- ansi_strip(xx)
   xw0 <- base::strwrap(xs, width = width, indent = indent, exdent = exdent)
-  if (xs == xx) return(xw0)
+  if (xs == xx) return(ansi_string(xw0))
 
   xw <- trimws(xw0, "left")
   indent <- nchar(xw0) - nchar(xw)
@@ -497,5 +509,5 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   })
 
   indent <- strrep(" ", indent)
-  paste0(indent, wrp)
+  ansi_string(paste0(indent, wrp))
 }
