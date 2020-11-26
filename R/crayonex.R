@@ -168,17 +168,23 @@ ansi_nchar <- function(x, ...) {
 #' substr(ansi_strip(c(str, str2)), c(3,5), c(7, 18))
 
 ansi_substr <- function(x, start, stop) {
-  if(!is.character(x)) x <- as.character(x)
-  if(!length(x)) return(x)
+  if (!is.character(x)) x <- as.character(x)
+  if (!length(x)) return(x)
   start <- as.integer(start)
   stop <- as.integer(stop)
-  if(!length(start) || !length(stop))
+  if (!length(start) || !length(stop)) {
     stop("invalid substring arguments")
-  if(anyNA(start) || anyNA(stop))
+  }
+  if (anyNA(start) || anyNA(stop)) {
     stop("non-numeric substring arguments not supported")
+  }
   ansi <- re_table(ansi_regex(), x)
   text <- non_matching(ansi, x, empty=TRUE)
   mapper <- map_to_ansi(x, text = text)
+  ansi_substr_internal(x, mapper, start, stop)
+}
+
+ansi_substr_internal <- function(x, mapper, start, stop) {
   nstart <- mapper(start)
   nstop  <- mapper(stop)
 
@@ -379,4 +385,117 @@ strrep <- function (x, times) {
     x, times,
     USE.NAMES = FALSE
   )
+}
+
+#' @export
+
+ansi_trim_ws <- function(x, which = c("both", "left", "right")) {
+
+  if (!is.character(x)) x <- as.character(x)
+  which <- match.arg(which)
+  if (!length(x)) return(x)
+
+  sl <- 0L
+  if (which %in% c("both", "left")) {
+    xs <- ansi_strip(x)
+    xl <- trimws(xs, "left")
+    nxs <- nchar(xs)
+    sl <- nxs - nchar(xl)
+  }
+
+  rl <- 0L
+  if (which %in% c("both", "right")) {
+    xs <- ansi_strip(x)
+    xr <- trimws(xs, "right")
+    nxs <- nchar(xs)
+    rl <- nxs - nchar(xr)
+  }
+
+  if (any(sl > 0L) || rl > 0L) {
+    x <- ansi_substr(x, 1 + sl, ansi_nchar(x) - rl)
+  }
+
+  x
+}
+
+#' @export
+
+ansi_strwrap <- function(x, width = console_width(), indent = 0,
+                         exdent = 0, simplify = TRUE) {
+
+  if (!is.character(x)) x <- as.character(x)
+  if (length(x) == 0) return(x)
+  if (length(x) > 1) {
+    wrp <- lapply(x, ansi_strwrap, width = width, indent = indent,
+                  exdent = exdent, simplify = FALSE)
+    if (simplify) wrp <- unlist(wrp)
+    return(wrp)
+  }
+
+  # First we need to remove the multiple spaces, to make it easier to
+  # map the strings later on. We do this per paragraph, to keep paragraphs.
+  pars <- strsplit(x, "\n[ \t\n]*\n", perl = TRUE)
+  pars <- lapply(pars, ansi_trim_ws)
+
+  # Within paragraphs, replace multiple spaces with one, except when there
+  # were two spaces at the end of a sentence, where we keep two.
+  pars <- lapply(pars, function(s) {
+    gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
+  })
+
+  # Put them back together
+  xx <- vcapply(pars, function(s) paste(s, collapse = "\n\n"))
+
+  xs <- ansi_strip(xx)
+  xw0 <- base::strwrap(xs, width = width, indent = indent, exdent = exdent)
+  if (xs == xx) return(xw0)
+
+  xw <- trimws(xw0, "left")
+  indent <- nchar(xw0) - nchar(xw)
+
+  # Now map the positions from xw back to xs by going over both in parallel
+  splits <- 1L
+  drop <- integer()
+  xslen <- nchar(xs)
+  xsidx <- 1L
+  xwlen <- nchar(xw[1])
+  xwidx <- c(1L, 1L)
+
+  while (xsidx <= xslen) {
+    xsc <- substr(xs, xsidx, xsidx)
+    xwc <- substr(xw[xwidx[1]], xwidx[2], xwidx[2])
+    if (xsc == xwc) {
+      xsidx <- xsidx + 1L
+      xwidx[2] <- xwidx[2] + 1L
+    } else if (xsc %in% c(" ", "\n", "\t")) {
+      drop <- c(drop, xsidx)
+      xsidx <- xsidx + 1L
+    } else if (xwc == " ") {
+      xwidx[2] <- xwidx[2] + 1L
+    } else {
+      stop("Internal error")
+    }
+
+    while (xsidx <= xslen && xwidx[1] <= length(xw) && xwidx[2] > xwlen) {
+      splits <- c(splits, xsidx)
+      xwidx[1] <- xwidx[1] + 1L
+      xwidx[2] <- 1L
+      xwlen <- nchar(xw[xwidx[1]])
+    }
+  }
+  splits <- c(splits, xsidx)
+
+  ansi <- re_table(ansi_regex(), xx)
+  text <- non_matching(ansi, xx, empty=TRUE)
+  mapper <- map_to_ansi(xx, text = text)
+
+  wrp <- vcapply(seq_along(splits[-1]), function(i) {
+    from <- splits[i]
+    to <- splits[i + 1L] - 1L
+    while (from %in% drop) from <- from + 1L
+    ansi_substr_internal(xx, mapper, from, to)
+  })
+
+  indent <- strrep(" ", indent)
+  paste0(indent, wrp)
 }
