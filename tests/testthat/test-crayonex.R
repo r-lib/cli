@@ -359,7 +359,7 @@ test_that("stripping hyperlinks", {
   )
 })
 
-test_that("ansi_trim_ws", {
+test_that("ansi_trimws", {
   
 })
 

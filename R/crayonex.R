@@ -409,11 +409,11 @@ strrep <- function (x, times) {
 #' @export
 #' @examples
 #' trimws(paste0("   ", col_red("I am red"), "   "))
-#' ansi_trim_ws(paste0("   ", col_red("I am red"), "   "))
+#' ansi_trimws(paste0("   ", col_red("I am red"), "   "))
 #' trimws(col_red("   I am red   "))
-#' ansi_trim_ws(col_red("   I am red   "))
+#' ansi_trimws(col_red("   I am red   "))
 
-ansi_trim_ws <- function(x, which = c("both", "left", "right")) {
+ansi_trimws <- function(x, which = c("both", "left", "right")) {
 
   if (!is.character(x)) x <- as.character(x)
   which <- match.arg(which)
@@ -485,7 +485,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   # First we need to remove the multiple spaces, to make it easier to
   # map the strings later on. We do this per paragraph, to keep paragraphs.
   pars <- strsplit(x, "\n[ \t\n]*\n", perl = TRUE)
-  pars <- lapply(pars, ansi_trim_ws)
+  pars <- lapply(pars, ansi_trimws)
 
   # Within paragraphs, replace multiple spaces with one, except when there
   # were two spaces at the end of a sentence, where we keep two.

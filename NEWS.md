@@ -1,6 +1,9 @@
 
 # cli development version
 
+* New `ansi_trimws()` and `ansi_strwrap()` functions, they are similar
+  to `trimws()` and `strwrap()` but work on ANSI strings.
+
 * `ansi_substr()`, `ansi_substring()`, `ansi_strsplit()`, `ansi_align()`
   now always return `ansi_string` objects.
 
