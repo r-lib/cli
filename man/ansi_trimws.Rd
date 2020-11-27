@@ -24,3 +24,14 @@ ansi_trimws(paste0("   ", col_red("I am red"), "   "))
 trimws(col_red("   I am red   "))
 ansi_trimws(col_red("   I am red   "))
 }
+\seealso{
+Other ANSI string operations: 
+\code{\link{ansi_align}()},
+\code{\link{ansi_nchar}()},
+\code{\link{ansi_strsplit}()},
+\code{\link{ansi_strtrim}()},
+\code{\link{ansi_strwrap}()},
+\code{\link{ansi_substring}()},
+\code{\link{ansi_substr}()}
+}
+\concept{ANSI string operations}

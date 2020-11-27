@@ -406,6 +406,7 @@ strrep <- function (x, times) {
 #' @param which Whether to remove leading or trailing whitespace or both.
 #' @return ANSI string, with the whitespace removed.
 #'
+#' @family ANSI string operations
 #' @export
 #' @examples
 #' trimws(paste0("   ", col_red("I am red"), "   "))
@@ -457,6 +458,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
 #' @return If `simplify` is `FALSE`, then a list of character vectors,
 #'   each an ANSI string. Otherwise a single ANSI string vector.
 #'
+#' @family ANSI string operations
 #' @export
 #' @examples
 #' text <- cli:::lorem_ipsum()
@@ -548,4 +550,42 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
   indent <- strrep(" ", indent)
   ansi_string(paste0(indent, wrp))
+}
+
+#' Truncate an ANSI string
+#'
+#' This function is similar to [base::strtrim()], but works correcntly with
+#' ANSI styled strings. It also adds `...` (or the corresponding Unicode
+#' character if Unicode characters are allowed) to the end of truncated
+#' strings.
+#'
+#' @param x Character vector of ANSI strings.
+#' @param width The width to truncate to.
+#' @param ellipsis The string to append to truncated strings. Supply an
+#'   empty string if you don't want a marker.
+#'
+#' @family ANSI string operations
+#' @export
+#' @examples
+#' text <- cli::col_red(cli:::lorem_ipsum())
+#' ansi_strtrim(c(text, "foobar"), 40)
+
+ansi_strtrim <- function(x, width = console_width(),
+                         ellipsis = symbol$ellipsis) {
+  # This might be too wide if we have wide characters
+  xt <- ansi_substr(x, 1, width)
+
+  # these are good, we do not touch them
+  gd <- xt == x
+
+  # the rest were truncated, and we might need to truncate them even more
+  # if we have double width characters. Plus we need to put ... at the end
+  tw <- ansi_nchar(ellipsis, "width")
+
+  while (any(bad <- ! gd & (ansi_nchar(xt, "width") > width - tw))) {
+    xt[bad] <- ansi_substr(xt[bad], 1, ansi_nchar(xt[bad]) - 1L)
+  }
+
+  xt[!gd] <- paste0(xt[!gd], ellipsis)
+  xt
 }

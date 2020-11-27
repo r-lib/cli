@@ -58,6 +58,9 @@ Other ANSI string operations:
 \code{\link{ansi_align}()},
 \code{\link{ansi_nchar}()},
 \code{\link{ansi_strsplit}()},
-\code{\link{ansi_substr}()}
+\code{\link{ansi_strtrim}()},
+\code{\link{ansi_strwrap}()},
+\code{\link{ansi_substr}()},
+\code{\link{ansi_trimws}()}
 }
 \concept{ANSI string operations}
