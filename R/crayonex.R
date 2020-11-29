@@ -443,7 +443,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
     rl <- nxs - nchar(xr)
   }
 
-  if (any(sl > 0L) || rl > 0L) {
+  if (any(sl > 0L | rl > 0L)) {
     x <- ansi_substr(x, 1 + sl, ansi_nchar(x) - rl)
   }
 
