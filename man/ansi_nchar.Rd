@@ -4,13 +4,16 @@
 \alias{ansi_nchar}
 \title{Count number of characters in an ANSI colored string}
 \usage{
-ansi_nchar(x, ...)
+ansi_nchar(x, type = c("chars", "bytes", "width"), ...)
 }
 \arguments{
 \item{x}{Character vector, potentially ANSO styled, or a vector to be
 coarced to character.}
 
-\item{...}{Additional arguments, passed on to \code{base::nchar()}
+\item{type}{Whether to count characters, bytes, or calculate the
+display width of the string. Passed to \code{\link[base:nchar]{base::nchar()}}.}
+
+\item{...}{Additional arguments, passed on to \code{\link[base:nchar]{base::nchar()}}
 after removing ANSI escape sequences.}
 }
 \value{
@@ -38,7 +41,10 @@ nchar(ansi_strip(str))
 Other ANSI string operations: 
 \code{\link{ansi_align}()},
 \code{\link{ansi_strsplit}()},
+\code{\link{ansi_strtrim}()},
+\code{\link{ansi_strwrap}()},
 \code{\link{ansi_substring}()},
-\code{\link{ansi_substr}()}
+\code{\link{ansi_substr}()},
+\code{\link{ansi_trimws}()}
 }
 \concept{ANSI string operations}

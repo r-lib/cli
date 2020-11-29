@@ -215,7 +215,7 @@ clii_rule <- function(app, left, center, right, id) {
   on.exit(clii__container_end(app, id), add = TRUE)
   style <- app$get_current_style()
   width <- console_width() -
-    nchar_fixed(style$before %||% "") - nchar_fixed(style$after %||% "")
+    ansi_nchar(style$before %||% "") - ansi_nchar(style$after %||% "")
   text <- rule(left, center, right, line = style$`line-type` %||% 1)
   text[1] <- paste0(style$before, text[1])
   text[length(text)] <- paste0(text[length(text)], style$after)
@@ -234,6 +234,6 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   text[1] <- paste0(style$before, text[1])
   text[length(text)] <- paste0(text[length(text)], style$after)
   if (is.function(style$fmt)) text <- style$fmt(text)
-  if (wrap) text <- strwrap_fixed(text, exdent = 2)
+  if (wrap) text <- ansi_strwrap(text, exdent = 2)
   app$cat_ln(text)
 }

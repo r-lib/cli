@@ -1,4 +1,10 @@
 
+ansi_string <- function(x) {
+  if (!is.character(x)) x <- as.character(x)
+  class(x) <- unique(c("ansi_string", class(x)))
+  x
+}
+
 #' Perl comparible regular expression that matches ANSI escape
 #' sequences
 #'
@@ -99,7 +105,9 @@ map_to_ansi <- function(x, text = NULL) {
 #'
 #' @param x Character vector, potentially ANSO styled, or a vector to be
 #'   coarced to character.
-#' @param ... Additional arguments, passed on to `base::nchar()`
+#' @param type Whether to count characters, bytes, or calculate the
+#'   display width of the string. Passed to [base::nchar()].
+#' @param ... Additional arguments, passed on to [base::nchar()]
 #'   after removing ANSI escape sequences.
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
@@ -118,10 +126,15 @@ map_to_ansi <- function(x, text = NULL) {
 #' ansi_nchar(str)
 #' nchar(ansi_strip(str))
 
-ansi_nchar <- function(x, ...) {
-  base::nchar(ansi_strip(x), ...)
+ansi_nchar <- function(x, type = c("chars", "bytes", "width"), ...) {
+  type <- match.arg(type)
+  if (type == "width") x <- unicode_pre(x)
+  ansi_nchar_bad(x, type = type, ...)
 }
 
+ansi_nchar_bad <- function(x, ...) {
+  base::nchar(ansi_strip(x), ...)
+}
 
 #' Substring(s) of an ANSI colored string
 #'
@@ -168,17 +181,23 @@ ansi_nchar <- function(x, ...) {
 #' substr(ansi_strip(c(str, str2)), c(3,5), c(7, 18))
 
 ansi_substr <- function(x, start, stop) {
-  if(!is.character(x)) x <- as.character(x)
-  if(!length(x)) return(x)
+  if (!is.character(x)) x <- as.character(x)
+  if (!length(x)) return(ansi_string(x))
   start <- as.integer(start)
   stop <- as.integer(stop)
-  if(!length(start) || !length(stop))
+  if (!length(start) || !length(stop)) {
     stop("invalid substring arguments")
-  if(anyNA(start) || anyNA(stop))
+  }
+  if (anyNA(start) || anyNA(stop)) {
     stop("non-numeric substring arguments not supported")
+  }
   ansi <- re_table(ansi_regex(), x)
   text <- non_matching(ansi, x, empty=TRUE)
   mapper <- map_to_ansi(x, text = text)
+  ansi_substr_internal(x, mapper, start, stop)
+}
+
+ansi_substr_internal <- function(x, mapper, start, stop) {
   nstart <- mapper(start)
   nstop  <- mapper(stop)
 
@@ -189,7 +208,9 @@ ansi_substr <- function(x, start, stop) {
   ansi_aft <- vapply(regmatches(aft, gregexpr(ansi_regex(), aft)),
                      paste, collapse = "", FUN.VALUE = "")
 
-  paste(sep = "", ansi_bef, base::substr(x, nstart, nstop), ansi_aft)
+  ansi_string(
+    paste(sep = "", ansi_bef, base::substr(x, nstart, nstop), ansi_aft)
+  )
 }
 
 #' Substring(s) of an ANSI colored string
@@ -315,7 +336,7 @@ ansi_strsplit <- function(x, split, ...) {
     chunks[!zero.chunks], x[!zero.chunks], SIMPLIFY = FALSE,
     FUN = function(tab, xx) ansi_substring(xx, tab[, "start"], tab[, "end"])
   )
-  res
+  lapply(res, ansi_string)
 }
 
 #' Align an ANSI colored string
@@ -333,16 +354,16 @@ ansi_strsplit <- function(x, split, ...) {
 #' ansi_align(col_red("foobar"), 20, "center")
 #' ansi_align(col_red("foobar"), 20, "right")
 
-ansi_align <- function(text, width = getOption("width"),
+ansi_align <- function(text, width = console_width(),
                       align = c("left", "center", "right"),
                       type = "width") {
 
   align <- match.arg(align)
   nc <- ansi_nchar(text, type = type)
 
-  if (!length(text)) return(text)
+  if (!length(text)) return(ansi_string(text))
 
-  if (align == "left") {
+  res <- if (align == "left") {
     paste0(text, make_space(width - nc))
 
   } else if (align == "center") {
@@ -353,6 +374,8 @@ ansi_align <- function(text, width = getOption("width"),
   } else {
     paste0(make_space(width - nc), text)
   }
+
+  ansi_string(res)
 }
 
 make_space <- function(num, filling = " ") {
@@ -379,4 +402,208 @@ strrep <- function (x, times) {
     x, times,
     USE.NAMES = FALSE
   )
+}
+
+#' Remove leading and/or trailing whitespace from an ANSI string
+#'
+#' This function is similar to [base::trimws()] but works on ANSI strings,
+#' and keeps color and other styling.
+#'
+#' @param x ANSI string vector.
+#' @param which Whether to remove leading or trailing whitespace or both.
+#' @return ANSI string, with the whitespace removed.
+#'
+#' @family ANSI string operations
+#' @export
+#' @examples
+#' trimws(paste0("   ", col_red("I am red"), "   "))
+#' ansi_trimws(paste0("   ", col_red("I am red"), "   "))
+#' trimws(col_red("   I am red   "))
+#' ansi_trimws(col_red("   I am red   "))
+
+ansi_trimws <- function(x, which = c("both", "left", "right")) {
+
+  if (!is.character(x)) x <- as.character(x)
+  which <- match.arg(which)
+  if (!length(x)) return(ansi_string(x))
+
+  sl <- 0L
+  if (which %in% c("both", "left")) {
+    xs <- ansi_strip(x)
+    xl <- trimws(xs, "left")
+    nxs <- nchar(xs)
+    sl <- nxs - nchar(xl)
+  }
+
+  rl <- 0L
+  if (which %in% c("both", "right")) {
+    xs <- ansi_strip(x)
+    xr <- trimws(xs, "right")
+    nxs <- nchar(xs)
+    rl <- nxs - nchar(xr)
+  }
+
+  if (any(sl > 0L | rl > 0L)) {
+    x <- ansi_substr(x, 1 + sl, ansi_nchar(x) - rl)
+  }
+
+  ansi_string(x)
+}
+
+#' Wrap an ANSI styled string to a certain width
+#'
+#' This function is similar to [base::strwrap()], but works on ANSI
+#' styled strings, and leaves the styling intact.
+#'
+#' @param x ANSI string.
+#' @param width Width to wrap to.
+#' @param indent Indentation of the first line of each paragraph.
+#' @param exdent Indentation of the subsequent lines of each paragraph.
+#' @param simplify Whether to return all wrapped strings in a single
+#'   charcter vector, or wrap each element of `x` independently and return
+#'   a list.
+#' @return If `simplify` is `FALSE`, then a list of character vectors,
+#'   each an ANSI string. Otherwise a single ANSI string vector.
+#'
+#' @family ANSI string operations
+#' @export
+#' @examples
+#' text <- cli:::lorem_ipsum()
+#' # Highlight some words, that start with 's'
+#' rexp <- gregexpr("\\b([sS][a-zA-Z]+)\\b", text)
+#' regmatches(text, rexp) <- lapply(regmatches(text, rexp), col_red)
+#' cat(text)
+#'
+#' wrp <- ansi_strwrap(text, width = 40)
+#' cat(wrp, sep = "\n")
+
+ansi_strwrap <- function(x, width = console_width(), indent = 0,
+                         exdent = 0, simplify = TRUE) {
+
+  if (!is.character(x)) x <- as.character(x)
+  if (length(x) == 0) {
+    return(ansi_string(x))
+  }
+  if (length(x) > 1) {
+    wrp <- lapply(x, ansi_strwrap, width = width, indent = indent,
+                  exdent = exdent, simplify = FALSE)
+    if (simplify) wrp <- ansi_string(unlist(wrp))
+    return(wrp)
+  }
+
+  # Workaround for bad Unicode width
+  x <- unicode_pre(x)
+
+  # First we need to remove the multiple spaces, to make it easier to
+  # map the strings later on. We do this per paragraph, to keep paragraphs.
+  pars <- strsplit(x, "\n[ \t\n]*\n", perl = TRUE)
+  pars <- lapply(pars, ansi_trimws)
+
+  # Within paragraphs, replace multiple spaces with one, except when there
+  # were two spaces at the end of a sentence, where we keep two.
+  # This does not work well, when some space is inside an ANSI tag, and
+  # some is outside, but for now, we'll live with this limitation.
+  pars <- lapply(pars, function(s) {
+    gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
+  })
+
+  # Put them back together
+  xx <- vcapply(pars, function(s) paste(s, collapse = "\n\n"))
+
+  xs <- ansi_strip(xx)
+  xw0 <- base::strwrap(xs, width = width, indent = indent, exdent = exdent)
+  if (xs == xx) return(ansi_string(unicode_post(xw0)))
+
+  xw <- trimws(xw0, "left")
+  indent <- nchar(xw0) - nchar(xw)
+
+  # Now map the positions from xw back to xs by going over both in parallel
+  splits <- 1L
+  drop <- integer()
+  xslen <- nchar(xs)
+  xsidx <- 1L
+  xwlen <- nchar(xw[1])
+  xwidx <- c(1L, 1L)
+
+  while (xsidx <= xslen) {
+    xsc <- substr(xs, xsidx, xsidx)
+    xwc <- substr(xw[xwidx[1]], xwidx[2], xwidx[2])
+    if (xsc == xwc) {
+      xsidx <- xsidx + 1L
+      xwidx[2] <- xwidx[2] + 1L
+    } else if (xsc %in% c(" ", "\n", "\t")) {
+      drop <- c(drop, xsidx)
+      xsidx <- xsidx + 1L
+    } else if (xwc == " ") {
+      xwidx[2] <- xwidx[2] + 1L
+    } else {
+      stop("Internal error")
+    }
+
+    while (xsidx <= xslen && xwidx[1] <= length(xw) && xwidx[2] > xwlen) {
+      splits <- c(splits, xsidx)
+      xwidx[1] <- xwidx[1] + 1L
+      xwidx[2] <- 1L
+      xwlen <- nchar(xw[xwidx[1]])
+    }
+  }
+  splits <- c(splits, xsidx)
+
+  ansi <- re_table(ansi_regex(), xx)
+  text <- non_matching(ansi, xx, empty=TRUE)
+  mapper <- map_to_ansi(xx, text = text)
+
+  wrp <- vcapply(seq_along(splits[-1]), function(i) {
+    from <- splits[i]
+    to <- splits[i + 1L] - 1L
+    while (from %in% drop) from <- from + 1L
+    ansi_substr_internal(xx, mapper, from, to)
+  })
+
+  indent <- strrep(" ", indent)
+  ansi_string(unicode_post(paste0(indent, wrp)))
+}
+
+#' Truncate an ANSI string
+#'
+#' This function is similar to [base::strtrim()], but works correcntly with
+#' ANSI styled strings. It also adds `...` (or the corresponding Unicode
+#' character if Unicode characters are allowed) to the end of truncated
+#' strings.
+#'
+#' @param x Character vector of ANSI strings.
+#' @param width The width to truncate to.
+#' @param ellipsis The string to append to truncated strings. Supply an
+#'   empty string if you don't want a marker.
+#'
+#' @family ANSI string operations
+#' @export
+#' @examples
+#' text <- cli::col_red(cli:::lorem_ipsum())
+#' ansi_strtrim(c(text, "foobar"), 40)
+
+ansi_strtrim <- function(x, width = console_width(),
+                         ellipsis = symbol$ellipsis) {
+
+  # Unicode width notes. We have nothing to fix here, because we'll just
+  # use ansi_substr() and ansi_nchar(), which work correctly with wide
+  # characters.
+
+  # First we cut according to _characters_. This might be too wide if we
+  # have wide characters.
+  xt <- ansi_substr(x, 1, width)
+  tw <- ansi_nchar(ellipsis, "width")
+
+  # If there was a cut, or xt is too wise (using _width_!), that's bad
+  # We keep the initial bad ones, these are the ones that need an ellipsis.
+  # Then we keep chopping off single characters from the too wide ones,
+  # until they are narrow enough.
+  bad0 <- bad <- xt != x | ansi_nchar(xt, "width") > width
+  while (any(bad)) {
+    xt[bad] <- ansi_substr(xt[bad], 1, ansi_nchar(xt[bad]) - 1L)
+    bad <- ansi_nchar(xt, "width") > width - tw
+  }
+
+  xt[bad0] <- paste0(xt[bad0], ellipsis)
+  xt
 }

@@ -325,7 +325,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   ## Format the line
   content <- ""
   fmsg <- app$inline(msg)
-  cfmsg <- strwrap2_fixed(fmsg, width = app$get_width(), strip.spaces = FALSE)
+  cfmsg <- ansi_strtrim(fmsg, width = app$get_width())
   content <- strsplit(cfmsg, "\r?\n")[[1]][1]
   if (is.na(content)) content <- ""
 
@@ -342,7 +342,7 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   if (is_ansi_tty(output)) {
     app$cat(paste0("\r", content, ANSI_EL))
   } else if (is_dynamic_tty(output)) {
-    nsp <- max(nchar_fixed(current) - nchar_fixed(content), 0)
+    nsp <- max(ansi_nchar(current) - ansi_nchar(content), 0)
     app$cat(paste0("\r", content, strrep(" ", nsp)))
   } else {
     app$cat(paste0(content, "\n"))
@@ -355,7 +355,7 @@ clii__clear_status_bar <- function(app) {
     app$cat(paste0("\r", ANSI_EL))
   } else if (is_dynamic_tty(output)) {
     text <- app$status_bar[[1]]$content
-    len <- nchar_fixed(text, type = "width")
+    len <- ansi_nchar(text, type = "width")
     app$cat(paste0("\r", strrep(" ", len), "\r"))
   }
 }

@@ -55,7 +55,7 @@ will be used in \code{\link[=make_ansi_style]{make_ansi_style()}} to create a \e
 \item{align}{Alignment of the label within the box: \code{"left"},
 \code{"center"}, or \code{"right"}.}
 
-\item{width}{Width of the screen, defaults to \code{getOption("width")}.}
+\item{width}{Width of the screen, defaults to \code{\link[=console_width]{console_width()}}.}
 }
 \description{
 Draw a banner-like box in the console

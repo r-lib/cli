@@ -1,6 +1,6 @@
 
 rule_class <- function(x) {
-  structure(x, class = c("rule", "character"))
+  structure(x, class = c("rule", "ansi_string", "character"))
 }
 
 capture_messages <- function(expr) {

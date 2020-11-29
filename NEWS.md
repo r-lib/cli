@@ -1,6 +1,16 @@
 
 # cli development version
 
+* New `ansi_trimws()` and `ansi_strwrap()` functions, they are similar
+  to `trimws()` and `strwrap()` but work on ANSI strings.
+
+* `ansi_substr()`, `ansi_substring()`, `ansi_strsplit()`, `ansi_align()`
+  now always return `ansi_string` objects.
+
+* `ansi_nchar()`, `ansi_align()`, `ansi_strtrim()` and the new
+  `ansi_strwrap()` as well handle wide Unicode correctly, according to
+  their display width.
+
 # cli 2.2.0
 
 * New `style_hyperlink()` function to add hyperlinks, on terminals that

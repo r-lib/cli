@@ -123,7 +123,7 @@ test_that("dedent", {
     list(" x  ", 5, "x  ")
   )
 
-  for (c in cases) expect_identical(dedent(c[[1]], c[[2]]), c[[3]])
+  for (c in cases) expect_identical(dedent(c[[1]], c[[2]]), ansi_string(c[[3]]))
 })
 
 test_that("tail_na", {

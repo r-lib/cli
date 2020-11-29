@@ -1,4 +1,11 @@
 
+test_that("ansi_string", {
+  right <- c("ansi_string", "character")
+  expect_equal(class(ansi_string("foobar")), right)
+  expect_equal(class(ansi_string(133)), right)
+  expect_equal(class(ansi_string(ansi_string(134))), right)
+})
+
 test_that("ansi_has_any works", {
   withr::local_options(list(
     crayon.enabled = TRUE,
@@ -49,6 +56,21 @@ test_that("ansi_nchar", {
   }
 })
 
+test_that("ansi_nchar wide characters", {
+  expect_equal(ansi_nchar("\u231a", "width"), 2L)
+})
+
+test_that("ansi_substr bad input", {
+  expect_error(
+    ansi_substr("foobar", NULL, 10),
+    "invalid substring arguments"
+  )
+  expect_error(
+    ansi_substr("foobar", 10, NULL),
+    "invalid substring arguments"
+  )
+})
+
 test_that("ansi_substr", {
   withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
   for (s in str) {
@@ -63,25 +85,33 @@ test_that("ansi_substr", {
 
 test_that("ansi_substr keeps color", {
   withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
-  expect_equal(ansi_substr("\033[31mred\033[39m", 1, 1),
-               "\033[31mr\033[39m")
-  expect_equal(ansi_substr("foo\033[31mred\033[39m", 4, 4),
-               "\033[31mr\033[39m")
-  expect_equal(ansi_substr("foo\033[31mred\033[39mbar", 4, 4),
-               "\033[31mr\033[39m")
-  expect_equal(ansi_substr("\033[31mred\033[39mfoo\033[31mred\033[39mbar", 7, 7),
-               "\033[31m\033[39m\033[31mr\033[39m")
+  expect_equal(
+    ansi_substr("\033[31mred\033[39m", 1, 1),
+    ansi_string("\033[31mr\033[39m")
+  )
+  expect_equal(
+    ansi_substr("foo\033[31mred\033[39m", 4, 4),
+    ansi_string("\033[31mr\033[39m")
+  )
+  expect_equal(
+    ansi_substr("foo\033[31mred\033[39mbar", 4, 4),
+    ansi_string("\033[31mr\033[39m")
+  )
+  expect_equal(
+    ansi_substr("\033[31mred\033[39mfoo\033[31mred\033[39mbar", 7, 7),
+    ansi_string("\033[31m\033[39m\033[31mr\033[39m")
+  )
 })
 
 test_that("ansi_substr, start after string end", {
   withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
-  expect_equal(ansi_substr("red", 4, 4), "")
-  expect_equal(ansi_substr("red", 4, 5), "")
+  expect_equal(ansi_substr("red", 4, 4), ansi_string(""))
+  expect_equal(ansi_substr("red", 4, 5), ansi_string(""))
   expect_equal(ansi_strip(ansi_substr("\033[31mred\033[39m", 4, 4)), "")
   expect_equal(ansi_strip(ansi_substr("\033[31mred\033[39m", 4, 5)), "")
 
-  expect_equal(ansi_substr("red", 3, 4), "d")
-  expect_equal(ansi_substr("red", 3, 5), "d")
+  expect_equal(ansi_substr("red", 3, 4), ansi_string("d"))
+  expect_equal(ansi_substr("red", 3, 5), ansi_string("d"))
   expect_equal(ansi_strip(ansi_substr("\033[31mred\033[39m", 3, 4)), "d")
   expect_equal(ansi_strip(ansi_substr("\033[31mred\033[39m", 3, 5)), "d")
 })
@@ -108,17 +138,32 @@ test_that("ansi_substr corner cases", {
   c0 <- character(0L)
   o0 <- structure(list(), class="abc")
   co0 <- structure(character(0L), class="abc")
-  expect_identical(ansi_substr(c0, 1, 1), substr(c0, 1, 1))
-  expect_identical(ansi_substr(o0, 1, 1), substr(o0, 1, 1))
-  expect_identical(ansi_substr(co0, 1, 1), substr(co0, 1, 1))
+  expect_identical(ansi_substr(c0, 1, 1), ansi_string(substr(c0, 1, 1)))
+  expect_identical(ansi_substr(o0, 1, 1), ansi_string(substr(o0, 1, 1)))
+  expect_identical(ansi_substr(co0, 1, 1), ansi_string(substr(co0, 1, 1)))
 
-  expect_identical(ansi_substring(c0, 1, 1), substring(c0, 1, 1))
-  expect_identical(ansi_substring(o0, 1, 1), substring(o0, 1, 1))
-  expect_identical(ansi_substring(co0, 1, 1), substring(co0, 1, 1))
+  expect_identical(
+    ansi_substring(c0, 1, 1),
+    ansi_string(substring(c0, 1, 1))
+  )
+  expect_identical(
+    ansi_substring(o0, 1, 1),
+    ansi_string(substring(o0, 1, 1))
+  )
+  expect_identical(
+    ansi_substring(co0, 1, 1),
+    ansi_string(substring(co0, 1, 1))
+  )
 
   # Character start/stop
-  expect_identical(ansi_substr("abc", "1", 1), substr("abc", "1", 1))
-  expect_identical(ansi_substr("abc", 1, "1"), substr("abc", 1, "1"))
+  expect_identical(
+    ansi_substr("abc", "1", 1),
+    ansi_string(substr("abc", "1", 1))
+  )
+  expect_identical(
+    ansi_substr("abc", 1, "1"),
+    ansi_string(substr("abc", 1, "1"))
+  )
 
   # non-numeric arguments cause errors; NOTE: this actually "works"
   # with 'substr' but not implemented in 'ansi_substr'
@@ -162,9 +207,18 @@ test_that("ansi_substring corner cases", {
   c0 <- character(0L)
   o0 <- structure(list(), class="abc")
   co0 <- structure(character(0L), class="abc")
-  expect_identical(ansi_substring(c0, 1, 1), substring(c0, 1, 1))
-  expect_identical(ansi_substring(o0, 1, 1), substring(o0, 1, 1))
-  expect_identical(ansi_substring(co0, 1, 1), substring(co0, 1, 1))
+  expect_identical(
+    ansi_substring(c0, 1, 1),
+    ansi_string(substring(c0, 1, 1))
+  )
+  expect_identical(
+    ansi_substring(o0, 1, 1),
+    ansi_string(substring(o0, 1, 1))
+  )
+  expect_identical(
+    ansi_substring(co0, 1, 1),
+    ansi_string(substring(co0, 1, 1))
+  )
 })
 
 test_that("ansi_strsplit", {
@@ -172,18 +226,27 @@ test_that("ansi_strsplit", {
   red <- "\033[31mred\033[39m"
 
   str <- "plain-plain"
-  expect_equal(ansi_strsplit(str, "-"), strsplit(str, "-"))
+  expect_equal(
+    ansi_strsplit(str, "-"),
+    lapply(strsplit(str, "-"), ansi_string)
+  )
 
   str <- paste0(red, "-plain")
-  expect_equal(ansi_strip(ansi_strsplit(str, "-")[[1]]),
-               strsplit(ansi_strip(str), "-")[[1]])
+  expect_equal(
+    ansi_strip(ansi_strsplit(str, "-")[[1]]),
+    strsplit(ansi_strip(str), "-")[[1]]
+  )
 
-  expect_equal(ansi_strsplit(str, "e"),
-               list(c("\033[31mr\033[39m", "\033[31md\033[39m-plain")))
+  expect_equal(
+    ansi_strsplit(str, "e"),
+    list(ansi_string(c("\033[31mr\033[39m", "\033[31md\033[39m-plain")))
+  )
 
   str <- paste0(red, "-", red, "-", red)
-  expect_equal(ansi_strip(ansi_strsplit(str, "-")[[1]]),
-               strsplit(ansi_strip(str), "-")[[1]])
+  expect_equal(
+    ansi_strip(ansi_strsplit(str, "-")[[1]]),
+    strsplit(ansi_strip(str), "-")[[1]]
+  )
 
   # with leading and trailing separators
   str.2 <- paste0("-", red, "-", red, "-", red, "-")
@@ -212,74 +275,101 @@ test_that("ansi_strsplit multiple strings", {
 
 test_that("ansi_strsplit edge cases", {
   withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
-  expect_equal(ansi_strsplit("", "-"), list(character(0L)))
+  expect_equal(ansi_strsplit("", "-"), list(ansi_string(character(0L))))
   expect_equal(
     ansi_strip(ansi_strsplit("\033[31m\033[39m", "-")[[1]]), character(0L)
   )
+
   # special cases
-  expect_equal(ansi_strsplit("", ""), strsplit("", ""))
-  expect_equal(ansi_strsplit("a", "a"), strsplit("a", "a"))
+  expect_equal(ansi_strsplit("", ""), lapply(strsplit("", ""), ansi_string))
+  expect_equal(
+    ansi_strsplit("a", "a"),
+    lapply(strsplit("a", "a"), ansi_string)
+  )
+
   # this following test isn't working yet
-  expect_equal(ansi_strsplit("a", ""), strsplit("a", ""))
-  expect_equal(ansi_strsplit("", "a"), strsplit("", "a"))
+  expect_equal(
+    ansi_strsplit("a", ""),
+    lapply(strsplit("a", ""), ansi_string)
+  )
+  expect_equal(
+    ansi_strsplit("", "a"),
+    lapply(strsplit("", "a"), ansi_string)
+  )
+
   # Longer strings
   expect_identical(
-    ansi_strsplit(c("", "a", "aa"), "a"), strsplit(c("", "a", "aa"), "a")
+    ansi_strsplit(c("", "a", "aa"), "a"),
+    lapply(strsplit(c("", "a", "aa"), "a"), ansi_string)
   )
   expect_identical(
-    ansi_strsplit(c("abaa", "ababza"), "b."), strsplit(c("abaa", "ababza"), "b.")
+    ansi_strsplit(c("abaa", "ababza"), "b."),
+    lapply(strsplit(c("abaa", "ababza"), "b."), ansi_string)
   )
 })
 
 test_that("Weird length 'split'", {
   withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
-  expect_error(ansi_strsplit(c("ab", "bd"), c("b", "d")), "must be character")
-  expect_identical(ansi_strsplit("ab", NULL), strsplit("ab", NULL))
+  expect_error(
+    ansi_strsplit(c("ab", "bd"), c("b", "d")),
+    "must be character"
+  )
   expect_identical(
-    ansi_strsplit("ab", character(0L)), strsplit("ab", character(0L))
+    ansi_strsplit("ab", NULL),
+    lapply(strsplit("ab", NULL), ansi_string)
+  )
+  expect_identical(
+    ansi_strsplit("ab", character(0L)),
+    lapply(strsplit("ab", character(0L)), ansi_string)
   )
 })
 
 test_that("ansi_align", {
   withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
-  expect_equal(ansi_align(character()), character())
-  expect_equal(ansi_align("", 0), "")
-  expect_equal(ansi_align(" ", 0), " ")
-  expect_equal(ansi_align(" ", 1), " ")
-  expect_equal(ansi_align(" ", 2), "  ")
-  expect_equal(ansi_align("a", 1), "a")
-  expect_equal(ansi_align(letters, 1), letters)
-  expect_equal(ansi_align(letters, 0), letters)
-  expect_equal(ansi_align(letters, -1), letters)
+  expect_equal(ansi_align(character()), ansi_string(character()))
+  expect_equal(ansi_align("", 0), ansi_string(""))
+  expect_equal(ansi_align(" ", 0), ansi_string(" "))
+  expect_equal(ansi_align(" ", 1), ansi_string(" "))
+  expect_equal(ansi_align(" ", 2), ansi_string("  "))
+  expect_equal(ansi_align("a", 1), ansi_string("a"))
+  expect_equal(ansi_align(letters, 1), ansi_string(letters))
+  expect_equal(ansi_align(letters, 0), ansi_string(letters))
+  expect_equal(ansi_align(letters, -1), ansi_string(letters))
 
-  expect_equal(ansi_align(letters, 2), paste0(letters, " "))
-  expect_equal(ansi_align(letters, 3, "center"), paste0(" ", letters, " "))
-  expect_equal(ansi_align(letters, 2, "right"), paste0(" ", letters))
+  expect_equal(ansi_align(letters, 2), ansi_string(paste0(letters, " ")))
+  expect_equal(
+    ansi_align(letters, 3, "center"),
+    ansi_string(paste0(" ", letters, " "))
+  )
+  expect_equal(
+    ansi_align(letters, 2, "right"),
+    ansi_string(paste0(" ", letters))
+  )
 
   expect_equal(
     ansi_align(c("foo", "foobar", "", "a"), 6, "left"),
-    c("foo   ", "foobar", "      ", "a     "))
+    ansi_string(c("foo   ", "foobar", "      ", "a     ")))
 
   expect_equal(
     ansi_align(c("foo", "foobar", "", "a"), 6, "center"),
-    c("  foo ", "foobar", "      ", "   a  "))
+    ansi_string(c("  foo ", "foobar", "      ", "   a  ")))
 
   expect_equal(
     ansi_align(c("foo", "foobar", "", "a"), 6, "right"),
-    c("   foo", "foobar", "      ", "     a"))
+    ansi_string(c("   foo", "foobar", "      ", "     a")))
 
   # #54: alignment of wide characters
   expect_equal(
     ansi_align(c("foo", "\u6210\u4ea4\u65e5", "", "a"), 6, "left"),
-    c("foo   ", "\u6210\u4ea4\u65e5", "      ", "a     "))
+    ansi_string(c("foo   ", "\u6210\u4ea4\u65e5", "      ", "a     ")))
 
   expect_equal(
     ansi_align(c("foo", "\u6210\u4ea4\u65e5", "", "a"), 6, "center"),
-    c("  foo ", "\u6210\u4ea4\u65e5", "      ", "   a  "))
+    ansi_string(c("  foo ", "\u6210\u4ea4\u65e5", "      ", "   a  ")))
 
   expect_equal(
     ansi_align(c("foo", "\u6210\u4ea4\u65e5", "", "a"), 6, "right"),
-    c("   foo", "\u6210\u4ea4\u65e5", "      ", "     a"))
+    ansi_string(c("   foo", "\u6210\u4ea4\u65e5", "      ", "     a")))
 })
 
 test_that("stripping hyperlinks", {
@@ -289,4 +379,137 @@ test_that("stripping hyperlinks", {
     ansi_strip(paste0("1111-", x, "-2222-", x, "-333")),
     "1111-foo-2222-foo-333"
   )
+})
+
+test_that("ansi_trimws", {
+  cases <- list(
+    list(character(), ansi_string(character())),
+    list(1, ansi_string(1)),
+    list("", ansi_string("")),
+    list("foo", ansi_string("foo")),
+    list("  foo  ", ansi_string("foo")),
+    list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
+    list(col_red(c("  colored  ")), ansi_string(col_red("colored"))),
+    list(
+      paste0("   ", col_red(c("  colored  ")), "   "),
+      ansi_string(col_red("colored")))
+  )
+
+  for (case in cases) expect_equal(ansi_trimws(case[[1]]), case[[2]])
+
+  cases_left <- list(
+    list(character(), ansi_string(character())),
+    list(1, ansi_string(1)),
+    list("", ansi_string("")),
+    list("foo", ansi_string("foo")),
+    list("  foo  ", ansi_string("foo  ")),
+    list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
+    list(col_red(c("  colored  ")), ansi_string(col_red("colored  "))),
+    list(
+      paste0("   ", col_red(c("  colored  ")), "   "),
+      ansi_string(paste0(col_red("colored  "), "   ")))
+  )
+
+  for (case in cases_left) {
+    expect_equal(ansi_trimws(case[[1]], "left"), case[[2]])
+  }
+
+  cases_right <- list(
+    list(character(), ansi_string(character())),
+    list(1, ansi_string(1)),
+    list("", ansi_string("")),
+    list("foo", ansi_string("foo")),
+    list("  foo  ", ansi_string("  foo")),
+    list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
+    list(col_red(c("  colored  ")), ansi_string(col_red("  colored"))),
+    list(
+      paste0("   ", col_red(c("  colored  ")), "   "),
+      ansi_string(paste0("   ", col_red("  colored"))))
+  )
+
+  for (case in cases_left) {
+    expect_equal(ansi_trimws(case[[1]], "left"), case[[2]])
+  }
+})
+
+test_that("ansi_strwrap simple", {
+  cases = list(
+    list(character(), character()),
+    list("", ""),
+    list("foo", "foo"),
+    list(1, "1"),
+    list(c("foo", "bar"), c("foo", "bar"))
+  )
+
+  for (case in cases) {
+    expect_equal(ansi_strwrap(case[[1]], 20), ansi_string(case[[2]]))
+  }
+})
+
+test_that("ansi_strwrap simple styled", {
+  cases = list(
+    list(col_red("foo"), col_red("foo")),
+    list(col_red(c("foo", "bar")), col_red(c("foo", "bar")))
+  )
+
+  for (case in cases) {
+    expect_equal(ansi_strwrap(case[[1]], 20), ansi_string(case[[2]]))
+  }
+})
+
+test_that("ansi_strwrap", {
+  txt0 <- glue::glue_col("
+    {red Velit occaecat} quis culpa occaecat.  {green Pariatur} \\
+    ad veniam pariatur {bgBlue consectetur}.  Dolore aliquip et \\
+    {underline consequat Lorem consectetur} dolor.  Irure id velit \\
+    proident elit veniam eu exercitation nisi laboris officia.     Qui \\
+    {red sunt      occaecat} cillum {red sit    commodo sit.    Culpa} \\
+    aliquip et consectetur ullamco aliqua Lorem laborum dolore.    ")
+
+  txt <- paste0(txt0, "\n\t  \n", txt0)
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt0, 40)),
+    strwrap(ansi_strip(txt0), 40)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40)),
+    strwrap(ansi_strip(txt), 40)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40, indent = 2)),
+    strwrap(ansi_strip(txt), 40, indent = 2)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40, exdent = 2)),
+    strwrap(ansi_strip(txt), 40, exdent = 2)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40, indent = 2, exdent = 4)),
+    strwrap(ansi_strip(txt), 40, indent = 2, exdent = 4)
+  )
+})
+
+test_that("ansi_strwrap double width", {
+  expect_equal(
+    ansi_strwrap("\U0001F477 1 2 3", 4),
+    ansi_string(c("\U0001f477", "1 2", "3"))
+  )
+})
+
+test_that("ansi_strtrim", {
+  withr::local_options(c(cli.unicode = FALSE))
+  setup_unicode_width_fix()
+  cases <- list(
+    list("", ansi_string("")),
+    list("1", ansi_string("1")),
+    list("123456789", ansi_string("123456789")),
+    list("1234567890", ansi_string("1234567890")),
+    list("12345678901", ansi_string("1234567...")),
+    list(
+      strrep("\u231A", 6),
+      ansi_string(paste0(strrep("\u231A", 3), "..."))),
+    list(col_red("1"), col_red("1"))
+  )
+
+  for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
 })

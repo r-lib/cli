@@ -10,12 +10,10 @@ Unfortunately the widths of most emojis are incorrect in this standard,
 and width 1 is reported instead of the correct 2 value.
 }
 \details{
-See more about this here: https://github.com/brodieG/fansi/issues/62
-
 cli implements a workaround for this. The package contains a table that
 contains all Unicode ranges that have wide characters (display width 2).
 
-On first use of one of the workaround wrappers (\code{strwrap2_fixed()}, etc.)
+On first use of one of the workaround wrappers (in \code{ansi_nchar()}, etc.)
 we check what the current version of R thinks about the width of these
 characters, and then create a regex that matches the ones that R
 is wrong about (\code{re_bad_char_width}).
@@ -25,8 +23,10 @@ in the input string to the wrapper function, before calling the real
 string manupulation function (char, strwrap) etc. At end we undo the
 duplication before we return the result.
 
-This workaround is fine for \code{nchar()} and \code{strwrap()} (& co in fansi).
-It is potentially not fine for \code{substr()}, but we don't currently use
-that...
+This workaround is fine for \code{nchar()} and \code{strwrap()}, and consequently
+\code{ansi_align()} and \code{ansi_strtrim()} as well.
+
+The rest of the \verb{ansi_*()} functions work on characters, and do not
+deal with character width.
 }
 \keyword{internal}
