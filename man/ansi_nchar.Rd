@@ -4,7 +4,7 @@
 \alias{ansi_nchar}
 \title{Count number of characters in an ANSI colored string}
 \usage{
-ansi_nchar(x, ...)
+ansi_nchar(x, type = c("chars", "bytes", "width"), ...)
 }
 \arguments{
 \item{x}{Character vector, potentially ANSO styled, or a vector to be

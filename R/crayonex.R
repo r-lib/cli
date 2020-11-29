@@ -124,10 +124,15 @@ map_to_ansi <- function(x, text = NULL) {
 #' ansi_nchar(str)
 #' nchar(ansi_strip(str))
 
-ansi_nchar <- function(x, ...) {
-  base::nchar(ansi_strip(x), ...)
+ansi_nchar <- function(x, type = c("chars", "bytes", "width"), ...) {
+  type <- match.arg(type)
+  if (type == "width") x <- unicode_pre(x)
+  ansi_nchar_bad(x, type = type, ...)
 }
 
+ansi_nchar_bad <- function(x, ...) {
+  base::nchar(ansi_strip(x), ...)
+}
 
 #' Substring(s) of an ANSI colored string
 #'
@@ -480,9 +485,12 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   if (length(x) > 1) {
     wrp <- lapply(x, ansi_strwrap, width = width, indent = indent,
                   exdent = exdent, simplify = FALSE)
-    if (simplify) wrp <- unlist(wrp)
+    if (simplify) wrp <- ansi_string(unlist(wrp))
     return(wrp)
   }
+
+  # Workaround for bad Unicode width
+  x <- unicode_pre(x)
 
   # First we need to remove the multiple spaces, to make it easier to
   # map the strings later on. We do this per paragraph, to keep paragraphs.
@@ -491,6 +499,8 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
   # Within paragraphs, replace multiple spaces with one, except when there
   # were two spaces at the end of a sentence, where we keep two.
+  # This does not work well, when some space is inside an ANSI tag, and
+  # some is outside, but for now, we'll live with this limitation.
   pars <- lapply(pars, function(s) {
     gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
   })
@@ -500,7 +510,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
   xs <- ansi_strip(xx)
   xw0 <- base::strwrap(xs, width = width, indent = indent, exdent = exdent)
-  if (xs == xx) return(ansi_string(xw0))
+  if (xs == xx) return(ansi_string(unicode_post(xw0)))
 
   xw <- trimws(xw0, "left")
   indent <- nchar(xw0) - nchar(xw)
@@ -549,7 +559,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   })
 
   indent <- strrep(" ", indent)
-  ansi_string(paste0(indent, wrp))
+  ansi_string(unicode_post(paste0(indent, wrp)))
 }
 
 #' Truncate an ANSI string
@@ -572,20 +582,26 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
 ansi_strtrim <- function(x, width = console_width(),
                          ellipsis = symbol$ellipsis) {
-  # This might be too wide if we have wide characters
+
+  # Unicode width notes. We have nothing to fix here, because we'll just
+  # use ansi_substr() and ansi_nchar(), which work correctly with wide
+  # characters.
+
+  # First we cut according to _characters_. This might be too wide if we
+  # have wide characters.
   xt <- ansi_substr(x, 1, width)
-
-  # these are good, we do not touch them
-  gd <- xt == x
-
-  # the rest were truncated, and we might need to truncate them even more
-  # if we have double width characters. Plus we need to put ... at the end
   tw <- ansi_nchar(ellipsis, "width")
 
-  while (any(bad <- ! gd & (ansi_nchar(xt, "width") > width - tw))) {
+  # If there was a cut, or xt is too wise (using _width_!), that's bad
+  # We keep the initial bad ones, these are the ones that need an ellipsis.
+  # Then we keep chopping off single characters from the too wide ones,
+  # until they are narrow enough.
+  bad0 <- bad <- xt != x | ansi_nchar(xt, "width") > width
+  while (any(bad)) {
     xt[bad] <- ansi_substr(xt[bad], 1, ansi_nchar(xt[bad]) - 1L)
+    bad <- ansi_nchar(xt, "width") > width - tw
   }
 
-  xt[!gd] <- paste0(xt[!gd], ellipsis)
+  xt[bad0] <- paste0(xt[bad0], ellipsis)
   xt
 }

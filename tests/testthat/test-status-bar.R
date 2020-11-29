@@ -92,7 +92,11 @@ test_that("multiple status bars", {
 })
 
 test_that("truncating", {
-  withr::local_options(list(cli.ansi = FALSE, cli.dynamic = TRUE))
+  withr::local_options(list(
+    cli.ansi = FALSE,
+    cli.dynamic = TRUE,
+    cli.unicode = FALSE
+  ))
   f <- function() {
     withr::local_options(list(cli.width = 40))
     txt <- "Eiusmod enim mollit aute aliquip Lorem sunt cupidatat."
@@ -100,8 +104,8 @@ test_that("truncating", {
   }
   out <- crayon::strip_style(capt0(f()))
   expect_equal(out, paste0(
-    "\rEiusmod enim mollit aute aliquip Lorem ",
-    "\r                                       \r"))
+    "\rEiusmod enim mollit aute aliquip Lore...",
+    "\r                                        \r"))
 })
 
 test_that("ansi colors and clearing", {

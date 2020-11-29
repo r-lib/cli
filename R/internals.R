@@ -2,7 +2,7 @@
 clii__xtext <- function(app, text, .list, indent, padding) {
   style <- app$get_current_style()
   text <- app$inline(text, .list = .list)
-  text <- strwrap_fixed(text, width = app$get_width(extra = padding))
+  text <- ansi_strwrap(text, width = app$get_width(extra = padding))
 
   text[1] <- paste0(style$before, text[1])
   text[length(text)] <- paste0(text[length(text)], style$after)

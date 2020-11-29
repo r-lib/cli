@@ -1,4 +1,11 @@
 
+test_that("ansi_string", {
+  right <- c("ansi_string", "character")
+  expect_equal(class(ansi_string("foobar")), right)
+  expect_equal(class(ansi_string(133)), right)
+  expect_equal(class(ansi_string(ansi_string(134))), right)
+})
+
 test_that("ansi_has_any works", {
   withr::local_options(list(
     crayon.enabled = TRUE,
@@ -47,6 +54,21 @@ test_that("ansi_nchar", {
   for (s in str) {
     expect_equal(ansi_nchar(s), nchar(ansi_strip(s)), info = s)
   }
+})
+
+test_that("ansi_nchar wide characters", {
+  expect_equal(ansi_nchar("\u231a", "width"), 2L)
+})
+
+test_that("ansi_substr bad input", {
+  expect_error(
+    ansi_substr("foobar", NULL, 10),
+    "invalid substring arguments"
+  )
+  expect_error(
+    ansi_substr("foobar", 10, NULL),
+    "invalid substring arguments"
+  )
 })
 
 test_that("ansi_substr", {
@@ -360,9 +382,135 @@ test_that("stripping hyperlinks", {
 })
 
 test_that("ansi_trimws", {
-  
+  cases <- list(
+    list(character(), ansi_string(character())),
+    list(1, ansi_string(1)),
+    list("", ansi_string("")),
+    list("foo", ansi_string("foo")),
+    list("  foo  ", ansi_string("foo")),
+    list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
+    list(col_red(c("  colored  ")), ansi_string(col_red("colored"))),
+    list(
+      paste0("   ", col_red(c("  colored  ")), "   "),
+      ansi_string(col_red("colored")))
+  )
+
+  for (case in cases) expect_equal(ansi_trimws(case[[1]]), case[[2]])
+
+  cases_left <- list(
+    list(character(), ansi_string(character())),
+    list(1, ansi_string(1)),
+    list("", ansi_string("")),
+    list("foo", ansi_string("foo")),
+    list("  foo  ", ansi_string("foo  ")),
+    list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
+    list(col_red(c("  colored  ")), ansi_string(col_red("colored  "))),
+    list(
+      paste0("   ", col_red(c("  colored  ")), "   "),
+      ansi_string(paste0(col_red("colored  "), "   ")))
+  )
+
+  for (case in cases_left) {
+    expect_equal(ansi_trimws(case[[1]], "left"), case[[2]])
+  }
+
+  cases_right <- list(
+    list(character(), ansi_string(character())),
+    list(1, ansi_string(1)),
+    list("", ansi_string("")),
+    list("foo", ansi_string("foo")),
+    list("  foo  ", ansi_string("  foo")),
+    list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
+    list(col_red(c("  colored  ")), ansi_string(col_red("  colored"))),
+    list(
+      paste0("   ", col_red(c("  colored  ")), "   "),
+      ansi_string(paste0("   ", col_red("  colored"))))
+  )
+
+  for (case in cases_left) {
+    expect_equal(ansi_trimws(case[[1]], "left"), case[[2]])
+  }
+})
+
+test_that("ansi_strwrap simple", {
+  cases = list(
+    list(character(), character()),
+    list("", ""),
+    list("foo", "foo"),
+    list(1, "1"),
+    list(c("foo", "bar"), c("foo", "bar"))
+  )
+
+  for (case in cases) {
+    expect_equal(ansi_strwrap(case[[1]], 20), ansi_string(case[[2]]))
+  }
+})
+
+test_that("ansi_strwrap simple styled", {
+  cases = list(
+    list(col_red("foo"), col_red("foo")),
+    list(col_red(c("foo", "bar")), col_red(c("foo", "bar")))
+  )
+
+  for (case in cases) {
+    expect_equal(ansi_strwrap(case[[1]], 20), ansi_string(case[[2]]))
+  }
 })
 
 test_that("ansi_strwrap", {
+  local_edition(3)
+  txt0 <- glue::glue_col("
+    {red Velit occaecat} quis culpa occaecat.  {green Pariatur} \\
+    ad veniam pariatur {bgBlue consectetur}.  Dolore aliquip et \\
+    {underline consequat Lorem consectetur} dolor.  Irure id velit \\
+    proident elit veniam eu exercitation nisi laboris officia.     Qui \\
+    {red sunt      occaecat} cillum {red sit    commodo sit.    Culpa} \\
+    aliquip et consectetur ullamco aliqua Lorem laborum dolore.    ")
 
+  txt <- paste0(txt0, "\n\t  \n", txt0)
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt0, 40)),
+    strwrap(ansi_strip(txt0), 40)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40)),
+    strwrap(ansi_strip(txt), 40)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40, indent = 2)),
+    strwrap(ansi_strip(txt), 40, indent = 2)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40, exdent = 2)),
+    strwrap(ansi_strip(txt), 40, exdent = 2)
+  )
+  expect_equal(
+    ansi_strip(ansi_strwrap(txt, 40, indent = 2, exdent = 4)),
+    strwrap(ansi_strip(txt), 40, indent = 2, exdent = 4)
+  )
+})
+
+test_that("ansi_strwrap double width", {
+  expect_equal(
+    ansi_strwrap("\U0001F477 1 2 3", 4),
+    ansi_string(c("\U0001f477", "1 2", "3"))
+  )
+})
+
+test_that("ansi_strtrim", {
+  withr::local_options(c(cli.unicode = FALSE))
+  setup_unicode_width_fix()
+  cases <- list(
+    list("", ansi_string("")),
+    list("1", ansi_string("1")),
+    list("123456789", ansi_string("123456789")),
+    list("1234567890", ansi_string("1234567890")),
+    list("12345678901", ansi_string("1234567...")),
+    list(
+      strrep("\u231A", 6),
+      ansi_string(paste0(strrep("\u231A", 3), "..."))),
+    list(col_red("1"), col_red("1"))
+  )
+
+  for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
 })
