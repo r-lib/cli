@@ -39,7 +39,7 @@ setup_unicode_width_fix <- function() {
 unicode_pre <- function(x) {
   if (is.null(clienv$re_bad_char_width)) setup_unicode_width_fix()
   if (clienv$re_bad_char_width != "([])") {
-    x <- gsub(clienv$re_bad_char_width, "\\1\\1", x)
+    x <- gsub(clienv$re_bad_char_width, "\\1\\1", x, perl = TRUE)
   }
   x
 }
@@ -47,7 +47,7 @@ unicode_pre <- function(x) {
 unicode_post <- function(x) {
   if (is.null(clienv$re_bad_char_width)) setup_unicode_width_fix()
   if (clienv$re_bad_char_width != "([])") {
-    x <- gsub(clienv$re_bad_char_width_fix, "\\1", x)
+    x <- gsub(clienv$re_bad_char_width_fix, "\\1", x, perl = TRUE)
   }
   x
 }
