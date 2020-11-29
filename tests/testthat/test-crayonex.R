@@ -6,6 +6,20 @@ test_that("ansi_string", {
   expect_equal(class(ansi_string(ansi_string(134))), right)
 })
 
+test_that("ansi_regex", {
+  # somewhat special sequences
+  cases <- list(
+    list("foo\033[39;49mbar", "foobar"),
+    list("foo\033[1;3;4mbar", "foobar"),
+    list("foo\033[1;;4mbar", "foobar"),
+    list("foo\033[mbar", "foobar")
+  )
+
+  for (case in cases) {
+    expect_equal(gsub(ansi_regex(), "", case[[1]], perl = TRUE), case[[2]])
+  }
+})
+
 test_that("ansi_has_any works", {
   withr::local_options(list(
     crayon.enabled = TRUE,
