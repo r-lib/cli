@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Count number of characters in an ANSI colored string — ansi_nchar • cli</title>
+<title>Wrap an ANSI styled string to a certain width — ansi_strwrap • cli</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Count number of characters in an ANSI colored string — ansi_nchar" />
-<meta property="og:description" content="This is a color-aware counterpart of base::nchar(),
-which does not do well, since it also counts the ANSI control
-characters." />
+<meta property="og:title" content="Wrap an ANSI styled string to a certain width — ansi_strwrap" />
+<meta property="og:description" content="This function is similar to base::strwrap(), but works on ANSI
+styled strings, and leaves the styling intact." />
 
 
 <meta name="robots" content="noindex">
@@ -134,66 +133,93 @@ characters." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Count number of characters in an ANSI colored string</h1>
+    <h1>Wrap an ANSI styled string to a certain width</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/crayonex.R'><code>R/crayonex.R</code></a></small>
-    <div class="hidden name"><code>ansi_nchar.Rd</code></div>
+    <div class="hidden name"><code>ansi_strwrap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is a color-aware counterpart of <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>,
-which does not do well, since it also counts the ANSI control
-characters.</p>
+    <p>This function is similar to <code><a href='https://rdrr.io/r/base/strwrap.html'>base::strwrap()</a></code>, but works on ANSI
+styled strings, and leaves the styling intact.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>x</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chars"</span>, <span class='st'>"bytes"</span>, <span class='st'>"width"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_strwrap</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  width <span class='op'>=</span> <span class='fu'><a href='console_width.html'>console_width</a></span><span class='op'>(</span><span class='op'>)</span>,
+  indent <span class='op'>=</span> <span class='fl'>0</span>,
+  exdent <span class='op'>=</span> <span class='fl'>0</span>,
+  simplify <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Character vector, potentially ANSO styled, or a vector to be
-coarced to character.</p></td>
+      <td><p>ANSI string.</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>Whether to count characters, bytes, or calculate the
-display width of the string. Passed to <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>.</p></td>
+      <th>width</th>
+      <td><p>Width to wrap to.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments, passed on to <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>
-after removing ANSI escape sequences.</p></td>
+      <th>indent</th>
+      <td><p>Indentation of the first line of each paragraph.</p></td>
+    </tr>
+    <tr>
+      <th>exdent</th>
+      <td><p>Indentation of the subsequent lines of each paragraph.</p></td>
+    </tr>
+    <tr>
+      <th>simplify</th>
+      <td><p>Whether to return all wrapped strings in a single
+charcter vector, or wrap each element of <code>x</code> independently and return
+a list.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Numeric vector, the length of the strings in the character
-vector.</p>
+    <p>If <code>simplify</code> is <code>FALSE</code>, then a list of character vectors,
+each an ANSI string. Otherwise a single ANSI string vector.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other ANSI string operations: 
 <code><a href='ansi_align.html'>ansi_align</a>()</code>,
+<code><a href='ansi_nchar.html'>ansi_nchar</a>()</code>,
 <code><a href='ansi_strsplit.html'>ansi_strsplit</a>()</code>,
 <code><a href='ansi_strtrim.html'>ansi_strtrim</a>()</code>,
-<code><a href='ansi_strwrap.html'>ansi_strwrap</a>()</code>,
 <code><a href='ansi_substring.html'>ansi_substring</a>()</code>,
 <code><a href='ansi_substr.html'>ansi_substr</a>()</code>,
 <code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>str</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span>
-  <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"red"</span><span class='op'>)</span>,
-  <span class='st'>"default"</span>,
-  <span class='fu'><a href='ansi-styles.html'>col_green</a></span><span class='op'>(</span><span class='st'>"green"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>red</span><span> default </span><span style='color: #00BB00;'>green</span><span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 37</div><div class='input'><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div></span></pre>
+    <pre class="examples"><div class='input'><span class='va'>text</span> <span class='op'>&lt;-</span> <span class='fu'>cli</span><span class='fu'>:::</span><span class='fu'>lorem_ipsum</span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># Highlight some words, that start with 's'</span>
+<span class='va'>rexp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gregexpr</a></span><span class='op'>(</span><span class='st'>"\\b([sS][a-zA-Z]+)\\b"</span>, <span class='va'>text</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/regmatches.html'>regmatches</a></span><span class='op'>(</span><span class='va'>text</span>, <span class='va'>rexp</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/regmatches.html'>regmatches</a></span><span class='op'>(</span><span class='va'>text</span>, <span class='va'>rexp</span><span class='op'>)</span>, <span class='va'>col_red</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>text</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Mollit adipisicing laborum Lorem non eu velit <span style='color: #BB0000;'>sint</span><span> deserunt amet Lorem qui culpa. Laboris dolore cupidatat laborum incididunt. Cupidatat duis in amet </span><span style='color: #BB0000;'>sit</span><span>. Incididunt labore aute esse est ipsum cillum commodo qui minim ut veniam laborum nostrud nostrud. Reprehenderit irure nostrud duis esse quis nisi aliquip ipsum minim duis fugiat ea. Dolore consectetur non cupidatat officia Lorem elit. Ad aliqua aute pariatur anim ex culpa Lorem. Mollit magna </span><span style='color: #BB0000;'>sint</span><span> pariatur non quis do duis non </span><span style='color: #BB0000;'>sint</span><span> elit ullamco exercitation consectetur aliqua. Nostrud laborum deserunt adipisicing tempor amet qui duis. Mollit non aliquip ea </span><span style='color: #BB0000;'>sunt</span><span> quis tempor dolore esse.</div><div class='input'>
+<span class='va'>wrp</span> <span class='op'>&lt;-</span> <span class='fu'>ansi_strwrap</span><span class='op'>(</span><span class='va'>text</span>, width <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>wrp</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Mollit adipisicing laborum Lorem non eu
+#&gt; velit </span><span style='color: #BB0000;'>sint</span><span> deserunt amet Lorem qui
+#&gt; culpa. Laboris dolore cupidatat laborum
+#&gt; incididunt. Cupidatat duis in amet </span><span style='color: #BB0000;'>sit</span><span>.
+#&gt; Incididunt labore aute esse est ipsum
+#&gt; cillum commodo qui minim ut veniam
+#&gt; laborum nostrud nostrud. Reprehenderit
+#&gt; irure nostrud duis esse quis nisi
+#&gt; aliquip ipsum minim duis fugiat ea.
+#&gt; Dolore consectetur non cupidatat
+#&gt; officia Lorem elit. Ad aliqua aute
+#&gt; pariatur anim ex culpa Lorem. Mollit
+#&gt; magna </span><span style='color: #BB0000;'>sint</span><span> pariatur non quis do duis
+#&gt; non </span><span style='color: #BB0000;'>sint</span><span> elit ullamco exercitation
+#&gt; consectetur aliqua. Nostrud laborum
+#&gt; deserunt adipisicing tempor amet qui
+#&gt; duis. Mollit non aliquip ea </span><span style='color: #BB0000;'>sunt</span><span> quis
+#&gt; tempor dolore esse.</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

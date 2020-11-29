@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Match a selector node to a container — match_selector_node • cli</title>
+<title>Truncate an ANSI string — ansi_strtrim • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Match a selector node to a container — match_selector_node" />
-<meta property="og:description" content="Match a selector node to a container" />
+<meta property="og:title" content="Truncate an ANSI string — ansi_strtrim" />
+<meta property="og:description" content="This function is similar to base::strtrim(), but works correcntly with
+ANSI styled strings. It also adds ... (or the corresponding Unicode
+character if Unicode characters are allowed) to the end of truncated
+strings." />
 
 
 <meta name="robots" content="noindex">
@@ -132,41 +135,55 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Match a selector node to a container</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/themes.R'><code>R/themes.R</code></a></small>
-    <div class="hidden name"><code>match_selector_node.Rd</code></div>
+    <h1>Truncate an ANSI string</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/crayonex.R'><code>R/crayonex.R</code></a></small>
+    <div class="hidden name"><code>ansi_strtrim.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Match a selector node to a container</p>
+    <p>This function is similar to <code><a href='https://rdrr.io/r/base/strtrim.html'>base::strtrim()</a></code>, but works correcntly with
+ANSI styled strings. It also adds <code>...</code> (or the corresponding Unicode
+character if Unicode characters are allowed) to the end of truncated
+strings.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>match_selector_node</span><span class='op'>(</span><span class='va'>node</span>, <span class='va'>cnt</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_strtrim</span><span class='op'>(</span><span class='va'>x</span>, width <span class='op'>=</span> <span class='fu'><a href='console_width.html'>console_width</a></span><span class='op'>(</span><span class='op'>)</span>, ellipsis <span class='op'>=</span> <span class='va'>symbol</span><span class='op'>$</span><span class='va'>ellipsis</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>node</th>
-      <td><p>Selector node, as parsed by <code>parse_selector_node()</code>.</p></td>
+      <th>x</th>
+      <td><p>Character vector of ANSI strings.</p></td>
     </tr>
     <tr>
-      <th>cnt</th>
-      <td><p>Container node, has elements <code>tag</code>, <code>id</code>, <code>class</code>.</p>
-<p>The selector node matches the container, if all these hold:</p><ul>
-<li><p>The id of the selector is missing or unique.</p></li>
-<li><p>The tag of the selector is missing or unique.</p></li>
-<li><p>The id of the container is missing or unique.</p></li>
-<li><p>The tag of the container is unique.</p></li>
-<li><p>If the selector specifies an id, it matches the id of the container.</p></li>
-<li><p>If the selector specifies a tag, it matxhes the tag of the container.</p></li>
-<li><p>If the selector specifies class names, the container has all these
-classes.</p></li>
-</ul></td>
+      <th>width</th>
+      <td><p>The width to truncate to.</p></td>
+    </tr>
+    <tr>
+      <th>ellipsis</th>
+      <td><p>The string to append to truncated strings. Supply an
+empty string if you don't want a marker.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Other ANSI string operations: 
+<code><a href='ansi_align.html'>ansi_align</a>()</code>,
+<code><a href='ansi_nchar.html'>ansi_nchar</a>()</code>,
+<code><a href='ansi_strsplit.html'>ansi_strsplit</a>()</code>,
+<code><a href='ansi_strwrap.html'>ansi_strwrap</a>()</code>,
+<code><a href='ansi_substring.html'>ansi_substring</a>()</code>,
+<code><a href='ansi_substr.html'>ansi_substr</a>()</code>,
+<code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>text</span> <span class='op'>&lt;-</span> <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='fu'>cli</span><span class='fu'>:::</span><span class='fu'>lorem_ipsum</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>ansi_strtrim</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>text</span>, <span class='st'>"foobar"</span><span class='op'>)</span>, <span class='fl'>40</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;ansi_string&gt;
+#&gt; [1] <span style='color: #BB0000;'>Culpa laboris laborum occaecat occaecat</span><span>…
+#&gt; [2] foobar                                                  </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
