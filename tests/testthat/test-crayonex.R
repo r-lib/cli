@@ -458,7 +458,6 @@ test_that("ansi_strwrap simple styled", {
 })
 
 test_that("ansi_strwrap", {
-  local_edition(3)
   txt0 <- glue::glue_col("
     {red Velit occaecat} quis culpa occaecat.  {green Pariatur} \\
     ad veniam pariatur {bgBlue consectetur}.  Dolore aliquip et \\
