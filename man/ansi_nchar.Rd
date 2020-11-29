@@ -10,7 +10,10 @@ ansi_nchar(x, type = c("chars", "bytes", "width"), ...)
 \item{x}{Character vector, potentially ANSO styled, or a vector to be
 coarced to character.}
 
-\item{...}{Additional arguments, passed on to \code{base::nchar()}
+\item{type}{Whether to count characters, bytes, or calculate the
+display width of the string. Passed to \code{\link[base:nchar]{base::nchar()}}.}
+
+\item{...}{Additional arguments, passed on to \code{\link[base:nchar]{base::nchar()}}
 after removing ANSI escape sequences.}
 }
 \value{

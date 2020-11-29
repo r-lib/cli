@@ -105,7 +105,9 @@ map_to_ansi <- function(x, text = NULL) {
 #'
 #' @param x Character vector, potentially ANSO styled, or a vector to be
 #'   coarced to character.
-#' @param ... Additional arguments, passed on to `base::nchar()`
+#' @param type Whether to count characters, bytes, or calculate the
+#'   display width of the string. Passed to [base::nchar()].
+#' @param ... Additional arguments, passed on to [base::nchar()]
 #'   after removing ANSI escape sequences.
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
