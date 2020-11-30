@@ -13,7 +13,11 @@ test_that("add/remove/list themes", {
     capt0(cli_par(class = "green"))
     out <- capt0(cli_text(lorem_ipsum()))
     capt0(cli_end())
-    expect_true(grepl(start(crayon::make_style("green")), out, fixed = TRUE))
+    expect_true(grepl(
+      attr(make_ansi_style("green"), "_styles")[[1]]$open,
+      out,
+      fixed = TRUE
+    ))
   })
 
   default_app()$remove_theme(id)
@@ -35,7 +39,7 @@ test_that("explicit formatter is used, and combined", {
     ))
   on.exit(default_app()$remove_theme(id), add = TRUE)
   out <- capt0(cli_text("this is {.emph it}, really"))
-  expect_match(crayon::strip_style(out), "(((<<it>>)))", fixed = TRUE)
+  expect_match(ansi_strip(out), "(((<<it>>)))", fixed = TRUE)
 })
 
 test_that("simple theme", {

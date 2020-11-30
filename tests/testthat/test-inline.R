@@ -28,9 +28,14 @@ test_that("inline classes", {
       txt <- glue::glue("This is {.<class> it} really",
                         .open = "<", .close = ">")
       out <- capt0(cli_text(txt))
-      expect_true(crayon::has_style(out))
-      expect_match(crayon::strip_style(out), "<<<it>>>", info = class)
-      expect_match(out, start(crayon::make_style("cyan")), fixed = TRUE, info = class)
+      expect_true(ansi_has_any(out))
+      expect_match(ansi_strip(out), "<<<it>>>", info = class)
+      expect_match(
+        out,
+        attr(make_ansi_style("cyan"), "_styles")[[1]]$open,
+        fixed = TRUE,
+        info = class
+      )
     })
   }
 
@@ -87,26 +92,26 @@ test_that("quoting phrases that don't start or end with letter or number", {
   x0 <- "good-name"
   out <- capt0(cli_text("The name is {.file {x0}}."))
   expect_equal(
-    crayon::strip_style(out),
+    ansi_strip(out),
     "The name is good-name.\n"
   )
 
   x <- "weird-name "
   out <- capt0(cli_text("The name is {.file {x}}."))
   expect_equal(
-    crayon::strip_style(out),
+    ansi_strip(out),
     "The name is 'weird-name '.\n"
   )
 
   out <- capt0(cli_text("The name is {.path {x}}."))
   expect_equal(
-    crayon::strip_style(out),
+    ansi_strip(out),
     "The name is 'weird-name '.\n"
   )
 
   out <- capt0(cli_text("The name is {.email {x}}."))
   expect_equal(
-    crayon::strip_style(out),
+    ansi_strip(out),
     "The name is 'weird-name '.\n"
   )
 })

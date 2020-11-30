@@ -45,7 +45,7 @@ test_that("is_padding_or_margin", {
 })
 
 test_that("is_col", {
-  good <- list("red", "orange", NULL, crayon::red, col_red)
+  good <- list("red", "orange", NULL, col_red)
   bad <- list(c("red", "orange"), character(), NA_character_)
 
   for (g in good) {

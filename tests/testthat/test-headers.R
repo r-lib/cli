@@ -9,20 +9,20 @@ test_that("headers", {
 
   withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
     out <- capt0(cli_h1("HEADER"))
-    expect_true(crayon::has_style(out))
-    expect_equal(crayon::strip_style(out), "\nHEADER\n\n")
+    expect_true(ansi_has_any(out))
+    expect_equal(ansi_strip(out), "\nHEADER\n\n")
 
     out <- capt0(cli_h2("Header"))
-    expect_true(crayon::has_style(out))
-    expect_equal(crayon::strip_style(out), "Header\n\n")
+    expect_true(ansi_has_any(out))
+    expect_equal(ansi_strip(out), "Header\n\n")
 
     out <- capt0(cli_h3("Header"))
-    expect_true(crayon::has_style(out))
-    expect_equal(crayon::strip_style(out), "Header\n")
+    expect_true(ansi_has_any(out))
+    expect_equal(ansi_strip(out), "Header\n")
 
     x <- "foobar"
     xx <- 100
     out <- capt0(cli_h2("{xx}. header: {x}"))
-    expect_equal(crayon::strip_style(out), "\n100. header: foobar\n\n")
+    expect_equal(ansi_strip(out), "\n100. header: foobar\n\n")
   })
 })

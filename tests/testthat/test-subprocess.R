@@ -126,7 +126,7 @@ test_that("output in child process", {
   expect_identical(result$result, "foobar")
   expect_null(result$error)
   str <- paste(vcapply(msgs, "[[", "message"), collapse = "")
-  expect_true(crayon::has_style(str))
+  expect_true(ansi_has_any(str))
   expect_match(str, "Title")
   expect_match(str, "This is generated")
 

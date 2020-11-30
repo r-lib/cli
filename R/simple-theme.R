@@ -100,10 +100,10 @@ simple_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ),
 
     ".alert-success" = list(
-      before = paste0(crayon::green(symbol$tick), " ")
+      before = paste0(col_green(symbol$tick), " ")
     ),
     ".alert-info" = list(
-      before = paste0(crayon::cyan(symbol$info), " ")
+      before = paste0(col_cyan(symbol$info), " ")
     ),
 
     ".alert-start" = list(
@@ -164,7 +164,7 @@ simple_theme_r_code <- function(dark) {
     make_ansi_style("#202020")
   }
   function(x) {
-    x <- crayon::strip_style(x)
+    x <- ansi_strip(x)
     lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
     fmd <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
     style(fmd)
