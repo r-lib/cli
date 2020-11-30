@@ -268,7 +268,7 @@ test_that("ansi_strsplit", {
                strsplit(ansi_strip(str.2), "-")[[1]])
 
   # greater than length 1
-  str.3 <- paste0("-", c(green("hello"), red("goodbye")), "-world-")
+  str.3 <- paste0("-", c(col_green("hello"), col_red("goodbye")), "-world-")
   expect_equal(ansi_strip(unlist(ansi_strsplit(str.3, "-"))),
                unlist(strsplit(ansi_strip(str.3), "-")))
 })
@@ -473,12 +473,12 @@ test_that("ansi_strwrap simple styled", {
 
 test_that("ansi_strwrap", {
   txt0 <- glue::glue_col("
-    {red Velit occaecat} quis culpa occaecat.  {green Pariatur} \\
-    ad veniam pariatur {bgBlue consectetur}.  Dolore aliquip et \\
-    {underline consequat Lorem consectetur} dolor.  Irure id velit \\
+    {col_red Velit occaecat} quis culpa occaecat.  {col_green Pariatur} \\
+    ad veniam pariatur {bg_blue consectetur}.  Dolore aliquip et \\
+    {style_underline consequat Lorem consectetur} dolor.  Irure id velit \\
     proident elit veniam eu exercitation nisi laboris officia.     Qui \\
-    {red sunt      occaecat} cillum {red sit    commodo sit.    Culpa} \\
-    aliquip et consectetur ullamco aliqua Lorem laborum dolore.    ")
+    {col_red sunt      occaecat} cillum {col_red sit    commodo sit.    \\
+    Culpa} aliquip et consectetur ullamco aliqua Lorem laborum dolore.    ")
 
   txt <- paste0(txt0, "\n\t  \n", txt0)
   expect_equal(

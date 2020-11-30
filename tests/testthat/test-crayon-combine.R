@@ -2,6 +2,7 @@
 context("crayon combine_ansi_styles")
 
 test_that("one style", {
+  testthat::skip_on_covr()
   expect_equal(combine_ansi_styles(col_red), col_red)
   expect_equal(combine_ansi_styles(style_bold), style_bold)
 })

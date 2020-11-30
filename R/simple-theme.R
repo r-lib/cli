@@ -159,9 +159,9 @@ simple_theme_file <- function() {
 simple_theme_r_code <- function(dark) {
   dark <- dark
   style <- if (dark) {
-    crayon::make_style("#f0f0f0")
+    make_ansi_style("#f0f0f0")
   } else {
-    crayon::make_style("#202020")
+    make_ansi_style("#202020")
   }
   function(x) {
     x <- crayon::strip_style(x)

@@ -213,8 +213,6 @@ theme_create <- function(theme) {
   res
 }
 
-#' @importFrom crayon combine_styles make_style
-
 create_formatter <- function(x) {
   is_bold <- identical(x[["font-weight"]], "bold")
   is_italic <- identical(x[["font-style"]], "italic")
@@ -229,11 +227,11 @@ create_formatter <- function(x) {
     if (is_bold) list(crayon::bold),
     if (is_italic) list(crayon::italic),
     if (is_underline) list(crayon::underline),
-    if (is_color) make_style(x[["color"]]),
-    if (is_bg_color) make_style(x[["background-color"]], bg = TRUE)
+    if (is_color) make_ansi_style(x[["color"]]),
+    if (is_bg_color) make_ansi_style(x[["background-color"]], bg = TRUE)
   )
 
-  new_fmt <- do.call(combine_styles, fmt)
+  new_fmt <- do.call(combine_ansi_styles, fmt)
 
   if (is.null(x[["fmt"]])) {
     x[["fmt"]] <- new_fmt
