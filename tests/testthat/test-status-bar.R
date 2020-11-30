@@ -9,9 +9,9 @@ test_that("create and clear", {
     cli_status("* This is the current status")
     cli_status_clear()
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "* This is the current status", fixed = TRUE)
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "* This is the current status", fixed = TRUE)
 })
 
@@ -23,7 +23,7 @@ test_that("output while status bar is active", {
     cli_text("out2")
     cli_status_update("status2", id = sb)
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1",
@@ -39,7 +39,7 @@ test_that("interpolation", {
     cli_status("You see 1+1={1+1}, this is {.pkg cli}")
     cli_status_clear()
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "\rYou see 1+1=2, this is {cli}",
     "\r                            \r"))
@@ -52,7 +52,7 @@ test_that("update", {
     sb <- cli_status("status1")
     cli_status_update("status2", id = sb)
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1",
@@ -66,7 +66,7 @@ test_that("keep", {
     cli_status("* This is the current status", .keep = TRUE)
     cli_status_clear()
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, "\r* This is the current status\n")
 })
 
@@ -80,7 +80,7 @@ test_that("multiple status bars", {
     cli_status_clear(sb2)
     cli_text("text3")
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "\rstatus1",
     "\r       \rtext1\nstatus1",        # emit text1, restore status1
@@ -102,7 +102,7 @@ test_that("truncating", {
     txt <- "Eiusmod enim mollit aute aliquip Lorem sunt cupidatat."
     cli_status(c(txt, txt))
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "\rEiusmod enim mollit aute aliquip Lore...",
     "\r                                        \r"))
@@ -128,8 +128,8 @@ test_that("theming status bar", {
     cli_text("out2")
     cli_status_update("status2", id = sb)
   }
-  out <- crayon::strip_style(capt0(f()))
-  out2 <- crayon::strip_style(capt0(cli_alert_info("status1")))
+  out <- ansi_strip(capt0(f()))
+  out2 <- ansi_strip(capt0(cli_alert_info("status1")))
   expect_match(out, str_trim(out2), fixed = TRUE)
 })
 
@@ -141,7 +141,7 @@ test_that("successful termination", {
     cli_text("out2")
     cli_status_clear(result = "done")
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1",
@@ -158,7 +158,7 @@ test_that("terminate with failed", {
     cli_text("out2")
     cli_status_clear(result = "failed")
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1",
@@ -174,7 +174,7 @@ test_that("auto close with success", {
     sb <- cli_status("status1", .auto_result = "done")
     cli_text("out2")
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1",
@@ -192,7 +192,7 @@ test_that("auto close wtih failure", {
     cli_text("out2")
     if (is_interactive()) Sys.sleep(2)
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1",
@@ -214,7 +214,7 @@ test_that("auto close with styling", {
     cli_text("out2")
     if (is_interactive()) Sys.sleep(1)
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "status1 ... failed\n")
 
   f2 <- function() {
@@ -229,7 +229,7 @@ test_that("auto close with styling", {
     cli_text("out2")
     if (is_interactive()) Sys.sleep(1)
   }
-  out2 <- crayon::strip_style(capt0(f2()))
+  out2 <- ansi_strip(capt0(f2()))
   expect_match(out2, "status1 ... done\n")
 })
 
@@ -239,7 +239,7 @@ test_that("process auto close with success", {
     sb <- cli_process_start("status1", on_exit = "done")
     cli_text("out2")
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "status1 ... done")
 })
 
@@ -251,7 +251,7 @@ test_that("process auto close with failure", {
     cli_text("out2")
     if (is_interactive()) Sys.sleep(2)
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "status1 ... failed")
 })
 
@@ -260,9 +260,9 @@ test_that("Multiple spaces are no condensed in a status bar", {
     cli_status("* This  is the current  status")
     cli_status_clear()
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "* This  is the current  status", fixed = TRUE)
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   expect_match(out, "* This  is the current  status", fixed = TRUE)
 })
 
@@ -275,7 +275,7 @@ test_that("Emojis are cleaned up properly", {
     cli_text("out2")
     cli_status_update("\u2728", id = sb)
   }
-  out <- crayon::strip_style(capt0(f()))
+  out <- ansi_strip(capt0(f()))
   exps <- c(
     paste0(
       "out1\n",

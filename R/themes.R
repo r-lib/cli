@@ -81,16 +81,16 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       before = paste0(symbol$arrow_right, " ")
     ),
     ".alert-success" = list(
-      before = paste0(crayon::green(symbol$tick), " ")
+      before = paste0(col_green(symbol$tick), " ")
     ),
     ".alert-danger" = list(
-      before = paste0(crayon::red(symbol$cross), " ")
+      before = paste0(col_red(symbol$cross), " ")
     ),
     ".alert-warning" = list(
-      before = paste0(crayon::yellow("!"), " ")
+      before = paste0(col_yellow("!"), " ")
     ),
     ".alert-info" = list(
-      before = paste0(crayon::cyan(symbol$info), " ")
+      before = paste0(col_cyan(symbol$info), " ")
     ),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
@@ -144,7 +144,7 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 }
 
 quote_weird_name <- function(x) {
-  x2 <- crayon::strip_style(x)
+  x2 <- ansi_strip(x)
   if (!is_alnum(first_character(x2)) || !is_alnum(last_character(x2))) {
     x <- paste0("'", x, "'")
   }
@@ -185,7 +185,7 @@ theme_function <- function(dark) {
 
 format_r_code <- function(dark) {
   function(x) {
-    x <- crayon::strip_style(x)
+    x <- ansi_strip(x)
     lines <- unlist(strsplit(x, "\n", fixed = TRUE))
     tryCatch(prettycode::highlight(lines), error = function(x) lines)
   }
@@ -224,9 +224,9 @@ create_formatter <- function(x) {
       && !is_bg_color) return(x)
 
   fmt <- c(
-    if (is_bold) list(crayon::bold),
-    if (is_italic) list(crayon::italic),
-    if (is_underline) list(crayon::underline),
+    if (is_bold) list(style_bold),
+    if (is_italic) list(style_italic),
+    if (is_underline) list(style_underline),
     if (is_color) make_ansi_style(x[["color"]]),
     if (is_bg_color) make_ansi_style(x[["background-color"]], bg = TRUE)
   )
