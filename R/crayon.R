@@ -1,24 +1,107 @@
 
-#' @importFrom crayon reset bold blurred italic underline inverse
-#'   hidden strikethrough
-#' @importFrom crayon black red green yellow blue magenta cyan
-#'   white silver
-#' @importFrom crayon bgBlack bgRed bgGreen bgYellow bgBlue bgMagenta
-#'   bgCyan bgWhite
+ansi_builtin_styles <- list(
+  reset = list(0, c(0, 22, 23, 24, 27, 28, 29, 39, 49)),
+  bold = list(1, 22), # 21 isn't widely supported and 22 does the same thing
+  blurred = list(2, 22),
+  italic = list(3, 23),
+  underline = list(4, 24),
+  inverse = list(7, 27),
+  hidden = list(8, 28),
+  strikethrough = list(9, 29),
 
-cray_wrapper_fun <- function(style) {
-  style
-  fun <- function(...) {
+  black = list(30, 39),
+  red = list(31, 39),
+  green = list(32, 39),
+  yellow = list(33, 39),
+  blue = list(34, 39),
+  magenta = list(35, 39),
+  cyan = list(36, 39),
+  white = list(37, 39),
+  silver = list(90, 39),
+
+  bg_black = list(40, 49),
+  bg_red = list(41, 49),
+  bg_green = list(42, 49),
+  bg_yellow = list(43, 49),
+  bg_blue = list(44, 49),
+  bg_magenta = list(45, 49),
+  bg_cyan = list(46, 49),
+  bg_white = list(47, 49)
+)
+
+is_builtin_style <- function(x) {
+  is_string(x) && x %in% names(ansi_builtin_styles)
+}
+
+ansi_fg_r <- c(
+  "black" = "black",
+  "red" = "red",
+  "green" = "green",
+  "yellow" = "yellow",
+  "blue" = "blue",
+  "magenta" = "magenta",
+  "cyan" = "cyan",
+  "white" = "white",
+  "silver" = "grey"
+)
+
+#' @importFrom grDevices col2rgb
+
+ansi_fg_rgb <- col2rgb(ansi_fg_r)
+
+ansi_bg_r <- c(
+  "bg_black" = "black",
+  "bg_red" = "red",
+  "bg_green" = "green",
+  "bg_yellow" = "yellow",
+  "bg_blue" = "blue",
+  "bg_magenta" = "magenta",
+  "bg_cyan" = "cyan",
+  "bg_white" = "white"
+)
+
+ansi_bg_rgb <- col2rgb(ansi_bg_r)
+
+ansi_style_str <- function(x) {
+  paste0("\u001b[", x, "m", collapse = "")
+}
+
+create_ansi_style_tag <- function(name, open, close) {
+  structure(
+    list(list(open = open, close = close)),
+    names = name
+  )
+}
+
+#' @importFrom crayon has_color
+
+create_ansi_style_fun <- function(styles) {
+  fun <- eval(substitute(function(...) {
+    mystyles <- .styles
     txt <- paste0(...)
-    structure(style(txt), class = c("ansi_string", "character"))
-  }
+    if (has_color()) {
+      for (st in rev(mystyles)) {
+        txt <- paste0(
+          st$open,
+          gsub(st$close, st$open, txt, fixed = TRUE),
+          st$close
+        )
+      }
+    }
+    class(txt) <- c("ansi_string", "character")
+    txt
+  }, list(.styles = styles)))
+
   class(fun) <- "ansi_style"
-  attr(fun, "crayon_style") <- style
+  attr(fun, "_styles") <- styles
   fun
 }
 
-cray_wrapper <- function(name) {
-  cray_wrapper_fun(asNamespace("crayon")[[name]])
+create_ansi_style <- function(name, open = NULL, close = NULL) {
+  open <- open %||% ansi_style_str(ansi_builtin_styles[[name]][[1]])
+  close <- close %||% ansi_style_str(ansi_builtin_styles[[name]][[2]])
+  style <- create_ansi_style_tag(name, open, close)
+  create_ansi_style_fun(style)
 }
 
 #' @export
@@ -31,11 +114,18 @@ print.ansi_string <- function(x, ...) {
   invisible(x)
 }
 
+#' @export
+
+print.ansi_style <- function(x, ...) {
+  cat("<ansi_style>\n")
+  cat(x("Example output"))
+  cat("\n")
+  invisible(x)
+}
+
 #' Create a new ANSI style
 #'
 #' Create a function that can be used to add ANSI styles to text.
-#' All arguments are passed to [crayon::make_style()], but see the
-#' Details below.
 #'
 #' @param ... The style to create. See details and examples below.
 #' @param bg Whether the color applies to the background.
@@ -50,15 +140,16 @@ print.ansi_string <- function(x, ...) {
 #' @return A function that can be used to color (style) strings.
 #'
 #' @details
-#' The styles (elements of `...`) can be any of the
-#' following:
+#' The `...` style argument can be any of the following:
+#' * A cli ANSI style function of class `ansi_style`. This is returned
+#'   as is, without looking at the other arguments.
 #' * An R color name, see [grDevices::colors()].
 #' * A 6- or 8-digit hexa color string, e.g. `#ff0000` means
 #'   red. Transparency (alpha channel) values are ignored.
 #' * A one-column matrix with three rows for the red, green
 #'   and blue channels, as returned by [grDevices::col2rgb()].
 #'
-#' `make_ansistyle()` detects the number of colors to use
+#' `make_ansi_style()` detects the number of colors to use
 #' automatically (this can be overridden using the `colors`
 #' argument). If the number of colors is less than 256 (detected or given),
 #' then it falls back to the color in the ANSI eight color mode that
@@ -79,23 +170,133 @@ print.ansi_string <- function(x, ...) {
 make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
                             colors = crayon::num_colors()) {
 
-  dots <- lapply(list(...), function(x) {
-    if (identical(x, "dim")) return("blurred") else x
-  })
-  args <- c(dots, list(bg = bg , grey = grey, colors = colors))
-  style <- do.call(crayon::make_style, args)
-  cray_wrapper_fun(style)
+  style <- list(...)[[1]]
+  if (inherits(style, "ansi_style")) return(style)
+  if (inherits(style, "crayon")) {
+    return(create_ansi_style_fun(attr(style, "_styles")))
+  }
+
+  if (identical(style, "dim")) style <- "blurred"
+
+  orig_style_name <- style_name <- names(args)[1]
+
+  stopifnot(is.character(style) && length(style) == 1 ||
+            is_rgb_matrix(style) && ncol(style) == 1,
+            is.logical(bg) && length(bg) == 1,
+            is.numeric(colors) && length(colors) == 1)
+
+  ansi_seqs <- if (is_builtin_style(style)) {
+    if (bg && substr(style, 1, 3) != "bg_") {
+      style <- paste0("bg_", style)
+    }
+    if (is.null(style_name)) style_name <- style
+    ansi_builtin_styles[[style]]
+
+  } else if (is_r_color(style)) {
+    if (is.null(style_name)) style_name <- style
+    ansi_style_from_r_color(style, bg, colors, grey)
+
+  } else if (is_rgb_matrix(style)) {
+    ansi_style_from_rgb(style, bg, colors, grey)
+
+  } else {
+    stop("Unknown style specification: ", style)
+  }
+
+  create_ansi_style(style_name, ansi_seqs$open, ansi_seqs$close)
 }
 
-#' @export
+hash_color_regex <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"
 
-print.ansi_style <- function(x, ...) {
-  cat("<ansi_style>\n")
-  cat(x("Example output"))
-  cat("\n")
-  invisible(x)
+#' @importFrom grDevices colors
+
+is_r_color <- function(x) {
+  x %in% colors() || grepl(hash_color_regex, x)
 }
 
+is_rgb_matrix <- function(x) {
+  is.matrix(x) && is.numeric(x) && (nrow(x) == 3 || nrow(x) == 4)
+}
+
+ansi_style_from_r_color <- function(color, bg, num_colors, grey) {
+  ansi_style_from_rgb(col2rgb(color), bg, num_colors, grey)
+}
+
+ansi_style_8_from_rgb <- function(rgb, bg) {
+  ansi_cols <- if (bg) ansi_bg_rgb else ansi_fg_rgb
+  dist <- colSums((ansi_cols - as.vector(rgb)) ^ 2 )
+  builtin_name <- names(which.min(dist))[1]
+  btn <- ansi_builtin_styles[[builtin_name]]
+  list(open = ansi_style_str(btn[[1]]), close = ansi_style_str(btn[[2]]))
+}
+
+ansi_style_from_rgb <- function(rgb, bg, num_colors, grey) {
+  if (num_colors < 256) { return(ansi_style_8_from_rgb(rgb, bg)) }
+  ansi256(rgb, bg, grey)
+}
+
+# nocov start
+fgcodes <- c(paste0('\x1b[38;5;', 0:255, 'm'), '\x1b[39m')
+bgcodes <- c(paste0('\x1b[48;5;', 0:255, 'm'), '\x1b[49m')
+
+rgb_index <- 17:232
+gray_index <- 233:256
+reset_index <- 257
+#nocov end
+
+ansi_scale <- function(x, from = c(0, 255), to = c(0, 5), round = TRUE) {
+  y <- (x - from[1]) /
+    (from[2] - from[1]) *
+    (to[2] - to[1]) +
+    to[1]
+
+  if (round) {
+    round(y)
+  } else {
+    y
+  }
+}
+
+ansi256 <- function(rgb, bg = FALSE, grey = FALSE) {
+  codes <- if (bg) bgcodes else fgcodes
+  if (grey) {
+    ## Gray
+    list(
+      open = codes[gray_index][ansi_scale(rgb[1], to = c(0, 23)) + 1],
+      close = codes[reset_index]
+    )
+
+  } else {
+    ## Not gray
+    list(
+      open = codes[ansi256_rgb_index(rgb[1L], rgb[2L], rgb[3L])],
+      close = codes[reset_index]
+    )
+  }
+}
+
+## This is based off the algorithm in the ruby "paint" gem, as
+## implemented in rainbowrite.
+ansi256_rgb_index <- function(red, green, blue) {
+  gray_possible <- TRUE
+  sep <- 42.5
+  while (gray_possible) {
+    if (red < sep || green < sep || blue < sep) {
+      gray <- red < sep && green < sep && blue < sep
+      gray_possible <- FALSE
+    }
+    sep <- sep + 42.5
+  }
+
+  ## NOTE: The +1 here translates from base0 to base1 for the index
+  ## that does the same.  Not ideal, but that does get the escape
+  ## characters in nicely.
+  if (gray) {
+    232 + round((red + green + blue) / 33) + 1
+  } else {
+    16 + sum(floor(6 * c(red, green, blue) / 256) * c(36, 6, 1)) + 1
+  }
+}
 
 #' Combine two or more ANSI styles
 #'
@@ -116,7 +317,6 @@ print.ansi_style <- function(x, ...) {
 #'
 #' @family ANSI styling
 #' @export
-#' @importFrom crayon combine_styles
 #' @examples
 #' ## Use style names
 #' alert <- combine_ansi_styles("bold", "red4")
@@ -133,158 +333,10 @@ print.ansi_style <- function(x, ...) {
 #' cat(alert("Warning!"), "\n")
 
 combine_ansi_styles <- function(...) {
-  args <- list(...)
-  args <- lapply(args, function(x) {
-    if (inherits(x, "ansi_style")) attr(x, "crayon_style") else x
-  })
-  style <- do.call(crayon::combine_styles, args)
-  cray_wrapper_fun(style)
+  styles <- lapply(
+    list(...),
+    function(x) attr(make_ansi_style(x), "_styles")
+  )
+  styles <- unlist(styles, recursive = FALSE)
+  create_ansi_style_fun(styles)
 }
-
-#' ANSI colored text
-#'
-#' cli has a number of functions to color and style text at the command
-#' line. These all use the crayon package under the hood, but provide a
-#' slightly simpler interface.
-#'
-#' The `col_*` functions change the (foreground) color to the text.
-#' These are the eight original ANSI colors. Note that in some terminals,
-#' they might actually look differently, as terminals have their own
-#' settings for how to show them.
-#'
-#' The `bg_*` functions change the background color of the text.
-#' These are the eight original ANSI background colors. These, too, can
-#' vary in appearence, depending on terminal settings.
-#'
-#' The `style_*` functions apply other styling to the text. The currently
-#' supported styling funtions are:
-#' * `style_reset()` to remove any style, including color,
-#' * `style_bold()` for boldface / strong text, although some terminals
-#'   show a bright, high intensity text instead,
-#' * `style_dim()` (or `style_blurred()` reduced intensity text.
-#' * `style_italic()` (not widely supported).
-#' * `style_underline()`,
-#' * `style_inverse()`,
-#' * `style_hidden()`,
-#' * `style_strikethrough()` (not widely supported).
-#'
-#' The style functions take any number of character vectors as arguments,
-#' and they concatenate them using `paste0()` before adding the style.
-#'
-#' Styles can also be nested, and then inner style takes precedence, see
-#' examples below.
-#'
-#' @param ... Character strings, they will be pasted together with
-#'   `paste0()`, before applying the style function.
-#' @return An ANSI string (class `ansi_string`), that contains ANSI
-#'   sequences, if the current platform supports them. You can simply
-#'   use `cat()` to print them to the terminal.
-#'
-#' @family ANSI styling
-#' @name ansi-styles
-#' @examples
-#' col_blue("Hello ", "world!")
-#' cat(col_blue("Hello ", "world!"))
-#'
-#' cat("... to highlight the", col_red("search term"),
-#'     "in a block of text\n")
-#'
-#' ## Style stack properly
-#' cat(col_green(
-#'  "I am a green line ",
-#'  col_blue(style_underline(style_bold("with a blue substring"))),
-#'  " that becomes green again!"
-#' ))
-#'
-#' error <- combine_ansi_styles("red", "bold")
-#' warn <- combine_ansi_styles("magenta", "underline")
-#' note <- col_cyan
-#' cat(error("Error: subscript out of bounds!\n"))
-#' cat(warn("Warning: shorter argument was recycled.\n"))
-#' cat(note("Note: no such directory.\n"))
-#'
-NULL
-
-#' @export
-#' @name ansi-styles
-bg_black    <- cray_wrapper("bgBlack")
-#' @export
-#' @name ansi-styles
-bg_blue     <- cray_wrapper("bgBlue")
-#' @export
-#' @name ansi-styles
-bg_cyan     <- cray_wrapper("bgCyan")
-#' @export
-#' @name ansi-styles
-bg_green    <- cray_wrapper("bgGreen")
-#' @export
-#' @name ansi-styles
-bg_magenta  <- cray_wrapper("bgMagenta")
-#' @export
-#' @name ansi-styles
-bg_red      <- cray_wrapper("bgRed")
-#' @export
-#' @name ansi-styles
-bg_white    <- cray_wrapper("bgWhite")
-#' @export
-#' @name ansi-styles
-bg_yellow   <- cray_wrapper("bgYellow")
-
-#' @export
-#' @name ansi-styles
-col_black   <- cray_wrapper("black")
-#' @export
-#' @name ansi-styles
-col_blue    <- cray_wrapper("blue")
-#' @export
-#' @name ansi-styles
-col_cyan    <- cray_wrapper("cyan")
-#' @export
-#' @name ansi-styles
-col_green   <- cray_wrapper("green")
-#' @export
-#' @name ansi-styles
-col_magenta <- cray_wrapper("magenta")
-#' @export
-#' @name ansi-styles
-col_red     <- cray_wrapper("red")
-#' @export
-#' @name ansi-styles
-col_white   <- cray_wrapper("white")
-#' @export
-#' @name ansi-styles
-col_yellow  <- cray_wrapper("yellow")
-#' @export
-#' @name ansi-styles
-col_grey    <- cray_wrapper("silver")
-#' @export
-#' @name ansi-styles
-col_silver  <- cray_wrapper("silver")
-
-#' @export
-#' @name ansi-styles
-style_dim           <- cray_wrapper("blurred")
-#' @export
-#' @name ansi-styles
-style_blurred       <- cray_wrapper("blurred")
-#' @export
-#' @name ansi-styles
-style_bold          <- cray_wrapper("bold")
-#' @export
-#' @name ansi-styles
-style_hidden        <- cray_wrapper("hidden")
-#' @export
-#' @name ansi-styles
-style_inverse       <- cray_wrapper("inverse")
-#' @export
-#' @name ansi-styles
-style_italic        <- cray_wrapper("italic")
-#' @export
-#' @name ansi-styles
-style_reset         <- cray_wrapper("reset")
-#' @export
-#' @name ansi-styles
-style_strikethrough <- cray_wrapper("strikethrough")
-#' @export
-#' @name ansi-styles
-style_underline     <- cray_wrapper("underline")

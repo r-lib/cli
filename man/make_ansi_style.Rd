@@ -26,13 +26,12 @@ A function that can be used to color (style) strings.
 }
 \description{
 Create a function that can be used to add ANSI styles to text.
-All arguments are passed to \code{\link[crayon:make_style]{crayon::make_style()}}, but see the
-Details below.
 }
 \details{
-The styles (elements of \code{...}) can be any of the
-following:
+The \code{...} style argument can be any of the following:
 \itemize{
+\item A cli ANSI style function of class \code{ansi_style}. This is returned
+as is, without looking at the other arguments.
 \item An R color name, see \code{\link[grDevices:colors]{grDevices::colors()}}.
 \item A 6- or 8-digit hexa color string, e.g. \verb{#ff0000} means
 red. Transparency (alpha channel) values are ignored.
@@ -40,7 +39,7 @@ red. Transparency (alpha channel) values are ignored.
 and blue channels, as returned by \code{\link[grDevices:col2rgb]{grDevices::col2rgb()}}.
 }
 
-\code{make_ansistyle()} detects the number of colors to use
+\code{make_ansi_style()} detects the number of colors to use
 automatically (this can be overridden using the \code{colors}
 argument). If the number of colors is less than 256 (detected or given),
 then it falls back to the color in the ANSI eight color mode that
