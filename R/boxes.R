@@ -5,6 +5,10 @@
 #' @param label Label to show, a character vector. Each element will be
 #'   in a new line. You can color it using the `col_*`, `bg_*` and
 #'   `style_*` functions, see [ansi-styles] and the examples below.
+#' @param header Text to show on top border of the box. If too long,
+#'   it will be cut.
+#' @param footer Text to show on the bottom border of the box. If too long,
+#'   it will be cut.
 #' @param border_style String that specifies the border style.
 #'   `list_border_styles` lists all current styles.
 #' @param padding Padding within the box. Either an integer vector of
@@ -92,7 +96,8 @@
 #'   background_col="darkolivegreen"
 #' )
 
-boxx <- function(label, border_style = "single", padding = 1, margin = 0,
+boxx <- function(label, header = "", footer = "",
+                 border_style = "single", padding = 1, margin = 0,
                  float = c("left", "center", "right"),
                  col = NULL, background_col = NULL, border_col = col,
                  align = c("left", "center", "right"),
@@ -132,19 +137,30 @@ boxx <- function(label, border_style = "single", padding = 1, margin = 0,
 
   chars <- box_styles()[border_style, ]
 
-  horizontal <- strrep(chars$horizontal, content_width)
+  pad_left <- make_space(padding[2])
+  pad_right <- make_space(content_width - ansi_nchar(label) - padding[2])
+
+  if (header != "") {
+    header <- paste0(" ", ansi_strtrim(header, content_width - 2), " ")
+  }
+  hdw <- ansi_nchar(header, "width")
+  if (footer != "") {
+    footer <- paste0(" ", ansi_strtrim(footer, content_width - 2), " ")
+  }
+  ftw <- ansi_nchar(footer, "width")
+
+  hdline <- paste0(header, strrep(chars$horizontal, content_width - hdw))
   top <- color_border(paste0(
     strrep("\n", margin[3]),
-    mar_left, chars$top_left, horizontal, chars$top_right
+    mar_left, chars$top_left, hdline, chars$top_right
   ))
+  ftline <- paste0(strrep(chars$horizontal, content_width - ftw), footer)
   bottom <- color_border(paste0(
-    mar_left, chars$bottom_left, horizontal, chars$bottom_right,
+    mar_left, chars$bottom_left, ftline, chars$bottom_right,
     strrep("\n", margin[1])
   ))
   side <- color_border(chars$vertical)
 
-  pad_left <- make_space(padding[2])
-  pad_right <- make_space(content_width - ansi_nchar(label) - padding[2])
   middle <- paste0(mar_left, side,
                    color_content(paste0(pad_left, label, pad_right)), side)
 

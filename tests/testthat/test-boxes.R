@@ -220,3 +220,25 @@ test_that("align", {
     "└───────────┘")
   expect_equal(out, exp)
 })
+
+test_that("header", {
+  out <- capt(boxx("foobar", header = "foo"))
+  exp <- rebox(
+    "┌ foo ───────┐",
+    "│            │",
+    "│   foobar   │",
+    "│            │",
+    "└────────────┘")
+  expect_equal(out, exp)
+})
+
+test_that("footer", {
+  out <- capt(boxx("foobar", footer = "foo"))
+  exp <- rebox(
+    "┌────────────┐",
+    "│            │",
+    "│   foobar   │",
+    "│            │",
+    "└─────── foo ┘")
+  expect_equal(out, exp)
+})

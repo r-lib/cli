@@ -9,6 +9,8 @@ list_border_styles()
 
 boxx(
   label,
+  header = "",
+  footer = "",
   border_style = "single",
   padding = 1,
   margin = 0,
@@ -24,6 +26,12 @@ boxx(
 \item{label}{Label to show, a character vector. Each element will be
 in a new line. You can color it using the \verb{col_*}, \verb{bg_*} and
 \verb{style_*} functions, see \link{ansi-styles} and the examples below.}
+
+\item{header}{Text to show on top border of the box. If too long,
+it will be cut.}
+
+\item{footer}{Text to show on the bottom border of the box. If too long,
+it will be cut.}
 
 \item{border_style}{String that specifies the border style.
 \code{list_border_styles} lists all current styles.}

@@ -11,6 +11,8 @@
   `ansi_strwrap()` as well handle wide Unicode correctly, according to
   their display width.
 
+* `boxx()` can now add headers and footers to boxes.
+
 # cli 2.2.0
 
 * New `style_hyperlink()` function to add hyperlinks, on terminals that
