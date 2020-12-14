@@ -60,9 +60,11 @@
 cli_format_method <- function(expr, theme = getOption("cli.theme")) {
 
   # This is not needed for cli, but needed for sink() and crayon
+  nc <- num_ansi_colors()
   opts <- options(
-    crayon.enabled = crayon::has_color(),
-    crayon.colors = crayon::num_colors()
+    cli.num_colors = nc,
+    crayon.enabled = nc > 1,
+    crayon.colors = nc
   )
   on.exit(options(opts), add = TRUE)
 

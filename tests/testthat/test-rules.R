@@ -113,7 +113,7 @@ test_that("right label", {
 test_that("line_col", {
 
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
+    list(cli.num_colors = 256L), {
       expect_true(ansi_has_any(
         rule(line_col = "red")
       ))

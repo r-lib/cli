@@ -36,7 +36,7 @@ ansi_regex <- function() {
 #' @family low level ANSI functions
 #' @export
 #' @examples
-#' ## The second one has style if crayon is enabled
+#' ## The second one has style if ANSI colors are supported
 #' ansi_has_any("foobar")
 #' ansi_has_any(col_red("foobar"))
 

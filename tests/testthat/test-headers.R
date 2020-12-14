@@ -7,7 +7,7 @@ teardown(stop_app())
 test_that("headers", {
   cli_div(class = "testcli", theme = test_style())
 
-  withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
+  withr::with_options(list(cli.num_colors = 256L), {
     out <- capt0(cli_h1("HEADER"))
     expect_true(ansi_has_any(out))
     expect_equal(ansi_strip(out), "\nHEADER\n\n")

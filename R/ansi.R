@@ -73,13 +73,11 @@ create_ansi_style_tag <- function(name, open, close) {
   )
 }
 
-#' @importFrom crayon has_color
-
 create_ansi_style_fun <- function(styles) {
   fun <- eval(substitute(function(...) {
     mystyles <- .styles
     txt <- paste0(...)
-    if (has_color()) {
+    if (num_ansi_colors() > 1) {
       for (st in rev(mystyles)) {
         txt <- paste0(
           st$open,
@@ -168,7 +166,7 @@ print.ansi_style <- function(x, ...) {
 #' cat(orange("foobar"))
 
 make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
-                            colors = crayon::num_colors()) {
+                            colors = num_ansi_colors()) {
 
   style <- list(...)[[1]]
   if (inherits(style, "ansi_style")) return(style)

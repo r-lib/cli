@@ -9,7 +9,7 @@ test_that("add/remove/list themes", {
   on.exit(default_app()$remove_theme(id), add = TRUE)
   expect_true(id %in% names(default_app()$list_themes()))
 
-  withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
+  withr::with_options(list(cli.num_colors = 256L), {
     capt0(cli_par(class = "green"))
     out <- capt0(cli_text(lorem_ipsum()))
     capt0(cli_end())

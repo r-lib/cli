@@ -55,7 +55,7 @@ test_that("is_col", {
   for (b in bad) {
     expect_false(is_col(b))
     expect_error(assert_that(is_col(b)),
-                 "must be a color name, or a crayon style")
+                 "must be a color name, or an `ansi_style`")
   }
 })
 

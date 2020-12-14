@@ -2,8 +2,7 @@
 #' ANSI colored text
 #'
 #' cli has a number of functions to color and style text at the command
-#' line. These all use the crayon package under the hood, but provide a
-#' slightly simpler interface.
+#' line. They provide a mode modern interface than the crayon package.
 #'
 #' The `col_*` functions change the (foreground) color to the text.
 #' These are the eight original ANSI colors. Note that in some terminals,

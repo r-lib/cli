@@ -24,7 +24,7 @@ test_that("inline classes", {
     )
 
     cli_div(theme = special_style)
-    withr::with_options(list(crayon.enabled = TRUE, crayon.colors = 256), {
+    withr::with_options(list(cli.num_colors = 256L), {
       txt <- glue::glue("This is {.<class> it} really",
                         .open = "<", .close = ">")
       out <- capt0(cli_text(txt))

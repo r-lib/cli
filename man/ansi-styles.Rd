@@ -96,8 +96,7 @@ use \code{cat()} to print them to the terminal.
 }
 \description{
 cli has a number of functions to color and style text at the command
-line. These all use the crayon package under the hood, but provide a
-slightly simpler interface.
+line. They provide a mode modern interface than the crayon package.
 }
 \details{
 The \verb{col_*} functions change the (foreground) color to the text.
@@ -154,6 +153,7 @@ cat(note("Note: no such directory.\n"))
 \seealso{
 Other ANSI styling: 
 \code{\link{combine_ansi_styles}()},
-\code{\link{make_ansi_style}()}
+\code{\link{make_ansi_style}()},
+\code{\link{num_ansi_colors}()}
 }
 \concept{ANSI styling}
