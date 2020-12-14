@@ -7,7 +7,7 @@ test_that("cat_line", {
   expect_equal(out, exp)
 
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
+    list(cli.num_colors = 256L), {
       out <- capt00(cat_line("This is ", "a ", "line of text.", col = "red"))
       expect_true(ansi_has_any(out))
       exp <- rebox("This is a line of text.")

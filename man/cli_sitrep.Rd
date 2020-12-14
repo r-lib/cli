@@ -21,7 +21,7 @@ Windows, or ASCII.
 \code{\link[base:l10n_info]{base::l10n_info()}}.
 \item \code{latex_active}: whether we are inside knitr, creating a LaTeX
 document.
-\item \code{num_colors}: number of ANSI colors. See \code{\link[crayon:num_colors]{crayon::num_colors()}}.
+\item \code{num_colors}: number of ANSI colors. See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
 \item \code{console_with}: detected console width.
 }
 }

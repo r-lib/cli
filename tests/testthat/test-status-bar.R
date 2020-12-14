@@ -109,10 +109,13 @@ test_that("truncating", {
 })
 
 test_that("ansi colors and clearing", {
-  withr::local_options(list(cli.ansi = FALSE, cli.dynamic = TRUE))
+  withr::local_options(list(
+    cli.num_colors = 256L,
+    cli.ansi = FALSE,
+    cli.dynamic = TRUE
+  ))
   f <- function() {
-    withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
-    crayon::num_colors(forget = TRUE)
+    withr::local_options(list(num_ansi_colors = 256L))
     cli_status(col_red("This is red"))
     cli_status_clear()
   }

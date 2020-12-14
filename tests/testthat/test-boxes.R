@@ -145,7 +145,7 @@ test_that("float", {
 
 test_that("background_col", {
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
+    list(cli.num_colors = 256L), {
       bx <- boxx("label", background_col = "red")
       expect_true(ansi_has_any(bx))
       out <- capt_cat(ansi_strip(unclass(bx)))
@@ -173,7 +173,7 @@ test_that("background_col", {
 
 test_that("border_col", {
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
+    list(cli.num_colors = 256L), {
       bx <- boxx("label", border_col = "red")
       expect_true(ansi_has_any(bx))
       out <- capt_cat(ansi_strip(unclass(bx)))

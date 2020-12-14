@@ -12,7 +12,7 @@ test_that("cliapp output auto", {
   # stderr if not interactive ----------------
 
   code <- substitute(env = list(txt = txt), {
-    options(rlib_interactive = FALSE, crayon.enabled = FALSE)
+    options(rlib_interactive = FALSE, cli.num_colors = 1L)
     cli::cli_text(txt)
   })
   cat(deparse(code), file = script, sep = "\n")
@@ -24,7 +24,7 @@ test_that("cliapp output auto", {
   # stdout if interactive --------------------
 
   code <- substitute(env = list(txt = txt), {
-    options(rlib_interactive = TRUE, crayon.enabled = FALSE)
+    options(rlib_interactive = TRUE, cli.num_colors = 1L)
     cli::cli_text(txt)
   })
   cat(deparse(code), file = script, sep = "\n")
@@ -37,7 +37,7 @@ test_that("cliapp output auto", {
 
   txt2 <- "Don't move"
   code <- substitute(env = list(txt = txt, txt2 = txt2), {
-    options(rlib_interactive = FALSE, crayon.enabled = FALSE)
+    options(rlib_interactive = FALSE, cli_num_colors = 1L)
     cli::start_app(output = "stderr")
     cli::cli_text(txt)
     cli::stop_app()
@@ -61,7 +61,7 @@ test_that("can also use a connection", {
   on.exit(unlink(script, recursive = TRUE), add = TRUE)
 
   code <- substitute(env = list(txt = txt), {
-    options(crayon.enabled = FALSE)
+    options(cli.num_colors = 1L)
     con <- textConnection(NULL, open = "w", local = TRUE)
     cli::start_app(output = con)
     cli::cli_text(txt)

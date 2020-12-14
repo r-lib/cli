@@ -1,5 +1,5 @@
 
-context("crayon make_ansi_style")
+context("make_ansi_style")
 
 test_that("make_style without name", {
   pink <- make_ansi_style("pink")
@@ -33,5 +33,5 @@ test_that("we fall back for ANSI 8 if needed", {
 test_that("we can create a style from an R color", {
   red4 <- make_ansi_style("red4")
   red_text <- red4("text")
-  expect_true(!crayon::has_color() || ansi_has_any(red_text))
+  expect_true(num_ansi_colors() == 1 || ansi_has_any(red_text))
 })

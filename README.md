@@ -6,6 +6,7 @@ cli
 > Helpers for Developing Command Line Interfaces
 
 <!-- badges: start -->
+
 [![R build
 status](https://github.com/r-lib/cli/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/cli/actions)
 [![](https://www.r-pkg.org/badges/version/cli)](https://www.r-pkg.org/pkg/cli)
@@ -19,8 +20,8 @@ A suite of tools to build attractive command line interfaces (CLIs),
 from semantic elements: headers, lists, alerts, paragraphs, etc.
 Supports theming via a CSS-like language. It also contains a number of
 lower level CLI elements: rules, boxes, trees, and Unicode symbols with
-ASCII alternatives. It integrates with the crayon package to support
-ANSI terminal colors.
+ASCII alternatives. It supports ANSI markup for terminal colors and font
+styles.
 
 ------------------------------------------------------------------------
 
@@ -30,8 +31,7 @@ Features
 -   Build a CLI using semantic elements: headings, lists, alerts,
     paragraphs.
 -   Theming via a CSS-like language.
--   Terminal colors via the [crayon](https://github.com/r-lib/crayon)
-    package.
+-   Terminal colors and font styles.
 -   Create cli elements in subprocesses, using the
     [callr](https://github.com/r-lib/callr) package.
 -   All cli text can contain interpreted string literals, via the
