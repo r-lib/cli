@@ -665,7 +665,7 @@ ansi_columns <- function(text, width = console_width(), sep = " ",
   len <- length(text)
   extra <- ceiling(len / cols) * cols - len
   text <- c(text, rep("", extra))
-  tm <- matrix(text, byrow = fill == "rows", nc = cols)
+  tm <- matrix(text, byrow = fill == "rows", ncol = cols)
 
   colwdh <- diff(c(0, round((width / cols)  * (1:cols))))
   for (c in seq_len(ncol(tm))) {
