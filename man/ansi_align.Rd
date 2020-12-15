@@ -33,6 +33,7 @@ ansi_align(col_red("foobar"), 20, "right")
 }
 \seealso{
 Other ANSI string operations: 
+\code{\link{ansi_columns}()},
 \code{\link{ansi_nchar}()},
 \code{\link{ansi_strsplit}()},
 \code{\link{ansi_strtrim}()},

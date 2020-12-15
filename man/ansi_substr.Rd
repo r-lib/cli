@@ -55,6 +55,7 @@ substr(ansi_strip(c(str, str2)), c(3,5), c(7, 18))
 \seealso{
 Other ANSI string operations: 
 \code{\link{ansi_align}()},
+\code{\link{ansi_columns}()},
 \code{\link{ansi_nchar}()},
 \code{\link{ansi_strsplit}()},
 \code{\link{ansi_strtrim}()},

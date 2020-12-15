@@ -527,3 +527,18 @@ test_that("ansi_strtrim", {
 
   for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
 })
+
+test_that("ansi_columns", {
+  withr::local_options(c(cli.unicode = FALSE))
+  local_edition(3)
+
+  expect_equal(ansi_columns(character()), ansi_string(character()))
+
+  expect_snapshot_output(
+    cat(ansi_columns(paste("foo", 1:10), width = 40), sep = "\n")
+  )
+  txt60 <- strrep("1234567890", 6)
+  expect_snapshot_output(
+    cat(ansi_columns(txt60, width = 15), sep = "\n")
+  )
+})
