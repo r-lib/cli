@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Align an ANSI colored string — ansi_align • cli</title>
+<title>Detect the number of ANSI colors to use — num_ansi_colors • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Align an ANSI colored string — ansi_align" />
-<meta property="og:description" content="Align an ANSI colored string" />
+<meta property="og:title" content="Detect the number of ANSI colors to use — num_ansi_colors" />
+<meta property="og:description" content="Certain Unix and Windows terminals, and also certain R GUIs, e.g.
+RStudio, support styling terminal output using special control
+sequences (ANSI sequences).
+num_ansi_colors() detects if the current R session supports ANSI
+sequences, and if it does how many colors are supported." />
 
 
 <meta name="robots" content="noindex">
@@ -132,66 +136,91 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Align an ANSI colored string</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
-    <div class="hidden name"><code>ansi_align.Rd</code></div>
+    <h1>Detect the number of ANSI colors to use</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/num-ansi-colors.R'><code>R/num-ansi-colors.R</code></a></small>
+    <div class="hidden name"><code>num_ansi_colors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Align an ANSI colored string</p>
+    <p>Certain Unix and Windows terminals, and also certain R GUIs, e.g.
+RStudio, support styling terminal output using special control
+sequences (ANSI sequences).</p>
+<p><code>num_ansi_colors()</code> detects if the current R session supports ANSI
+sequences, and if it does how many colors are supported.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_align</span><span class='op'>(</span>
-  <span class='va'>text</span>,
-  width <span class='op'>=</span> <span class='fu'><a href='console_width.html'>console_width</a></span><span class='op'>(</span><span class='op'>)</span>,
-  align <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"left"</span>, <span class='st'>"center"</span>, <span class='st'>"right"</span><span class='op'>)</span>,
-  type <span class='op'>=</span> <span class='st'>"width"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>num_ansi_colors</span><span class='op'>(</span>stream <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>text</th>
-      <td><p>The character vector to align.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>Width of the field to align in.</p></td>
-    </tr>
-    <tr>
-      <th>align</th>
-      <td><p>Whether to align <code>"left"</code>, <code>"center"</code> or <code>"right"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>Passed on to <code><a href='ansi_nchar.html'>ansi_nchar()</a></code> and there to <code><a href='https://rdrr.io/r/base/nchar.html'>nchar()</a></code></p></td>
+      <th>stream</th>
+      <td><p>The stream that will be used for output, an R connection
+object. It can also be a string, one of <code>"auto"</code>, <code>"message"</code>,
+<code>"stdout"</code>, <code>"stderr"</code>. <code>"auto"</code> will select <code><a href='https://rdrr.io/r/base/showConnections.html'>stdout()</a></code> if the session is
+interactive and there are no sinks, otherwise it will select <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The aligned character vector.</p>
+    <p>Integer, the number of ANSI colors the current R session
+supports for <code>stream</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The detaction mechanism is quite involved and it is designed to work
+out of the box on most systems. If it does not work on your system,
+please report a bug. Setting options and environment variables to turn
+on ANSI support is error prone, because they are inherited in other
+environments, e.g. knitr, that might have ANSI support.</p>
+<p>If you want to turn off ANSI colors, set the <code>NO_COLOR</code> environment
+variable to a non-empty value.</p>
+<p>The exact detection mechanism is as follows:</p><ol>
+<li><p>If the <code>cli.num_colors</code> options is set, that is returned.</p></li>
+<li><p>If the <code>R_CLI_NUM_COLORS</code> env var is set to a non-empty value,
+then it is used.</p></li>
+<li><p>If the <code>crayon.enabled</code> option is set to <code>FALSE</code>, 1L is returned.
+(This is for compatibility with code that uses the crayon package.)</p></li>
+<li><p>If the <code>crayon.enabled</code> option is set to <code>TRUE</code> and the
+<code>crayon.colors</code> option is also set, then the latter is returned.
+(This is for compatibility with code that uses the crayon package.)</p></li>
+<li><p>If the <code>NO_COLOR</code> environment variable is set, then 1L is returned.</p></li>
+<li><p>If <code>stream</code> is <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code> and there is an active sink for it, then
+1L is returned.</p></li>
+<li><p>If R is running inside RStudio, with color support, then the
+appropriate number of colors is returned, usuallu 256L.</p></li>
+<li><p>If <code>stream</code> is not a terminal, then 1L is returned.</p></li>
+<li><p>If <code>stream</code> is not the standard output or error, then 1L is returned.</p></li>
+<li><p>If R is running inside an Emacs version that is recent enough to
+support ANSI colors, then 8L is returned.</p></li>
+<li><p>If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
+then 8L is returned.</p></li>
+<li><p>Otherwise if we are on Windows, return 1L.</p></li>
+<li><p>Otherwise we are on Unix and try to run <code>tput colors</code> to determine
+the number of colors. If this succeeds, we return its return value,
+except if the <code>TERM</code> environment variable is <code>xterm</code> and <code>tput</code>
+returned 8L, we return 256L, because xterm compatible terminals
+tend to support 256 colors.</p></li>
+<li><p>If <code>tput colors</code> fails, we try to guess. If <code>COLORTERM</code> is set
+to any value, we return 8L.</p></li>
+<li><p>If <code>TERM</code> is set to <code>dumb</code>, we return 1L.</p></li>
+<li><p>If <code>TERM</code> starts with <code>screen</code>, <code>xterm</code>, or <code>vt100</code>, we return 8L.</p></li>
+<li><p>If <code>TERM</code> contains <code>color</code>, <code>ansi</code>, <code>cygwin</code> or <code>linux</code>, we return
+8L.</p></li>
+<li><p>Otherwise we return 1L.</p></li>
+</ol>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other ANSI string operations: 
-<code><a href='ansi_columns.html'>ansi_columns</a>()</code>,
-<code><a href='ansi_nchar.html'>ansi_nchar</a>()</code>,
-<code><a href='ansi_strsplit.html'>ansi_strsplit</a>()</code>,
-<code><a href='ansi_strtrim.html'>ansi_strtrim</a>()</code>,
-<code><a href='ansi_strwrap.html'>ansi_strwrap</a>()</code>,
-<code><a href='ansi_substring.html'>ansi_substring</a>()</code>,
-<code><a href='ansi_substr.html'>ansi_substr</a>()</code>,
-<code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p></div>
+    <div class='dont-index'><p>Other ANSI styling: 
+<code><a href='ansi-styles.html'>ansi-styles</a></code>,
+<code><a href='combine_ansi_styles.html'>combine_ansi_styles</a>()</code>,
+<code><a href='make_ansi_style.html'>make_ansi_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>ansi_align</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>, <span class='fl'>20</span>, <span class='st'>"left"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1] <span style='color: #BB0000;'>foobar</span><span>              </div><div class='input'><span class='fu'>ansi_align</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>, <span class='fl'>20</span>, <span class='st'>"center"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1]        </span><span style='color: #BB0000;'>foobar</span><span>       </div><div class='input'><span class='fu'>ansi_align</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>, <span class='fl'>20</span>, <span class='st'>"right"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1]               </span><span style='color: #BB0000;'>foobar</span><span></div></span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>num_ansi_colors</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 256</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

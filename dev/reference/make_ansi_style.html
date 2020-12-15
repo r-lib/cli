@@ -40,9 +40,7 @@
 
 
 <meta property="og:title" content="Create a new ANSI style — make_ansi_style" />
-<meta property="og:description" content="Create a function that can be used to add ANSI styles to text.
-All arguments are passed to crayon::make_style(), but see the
-Details below." />
+<meta property="og:description" content="Create a function that can be used to add ANSI styles to text." />
 
 
 <meta name="robots" content="noindex">
@@ -135,17 +133,15 @@ Details below." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a new ANSI style</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/crayon.R'><code>R/crayon.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansi.R'><code>R/ansi.R</code></a></small>
     <div class="hidden name"><code>make_ansi_style.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a function that can be used to add ANSI styles to text.
-All arguments are passed to <code><a href='https://rdrr.io/pkg/crayon/man/make_style.html'>crayon::make_style()</a></code>, but see the
-Details below.</p>
+    <p>Create a function that can be used to add ANSI styles to text.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='va'>...</span>, bg <span class='op'>=</span> <span class='cn'>FALSE</span>, grey <span class='op'>=</span> <span class='cn'>FALSE</span>, colors <span class='op'>=</span> <span class='fu'>crayon</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/crayon/man/num_colors.html'>num_colors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='va'>...</span>, bg <span class='op'>=</span> <span class='cn'>FALSE</span>, grey <span class='op'>=</span> <span class='cn'>FALSE</span>, colors <span class='op'>=</span> <span class='fu'><a href='num_ansi_colors.html'>num_ansi_colors</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,8 +175,9 @@ by default.</p></td>
     <p>A function that can be used to color (style) strings.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The styles (elements of <code>...</code>) can be any of the
-following:</p><ul>
+    <p>The <code>...</code> style argument can be any of the following:</p><ul>
+<li><p>A cli ANSI style function of class <code>ansi_style</code>. This is returned
+as is, without looking at the other arguments.</p></li>
 <li><p>An R color name, see <code><a href='https://rdrr.io/r/grDevices/colors.html'>grDevices::colors()</a></code>.</p></li>
 <li><p>A 6- or 8-digit hexa color string, e.g. <code>#ff0000</code> means
 red. Transparency (alpha channel) values are ignored.</p></li>
@@ -188,7 +185,7 @@ red. Transparency (alpha channel) values are ignored.</p></li>
 and blue channels, as returned by <code><a href='https://rdrr.io/r/grDevices/col2rgb.html'>grDevices::col2rgb()</a></code>.</p></li>
 </ul>
 
-<p><code>make_ansistyle()</code> detects the number of colors to use
+<p><code>make_ansi_style()</code> detects the number of colors to use
 automatically (this can be overridden using the <code>colors</code>
 argument). If the number of colors is less than 256 (detected or given),
 then it falls back to the color in the ANSI eight color mode that
@@ -197,21 +194,22 @@ is closest to the specified (RGB or R) color.</p>
 
     <div class='dont-index'><p>Other ANSI styling: 
 <code><a href='ansi-styles.html'>ansi-styles</a></code>,
-<code><a href='combine_ansi_styles.html'>combine_ansi_styles</a>()</code></p></div>
+<code><a href='combine_ansi_styles.html'>combine_ansi_styles</a>()</code>,
+<code><a href='num_ansi_colors.html'>num_ansi_colors</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='st'>"orange"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;ansi_style&gt;
-#&gt; <span style='color: #BBBB00;'>Example output</span><span></div><div class='input'><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='st'>"#123456"</span><span class='op'>)</span>
+#&gt; <span style='color: #FFAF00;'>Example output</span><span></div><div class='input'><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='st'>"#123456"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;ansi_style&gt;
-#&gt; </span><span style='color: #000000;'>Example output</span><span></div><div class='input'><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='st'>"orange"</span>, bg <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+#&gt; </span><span style='color: #005F87;'>Example output</span><span></div><div class='input'><span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='st'>"orange"</span>, bg <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;ansi_style&gt;
-#&gt; </span><span style='background-color: #BBBB00;'>Example output</span><span></div><div class='input'>
+#&gt; </span><span style='background-color: #FFAF00;'>Example output</span><span></div><div class='input'>
 <span class='va'>orange</span> <span class='op'>&lt;-</span> <span class='fu'>make_ansi_style</span><span class='op'>(</span><span class='st'>"orange"</span><span class='op'>)</span>
 <span class='fu'>orange</span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1] </span><span style='color: #BBBB00;'>foobar</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>orange</span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #BBBB00;'>foobar</span><span></div></span></pre>
+#&gt; [1] </span><span style='color: #FFAF00;'>foobar</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>orange</span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #FFAF00;'>foobar</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
