@@ -607,3 +607,76 @@ ansi_strtrim <- function(x, width = console_width(),
   xt[bad0] <- paste0(xt[bad0], ellipsis)
   xt
 }
+
+#' Format a character vector in multiple columns
+#'
+#' This function helps with multi-column output of ANSI styles strings.
+#' It works well together with [boxx()], see the example below.
+#'
+#' If a string does not fit into the specified `width`, it will be
+#' truncated using [ansi_strtrim()].
+#'
+#' @param text Character vector to format. Each element will formatted
+#'   as a cell of a table.
+#' @param width Width of the screen.
+#' @param sep Separator between the columns. It may have ANSI styles.
+#' @param fill Whether to fill the columns row-wise or column-wise.
+#' @param max_cols Maximum number of columns to use. Will not use more,
+#'   even if there is space for it.
+#' @param align Alignment within the columns.
+#' @param type Passed to [ansi_nchar()] and [ansi_align()]. Most probably
+#'   you want the default, `"width"`.
+#' @inheritParams ansi_strtrim
+#' @return ANSI string vector.
+#'
+#' @family ANSI string operations
+#' @export
+#' @examples
+#' fmt <- ansi_columns(
+#'   paste(col_red("foo"), 1:10),
+#'   width = 50,
+#'   fill = "rows",
+#'   max_cols=10,
+#'   align = "center",
+#'   sep = "   "
+#' )
+#' fmt
+#' ansi_nchar(fmt, type = "width")
+#' boxx(fmt, padding = c(0,1,0,1), header = col_green("foobar"))
+
+ansi_columns <- function(text, width = console_width(), sep = " ",
+                         fill = c("rows", "cols"), max_cols = 4,
+                         align = c("left", "center", "right"),
+                         type = "width", ellipsis = symbol$ellipsis) {
+
+  fill <- match.arg(fill)
+  align <- match.arg(align)
+
+  if (length(text) == 0) return(ansi_string(text))
+
+  swdh <- ansi_nchar(sep, type = "width")
+  twdh <- max(ansi_nchar(text, type = type)) + swdh
+  cols <- min(floor(width / twdh), max_cols)
+  if (cols == 0) {
+    cols <- 1
+    text <- ansi_strtrim(text, width = width, ellipsis = ellipsis)
+  }
+
+  len <- length(text)
+  extra <- ceiling(len / cols) * cols - len
+  text <- c(text, rep("", extra))
+  tm <- matrix(text, byrow = fill == "rows", ncol = cols)
+
+  colwdh <- diff(c(0, round((width / cols)  * (1:cols))))
+  for (c in seq_len(ncol(tm))) {
+    tm[, c] <- ansi_align(
+      paste0(tm[, c], if (cols > 1) sep),
+      colwdh[c],
+      align = align,
+      type = type
+    )
+  }
+
+  clp <- apply(tm, 1, paste0, collapse = "")
+  ansi_string(clp)
+}
