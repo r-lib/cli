@@ -10,7 +10,7 @@
 #'   [base::l10n_info()].
 #' * `latex_active`: whether we are inside knitr, creating a LaTeX
 #'   document.
-#' * `num_colors`: number of ANSI colors. See [crayon::num_colors()].
+#' * `num_colors`: number of ANSI colors. See [num_ansi_colors()].
 #' * `console_with`: detected console width.
 #'
 #' @return Named list with entries listed above. It has a `cli_sitrep`
@@ -27,7 +27,7 @@ cli_sitrep <- function() {
       symbol_charset = get_active_symbol_set(),
       console_utf8 = l10n_info()$`UTF-8`,
       latex_active = is_latex_output(),
-      num_colors = crayon::num_colors(),
+      num_colors = num_ansi_colors(),
       console_width = console_width()),
     class = "cli_sitrep")
 }

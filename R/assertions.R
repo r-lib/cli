@@ -32,7 +32,7 @@ is_col <- function(x) {
 }
 
 on_failure(is_col) <- function(call, env) {
-  paste0(deparse(call$x), " must be a color name, or a crayon style")
+  paste0(deparse(call$x), " must be a color name, or an `ansi_style`")
 }
 
 is_count <- function(x) {

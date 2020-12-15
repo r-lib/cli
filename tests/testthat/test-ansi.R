@@ -1,9 +1,8 @@
 
-context("crayon colors")
+context("ansi colors")
 
-op <- options()
+op <- options(cli.num_colors = 256L)
 on.exit(options(op))
-options(crayon.enabled = TRUE)
 
 test_that("Classes", {
   expect_equal(class(style_underline("foo")), c("ansi_string", "character"))

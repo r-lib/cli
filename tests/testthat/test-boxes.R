@@ -145,10 +145,10 @@ test_that("float", {
 
 test_that("background_col", {
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
+    list(cli.num_colors = 256L), {
       bx <- boxx("label", background_col = "red")
-      expect_true(crayon::has_style(bx))
-      out <- capt_cat(crayon::strip_style(unclass(bx)))
+      expect_true(ansi_has_any(bx))
+      out <- capt_cat(ansi_strip(unclass(bx)))
       exp <- rebox(
         "┌───────────┐",
         "│           │",
@@ -158,8 +158,8 @@ test_that("background_col", {
       expect_equal(out, exp)
 
       bx <- boxx("label", background_col = col_red)
-      expect_true(crayon::has_style(bx))
-      out <- capt_cat(crayon::strip_style(unclass(bx)))
+      expect_true(ansi_has_any(bx))
+      out <- capt_cat(ansi_strip(unclass(bx)))
       exp <- rebox(
         "┌───────────┐",
         "│           │",
@@ -173,10 +173,10 @@ test_that("background_col", {
 
 test_that("border_col", {
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
+    list(cli.num_colors = 256L), {
       bx <- boxx("label", border_col = "red")
-      expect_true(crayon::has_style(bx))
-      out <- capt_cat(crayon::strip_style(unclass(bx)))
+      expect_true(ansi_has_any(bx))
+      out <- capt_cat(ansi_strip(unclass(bx)))
       exp <- rebox(
         "┌───────────┐",
         "│           │",
@@ -186,8 +186,8 @@ test_that("border_col", {
       expect_equal(out, exp)
 
       bx <- boxx("label", border_col = col_red)
-      expect_true(crayon::has_style(bx))
-      out <- capt_cat(crayon::strip_style(unclass(bx)))
+      expect_true(ansi_has_any(bx))
+      out <- capt_cat(ansi_strip(unclass(bx)))
       exp <- rebox(
         "┌───────────┐",
         "│           │",

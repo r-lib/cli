@@ -113,24 +113,24 @@ test_that("right label", {
 test_that("line_col", {
 
   withr::with_options(
-    list(crayon.enabled = TRUE, crayon.colors = 256), {
-      expect_true(crayon::has_style(
+    list(cli.num_colors = 256L), {
+      expect_true(ansi_has_any(
         rule(line_col = "red")
       ))
-      expect_true(crayon::has_style(
+      expect_true(ansi_has_any(
         rule(left = "left", line_col = "red")
       ))
-      expect_true(crayon::has_style(
+      expect_true(ansi_has_any(
         rule(left = "left", right = "right", line_col = "red")
       ))
-      expect_true(crayon::has_style(
+      expect_true(ansi_has_any(
         rule(center = "center", line_col = "red")
       ))
-      expect_true(crayon::has_style(
+      expect_true(ansi_has_any(
         rule(right = "right", line_col = "red")
       ))
 
-      expect_true(crayon::has_style(
+      expect_true(ansi_has_any(
         rule(line_col = col_red)
       ))
     }

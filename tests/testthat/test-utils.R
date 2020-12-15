@@ -32,7 +32,7 @@ test_that("ruler", {
     "----+----1----+----2",
     "12345678901234567890"
   )
-  expect_equal(crayon::strip_style(out), exp)
+  expect_equal(ansi_strip(out), exp)
 })
 
 test_that("rpad", {

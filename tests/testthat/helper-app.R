@@ -32,5 +32,5 @@ capt <- function(expr, print_it = TRUE) {
 
 capt0 <- function(expr, strip_style = FALSE) {
   out <- capture_messages(expr)
-  if  (strip_style) crayon::strip_style(out) else out
+  if  (strip_style) ansi_strip(out) else out
 }

@@ -45,7 +45,7 @@ test_that("is_padding_or_margin", {
 })
 
 test_that("is_col", {
-  good <- list("red", "orange", NULL, crayon::red, col_red)
+  good <- list("red", "orange", NULL, col_red)
   bad <- list(c("red", "orange"), character(), NA_character_)
 
   for (g in good) {
@@ -55,7 +55,7 @@ test_that("is_col", {
   for (b in bad) {
     expect_false(is_col(b))
     expect_error(assert_that(is_col(b)),
-                 "must be a color name, or a crayon style")
+                 "must be a color name, or an `ansi_style`")
   }
 })
 

@@ -3,14 +3,9 @@ title: "Building a Semantic CLI"
 author: "Gábor Csárdi"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    keep_md: true
+  rmarkdown::html_document:
     toc: true
     toc_depth: 2
-vignette: >
-  %\VignetteIndexEntry{Building a Semantic CLI}
-  %\VignetteEngine{cli::lazyrmd}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE, cache = FALSE}
@@ -21,10 +16,7 @@ knitr::opts_chunk$set(
   cache = TRUE
 )
 # Turn on ANSI colors
-options(
-    crayon.enabled = TRUE,
-    crayon.colors = 256)
-crayon::num_colors(forget = TRUE)
+options(cli.num_colors = 256L)
 asciicast::init_knitr_engine(
   startup = quote({
     library(cli)
@@ -492,10 +484,10 @@ invisible(rs$close())
 
 ## ANSI colors
 
-cli defines wrapper functions to the crayon package, to create ANSI colored
-and styled output in the console. `col_*` functions change the foreground
-color, `bg_*` functions change the background color, and `style_*` functions
-change the style of the text in some way.
+cli has functions to create ANSI colored or styled output in the console.
+`col_*` functions change the foreground color, `bg_*` functions change the
+background color, and `style_*` functions change the style of the text in
+some way.
 
 These functions concatenate their arguments using `paste0()`, and add
 the `ansi_string` class to their result:

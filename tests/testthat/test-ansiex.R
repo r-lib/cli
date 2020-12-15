@@ -22,8 +22,7 @@ test_that("ansi_regex", {
 
 test_that("ansi_has_any works", {
   withr::local_options(list(
-    crayon.enabled = TRUE,
-    crayon.colors = 256,
+    cli.num_colors = 256L,
     cli.hyperlink = TRUE
   ))
   expect_false(ansi_has_any("foobar"))
@@ -35,8 +34,7 @@ test_that("ansi_has_any works", {
 
 test_that("ansi_strip works", {
   withr::local_options(list(
-    crayon.enabled = TRUE,
-    crayon.colors = 256,
+    cli.num_colors = 256L,
     cli.hyperlink = TRUE
   ))
   expect_equal("", ansi_strip(""))
@@ -64,7 +62,7 @@ str <- c("",
          "\033[31mred\033[39mfoo")
 
 test_that("ansi_nchar", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   for (s in str) {
     expect_equal(ansi_nchar(s), nchar(ansi_strip(s)), info = s)
   }
@@ -86,7 +84,7 @@ test_that("ansi_substr bad input", {
 })
 
 test_that("ansi_substr", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   for (s in str) {
     for (i in 1 %:% ansi_nchar(s)) {
       for (j in i %:% ansi_nchar(s)) {
@@ -98,7 +96,7 @@ test_that("ansi_substr", {
 })
 
 test_that("ansi_substr keeps color", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   expect_equal(
     ansi_substr("\033[31mred\033[39m", 1, 1),
     ansi_string("\033[31mr\033[39m")
@@ -118,7 +116,7 @@ test_that("ansi_substr keeps color", {
 })
 
 test_that("ansi_substr, start after string end", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   expect_equal(ansi_substr("red", 4, 4), ansi_string(""))
   expect_equal(ansi_substr("red", 4, 5), ansi_string(""))
   expect_equal(ansi_strip(ansi_substr("\033[31mred\033[39m", 4, 4)), "")
@@ -131,7 +129,7 @@ test_that("ansi_substr, start after string end", {
 })
 
 test_that("ansi_substr, multiple strings", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   set.seed(42)
   for (i in 1:100) {
     strs <- sample(str, 4)
@@ -146,7 +144,7 @@ test_that("ansi_substr, multiple strings", {
 })
 
 test_that("ansi_substr corner cases", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   # Zero length input
 
   c0 <- character(0L)
@@ -188,7 +186,7 @@ test_that("ansi_substr corner cases", {
 })
 
 test_that("ansi_substring", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   for (s in str) {
     for (i in 1 %:% ansi_nchar(s)) {
       for (j in i %:% ansi_nchar(s)) {
@@ -200,7 +198,7 @@ test_that("ansi_substring", {
 })
 
 test_that("ansi_substring, multiple strings", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   set.seed(42)
   for (i in 1:100) {
     strs <- sample(str, 4)
@@ -215,7 +213,7 @@ test_that("ansi_substring, multiple strings", {
 })
 
 test_that("ansi_substring corner cases", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   # Zero length input
 
   c0 <- character(0L)
@@ -236,7 +234,7 @@ test_that("ansi_substring corner cases", {
 })
 
 test_that("ansi_strsplit", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   red <- "\033[31mred\033[39m"
 
   str <- "plain-plain"
@@ -268,13 +266,13 @@ test_that("ansi_strsplit", {
                strsplit(ansi_strip(str.2), "-")[[1]])
 
   # greater than length 1
-  str.3 <- paste0("-", c(green("hello"), red("goodbye")), "-world-")
+  str.3 <- paste0("-", c(col_green("hello"), col_red("goodbye")), "-world-")
   expect_equal(ansi_strip(unlist(ansi_strsplit(str.3, "-"))),
                unlist(strsplit(ansi_strip(str.3), "-")))
 })
 
 test_that("ansi_strsplit multiple strings", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   red <- "\033[31mred\033[39m"
   str <- c(
     paste0("plain-plain-", red, "-plain-", red),
@@ -288,7 +286,7 @@ test_that("ansi_strsplit multiple strings", {
 })
 
 test_that("ansi_strsplit edge cases", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   expect_equal(ansi_strsplit("", "-"), list(ansi_string(character(0L))))
   expect_equal(
     ansi_strip(ansi_strsplit("\033[31m\033[39m", "-")[[1]]), character(0L)
@@ -323,7 +321,7 @@ test_that("ansi_strsplit edge cases", {
 })
 
 test_that("Weird length 'split'", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   expect_error(
     ansi_strsplit(c("ab", "bd"), c("b", "d")),
     "must be character"
@@ -339,7 +337,7 @@ test_that("Weird length 'split'", {
 })
 
 test_that("ansi_align", {
-  withr::local_options(list(crayon.enabled = TRUE, crayon.colors = 256))
+  withr::local_options(list(cli.num_colors = 256L))
   expect_equal(ansi_align(character()), ansi_string(character()))
   expect_equal(ansi_align("", 0), ansi_string(""))
   expect_equal(ansi_align(" ", 0), ansi_string(" "))
@@ -473,12 +471,12 @@ test_that("ansi_strwrap simple styled", {
 
 test_that("ansi_strwrap", {
   txt0 <- glue::glue_col("
-    {red Velit occaecat} quis culpa occaecat.  {green Pariatur} \\
-    ad veniam pariatur {bgBlue consectetur}.  Dolore aliquip et \\
-    {underline consequat Lorem consectetur} dolor.  Irure id velit \\
+    {col_red Velit occaecat} quis culpa occaecat.  {col_green Pariatur} \\
+    ad veniam pariatur {bg_blue consectetur}.  Dolore aliquip et \\
+    {style_underline consequat Lorem consectetur} dolor.  Irure id velit \\
     proident elit veniam eu exercitation nisi laboris officia.     Qui \\
-    {red sunt      occaecat} cillum {red sit    commodo sit.    Culpa} \\
-    aliquip et consectetur ullamco aliqua Lorem laborum dolore.    ")
+    {col_red sunt      occaecat} cillum {col_red sit    commodo sit.    \\
+    Culpa} aliquip et consectetur ullamco aliqua Lorem laborum dolore.    ")
 
   txt <- paste0(txt0, "\n\t  \n", txt0)
   expect_equal(
