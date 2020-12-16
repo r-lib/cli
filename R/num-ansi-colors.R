@@ -10,13 +10,13 @@
 #' sequences, and if it does how many colors are supported.
 #'
 #' @details
-#' The detaction mechanism is quite involved and it is designed to work
+#' The detection mechanism is quite involved and it is designed to work
 #' out of the box on most systems. If it does not work on your system,
 #' please report a bug. Setting options and environment variables to turn
 #' on ANSI support is error prone, because they are inherited in other
-#' environments, e.g. knitr, that might have ANSI support.
+#' environments, e.g. knitr, that might not have ANSI support.
 #'
-#' If you want to turn off ANSI colors, set the `NO_COLOR` environment
+#' If you want to _turn off_ ANSI colors, set the `NO_COLOR` environment
 #' variable to a non-empty value.
 #'
 #' The exact detection mechanism is as follows:
