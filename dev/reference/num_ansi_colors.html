@@ -188,6 +188,8 @@ then it is used.</p></li>
 <li><p>If the <code>NO_COLOR</code> environment variable is set, then 1L is returned.</p></li>
 <li><p>If <code>stream</code> is <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code> and there is an active sink for it, then
 1L is returned.</p></li>
+<li><p>If R is running inside RGui on Windows, or R.app on macOS, then we
+return 1L.</p></li>
 <li><p>If R is running inside RStudio, with color support, then the
 appropriate number of colors is returned, usuallu 256L.</p></li>
 <li><p>If <code>stream</code> is not a terminal, then 1L is returned.</p></li>
@@ -206,8 +208,7 @@ tend to support 256 colors.</p></li>
 to any value, we return 8L.</p></li>
 <li><p>If <code>TERM</code> is set to <code>dumb</code>, we return 1L.</p></li>
 <li><p>If <code>TERM</code> starts with <code>screen</code>, <code>xterm</code>, or <code>vt100</code>, we return 8L.</p></li>
-<li><p>If <code>TERM</code> contains <code>color</code>, <code>ansi</code>, <code>cygwin</code> or <code>linux</code>, we return
-8L.</p></li>
+<li><p>If <code>TERM</code> contains <code>color</code>, <code>ansi</code>, <code>cygwin</code> or <code>linux</code>, we return 8L.</p></li>
 <li><p>Otherwise we return 1L.</p></li>
 </ol>
 
