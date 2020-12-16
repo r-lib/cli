@@ -135,7 +135,14 @@ detect_tty_colors <- function() {
   # Emacs?
   if (is_emacs_with_color()) return(8L)
 
-  # Windows terminal with color support?
+  # Windows terminal with native color support?
+  if (os_type() == "windows" && win10_build() >= 16257) {
+    # this is rather weird, but echo turns on color support :D
+    system2("cmd", c("/c", "echo 1 >NUL"))
+    return(256L)
+  }
+
+  # Windows terminal with 3rd party color support?
   if (os_type() == "windows") {
     if (Sys.getenv("ConEmuANSI") == "ON" ||
         Sys.getenv("CMDER_ROOT") != "") {
@@ -198,4 +205,13 @@ emacs_version <- function() {
   ver <- strsplit(ver, ",", fixed = TRUE)[[1]]
   ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
   as.numeric(ver)
+}
+
+win10_build <- function() {
+  os <- sessionInfo()$running
+  if (!grepl("^Windows 10 ", os)) return(0L)
+  mch <- re_match(os, "[(]build (?<build>[0-9]+)[)]")
+  mch <- suppressWarnings(as.integer(mch))
+  if (is.na(mch)) return(0L)
+  mch
 }
