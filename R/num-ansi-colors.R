@@ -34,11 +34,11 @@
 #' 1. If R is running inside RGui on Windows, or R.app on macOS, then we
 #'    return 1L.
 #' 1. If R is running inside RStudio, with color support, then the
-#'    appropriate number of colors is returned, usuallu 256L.
-#' 1. If `stream` is not a terminal, then 1L is returned.
-#' 1. If `stream` is not the standard output or error, then 1L is returned.
+#'    appropriate number of colors is returned, usually 256L.
 #' 1. If R is running inside an Emacs version that is recent enough to
 #'    support ANSI colors, then 8L is returned.
+#' 1. If `stream` is not a terminal, then 1L is returned.
+#' 1. If `stream` is not the standard output or error, then 1L is returned.
 #' 1. If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
 #'    then 8L is returned.
 #' 1. Otherwise if we are on Windows, return 1L.
@@ -119,8 +119,10 @@ num_ansi_colors <- function(stream = "auto") {
     return(rstudio$num_colors)
   }
 
+  # Emacs?
+  if (is_emacs_with_color()) return(8L)
+
   # For the rest, we are either in a terminal, or there is no ANSI support.
-  # Emacs counts as a terminal as well.
   if (!isatty(stream)) return(1L)
 
   # If `stream` is not stdout or stderr then we give up here
@@ -132,9 +134,6 @@ num_ansi_colors <- function(stream = "auto") {
 }
 
 detect_tty_colors <- function() {
-  # Emacs?
-  if (is_emacs_with_color()) return(8L)
-
   # Windows terminal with native color support?
   if (os_type() == "windows" && win10_build() >= 16257) {
     # this is rather weird, but echo turns on color support :D
