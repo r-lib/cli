@@ -47,6 +47,8 @@ then it is used.
 \item If the \code{NO_COLOR} environment variable is set, then 1L is returned.
 \item If \code{stream} is \code{stderr()} and there is an active sink for it, then
 1L is returned.
+\item If R is running inside RGui on Windows, or R.app on macOS, then we
+return 1L.
 \item If R is running inside RStudio, with color support, then the
 appropriate number of colors is returned, usuallu 256L.
 \item If \code{stream} is not a terminal, then 1L is returned.
@@ -65,8 +67,7 @@ tend to support 256 colors.
 to any value, we return 8L.
 \item If \code{TERM} is set to \code{dumb}, we return 1L.
 \item If \code{TERM} starts with \code{screen}, \code{xterm}, or \code{vt100}, we return 8L.
-\item If \code{TERM} contains \code{color}, \code{ansi}, \code{cygwin} or \code{linux}, we return
-8L.
+\item If \code{TERM} contains \code{color}, \code{ansi}, \code{cygwin} or \code{linux}, we return 8L.
 \item Otherwise we return 1L.
 }
 }

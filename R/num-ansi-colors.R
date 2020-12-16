@@ -21,37 +21,38 @@
 #'
 #' The exact detection mechanism is as follows:
 #' 1. If the `cli.num_colors` options is set, that is returned.
-#' 2. If the `R_CLI_NUM_COLORS` env var is set to a non-empty value,
+#' 1. If the `R_CLI_NUM_COLORS` env var is set to a non-empty value,
 #'    then it is used.
-#' 3. If the `crayon.enabled` option is set to `FALSE`, 1L is returned.
+#' 1. If the `crayon.enabled` option is set to `FALSE`, 1L is returned.
 #'    (This is for compatibility with code that uses the crayon package.)
-#' 4. If the `crayon.enabled` option is set to `TRUE` and the
+#' 1. If the `crayon.enabled` option is set to `TRUE` and the
 #'    `crayon.colors` option is also set, then the latter is returned.
 #'    (This is for compatibility with code that uses the crayon package.)
-#' 6. If the `NO_COLOR` environment variable is set, then 1L is returned.
-#' 7. If `stream` is `stderr()` and there is an active sink for it, then
+#' 1. If the `NO_COLOR` environment variable is set, then 1L is returned.
+#' 1. If `stream` is `stderr()` and there is an active sink for it, then
 #'    1L is returned.
-#' 8. If R is running inside RStudio, with color support, then the
+#' 1. If R is running inside RGui on Windows, or R.app on macOS, then we
+#'    return 1L.
+#' 1. If R is running inside RStudio, with color support, then the
 #'    appropriate number of colors is returned, usuallu 256L.
-#' 9. If `stream` is not a terminal, then 1L is returned.
-#' 9. If `stream` is not the standard output or error, then 1L is returned.
-#' 10. If R is running inside an Emacs version that is recent enough to
+#' 1. If `stream` is not a terminal, then 1L is returned.
+#' 1. If `stream` is not the standard output or error, then 1L is returned.
+#' 1. If R is running inside an Emacs version that is recent enough to
 #'    support ANSI colors, then 8L is returned.
-#' 11. If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
+#' 1. If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
 #'    then 8L is returned.
-#' 12. Otherwise if we are on Windows, return 1L.
-#' 13. Otherwise we are on Unix and try to run `tput colors` to determine
+#' 1. Otherwise if we are on Windows, return 1L.
+#' 1. Otherwise we are on Unix and try to run `tput colors` to determine
 #'    the number of colors. If this succeeds, we return its return value,
 #'    except if the `TERM` environment variable is `xterm` and `tput`
 #'    returned 8L, we return 256L, because xterm compatible terminals
 #'    tend to support 256 colors.
-#' 14. If `tput colors` fails, we try to guess. If `COLORTERM` is set
+#' 1. If `tput colors` fails, we try to guess. If `COLORTERM` is set
 #'    to any value, we return 8L.
-#' 15. If `TERM` is set to `dumb`, we return 1L.
-#' 16. If `TERM` starts with `screen`, `xterm`, or `vt100`, we return 8L.
-#' 17. If `TERM` contains `color`, `ansi`, `cygwin` or `linux`, we return
-#'    8L.
-#' 18. Otherwise we return 1L.
+#' 1. If `TERM` is set to `dumb`, we return 1L.
+#' 1. If `TERM` starts with `screen`, `xterm`, or `vt100`, we return 8L.
+#' 1. If `TERM` contains `color`, `ansi`, `cygwin` or `linux`, we return 8L.
+#' 1. Otherwise we return 1L.
 #'
 #' @param stream The stream that will be used for output, an R connection
 #' object. It can also be a string, one of `"auto"`, `"message"`,
@@ -103,6 +104,9 @@ num_ansi_colors <- function(stream = "auto") {
   # If a sink is active for "message" (ie. stderr), then R does not update
   # the `stderr()` stream, so we need to catch this case.
   if (is_stderr && sink.number("message") != 2) return(1L)
+
+  # RGui or Rapp?
+  if (.Platform$GUI == "Rgui" || .Platform$GUI == "AQUA") return(1L)
 
   # RStudio?
   rstudio <- rstudio$detect()
