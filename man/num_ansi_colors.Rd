@@ -45,6 +45,8 @@ then it is used.
 \code{crayon.colors} option is also set, then the latter is returned.
 (This is for compatibility with code that uses the crayon package.)
 \item If the \code{NO_COLOR} environment variable is set, then 1L is returned.
+\item If we are in knitr, then 1L is returned, to turn off colors in
+\code{.Rmd} chunks.
 \item If \code{stream} is \code{stderr()} and there is an active sink for it, then
 1L is returned.
 \item If R is running inside RGui on Windows, or R.app on macOS, then we

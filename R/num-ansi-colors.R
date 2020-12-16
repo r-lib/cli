@@ -29,6 +29,8 @@
 #'    `crayon.colors` option is also set, then the latter is returned.
 #'    (This is for compatibility with code that uses the crayon package.)
 #' 1. If the `NO_COLOR` environment variable is set, then 1L is returned.
+#' 1. If we are in knitr, then 1L is returned, to turn off colors in
+#'    `.Rmd` chunks.
 #' 1. If `stream` is `stderr()` and there is an active sink for it, then
 #'    1L is returned.
 #' 1. If R is running inside RGui on Windows, or R.app on macOS, then we
@@ -98,6 +100,9 @@ num_ansi_colors <- function(stream = "auto") {
 
   # NO_COLOR env var
   if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) return(1L)
+
+  # knitr?
+  if (isTRUE(getOption("knitr.in.progress"))) return(1L)
 
   # If a sink is active for "output", then R changes the `stdout()`
   # stream, so we don't need to do anything here.
