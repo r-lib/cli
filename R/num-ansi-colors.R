@@ -110,7 +110,14 @@ num_ansi_colors <- function(stream = "auto") {
 
   # RStudio?
   rstudio <- rstudio$detect()
-  if (rstudio$type != "not_rstudio" && is_std) return(rstudio$num_colors)
+  rstudio_colors <- c(
+    "rstudio_console",
+    "rstudio_console_starting",
+    "rstudio_build_pane"
+  )
+  if (rstudio$type %in% rstudio_colors && is_std) {
+    return(rstudio$num_colors)
+  }
 
   # For the rest, we are either in a terminal, or there is no ANSI support.
   # Emacs counts as a terminal as well.
