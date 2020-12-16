@@ -60,10 +60,15 @@ rstudio <- local({
       # 2. RStudio console, properly initialized
       "rstudio_console"
 
-    } else if (new$gui == "RStudio" && ! new$api) {
+    } else if (new$gui %in% c("RStudio", "Rgui")  && ! new$api &&
+               (basename(new$args[1]) == "RStudio" || !new$tty)) {
       # 3. RStudio console, initilizing
       cache <- FALSE
       "rstudio_console_starting"
+
+    } else if (new$gui == "Rgui") {
+      # Still not RStudio, but Rgui that was started from RStudio
+      "not_rstudio"
 
     } else if (new$tty && new$envs[["ASCIICAST"]] != "true") {
       # 4. R in the RStudio terminal
@@ -134,9 +139,9 @@ rstudio <- local({
     list(
       type = "rstudio_terminal",
       dynamic_tty = TRUE,
-      ansi_tty = TRUE,
-      ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
-      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]])
+      ansi_tty = FALSE,
+      ansi_color = FALSE,
+      num_colors = 1L
     )
   }
 
