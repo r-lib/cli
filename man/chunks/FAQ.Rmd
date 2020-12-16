@@ -1,0 +1,24 @@
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  R.options = list(
+    cli.num_colors = 1L,
+    cli.unicode = FALSE
+  ),
+  results = "hold",
+  comment = "#>",
+  cache = TRUE
+)
+```
+
+## My platform supports ANSI colors, why does cli not use them?
+
+It is probably a mistake in cli's ANSI support detection algorithm.
+Please open an issue at https://github.com/r-lib/cli/issues and don't forget to tell us the details of your platform and terminal or GUI.
+
+## How do I turn off ANSI colors and styles?
+
+Set the `NO_COLOR` environment variable to a non-empty value.
+You can do this in your `.Renviron` file (use `usethis::edit_r_environ()`).
+
+If you want to do this for testthat tests, then consider using the 3rd edition on testthat, which does turn off ANSI styling automatically inside `test_that()`.
