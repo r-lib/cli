@@ -225,7 +225,7 @@ emacs_version <- function() {
 }
 
 win10_build <- function() {
-  os <- sessionInfo()$running
+  os <- utils::sessionInfo()$running
   if (!grepl("^Windows 10 ", os)) return(0L)
   mch <- re_match(os, "[(]build (?<build>[0-9]+)[)]")
   mch <- suppressWarnings(as.integer(mch))
