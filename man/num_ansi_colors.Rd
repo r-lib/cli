@@ -53,9 +53,13 @@ then it is used.
 return 1L.
 \item If R is running inside RStudio, with color support, then the
 appropriate number of colors is returned, usually 256L.
-\item If R is running inside an Emacs version that is recent enough to
-support ANSI colors, then 8L is returned.
+\item If R is running on Windows, inside an Emacs version that is recent
+enough to support ANSI colors, then 8L is returned. (On Windows,
+Emacs has \code{isatty(stdout()) == FALSE}, so we need to check for this
+here before dealing with terminals.)
 \item If \code{stream} is not a terminal, then 1L is returned.
+\item If R is running on Unix, inside an Emacs version that is recent
+enough to support ANSI colors, then 8L is returned.
 \item If \code{stream} is not the standard output or error, then 1L is returned.
 \item If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
 then 8L is returned.

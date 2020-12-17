@@ -37,9 +37,13 @@
 #'    return 1L.
 #' 1. If R is running inside RStudio, with color support, then the
 #'    appropriate number of colors is returned, usually 256L.
-#' 1. If R is running inside an Emacs version that is recent enough to
-#'    support ANSI colors, then 8L is returned.
+#' 1. If R is running on Windows, inside an Emacs version that is recent
+#'    enough to support ANSI colors, then 8L is returned. (On Windows,
+#'    Emacs has `isatty(stdout()) == FALSE`, so we need to check for this
+#'    here before dealing with terminals.)
 #' 1. If `stream` is not a terminal, then 1L is returned.
+#' 1. If R is running on Unix, inside an Emacs version that is recent
+#'    enough to support ANSI colors, then 8L is returned.
 #' 1. If `stream` is not the standard output or error, then 1L is returned.
 #' 1. If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
 #'    then 8L is returned.
@@ -124,8 +128,14 @@ num_ansi_colors <- function(stream = "auto") {
     return(rstudio$num_colors)
   }
 
-  # Emacs?
-  if (is_emacs_with_color()) return(8L)
+  # Windows Emacs? The top R process will have `--ess` in ESS, but the
+  # subprocesses won't. (Without ESS subprocesses will also report 8L
+  # colors, this is a problem, but we expect most people use ESS in Emacs.)
+  if (os_type() == "windows" &&
+      "--ess" %in% commandArgs() &&
+      is_emacs_with_color()) {
+    return(8L)
+  }
 
   # For the rest, we are either in a terminal, or there is no ANSI support.
   if (!isatty(stream)) return(1L)
@@ -139,6 +149,9 @@ num_ansi_colors <- function(stream = "auto") {
 }
 
 detect_tty_colors <- function() {
+  # Emacs on Unix?
+  if (os_type() == "unix" && is_emacs_with_color()) return(8L)
+
   # Windows terminal with native color support?
   if (os_type() == "windows" && win10_build() >= 16257) {
     # this is rather weird, but echo turns on color support :D
