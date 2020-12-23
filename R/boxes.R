@@ -104,7 +104,7 @@ boxx <- function(label, header = "", footer = "",
                  width = console_width()) {
 
   label <- apply_style(as.character(label), col)
-  widest <- max(ansi_nchar(label), 0)
+  widest <- max(ansi_nchar(label, "width"), 0)
 
   assert_that(is_border_style(border_style))
   assert_that(is_padding_or_margin(padding))

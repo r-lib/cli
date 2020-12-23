@@ -1,6 +1,9 @@
 
 # cli development version
 
+* `boxx()` now correctly calculates the width of the box for non-ASCII
+  characters.
+
 * New `ansi_trimws()` and `ansi_strwrap()` functions, they are similar
   to `trimws()` and `strwrap()` but work on ANSI strings.
 
