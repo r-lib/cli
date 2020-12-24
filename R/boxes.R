@@ -138,7 +138,9 @@ boxx <- function(label, header = "", footer = "",
   chars <- box_styles()[border_style, ]
 
   pad_left <- make_space(padding[2])
-  pad_right <- make_space(content_width - ansi_nchar(label) - padding[2])
+  pad_right <- make_space(
+    content_width - ansi_nchar(label, "width") - padding[2]
+  )
 
   if (header != "") {
     header <- paste0(" ", ansi_strtrim(header, content_width - 2), " ")
