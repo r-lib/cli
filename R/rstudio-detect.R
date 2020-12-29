@@ -94,7 +94,8 @@ rstudio <- local({
       "rstudio_subprocess"
     }
 
-    if (cache) data <<- new
+    installing <- Sys.getenv("R_PACKAGE_DIR", "")
+    if (cache && installing == "") data <<- new
 
     get_caps(new)
   }
