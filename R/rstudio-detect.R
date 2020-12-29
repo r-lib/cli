@@ -60,9 +60,8 @@ rstudio <- local({
       # 2. RStudio console, properly initialized
       "rstudio_console"
 
-    } else if (new$gui %in% c("RStudio", "Rgui")  && ! new$api &&
-               (basename(new$args[1]) == "RStudio" || !new$tty)) {
-      # 3. RStudio console, initilizing
+    } else if (! new$api && basename(new$args[1]) == "RStudio") {
+      # 3. RStudio console, initializing
       cache <- FALSE
       "rstudio_console_starting"
 
