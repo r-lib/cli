@@ -1,11 +1,15 @@
 
+call_if_fun <- function(x) {
+  if (is.function(x)) x() else x
+}
+
 clii__xtext <- function(app, text, .list, indent, padding) {
   style <- app$get_current_style()
   text <- app$inline(text, .list = .list)
   text <- ansi_strwrap(text, width = app$get_width(extra = padding))
 
-  text[1] <- paste0(style$before, text[1])
-  text[length(text)] <- paste0(text[length(text)], style$after)
+  text[1] <- paste0(call_if_fun(style$before), text[1])
+  text[length(text)] <- paste0(text[length(text)], call_if_fun(style$after))
 
   if (!is.null(style$fmt)) text <- style$fmt(text)
   app$cat_ln(text, indent = indent, padding)

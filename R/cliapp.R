@@ -214,11 +214,12 @@ clii_rule <- function(app, left, center, right, id) {
   clii__container_start(app, "rule", id = id)
   on.exit(clii__container_end(app, id), add = TRUE)
   style <- app$get_current_style()
-  width <- console_width() -
-    ansi_nchar(style$before %||% "") - ansi_nchar(style$after %||% "")
+  before <- call_if_fun(style$before) %||% ""
+  after <- call_if_fun(style$after) %||% ""
+  width <- console_width() - ansi_nchar(before) - ansi_nchar(after)
   text <- rule(left, center, right, line = style$`line-type` %||% 1)
-  text[1] <- paste0(style$before, text[1])
-  text[length(text)] <- paste0(text[length(text)], style$after)
+  text[1] <- paste0(before, text[1])
+  text[length(text)] <- paste0(text[length(text)], after)
   if (is.function(style$fmt)) text <- style$fmt(text)
   app$cat_ln(text)
 }
@@ -231,8 +232,10 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   on.exit(clii__container_end(app, id), add = TRUE)
   text <- app$inline(text)
   style <- app$get_current_style()
-  text[1] <- paste0(style$before, text[1])
-  text[length(text)] <- paste0(text[length(text)], style$after)
+  before <- call_if_fun(style$before) %||% ""
+  after <- call_if_fun(style$after) %||% ""
+  text[1] <- paste0(before, text[1])
+  text[length(text)] <- paste0(text[length(text)], after)
   if (is.function(style$fmt)) text <- style$fmt(text)
   if (wrap) text <- ansi_strwrap(text, exdent = 2)
   app$cat_ln(text)

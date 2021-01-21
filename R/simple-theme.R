@@ -90,7 +90,7 @@ simple_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ".alert-danger" = list(
       "background-color" = "red",
       color = "white",
-      before = paste0(symbol$cross, " ")
+      before = function() paste0(symbol$cross, " ")
     ),
 
     ".alert-warning" = list(
@@ -100,14 +100,14 @@ simple_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ),
 
     ".alert-success" = list(
-      before = paste0(col_green(symbol$tick), " ")
+      before = function() paste0(col_green(symbol$tick), " ")
     ),
     ".alert-info" = list(
-      before = paste0(col_cyan(symbol$info), " ")
+      before = function() paste0(col_cyan(symbol$info), " ")
     ),
 
     ".alert-start" = list(
-      before = paste0(symbol$arrow_right, " ")),
+      before = function() paste0(symbol$arrow_right, " ")),
 
     span.pkg = list(
       color = "blue",

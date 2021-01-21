@@ -78,26 +78,32 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       fmt = function(x) paste0(symbol$line, symbol$line, " ", x, " ")),
 
     ".alert" = list(
-      before = paste0(symbol$arrow_right, " ")
+      before = function() paste0(symbol$arrow_right, " ")
     ),
     ".alert-success" = list(
-      before = paste0(col_green(symbol$tick), " ")
+      before = function() paste0(col_green(symbol$tick), " ")
     ),
     ".alert-danger" = list(
-      before = paste0(col_red(symbol$cross), " ")
+      before = function() paste0(col_red(symbol$cross), " ")
     ),
     ".alert-warning" = list(
-      before = paste0(col_yellow("!"), " ")
+      before = function() paste0(col_yellow("!"), " ")
     ),
     ".alert-info" = list(
-      before = paste0(col_cyan(symbol$info), " ")
+      before = function() paste0(col_cyan(symbol$info), " ")
     ),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
     li = list("padding-left" = 2),
-    ul = list("list-style-type" = symbol$bullet, "padding-left" = 0),
-    "ul ul" = list("list-style-type" = symbol$circle, "padding-left" = 2),
-    "ul ul ul" = list("list-style-type" = symbol$line),
+    ul = list(
+      "list-style-type" = function() symbol$bullet,
+      "padding-left" = 0
+    ),
+    "ul ul" = list(
+      "list-style-type" = function() symbol$circle,
+      "padding-left" = 2
+    ),
+    "ul ul ul" = list("list-style-type" = function() symbol$line),
 
     "ul ul" = list("padding-left" = 2),
     "ul dl" = list("padding-left" = 2),
@@ -110,10 +116,14 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 
     blockquote = list("padding-left" = 4L, "padding-right" = 10L,
                       "font-style" = "italic", "margin-top" = 1L,
-                      "margin-bottom" = 1L, before = symbol$dquote_left,
-                      after = symbol$dquote_right),
-    "blockquote cite" = list(before = paste0(symbol$em_dash, " "),
-                             "font-style" = "italic", "font-weight" = "bold"),
+                      "margin-bottom" = 1L,
+                      before = function() symbol$dquote_left,
+                      after = function() symbol$dquote_right),
+    "blockquote cite" = list(
+      before = function() paste0(symbol$em_dash, " "),
+      "font-style" = "italic",
+      "font-weight" = "bold"
+    ),
 
     .code = list(fmt = format_code(dark)),
     .code.R = list(fmt = format_r_code(dark)),

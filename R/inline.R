@@ -5,8 +5,8 @@ if (getRversion() >= "2.15.1") globalVariables("app")
 
 inline_generic <- function(app, x, style) {
   vec_style <- attr(x, "cli_style")
-  before <- vec_style$before %||% style$before
-  after <- vec_style$after %||% style$after
+  before <- call_if_fun(vec_style$before) %||% call_if_fun(style$before)
+  after <- call_if_fun(vec_style$after) %||% call_if_fun(style$after)
   fmt <- vec_style$fmt %||% style$fmt
   xx <- paste0(before, x, after)
   if (!is.null(fmt)) xx <- vcapply(xx, fmt)

@@ -161,7 +161,7 @@ clii__item_text <- function(app, type, name, cnt_id, text, .list) {
   cnt_style <- app$styles[[cnt_id]]
 
   head <- if (type == "ul") {
-    paste0(style$`list-style-type` %||% "*", " ")
+    paste0(call_if_fun(style$`list-style-type`) %||% "*", " ")
   } else if (type == "ol") {
     res <- paste0(cnt_style$start %||% 1L, ". ")
     app$styles[[cnt_id]]$start <- (cnt_style$start %||% 1L) + 1L
