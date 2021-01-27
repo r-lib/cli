@@ -66,3 +66,22 @@ test_that("user's override", {
     stop_app()
   })
 })
+
+test_that("theme does not precompute Unicode symbols", {
+  withr::local_options(cli.unicode = TRUE, cli.num_colors = 256L)
+  start_app()
+  msg <- NULL
+  withCallingHandlers(
+    cli_alert_success("ok"),
+    cliMessage = function(m) msg <<- m
+  )
+  expect_true(ansi_has_any(msg$message))
+
+  msg2 <- NULL
+  withr::local_options(cli.unicode = FALSE, cli.num_colors = 1L)
+  withCallingHandlers(
+    cli_alert_success("ok2"),
+    cliMessage = function(m) msg2 <<- m
+  )
+  expect_equal(msg2$message, "v ok2\n")
+})
