@@ -26,6 +26,8 @@
 #' 1. If the `crayon.enabled` option is set to `FALSE`, 1L is returned.
 #'    (This is for compatibility with code that uses the crayon package.)
 #' 1. If the `crayon.enabled` option is set to `TRUE` and the
+#'    `crayon.colors` option is not set, then 8L is returned.
+#' 1. If the `crayon.enabled` option is set to `TRUE` and the
 #'    `crayon.colors` option is also set, then the latter is returned.
 #'    (This is for compatibility with code that uses the crayon package.)
 #' 1. If the `NO_COLOR` environment variable is set, then 1L is returned.
@@ -100,6 +102,9 @@ num_ansi_colors <- function(stream = "auto") {
   if (!is.null(cray_opt_has) && !isTRUE(cray_opt_has)) return(1L)
   if (isTRUE(cray_opt_has) && !is.null(cray_opt_num)) {
     return(as.integer(cray_opt_num))
+  }
+  if (isTRUE(cray_opt_has) && is.null(cray_opt_num)) {
+    return(8L)
   }
 
   # NO_COLOR env var

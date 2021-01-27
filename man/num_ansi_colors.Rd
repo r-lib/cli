@@ -42,6 +42,8 @@ then it is used.
 \item If the \code{crayon.enabled} option is set to \code{FALSE}, 1L is returned.
 (This is for compatibility with code that uses the crayon package.)
 \item If the \code{crayon.enabled} option is set to \code{TRUE} and the
+\code{crayon.colors} option is not set, then 8L is returned.
+\item If the \code{crayon.enabled} option is set to \code{TRUE} and the
 \code{crayon.colors} option is also set, then the latter is returned.
 (This is for compatibility with code that uses the crayon package.)
 \item If the \code{NO_COLOR} environment variable is set, then 1L is returned.
