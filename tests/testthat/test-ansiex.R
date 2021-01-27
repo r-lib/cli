@@ -508,6 +508,13 @@ test_that("ansi_strwrap double width", {
   )
 })
 
+test_that("ansi_strwrap newlines", {
+  expect_equal(
+    ansi_strwrap("\033[32mv\033[39m hello world.\nxxx"),
+    ansi_string("\033[32mv\033[39m hello world. xxx")
+  )
+})
+
 test_that("ansi_strtrim", {
   withr::local_options(c(cli.unicode = FALSE))
   setup_unicode_width_fix()

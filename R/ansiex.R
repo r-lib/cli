@@ -504,7 +504,12 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   # This does not work well, when some space is inside an ANSI tag, and
   # some is outside, but for now, we'll live with this limitation.
   pars <- lapply(pars, function(s) {
-    gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
+    # First replace multiple spaces that are not at the end of a sentence
+    s <- gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
+    # Handle multiple spaces at the end of a sentence
+    s <- gsub("(?<=[.!?])[ \t\n][ \t\n][ \t\n]*", "  ", s, perl = TRUE)
+    # Handle simple space at the end of a sentence
+    gsub("(?<=[.!?])[ \t\n]", " ", s, perl = TRUE)
   })
 
   # Put them back together
