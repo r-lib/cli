@@ -90,7 +90,7 @@ inline_transformer <- local({
       .transformer = inline_transformer,
       .open = paste0("{", envir$marker),
       .close = paste0(envir$marker, "}"),
-      .trim = FALSE
+      .trim = TRUE
     )
 
     inline_collapse(
@@ -112,7 +112,7 @@ clii__inline <- function(app, text, .list) {
       .transformer = inline_transformer,
       .open = paste0("{", t$values$marker),
       .close = paste0(t$values$marker, "}"),
-      .trim = FALSE
+      .trim = TRUE
     )
   })
   paste(out, collapse = "")
@@ -158,7 +158,7 @@ make_cmd_transformer <- function(values) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      out <- glue(text, .envir = envir, .transformer = sys.function(), .trim = FALSE)
+      out <- glue(text, .envir = envir, .transformer = sys.function(), .trim = TRUE)
       paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
     }
   }
@@ -168,7 +168,7 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  pstr <- glue(str, .envir = .envir, .transformer = transformer, .trim = FALSE)
+  pstr <- glue(str, .envir = .envir, .transformer = transformer, .trim = TRUE)
   glue_delay(
     str = post_process_plurals(pstr, values),
     values = values
