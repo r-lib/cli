@@ -72,17 +72,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/faq.html">FAQ</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -95,13 +92,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    </li>
+    <li>
       <a href="../articles/pluralization.html">CLI pluralization</a>
     </li>
     <li>
       <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
-    <li>
-      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
     </li>
     <li>
       <a href="../articles/usethis-ui.html">From usethis::ui functions to cli</a>
@@ -109,13 +106,13 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/r-lib/cli/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -145,6 +142,8 @@
 
 <span class='fu'>boxx</span><span class='op'>(</span>
   <span class='va'>label</span>,
+  header <span class='op'>=</span> <span class='st'>""</span>,
+  footer <span class='op'>=</span> <span class='st'>""</span>,
   border_style <span class='op'>=</span> <span class='st'>"single"</span>,
   padding <span class='op'>=</span> <span class='fl'>1</span>,
   margin <span class='op'>=</span> <span class='fl'>0</span>,
@@ -164,6 +163,16 @@
       <td><p>Label to show, a character vector. Each element will be
 in a new line. You can color it using the <code>col_*</code>, <code>bg_*</code> and
 <code>style_*</code> functions, see <a href='ansi-styles.html'>ansi-styles</a> and the examples below.</p></td>
+    </tr>
+    <tr>
+      <th>header</th>
+      <td><p>Text to show on top border of the box. If too long,
+it will be cut.</p></td>
+    </tr>
+    <tr>
+      <th>footer</th>
+      <td><p>Text to show on the bottom border of the box. If too long,
+it will be cut.</p></td>
     </tr>
     <tr>
       <th>border_style</th>
@@ -213,7 +222,7 @@ will be used in <code><a href='make_ansi_style.html'>make_ansi_style()</a></code
     </tr>
     <tr>
       <th>width</th>
-      <td><p>Width of the screen, defaults to <code><a href='https://rdrr.io/r/base/options.html'>getOption("width")</a></code>.</p></td>
+      <td><p>Width of the screen, defaults to <code><a href='console_width.html'>console_width()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -311,9 +320,9 @@ which makes the boxes ugly.</p>
 <span class='co'>## Backgorund color</span>
 <span class='fu'>boxx</span><span class='op'>(</span><span class='st'>"Hello there!"</span>, padding <span class='op'>=</span> <span class='fl'>1</span>, background_col <span class='op'>=</span> <span class='st'>"brown"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ┌──────────────────┐
-#&gt; │</span><span style='background-color: #BB0000;'>                  </span><span>│
-#&gt; │</span><span style='background-color: #BB0000;'>   Hello there!   </span><span>│
-#&gt; │</span><span style='background-color: #BB0000;'>                  </span><span>│
+#&gt; │</span><span style='background-color: #AF0000;'>                  </span><span>│
+#&gt; │</span><span style='background-color: #AF0000;'>   Hello there!   </span><span>│
+#&gt; │</span><span style='background-color: #AF0000;'>                  </span><span>│
 #&gt; └──────────────────┘</div><div class='input'><span class='fu'>boxx</span><span class='op'>(</span><span class='st'>"Hello there!"</span>, padding <span class='op'>=</span> <span class='fl'>1</span>, background_col <span class='op'>=</span> <span class='va'>bg_red</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ┌──────────────────┐
 #&gt; │</span><span style='background-color: #BB0000;'>                  </span><span>│
@@ -366,12 +375,12 @@ which makes the boxes ugly.</p>
   border_col <span class='op'>=</span> <span class='st'>"tomato3"</span>,
   background_col<span class='op'>=</span><span class='st'>"darkolivegreen"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>                                ╭───────────────╮</span><span>
-#&gt;                                 </span><span style='color: #BB0000;'>│</span><span style='background-color: #000000;'>               </span><span style='color: #BB0000;'>│</span><span>
-#&gt;                                 </span><span style='color: #BB0000;'>│</span><span style='background-color: #000000;'>   </span><span style='color: #BBBBBB;background-color: #000000;'>★ Hello ★</span><span style='background-color: #000000;'>   </span><span style='color: #BB0000;'>│</span><span>
-#&gt;                                 </span><span style='color: #BB0000;'>│</span><span style='background-color: #000000;'>   </span><span style='color: #BBBBBB;background-color: #000000;'>  there!</span><span style='background-color: #000000;'>    </span><span style='color: #BB0000;'>│</span><span>
-#&gt;                                 </span><span style='color: #BB0000;'>│</span><span style='background-color: #000000;'>               </span><span style='color: #BB0000;'>│</span><span>
-#&gt; </span><span style='color: #BB0000;'>                                ╰───────────────╯</span><span></div></span></pre>
+</div><div class='output co'>#&gt; </span><span style='color: #D75F5F;'>                                ╭───────────────╮</span><span>
+#&gt;                                 </span><span style='color: #D75F5F;'>│</span><span style='background-color: #5F875F;'>               </span><span style='color: #D75F5F;'>│</span><span>
+#&gt;                                 </span><span style='color: #D75F5F;'>│</span><span style='background-color: #5F875F;'>   </span><span style='color: #BBBBBB;background-color: #5F875F;'>★ Hello ★</span><span style='background-color: #5F875F;'>   </span><span style='color: #D75F5F;'>│</span><span>
+#&gt;                                 </span><span style='color: #D75F5F;'>│</span><span style='background-color: #5F875F;'>   </span><span style='color: #BBBBBB;background-color: #5F875F;'>  there!</span><span style='background-color: #5F875F;'>    </span><span style='color: #D75F5F;'>│</span><span>
+#&gt;                                 </span><span style='color: #D75F5F;'>│</span><span style='background-color: #5F875F;'>               </span><span style='color: #D75F5F;'>│</span><span>
+#&gt; </span><span style='color: #D75F5F;'>                                ╰───────────────╯</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
