@@ -109,7 +109,7 @@ list_spinners <- function() {
 #' sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading {spin}")
 #' fun_with_spinner3 <- function() {
 #'   lapply(1:100, function(x) { sp3$spin(); Sys.sleep(0.05) })
-#'   sp2$finish()
+#'   sp3$finish()
 #' }
 #' ansi_with_hidden_cursor(fun_with_spinner3())
 #' ```
