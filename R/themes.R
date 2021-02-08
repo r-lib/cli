@@ -256,10 +256,10 @@ create_formatter <- function(x) {
 #' @importFrom utils modifyList
 
 merge_embedded_styles <- function(old, new) {
-  # before and after is not inherited,
+  # before and after is not inherited, fmt is not inherited, either
   # side margins are additive, class mappings are merged
   # rest is updated, counter is reset
-  old$before <- old$after <- NULL
+  old$before <- old$after <- old$fmt <- NULL
 
   top <- new$`margin-top` %||% 0L
   bottom <- new$`margin-bottom` %||% 0L

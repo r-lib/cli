@@ -26,3 +26,11 @@ test_that("headers", {
     expect_equal(ansi_strip(out), "\n100. header: foobar\n\n")
   })
 })
+
+test_that("issue #218", {
+  out <- capt0(cli_h1("one {1} two {2} three {3}"))
+  expect_match(ansi_strip(out), "one 1 two 2 three 3")
+
+  out <- capt0(cli_h2("one {1} two {2} three {3}"))
+  expect_match(ansi_strip(out), "one 1 two 2 three 3")
+})

@@ -4,6 +4,9 @@
 * ANSI color support detection works correctly now in older RStudio,
   and also on older R versions.
 
+* `cli_h1()`, `cli_h2()` and `cli_h3()` now work with multiple glue
+  substitutions (#218).
+
 # cli 2.3.0
 
 * `boxx()` now correctly calculates the width of the box for non-ASCII
