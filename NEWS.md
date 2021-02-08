@@ -1,6 +1,8 @@
 
 # development version
 
+* ANSI color support detection works correctly now in older RStudio.
+
 # cli 2.3.0
 
 * `boxx()` now correctly calculates the width of the box for non-ASCII
