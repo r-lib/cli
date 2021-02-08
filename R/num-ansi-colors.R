@@ -150,6 +150,7 @@ num_ansi_colors <- function(stream = "auto") {
   if (!is_std) return(1L)
 
   # Otherwise use/set the cache
+  if (is.null(clienv$num_colors)) clienv$num_colors <- list()
   clienv$num_colors[[std]] <- clienv$num_colors[[std]] %||% detect_tty_colors()
   clienv$num_colors[[std]]
 }

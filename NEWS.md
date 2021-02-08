@@ -1,7 +1,8 @@
 
 # development version
 
-* ANSI color support detection works correctly now in older RStudio.
+* ANSI color support detection works correctly now in older RStudio,
+  and also on older R versions.
 
 # cli 2.3.0
 
