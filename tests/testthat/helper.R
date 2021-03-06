@@ -105,7 +105,7 @@ fallback <- function(bx, mode) {
 }
 
 chartr <- function(old, new, x) {
-  assertthat::assert_that(
+  stopifnot(
     is.character(old),
     is.character(new),
     is.character(x),

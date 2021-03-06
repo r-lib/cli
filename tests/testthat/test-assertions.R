@@ -9,12 +9,16 @@ test_that("is_string", {
 
   for (p in strings) {
     expect_true(is_string(p))
-    expect_silent(assert_that(is_string(p)))
+    expect_silent(stopifnot(is_string(p)))
   }
 
   for (n in not_strings) {
     expect_false(is_string(n))
-    expect_error(assert_that(is_string(n)), "is not a string")
+    expect_error(
+      stopifnot(is_string(n)),
+      "is_string(n) is not TRUE",
+      fixed = TRUE
+    )
   }
 })
 
@@ -22,9 +26,12 @@ test_that("is_border_style", {
   expect_true(is_border_style(rownames(box_styles())[1]))
   expect_false(is_border_style("blahblahxxx"))
 
-  expect_silent(assert_that(is_border_style(rownames(box_styles())[1])))
-  expect_error(assert_that(is_border_style("blahblahxxx")),
-               "not a border style")
+  expect_silent(stopifnot(is_border_style(rownames(box_styles())[1])))
+  expect_error(
+    stopifnot(is_border_style("blahblahxxx")),
+    "is_border_style(\"blahblahxxx\") is not TRUE",
+    fixed = TRUE
+  )
 })
 
 test_that("is_padding_or_margin", {
@@ -35,12 +42,15 @@ test_that("is_padding_or_margin", {
 
   for (g in good) {
     expect_true(is_padding_or_margin(g))
-    expect_silent(assert_that(is_padding_or_margin(g)))
+    expect_silent(stopifnot(is_padding_or_margin(g)))
   }
   for (b in bad) {
     expect_false(is_padding_or_margin(b))
-    expect_error(assert_that(is_padding_or_margin(b)),
-                 "must be an integer of length one or four")
+    expect_error(
+      stopifnot(is_padding_or_margin(b)),
+      "is_padding_or_margin(b) is not TRUE",
+      fixed = TRUE
+    )
   }
 })
 
@@ -50,12 +60,15 @@ test_that("is_col", {
 
   for (g in good) {
     expect_true(is_col(g))
-    expect_silent(assert_that(is_col(g)))
+    expect_silent(stopifnot(is_col(g)))
   }
   for (b in bad) {
     expect_false(is_col(b))
-    expect_error(assert_that(is_col(b)),
-                 "must be a color name, or an `ansi_style`")
+    expect_error(
+      stopifnot(is_col(b)),
+      "is_col(b) is not TRUE",
+      fixed = TRUE
+    )
   }
 })
 
@@ -67,12 +80,16 @@ test_that("is_count", {
 
   for (c in counts) {
     expect_true(is_count(c))
-    expect_silent(assert_that(is_count(c)))
+    expect_silent(stopifnot(is_count(c)))
   }
 
   for (n in not_counts) {
     expect_false(is_count(n))
-    expect_error(assert_that(is_count(n)), "must be a count")
+    expect_error(
+      stopifnot(is_count(n)),
+      "is_count(n) is not TRUE",
+      fixed = TRUE
+    )
   }
 })
 

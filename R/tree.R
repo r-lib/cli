@@ -104,7 +104,7 @@
 
 tree <- function(data, root = data[[1]][[1]], style = NULL,
                  width = console_width(), trim = FALSE) {
-  assert_that(
+  stopifnot(
     is.data.frame(data), ncol(data) >= 2,
     is_string(root),
     is.null(style) || (is_tree_style(style)),

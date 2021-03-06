@@ -30,7 +30,7 @@ usethis::use_data(spinners, internal = TRUE)
 #' get_spinner("shark")
 
 get_spinner <- function(which = NULL) {
-  assert_that(is.null(which) || is_string(which))
+  stopifnot(is.null(which) || is_string(which))
 
   if (is.null(which)) {
     which <- if (is_utf8_output()) "dots" else "line"
@@ -121,7 +121,7 @@ make_spinner <- function(which = NULL, stream = "auto", template = "{spin}",
                          static = c("dots", "print", "print_line",
                                     "silent")) {
 
-  assert_that(
+  stopifnot(
     inherits(stream, "connection") || is_string(stream),
     is_string(template))
 
@@ -252,7 +252,7 @@ print.cli_spinner <- function(x, ...) {
 #' }
 
 demo_spinners <- function(which = NULL) {
-  assert_that(is.null(which) || is.character(which))
+  stopifnot(is.null(which) || is.character(which))
 
   all <- list_spinners()
   which <- which %||% all
