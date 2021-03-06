@@ -106,9 +106,11 @@ boxx <- function(label, header = "", footer = "",
   label <- apply_style(as.character(label), col)
   widest <- max(ansi_nchar(label, "width"), 0)
 
-  assert_that(is_border_style(border_style))
-  assert_that(is_padding_or_margin(padding))
-  assert_that(is_padding_or_margin(margin))
+  stopifnot(
+    is_border_style(border_style),
+    is_padding_or_margin(padding),
+    is_padding_or_margin(margin)
+  )
   float <- match.arg(float)
   align <- match.arg(align)
 

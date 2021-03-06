@@ -98,7 +98,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
   try_silently(center <- as.character(center))
   try_silently(right <- as.character(right))
 
-  assert_that(
+  stopifnot(
     is_string(left),
     is_string(center),
     is_string(right),
