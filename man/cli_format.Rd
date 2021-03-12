@@ -45,5 +45,5 @@ cli_text("{.val {nums}}")
 cli_end(divid)
 }
 \seealso{
-cli_vec
+\code{\link[=cli_vec]{cli_vec()}}
 }

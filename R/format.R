@@ -14,7 +14,7 @@
 #' @param ... Additional arguments for methods.
 #'
 #' @export
-#' @seealso cli_vec
+#' @seealso [cli_vec()]
 #' @examples
 #' things <- c(rep("this", 3), "that")
 #' cli_format(things)
@@ -76,7 +76,7 @@ cli_format.numeric <- function(x, style = list(), ...) {
 #' [glue::glue_collapse()]. See an example below.
 #'
 #' @export
-#' @seealso cli_format
+#' @seealso [cli_format()]
 #' @examples
 #' v <- cli_vec(
 #'   c("foo", "bar", "foobar"),

@@ -32,5 +32,5 @@ v <- cli_vec(
 cli_text("My list: {v}.")
 }
 \seealso{
-cli_format
+\code{\link[=cli_format]{cli_format()}}
 }
