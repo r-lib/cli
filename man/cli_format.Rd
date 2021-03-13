@@ -30,7 +30,7 @@ of \code{expr}, before styling and collapsing it.
 }
 \details{
 It is possible to define new S3 methods for \code{cli_format} and then
-these will be used automatically for \verb{\{.cal ...\}} expressions.
+these will be used automatically for \verb{\{.val ...\}} expressions.
 }
 \examples{
 things <- c(rep("this", 3), "that")

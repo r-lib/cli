@@ -6,7 +6,7 @@
 #' of `expr`, before styling and collapsing it.
 #'
 #' It is possible to define new S3 methods for `cli_format` and then
-#' these will be used automatically for `{.cal ...}` expressions.
+#' these will be used automatically for `{.val ...}` expressions.
 #'
 #' @param x The object to format.
 #' @param style List of formatting options, see the individual methods
