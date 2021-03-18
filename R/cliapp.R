@@ -237,6 +237,8 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   text[1] <- paste0(before, text[1])
   text[length(text)] <- paste0(text[length(text)], after)
   if (is.function(style$fmt)) text <- style$fmt(text)
-  if (wrap) text <- ansi_strwrap(text, exdent = 2)
+  if (wrap) {
+    text <- ansi_strwrap(text, exdent = ansi_nchar(before, "width"))
+  }
   app$cat_ln(text)
 }
