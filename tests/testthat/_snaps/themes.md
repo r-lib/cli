@@ -4,14 +4,11 @@
       cli_par(class = "green")
       cli_text(lorem_ipsum())
     Message <cliMessage>
-      [32m[32mEsse ipsum irure exercitation consectetur sunt sint eu minim quis commodo[32m[39m
-      [32m[32mcillum. Sunt dolore veniam cillum cupidatat incididunt laboris dolor elit culpa[32m[39m
-      [32m[32melit. Duis pariatur culpa id nisi laboris duis incididunt laboris eiusmod velit[32m[39m
-      [32m[32meu. Nulla anim anim nulla ullamco irure nostrud incididunt qui magna sint aute[32m[39m
-      [32m[32mad nulla anim. Incididunt proident aliquip do aliqua sint deserunt irure quis[32m[39m
-      [32m[32msint elit. Minim pariatur ad pariatur ex occaecat quis esse aliqua[32m[39m
-      [32m[32mreprehenderit in do aute elit. Consectetur sunt mollit labore aliquip voluptate[32m[39m
-      [32m[32mofficia mollit in ex esse.[32m[39m
+      [32m[32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[32m[39m
+      [32m[32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[32m[39m
+      [32m[32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[32m[39m
+      [32m[32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[32m[39m
+      [32m[32mexercitation non ipsum.[32m[39m
     Code
       cli_end()
     Message <cliMessage>

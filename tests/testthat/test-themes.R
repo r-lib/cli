@@ -4,6 +4,7 @@ on.exit(stop_app(), add = TRUE)
 
 test_that("add/remove/list themes", {
   local_cli_config(num_colors = 256L)
+  withr::local_rng_version("3.5.0")
   withr::local_seed(24)
 
   id <- default_app()$add_theme(list(".green" = list(color = "green")))
