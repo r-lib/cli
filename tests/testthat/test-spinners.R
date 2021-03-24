@@ -1,6 +1,4 @@
 
-context("spinners")
-
 test_that("get_spinner", {
   if (is_utf8_output()) {
     expect_equal(get_spinner()$name, "dots")

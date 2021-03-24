@@ -1,6 +1,4 @@
 
-context("make_ansi_style")
-
 test_that("make_style without name", {
   pink <- make_ansi_style("pink")
   expect_true(inherits(pink, "ansi_style"))

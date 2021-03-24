@@ -1,6 +1,4 @@
 
-context("custom-handler")
-
 test_that("custom handler works", {
   conds <- list()
   withr::with_options(

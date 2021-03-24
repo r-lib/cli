@@ -136,7 +136,9 @@ clii_init <- function(app, theme, user_theme, output) {
   app$output <- output
   app$styles <- NULL
 
-  app$add_theme(builtin_theme())
+  if (Sys.getenv("CLI_NO_BUILTIN_THEME", "") != "true") {
+    app$add_theme(builtin_theme())
+  }
   app$add_theme(theme)
   app$add_theme(user_theme)
 
