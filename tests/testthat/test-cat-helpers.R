@@ -18,26 +18,26 @@ test_that("cat_line", {
   })
 })
 
-test_that("cat_bullet", {
+test_that_cli(configs = c("plain", "unicode"), "cat_bullet", {
   expect_snapshot({
     cat_bullet(letters[1:5])
   })
 })
 
-test_that("cat_boxx", {
+test_that_cli(configs = c("plain", "unicode"), "cat_boxx", {
   expect_snapshot({
     cat_boxx("foo")
   })
 })
 
-test_that("cat_rule", {
+test_that_cli(configs = c("plain", "unicode"), "cat_rule", {
   expect_snapshot(local({
     withr::local_options(cli.width = 20)
     cat_rule("title")
   }))
 })
 
-test_that("cat_print", {
+test_that_cli(configs = c("plain", "unicode"), "cat_print", {
   expect_snapshot({
     cat_print(boxx(""))
   })

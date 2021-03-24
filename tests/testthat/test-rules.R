@@ -1,5 +1,5 @@
 
-test_that("make_line", {
+test_that_cli("make_line", {
 
   expect_equal(make_line(1, "-"), "-")
   expect_equal(make_line(0, "-"), "")
@@ -135,7 +135,7 @@ test_that("line_col", {
   )
 })
 
-test_that("get_line_char", {
+test_that_cli("get_line_char", {
   expect_equal(get_line_char(1), cli::symbol$line)
   expect_equal(get_line_char(2), cli::symbol$double_line)
 

@@ -2,9 +2,8 @@
 start_app()
 on.exit(stop_app(), add = TRUE)
 
-test_that("ul", {
+test_that_cli(configs = c("plain", "unicode"), "ul", {
   expect_snapshot(local({
-    cli_div(theme = list(ul = list("list-style-type" = "*")))
     lid <- cli_ul()
     cli_li("foo")
     cli_li(c("bar", "foobar"))
@@ -12,7 +11,7 @@ test_that("ul", {
   }))
 })
 
-test_that("ol", {
+test_that_cli(configs = c("plain", "unicode"), "ol", {
   expect_snapshot(local({
     cli_div(theme = list(ol = list()))
     lid <- cli_ol()
@@ -22,11 +21,10 @@ test_that("ol", {
   }))
 })
 
-test_that("ul ul", {
+test_that_cli(configs = c("plain", "unicode"), "ul ul", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        ul = list("list-style-type" = "*"),
         "ul ul" = list("list-style-type" = "-", "margin-left" = 2)
       )
     )
@@ -41,11 +39,10 @@ test_that("ul ul", {
   }))
 })
 
-test_that("ul ol", {
+test_that_cli(configs = c("plain", "unicode"), "ul ol", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        ul = list("list-style-type" = "*"),
         li = list("margin-left" = 2)
       )
     )
@@ -60,7 +57,7 @@ test_that("ul ol", {
   }))
 })
 
-test_that("ol ol", {
+test_that_cli(configs = c("plain", "unicode"), "ol ol", {
   expect_snapshot(local({
     cli_div(
       theme = list(
@@ -79,11 +76,11 @@ test_that("ol ol", {
   }))
 })
 
-test_that("ol ul", {
+test_that_cli(configs = c("plain", "unicode"), "ol ul", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        ul = list("list-style-type" = "*", "margin-left" = 2)
+        ul = list("margin-left" = 2)
       )
     )
     lid <- cli_ol()
@@ -97,15 +94,16 @@ test_that("ol ul", {
   }))
 })
 
-test_that("starting with an item", {
+test_that_cli(configs = c("plain", "unicode"), "starting with an item", {
   expect_snapshot(local({
-    cli_div(theme = list(ul = list("list-style-type" = "*")))
     cli_li("foo")
     cli_li(c("bar", "foobar"))
+    cli_end()
+    cli_end()
   }))
 })
 
-test_that("ol, with first item", {
+test_that_cli(configs = c("plain", "unicode"), "ol, with first item", {
   expect_snapshot(local({
     cli_div(theme = list(ol = list()))
     lid <- cli_ol("foo", .close = FALSE)
@@ -114,16 +112,15 @@ test_that("ol, with first item", {
   }))
 })
 
-test_that("ul, with first item", {
+test_that_cli(configs = c("plain", "unicode"), "ul, with first item", {
   expect_snapshot(local({
-    cli_div(theme = list(ul = list("list-style-type" = "*")))
     lid <- cli_ul("foo", .close = FALSE)
     cli_li(c("bar", "foobar"))
     cli_end(lid)
   }))
 })
 
-test_that("dl", {
+test_that_cli(configs = c("plain", "unicode"), "dl", {
   expect_snapshot(local({
     cli_div(theme = list(ul = list()))
     lid <- cli_dl()
@@ -133,7 +130,7 @@ test_that("dl", {
   }))
 })
 
-test_that("dl dl", {
+test_that_cli(configs = c("plain", "unicode"), "dl dl", {
   expect_snapshot(local({
     cli_div(
       theme = list(
@@ -151,7 +148,7 @@ test_that("dl dl", {
   }))
 })
 
-test_that("dl ol", {
+test_that_cli(configs = c("plain", "unicode"), "dl ol", {
   expect_snapshot(local({
     cli_div(
       theme = list(
@@ -169,11 +166,10 @@ test_that("dl ol", {
   }))
 })
 
-test_that("dl ul", {
+test_that_cli(configs = c("plain", "unicode"), "dl ul", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        ul = list("list-style-type" = "*"),
         li = list("margin-left" = 2)
       )
     )
@@ -188,7 +184,7 @@ test_that("dl ul", {
   }))
 })
 
-test_that("ol dl", {
+test_that_cli(configs = c("plain", "unicode"), "ol dl", {
   expect_snapshot(local({
     cli_div(
       theme = list(
@@ -206,11 +202,10 @@ test_that("ol dl", {
   }))
 })
 
-test_that("ul dl", {
+test_that_cli(configs = c("plain", "unicode"), "ul dl", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        ul = list("list-style-type" = "*"),
         li = list("margin-left" = 2)
       )
     )
@@ -225,7 +220,7 @@ test_that("ul dl", {
   }))
 })
 
-test_that("dl, with first item", {
+test_that_cli(configs = c("plain", "unicode"), "dl, with first item", {
   expect_snapshot(local({
     cli_div(theme = list(ul = list()))
     lid <- cli_dl(c(this = "foo"), .close = FALSE)

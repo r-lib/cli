@@ -42,9 +42,8 @@ test_that("collapsing a cli_vec", {
   })
 })
 
-test_that("collapsing a cli_vec with styling", {
+test_that_cli(configs = c("plain", "ansi"), "collapsing a cli_vec with styling", {
   expect_snapshot(local({
-    local_cli_config(num_colors = 256L)
     cli_div(theme = list(body = list(vec_sep = " ... ")))
     pkgs <- cli_vec(
       paste0("pkg", 1:5),

@@ -44,11 +44,22 @@
     Message <cliMessage>
       Packages: pkg1 & pkg2 & pkg3 & pkg4 & pkg5.
 
-# collapsing a cli_vec with styling
+# collapsing a cli_vec with styling [plain]
 
     Code
       local({
-        local_cli_config(num_colors = 256L)
+        cli_div(theme = list(body = list(vec_sep = " ... ")))
+        pkgs <- cli_vec(paste0("pkg", 1:5), style = list(vec_sep = " & ", vec_last = " & ",
+          color = "blue"))
+        cli_text("Packages: {pkgs}.")
+      })
+    Message <cliMessage>
+      Packages: pkg1 & pkg2 & pkg3 & pkg4 & pkg5.
+
+# collapsing a cli_vec with styling [ansi]
+
+    Code
+      local({
         cli_div(theme = list(body = list(vec_sep = " ... ")))
         pkgs <- cli_vec(paste0("pkg", 1:5), style = list(vec_sep = " & ", vec_last = " & ",
           color = "blue"))

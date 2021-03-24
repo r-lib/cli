@@ -2,9 +2,8 @@
 start_app()
 on.exit(stop_app(), add = TRUE)
 
-test_that("headers", {
+test_that_cli("headers", {
   expect_snapshot(local({
-    local_cli_config(num_colors = 256L)
     cli_div(class = "testcli", theme = test_style())
     cli_h1("HEADER")
     cli_h2("Header")

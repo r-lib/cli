@@ -4,7 +4,7 @@ withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
 start_app()
 on.exit(stop_app(), add = TRUE)
 
-test_that("inline classes", {
+test_that_cli(config = c("plain", "ansi"), "inline classes", {
   classes <- c(
     "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
     "email", "url", "var", "envvar")
@@ -24,7 +24,6 @@ test_that("inline classes", {
     )
 
     cli_div(theme = special_style)
-    local_cli_config(num_colors = 256L)
     txt <- glue::glue("This is {.<class> it} really",
                       .open = "<", .close = ">")
     cli_text(txt)

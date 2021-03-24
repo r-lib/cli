@@ -15,23 +15,20 @@ test_that_cli("success", {
   }))
 })
 
-test_that("danger", {
+test_that_cli("danger", {
   expect_snapshot(local({
-    cli_div(theme = list(".alert-danger" = list(before = "DANGER! ")))
     cli_alert_danger("wow")
   }))
 })
 
-test_that("warning", {
+test_that_cli("warning", {
   expect_snapshot(local({
-    cli_div(theme = list(".alert-warning" = list(before = "WARNING! ")))
     cli_alert_warning("wow")
   }))
 })
 
-test_that("info", {
+test_that_cli("info", {
   expect_snapshot(local({
-    cli_div(theme = list(".alert-info" = list(before = "INFO! ")))
     cli_alert_info("wow")
   }))
 })

@@ -1,4 +1,23 @@
-# inline classes
+# inline classes [plain]
+
+    Code
+      invisible(lapply(classes, do))
+    Message <cliMessage>
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+      This is <<<it>>> really
+
+# inline classes [ansi]
 
     Code
       invisible(lapply(classes, do))

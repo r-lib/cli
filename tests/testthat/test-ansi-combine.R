@@ -13,8 +13,7 @@ test_that("one style", {
   )
 })
 
-test_that("style objects", {
-  local_cli_config(num_colors = 256L)
+test_that_cli(configs = c("plain", "ansi"), "style objects", {
   expect_equal(
     combine_ansi_styles(col_red, style_bold)("blah"),
     col_red(style_bold("blah"))
@@ -25,8 +24,7 @@ test_that("style objects", {
   )
 })
 
-test_that("create styles on the fly", {
-  local_cli_config(num_colors = 256L)
+test_that_cli(configs = c("plain", "ansi"), "create styles on the fly", {
   expect_equal(
     combine_ansi_styles("darkolivegreen", style_bold)("blah"),
     make_ansi_style("darkolivegreen")((style_bold("blah")))

@@ -1,5 +1,5 @@
 
-test_that("tree", {
+test_that_cli("tree", {
   data <- data.frame(
     stringsAsFactors = FALSE,
     package = c("processx", "backports", "assertthat", "Matrix",
@@ -41,10 +41,9 @@ test_that("tree", {
   )
 
   expect_warning(tree(data), "Endless loop found in tree: a -> b -> d -> a")
-
 })
 
-test_that("trimming", {
+test_that_cli("trimming", {
 
   pkgdeps <- list(
     "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",

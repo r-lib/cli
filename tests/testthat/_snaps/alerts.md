@@ -44,33 +44,111 @@
     Message <cliMessage>
       [32m✔[39m wow
 
-# danger
+# danger [plain]
 
     Code
       local({
-        cli_div(theme = list(`.alert-danger` = list(before = "DANGER! ")))
         cli_alert_danger("wow")
       })
     Message <cliMessage>
-      DANGER! wow
+      x wow
 
-# warning
+# danger [ansi]
 
     Code
       local({
-        cli_div(theme = list(`.alert-warning` = list(before = "WARNING! ")))
+        cli_alert_danger("wow")
+      })
+    Message <cliMessage>
+      [31mx[39m wow
+
+# danger [unicode]
+
+    Code
+      local({
+        cli_alert_danger("wow")
+      })
+    Message <cliMessage>
+      ✖ wow
+
+# danger [fancy]
+
+    Code
+      local({
+        cli_alert_danger("wow")
+      })
+    Message <cliMessage>
+      [31m✖[39m wow
+
+# warning [plain]
+
+    Code
+      local({
         cli_alert_warning("wow")
       })
     Message <cliMessage>
-      WARNING! wow
+      ! wow
 
-# info
+# warning [ansi]
 
     Code
       local({
-        cli_div(theme = list(`.alert-info` = list(before = "INFO! ")))
+        cli_alert_warning("wow")
+      })
+    Message <cliMessage>
+      [33m![39m wow
+
+# warning [unicode]
+
+    Code
+      local({
+        cli_alert_warning("wow")
+      })
+    Message <cliMessage>
+      ! wow
+
+# warning [fancy]
+
+    Code
+      local({
+        cli_alert_warning("wow")
+      })
+    Message <cliMessage>
+      [33m![39m wow
+
+# info [plain]
+
+    Code
+      local({
         cli_alert_info("wow")
       })
     Message <cliMessage>
-      INFO! wow
+      i wow
+
+# info [ansi]
+
+    Code
+      local({
+        cli_alert_info("wow")
+      })
+    Message <cliMessage>
+      [36mi[39m wow
+
+# info [unicode]
+
+    Code
+      local({
+        cli_alert_info("wow")
+      })
+    Message <cliMessage>
+      ℹ wow
+
+# info [fancy]
+
+    Code
+      local({
+        cli_alert_info("wow")
+      })
+    Message <cliMessage>
+      [36mℹ[39m wow
 

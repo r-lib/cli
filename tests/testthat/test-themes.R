@@ -2,8 +2,7 @@
 start_app()
 on.exit(stop_app(), add = TRUE)
 
-test_that("add/remove/list themes", {
-  local_cli_config(num_colors = 256L)
+test_that_cli("add/remove/list themes", {
   withr::local_rng_version("3.5.0")
   withr::local_seed(24)
 
