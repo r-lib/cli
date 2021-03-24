@@ -221,10 +221,47 @@ NULL
 #' properties are supported to insert text before and after the
 #' content of the element.
 #'
-#' More properties might be adder later.
+#' The current list of properties:
 #'
-#' Please see the example themes and the source code for now for the
-#' details.
+#' * `after`: A string literal to insert after the element. It can also be
+#'   a function that returns a string literal. Supported by all inline
+#'   elements, list items, alerts and rules.
+#' * `background-color`: An R color name, or HTML hexadecimal color.
+#'   It can be applied to most elements (inline elements, rules, text,
+#'   etc.), but the background of containers is not colored properly
+#'   currently.
+#' * `before`: A string literal to insert before the element. It can also be
+#'   a function that returns a string literal. Supported by all inline
+#'   elements, list items, alerts and rules.
+#' * `class-map`: Its value can be a named list, and it specifies how
+#'   R (S3) class names are mapped to cli class names. E.g.
+#'   `list(fs_path = "file")` specifies that `fs_path` objects (from the fs
+#'   package) should always print as `.file` objects in cli.
+#' * `color`: Text color, an R color name or a HTML hexadecimal color. It
+#'   can be applied to most elements that are printed.
+#' * `digits`: Number of digits after the decimal point for numeric inline
+#'   element of class `.val`.
+#' * `fmt`: Generic formatter function that takes an input text and returns
+#'   formatted text. Can be applied to most elements.
+#' * `font-style`: If `"italic"` then the text is printed as cursive.
+#' * `font-weight`: If `"bold"`, then the text is printed in boldface.
+#' * `line-type`: Line type for [cli_rule()].
+#' * `list-style-type`: String literal or functions that returns a string
+#'   literal, to be used as a list item marker in un-ordered lists.
+#' * `margin-bottom`, `margin-left`, `margin-right`, `margin-top`: Margins.
+#' * `padding-left`, `padding-right`: This is currently used the same way
+#'   as the margins, but this might change later.
+#' * `start`: Integer number, the first element in an ordered list.
+#' * `string_quote`: Quoting character for inline elements of class `.val`.
+#' * `text-decoration`: If `"underline"`, then underlined text is created.
+#' * `transform`: A function to call on gluw substitutions, before
+#'   collapsing them.
+#' * `vec_last`: The last seperator when collapsing vectors.
+#' * `vec_sep`: The separator to use when collapsing vectors.
+#'
+#' More properties might be adder later. If you think that a properly is
+#' not applied properly to an alement, please open an issue about it in
+#' the cli issue tracker.
 #'
 #' @section Examples:
 #' Color of headings, that are only active in paragraphs with an
