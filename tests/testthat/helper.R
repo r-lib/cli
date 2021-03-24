@@ -3,6 +3,33 @@ rule_class <- function(x) {
   structure(x, class = c("rule", "ansi_string", "character"))
 }
 
+test_that_cli <- function(desc, code) {
+  code <- substitute(code)
+
+  configs <- list(
+    list(id = "plain",   unicode = FALSE, num_colors =   1, locale = NULL),
+    list(id = "ansi",    unicode = FALSE, num_colors = 256, locale = NULL),
+    list(id = "unicode", unicode = TRUE,  num_colors =   1, locale = NULL),
+    list(id = "fancy",   unicode = TRUE,  num_colors = 256, locale = NULL)
+  )
+
+  lapply(configs, function(conf) {
+    code2 <- substitute({
+      testthat::local_reproducible_output(
+        crayon = num_colors > 1,
+        unicode = unicode
+      )
+      code_
+    }, c(conf, list(code_ = code)))
+    desc2 <- paste0(desc, " [", conf$id, "]")
+    test <- substitute(
+      test_that(desc, code),
+      list(desc = desc2, code = code2)
+    )
+    eval(test)
+  })
+}
+
 capture_messages <- function(expr) {
   msgs <- character()
   i <- 0
@@ -18,7 +45,7 @@ capt <- function(expr, print_it = TRUE) {
 }
 
 capt0 <- function(expr, strip_style = FALSE) {
-  out <- capture_messages(expr)    
+  out <- capture_messages(expr)
   if  (strip_style) ansi_strip(out) else out
 }
 

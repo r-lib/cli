@@ -9,9 +9,8 @@ test_that("generic", {
   }))
 })
 
-test_that("success", {
+test_that_cli("success", {
   expect_snapshot(local({
-    cli_div(theme = list(".alert-success" = list(before = "SUCCESS! ")))
     cli_alert_success("wow")
   }))
 })

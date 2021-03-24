@@ -8,15 +8,41 @@
     Message <cliMessage>
       GENERIC! wow
 
-# success
+# success [plain]
 
     Code
       local({
-        cli_div(theme = list(`.alert-success` = list(before = "SUCCESS! ")))
         cli_alert_success("wow")
       })
     Message <cliMessage>
-      SUCCESS! wow
+      v wow
+
+# success [ansi]
+
+    Code
+      local({
+        cli_alert_success("wow")
+      })
+    Message <cliMessage>
+      [32mv[39m wow
+
+# success [unicode]
+
+    Code
+      local({
+        cli_alert_success("wow")
+      })
+    Message <cliMessage>
+      ✔ wow
+
+# success [fancy]
+
+    Code
+      local({
+        cli_alert_success("wow")
+      })
+    Message <cliMessage>
+      [32m✔[39m wow
 
 # danger
 
