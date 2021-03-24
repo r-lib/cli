@@ -1,4 +1,6 @@
 
+withr::local_envvar(CLI_NO_BUILTIN_THEME = "true")
+withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
 start_app()
 on.exit(stop_app(), add = TRUE)
 
@@ -63,17 +65,5 @@ test_that("S3 class is used for styling", {
     )
     obj <- structure("yep", class = "foo")
     cli_text("This is {obj}.")
-  }))
-})
-
-test_that("quoting phrases that don't start or end with letter or number", {
-  expect_snapshot(local({
-    x0 <- "good-name"
-    cli_text("The name is {.file {x0}}.")
-
-    x <- "weird-name "
-    cli_text("The name is {.file {x}}.")
-    cli_text("The name is {.path {x}}.")
-    cli_text("The name is {.email {x}}.")
   }))
 })
