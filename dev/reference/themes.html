@@ -203,9 +203,47 @@ left, right, top and bottom margins, background and foreground colors,
 bold and italic fonts, underlined text. The <code>before</code> and <code>after</code>
 properties are supported to insert text before and after the
 content of the element.</p>
-<p>More properties might be adder later.</p>
-<p>Please see the example themes and the source code for now for the
-details.</p>
+<p>The current list of properties:</p><ul>
+<li><p><code>after</code>: A string literal to insert after the element. It can also be
+a function that returns a string literal. Supported by all inline
+elements, list items, alerts and rules.</p></li>
+<li><p><code>background-color</code>: An R color name, or HTML hexadecimal color.
+It can be applied to most elements (inline elements, rules, text,
+etc.), but the background of containers is not colored properly
+currently.</p></li>
+<li><p><code>before</code>: A string literal to insert before the element. It can also be
+a function that returns a string literal. Supported by all inline
+elements, list items, alerts and rules.</p></li>
+<li><p><code>class-map</code>: Its value can be a named list, and it specifies how
+R (S3) class names are mapped to cli class names. E.g.
+<code><a href='https://rdrr.io/r/base/list.html'>list(fs_path = "file")</a></code> specifies that <code>fs_path</code> objects (from the fs
+package) should always print as <code>.file</code> objects in cli.</p></li>
+<li><p><code>color</code>: Text color, an R color name or a HTML hexadecimal color. It
+can be applied to most elements that are printed.</p></li>
+<li><p><code>digits</code>: Number of digits after the decimal point for numeric inline
+element of class <code>.val</code>.</p></li>
+<li><p><code>fmt</code>: Generic formatter function that takes an input text and returns
+formatted text. Can be applied to most elements.</p></li>
+<li><p><code>font-style</code>: If <code>"italic"</code> then the text is printed as cursive.</p></li>
+<li><p><code>font-weight</code>: If <code>"bold"</code>, then the text is printed in boldface.</p></li>
+<li><p><code>line-type</code>: Line type for <code><a href='cli_rule.html'>cli_rule()</a></code>.</p></li>
+<li><p><code>list-style-type</code>: String literal or functions that returns a string
+literal, to be used as a list item marker in un-ordered lists.</p></li>
+<li><p><code>margin-bottom</code>, <code>margin-left</code>, <code>margin-right</code>, <code>margin-top</code>: Margins.</p></li>
+<li><p><code>padding-left</code>, <code>padding-right</code>: This is currently used the same way
+as the margins, but this might change later.</p></li>
+<li><p><code>start</code>: Integer number, the first element in an ordered list.</p></li>
+<li><p><code>string_quote</code>: Quoting character for inline elements of class <code>.val</code>.</p></li>
+<li><p><code>text-decoration</code>: If <code>"underline"</code>, then underlined text is created.</p></li>
+<li><p><code>transform</code>: A function to call on gluw substitutions, before
+collapsing them.</p></li>
+<li><p><code>vec_last</code>: The last seperator when collapsing vectors.</p></li>
+<li><p><code>vec_sep</code>: The separator to use when collapsing vectors.</p></li>
+</ul>
+
+<p>More properties might be adder later. If you think that a properly is
+not applied properly to an alement, please open an issue about it in
+the cli issue tracker.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
 
     
