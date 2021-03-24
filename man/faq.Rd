@@ -23,4 +23,13 @@ If you want to do this for testthat tests, then consider using the 3rd
 edition on testthat, which does turn off ANSI styling automatically
 inside \code{test_that()}.
 }
+
+\subsection{cli does not show the output before \code{file.choose()}}{
+
+Try calling \code{flush.console()} to flush the console, before
+\code{file.choose()}. If flushing does not work and you are in RStudio, then
+it is probably this RStudio bug:
+\url{https://github.com/rstudio/rstudio/issues/8040} See more details at
+\url{https://github.com/r-lib/cli/issues/151}
+}
 }
