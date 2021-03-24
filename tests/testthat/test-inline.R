@@ -1,8 +1,6 @@
 
-context("cli inline")
-
-setup(start_app())
-teardown(stop_app())
+start_app()
+on.exit(stop_app(), add = TRUE)
 
 test_that("inline classes", {
   classes <- c(
@@ -24,94 +22,58 @@ test_that("inline classes", {
     )
 
     cli_div(theme = special_style)
-    withr::with_options(list(cli.num_colors = 256L), {
-      txt <- glue::glue("This is {.<class> it} really",
-                        .open = "<", .close = ">")
-      out <- capt0(cli_text(txt))
-      expect_true(ansi_has_any(out))
-      expect_match(ansi_strip(out), "<<<it>>>", info = class)
-      expect_match(
-        out,
-        attr(make_ansi_style("cyan"), "_styles")[[1]]$open,
-        fixed = TRUE,
-        info = class
-      )
-    })
+    local_cli_config(num_colors = 256L)
+    txt <- glue::glue("This is {.<class> it} really",
+                      .open = "<", .close = ">")
+    cli_text(txt)
   }
 
-  lapply(classes, do)
+  expect_snapshot(
+    invisible(lapply(classes, do))
+  )
 })
 
 test_that("{{ and }} can be used for comments", {
-  out <- capt0(cli_text("Escaping {{ works"))
-  expect_equal(out, "Escaping { works\n")
-
-  out <- capt0(cli_text("Escaping }} works"))
-  expect_equal(out, "Escaping } works\n")
-
-  out <- capt0(cli_text("Escaping {{ and }} works"))
-  expect_equal(out, "Escaping { and } works\n")
-
-  out <- capt0(cli_text("Escaping {{{{ works"))
-  expect_equal(out, "Escaping {{ works\n")
-
-  out <- capt0(cli_text("Escaping }}}} works"))
-  expect_equal(out, "Escaping }} works\n")
-
-  out <- capt0(cli_text("Escaping {{{{ and }} works"))
-  expect_equal(out, "Escaping {{ and } works\n")
-
-  out <- capt0(cli_text("Escaping {{{{ and }}}} works"))
-  expect_equal(out, "Escaping {{ and }} works\n")
-
-  out <- capt0(cli_text("Escaping {{ and }}}} works"))
-  expect_equal(out, "Escaping { and }} works\n")
+  expect_snapshot(local({
+    cli_text("Escaping {{ works")
+    cli_text("Escaping }} works")
+    cli_text("Escaping {{ and }} works")
+    cli_text("Escaping {{{{ works")
+    cli_text("Escaping }}}} works")
+    cli_text("Escaping {{{{ and }} works")
+    cli_text("Escaping {{{{ and }}}} works")
+    cli_text("Escaping {{ and }}}} works")
+  }))
 })
 
 test_that("no glue substitution in expressions that evaluate to a string", {
-  msg <- "Message with special characters like } { }} {{"
-  out <- capt0(cli_text("{msg}"))
-  expect_equal(out, paste0(msg, "\n"))
-
-  out <- capt0(cli_text("{.emph {msg}}"), strip_style = TRUE)
-  expect_equal(out, paste0(msg, "\n"))
+  expect_snapshot(local({
+    msg <- "Message with special characters like } { }} {{"
+    cli_text("{msg}")
+    cli_text("{.emph {msg}}")
+  }))
 })
 
 test_that("S3 class is used for styling", {
-  cli_div(theme = list(
-    body = list("class-map" = list("foo" = "bar")),
-    ".bar" = list(before = "::"))
-  )
-
-  obj <- structure("yep", class = "foo")
-  out <- capt0(cli_text("This is {obj}."))
-  expect_match(out, "::yep")
+  expect_snapshot(local({
+    cli_div(
+      theme = list(
+        body = list("class-map" = list("foo" = "bar")),
+        ".bar" = list(before = "::"))
+    )
+    obj <- structure("yep", class = "foo")
+    cli_text("This is {obj}.")
+  }))
 })
 
 test_that("quoting phrases that don't start or end with letter or number", {
-  x0 <- "good-name"
-  out <- capt0(cli_text("The name is {.file {x0}}."))
-  expect_equal(
-    ansi_strip(out),
-    "The name is good-name.\n"
-  )
+  expect_snapshot(local({
+    x0 <- "good-name"
+    cli_text("The name is {.file {x0}}.")
 
-  x <- "weird-name "
-  out <- capt0(cli_text("The name is {.file {x}}."))
-  expect_equal(
-    ansi_strip(out),
-    "The name is 'weird-name '.\n"
-  )
-
-  out <- capt0(cli_text("The name is {.path {x}}."))
-  expect_equal(
-    ansi_strip(out),
-    "The name is 'weird-name '.\n"
-  )
-
-  out <- capt0(cli_text("The name is {.email {x}}."))
-  expect_equal(
-    ansi_strip(out),
-    "The name is 'weird-name '.\n"
-  )
+    x <- "weird-name "
+    cli_text("The name is {.file {x}}.")
+    cli_text("The name is {.path {x}}.")
+    cli_text("The name is {.email {x}}.")
+  }))
 })

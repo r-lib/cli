@@ -1,6 +1,6 @@
 
-setup(start_app())
-teardown(stop_app())
+start_app()
+on.exit(stop_app(), add = TRUE)
 
 test_that("cliapp output auto", {
   skip_on_cran()
@@ -87,7 +87,10 @@ test_that("message if there is a sink", {
   }
   withCallingHandlers(
     fun(),
-    cliMessage = function(m) msgs <<- c(msgs, list(m))
+    cliMessage = function(m) {
+      msgs <<- c(msgs, list(m))
+      invokeRestart("muffleMessage")
+    }
   )
   expect_equal(msgs[[1]]$message, "Hola\n")
   expect_equal(length(readLines(tmp)), 0)
@@ -104,7 +107,10 @@ test_that("message if there is a sink", {
   }
   withCallingHandlers(
     fun(),
-    cliMessage = function(m) msgs <<- c(msgs, list(m))
+    cliMessage = function(m) {
+      msgs <<- c(msgs, list(m))
+      invokeRestart("muffleMessage")
+    }
   )
   expect_equal(msgs[[1]]$message, "Hola\n")
   expect_equal(readLines(tmp), "this")
@@ -121,7 +127,10 @@ test_that("message if there is a sink", {
   }
   withCallingHandlers(
     fun(),
-    cliMessage = function(m) msgs <<- c(msgs, list(m))
+    cliMessage = function(m) {
+      msgs <<- c(msgs, list(m))
+      invokeRestart("muffleMessage")
+    }
   )
   expect_equal(msgs[[1]]$message, "Hola\n")
   expect_equal(length(readLines(tmp)), 0)
@@ -138,7 +147,10 @@ test_that("message if there is a sink", {
   }
   withCallingHandlers(
     fun(),
-    cliMessage = function(m) msgs <<- c(msgs, list(m))
+    cliMessage = function(m) {
+      msgs <<- c(msgs, list(m))
+      invokeRestart("muffleMessage")
+    }
   )
   expect_equal(msgs[[1]]$message, "Hola\n")
   expect_equal(readLines(tmp), "this")

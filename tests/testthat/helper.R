@@ -17,102 +17,42 @@ capt <- function(expr, print_it = TRUE) {
   paste(capture.output(pr(expr)), collapse = "\n")
 }
 
-capt00 <- function(expr) {
-  capt(expr, print_it = FALSE)
-}
-
 capt0 <- function(expr, strip_style = FALSE) {
   out <- capture_messages(expr)    
   if  (strip_style) ansi_strip(out) else out
 }
 
-capt_cat <- function(expr) {
-  paste(capture.output(cat(expr)), collapse = "\n")
-}
-
-## This function always needs to return the same as the actual correct output
-## on the current platform, with the current settings.
-## There are four cases:
-## 1. Platform is UTF-8 and cli.unicode = TRUE
-##    There is nothing we need to do
-## 2. Platform is UTF-8 and cli.unicode = FALSE
-##    Need to convert to non-unicode alternative characters
-## 3. Platform is not UTF-8 and cli.unicode = TRUE
-##    Need to use enc2native to convert to platform replacement characters
-## 4. Platform is not UTF-8 and cli.unicode = FALSE
-##    Need to convert to non-unicode alternative characters
-
-rebox <- function(..., mode = c("box", "tree")) {
-  mode <- match.arg(mode)
-  bx <- as.character(c(...))
-  ## Older versions of testthat do not set the encoding on the
-  ## parsed files, so we set it manually here
-  Encoding(bx) <- "UTF-8"
-  bx <- paste(bx, collapse = "\n")
-
-  utf8 <- l10n_info()$`UTF-8`
-  on <- is_utf8_output()
-
-  if (utf8 && on) {
-    bx
-  } else if (utf8 && !on) {
-    fallback(bx, mode)
-  } else if (!utf8 && on) {
-    enc2native(bx)
-  } else {
-    fallback(bx, mode)
-  }
-}
-
-fallback <- function(bx, mode) {
-
-  if (mode == "box") {
-    ## single
-    bx <- chartr(
-      c("\u250c", "\u2510", "\u2518", "\u2514", "\u2502", "\u2500"),
-      c("+", "+", "+", "+", "|", "-"), bx)
-
-    ## double
-    bx <- chartr(
-      c("\u2554", "\u2557", "\u255d", "\u255a", "\u2551", "\u2550"),
-      c("+", "+", "+", "+", "|", "-"), bx)
-
-    ## round
-    bx <- chartr(
-      c("\u256d", "\u256e", "\u256f", "\u2570", "\u2502", "\u2500"),
-      c("+", "+", "+", "+", "|", "-"), bx)
-
-    ## single-double
-    bx <- chartr(
-      c("\u2553", "\u2556", "\u255c", "\u2559", "\u2551", "\u2500"),
-      c("+", "+", "+", "+", "|", "-"), bx)
-
-    ## double-single
-    bx <- chartr(
-      c("\u2552", "\u2555", "\u255b", "\u2558", "\u2502", "\u2550"),
-      c("+", "+", "+", "+", "|", "-"), bx)
-
-    ## Bullets
-    bx <- chartr("\u25CF", "*", bx)
-
-  } else if (mode == "tree") {
-    bx <- chartr(
-      c("\u2500", "\u2502", "\u2514", "\u251c"),
-      c("-", "|", "\\", "+"), bx)
-  }
-
-  bx
-}
-
-chartr <- function(old, new, x) {
-  stopifnot(
-    is.character(old),
-    is.character(new),
-    is.character(x),
-    length(old) == length(new)
+local_cli_config <- function(unicode = FALSE, dynamic = FALSE,
+                             ansi = FALSE, num_colors = 1,
+                             .local_envir = parent.frame()) {
+  withr::local_options(
+    cli.dynamic = dynamic,
+    cli.ansi = ansi,
+    cli.unicode = unicode,
+    crayon.enabled = num_colors > 1,
+    crayon.colors = num_colors,
+    .local_envir = .local_envir
   )
-  for (i in seq_along(old)) {
-    x <- gsub(old[i], new[i], x, fixed = TRUE)
-  }
-  x
+  withr::local_envvar(
+    PKG_OMIT_TIMES = "true",
+    PKG_OMIT_SIZES = "true",
+    .local_envir = .local_envir
+  )
+}
+
+test_style <- function() {
+  list(
+    ".testcli h1" = list(
+      "font-weight" = "bold",
+      "font-style" = "italic",
+      "margin-top" = 1,
+      "margin-bottom" = 1),
+    ".testcli h2" = list(
+      "font-weight" = "bold",
+      "margin-top" = 1,
+      "margin-bottom" = 1),
+    ".testcli h3" = list(
+      "text-decoration" = "underline",
+      "margin-top" = 1)
+  )
 }

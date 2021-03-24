@@ -1,6 +1,4 @@
 
-context("assertions")
-
 test_that("is_string", {
 
   strings <- list("foo", "", "111", "1", "-", "NA")

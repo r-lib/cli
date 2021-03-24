@@ -1,36 +1,23 @@
 
-context("cli headers")
-
-setup(start_app())
-teardown(stop_app())
+start_app()
+on.exit(stop_app(), add = TRUE)
 
 test_that("headers", {
-  cli_div(class = "testcli", theme = test_style())
-
-  withr::with_options(list(cli.num_colors = 256L), {
-    out <- capt0(cli_h1("HEADER"))
-    expect_true(ansi_has_any(out))
-    expect_equal(ansi_strip(out), "\nHEADER\n\n")
-
-    out <- capt0(cli_h2("Header"))
-    expect_true(ansi_has_any(out))
-    expect_equal(ansi_strip(out), "Header\n\n")
-
-    out <- capt0(cli_h3("Header"))
-    expect_true(ansi_has_any(out))
-    expect_equal(ansi_strip(out), "Header\n")
-
+  expect_snapshot(local({
+    local_cli_config(num_colors = 256L)
+    cli_div(class = "testcli", theme = test_style())
+    cli_h1("HEADER")
+    cli_h2("Header")
+    cli_h3("Header")
     x <- "foobar"
     xx <- 100
-    out <- capt0(cli_h2("{xx}. header: {x}"))
-    expect_equal(ansi_strip(out), "\n100. header: foobar\n\n")
-  })
+    cli_h2("{xx}. header: {x}")
+  }))
 })
 
 test_that("issue #218", {
-  out <- capt0(cli_h1("one {1} two {2} three {3}"))
-  expect_match(ansi_strip(out), "one 1 two 2 three 3")
-
-  out <- capt0(cli_h2("one {1} two {2} three {3}"))
-  expect_match(ansi_strip(out), "one 1 two 2 three 3")
+  expect_snapshot({
+    cli_h1("one {1} two {2} three {3}")
+    cli_h2("one {1} two {2} three {3}")
+  })
 })

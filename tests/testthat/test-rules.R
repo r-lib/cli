@@ -1,6 +1,4 @@
 
-context("rules")
-
 test_that("make_line", {
 
   expect_equal(make_line(1, "-"), "-")
@@ -155,11 +153,6 @@ test_that("get_line_char", {
 })
 
 test_that("print.rule", {
-  withr::with_options(
-    list(cli.width = 20), {
-      out <- capt(rule("foo"))
-      exp <- rebox("── foo ─────────────")
-      expect_equal(out, exp)
-    }
-  )
+  withr::local_options(cli.width = 20)
+  expect_snapshot(rule("foo"))
 })

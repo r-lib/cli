@@ -1,6 +1,4 @@
 
-context("ansi colors")
-
 op <- options(cli.num_colors = 256L)
 on.exit(options(op))
 

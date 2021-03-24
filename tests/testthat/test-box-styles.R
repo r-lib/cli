@@ -1,6 +1,4 @@
 
-context("box styles")
-
 test_that("list_border_styles", {
   expect_silent(bs <- list_border_styles())
   expect_true(is.character(bs))

@@ -1,6 +1,4 @@
 
-context("utils")
-
 test_that("make_space", {
   expect_equal(make_space(0), "")
   expect_equal(make_space(1), " ")
@@ -27,12 +25,9 @@ test_that("viapply", {
 })
 
 test_that("ruler", {
-  out <- capt00(ruler(20))
-  exp <- rebox(
-    "----+----1----+----2",
-    "12345678901234567890"
+  expect_snapshot(
+    ruler(20)
   )
-  expect_equal(ansi_strip(out), exp)
 })
 
 test_that("rpad", {
