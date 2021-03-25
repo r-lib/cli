@@ -59,7 +59,7 @@ test_that("S3 class is used for styling", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        body = list("class-map" = list("foo" = "bar")),
+        div = list("class-map" = list("foo" = "bar")),
         ".bar" = list(before = "::"))
     )
     obj <- structure("yep", class = "foo")

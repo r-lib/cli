@@ -94,25 +94,24 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
-    li = list("padding-left" = 2),
     ul = list(
-      "list-style-type" = function() symbol$bullet,
-      "padding-left" = 0
+      "list-style-type" = function() symbol$bullet
     ),
     "ul ul" = list(
-      "list-style-type" = function() symbol$circle,
-      "padding-left" = 2
+      "list-style-type" = function() symbol$circle
     ),
     "ul ul ul" = list("list-style-type" = function() symbol$line),
 
-    "ul ul" = list("padding-left" = 2),
-    "ul dl" = list("padding-left" = 2),
-    "ol ol" = list("padding-left" = 2),
-    "ol ul" = list("padding-left" = 2),
-    "ol dl" = list("padding-left" = 2),
-    "dl ol" = list("padding-left" = 2),
-    "dl ul" = list("padding-left" = 2),
-    "dl dl" = list("padding-left" = 2),
+    # This means that list elements have a margin, if they are nested
+    "ul ul li" = list("margin-left" = 2),
+    "ul ol li" = list("margin-left" = 2),
+    "ul dl li" = list("margin-left" = 2),
+    "ol ul li" = list("margin-left" = 2),
+    "ol ol li" = list("margin-left" = 2),
+    "ol dl li" = list("margin-left" = 2),
+    "ol ul li" = list("margin-left" = 2),
+    "ol ol li" = list("margin-left" = 2),
+    "ol dl li" = list("margin-left" = 2),
 
     blockquote = list("padding-left" = 4L, "padding-right" = 10L,
                       "font-style" = "italic", "margin-top" = 1L,
@@ -364,8 +363,18 @@ match_selector_node <- function(node, cnt) {
 match_selector <- function(sels, cnts) {
   sptr <- length(sels)
   cptr <- length(cnts)
+
+  # Last selector must match the last container
+  if (sptr == 0 || sptr > cptr) return(FALSE)
+  match <- match_selector_node(sels[[sptr]], cnts[[cptr]])
+  if (!match) return (FALSE)
+
+  # Plus the rest should match somehow
+  sptr <- sptr - 1L
+  cptr <- cptr - 1L
   while (sptr != 0L && sptr <= cptr) {
-    if (match_selector_node(sels[[sptr]], cnts[[cptr]])) {
+    match <- match_selector_node(sels[[sptr]], cnts[[cptr]])
+    if (match) {
       sptr <- sptr - 1L
       cptr <- cptr - 1L
     } else {

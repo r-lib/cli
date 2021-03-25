@@ -29,7 +29,7 @@
 
     Code
       local({
-        cli_div(theme = list(body = list(vec_sep = " ... ")))
+        cli_div(theme = list(div = list(vec_sep = " ... ")))
         pkgs <- paste0("pkg", 1:5)
         cli_text("Packages: {.pkg {pkgs}}.")
       })

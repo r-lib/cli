@@ -21,8 +21,7 @@ clii__container_start <- function(app, tag, class = NULL,
   for (t in seq_along(app$themes)) {
     theme <- app$themes[[t]]
     for (i in seq_len(nrow(theme))) {
-      if (is.na(theme$cnt[i]) &&
-          match_selector(theme$parsed[[i]], app$doc)) {
+      if (match_selector(theme$parsed[[i]], app$doc)) {
         app$themes[[t]]$cnt[i] <- id
         new_sels <- modifyList(new_sels, theme$style[[i]])
       }
@@ -180,8 +179,8 @@ clii__item_text <- function(app, type, name, cnt_id, text, .list) {
 
   app$xtext(
     .list = c(list(glue_delay(head)), list(text), .list),
-    indent = - style$`padding-left` %||% 0,
-    padding = cnt_style$`padding-left` %||% 0
+    indent = - (style$`padding-left` %||% 0),
+    padding = (cnt_style$`padding-left` %||% 0)
   )
 }
 

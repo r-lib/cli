@@ -36,7 +36,7 @@ clii__cat_ln <- function(app, lines, indent, padding) {
   style <- app$get_current_style()
 
   ## left margin
-  left <- padding + style$`margin-left` %||% 0 + style$`padding-left` %||% 0
+  left <- padding + (style$`margin-left` %||% 0) + (style$`padding-left` %||% 0)
   if (length(lines) && left) lines <- paste0(strrep(" ", left), lines)
 
   ## indent or negative indent

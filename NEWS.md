@@ -1,6 +1,9 @@
 
 # development version
 
+* Styling is fixed at several places. In particular, nested lists should
+  be now formatted better (#221).
+
 * New `spark_bar()` and `spark_line()` funcions to draw small bar or
   line charts.
 

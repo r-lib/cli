@@ -63,7 +63,7 @@ format.cli_doc <- function(x, ...) {
       if (nz) "<",
       x$tag,
       if (nz) " id=\"", x$id, if (nz) "\"",
-      ifelse (x$class == "", "", paste0("class=\"", x$class, "\"")),
+      ifelse (x$class == "", "", paste0(" class=\"", x$class, "\"")),
       if (nz) ">",
       ifelse (vlapply(x$theme, is.null), "", " +theme")
     )

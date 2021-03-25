@@ -75,7 +75,7 @@
 
     Code
       local({
-        cli_div(theme = list(body = list(`class-map` = list(foo = "bar")), .bar = list(
+        cli_div(theme = list(div = list(`class-map` = list(foo = "bar")), .bar = list(
           before = "::")))
         obj <- structure("yep", class = "foo")
         cli_text("This is {obj}.")
