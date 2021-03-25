@@ -17,6 +17,11 @@
 #'   theme (id of the theme the element added), `styles` (computed styles
 #'   for the element).
 #'
+#' @seealso [cli_sitrep()]. To debug containers, you can set the
+#' `CLI-DEBUG_BAD_END` environment variable to `true`, and then cli will
+#' warn when it cannot find the specified container to close (or any
+#' contained at all).
+#'
 #' @examples
 #' \dontrun{
 #' cli_debug_doc()

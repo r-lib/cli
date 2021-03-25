@@ -40,3 +40,9 @@ cli_end(olid)
 cli_debug_doc()
 }
 }
+\seealso{
+\code{\link[=cli_sitrep]{cli_sitrep()}}. To debug containers, you can set the
+\code{CLI-DEBUG_BAD_END} environment variable to \code{true}, and then cli will
+warn when it cannot find the specified container to close (or any
+contained at all).
+}
