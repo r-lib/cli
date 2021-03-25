@@ -1,6 +1,9 @@
 
 # development version
 
+* New `spark_bar()` and `spark_line()` funcions to draw small bar or
+  line charts.
+
 # cli 2.3.1
 
 * ANSI color support detection works correctly now in older RStudio,
