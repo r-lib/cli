@@ -152,3 +152,13 @@
     Message <cliMessage>
       [36mℹ[39m wow
 
+# before and after can have spaces
+
+    Code
+      local({
+        cli_div(theme = list(.alert = list(before = "x  ", after = "  x")))
+        cli_alert("continuing that first alert", wrap = TRUE)
+      })
+    Message <cliMessage>
+      x  continuing that first alert  x
+

@@ -236,6 +236,8 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   style <- app$get_current_style()
   before <- call_if_fun(style$before) %||% ""
   after <- call_if_fun(style$after) %||% ""
+  before <- gsub(" ", "\u00a0", before)
+  after <- gsub(" ", "\u00a0", after)
   text[1] <- paste0(before, text[1])
   text[length(text)] <- paste0(text[length(text)], after)
   if (is.function(style$fmt)) text <- style$fmt(text)

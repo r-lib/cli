@@ -32,3 +32,10 @@ test_that_cli("info", {
     cli_alert_info("wow")
   }))
 })
+
+test_that("before and after can have spaces", {
+  expect_snapshot(local({
+    cli_div(theme = list(.alert = list(before = "x  ", after = "  x")))
+    cli_alert("continuing that first alert", wrap = TRUE)
+  }))
+})
