@@ -51,7 +51,7 @@ test_that("deep lists ul ol", {
       cli::cli_li(paste0("Level ",2*i))
     }
   }
-  execpt_snapshot(
+  expect_snapshot(
     for (i in 1:4) test_ul_ol(i)
   )
 })

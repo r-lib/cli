@@ -56,3 +56,29 @@
                   1. Level 7
                     - Level 8
 
+# deep lists ul ol
+
+    Code
+      for (i in 1:4) test_ul_ol(i)
+    Message <cliMessage>
+      * Level 1
+        1. Level 2
+      * Level 1
+        1. Level 2
+          ( ) Level 3
+            1. Level 4
+      * Level 1
+        1. Level 2
+          ( ) Level 3
+            1. Level 4
+              - Level 5
+                1. Level 6
+      * Level 1
+        1. Level 2
+          ( ) Level 3
+            1. Level 4
+              - Level 5
+                1. Level 6
+                  - Level 7
+                    1. Level 8
+
