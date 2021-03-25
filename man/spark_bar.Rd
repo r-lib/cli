@@ -30,5 +30,5 @@ spark_bar(seq(0, 1, length = 8))
 spark_bar(c(0, NA, 0.5, NA, 1))
 }
 \seealso{
-\code{\link[=spart_line]{spart_line()}}
+\code{\link[=spark_line]{spark_line()}}
 }

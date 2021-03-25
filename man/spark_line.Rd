@@ -19,5 +19,5 @@ x <- seq(0, 1, length = 10)
 spark_line(x)
 }
 \seealso{
-\code{\link[=spart_line]{spart_line()}}
+\code{\link[=spark_bar]{spark_bar()}}
 }

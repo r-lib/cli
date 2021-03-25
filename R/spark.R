@@ -13,7 +13,7 @@
 #'
 #' @param x A numeric vector between 0 and 1
 #' @export
-#' @seealso [spart_line()]
+#' @seealso [spark_line()]
 #' @examples
 #' x <- seq(0, 1, length = 6)
 #' spark_bar(x)
@@ -65,7 +65,7 @@ spark_bar_chars <- function(x, bars = NULL) {
 #'
 #' @inheritParams spark_bar
 #' @export
-#' @seealso [spart_line()]
+#' @seealso [spark_bar()]
 #' @examples
 #' x <- seq(0, 1, length = 10)
 #' spark_line(x)
