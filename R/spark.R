@@ -7,15 +7,21 @@
 #' In most common fixed width fonts these are rendered wider than regular
 #' characters which means they are not suitable if you need precise alignment.
 #'
+#' You might want to avoid sparklines on non-UTF-8 systems, because they
+#' do not look good. You can use [is_utf8_output()] to test for support
+#' for them.
+#'
 #' @param x A numeric vector between 0 and 1
+#' @export
+#' @seealso [spart_line()]
 #' @examples
 #' x <- seq(0, 1, length = 6)
 #' spark_bar(x)
 #' spark_bar(sample(x))
 #'
-#' # This might work if you're lucky
-#' spark_bar(seq(0, 1, length = 8), safe = FALSE)
+#' spark_bar(seq(0, 1, length = 8))
 #'
+#' # NAs are left out
 #' spark_bar(c(0, NA, 0.5, NA, 1))
 
 spark_bar <- function(x) {
@@ -53,7 +59,13 @@ spark_bar_chars <- function(x, bars = NULL) {
 
 #' Draw a sparkline line graph with Braille characters.
 #'
+#' You might want to avoid sparklines on non-UTF-8 systems, because they
+#' do not look good. You can use [is_utf8_output()] to test for support
+#' for them.
+#'
 #' @inheritParams spark_bar
+#' @export
+#' @seealso [spart_line()]
 #' @examples
 #' x <- seq(0, 1, length = 10)
 #' spark_line(x)
@@ -75,7 +87,7 @@ spark_line <- function(x) {
     bars <- c("_", ",", "-", "^")
     chars <- spark_bar_chars(apply(ind, 1, mean), bars)
   }
-  
+
   structure(
     paste0(chars, collapse = ""),
     class = c("cli_spark_line", "cli_spark")
