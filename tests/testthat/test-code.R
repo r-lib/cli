@@ -1,8 +1,9 @@
 
-setup(start_app())
-teardown(stop_app())
+start_app()
+on.exit(stop_app(), add = TRUE)
 
-test_that("issue #154", {
-  out <- capt0(cli_code("a\nb\nc"))
-  expect_equal(out, "a\nb\nc\n")
+test_that_cli("issue #154", {
+  expect_snapshot({
+    cli_code("a\nb\nc")
+  })
 })

@@ -1,8 +1,8 @@
 
-context("cli status bar")
+start_app()
+on.exit(stop_app(), add = TRUE)
 
-setup(start_app())
-teardown(stop_app())
+# We can't easily use snapshot tests here, because they don't capture \r
 
 test_that("create and clear", {
   f <- function() {

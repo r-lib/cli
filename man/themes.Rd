@@ -66,10 +66,48 @@ bold and italic fonts, underlined text. The \code{before} and \code{after}
 properties are supported to insert text before and after the
 content of the element.
 
-More properties might be adder later.
+The current list of properties:
+\itemize{
+\item \code{after}: A string literal to insert after the element. It can also be
+a function that returns a string literal. Supported by all inline
+elements, list items, alerts and rules.
+\item \code{background-color}: An R color name, or HTML hexadecimal color.
+It can be applied to most elements (inline elements, rules, text,
+etc.), but the background of containers is not colored properly
+currently.
+\item \code{before}: A string literal to insert before the element. It can also be
+a function that returns a string literal. Supported by all inline
+elements, list items, alerts and rules.
+\item \code{class-map}: Its value can be a named list, and it specifies how
+R (S3) class names are mapped to cli class names. E.g.
+\code{list(fs_path = "file")} specifies that \code{fs_path} objects (from the fs
+package) should always print as \code{.file} objects in cli.
+\item \code{color}: Text color, an R color name or a HTML hexadecimal color. It
+can be applied to most elements that are printed.
+\item \code{digits}: Number of digits after the decimal point for numeric inline
+element of class \code{.val}.
+\item \code{fmt}: Generic formatter function that takes an input text and returns
+formatted text. Can be applied to most elements.
+\item \code{font-style}: If \code{"italic"} then the text is printed as cursive.
+\item \code{font-weight}: If \code{"bold"}, then the text is printed in boldface.
+\item \code{line-type}: Line type for \code{\link[=cli_rule]{cli_rule()}}.
+\item \code{list-style-type}: String literal or functions that returns a string
+literal, to be used as a list item marker in un-ordered lists.
+\item \code{margin-bottom}, \code{margin-left}, \code{margin-right}, \code{margin-top}: Margins.
+\item \code{padding-left}, \code{padding-right}: This is currently used the same way
+as the margins, but this might change later.
+\item \code{start}: Integer number, the first element in an ordered list.
+\item \code{string_quote}: Quoting character for inline elements of class \code{.val}.
+\item \code{text-decoration}: If \code{"underline"}, then underlined text is created.
+\item \code{transform}: A function to call on gluw substitutions, before
+collapsing them.
+\item \code{vec_last}: The last seperator when collapsing vectors.
+\item \code{vec_sep}: The separator to use when collapsing vectors.
+}
 
-Please see the example themes and the source code for now for the
-details.
+More properties might be adder later. If you think that a properly is
+not applied properly to an alement, please open an issue about it in
+the cli issue tracker.
 }
 
 \section{Examples}{

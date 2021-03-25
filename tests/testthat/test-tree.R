@@ -1,7 +1,5 @@
 
-context("tree")
-
-test_that("tree", {
+test_that_cli("tree", {
   data <- data.frame(
     stringsAsFactors = FALSE,
     package = c("processx", "backports", "assertthat", "Matrix",
@@ -20,26 +18,10 @@ test_that("tree", {
       c("processx", "R6"), character(0), character(0)
     ))
   )
-  out <- capt(tree(data))
-  exp <- rebox(mode = "tree",
-    "processx",
-    "├─assertthat",
-    "├─crayon",
-    "├─debugme",
-    "│ └─crayon",
-    "└─R6"
-  )
-  expect_equal(out, exp)
 
-  out <- capt(tree(data, root = "desc"))
-  exp <- rebox(mode = "tree",
-    "desc",
-    "├─assertthat",
-    "├─R6",
-    "├─crayon",
-    "└─rprojroot",
-    "  └─backports")
-  expect_equal(out, exp)
+  expect_snapshot(tree(data))
+
+  expect_snapshot(tree(data, root = "desc"))
 
   # Check that trees with apparent circularity error nicely
   data <- data.frame(
@@ -59,10 +41,9 @@ test_that("tree", {
   )
 
   expect_warning(tree(data), "Endless loop found in tree: a -> b -> d -> a")
-
 })
 
-test_that("trimming", {
+test_that_cli("trimming", {
 
   pkgdeps <- list(
     "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",
@@ -103,43 +84,5 @@ test_that("trimming", {
   pkgs$label <- pkgs$name
   pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
 
-  out <- capt(tree(pkgs, trim = TRUE))
-
-  exp <- rebox(mode = "tree",
-    "dplyr@0.8.3",
-    "├─assertthat@0.2.1",
-    "├─glue@1.3.1",
-    "├─magrittr@1.5",
-    "├─R6@2.4.0",
-    "├─Rcpp@1.0.2",
-    "├─rlang@0.4.0",
-    "├─tibble@2.1.3",
-    "│ ├─cli@1.1.0",
-    "│ │ ├─assertthat@0.2.1  (trimmed)",
-    "│ │ └─crayon@1.3.4",
-    "│ ├─crayon@1.3.4  (trimmed)",
-    "│ ├─fansi@0.4.0",
-    "│ ├─pillar@1.4.2",
-    "│ │ ├─cli@1.1.0  (trimmed)",
-    "│ │ ├─crayon@1.3.4  (trimmed)",
-    "│ │ ├─fansi@0.4.0  (trimmed)",
-    "│ │ ├─rlang@0.4.0  (trimmed)",
-    "│ │ ├─utf8@1.1.4",
-    "│ │ └─vctrs@0.2.0",
-    "│ │   ├─backports@1.1.5",
-    "│ │   ├─ellipsis@0.3.0",
-    "│ │   │ └─rlang@0.4.0  (trimmed)",
-    "│ │   ├─digest@0.6.21",
-    "│ │   ├─glue@1.3.1  (trimmed)",
-    "│ │   ├─rlang@0.4.0  (trimmed)",
-    "│ │   └─zeallot@0.1.0",
-    "│ ├─pkgconfig@2.0.3",
-    "│ └─rlang@0.4.0  (trimmed)",
-    "└─tidyselect@0.2.5",
-    "  ├─glue@1.3.1  (trimmed)",
-    "  ├─rlang@0.4.0  (trimmed)",
-    "  └─Rcpp@1.0.2  (trimmed)"
-  )
-
-  expect_equal(out, exp)
+  expect_snapshot(tree(pkgs, trim = TRUE))
 })

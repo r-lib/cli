@@ -1,6 +1,4 @@
 
-context("css parsing")
-
 test_that("parse_selector_node", {
 
   empty <- list(tag = character(), class = character(), id = character())

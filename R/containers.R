@@ -41,15 +41,23 @@ clii__container_start <- function(app, tag, class = NULL,
 #' @importFrom stats na.omit
 
 clii__container_end <- function(app, id) {
+  debug <- is_yes(Sys.getenv("CLI_DEBUG_BAD_END", ""))
+
   ## Defaults to last container
   if (is.null(id) || is.na(id)) id <- last(app$doc)$id
 
   ## Do not remove the <body>
-  if (id == "body") return(invisible(app))
+  if (id == "body") {
+    if (debug) warning("No cli container to close")
+    return(invisible(app))
+  }
 
   ## Do we have 'id' at all?
   wh <- which(vlapply(app$doc, function(x) identical(x$id, id)))[1]
-  if (is.na(wh)) return(invisible(app))
+  if (is.na(wh)) {
+    if (debug) warning("Can't find cli container '", id, "' to close")
+    return(invisible(app))
+  }
 
   ## ids to remove
   del_ids <- unlist(lapply(tail(app$doc, - (wh - 1L)), "[[", "id"))
