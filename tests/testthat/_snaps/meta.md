@@ -154,3 +154,67 @@
       [36mℹ[39m First message
       [32m✔[39m Success!
 
+# substitution [plain]
+
+    Code
+      local({
+        x <- 1:3
+        cli({
+          title <- "My title"
+          cli_h1("Title: {.emph {title}}")
+          cli_text("And {.emph some} more: {.val {x}}")
+        })
+      })
+    Message <cliMessage>
+      
+      -- Title: My title -------------------------------------------------------------
+      And some more: 1, 2, and 3
+
+# substitution [ansi]
+
+    Code
+      local({
+        x <- 1:3
+        cli({
+          title <- "My title"
+          cli_h1("Title: {.emph {title}}")
+          cli_text("And {.emph some} more: {.val {x}}")
+        })
+      })
+    Message <cliMessage>
+      
+      [36m--[39m [1m[1mTitle: [3m[1m[3mMy title[3m[1m[23m[1m[22m [36m-------------------------------------------------------------[39m
+      And [3m[3msome[3m[23m more: [34m[34m1[34m[39m, [34m[34m2[34m[39m, and [34m[34m3[34m[39m
+
+# substitution [unicode]
+
+    Code
+      local({
+        x <- 1:3
+        cli({
+          title <- "My title"
+          cli_h1("Title: {.emph {title}}")
+          cli_text("And {.emph some} more: {.val {x}}")
+        })
+      })
+    Message <cliMessage>
+      
+      ── Title: My title ─────────────────────────────────────────────────────────────
+      And some more: 1, 2, and 3
+
+# substitution [fancy]
+
+    Code
+      local({
+        x <- 1:3
+        cli({
+          title <- "My title"
+          cli_h1("Title: {.emph {title}}")
+          cli_text("And {.emph some} more: {.val {x}}")
+        })
+      })
+    Message <cliMessage>
+      
+      [36m──[39m [1m[1mTitle: [3m[1m[3mMy title[3m[1m[23m[1m[22m [36m─────────────────────────────────────────────────────────────[39m
+      And [3m[3msome[3m[23m more: [34m[34m1[34m[39m, [34m[34m2[34m[39m, and [34m[34m3[34m[39m
+

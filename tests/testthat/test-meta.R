@@ -46,3 +46,14 @@ test_that_cli("meta is single cliMessage", {
 
   expect_equal(length(msgs), 1L)
 })
+
+test_that_cli("substitution", {
+  expect_snapshot(local({
+    x <- 1:3
+    cli({
+      title <- "My title"
+      cli_h1("Title: {.emph {title}}")
+      cli_text("And {.emph some} more: {.val {x}}")
+    })
+  }))
+})
