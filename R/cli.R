@@ -1,4 +1,19 @@
 
+#' @export
+
+cli <- function(expr) {
+  id <- new_uuid()
+  cli_recorded[[id]] <- list()
+  on.exit(rm(id, envir = cli_recorded), add = TRUE)
+  old <- options(cli.record = id)
+  on.exit(options(old), add = TRUE)
+
+  expr
+
+  cond <- cli__message_create("meta", cli_recorded[[id]])
+  cli_message_emit(cond)
+}
+
 #' CLI text
 #'
 #' It is wrapped to the screen width automatically. It may contain inline
@@ -496,7 +511,10 @@ cli_code <- function(lines = NULL, ..., language = "R",
   invisible(id)
 }
 
-cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
+cli_recorded <- new.env(parent = emptyenv())
+
+cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
+                         record = getOption("cli.record")) {
 
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()
 
@@ -509,6 +527,19 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
     }
   }
 
+  cond <- cli__message_create(type, args)
+
+  if (is.null(record)) {
+    cli__message_emit(cond)
+    invisible(args$id)
+
+  } else {
+    cli_recorded[[record]] <- c(cli_recorded, list(cond))
+    invisible(cond)
+  }
+}
+
+cli__message_create <- function(type, args) {
   cond <- list(message = paste("cli message", type),
                type = type, args = args, pid = clienv$pid)
 
@@ -518,14 +549,16 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
     "condition"
   )
 
+  cond
+}
+
+cli__message_emit <- function(cond) {
   withRestarts(
   {
     signalCondition(cond)
     cli__default_handler(cond)
   },
   cli_message_handled = function() NULL)
-
-  invisible(args$id)
 }
 
 cli__default_handler <- function(msg) {
