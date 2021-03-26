@@ -12,6 +12,7 @@ cli <- function(expr) {
 
   cond <- cli__message_create("meta", cli_recorded[[id]])
   cli__message_emit(cond)
+  invisible()
 }
 
 #' CLI text

@@ -24,7 +24,7 @@ clii__get_width <- function(app, extra) {
 }
 
 clii__cat <- function(app, lines) {
-  clii__message(lines, appendLF = FALSE, output = app$output)
+  clii__message(lines, appendLF = FALSE, output = app$output, signal = app$signal)
 }
 
 clii__cat_ln <- function(app, lines, indent, padding) {
@@ -59,7 +59,7 @@ clii__cat_ln <- function(app, lines, indent, padding) {
 clii__vspace <- function(app, n) {
   if (app$margin < n) {
     sp <- strrep("\n", n - app$margin)
-    clii__message(sp, appendLF = FALSE, output = app$output)
+    clii__message(sp, appendLF = FALSE, output = app$output, signal = app$signal)
     app$margin <- n
   }
 }
@@ -78,7 +78,7 @@ get_real_output <- function(output) {
 }
 
 clii__message <- function(..., domain = NULL, appendLF = TRUE,
-                          output = stderr()) {
+                          output = stderr(), signal = TRUE) {
 
   msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
   output <- get_real_output(output)
@@ -86,10 +86,15 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
   # to avoid non-breaking spaces in files, if output is redirected
   msg <- gsub("\u00a0", " ", msg, fixed = TRUE)
 
-  withRestarts(muffleMessage = function() NULL, {
-    cond <- simpleMessage(msg)
-    class(cond) <- c("cliMessage", class(cond))
-    signalCondition(cond)
+  if (identical(signal, FALSE)) {
     cat(msg, file = output, sep = "")
-  })
+
+  } else {
+    withRestarts(muffleMessage = function() NULL, {
+      cond <- simpleMessage(msg)
+      class(cond) <- c("cliMessage", class(cond))
+      signalCondition(cond)
+      cat(msg, file = output, sep = "")
+    })
+  }
 }

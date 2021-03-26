@@ -11,9 +11,20 @@ cliapp <- function(theme = getOption("cli.theme"),
 
     ## Meta
     meta = function(...) {
+      old <- app$output
+      on.exit(app$output <- old, add = TRUE)
+      on.exit(app$signal <- NULL, add = TRUE)
+      out <- rawConnection(raw(1000), open = "w")
+      on.exit(close(out), add = TRUE)
+      app$output <- out
+      app$signal <- FALSE
+
       for (msg in list(...)) {
         do.call(app[[msg$type]], msg$args)
       }
+
+      txt <- rawToChar(rawConnectionValue(out))
+      clii__message(txt, appendLF = FALSE, output = old, signal = TRUE)
     },
 
     ## Themes
