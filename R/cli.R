@@ -4,14 +4,14 @@
 cli <- function(expr) {
   id <- new_uuid()
   cli_recorded[[id]] <- list()
-  on.exit(rm(id, envir = cli_recorded), add = TRUE)
+  on.exit(rm(list = id, envir = cli_recorded), add = TRUE)
   old <- options(cli.record = id)
   on.exit(options(old), add = TRUE)
 
   expr
 
   cond <- cli__message_create("meta", cli_recorded[[id]])
-  cli_message_emit(cond)
+  cli__message_emit(cond)
 }
 
 #' CLI text
@@ -534,7 +534,7 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
     invisible(args$id)
 
   } else {
-    cli_recorded[[record]] <- c(cli_recorded, list(cond))
+    cli_recorded[[record]] <- c(cli_recorded[[record]], list(cond))
     invisible(cond)
   }
 }

@@ -3,8 +3,6 @@
 
 dummy <- function() { }
 
-cli <- NULL
-
 clienv <- new.env()
 clienv$pid <- Sys.getpid()
 

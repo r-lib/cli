@@ -9,6 +9,13 @@ cliapp <- function(theme = getOption("cli.theme"),
     new = function(theme, user_theme, output)
       clii_init(app, theme, user_theme, output),
 
+    ## Meta
+    meta = function(...) {
+      for (msg in list(...)) {
+        do.call(app[[msg$type]], msg$args)
+      }
+    },
+
     ## Themes
     list_themes = function()
       clii_list_themes(app),
