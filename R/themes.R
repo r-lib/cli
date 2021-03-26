@@ -131,6 +131,7 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     span.strong = list("font-weight" = "bold"),
     span.code = theme_code_tick(dark),
 
+    span.q   = list(fmt = quote_weird_name),
     span.pkg = list(color = "blue"),
     span.fn = theme_function(dark),
     span.fun = theme_function(dark),
@@ -153,11 +154,33 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 }
 
 quote_weird_name <- function(x) {
+  x <- gsub(" ", "\u00a0", x)
   x2 <- ansi_strip(x)
-  if (!is_alnum(first_character(x2)) || !is_alnum(last_character(x2))) {
+  wfst <- !is_alnum(first_character(x2))
+  wlst <- !is_alnum(last_character(x2))
+  if (wfst || wlst) {
+    lsp <- leading_space(x2)
+    tsp <- trailing_space(x2)
+    if (nzchar(lsp)) {
+      x <- paste0(
+        bg_grey(lsp),
+        ansi_substr(x, nchar(lsp) + 1, ansi_nchar(x))
+      )
+    }
+    if (nzchar(tsp)) {
+      x <- paste0(
+        ansi_substr(x, 1, ansi_nchar(x) - nchar(tsp)),
+        bg_grey(tsp)
+      )
+    }
     x <- paste0("'", x, "'")
   }
   x
+}
+
+bg_grey <- function(...) {
+  grey <- cli::make_ansi_style("grey", bg = TRUE)
+  grey(...)
 }
 
 detect_dark_theme <- function(dark) {

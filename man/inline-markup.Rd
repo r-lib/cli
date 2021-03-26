@@ -58,6 +58,21 @@ See examples below.
 
 You can simply add new classes by defining them in the theme, and then
 using them, see the example below.
+\subsection{Highlighting weird-looking values}{
+
+Often it is useful to highlight a weird file or path name, e.g. one
+that starts or ends with space characters. The buildin theme does this
+for \code{.file}, \code{.path} and \code{.email} by default. You can highlight
+any string inline by adding the \code{.q} class to it.
+
+The current highlighting algorithm
+\itemize{
+\item adds single quotes to the string if it does not start or end with an
+alphanumeric character, underscore, dot or forward slash.
+\item Highlights the background colors of leading and trailing spaces on
+terminals that support ANSI colors.
+}
+}
 }
 
 \section{Collapsing inline vectors}{

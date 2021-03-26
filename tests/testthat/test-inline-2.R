@@ -14,3 +14,13 @@ test_that_cli(
     }))
   }
 )
+
+test_that_cli(config = c("plain", "ansi"), "quoting weird names, still", {
+  nb <- function(x) gsub("\u00a0", " ", x, fixed = TRUE)
+  expect_snapshot(local({
+    cat_line(nb(quote_weird_name("good")))
+    cat_line(nb(quote_weird_name("  bad")))
+    cat_line(nb(quote_weird_name("bad  ")))
+    cat_line(nb(quote_weird_name("  bad  ")))
+  }))
+})

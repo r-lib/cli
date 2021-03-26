@@ -58,6 +58,19 @@
 #' You can simply add new classes by defining them in the theme, and then
 #' using them, see the example below.
 #'
+#' ## Highlighting weird-looking values
+#'
+#' Often it is useful to highlight a weird file or path name, e.g. one
+#' that starts or ends with space characters. The buildin theme does this
+#' for `.file`, `.path` and `.email` by default. You can highlight
+#' any string inline by adding the `.q` class to it.
+#'
+#' The current highlighting algorithm
+#' * adds single quotes to the string if it does not start or end with an
+#'   alphanumeric character, underscore, dot or forward slash.
+#' * Highlights the background colors of leading and trailing spaces on
+#'   terminals that support ANSI colors.
+#'
 #' @section Collapsing inline vectors:
 #'
 #' When cli performs inline text formatting, it automatically collapses

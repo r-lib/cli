@@ -28,7 +28,37 @@
       })
     Message <cliMessage>
       The name is [34m[34mgood-name[34m[39m.
-      The name is '[34m[34mweird-name [34m[39m'.
-      The name is '[34m[34mweird-name [34m[39m'.
-      The name is '[34m[34mweird-name [34m[39m'.
+      The name is '[34m[34mweird-name[34m[39m[47m [49m'.
+      The name is '[34m[34mweird-name[34m[39m[47m [49m'.
+      The name is '[34m[34mweird-name[34m[39m[47m [49m'.
+
+# quoting weird names, still [plain]
+
+    Code
+      local({
+        cat_line(nb(quote_weird_name("good")))
+        cat_line(nb(quote_weird_name("  bad")))
+        cat_line(nb(quote_weird_name("bad  ")))
+        cat_line(nb(quote_weird_name("  bad  ")))
+      })
+    Output
+      good
+      '  bad'
+      'bad  '
+      '  bad  '
+
+# quoting weird names, still [ansi]
+
+    Code
+      local({
+        cat_line(nb(quote_weird_name("good")))
+        cat_line(nb(quote_weird_name("  bad")))
+        cat_line(nb(quote_weird_name("bad  ")))
+        cat_line(nb(quote_weird_name("  bad  ")))
+      })
+    Output
+      good
+      '[47m  [49mbad'
+      'bad[47m  [49m'
+      '[47m  [49mbad[47m  [49m'
 

@@ -156,9 +156,17 @@ first_character <- function(x) {
 }
 
 is_alnum <- function(x) {
-  x %in% c(letters, LETTERS, 0:9, "/")
+  grepl("^[[:alnum:]/_.]*$", x)
 }
 
 os_type <- function() {
   .Platform$OS.type
+}
+
+leading_space <- function(x) {
+  sub("^([\\s\u00a0]*).*$", "\\1", x, perl = TRUE)
+}
+
+trailing_space <- function(x) {
+  sub("^.*[^\\s\u00a0]([\\s\u00a0]*)$", "\\1", x, perl = TRUE)
 }

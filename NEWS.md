@@ -1,6 +1,9 @@
 
 # development version
 
+* cli now highlights weird names, e.g. path names with leading or
+  trailing space (#227).
+
 * Styling is fixed at several places. In particular, nested lists should
   be now formatted better (#221).
 
