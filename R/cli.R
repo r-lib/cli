@@ -1,4 +1,39 @@
 
+#' Compose multiple cli functions
+#'
+#' `cli()` will record all `cli_*` calls in `expr`, and emit them together
+#' in a single message. This is useful if you want to built a larger
+#' piece of output from multiple `cli_*` calls.
+#'
+#' Use this function to build a more complex piece of CLI that would not
+#' make sense to show in pieces.
+#'
+#' @param expr Expression that contains `cli_*` calls. Their output is
+#' collected and sent as a single message.
+#' @return Nothing.
+#'
+#' @export
+#' @examples
+#' cli({
+#'   cli_h1("Title")
+#'   cli_h2("Subtitle")
+#'   cli_ul(c("this", "that", "end"))
+#' })
+
+cli <- function(expr) {
+  id <- new_uuid()
+  cli_recorded[[id]] <- list()
+  on.exit(rm(list = id, envir = cli_recorded), add = TRUE)
+  old <- options(cli.record = id)
+  on.exit(options(old), add = TRUE)
+
+  expr
+
+  cond <- cli__message_create("meta", cli_recorded[[id]])
+  cli__message_emit(cond)
+  invisible()
+}
+
 #' CLI text
 #'
 #' It is wrapped to the screen width automatically. It may contain inline
@@ -496,7 +531,10 @@ cli_code <- function(lines = NULL, ..., language = "R",
   invisible(id)
 }
 
-cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
+cli_recorded <- new.env(parent = emptyenv())
+
+cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
+                         record = getOption("cli.record")) {
 
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()
 
@@ -509,6 +547,19 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
     }
   }
 
+  cond <- cli__message_create(type, args)
+
+  if (is.null(record)) {
+    cli__message_emit(cond)
+    invisible(args$id)
+
+  } else {
+    cli_recorded[[record]] <- c(cli_recorded[[record]], list(cond))
+    invisible(cond)
+  }
+}
+
+cli__message_create <- function(type, args) {
   cond <- list(message = paste("cli message", type),
                type = type, args = args, pid = clienv$pid)
 
@@ -518,14 +569,16 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL) {
     "condition"
   )
 
+  cond
+}
+
+cli__message_emit <- function(cond) {
   withRestarts(
   {
     signalCondition(cond)
     cli__default_handler(cond)
   },
   cli_message_handled = function() NULL)
-
-  invisible(args$id)
 }
 
 cli__default_handler <- function(msg) {

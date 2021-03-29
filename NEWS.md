@@ -1,6 +1,9 @@
 
 # development version
 
+* New `cli::cli()` function to create a cli message from multiple
+  cli calls (#170).
+
 * cli now highlights weird names, e.g. path names with leading or
   trailing space (#227).
 
