@@ -39,3 +39,14 @@ test_that("before and after can have spaces", {
     cli_alert("continuing that first alert", wrap = TRUE)
   }))
 })
+
+test_that_cli("details", {
+  expect_snapshot(local({
+    x <- 1:5
+    cli_alert("generic", details = c("Note that {x}", "and {.pkg {1:3}}"))
+    cli_alert_success("success", details = c("Note that {x}", "and {.pkg {1:3}}"))
+    cli_alert_danger("danger", details = c("Note that {x}", "and {.pkg {1:3}}"))
+    cli_alert_warning("warning", details = c("Note that {x}", "and {.pkg {1:3}}"))
+    cli_alert_info("info", details = c("Note that {x}", "and {.pkg {1:3}}"))
+  }))
+})

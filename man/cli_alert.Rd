@@ -8,14 +8,22 @@
 \alias{cli_alert_info}
 \title{CLI alerts}
 \usage{
-cli_alert(text, id = NULL, class = NULL, wrap = FALSE, .envir = parent.frame())
+cli_alert(
+  text,
+  id = NULL,
+  class = NULL,
+  wrap = FALSE,
+  .envir = parent.frame(),
+  details = NULL
+)
 
 cli_alert_success(
   text,
   id = NULL,
   class = NULL,
   wrap = FALSE,
-  .envir = parent.frame()
+  .envir = parent.frame(),
+  details = NULL
 )
 
 cli_alert_danger(
@@ -23,7 +31,8 @@ cli_alert_danger(
   id = NULL,
   class = NULL,
   wrap = FALSE,
-  .envir = parent.frame()
+  .envir = parent.frame(),
+  details = NULL
 )
 
 cli_alert_warning(
@@ -31,7 +40,8 @@ cli_alert_warning(
   id = NULL,
   class = NULL,
   wrap = FALSE,
-  .envir = parent.frame()
+  .envir = parent.frame(),
+  details = NULL
 )
 
 cli_alert_info(
@@ -39,7 +49,8 @@ cli_alert_info(
   id = NULL,
   class = NULL,
   wrap = FALSE,
-  .envir = parent.frame()
+  .envir = parent.frame(),
+  details = NULL
 )
 }
 \arguments{
@@ -52,6 +63,11 @@ cli_alert_info(
 \item{wrap}{Whether to auto-wrap the text of the alert.}
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
+
+\item{details}{Additional text to add after the alert. It can be a
+character vector, and each element will be in a new line, as each
+element is formatted the same way as a \code{cli_text()}. They are
+in a \code{div} element (see \code{\link[=cli_div]{cli_div()}}) with class \code{.details}.}
 }
 \description{
 Alerts are typically short status messages.
@@ -63,4 +79,6 @@ cli_alert_success("Package {.pkg cli} installed successfully.")
 cli_alert_danger("Could not download {.pkg cli}.")
 cli_alert_warning("Internet seems to be unreacheable.")
 cli_alert_info("Downloaded 1.45MiB of data")
+
+# details
 }
