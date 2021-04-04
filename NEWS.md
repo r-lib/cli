@@ -1,5 +1,5 @@
 
-# development version
+# cli 2.4.0
 
 * New `cli_memo()` function to create a list of items or tasks.
 
