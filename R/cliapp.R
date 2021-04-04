@@ -86,16 +86,16 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_table(app, cells, class),
 
     ## Alerts
-    alert = function(text, id = NULL, class = NULL, wrap = FALSE, details = NULL)
-      clii_alert(app, "alert", text, id, class, wrap, details),
-    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE, details = NULL)
-      clii_alert(app, "alert-success", text, id, class, wrap, details),
-    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE, details = NULL)
-      clii_alert(app, "alert-danger", text, id, class, wrap, details),
-    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE, details = NULL)
-      clii_alert(app, "alert-warning", text, id, class, wrap, details),
-    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE, details = NULL)
-      clii_alert(app, "alert-info", text, id, class, wrap, details),
+    alert = function(text, id = NULL, class = NULL, wrap = FALSE)
+      clii_alert(app, "alert", text, id, class, wrap),
+    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE)
+      clii_alert(app, "alert-success", text, id, class, wrap),
+    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE)
+      clii_alert(app, "alert-danger", text, id, class, wrap),
+    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE)
+      clii_alert(app, "alert-warning", text, id, class, wrap),
+    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
+      clii_alert(app, "alert-info", text, id, class, wrap),
 
     ## Horizontal rule
     rule = function(left, center, right, id = NULL)
@@ -246,7 +246,7 @@ clii_rule <- function(app, left, center, right, id) {
 
 ## Alerts -----------------------------------------------------------
 
-clii_alert <- function(app, type, text, id, class, wrap, details) {
+clii_alert <- function(app, type, text, id, class, wrap) {
   clii__container_start(app, "div", id = id,
                        class = paste(class, "alert", type))
   on.exit(clii__container_end(app, id), add = TRUE)
@@ -263,12 +263,8 @@ clii_alert <- function(app, type, text, id, class, wrap, details) {
     text <- ansi_strwrap(text, exdent = ansi_nchar(before, "width"))
   }
   app$cat_ln(text)
+}
 
-  if (length(details) > 0) {
-    did <- new_uuid()
-    clii__container_start(app, "div", id = did, class = "details")
-    lapply(details, function(x) app$text(x))
-  }
 
   invisible()
 }

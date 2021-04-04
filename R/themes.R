@@ -92,7 +92,6 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ".alert-info" = list(
       before = function() paste0(col_cyan(symbol$info), " ")
     ),
-    ".details" = list("margin-left" = 2),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
     ul = list(

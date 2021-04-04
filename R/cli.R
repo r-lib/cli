@@ -371,10 +371,6 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
 #' @param class Class of the alert element. Can be used in themes.
 #' @param wrap Whether to auto-wrap the text of the alert.
 #' @param .envir Environment to evaluate the glue expressions in.
-#' @param details Additional text to add after the alert. It can be a
-#'   character vector, and each element will be in a new line, as each
-#'   element is formatted the same way as a `cli_text()`. They are
-#'   in a `div` element (see [cli_div()]) with class `.details`.
 #'
 #' @export
 #' @examples
@@ -384,19 +380,16 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
 #' cli_alert_danger("Could not download {.pkg cli}.")
 #' cli_alert_warning("Internet seems to be unreacheable.")
 #' cli_alert_info("Downloaded 1.45MiB of data")
-#'
-#' # details
 
 cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
-                      .envir = parent.frame(), details = NULL) {
+                      .envir = parent.frame()) {
   cli__message(
     "alert",
     list(
       text = glue_cmd(text, .envir = .envir),
       id = id,
       class = class,
-      wrap = wrap,
-      details = lapply(details, glue_cmd, .envir = .envir)
+      wrap = wrap
     )
   )
 }
@@ -405,15 +398,14 @@ cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' @export
 
 cli_alert_success <- function(text, id = NULL, class = NULL, wrap = FALSE,
-                              .envir = parent.frame(), details = NULL) {
+                              .envir = parent.frame()) {
   cli__message(
     "alert_success",
     list(
       text = glue_cmd(text, .envir = .envir),
       id = id,
       class = class,
-      wrap = wrap,
-      details = lapply(details, glue_cmd, .envir = .envir)
+      wrap = wrap
     )
   )
 }
@@ -422,15 +414,14 @@ cli_alert_success <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' @export
 
 cli_alert_danger <- function(text, id = NULL, class = NULL, wrap = FALSE,
-                              .envir = parent.frame(), details = NULL) {
+                              .envir = parent.frame()) {
   cli__message(
     "alert_danger",
     list(
       text = glue_cmd(text, .envir = .envir),
       id = id,
       class = class,
-      wrap = wrap,
-      details = lapply(details, glue_cmd, .envir = .envir)
+      wrap = wrap
     )
   )
 }
@@ -439,15 +430,14 @@ cli_alert_danger <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' @export
 
 cli_alert_warning <- function(text, id = NULL, class = NULL, wrap = FALSE,
-                               .envir = parent.frame(), details = NULL) {
+                               .envir = parent.frame()) {
   cli__message(
     "alert_warning",
     list(
       text = glue_cmd(text, .envir = .envir),
       id = id,
       class = class,
-      wrap = wrap,
-      details = lapply(details, glue_cmd, .envir = .envir)
+      wrap = wrap
     )
   )
 }
@@ -456,15 +446,14 @@ cli_alert_warning <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' @export
 
 cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
-                            .envir = parent.frame(), details = NULL) {
+                            .envir = parent.frame()) {
   cli__message(
     "alert_info",
     list(
       text = glue_cmd(text, .envir = .envir),
       id = id,
       class = class,
-      wrap = wrap,
-      details = lapply(details, glue_cmd, .envir = .envir)
+      wrap = wrap
     )
   )
 }
