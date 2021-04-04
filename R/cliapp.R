@@ -97,6 +97,10 @@ cliapp <- function(theme = getOption("cli.theme"),
     alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(app, "alert-info", text, id, class, wrap),
 
+    ## Memo
+    memo = function(text, id = NULL, class = NULL)
+      clii_memo(app, text, id, class),
+
     ## Horizontal rule
     rule = function(left, center, right, id = NULL)
       clii_rule(app, left, center, right, id),
@@ -265,6 +269,26 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   app$cat_ln(text)
 }
 
+## Memo -------------------------------------------------------------
+
+clii_memo <- function(app, text, id, class) {
+  clii__container_start(app, "div", id = id, class = paste("memo", class))
+  on.exit(clii__container_end(app, id), add = TRUE)
+
+  # Normalize names a bit, so we can use them as class names
+  nms <- as.character(names(text))
+  length(nms) <- length(text)
+  nms[is.na(nms) | nms == ""] <- "empty"
+  nms[nms == " "] <- "space"
+  nms <- gsub(" ", "-", nms)
+  cls <- paste0("memo-item-", nms)
+
+  lapply(seq_along(text), function(i) {
+    iid <- new_uuid()
+    clii__container_start(app, "div", id = iid, class = cls[i])
+    on.exit(clii__container_end(app, iid), add = TRUE)
+    app$text(text[[i]])
+  })
 
   invisible()
 }
