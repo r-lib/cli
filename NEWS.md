@@ -3,7 +3,7 @@
 
 * New `cli_memo()` function to create a list of items or tasks.
 
-* New `cli::cli()` function to create a cli message from multiple
+* New `cli::cli()` function to create a single cli message from multiple
   cli calls (#170).
 
 * cli now highlights weird names, e.g. path names with leading or
