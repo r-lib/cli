@@ -382,9 +382,16 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
 #' cli_alert_info("Downloaded 1.45MiB of data")
 
 cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
-                       .envir = parent.frame()) {
-  cli__message("alert", list(text = glue_cmd(text, .envir = .envir), id = id,
-                             class = class, wrap = wrap))
+                      .envir = parent.frame()) {
+  cli__message(
+    "alert",
+    list(
+      text = glue_cmd(text, .envir = .envir),
+      id = id,
+      class = class,
+      wrap = wrap
+    )
+  )
 }
 
 #' @rdname cli_alert
@@ -392,8 +399,15 @@ cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
 
 cli_alert_success <- function(text, id = NULL, class = NULL, wrap = FALSE,
                               .envir = parent.frame()) {
-  cli__message("alert_success", list(text = glue_cmd(text, .envir = .envir),
-                                     id = id, class = class, wrap = wrap))
+  cli__message(
+    "alert_success",
+    list(
+      text = glue_cmd(text, .envir = .envir),
+      id = id,
+      class = class,
+      wrap = wrap
+    )
+  )
 }
 
 #' @rdname cli_alert
@@ -401,8 +415,15 @@ cli_alert_success <- function(text, id = NULL, class = NULL, wrap = FALSE,
 
 cli_alert_danger <- function(text, id = NULL, class = NULL, wrap = FALSE,
                               .envir = parent.frame()) {
-  cli__message("alert_danger", list(text = glue_cmd(text, .envir = .envir),
-                                    id = id, class = class, wrap = wrap))
+  cli__message(
+    "alert_danger",
+    list(
+      text = glue_cmd(text, .envir = .envir),
+      id = id,
+      class = class,
+      wrap = wrap
+    )
+  )
 }
 
 #' @rdname cli_alert
@@ -410,8 +431,15 @@ cli_alert_danger <- function(text, id = NULL, class = NULL, wrap = FALSE,
 
 cli_alert_warning <- function(text, id = NULL, class = NULL, wrap = FALSE,
                                .envir = parent.frame()) {
-  cli__message("alert_warning", list(text = glue_cmd(text, .envir = .envir),
-                                     id = id, class = class, wrap = wrap))
+  cli__message(
+    "alert_warning",
+    list(
+      text = glue_cmd(text, .envir = .envir),
+      id = id,
+      class = class,
+      wrap = wrap
+    )
+  )
 }
 
 #' @rdname cli_alert
@@ -419,8 +447,15 @@ cli_alert_warning <- function(text, id = NULL, class = NULL, wrap = FALSE,
 
 cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
                             .envir = parent.frame()) {
-  cli__message("alert_info", list(text = glue_cmd(text, .envir = .envir),
-                                  id = id, class = class, wrap = wrap))
+  cli__message(
+    "alert_info",
+    list(
+      text = glue_cmd(text, .envir = .envir),
+      id = id,
+      class = class,
+      wrap = wrap
+    )
+  )
 }
 
 #' CLI horizontal rule
