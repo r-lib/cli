@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update the status bar — cli_status • cli</title>
+<title>Debug cli internals — cli_debug_doc • cli</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,9 @@
 
 
 
-<meta property="og:title" content="Update the status bar — cli_status" />
-<meta property="og:description" content="The status bar is the last line of the terminal. cli apps can use this
-to show status information, progress bars, etc. The status bar is kept
-intact by all semantic cli output." />
+<meta property="og:title" content="Debug cli internals — cli_debug_doc" />
+<meta property="og:description" content="Return the current state of a clie app. It includes the currencly
+open tags, their ids, classes and their computed styles." />
 
 
 
@@ -131,95 +130,60 @@ intact by all semantic cli output." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update the status bar</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/status-bar.R'><code>R/status-bar.R</code></a></small>
-    <div class="hidden name"><code>cli_status.Rd</code></div>
+    <h1>Debug cli internals</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/debug.R'><code>R/debug.R</code></a></small>
+    <div class="hidden name"><code>cli_debug_doc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The status bar is the last line of the terminal. cli apps can use this
-to show status information, progress bars, etc. The status bar is kept
-intact by all semantic cli output.</p>
+    <p>Return the current state of a clie app. It includes the currencly
+open tags, their ids, classes and their computed styles.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cli_status</span><span class='op'>(</span>
-  <span class='va'>msg</span>,
-  msg_done <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>msg</span>, <span class='st'>"... done"</span><span class='op'>)</span>,
-  msg_failed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>msg</span>, <span class='st'>"... failed"</span><span class='op'>)</span>,
-  .keep <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  .auto_close <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>,
-  .auto_result <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"clear"</span>, <span class='st'>"done"</span>, <span class='st'>"failed"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>cli_debug_doc</span><span class='op'>(</span>app <span class='op'>=</span> <span class='fu'><a href='start_app.html'>default_app</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%||%</span> <span class='fu'><a href='start_app.html'>start_app</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>msg</th>
-      <td><p>The text to show, a character vector. It will be
-collapsed into a single string, and the first line is kept and cut to
-<code><a href='console_width.html'>console_width()</a></code>. The message is often associated with the start of
-a calculation.</p></td>
-    </tr>
-    <tr>
-      <th>msg_done</th>
-      <td><p>The message to use when the message is cleared, when
-the calculation finishes successfully. If <code>.auto_close</code> is <code>TRUE</code>
-and <code>.auto_result</code> is <code>"done"</code>, then this is printed automatically
-then the calling function (or <code>.envir</code>) finishes.</p></td>
-    </tr>
-    <tr>
-      <th>msg_failed</th>
-      <td><p>The message to use when the message is cleared, when
-the calculation finishes unsuccessfully. If <code>.auto_close</code> is <code>TRUE</code>
-and <code>.auto_result</code> is <code>"failed"</code>, then this is printed automatically
-then the calling function (or <code>.envir</code>) finishes.</p></td>
-    </tr>
-    <tr>
-      <th>.keep</th>
-      <td><p>What to do when this status bar is cleared. If <code>TRUE</code> then
-the content of this status bar is kept, as regular cli output (the
-screen is scrolled up if needed). If <code>FALSE</code>, then this status bar
-is deleted.</p></td>
-    </tr>
-    <tr>
-      <th>.auto_close</th>
-      <td><p>Whether to clear the status bar when the calling
-function finishes (or ‘.envir’ is removed from the stack, if
-specified).</p></td>
-    </tr>
-    <tr>
-      <th>.envir</th>
-      <td><p>Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status bar if <code>.auto_close</code> is `TRUE.</p></td>
-    </tr>
-    <tr>
-      <th>.auto_result</th>
-      <td><p>What to do when auto-closing the status bar.</p></td>
+      <th>app</th>
+      <td><p>The cli app to debug. Defaults to the current app.
+if there is no app, then it creates one by calling <code><a href='start_app.html'>start_app()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The id of the new status bar container element, invisibly.</p>
+    <p>Data frame with columns: <code>tag</code>, <code>id</code>, <code>class</code> (space separated),
+theme (id of the theme the element added), <code>styles</code> (computed styles
+for the element).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Use <code><a href='cli_status_clear.html'>cli_status_clear()</a></code> to clear the status bar.</p>
-<p>Often status messages are associated with processes. E.g. the app starts
-downloading a large file, so it sets the status bar accordingly. Once the
-download is done (or failed), the app typically updates the status bar
-again. cli automates much of this, via the <code>msg_done</code>, <code>msg_failed</code>, and
-<code>.auto_result</code> arguments. See examples below.</p>
+    <p>The returned data frame has a print method, and if you want to create
+a plain data frame from it, index it with an empty bracket:
+<code>cli_debug_doc()[]</code>.</p>
+<p>To see all currently active themes, use <code>app$themes</code>, e.g. for the
+default app: <code>default_app()$themes</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='cli_process_start.html'>cli_process_start</a> for a higher level interface to the
-status bar, that adds automatic styling.</p>
-<p>Other status bar: 
-<code><a href='cli_process_start.html'>cli_process_start</a>()</code>,
-<code><a href='cli_status_clear.html'>cli_status_clear</a>()</code>,
-<code><a href='cli_status_update.html'>cli_status_update</a>()</code></p></div>
+    <div class='dont-index'><p><code><a href='cli_sitrep.html'>cli_sitrep()</a></code>. To debug containers, you can set the
+<code>CLI-DEBUG_BAD_END</code> environment variable to <code>true</code>, and then cli will
+warn when it cannot find the specified container to close (or any
+contained at all).</p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>cli_debug_doc</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>olid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_ol.html'>cli_ol</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>cli_debug_doc</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>cli_debug_doc</span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='op'>]</span>
+
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>olid</span><span class='op'>)</span>
+<span class='fu'>cli_debug_doc</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

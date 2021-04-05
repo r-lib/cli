@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -191,7 +191,21 @@ text is emphasized:</p><pre><span class='fu'><a href='cli_div.html'>cli_div</a><
 
 <p>See examples below.</p>
 <p>You can simply add new classes by defining them in the theme, and then
-using them, see the example below.</p>
+using them, see the example below.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Highlighting weird-looking values</h3>
+
+
+<p>Often it is useful to highlight a weird file or path name, e.g. one
+that starts or ends with space characters. The buildin theme does this
+for <code>.file</code>, <code>.path</code> and <code>.email</code> by default. You can highlight
+any string inline by adding the <code>.q</code> class to it.</p>
+<p>The current highlighting algorithm</p><ul>
+<li><p>adds single quotes to the string if it does not start or end with an
+alphanumeric character, underscore, dot or forward slash.</p></li>
+<li><p>Highlights the background colors of leading and trailing spaces on
+terminals that support ANSI colors.</p></li>
+</ul>
+
+
     <h2 class="hasAnchor" id="collapsing-inline-vectors"><a class="anchor" href="#collapsing-inline-vectors"></a>Collapsing inline vectors</h2>
 
     
@@ -240,16 +254,16 @@ them:</p><pre><span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></s
     <pre class="examples"><div class='input'><span class='co'>## Some inline markup examples</span>
 <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.emph Emphasized} text"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ <span style='font-style: italic;'>Emphasized</span><span> text</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.strong Strong} importance"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ </span><span style='font-weight: bold;'>Strong</span><span> importance</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A piece of code: {.code sum(a) / length(a)}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ A piece of code: </span><span style='color: #262626;background-color: #DADADA;'>`sum(a) / length(a)`</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A package name: {.pkg cli}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ A package name: </span><span style='color: #0000BB;'>cli</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A function name: {.fn cli_text}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ A function name: </span><span style='color: #262626;background-color: #DADADA;'>`cli_text()`</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A keyboard key: press {.kbd ENTER}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ A keyboard key: press </span><span style='color: #0000BB;'>[ENTER]</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A file name: {.file /usr/bin/env}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ A file name: </span><span style='color: #0000BB;'>/usr/bin/env</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An email address: {.email bugs.bunny@acme.com}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ An email address: </span><span style='color: #0000BB;'>bugs.bunny@acme.com</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A URL: {.url https://acme.com}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ A URL: </span><span style='color: #0000BB;font-style: italic;'>&lt;https://acme.com&gt;</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An environment variable: {.envvar R_LIBS}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  ─ An environment variable: </span><span style='color: #262626;background-color: #DADADA;'>`R_LIBS`</span><span></span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ <span style='font-style: italic;'>Emphasized</span><span> text</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.strong Strong} importance"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ </span><span style='font-weight: bold;'>Strong</span><span> importance</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A piece of code: {.code sum(a) / length(a)}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ A piece of code: </span><span style='color: #262626;background-color: #DADADA;'>`sum(a) / length(a)`</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A package name: {.pkg cli}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ A package name: </span><span style='color: #0000BB;'>cli</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A function name: {.fn cli_text}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ A function name: </span><span style='color: #262626;background-color: #DADADA;'>`cli_text()`</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A keyboard key: press {.kbd ENTER}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ A keyboard key: press </span><span style='color: #0000BB;'>[ENTER]</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A file name: {.file /usr/bin/env}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ A file name: </span><span style='color: #0000BB;'>/usr/bin/env</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An email address: {.email bugs.bunny@acme.com}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ An email address: </span><span style='color: #0000BB;'>bugs.bunny@acme.com</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A URL: {.url https://acme.com}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ A URL: </span><span style='color: #0000BB;font-style: italic;'>&lt;https://acme.com&gt;</span><span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An environment variable: {.envvar R_LIBS}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>    ─ An environment variable: </span><span style='color: #262626;background-color: #DADADA;'>`R_LIBS`</span><span></span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'>## Adding a new class</span>
 <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
