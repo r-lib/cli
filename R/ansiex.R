@@ -67,8 +67,6 @@ ansi_strip <- function(string) {
 ## Create a mapping between the string and its style-less version.
 ## This is useful to work with the colored string.
 
-#' @importFrom utils tail
-
 map_to_ansi <- function(x, text = NULL) {
 
   if (is.null(text)) {
@@ -80,7 +78,7 @@ map_to_ansi <- function(x, text = NULL) {
     function(text) {
       cbind(
         pos = cumsum(c(1, text[, "length"], Inf)),
-        offset = c(text[, "start"] - 1, tail(text[, "end"], 1), NA)
+        offset = c(text[, "start"] - 1, utils::tail(text[, "end"], 1), NA)
       )
     })
 
@@ -285,7 +283,6 @@ ansi_substring <- function(text, first, last = 1000000L) {
 #'
 #' @family ANSI string operations
 #' @export
-#' @importFrom utils head
 #' @examples
 #' str <- paste0(
 #'   col_red("I am red---"),
@@ -320,11 +317,11 @@ ansi_strsplit <- function(x, split, ...) {
     function(i) {
       y <- chunks[[i]]
       # empty split means drop empty first match
-      if(nrow(y) && !nzchar(split.r[[i]]) && !head(y, 1L)[, "length"]) {
+      if(nrow(y) && !nzchar(split.r[[i]]) && !utils::head(y, 1L)[, "length"]) {
         y <- y[-1L, , drop=FALSE]
       }
       # drop empty last matches
-      if(nrow(y) && !tail(y, 1L)[, "length"]) y[-nrow(y), , drop=FALSE] else y
+      if(nrow(y) && !utils::tail(y, 1L)[, "length"]) y[-nrow(y), , drop=FALSE] else y
     }
   )
   zero.chunks <- !vapply(chunks, nrow, integer(1L))

@@ -124,7 +124,7 @@ cliapp <- function(theme = getOption("cli.theme"),
     output = NULL,
 
     get_current_style = function()
-      tail(app$styles, 1)[[1]],
+      utils::tail(app$styles, 1)[[1]],
 
     xtext = function(text = NULL, .list = NULL, indent = 0, padding = 0)
       clii__xtext(app, text, .list = .list, indent = indent,

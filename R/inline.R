@@ -1,7 +1,5 @@
 
-#' @importFrom utils globalVariables
-
-if (getRversion() >= "2.15.1") globalVariables("app")
+if (getRversion() >= "2.15.1") utils::globalVariables("app")
 
 inline_generic <- function(app, x, style) {
   vec_style <- attr(x, "cli_style")
@@ -21,10 +19,8 @@ inline_collapse <- function(x, style = list()) {
   last <- vec_style$vec_last %||%
     style$vec_last %||%
     if (length(x) >= 3) ", and " else " and "
-  glue_collapse(x, sep = sep, last = last)
+  glue::glue_collapse(x, sep = sep, last = last)
 }
-
-#' @importFrom glue glue glue_collapse
 
 inline_transformer <- local({
   inline_styling <- FALSE
@@ -59,7 +55,7 @@ inline_transformer <- local({
       return(inline_collapse(res, style))
     }
 
-    code <- glue_collapse(code, "\n")
+    code <- glue::glue_collapse(code, "\n")
     m <- regexpr(inline_regex(), code, perl = TRUE)
     has_match <- m != -1
     if (!has_match) return(paste0("{", code, "}"))
@@ -84,7 +80,7 @@ inline_transformer <- local({
       transform_hook <<- style$transform
     }
 
-    out <- glue(
+    out <- glue::glue(
       text,
       .envir = envir,
       .transformer = inline_transformer,
@@ -106,7 +102,7 @@ clii__inline <- function(app, text, .list) {
   on.exit(rm(list = "app", envir = environment(inline_transformer)), add = TRUE)
   texts <- c(if (!is.null(text)) list(text), .list)
   out <- lapply(texts, function(t) {
-    glue(
+    glue::glue(
       t$str,
       .envir = t$values,
       .transformer = inline_transformer,
@@ -158,7 +154,7 @@ make_cmd_transformer <- function(values) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      out <- glue(text, .envir = envir, .transformer = sys.function(), .trim = TRUE)
+      out <- glue::glue(text, .envir = envir, .transformer = sys.function(), .trim = TRUE)
       paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
     }
   }
@@ -168,7 +164,7 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  pstr <- glue(str, .envir = .envir, .transformer = transformer, .trim = TRUE)
+  pstr <- glue::glue(str, .envir = .envir, .transformer = transformer, .trim = TRUE)
   glue_delay(
     str = post_process_plurals(pstr, values),
     values = values

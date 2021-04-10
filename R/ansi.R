@@ -45,9 +45,7 @@ ansi_fg_r <- c(
   "silver" = "grey"
 )
 
-#' @importFrom grDevices col2rgb
-
-ansi_fg_rgb <- col2rgb(ansi_fg_r)
+ansi_fg_rgb <- grDevices::col2rgb(ansi_fg_r)
 
 ansi_bg_r <- c(
   "bg_black" = "black",
@@ -60,7 +58,7 @@ ansi_bg_r <- c(
   "bg_white" = "white"
 )
 
-ansi_bg_rgb <- col2rgb(ansi_bg_r)
+ansi_bg_rgb <- grDevices::col2rgb(ansi_bg_r)
 
 ansi_style_str <- function(x) {
   paste0("\u001b[", x, "m", collapse = "")
@@ -206,10 +204,8 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
 
 hash_color_regex <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"
 
-#' @importFrom grDevices colors
-
 is_r_color <- function(x) {
-  x %in% colors() || grepl(hash_color_regex, x)
+  x %in% grDevices::colors() || grepl(hash_color_regex, x)
 }
 
 is_rgb_matrix <- function(x) {
@@ -217,7 +213,7 @@ is_rgb_matrix <- function(x) {
 }
 
 ansi_style_from_r_color <- function(color, bg, num_colors, grey) {
-  ansi_style_from_rgb(col2rgb(color), bg, num_colors, grey)
+  ansi_style_from_rgb(grDevices::col2rgb(color), bg, num_colors, grey)
 }
 
 ansi_style_8_from_rgb <- function(rgb, bg) {

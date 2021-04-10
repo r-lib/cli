@@ -217,9 +217,7 @@ rule_left_right <- function(o) {
   )
 }
 
-#' @importFrom methods setOldClass
-
-setOldClass(c("rule", "character"))
+methods::setOldClass(c("rule", "character"))
 
 #' @export
 

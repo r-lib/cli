@@ -104,7 +104,7 @@
 # collapsing vectors
 
     Code
-      pkgs <- (function(n) glue("pkg{seq_len(n)}"))
+      pkgs <- (function(n) glue::glue("pkg{seq_len(n)}"))
       for (n in 1:3) cli_text("The {pkgs(n)} package{?s}")
     Message <cliMessage>
       The pkg1 package
@@ -131,7 +131,7 @@
 ---
 
     Code
-      pkgs <- (function(n) glue("pkg{seq_len(n)}"))
+      pkgs <- (function(n) glue::glue("pkg{seq_len(n)}"))
       for (n in 1:3) cli_text("The {.foo {pkgs(n)}} package{?s}")
     Message <cliMessage>
       The pkg1 package
@@ -150,7 +150,7 @@
 ---
 
     Code
-      pkgs <- (function(n) glue("pkg{seq_len(n)}"))
+      pkgs <- (function(n) glue::glue("pkg{seq_len(n)}"))
       for (n in 1:2) cli_text("Package{?s}: {pkgs(n)}")
     Message <cliMessage>
       Package: pkg1

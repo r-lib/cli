@@ -46,7 +46,7 @@ test_that("set qty() explicitly", {
 
 test_that("collapsing vectors", {
   expect_snapshot({
-    pkgs <- function(n) glue("pkg{seq_len(n)}")
+    pkgs <- function(n) glue::glue("pkg{seq_len(n)}")
     for (n in 1:3) cli_text("The {pkgs(n)} package{?s}")
     for (n in 1:3) print(pluralize("The {pkgs(n)} package{?s}"))
   })
@@ -60,7 +60,7 @@ test_that("pluralization and style", {
   })
 
   expect_snapshot({
-    pkgs <- function(n) glue("pkg{seq_len(n)}")
+    pkgs <- function(n) glue::glue("pkg{seq_len(n)}")
     for (n in 1:3) cli_text("The {.foo {pkgs(n)}} package{?s}")
   })
 })
@@ -71,7 +71,7 @@ test_that("post-processing", {
   })
 
   expect_snapshot({
-    pkgs <- function(n) glue("pkg{seq_len(n)}")
+    pkgs <- function(n) glue::glue("pkg{seq_len(n)}")
     for (n in 1:2) cli_text("Package{?s}: {pkgs(n)}")
     for (n in 1:2) print(pluralize("Package{?s}: {pkgs(n)}"))
   })

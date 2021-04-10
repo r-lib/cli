@@ -183,9 +183,7 @@ box_chars <- function() {
   }
 }
 
-#' @importFrom methods setOldClass
-
-setOldClass(c("tree", "character"))
+methods::setOldClass(c("tree", "character"))
 
 #' @export
 

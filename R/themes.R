@@ -231,11 +231,11 @@ theme_code <- function(dark) {
 }
 
 theme_code_tick <- function(dark) {
-  modifyList(theme_code(dark), list(before = "`", after = "`"))
+  utils::modifyList(theme_code(dark), list(before = "`", after = "`"))
 }
 
 theme_function <- function(dark) {
-  modifyList(theme_code(dark), list(before = "`", after = "()`"))
+  utils::modifyList(theme_code(dark), list(before = "`", after = "()`"))
 }
 
 format_r_code <- function(dark) {
@@ -298,8 +298,6 @@ create_formatter <- function(x) {
   x
 }
 
-#' @importFrom utils modifyList
-
 merge_embedded_styles <- function(old, new) {
   # before and after is not inherited, fmt is not inherited, either
   # side margins are additive, class mappings are merged
@@ -311,11 +309,11 @@ merge_embedded_styles <- function(old, new) {
   left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
   right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
 
-  map <- modifyList(old$`class-map` %||% list(), new$`class-map` %||% list())
+  map <- utils::modifyList(old$`class-map` %||% list(), new$`class-map` %||% list())
 
   start <- new$start %||% 1L
 
-  mrg <- modifyList(old, new)
+  mrg <- utils::modifyList(old, new)
   mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
         "start", "class-map")] <- list(top, bottom, left, right, start, map)
 

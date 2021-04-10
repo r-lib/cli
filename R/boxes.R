@@ -174,9 +174,7 @@ boxx <- function(label, header = "", footer = "",
   box
 }
 
-#' @importFrom methods setOldClass
-
-setOldClass(c("boxx", "character"))
+methods::setOldClass(c("boxx", "character"))
 
 #' @export
 

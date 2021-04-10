@@ -88,19 +88,15 @@ lpad <- function(x, width = NULL) {
   paste0(strrep(" ", pmax(width - w, 0)), x)
 }
 
-#' @importFrom utils tail
-
 tail_na <- function(x, n = 1) {
-  tail(c(rep(NA, n), x), n)
+  utils::tail(c(rep(NA, n), x), n)
 }
-
-#' @importFrom utils head
 
 dedent <- function(x, n = 2) {
   first_n_char <- strsplit(ansi_substr(x, 1, n), "")[[1]]
   n_space <- cumsum(first_n_char == " ")
   d_n_space <- diff(c(0, n_space))
-  first_not_space <- head(c(which(d_n_space == 0), n + 1), 1)
+  first_not_space <- utils::head(c(which(d_n_space == 0), n + 1), 1)
   ansi_substr(x, first_not_space, nchar(x))
 }
 
@@ -117,7 +113,7 @@ na.omit <- function(x) {
 }
 
 last <- function(x) {
-  tail(x, 1)[[1]]
+  utils::tail(x, 1)[[1]]
 }
 
 str_tail <- function(x) {

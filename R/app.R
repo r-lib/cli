@@ -47,12 +47,11 @@ start_app <- function(theme = getOption("cli.theme"),
 }
 
 #' @export
-#' @importFrom utils head
 #' @name start_app
 
 stop_app <- function(app = NULL) {
   if (is.null(app)) {
-    cliappenv$stack <- head(cliappenv$stack, -1)
+    cliappenv$stack <- utils::head(cliappenv$stack, -1)
 
   } else {
     if (!inherits(app, "cliapp")) stop("Not a CLI app")
@@ -63,17 +62,16 @@ stop_app <- function(app = NULL) {
       return()
     }
     wh <- which(nms == ndl)[1]
-    cliappenv$stack <- head(cliappenv$stack, wh - 1)
+    cliappenv$stack <- utils::head(cliappenv$stack, wh - 1)
   }
 
   invisible()
 }
 
 #' @export
-#' @importFrom utils tail
 #' @name start_app
 
 default_app <- function() {
-  top <- tail(cliappenv$stack, 1)
+  top <- utils::tail(cliappenv$stack, 1)
   if (length(top)) top[[1]] else NULL
 }
