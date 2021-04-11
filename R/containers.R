@@ -21,7 +21,7 @@ clii__container_start <- function(app, tag, class = NULL,
     for (i in seq_len(nrow(theme))) {
       if (match_selector(theme$parsed[[i]], app$doc)) {
         app$themes[[t]]$cnt[i] <- id
-        new_sels <- modifyList(new_sels, theme$style[[i]])
+        new_sels <- utils::modifyList(new_sels, theme$style[[i]])
       }
     }
   }
