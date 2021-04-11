@@ -1,5 +1,7 @@
 # cli (development version)
 
+* New `test_that_cli()` helper function to write testthat tests for
+  cli output.
 
 # cli 2.4.0
 
