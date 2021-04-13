@@ -114,7 +114,7 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
   style <- style %||% box_chars()
 
   labels <- if (ncol(data) >= 3) data[[3]] else data[[1]]
-  trimlabs <- data$trimmed %||% labels
+  trimlabs <- data[["trimmed"]] %||% labels
 
   seen <- character()
   res <- character()

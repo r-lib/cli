@@ -3,6 +3,8 @@
 * New `test_that_cli()` helper function to write testthat tests for
   cli output.
 
+* `tree()` now does not produce warnings for tibbles (#238).
+
 # cli 2.4.0
 
 * New `cli_memo()` function to create a list of items or tasks.

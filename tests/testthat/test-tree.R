@@ -86,3 +86,12 @@ test_that_cli("trimming", {
 
   expect_snapshot(tree(pkgs, trim = TRUE))
 })
+
+test_that("no warning for tibbles", {
+  data <- tibble::tibble(
+    package = c("A", "B", "C"),
+    dependencies = c("B", "C", "")
+  )
+
+  expect_silent(cli::tree(data))
+})
