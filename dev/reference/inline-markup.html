@@ -173,20 +173,22 @@ text is emphasized:</p><pre><span class='fu'><a href='cli_div.html'>cli_div</a><
 
 
 <p>The default theme defines the following inline classes:</p><ul>
-<li><p><code>emph</code> for emphasized text.</p></li>
-<li><p><code>strong</code> for strong importance.</p></li>
-<li><p><code>code</code> for a piece of code.</p></li>
-<li><p><code>pkg</code> for a package name.</p></li>
-<li><p><code>fun</code> for a function name.</p></li>
 <li><p><code>arg</code> for a function argument.</p></li>
-<li><p><code>key</code> for a keyboard key.</p></li>
-<li><p><code>file</code> for a file name.</p></li>
-<li><p><code>path</code> for a path (essentially the same as <code>file</code>).</p></li>
+<li><p><code>cls</code> for an S3, S4, R6 or other class name.</p></li>
+<li><p><code>code</code> for a piece of code.</p></li>
 <li><p><code>email</code> for an email address.</p></li>
+<li><p><code>emph</code> for emphasized text.</p></li>
+<li><p><code>envvar</code> for the name of an environment variable.</p></li>
+<li><p><code>field</code> for a generic field, e.g. in a named list.</p></li>
+<li><p><code>file</code> for a file name.</p></li>
+<li><p><code>fun</code> for a function name.</p></li>
+<li><p><code>key</code> for a keyboard key.</p></li>
+<li><p><code>path</code> for a path (essentially the same as <code>file</code>).</p></li>
+<li><p><code>pkg</code> for a package name.</p></li>
+<li><p><code>strong</code> for strong importance.</p></li>
 <li><p><code>url</code> for a URL.</p></li>
 <li><p><code>var</code> for a variable name.</p></li>
-<li><p><code>envvar</code> for the name of an environment variable.</p></li>
-<li><p><code>val</code> for a "value".</p></li>
+<li><p><code>val</code> for a generic "value".</p></li>
 </ul>
 
 <p>See examples below.</p>
@@ -278,6 +280,10 @@ them:</p><pre><span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></s
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {pkgs}."</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>  Packages: pkg1, pkg2, and pkg3.</span></div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {.pkg {pkgs}}"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>  Packages: </span><span style='color: #0000BB;'>pkg1</span><span>, </span><span style='color: #0000BB;'>pkg2</span><span>, and </span><span style='color: #0000BB;'>pkg3</span><span></span></div><div class='input'>
+<span class='co'>## Classes are collapsed differently by default</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Hey {.var x} has class {.cls {class(x)}}"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>  Hey </span><span style='color: #262626;background-color: #DADADA;'>`x`</span><span> has class </span><span style='color: #0000BB;'>&lt;POSIXct/POSIXt&gt;</span><span></span></div><div class='input'>
 <span class='co'>## Escaping</span>
 <span class='va'>msg</span> <span class='op'>&lt;-</span> <span class='st'>"Error in if (ncol(dat$y)) {: argument is of length zero"</span>
 <span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></span><span class='op'>(</span><span class='st'>"{msg}"</span><span class='op'>)</span>
