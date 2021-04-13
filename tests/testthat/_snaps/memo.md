@@ -6,11 +6,11 @@
     Message <cliMessage>
       noindent
         space
-        v success
-        x danger
-        ! warning
-        i info
-        * bullet
+      v success
+      x danger
+      ! warning
+      i info
+      * bullet
 
 # memo [ansi]
 
@@ -20,11 +20,11 @@
     Message <cliMessage>
       noindent
         space
-        [32mv[39m success
-        [31mx[39m danger
-        [33m![39m warning
-        [36mi[39m info
-        [36m*[39m bullet
+      [32mv[39m success
+      [31mx[39m danger
+      [33m![39m warning
+      [36mi[39m info
+      [36m*[39m bullet
 
 # memo [unicode]
 
@@ -34,11 +34,11 @@
     Message <cliMessage>
       noindent
         space
-        ✔ success
-        ✖ danger
-        ! warning
-        ℹ info
-        ● bullet
+      ✔ success
+      ✖ danger
+      ! warning
+      ℹ info
+      ● bullet
 
 # memo [fancy]
 
@@ -48,11 +48,11 @@
     Message <cliMessage>
       noindent
         space
-        [32m✔[39m success
-        [31m✖[39m danger
-        [33m![39m warning
-        [36mℹ[39m info
-        [36m●[39m bullet
+      [32m✔[39m success
+      [31m✖[39m danger
+      [33m![39m warning
+      [36mℹ[39m info
+      [36m●[39m bullet
 
 # memo glue [plain]
 
@@ -63,11 +63,11 @@
     Message <cliMessage>
       noindent [1], [2], and [3]
         space [1], [2], and [3]
-        v success [1], [2], and [3]
-        x danger [1], [2], and [3]
-        ! warning [1], [2], and [3]
-        i info [1], [2], and [3]
-        * bullet [1], [2], and [3]
+      v success [1], [2], and [3]
+      x danger [1], [2], and [3]
+      ! warning [1], [2], and [3]
+      i info [1], [2], and [3]
+      * bullet [1], [2], and [3]
 
 # memo glue [ansi]
 
@@ -78,11 +78,11 @@
     Message <cliMessage>
       noindent [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
         space [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [32mv[39m success [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [31mx[39m danger [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [33m![39m warning [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [36mi[39m info [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [36m*[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [32mv[39m success [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [31mx[39m danger [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [33m![39m warning [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [36mi[39m info [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [36m*[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
 
 # memo glue [unicode]
 
@@ -93,11 +93,11 @@
     Message <cliMessage>
       noindent [1], [2], and [3]
         space [1], [2], and [3]
-        ✔ success [1], [2], and [3]
-        ✖ danger [1], [2], and [3]
-        ! warning [1], [2], and [3]
-        ℹ info [1], [2], and [3]
-        ● bullet [1], [2], and [3]
+      ✔ success [1], [2], and [3]
+      ✖ danger [1], [2], and [3]
+      ! warning [1], [2], and [3]
+      ℹ info [1], [2], and [3]
+      ● bullet [1], [2], and [3]
 
 # memo glue [fancy]
 
@@ -108,9 +108,9 @@
     Message <cliMessage>
       noindent [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
         space [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [32m✔[39m success [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [31m✖[39m danger [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [33m![39m warning [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [36mℹ[39m info [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-        [36m●[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [32m✔[39m success [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [31m✖[39m danger [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [33m![39m warning [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [36mℹ[39m info [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [36m●[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
 
