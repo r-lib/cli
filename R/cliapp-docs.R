@@ -39,6 +39,7 @@
 #'
 #' The default theme defines the following inline classes:
 #' * `arg` for a function argument.
+#' * `cls` for an S3, S4, R6 or other class name.
 #' * `code` for a piece of code.
 #' * `email` for an email address.
 #' * `emph` for emphasized text.

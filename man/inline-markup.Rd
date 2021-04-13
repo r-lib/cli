@@ -39,6 +39,7 @@ cli_text("This is \{.emph \{adjective\}\}.")
 The default theme defines the following inline classes:
 \itemize{
 \item \code{arg} for a function argument.
+\item \code{cls} for an S3, S4, R6 or other class name.
 \item \code{code} for a piece of code.
 \item \code{email} for an email address.
 \item \code{emph} for emphasized text.
