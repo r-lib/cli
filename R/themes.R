@@ -96,23 +96,18 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ".memo .memo-item-empty" = list(),
     ".memo .memo-item-space" = list("margin-left" = 2),
     ".memo .memo-item-v" = list(
-      "margin-left" = 2,
       before = function(x) paste0(col_green(symbol$tick), " ")
     ),
     ".memo .memo-item-x" = list(
-      "margin-left" = 2,
       before = function(x) paste0(col_red(symbol$cross), " ")
     ),
     ".memo .memo-item-!" = list(
-      "margin-left" = 2,
       before = function(x) paste0(col_yellow("!"), " ")
     ),
     ".memo .memo-item-i" = list(
-      "margin-left" = 2,
       before = function(x) paste0(col_cyan(symbol$info), " ")
     ),
     ".memo .memo-item-*" = list(
-      "margin-left" = 2,
       before = function(x) paste0(col_cyan(symbol$bullet), " ")
     ),
 
