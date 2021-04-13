@@ -28,9 +28,9 @@
       })
     Message <cliMessage>
       The name is [34m[34mgood-name[34m[39m.
-      The name is '[34m[34mweird-name[34m[39m[47m [49m'.
-      The name is '[34m[34mweird-name[34m[39m[47m [49m'.
-      The name is '[34m[34mweird-name[34m[39m[47m [49m'.
+      The name is '[34m[34mweird-name[34m[39m[44m [49m'.
+      The name is '[34m[34mweird-name[34m[39m[44m [49m'.
+      The name is '[34m[34mweird-name[34m[39m[44m [49m'.
 
 # quoting weird names, still [plain]
 
@@ -58,7 +58,7 @@
       })
     Output
       good
-      '[47m  [49mbad'
-      'bad[47m  [49m'
-      '[47m  [49mbad[47m  [49m'
+      '[44m  [49mbad'
+      'bad[44m  [49m'
+      '[44m  [49mbad[44m  [49m'
 

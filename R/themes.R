@@ -186,14 +186,14 @@ quote_weird_name <- function(x) {
     tsp <- trailing_space(x2)
     if (nzchar(lsp)) {
       x <- paste0(
-        bg_grey(lsp),
+        bg_blue(lsp),
         ansi_substr(x, nchar(lsp) + 1, ansi_nchar(x))
       )
     }
     if (nzchar(tsp)) {
       x <- paste0(
         ansi_substr(x, 1, ansi_nchar(x) - nchar(tsp)),
-        bg_grey(tsp)
+        bg_blue(tsp)
       )
     }
   }
@@ -203,11 +203,6 @@ quote_weird_name <- function(x) {
   }
 
   x
-}
-
-bg_grey <- function(...) {
-  grey <- cli::make_ansi_style("grey", bg = TRUE)
-  grey(...)
 }
 
 detect_dark_theme <- function(dark) {
