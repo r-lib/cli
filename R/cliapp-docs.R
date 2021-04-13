@@ -38,20 +38,22 @@
 #' @section Classes:
 #'
 #' The default theme defines the following inline classes:
-#' * `emph` for emphasized text.
-#' * `strong` for strong importance.
-#' * `code` for a piece of code.
-#' * `pkg` for a package name.
-#' * `fun` for a function name.
 #' * `arg` for a function argument.
-#' * `key` for a keyboard key.
-#' * `file` for a file name.
-#' * `path` for a path (essentially the same as `file`).
+#' * `cls` for an S3, S4, R6 or other class name.
+#' * `code` for a piece of code.
 #' * `email` for an email address.
+#' * `emph` for emphasized text.
+#' * `envvar` for the name of an environment variable.
+#' * `field` for a generic field, e.g. in a named list.
+#' * `file` for a file name.
+#' * `fun` for a function name.
+#' * `key` for a keyboard key.
+#' * `path` for a path (essentially the same as `file`).
+#' * `pkg` for a package name.
+#' * `strong` for strong importance.
 #' * `url` for a URL.
 #' * `var` for a variable name.
-#' * `envvar` for the name of an environment variable.
-#' * `val` for a "value".
+#' * `val` for a generic "value".
 #'
 #' See examples below.
 #'
@@ -143,6 +145,10 @@
 #' pkgs <- c("pkg1", "pkg2", "pkg3")
 #' cli_text("Packages: {pkgs}.")
 #' cli_text("Packages: {.pkg {pkgs}}")
+#'
+#' ## Classes are collapsed differently by default
+#' x <- Sys.time()
+#' cli_text("Hey {.var x} has class {.cls {class(x)}}")
 #'
 #' ## Escaping
 #' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
@@ -252,6 +258,10 @@ NULL
 #'   package) should always print as `.file` objects in cli.
 #' * `color`: Text color, an R color name or a HTML hexadecimal color. It
 #'   can be applied to most elements that are printed.
+#' * `collapse`: Specifies how to collapse a vector, before applying
+#'   styling. If a character string, then that is used as the separator.
+#'   If a function, then it is called, with the vector as the only
+#'   argument.
 #' * `digits`: Number of digits after the decimal point for numeric inline
 #'   element of class `.val`.
 #' * `fmt`: Generic formatter function that takes an input text and returns

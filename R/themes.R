@@ -167,7 +167,9 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       transform = function(x, ...) cli_format(x, ...),
       color = "blue"
     ),
-    span.field = list(color = "green")
+    span.field = list(color = "green"),
+    span.cls = list(collapse = "/", color = "blue", before = "<", after = ">"
+    )
   )
 }
 

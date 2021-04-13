@@ -55,25 +55,25 @@ currently.
 # file
 
 # Default configurations
-test_that_cli("success", {
+cli::test_that_cli("success", {
   expect_snapshot({
-    cli_alert_success("wow")
+    cli::cli_alert_success("wow")
   })
 })
 
 # Only use two configurations, because this output does not have colors
-test_that_cli(configs = c("plain", "unicode"), "cat_bullet", {
+cli::test_that_cli(configs = c("plain", "unicode"), "cat_bullet", {
   expect_snapshot({
-    cat_bullet(letters[1:5])
+    cli::cat_bullet(letters[1:5])
   })
 })
 
 # You often need to evaluate all cli calls of a test case in the same
 # environment. Use `local()` to do that:
-test_that_cli("theming", {
+cli::test_that_cli("theming", {
   expect_snapshot(local({
-    cli_div(theme = list(".alert" = list(before = "!!! ")))
-    cli_alert("wow")
+    cli::cli_div(theme = list(".alert" = list(before = "!!! ")))
+    cli::cli_alert("wow")
   }))
 })
 }
