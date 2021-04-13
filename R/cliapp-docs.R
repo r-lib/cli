@@ -146,6 +146,10 @@
 #' cli_text("Packages: {pkgs}.")
 #' cli_text("Packages: {.pkg {pkgs}}")
 #'
+#' ## Classes are collapsed differently by default
+#' x <- Sys.time()
+#' cli_text("Hey {.var x} has class {.cls {class(x)}}")
+#'
 #' ## Escaping
 #' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
 #' cli_alert_warning("{msg}")
