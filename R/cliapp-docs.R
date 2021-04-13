@@ -38,20 +38,21 @@
 #' @section Classes:
 #'
 #' The default theme defines the following inline classes:
-#' * `emph` for emphasized text.
-#' * `strong` for strong importance.
-#' * `code` for a piece of code.
-#' * `pkg` for a package name.
-#' * `fun` for a function name.
 #' * `arg` for a function argument.
-#' * `key` for a keyboard key.
-#' * `file` for a file name.
-#' * `path` for a path (essentially the same as `file`).
+#' * `code` for a piece of code.
 #' * `email` for an email address.
+#' * `emph` for emphasized text.
+#' * `envvar` for the name of an environment variable.
+#' * `field` for a generic field, e.g. in a named list.
+#' * `file` for a file name.
+#' * `fun` for a function name.
+#' * `key` for a keyboard key.
+#' * `path` for a path (essentially the same as `file`).
+#' * `pkg` for a package name.
+#' * `strong` for strong importance.
 #' * `url` for a URL.
 #' * `var` for a variable name.
-#' * `envvar` for the name of an environment variable.
-#' * `val` for a "value".
+#' * `val` for a generic "value".
 #'
 #' See examples below.
 #'

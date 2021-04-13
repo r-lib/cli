@@ -38,20 +38,21 @@ cli_text("This is \{.emph \{adjective\}\}.")
 
 The default theme defines the following inline classes:
 \itemize{
-\item \code{emph} for emphasized text.
-\item \code{strong} for strong importance.
-\item \code{code} for a piece of code.
-\item \code{pkg} for a package name.
-\item \code{fun} for a function name.
 \item \code{arg} for a function argument.
-\item \code{key} for a keyboard key.
-\item \code{file} for a file name.
-\item \code{path} for a path (essentially the same as \code{file}).
+\item \code{code} for a piece of code.
 \item \code{email} for an email address.
+\item \code{emph} for emphasized text.
+\item \code{envvar} for the name of an environment variable.
+\item \code{field} for a generic field, e.g. in a named list.
+\item \code{file} for a file name.
+\item \code{fun} for a function name.
+\item \code{key} for a keyboard key.
+\item \code{path} for a path (essentially the same as \code{file}).
+\item \code{pkg} for a package name.
+\item \code{strong} for strong importance.
 \item \code{url} for a URL.
 \item \code{var} for a variable name.
-\item \code{envvar} for the name of an environment variable.
-\item \code{val} for a "value".
+\item \code{val} for a generic "value".
 }
 
 See examples below.
