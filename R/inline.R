@@ -6,6 +6,13 @@ inline_generic <- function(app, x, style) {
   before <- call_if_fun(vec_style$before) %||% call_if_fun(style$before)
   after <- call_if_fun(vec_style$after) %||% call_if_fun(style$after)
   fmt <- vec_style$fmt %||% style$fmt
+  collapse <- style$collapse
+  if (is.character(collapse)) {
+    x <- paste0(x, collapse = collapse[1])
+  }
+  if (is.function(collapse)) {
+    x <- collapse(x)
+  }
   xx <- paste0(before, x, after)
   if (!is.null(fmt)) xx <- vcapply(xx, fmt)
   xx

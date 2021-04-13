@@ -16,12 +16,14 @@
       This is <<<it>>> really
       This is <<<it>>> really
       This is <<<it>>> really
+      This is <<<it>>> really
 
 # inline classes [ansi]
 
     Code
       invisible(lapply(classes, do))
     Message <cliMessage>
+      This is [36m[36m<<<it>>>[36m[39m really
       This is [36m[36m<<<it>>>[36m[39m really
       This is [36m[36m<<<it>>>[36m[39m really
       This is [36m[36m<<<it>>>[36m[39m really

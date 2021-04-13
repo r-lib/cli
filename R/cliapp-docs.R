@@ -253,6 +253,10 @@ NULL
 #'   package) should always print as `.file` objects in cli.
 #' * `color`: Text color, an R color name or a HTML hexadecimal color. It
 #'   can be applied to most elements that are printed.
+#' * `collapse`: Specifies how to collapse a vector, before applying
+#'   styling. If a character string, then that is used as the separator.
+#'   If a function, then it is called, with the vector as the only
+#'   argument.
 #' * `digits`: Number of digits after the decimal point for numeric inline
 #'   element of class `.val`.
 #' * `fmt`: Generic formatter function that takes an input text and returns

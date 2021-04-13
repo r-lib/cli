@@ -7,7 +7,7 @@ on.exit(stop_app(), add = TRUE)
 test_that_cli(config = c("plain", "ansi"), "inline classes", {
   classes <- c(
     "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
-    "email", "url", "var", "envvar")
+    "email", "url", "var", "envvar", "cls")
 
   do <- function(class) {
 

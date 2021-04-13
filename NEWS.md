@@ -5,6 +5,9 @@
 
 * `tree()` now does not produce warnings for tibbles (#238).
 
+* New inline style: `.cls` to format class names, e.g.
+  `"{.var x} must be a {.cls tibble} object"`.
+
 # cli 2.4.0
 
 * New `cli_memo()` function to create a list of items or tasks.
