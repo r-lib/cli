@@ -6,7 +6,7 @@
 * `tree()` now does not produce warnings for tibbles (#238).
 
 * New inline style: `.cls` to format class names, e.g.
-  `"{.var x} must be a {.cls tibble} object"`.
+  `"{.var fit} must be an {.cls lm} object"`.
 
 # cli 2.4.0
 
