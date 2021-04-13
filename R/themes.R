@@ -196,8 +196,12 @@ quote_weird_name <- function(x) {
         bg_grey(tsp)
       )
     }
+  }
+
+  if (wfst || wlst || num_ansi_colors() == 1) {
     x <- paste0("'", x, "'")
   }
+
   x
 }
 

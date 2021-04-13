@@ -1,4 +1,7 @@
 
+start_app()
+on.exit(stop_app(), add = TRUE)
+
 test_that_cli(
   config = c("plain", "ansi"),
   "quoting phrases that don't start or end with letter or number", {

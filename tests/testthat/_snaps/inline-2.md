@@ -10,7 +10,7 @@
         cli_text("The name is {.email {x}}.")
       })
     Message <cliMessage>
-      The name is good-name.
+      The name is 'good-name'.
       The name is 'weird-name '.
       The name is 'weird-name '.
       The name is 'weird-name '.
@@ -42,7 +42,7 @@
         cat_line(nb(quote_weird_name("  bad  ")))
       })
     Output
-      good
+      'good'
       '  bad'
       'bad  '
       '  bad  '
