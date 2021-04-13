@@ -84,6 +84,10 @@ R (S3) class names are mapped to cli class names. E.g.
 package) should always print as \code{.file} objects in cli.
 \item \code{color}: Text color, an R color name or a HTML hexadecimal color. It
 can be applied to most elements that are printed.
+\item \code{collapse}: Specifies how to collapse a vector, before applying
+styling. If a character string, then that is used as the separator.
+If a function, then it is called, with the vector as the only
+argument.
 \item \code{digits}: Number of digits after the decimal point for numeric inline
 element of class \code{.val}.
 \item \code{fmt}: Generic formatter function that takes an input text and returns
