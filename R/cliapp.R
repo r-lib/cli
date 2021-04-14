@@ -254,19 +254,20 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   clii__container_start(app, "div", id = id,
                        class = paste(class, "alert", type))
   on.exit(clii__container_end(app, id), add = TRUE)
-  text <- app$inline(text)
-  style <- app$get_current_style()
-  before <- call_if_fun(style$before) %||% ""
-  after <- call_if_fun(style$after) %||% ""
-  before <- gsub(" ", "\u00a0", before)
-  after <- gsub(" ", "\u00a0", after)
-  text[1] <- paste0(before, text[1])
-  text[length(text)] <- paste0(text[length(text)], after)
-  if (is.function(style$fmt)) text <- style$fmt(text)
   if (wrap) {
-    text <- ansi_strwrap(text, exdent = ansi_nchar(before, "width"))
+    app$xtext(text)
+  } else {
+    text <- app$inline(text)
+    style <- app$get_current_style()
+    before <- call_if_fun(style$before) %||% ""
+    after <- call_if_fun(style$after) %||% ""
+    before <- gsub(" ", "\u00a0", before)
+    after <- gsub(" ", "\u00a0", after)
+    text[1] <- paste0(before, text[1])
+    text[length(text)] <- paste0(text[length(text)], after)
+    if (is.function(style$fmt)) text <- style$fmt(text)
+    app$cat_ln(text)
   }
-  app$cat_ln(text)
 }
 
 ## Memo -------------------------------------------------------------

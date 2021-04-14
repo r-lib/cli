@@ -6,7 +6,12 @@ call_if_fun <- function(x) {
 clii__xtext <- function(app, text, .list, indent, padding) {
   style <- app$get_current_style()
   text <- app$inline(text, .list = .list)
-  text <- ansi_strwrap(text, width = app$get_width(extra = padding))
+  exdent <- style$`text-exdent` %||% 0L
+  text <- ansi_strwrap(
+    text,
+    exdent = exdent,
+    width = app$get_width(extra = padding)
+  )
 
   text[1] <- paste0(call_if_fun(style$before), text[1])
   text[length(text)] <- paste0(text[length(text)], call_if_fun(style$after))

@@ -25,3 +25,16 @@ test_that_cli("memo glue", {
     "*" = "bullet {.key {1:3}}"
   )))
 })
+
+test_that_cli("memo wrapping", {
+  txt <- strrep("This is some text that is longer than the width. ", 3)
+  expect_snapshot(cli_memo(c(
+    txt,
+    " " = txt,
+    "v" = txt,
+    "x" = txt,
+    "!" = txt,
+    "i" = txt,
+    "*" = txt
+  )))
+})

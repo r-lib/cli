@@ -114,3 +114,83 @@
       [36mℹ[39m info [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
       [36m●[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
 
+# memo wrapping [plain]
+
+    Code
+      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt))
+    Message <cliMessage>
+      This is some text that is longer than the width. This is some text that is
+      longer than the width. This is some text that is longer than the width.
+        This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      v This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      x This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      ! This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      i This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      * This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+
+# memo wrapping [ansi]
+
+    Code
+      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt))
+    Message <cliMessage>
+      This is some text that is longer than the width. This is some text that is
+      longer than the width. This is some text that is longer than the width.
+        This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [32mv[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [31mx[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [33m![39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [36mi[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [36m*[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+
+# memo wrapping [unicode]
+
+    Code
+      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt))
+    Message <cliMessage>
+      This is some text that is longer than the width. This is some text that is
+      longer than the width. This is some text that is longer than the width.
+        This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      ✔ This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      ✖ This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      ! This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      ℹ This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      ● This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+
+# memo wrapping [fancy]
+
+    Code
+      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt))
+    Message <cliMessage>
+      This is some text that is longer than the width. This is some text that is
+      longer than the width. This is some text that is longer than the width.
+        This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [32m✔[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [31m✖[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [33m![39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [36mℹ[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+      [36m●[39m This is some text that is longer than the width. This is some text that is
+        longer than the width. This is some text that is longer than the width.
+
