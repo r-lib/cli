@@ -181,8 +181,14 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 quote_weird_name <- function(x) {
   x <- gsub(" ", "\u00a0", x)
   x2 <- ansi_strip(x)
-  wfst <- !is_alnum(first_character(x2))
-  wlst <- !is_alnum(last_character(x2))
+
+  fc <- first_character(x2)
+  sc <- second_character(x2)
+  lc <- last_character(x2)
+
+  wfst <- !is_alnum(fc, ok = "~") || (fc == "~" && !is_alnum(sc))
+  wlst <- !is_alnum(lc)
+
   if (wfst || wlst) {
     lsp <- leading_space(x2)
     tsp <- trailing_space(x2)

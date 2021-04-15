@@ -62,3 +62,18 @@
       'bad[44m  [49m'
       '[44m  [49mbad[44m  [49m'
 
+# ~/ files are not weird [ansi]
+
+    Code
+      local({
+        cat_line(nb(quote_weird_name("~/good")))
+        cat_line(nb(quote_weird_name("~~bad")))
+        cat_line(nb(quote_weird_name("bad~  ")))
+        cat_line(nb(quote_weird_name(" ~ bad ~ ")))
+      })
+    Output
+      ~/good
+      '~~bad'
+      'bad~[44m  [49m'
+      '[44m [49m~ bad ~[44m [49m'
+

@@ -151,8 +151,12 @@ first_character <- function(x) {
   substr(x, 1, 1)
 }
 
-is_alnum <- function(x) {
-  grepl("^[[:alnum:]/_.]*$", x)
+second_character <- function(x) {
+  substr(x, 2, 2)
+}
+
+is_alnum <- function(x, ok = "") {
+  grepl(paste0("^[[:alnum:]/_.", ok, "]*$"), x)
 }
 
 os_type <- function() {
