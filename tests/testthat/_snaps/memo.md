@@ -38,7 +38,7 @@
       ✖ danger
       ! warning
       ℹ info
-      ● bullet
+      • bullet
 
 # memo [fancy]
 
@@ -52,7 +52,7 @@
       [31m✖[39m danger
       [33m![39m warning
       [36mℹ[39m info
-      [36m●[39m bullet
+      [36m•[39m bullet
 
 # memo glue [plain]
 
@@ -97,7 +97,7 @@
       ✖ danger [1], [2], and [3]
       ! warning [1], [2], and [3]
       ℹ info [1], [2], and [3]
-      ● bullet [1], [2], and [3]
+      • bullet [1], [2], and [3]
 
 # memo glue [fancy]
 
@@ -112,7 +112,7 @@
       [31m✖[39m danger [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
       [33m![39m warning [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
       [36mℹ[39m info [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
-      [36m●[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
+      [36m•[39m bullet [34m[34m[1][34m[39m, [34m[34m[2][34m[39m, and [34m[34m[3][34m[39m
 
 # memo wrapping [plain]
 
@@ -171,7 +171,7 @@
         longer than the width. This is some text that is longer than the width.
       ℹ This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
-      ● This is some text that is longer than the width. This is some text that is
+      • This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
 # memo wrapping [fancy]
@@ -191,6 +191,6 @@
         longer than the width. This is some text that is longer than the width.
       [36mℹ[39m This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
-      [36m●[39m This is some text that is longer than the width. This is some text that is
+      [36m•[39m This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 

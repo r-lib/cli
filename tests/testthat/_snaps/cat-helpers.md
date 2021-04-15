@@ -32,11 +32,11 @@
     Code
       cat_bullet(letters[1:5])
     Output
-      ● a
-      ● b
-      ● c
-      ● d
-      ● e
+      • a
+      • b
+      • c
+      • d
+      • e
 
 # cat_boxx [plain]
 

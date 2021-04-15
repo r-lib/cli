@@ -38,7 +38,7 @@ symbol_utf8 <- list(
   "circle_cross" = '\u24E7',
   "circle_pipe" = '\u24be',
   "circle_question_mark" = '?\u20DD',
-  "bullet" = '\u25CF',
+  "bullet" = '\u2022',
   "dot" = '\u2024',
   "line" = '\u2500',
   "double_line" = "\u2550",

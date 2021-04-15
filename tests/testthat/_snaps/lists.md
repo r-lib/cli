@@ -22,9 +22,9 @@
         cli_end(lid)
       })
     Message <cliMessage>
-      ● foo
-      ● bar
-      ● foobar
+      • foo
+      • bar
+      • foobar
 
 # ol [plain]
 
@@ -92,11 +92,11 @@
         cli_end(lid)
       })
     Message <cliMessage>
-      ● 1
+      • 1
           - 1 1
           - 1 2
           - 1 3
-      ● 2
+      • 2
 
 # ul ol [plain]
 
@@ -134,11 +134,11 @@
         cli_end(lid)
       })
     Message <cliMessage>
-        ● 1
+        • 1
           1. 1 1
           2. 1 2
           3. 1 3
-        ● 2
+        • 2
 
 # ol ol [plain]
 
@@ -221,9 +221,9 @@
       })
     Message <cliMessage>
       1. 1
-          ● 1 1
-          ● 1 2
-          ● 1 3
+          • 1 1
+          • 1 2
+          • 1 3
       2. 2
 
 # starting with an item [plain]
@@ -250,9 +250,9 @@
         cli_end()
       })
     Message <cliMessage>
-      ● foo
-      ● bar
-      ● foobar
+      • foo
+      • bar
+      • foobar
 
 # ol, with first item [plain]
 
@@ -304,9 +304,9 @@
         cli_end(lid)
       })
     Message <cliMessage>
-      ● foo
-      ● bar
-      ● foobar
+      • foo
+      • bar
+      • foobar
 
 # dl [plain]
 
@@ -459,9 +459,9 @@
       })
     Message <cliMessage>
         a: 1
-          ● 1 1
-          ● 1 2
-          ● 1 3
+          • 1 1
+          • 1 2
+          • 1 3
         b: 2
 
 # ol dl [plain]
@@ -542,11 +542,11 @@
         cli_end(lid)
       })
     Message <cliMessage>
-        ● 1
+        • 1
           a-a: 1 1
           a-b: 1 2
           a-c: 1 3
-        ● 2
+        • 2
 
 # dl, with first item [plain]
 
