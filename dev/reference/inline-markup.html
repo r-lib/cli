@@ -215,7 +215,10 @@ terminals that support ANSI colors.</p></li>
 
 <p>When cli performs inline text formatting, it automatically collapses
 glue substitutions, after formatting. This is handy to create lists of
-files, packages, etc. See examples below.</p>
+files, packages, etc.</p>
+<p>By default cli truncates long vectors. The truncation limit is by default
+one hundred elements, but you can change it with the <code>vec_trunc</code> style.</p>
+<p>See examples below.</p>
     <h2 class="hasAnchor" id="formatting-values"><a class="anchor" href="#formatting-values"></a>Formatting values</h2>
 
     
@@ -280,6 +283,10 @@ them:</p><pre><span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></s
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {pkgs}."</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>  Packages: pkg1, pkg2, and pkg3.</span></div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {.pkg {pkgs}}"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>  Packages: </span><span style='color: #0000BB;'>pkg1</span><span>, </span><span style='color: #0000BB;'>pkg2</span><span>, and </span><span style='color: #0000BB;'>pkg3</span><span></span></div><div class='input'>
+<span class='co'>## Custom truncation, style set via cli_vec</span>
+<span class='va'>nms</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_vec.html'>cli_vec</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>vec_trunc <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Column names: {nms}."</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>  Column names: mpg, cyl, disp, hp, drat, ….</span></div><div class='input'>
 <span class='co'>## Classes are collapsed differently by default</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Hey {.var x} has class {.cls {class(x)}}"</span><span class='op'>)</span>
