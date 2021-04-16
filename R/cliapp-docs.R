@@ -77,7 +77,12 @@
 #'
 #' When cli performs inline text formatting, it automatically collapses
 #' glue substitutions, after formatting. This is handy to create lists of
-#' files, packages, etc. See examples below.
+#' files, packages, etc.
+#'
+#' By default cli truncates long vectors. The truncation limit is by default
+#' one hundred elements, but you can change it with the `vec_trunc` style.
+#'
+#' See examples below.
 #'
 #' @section Formatting values:
 #'
@@ -145,6 +150,10 @@
 #' pkgs <- c("pkg1", "pkg2", "pkg3")
 #' cli_text("Packages: {pkgs}.")
 #' cli_text("Packages: {.pkg {pkgs}}")
+#'
+#' ## Custom truncation, style set via cli_vec
+#' nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
+#' cli_text("Column names: {nms}.")
 #'
 #' ## Classes are collapsed differently by default
 #' x <- Sys.time()
@@ -283,6 +292,8 @@ NULL
 #'   collapsing them.
 #' * `vec_last`: The last seperator when collapsing vectors.
 #' * `vec_sep`: The separator to use when collapsing vectors.
+#' * `vec_trunc`: Vectors longer than this will be truncated. Defaults to
+#'   100.
 #'
 #' More properties might be adder later. If you think that a properly is
 #' not applied properly to an alement, please open an issue about it in

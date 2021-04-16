@@ -37,3 +37,11 @@ test_that_cli(config = c("ansi"), "~/ files are not weird", {
     cat_line(nb(quote_weird_name(" ~ bad ~ ")))
   }))
 })
+
+test_that_cli("custom truncation", {
+  expect_snapshot({
+    x <- cli_vec(1:100, list(vec_trunc = 5))
+    cli_text("Some numbers: {x}.")
+    cli_text("Some numbers: {.val {x}}.")
+  })
+})

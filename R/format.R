@@ -83,6 +83,10 @@ cli_format.numeric <- function(x, style = list(), ...) {
 #'   style = list(vec_sep = " & ", vec_last = " & ")
 #' )
 #' cli_text("My list: {v}.")
+#'
+#' # custom truncation
+#' x <- cli_vec(names(mtcars), list(vec_trunc = 3))
+#' cli_text("Column names: {x}.")
 
 cli_vec <- function(x, style = list()) {
   attr(x, "cli_style") <- style

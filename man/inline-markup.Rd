@@ -82,7 +82,12 @@ terminals that support ANSI colors.
 
 When cli performs inline text formatting, it automatically collapses
 glue substitutions, after formatting. This is handy to create lists of
-files, packages, etc. See examples below.
+files, packages, etc.
+
+By default cli truncates long vectors. The truncation limit is by default
+one hundred elements, but you can change it with the \code{vec_trunc} style.
+
+See examples below.
 }
 
 \section{Formatting values}{
@@ -147,6 +152,10 @@ cli_end()
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: {pkgs}.")
 cli_text("Packages: {.pkg {pkgs}}")
+
+## Custom truncation, style set via cli_vec
+nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
+cli_text("Column names: {nms}.")
 
 ## Classes are collapsed differently by default
 x <- Sys.time()

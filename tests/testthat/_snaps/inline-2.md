@@ -77,3 +77,51 @@
       'bad~[44m  [49m'
       '[44m [49m~ bad ~[44m [49m'
 
+# custom truncation [plain]
+
+    Code
+      x <- cli_vec(1:100, list(vec_trunc = 5))
+      cli_text("Some numbers: {x}.")
+    Message <cliMessage>
+      Some numbers: 1, 2, 3, 4, 5, ....
+    Code
+      cli_text("Some numbers: {.val {x}}.")
+    Message <cliMessage>
+      Some numbers: 1, 2, 3, 4, 5, ....
+
+# custom truncation [ansi]
+
+    Code
+      x <- cli_vec(1:100, list(vec_trunc = 5))
+      cli_text("Some numbers: {x}.")
+    Message <cliMessage>
+      Some numbers: 1, 2, 3, 4, 5, ....
+    Code
+      cli_text("Some numbers: {.val {x}}.")
+    Message <cliMessage>
+      Some numbers: [34m[34m1[34m[39m, [34m[34m2[34m[39m, [34m[34m3[34m[39m, [34m[34m4[34m[39m, [34m[34m5[34m[39m, ....
+
+# custom truncation [unicode]
+
+    Code
+      x <- cli_vec(1:100, list(vec_trunc = 5))
+      cli_text("Some numbers: {x}.")
+    Message <cliMessage>
+      Some numbers: 1, 2, 3, 4, 5, ….
+    Code
+      cli_text("Some numbers: {.val {x}}.")
+    Message <cliMessage>
+      Some numbers: 1, 2, 3, 4, 5, ….
+
+# custom truncation [fancy]
+
+    Code
+      x <- cli_vec(1:100, list(vec_trunc = 5))
+      cli_text("Some numbers: {x}.")
+    Message <cliMessage>
+      Some numbers: 1, 2, 3, 4, 5, ….
+    Code
+      cli_text("Some numbers: {.val {x}}.")
+    Message <cliMessage>
+      Some numbers: [34m[34m1[34m[39m, [34m[34m2[34m[39m, [34m[34m3[34m[39m, [34m[34m4[34m[39m, [34m[34m5[34m[39m, ….
+

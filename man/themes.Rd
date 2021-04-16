@@ -109,6 +109,8 @@ text.
 collapsing them.
 \item \code{vec_last}: The last seperator when collapsing vectors.
 \item \code{vec_sep}: The separator to use when collapsing vectors.
+\item \code{vec_trunc}: Vectors longer than this will be truncated. Defaults to
+100.
 }
 
 More properties might be adder later. If you think that a properly is

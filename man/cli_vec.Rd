@@ -30,6 +30,10 @@ v <- cli_vec(
   style = list(vec_sep = " & ", vec_last = " & ")
 )
 cli_text("My list: {v}.")
+
+# custom truncation
+x <- cli_vec(names(mtcars), list(vec_trunc = 3))
+cli_text("Column names: {x}.")
 }
 \seealso{
 \code{\link[=cli_format]{cli_format()}}
