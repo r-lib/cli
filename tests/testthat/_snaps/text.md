@@ -3,9 +3,6 @@
     Code
       local({
         cli_div(class = "testcli", theme = test_style())
-        withr::local_options(cli.width = 60)
-        withr::local_rng_version("3.5.0")
-        withr::local_seed(42)
         cli_h1("Header")
         cli_text(lorem_ipsum())
       })
