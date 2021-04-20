@@ -4,7 +4,10 @@ if (getRversion() >= "2.15.1") utils::globalVariables("app")
 inline_generic <- function(app, x, style) {
   before <- call_if_fun(style$before)
   after <- call_if_fun(style$after)
-  fmt <- style$fmt
+  transform <- style$transform
+  if (is.function(transform)) {
+    x <- transform(x)
+  }
   collapse <- style$collapse
   if (is.character(collapse)) {
     x <- paste0(x, collapse = collapse[1])
@@ -13,6 +16,7 @@ inline_generic <- function(app, x, style) {
     x <- collapse(x)
   }
   xx <- paste0(before, x, after)
+  fmt <- style$fmt
   if (!is.null(fmt)) xx <- vcapply(xx, fmt)
   attributes(xx) <- attributes(x)
   xx
