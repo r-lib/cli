@@ -153,7 +153,7 @@ will be ignored as well.</p>
 <p>The style of an element is calculated from themes from four sources.
 These form a stack, and the themes on the top of the stack take
 precedence, over themes in the bottom.</p><ol>
-<li><p>The cli package has a builtin theme. This is always active.
+<li><p>The cli package has a built-in theme. This is always active.
 See <code><a href='builtin_theme.html'>builtin_theme()</a></code>.</p></li>
 <li><p>When an app object is created via <code><a href='start_app.html'>start_app()</a></code>, the caller can
 specify a theme, that is added to theme stack. If no theme is
@@ -227,7 +227,8 @@ argument.</p></li>
 <li><p><code>digits</code>: Number of digits after the decimal point for numeric inline
 element of class <code>.val</code>.</p></li>
 <li><p><code>fmt</code>: Generic formatter function that takes an input text and returns
-formatted text. Can be applied to most elements.</p></li>
+formatted text. Can be applied to most elements. If colors are in use,
+the input text provided to <code>fmt</code> already includes ANSI sequences.</p></li>
 <li><p><code>font-style</code>: If <code>"italic"</code> then the text is printed as cursive.</p></li>
 <li><p><code>font-weight</code>: If <code>"bold"</code>, then the text is printed in boldface.</p></li>
 <li><p><code>line-type</code>: Line type for <code><a href='cli_rule.html'>cli_rule()</a></code>.</p></li>
@@ -241,16 +242,17 @@ as the margins, but this might change later.</p></li>
 <li><p><code>text-decoration</code>: If <code>"underline"</code>, then underlined text is created.</p></li>
 <li><p><code>text-exdent</code>: Amound of indentation from the second line of wrapped
 text.</p></li>
-<li><p><code>transform</code>: A function to call on gluw substitutions, before
-collapsing them.</p></li>
-<li><p><code>vec_last</code>: The last seperator when collapsing vectors.</p></li>
+<li><p><code>transform</code>: A function to call on glue substitutions, before
+collapsing them. Note that <code>transform</code> is applied prior to
+implementing color via ANSI sequences.</p></li>
+<li><p><code>vec_last</code>: The last separator when collapsing vectors.</p></li>
 <li><p><code>vec_sep</code>: The separator to use when collapsing vectors.</p></li>
 <li><p><code>vec_trunc</code>: Vectors longer than this will be truncated. Defaults to
 100.</p></li>
 </ul>
 
-<p>More properties might be adder later. If you think that a properly is
-not applied properly to an alement, please open an issue about it in
+<p>More properties might be added later. If you think that a property is
+not applied properly to an element, please open an issue about it in
 the cli issue tracker.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
 
