@@ -237,9 +237,6 @@ NULL
 #' the properties. See [builtin_theme()] and [simple_theme()] for examples.
 #'
 #' @section Formatter callbacks:
-#'
-#' <!-- This is where I think `transform` should also be mentioned? -->
-#'
 #' For flexibility, themes may also define formatter functions, with
 #' property name `fmt`. These will be called once the other styles are
 #' applied to an element. They are only called on elements that produce
