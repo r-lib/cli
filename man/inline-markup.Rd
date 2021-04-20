@@ -63,7 +63,7 @@ using them, see the example below.
 \subsection{Highlighting weird-looking values}{
 
 Often it is useful to highlight a weird file or path name, e.g. one
-that starts or ends with space characters. The buildin theme does this
+that starts or ends with space characters. The built-in theme does this
 for \code{.file}, \code{.path} and \code{.email} by default. You can highlight
 any string inline by adding the \code{.q} class to it.
 
@@ -93,7 +93,7 @@ See examples below.
 \section{Formatting values}{
 
 
-The \code{val} inline class formats values. By default (c.f. the builtin
+The \code{val} inline class formats values. By default (c.f. the built-in
 theme), it calls the \code{\link[=cli_format]{cli_format()}} generic function, with the current
 style as the argument. See \code{\link[=cli_format]{cli_format()}} for examples.
 }
@@ -102,9 +102,9 @@ style as the argument. See \code{\link[=cli_format]{cli_format()}} for examples.
 
 
 It might happen that you want to pass a string to \verb{cli_*} functions,
-and you do not_ want command substitution in that string, because it
-might contain \verb{\}} and \verb{\{} characters. The simplest solution for this is
-referring to the string from a template:\preformatted{msg <- "Error in if (ncol(dat$y)) \{: argument is of length zero"
+and you do \emph{not} want command substitution in that string, because it
+might contain \verb{\{} and \verb{\}} characters. The simplest solution for this is
+to refer to the string from a template:\preformatted{msg <- "Error in if (ncol(dat$y)) \{: argument is of length zero"
 cli_alert_warning("\{msg\}")
 }
 

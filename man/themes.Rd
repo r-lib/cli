@@ -15,7 +15,7 @@ The style of an element is calculated from themes from four sources.
 These form a stack, and the themes on the top of the stack take
 precedence, over themes in the bottom.
 \enumerate{
-\item The cli package has a builtin theme. This is always active.
+\item The cli package has a built-in theme. This is always active.
 See \code{\link[=builtin_theme]{builtin_theme()}}.
 \item When an app object is created via \code{\link[=start_app]{start_app()}}, the caller can
 specify a theme, that is added to theme stack. If no theme is
@@ -91,7 +91,8 @@ argument.
 \item \code{digits}: Number of digits after the decimal point for numeric inline
 element of class \code{.val}.
 \item \code{fmt}: Generic formatter function that takes an input text and returns
-formatted text. Can be applied to most elements.
+formatted text. Can be applied to most elements. If colors are in use,
+the input text provided to \code{fmt} already includes ANSI sequences.
 \item \code{font-style}: If \code{"italic"} then the text is printed as cursive.
 \item \code{font-weight}: If \code{"bold"}, then the text is printed in boldface.
 \item \code{line-type}: Line type for \code{\link[=cli_rule]{cli_rule()}}.
@@ -105,16 +106,17 @@ as the margins, but this might change later.
 \item \code{text-decoration}: If \code{"underline"}, then underlined text is created.
 \item \code{text-exdent}: Amound of indentation from the second line of wrapped
 text.
-\item \code{transform}: A function to call on gluw substitutions, before
-collapsing them.
-\item \code{vec_last}: The last seperator when collapsing vectors.
+\item \code{transform}: A function to call on glue substitutions, before
+collapsing them. Note that \code{transform} is applied prior to
+implementing color via ANSI sequences.
+\item \code{vec_last}: The last separator when collapsing vectors.
 \item \code{vec_sep}: The separator to use when collapsing vectors.
 \item \code{vec_trunc}: Vectors longer than this will be truncated. Defaults to
 100.
 }
 
-More properties might be adder later. If you think that a properly is
-not applied properly to an alement, please open an issue about it in
+More properties might be added later. If you think that a property is
+not applied properly to an element, please open an issue about it in
 the cli issue tracker.
 }
 
