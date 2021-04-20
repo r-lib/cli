@@ -63,7 +63,7 @@
 #' ## Highlighting weird-looking values
 #'
 #' Often it is useful to highlight a weird file or path name, e.g. one
-#' that starts or ends with space characters. The buildin theme does this
+#' that starts or ends with space characters. The built-in theme does this
 #' for `.file`, `.path` and `.email` by default. You can highlight
 #' any string inline by adding the `.q` class to it.
 #'
@@ -86,16 +86,16 @@
 #'
 #' @section Formatting values:
 #'
-#' The `val` inline class formats values. By default (c.f. the builtin
+#' The `val` inline class formats values. By default (c.f. the built-in
 #' theme), it calls the [cli_format()] generic function, with the current
 #' style as the argument. See [cli_format()] for examples.
 #'
 #' @section Escaping `{` and `}`:
 #'
 #' It might happen that you want to pass a string to `cli_*` functions,
-#' and you do not_ want command substitution in that string, because it
-#' might contain `}` and `{` characters. The simplest solution for this is
-#' referring to the string from a template:
+#' and you do _not_ want command substitution in that string, because it
+#' might contain `{` and `}` characters. The simplest solution for this is
+#' to refer to the string from a template:
 #'
 #' ```
 #' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
@@ -207,7 +207,7 @@ NULL
 #' These form a stack, and the themes on the top of the stack take
 #' precedence, over themes in the bottom.
 #'
-#' 1. The cli package has a builtin theme. This is always active.
+#' 1. The cli package has a built-in theme. This is always active.
 #'    See [builtin_theme()].
 #' 2. When an app object is created via [start_app()], the caller can
 #'    specify a theme, that is added to theme stack. If no theme is
@@ -295,8 +295,8 @@ NULL
 #' * `vec_trunc`: Vectors longer than this will be truncated. Defaults to
 #'   100.
 #'
-#' More properties might be adder later. If you think that a properly is
-#' not applied properly to an alement, please open an issue about it in
+#' More properties might be added later. If you think that a property is
+#' not applied properly to an element, please open an issue about it in
 #' the cli issue tracker.
 #'
 #' @section Examples:
