@@ -237,6 +237,9 @@ NULL
 #' the properties. See [builtin_theme()] and [simple_theme()] for examples.
 #'
 #' @section Formatter callbacks:
+#'
+#' <!-- This is where I think `transform` should also be mentioned? -->
+#'
 #' For flexibility, themes may also define formatter functions, with
 #' property name `fmt`. These will be called once the other styles are
 #' applied to an element. They are only called on elements that produce
@@ -274,7 +277,8 @@ NULL
 #' * `digits`: Number of digits after the decimal point for numeric inline
 #'   element of class `.val`.
 #' * `fmt`: Generic formatter function that takes an input text and returns
-#'   formatted text. Can be applied to most elements.
+#'   formatted text. Can be applied to most elements. If colors are in use,
+#'   the input text provided to `fmt` already includes ANSI sequences.
 #' * `font-style`: If `"italic"` then the text is printed as cursive.
 #' * `font-weight`: If `"bold"`, then the text is printed in boldface.
 #' * `line-type`: Line type for [cli_rule()].
@@ -288,9 +292,10 @@ NULL
 #' * `text-decoration`: If `"underline"`, then underlined text is created.
 #' * `text-exdent`: Amound of indentation from the second line of wrapped
 #'    text.
-#' * `transform`: A function to call on gluw substitutions, before
-#'   collapsing them.
-#' * `vec_last`: The last seperator when collapsing vectors.
+#' * `transform`: A function to call on glue substitutions, before
+#'   collapsing them. Note that `transform` is applied prior to
+#'   implementing color via ANSI sequences.
+#' * `vec_last`: The last separator when collapsing vectors.
 #' * `vec_sep`: The separator to use when collapsing vectors.
 #' * `vec_trunc`: Vectors longer than this will be truncated. Defaults to
 #'   100.
