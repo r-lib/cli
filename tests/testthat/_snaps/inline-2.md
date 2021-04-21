@@ -149,3 +149,35 @@
       this is a class: [34m[34m<myclass>[34m[39m
       multiple classes: [34m[34m<one/two>[34m[39m
 
+# transform [plain]
+
+    Code
+      local({
+        cli_text("This is a {.field field} (before)")
+        foo <- (function(x) toupper(x))
+        cli_div(theme = list(span.field = list(transform = foo)))
+        cli_text("This is a {.field field} (during)")
+        cli_end()
+        cli_text("This is a {.field field} (after)")
+      })
+    Message <cliMessage>
+      This is a field (before)
+      This is a FIELD (during)
+      This is a field (after)
+
+# transform [ansi]
+
+    Code
+      local({
+        cli_text("This is a {.field field} (before)")
+        foo <- (function(x) toupper(x))
+        cli_div(theme = list(span.field = list(transform = foo)))
+        cli_text("This is a {.field field} (during)")
+        cli_end()
+        cli_text("This is a {.field field} (after)")
+      })
+    Message <cliMessage>
+      This is a [32m[32mfield[32m[39m (before)
+      This is a [32m[32mFIELD[32m[39m (during)
+      This is a [32m[32mfield[32m[39m (after)
+

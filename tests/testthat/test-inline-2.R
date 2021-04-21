@@ -53,3 +53,14 @@ test_that_cli(configs = c("plain", "ansi"), "collapsing class names", {
     cli_text("multiple classes: {.cls {cc}}")
   }))
 })
+
+test_that_cli(configs = c("plain", "ansi"), "transform", {
+  expect_snapshot(local({
+    cli_text("This is a {.field field} (before)")
+    foo <- function(x) toupper(x)
+    cli_div(theme = list(span.field = list(transform = foo)))
+    cli_text("This is a {.field field} (during)")
+    cli_end()
+    cli_text("This is a {.field field} (after)")
+  }))
+})
