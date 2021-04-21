@@ -115,6 +115,10 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       "text-exdent" = 2,
       before = function(x) paste0(col_cyan(symbol$bullet), " ")
     ),
+    ".memo .memo-item->" = list(
+      "text-exdent" = 2,
+      before = function(x) paste0(symbol$arrow_right, " ")
+    ),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
     ul = list(

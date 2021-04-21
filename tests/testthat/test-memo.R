@@ -10,7 +10,8 @@ test_that_cli("memo", {
     "x" = "danger",
     "!" = "warning",
     "i" = "info",
-    "*" = "bullet"
+    "*" = "bullet",
+    ">" = "arrow"
   )))
 })
 
@@ -22,7 +23,8 @@ test_that_cli("memo glue", {
     "x" = "danger {.key {1:3}}",
     "!" = "warning {.key {1:3}}",
     "i" = "info {.key {1:3}}",
-    "*" = "bullet {.key {1:3}}"
+    "*" = "bullet {.key {1:3}}",
+    ">" = "arrow {.key {1:3}}"
   )))
 })
 
@@ -35,6 +37,7 @@ test_that_cli("memo wrapping", {
     "x" = txt,
     "!" = txt,
     "i" = txt,
-    "*" = txt
+    "*" = txt,
+    ">" = txt
   )))
 })

@@ -16,6 +16,7 @@
 #' * No name: Item without a prefix.
 #' * ` `: Indented item.
 #' * `*`: Item with a bullet.
+#' * `>`: Item with an arrow or pointer.
 #' * `v`: Item with a green "tick" symbol, like [cli_alert_success()].
 #' * `x`: Item with a ref cross, like [cli_alert_danger()].
 #' * `!`: Item with a yellow exclamation mark, like [cli_alert_warning()].
@@ -36,6 +37,7 @@
 #'         "noindent",
 #'   " " = "indent",
 #'   "*" = "bullet",
+#'   ">" = "arrow",
 #'   "v" = "success",
 #'   "x" = "danger",
 #'   "!" = "warning",

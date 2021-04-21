@@ -34,6 +34,7 @@ The builtin theme defines the following item types:
 \item No name: Item without a prefix.
 \item \verb{}: Indented item.
 \item \code{*}: Item with a bullet.
+\item \code{>}: Item with an arrow or pointer.
 \item \code{v}: Item with a green "tick" symbol, like \code{\link[=cli_alert_success]{cli_alert_success()}}.
 \item \code{x}: Item with a ref cross, like \code{\link[=cli_alert_danger]{cli_alert_danger()}}.
 \item \code{!}: Item with a yellow exclamation mark, like \code{\link[=cli_alert_warning]{cli_alert_warning()}}.
@@ -48,6 +49,7 @@ cli_memo(c(
         "noindent",
   " " = "indent",
   "*" = "bullet",
+  ">" = "arrow",
   "v" = "success",
   "x" = "danger",
   "!" = "warning",
