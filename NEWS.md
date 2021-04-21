@@ -1,5 +1,9 @@
 # cli (development version)
 
+* New `ansi_toupper()`, `ansi_tolower` and `ansi_chartr()` functions,
+  the ANSI styling aware variants of `toupper()`, `tolower()` and
+  `chartr()` (#248).
+
 * New `test_that_cli()` helper function to write testthat tests for
   cli output.
 
