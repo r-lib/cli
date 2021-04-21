@@ -45,3 +45,11 @@ test_that_cli("custom truncation", {
     cli_text("Some numbers: {.val {x}}.")
   })
 })
+
+test_that_cli(configs = c("plain", "ansi"), "collapsing class names", {
+  expect_snapshot(local({
+    cc <- c("one", "two")
+    cli_text("this is a class: {.cls myclass}")
+    cli_text("multiple classes: {.cls {cc}}")
+  }))
+})
