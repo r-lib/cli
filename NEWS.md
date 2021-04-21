@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New `cli_abort()`, `cli_warn()` and `cli_inform()` functions, to throw
+  errors with cli pluralization and styling.
+
 * New `test_that_cli()` helper function to write testthat tests for
   cli output.
 
