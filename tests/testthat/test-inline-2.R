@@ -64,3 +64,19 @@ test_that_cli(configs = c("plain", "ansi"), "transform", {
     cli_text("This is a {.field field} (after)")
   }))
 })
+
+test_that("cli_format", {
+  expect_snapshot(
+    cli_format(1:4/7, list(digits = 2))
+  )
+})
+
+test_that("cli_format() is used for .val", {
+  withr::local_options(cli.width = 60)
+  local_rng_version("3.5.0")
+  set.seed(42)
+  expect_snapshot({
+    cli_div(theme = list(.val = list(digits = 2)))
+    cli_text("Some random numbers: {.val {runif(4)}}.")
+  })
+})

@@ -181,3 +181,18 @@
       This is a [32m[32mFIELD[32m[39m (during)
       This is a [32m[32mfield[32m[39m (after)
 
+# cli_format
+
+    Code
+      cli_format(1:4 / 7, list(digits = 2))
+    Output
+      [1] 0.14 0.29 0.43 0.57
+
+# cli_format() is used for .val
+
+    Code
+      cli_div(theme = list(.val = list(digits = 2)))
+      cli_text("Some random numbers: {.val {runif(4)}}.")
+    Message <cliMessage>
+      Some random numbers: 0.13, 0.66, 0.71, and 0.46.
+

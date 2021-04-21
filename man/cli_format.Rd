@@ -7,13 +7,13 @@
 \alias{cli_format.numeric}
 \title{Format a value for printing}
 \usage{
-cli_format(x, style = list(), ...)
+cli_format(x, style = NULL, ...)
 
-\method{cli_format}{default}(x, style = list(), ...)
+\method{cli_format}{default}(x, style = NULL, ...)
 
-\method{cli_format}{character}(x, style = list(), ...)
+\method{cli_format}{character}(x, style = NULL, ...)
 
-\method{cli_format}{numeric}(x, style = list(), ...)
+\method{cli_format}{numeric}(x, style = NULL, ...)
 }
 \arguments{
 \item{x}{The object to format.}

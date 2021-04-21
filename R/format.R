@@ -27,13 +27,19 @@
 #' cli_text("{.val {nums}}")
 #' cli_end(divid)
 
-cli_format <- function(x, style = list(), ...)
-  UseMethod("cli_format")
+cli_format <- function(x, style = NULL, ...) {
+  if (is.null(style) && !is.null(default_app())) {
+    style <- default_app()$get_current_style()
+    cli_format(x, style, ...)
+  } else {
+    UseMethod("cli_format")
+  }
+}
 
 #' @rdname cli_format
 #' @export
 
-cli_format.default <- function(x, style = list(), ...) {
+cli_format.default <- function(x, style = NULL, ...) {
   x
 }
 
@@ -43,7 +49,7 @@ cli_format.default <- function(x, style = list(), ...) {
 #' @rdname cli_format
 #' @export
 
-cli_format.character <- function(x, style = list(), ...) {
+cli_format.character <- function(x, style = NULL, ...) {
   quote <- style$string_quote %||% "'"
   encodeString(x, quote = quote)
 }
@@ -54,7 +60,7 @@ cli_format.character <- function(x, style = list(), ...) {
 #' @rdname cli_format
 #' @export
 
-cli_format.numeric <- function(x, style = list(), ...) {
+cli_format.numeric <- function(x, style = NULL, ...) {
   digits <- style$digits
   if (!is.null(digits)) x <- round(x, digits)
   x
