@@ -109,6 +109,11 @@ test_that_cli(configs = "ansi", "NULL will undo color", {
   }))
 })
 
+withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
+withr::local_options(cli_theme_dark = FALSE, cli.num_colors = 256)
+start_app()
+on.exit(stop_app(), add = TRUE)
+
 test_that_cli(configs = "ansi", "NULL will undo background color", {
   expect_snapshot(local({
     cli_alert("{.emph {.code this has bg color}}")
