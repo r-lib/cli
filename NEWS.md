@@ -1,6 +1,13 @@
 
 # cli (development version)
 
+* New `style_no_*()` functions to locally undo styling.
+  New `col_none()` and `bg_none()` functions to locally undo text color
+  and background color.
+
+* It is now possible to undo text and background color in a theme, by
+  setting them to `NULL` or `"none"`.
+
 * `cli_memo()` was renamed to `cli_bullets()`, as it is by default
   formatted as a bullet list (#250).
 

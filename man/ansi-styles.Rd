@@ -10,6 +10,7 @@
 \alias{bg_red}
 \alias{bg_white}
 \alias{bg_yellow}
+\alias{bg_none}
 \alias{col_black}
 \alias{col_blue}
 \alias{col_cyan}
@@ -20,6 +21,7 @@
 \alias{col_yellow}
 \alias{col_grey}
 \alias{col_silver}
+\alias{col_none}
 \alias{style_dim}
 \alias{style_blurred}
 \alias{style_bold}
@@ -29,6 +31,16 @@
 \alias{style_reset}
 \alias{style_strikethrough}
 \alias{style_underline}
+\alias{style_no_bold}
+\alias{style_no_blurred}
+\alias{style_no_dim}
+\alias{style_no_italic}
+\alias{style_no_underline}
+\alias{style_no_inverse}
+\alias{style_no_hidden}
+\alias{style_no_strikethrough}
+\alias{style_no_color}
+\alias{style_no_bg_color}
 \title{ANSI colored text}
 \usage{
 bg_black(...)
@@ -46,6 +58,8 @@ bg_red(...)
 bg_white(...)
 
 bg_yellow(...)
+
+bg_none(...)
 
 col_black(...)
 
@@ -67,6 +81,8 @@ col_grey(...)
 
 col_silver(...)
 
+col_none(...)
+
 style_dim(...)
 
 style_blurred(...)
@@ -84,6 +100,26 @@ style_reset(...)
 style_strikethrough(...)
 
 style_underline(...)
+
+style_no_bold(...)
+
+style_no_blurred(...)
+
+style_no_dim(...)
+
+style_no_italic(...)
+
+style_no_underline(...)
+
+style_no_inverse(...)
+
+style_no_hidden(...)
+
+style_no_strikethrough(...)
+
+style_no_color(...)
+
+style_no_bg_color(...)
 }
 \arguments{
 \item{...}{Character strings, they will be pasted together with
@@ -102,11 +138,14 @@ line. They provide a mode modern interface than the crayon package.
 The \verb{col_*} functions change the (foreground) color to the text.
 These are the eight original ANSI colors. Note that in some terminals,
 they might actually look differently, as terminals have their own
-settings for how to show them.
+settings for how to show them. \code{col_none()} is the default color, this
+is useful in a substring of a colored string.
 
 The \verb{bg_*} functions change the background color of the text.
 These are the eight original ANSI background colors. These, too, can
-vary in appearence, depending on terminal settings.
+vary in appearence, depending on terminal settings. \code{bg_none()} the
+the default background color, this is useful in a substring of a
+background-colored string.
 
 The \verb{style_*} functions apply other styling to the text. The currently
 supported styling funtions are:
@@ -127,6 +166,12 @@ and they concatenate them using \code{paste0()} before adding the style.
 
 Styles can also be nested, and then inner style takes precedence, see
 examples below.
+
+Sometimes you want to revert back to the default text color, in the
+middle of colored text, or you want to have a normal font in the middle
+of italic text. You can use the \verb{style_no_*} functions for this. Every
+\verb{style_*()} function has a \verb{style_no_*()} pair, which defends its
+argument from taking on the style. See examples below.
 }
 \examples{
 col_blue("Hello ", "world!")
@@ -149,6 +194,19 @@ cat(error("Error: subscript out of bounds!\n"))
 cat(warn("Warning: shorter argument was recycled.\n"))
 cat(note("Note: no such directory.\n"))
 
+# style_no_* functions, note that the color is not removed
+style_italic(col_green(paste0(
+  "italic before, ",
+  style_no_italic("normal here, "),
+  "italic after"
+)))
+
+# avoiding  color for substring
+style_italic(col_red(paste(
+  "red before",
+  col_none("not red between"),
+  "red after"
+)))
 }
 \seealso{
 Other ANSI styling: 

@@ -46,7 +46,7 @@ cli_abort <- function(message, ..., .envir = parent.frame()) {
   }
 
   formatted1 <- fmt({
-    cli_div(class = "cli_abort")
+    cli_div(class = "cli_rlang cli_abort")
     cli_bullets(message, .envir = .envir)
   }, collapse = TRUE)
 
@@ -65,7 +65,7 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
   names(message)[1] <- "1"
 
   formatted1 <- fmt({
-    cli_div(class = "cli_warn")
+    cli_div(class = "cli_rlang cli_warn")
     cli_bullets(message, .envir = .envir)
   }, collapse = TRUE)
 
@@ -78,7 +78,7 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
 
 cli_inform <- function(message, ..., .envir = parent.frame()) {
   formatted1 <- fmt({
-    cli_div(class = "cli_warn")
+    cli_div(class = "cli_rlang cli_inform")
     cli_bullets(message, .envir = .envir)
   }, collapse = TRUE)
   formatted2 <- update_rstudio_color(formatted1)

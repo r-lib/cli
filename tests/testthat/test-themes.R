@@ -15,7 +15,7 @@ test_that_cli("add/remove/list themes", {
     cli_text(lorem_ipsum())
     cli_end()
   })
-  
+
   default_app()$remove_theme(id)
   expect_false(id %in% names(default_app()$list_themes()))
 })
@@ -86,4 +86,43 @@ test_that("theme does not precompute Unicode symbols", {
     }
   )
   expect_equal(msg2$message, "v ok2\n")
+})
+
+test_that("NULL will undo a style property", {
+  expect_snapshot(local({
+    cli_alert("this has an arrow")
+    cli_div(theme = list(.alert = list(before = NULL)))
+    cli_alert("this does not")
+  }))
+})
+
+test_that_cli(configs = "ansi", "NULL will undo color", {
+  expect_snapshot(local({
+    cli_alert("{.emph {.val this is blue}}")
+    cli_div(theme = list(span.val = list(color = NULL)))
+    cli_alert("{.emph {.val this is not}}")
+  }))
+  expect_snapshot(local({
+    cli_alert("{.emph {.val this is blue}}")
+    cli_div(theme = list(span.val = list(color = "none")))
+    cli_alert("{.emph {.val this is not}}")
+  }))
+})
+
+withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
+withr::local_options(cli_theme_dark = FALSE, cli.num_colors = 256)
+start_app()
+on.exit(stop_app(), add = TRUE)
+
+test_that_cli(configs = "ansi", "NULL will undo background color", {
+  expect_snapshot(local({
+    cli_alert("{.emph {.code this has bg color}}")
+    cli_div(theme = list(span = list("background-color" = NULL)))
+    cli_alert("{.emph {.code this does not}}")
+  }))
+  expect_snapshot(local({
+    cli_alert("{.emph {.code this has bg color}}")
+    cli_div(theme = list(span = list("background-color" = "none")))
+    cli_alert("{.emph {.code this does not}}")
+  }))
 })
