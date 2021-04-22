@@ -26,7 +26,20 @@ ansi_builtin_styles <- list(
   bg_blue = list(44, 49),
   bg_magenta = list(45, 49),
   bg_cyan = list(46, 49),
-  bg_white = list(47, 49)
+  bg_white = list(47, 49),
+
+  # similar to reset, but only for a single property
+  no_bold          = list(c(0,     23, 24, 27, 28, 29, 39, 49), 22),
+  no_blurred       = list(c(0,     23, 24, 27, 28, 29, 39, 49), 22),
+  no_italic        = list(c(0, 22,     24, 27, 28, 29, 39, 49), 23),
+  no_underline     = list(c(0, 22, 23,     27, 28, 29, 39, 49), 24),
+  no_inverse       = list(c(0, 22, 23, 24,     28, 29, 39, 49), 27),
+  no_hidden        = list(c(0, 22, 23, 24, 27,     29, 39, 49), 28),
+  no_strikethrough = list(c(0, 22, 23, 24, 27, 28,     39, 49), 29),
+  none             = list(c(0, 22, 23, 24, 27, 28, 29,     49), 39),
+  no_color         = list(c(0, 22, 23, 24, 27, 28, 29,     49), 39),
+  bg_none          = list(c(0, 22, 23, 24, 27, 28, 29, 39    ), 49),
+  no_bg_color      = list(c(0, 22, 23, 24, 27, 28, 29, 39    ), 49)
 )
 
 is_builtin_style <- function(x) {

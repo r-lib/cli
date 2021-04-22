@@ -7,11 +7,14 @@
 #' The `col_*` functions change the (foreground) color to the text.
 #' These are the eight original ANSI colors. Note that in some terminals,
 #' they might actually look differently, as terminals have their own
-#' settings for how to show them.
+#' settings for how to show them. `col_none()` is the default color, this
+#' is useful in a substring of a colored string.
 #'
 #' The `bg_*` functions change the background color of the text.
 #' These are the eight original ANSI background colors. These, too, can
-#' vary in appearence, depending on terminal settings.
+#' vary in appearence, depending on terminal settings. `bg_none()` the
+#' the default background color, this is useful in a substring of a
+#' background-colored string.
 #'
 #' The `style_*` functions apply other styling to the text. The currently
 #' supported styling funtions are:
@@ -30,6 +33,12 @@
 #'
 #' Styles can also be nested, and then inner style takes precedence, see
 #' examples below.
+#'
+#' Sometimes you want to revert back to the default text color, in the
+#' middle of colored text, or you want to have a normal font in the middle
+#' of italic text. You can use the `style_no_*` functions for this. Every
+#' `style_*()` function has a `style_no_*()` pair, which defends its
+#' argument from taking on the style. See examples below.
 #'
 #' @param ... Character strings, they will be pasted together with
 #'   `paste0()`, before applying the style function.
@@ -60,6 +69,19 @@
 #' cat(warn("Warning: shorter argument was recycled.\n"))
 #' cat(note("Note: no such directory.\n"))
 #'
+#' # style_no_* functions, note that the color is not removed
+#' style_italic(col_green(paste0(
+#'   "italic before, ",
+#'   style_no_italic("normal here, "),
+#'   "italic after"
+#' )))
+#'
+#' # avoiding  color for substring
+#' style_italic(col_red(paste(
+#'   "red before",
+#'   col_none("not red between"),
+#'   "red after"
+#' )))
 NULL
 
 #' @export
@@ -86,6 +108,9 @@ bg_white    <- create_ansi_style("bg_white")
 #' @export
 #' @name ansi-styles
 bg_yellow   <- create_ansi_style("bg_yellow")
+#' @export
+#' @name ansi-styles
+bg_none <- create_ansi_style("no_bg_color")
 
 #' @export
 #' @name ansi-styles
@@ -117,6 +142,9 @@ col_grey    <- create_ansi_style("silver")
 #' @export
 #' @name ansi-styles
 col_silver  <- create_ansi_style("silver")
+#' @export
+#' @name ansi-styles
+col_none <- create_ansi_style("no_color")
 
 #' @export
 #' @name ansi-styles
@@ -145,3 +173,34 @@ style_strikethrough <- create_ansi_style("strikethrough")
 #' @export
 #' @name ansi-styles
 style_underline     <- create_ansi_style("underline")
+
+#' @export
+#' @name ansi-styles
+style_no_bold <- create_ansi_style("no_bold")
+#' @export
+#' @name ansi-styles
+style_no_blurred <- create_ansi_style("no_blurred")
+#' @export
+#' @name ansi-styles
+style_no_dim <- create_ansi_style("no_blurred")
+#' @export
+#' @name ansi-styles
+style_no_italic <- create_ansi_style("no_italic")
+#' @export
+#' @name ansi-styles
+style_no_underline <- create_ansi_style("no_underline")
+#' @export
+#' @name ansi-styles
+style_no_inverse <- create_ansi_style("no_inverse")
+#' @export
+#' @name ansi-styles
+style_no_hidden <- create_ansi_style("no_hidden")
+#' @export
+#' @name ansi-styles
+style_no_strikethrough <- create_ansi_style("no_strikethrough")
+#' @export
+#' @name ansi-styles
+style_no_color <- create_ansi_style("no_color")
+#' @export
+#' @name ansi-styles
+style_no_bg_color <- create_ansi_style("no_bg_color")

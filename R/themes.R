@@ -292,6 +292,13 @@ create_formatter <- function(x) {
   if (!is_bold && !is_italic && !is_underline && !is_color
       && !is_bg_color) return(x)
 
+  if (is_color && is.null(x[["color"]])) {
+    x[["color"]] <- "none"
+  }
+  if (is_bg_color && is.null(x[["background-color"]])) {
+    x[["background-color"]] <- "none"
+  }
+
   fmt <- c(
     if (is_bold) list(style_bold),
     if (is_italic) list(style_italic),
