@@ -30,7 +30,7 @@ process termination. This overrides the message give when the status
 bar was created.}
 
 \item{.envir}{Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status bar if \code{.auto_close} is `TRUE.}
+also used to auto-clear the status bar if \code{.auto_close} is \code{TRUE}.}
 }
 \description{
 Clear the status bar

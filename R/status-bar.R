@@ -9,7 +9,7 @@
 #'
 #' Often status messages are associated with processes. E.g. the app starts
 #' downloading a large file, so it sets the status bar accordingly. Once the
-#' download is done (or failed), the app typically updates the status bar
+#' download is done (or has failed), the app typically updates the status bar
 #' again. cli automates much of this, via the `msg_done`, `msg_failed`, and
 #' `.auto_result` arguments. See examples below.
 #'
@@ -20,11 +20,11 @@
 #' @param msg_done The message to use when the message is cleared, when
 #'   the calculation finishes successfully. If `.auto_close` is `TRUE`
 #'   and `.auto_result` is `"done"`, then this is printed automatically
-#'   then the calling function (or `.envir`) finishes.
+#'   when the calling function (or `.envir`) finishes.
 #' @param msg_failed The message to use when the message is cleared, when
 #'   the calculation finishes unsuccessfully. If `.auto_close` is `TRUE`
 #'   and `.auto_result` is `"failed"`, then this is printed automatically
-#'   then the calling function (or `.envir`) finishes.
+#'   when the calling function (or `.envir`) finishes.
 #' @param .keep What to do when this status bar is cleared. If `TRUE` then
 #'   the content of this status bar is kept, as regular cli output (the
 #'   screen is scrolled up if needed). If `FALSE`, then this status bar
@@ -33,11 +33,11 @@
 #'   function finishes (or ‘.envir’ is removed from the stack, if
 #'   specified).
 #' @param .envir Environment to evaluate the glue expressions in. It is
-#'   also used to auto-clear the status bar if `.auto_close` is `TRUE.
+#'   also used to auto-clear the status bar if `.auto_close` is `TRUE`.
 #' @param .auto_result What to do when auto-closing the status bar.
 #' @return The id of the new status bar container element, invisibly.
 #'
-#' @seealso [cli_process_start] for a higher level interface to the
+#' @seealso [cli_process_start()] for a higher level interface to the
 #'   status bar, that adds automatic styling.
 #' @family status bar
 #' @export

@@ -60,7 +60,7 @@ function finishes (or ‘.envir’ is removed from the stack, if
 specified).}
 
 \item{.envir}{Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status bar if \code{.auto_close} is `TRUE.}
+also used to auto-clear the status bar if \code{.auto_close} is \code{TRUE}.}
 
 \item{id}{Id of the status bar container to clear. If \code{id} is not the id
 of the current status bar (because it was overwritten by another
