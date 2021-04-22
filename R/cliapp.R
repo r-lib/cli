@@ -270,7 +270,7 @@ clii_memo <- function(app, text, id, class) {
   nms[is.na(nms) | nms == ""] <- "empty"
   nms[nms == " "] <- "space"
   nms <- gsub(" ", "-", nms)
-  cls <- paste0("memo-item-", nms)
+  cls <- paste0("memo-item memo-item-", nms)
 
   lapply(seq_along(text), function(i) {
     iid <- new_uuid()
