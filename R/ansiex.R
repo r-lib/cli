@@ -682,3 +682,58 @@ ansi_columns <- function(text, width = console_width(), sep = " ",
   clp <- apply(tm, 1, paste0, collapse = "")
   ansi_string(clp)
 }
+
+#' ANSI character translation and case folding
+#'
+#' There functions are similar to [toupper()], [tolower()] and
+#' [chartr()], but they keep the ANSI colors of the string.
+#'
+#' @inheritParams base::chartr
+#' @param x Input string. May have ANSI colors and styles.
+#' @return Character vector of the same length as `x`, containing
+#'   the translated strings. ANSI styles are retained.
+#'
+#' @family ANSI string operations
+#' @export
+#' @examples
+#' ansi_toupper(col_red("Uppercase"))
+#'
+#' ansi_tolower(col_red("LowerCase"))
+#'
+#' x <- paste0(col_green("MiXeD"), col_red(" cAsE 123"))
+#' ansi_chartr("iXs", "why", x)
+
+ansi_toupper <- function(x) {
+  ansi_convert(x, toupper)
+}
+
+#' @family ANSI string operations
+#' @export
+#' @rdname ansi_toupper
+
+ansi_tolower <- function(x) {
+  ansi_convert(x, tolower)
+}
+
+#' @family ANSI string operations
+#' @export
+#' @rdname ansi_toupper
+
+ansi_chartr <- function(old, new, x) {
+  ansi_convert(x, chartr, old, new)
+}
+
+ansi_convert <- function(x, converter, ...) {
+  ansi <- re_table(ansi_regex(), x)
+  text <- non_matching(ansi, x, empty=TRUE)
+  out <- mapply(x, text, USE.NAMES = FALSE, FUN = function(x1, t1) {
+    t1 <- t1[t1[,1] <= t1[,2], , drop = FALSE]
+    for (i in seq_len(nrow(t1))) {
+      substring(x1, t1[i, 1], t1[i, 2]) <-
+        converter(x = substring(x1, t1[i, 1], t1[i, 2]), ...)
+    }
+    x1
+  })
+
+  ansi_string(out)
+}

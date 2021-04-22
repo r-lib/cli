@@ -61,6 +61,7 @@ Other ANSI string operations:
 \code{\link{ansi_strtrim}()},
 \code{\link{ansi_strwrap}()},
 \code{\link{ansi_substring}()},
+\code{\link{ansi_toupper}()},
 \code{\link{ansi_trimws}()}
 }
 \concept{ANSI string operations}
