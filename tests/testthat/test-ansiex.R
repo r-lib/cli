@@ -547,3 +547,39 @@ test_that("ansi_columns", {
     cat(ansi_columns(txt60, width = 15), sep = "\n")
   )
 })
+
+test_that_cli(configs = c("plain", "ansi"), "ansi_toupper", {
+  x <- paste0(
+    col_red("Red "),
+    "normal ",
+    style_bold(col_green("green"))
+  )
+  expect_snapshot(local({
+    cat_line(x)
+    cat_line(ansi_toupper(x))
+  }))
+})
+
+test_that_cli(configs = c("plain", "ansi"), "ansi_tolower", {
+  x <- paste0(
+    col_red("Red "),
+    "NORMAL ",
+    style_bold(col_green("grEeN"))
+  )
+  expect_snapshot(local({
+    cat_line(x)
+    cat_line(ansi_tolower(x))
+  }))
+})
+
+test_that_cli(configs = c("plain", "ansi"), "ansi_chartr", {
+  x <- paste0(
+    col_red("Red "),
+    "normal ",
+    style_bold(col_green("green"))
+  )
+  expect_snapshot(local({
+    cat_line(x)
+    cat_line(ansi_chartr(" R_", "-r*", x))
+  }))
+})
