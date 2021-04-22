@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New `cli_abort()`, `cli_warn()` and `cli_inform()` functions, to throw
+  errors with cli pluralization and styling.
+
 * New `ansi_toupper()`, `ansi_tolower` and `ansi_chartr()` functions,
   the ANSI styling aware variants of `toupper()`, `tolower()` and
   `chartr()` (#248).

@@ -21,17 +21,46 @@
 #' })
 
 cli <- function(expr) {
+  cond <- cli__message_create("meta", cli__rec(expr))
+  cli__message_emit(cond)
+  invisible()
+}
+
+cli__rec <- function(expr) {
   id <- new_uuid()
   cli_recorded[[id]] <- list()
   on.exit(rm(list = id, envir = cli_recorded), add = TRUE)
   old <- options(cli.record = id)
   on.exit(options(old), add = TRUE)
-
   expr
+  cli_recorded[[id]]
+}
 
-  cond <- cli__message_create("meta", cli_recorded[[id]])
-  cli__message_emit(cond)
-  invisible()
+cli__fmt <- function(record, collapse = FALSE, app = NULL) {
+  app <- app %||% default_app() %||% start_app(.auto_close = FALSE)
+
+  old <- app$output
+  on.exit(app$output <- old, add = TRUE)
+  on.exit(app$signal <- NULL, add = TRUE)
+  out <- rawConnection(raw(1000), open = "w")
+  on.exit(close(out), add = TRUE)
+  app$output <- out
+  app$signal <- FALSE
+
+  for (msg in record) {
+    do.call(app[[msg$type]], msg$args)
+  }
+
+  txt <- rawToChar(rawConnectionValue(out))
+  if (!collapse) txt <- unlist(strsplit(txt, "\n", fixed = TRUE))
+  txt
+}
+
+# cli__rec + cli__fmt
+
+fmt <- function(expr, collapse = FALSE, app = NULL) {
+  rec <- cli__rec(expr)
+  cli__fmt(rec, collapse, app)
 }
 
 #' CLI text
