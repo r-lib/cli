@@ -6,7 +6,7 @@
 #' messages with cli formatting, including inline styling,
 #' pluralization andglue substitutions.
 #'
-#' @param message It is formatted via a call to [cli_memo()].
+#' @param message It is formatted via a call to [cli_bullets()].
 #' @param ... Passed to [rlang::abort()], [rlang::warn()] or
 #'   [rlang::inform()].
 #' @param .envir Environment to evaluate the glue expressions in.
@@ -47,7 +47,7 @@ cli_abort <- function(message, ..., .envir = parent.frame()) {
 
   formatted1 <- fmt({
     cli_div(class = "cli_abort")
-    cli_memo(message, .envir = .envir)
+    cli_bullets(message, .envir = .envir)
   }, collapse = TRUE)
 
   # remove "Error: " that was only needed for the wrapping
@@ -66,7 +66,7 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
 
   formatted1 <- fmt({
     cli_div(class = "cli_warn")
-    cli_memo(message, .envir = .envir)
+    cli_bullets(message, .envir = .envir)
   }, collapse = TRUE)
 
   formatted2 <- update_rstudio_color(formatted1)
@@ -79,7 +79,7 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
 cli_inform <- function(message, ..., .envir = parent.frame()) {
   formatted1 <- fmt({
     cli_div(class = "cli_warn")
-    cli_memo(message, .envir = .envir)
+    cli_bullets(message, .envir = .envir)
   }, collapse = TRUE)
   formatted2 <- update_rstudio_color(formatted1)
   rlang::inform(formatted2, ...)

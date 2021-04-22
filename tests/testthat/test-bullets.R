@@ -3,7 +3,7 @@ start_app()
 on.exit(stop_app(), add = TRUE)
 
 test_that_cli("memo", {
-  expect_snapshot(cli_memo(c(
+  expect_snapshot(cli_bullets(c(
           "noindent",
     " " = "space",
     "v" = "success",
@@ -16,7 +16,7 @@ test_that_cli("memo", {
 })
 
 test_that_cli("memo glue", {
-  expect_snapshot(cli_memo(c(
+  expect_snapshot(cli_bullets(c(
           "noindent {.key {1:3}}",
     " " = "space {.key {1:3}}",
     "v" = "success {.key {1:3}}",
@@ -30,7 +30,7 @@ test_that_cli("memo glue", {
 
 test_that_cli("memo wrapping", {
   txt <- strrep("This is some text that is longer than the width. ", 3)
-  expect_snapshot(cli_memo(c(
+  expect_snapshot(cli_bullets(c(
     txt,
     " " = txt,
     "v" = txt,

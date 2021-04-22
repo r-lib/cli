@@ -33,7 +33,7 @@
 #'
 #' @export
 #' @examples
-#' cli_memo(c(
+#' cli_bullets(c(
 #'         "noindent",
 #'   " " = "indent",
 #'   "*" = "bullet",
@@ -44,7 +44,7 @@
 #'   "i" = "info"
 #' ))
 
-cli_memo <- function(text, id = NULL, class = NULL,
+cli_bullets <- function(text, id = NULL, class = NULL,
                      .envir = parent.frame()) {
   cli__message(
     "memo",

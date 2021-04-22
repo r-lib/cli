@@ -1,4 +1,8 @@
+
 # cli (development version)
+
+* `cli_memo()` was renamed to `cli_bullets()`, as it is by default
+  formatted as a bullet list (#250).
 
 * New `cli_abort()`, `cli_warn()` and `cli_inform()` functions, to throw
   errors with cli pluralization and styling.

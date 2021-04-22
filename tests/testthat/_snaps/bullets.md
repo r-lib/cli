@@ -1,7 +1,7 @@
 # memo [plain]
 
     Code
-      cli_memo(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
+      cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
     Message <cliMessage>
       noindent
@@ -16,7 +16,7 @@
 # memo [ansi]
 
     Code
-      cli_memo(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
+      cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
     Message <cliMessage>
       noindent
@@ -31,7 +31,7 @@
 # memo [unicode]
 
     Code
-      cli_memo(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
+      cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
     Message <cliMessage>
       noindent
@@ -46,7 +46,7 @@
 # memo [fancy]
 
     Code
-      cli_memo(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
+      cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
     Message <cliMessage>
       noindent
@@ -61,7 +61,7 @@
 # memo glue [plain]
 
     Code
-      cli_memo(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+      cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
     Message <cliMessage>
@@ -77,7 +77,7 @@
 # memo glue [ansi]
 
     Code
-      cli_memo(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+      cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
     Message <cliMessage>
@@ -93,7 +93,7 @@
 # memo glue [unicode]
 
     Code
-      cli_memo(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+      cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
     Message <cliMessage>
@@ -109,7 +109,7 @@
 # memo glue [fancy]
 
     Code
-      cli_memo(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+      cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
     Message <cliMessage>
@@ -125,7 +125,7 @@
 # memo wrapping [plain]
 
     Code
-      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
+      cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
     Message <cliMessage>
       This is some text that is longer than the width. This is some text that is
@@ -148,7 +148,7 @@
 # memo wrapping [ansi]
 
     Code
-      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
+      cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
     Message <cliMessage>
       This is some text that is longer than the width. This is some text that is
@@ -171,7 +171,7 @@
 # memo wrapping [unicode]
 
     Code
-      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
+      cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
     Message <cliMessage>
       This is some text that is longer than the width. This is some text that is
@@ -194,7 +194,7 @@
 # memo wrapping [fancy]
 
     Code
-      cli_memo(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
+      cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
     Message <cliMessage>
       This is some text that is longer than the width. This is some text that is

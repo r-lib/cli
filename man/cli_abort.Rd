@@ -14,7 +14,7 @@ cli_warn(message, ..., .envir = parent.frame())
 cli_inform(message, ..., .envir = parent.frame())
 }
 \arguments{
-\item{message}{It is formatted via a call to \code{\link[=cli_memo]{cli_memo()}}.}
+\item{message}{It is formatted via a call to \code{\link[=cli_bullets]{cli_bullets()}}.}
 
 \item{...}{Passed to \code{\link[rlang:abort]{rlang::abort()}}, \code{\link[rlang:abort]{rlang::warn()}} or
 \code{\link[rlang:abort]{rlang::inform()}}.}
