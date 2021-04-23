@@ -44,7 +44,7 @@ format_error <- function(message, .envir = parent.frame()) {
   formatted1 <- fmt({
     cli_div(class = "cli_rlang cli_abort")
     cli_bullets(message, .envir = .envir)
-  }, collapse = TRUE)
+  }, collapse = TRUE, strip_newline = TRUE)
 
   # remove "Error: " that was only needed for the wrapping
   formatted2 <- ansi_substr(formatted1, 8, nchar(formatted1))
@@ -61,7 +61,7 @@ format_warning <- function(message, .envir = parent.frame()) {
   formatted1 <- fmt({
     cli_div(class = "cli_rlang cli_warn")
     cli_bullets(message, .envir = .envir)
-  }, collapse = TRUE)
+  }, collapse = TRUE, strip_newline = TRUE)
 
   update_rstudio_color(formatted1)
 }
@@ -73,7 +73,7 @@ format_message <- function(message, .envir = parent.frame()) {
   formatted1 <- fmt({
     cli_div(class = "cli_rlang cli_inform")
     cli_bullets(message, .envir = .envir)
-  }, collapse = TRUE)
+  }, collapse = TRUE, strip_newline = TRUE)
   update_rstudio_color(formatted1)
 }
 

@@ -36,7 +36,8 @@ cli__rec <- function(expr) {
   cli_recorded[[id]]
 }
 
-cli__fmt <- function(record, collapse = FALSE, app = NULL) {
+cli__fmt <- function(record, collapse = FALSE, strip_newline = FALSE,
+                     app = NULL) {
   app <- app %||% default_app() %||% start_app(.auto_close = FALSE)
 
   old <- app$output
@@ -52,15 +53,19 @@ cli__fmt <- function(record, collapse = FALSE, app = NULL) {
   }
 
   txt <- rawToChar(rawConnectionValue(out))
-  if (!collapse) txt <- unlist(strsplit(txt, "\n", fixed = TRUE))
+  if (!collapse) {
+    txt <- unlist(strsplit(txt, "\n", fixed = TRUE))
+  } else if (strip_newline) {
+    txt <- substr(txt, 1, nchar(txt) - 1L)
+  }
   txt
 }
 
 # cli__rec + cli__fmt
 
-fmt <- function(expr, collapse = FALSE, app = NULL) {
+fmt <- function(expr, collapse = FALSE, strip_newline = FALSE, app = NULL) {
   rec <- cli__rec(expr)
-  cli__fmt(rec, collapse, app)
+  cli__fmt(rec, collapse, strip_newline, app)
 }
 
 #' CLI text
