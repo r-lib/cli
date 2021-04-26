@@ -1,5 +1,5 @@
 
-# cli (development version)
+# cli 2.5.0
 
 * New `style_no_*()` functions to locally undo styling.
   New `col_none()` and `bg_none()` functions to locally undo text color
