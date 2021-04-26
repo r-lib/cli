@@ -218,7 +218,11 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
 hash_color_regex <- "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"
 
 is_r_color <- function(x) {
-  x %in% grDevices::colors() || grepl(hash_color_regex, x)
+  if (!is.character(x) || length(x) != 1 || is.na(x)) {
+    FALSE
+  } else {
+    x %in% grDevices::colors() || grepl(hash_color_regex, x)
+  }
 }
 
 is_rgb_matrix <- function(x) {
