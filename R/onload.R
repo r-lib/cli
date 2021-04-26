@@ -10,6 +10,12 @@ clienv$status <- list()
 .onLoad <- function(libname, pkgname) {
 
   pkgenv <- environment(dummy)
+
+  clienv$pid <- Sys.getpid()
+  clienv$progress_client_version <- "1.0.0"
+  clienv$progress_server_version <- "1.0.0"
+  clienv$progress_handlers <- new.env(parent = emptyenv())
+
   makeActiveBinding(
     "symbol",
     function() {
