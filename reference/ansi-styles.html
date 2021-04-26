@@ -73,7 +73,7 @@ line. They provide a mode modern interface than the crayon package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
       </span>
     </div>
 
@@ -156,6 +156,8 @@ line. They provide a mode modern interface than the crayon package.</p>
 
 <span class='fu'>bg_yellow</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
+<span class='fu'>bg_none</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
 <span class='fu'>col_black</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>col_blue</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
@@ -176,6 +178,8 @@ line. They provide a mode modern interface than the crayon package.</p>
 
 <span class='fu'>col_silver</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
+<span class='fu'>col_none</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
 <span class='fu'>style_dim</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>style_blurred</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
@@ -192,7 +196,27 @@ line. They provide a mode modern interface than the crayon package.</p>
 
 <span class='fu'>style_strikethrough</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>style_underline</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>style_underline</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_bold</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_blurred</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_dim</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_italic</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_underline</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_inverse</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_hidden</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_strikethrough</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_color</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>style_no_bg_color</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,10 +238,13 @@ use <code><a href='https://rdrr.io/r/base/cat.html'>cat()</a></code> to print th
     <p>The <code>col_*</code> functions change the (foreground) color to the text.
 These are the eight original ANSI colors. Note that in some terminals,
 they might actually look differently, as terminals have their own
-settings for how to show them.</p>
+settings for how to show them. <code>col_none()</code> is the default color, this
+is useful in a substring of a colored string.</p>
 <p>The <code>bg_*</code> functions change the background color of the text.
 These are the eight original ANSI background colors. These, too, can
-vary in appearence, depending on terminal settings.</p>
+vary in appearence, depending on terminal settings. <code>bg_none()</code> the
+the default background color, this is useful in a substring of a
+background-colored string.</p>
 <p>The <code>style_*</code> functions apply other styling to the text. The currently
 supported styling funtions are:</p><ul>
 <li><p><code>style_reset()</code> to remove any style, including color,</p></li>
@@ -235,6 +262,11 @@ show a bright, high intensity text instead,</p></li>
 and they concatenate them using <code><a href='https://rdrr.io/r/base/paste.html'>paste0()</a></code> before adding the style.</p>
 <p>Styles can also be nested, and then inner style takes precedence, see
 examples below.</p>
+<p>Sometimes you want to revert back to the default text color, in the
+middle of colored text, or you want to have a normal font in the middle
+of italic text. You can use the <code>style_no_*</code> functions for this. Every
+<code>style_*()</code> function has a <code>style_no_*()</code> pair, which defends its
+argument from taking on the style. See examples below.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other ANSI styling: 
@@ -267,7 +299,22 @@ examples below.</p>
 #&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>note</span><span class='op'>(</span><span class='st'>"Note: no such directory.\n"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #00BBBB;'>Note: no such directory.
 #&gt; </span><span></div><div class='input'>
-</div></span></pre>
+<span class='co'># style_no_* functions, note that the color is not removed</span>
+<span class='fu'>style_italic</span><span class='op'>(</span><span class='fu'>col_green</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
+  <span class='st'>"italic before, "</span>,
+  <span class='fu'>style_no_italic</span><span class='op'>(</span><span class='st'>"normal here, "</span><span class='op'>)</span>,
+  <span class='st'>"italic after"</span>
+<span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;ansi_string&gt;
+#&gt; [1] </span><span style='color: #00BB00;font-style: italic;'>italic before, </span><span style='color: #00BB00;'>normal here, </span><span style='color: #00BB00;font-style: italic;'>italic after</span><span></div><div class='input'>
+<span class='co'># avoiding  color for substring</span>
+<span class='fu'>style_italic</span><span class='op'>(</span><span class='fu'>col_red</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span>
+  <span class='st'>"red before"</span>,
+  <span class='fu'>col_none</span><span class='op'>(</span><span class='st'>"not red between"</span><span class='op'>)</span>,
+  <span class='st'>"red after"</span>
+<span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;ansi_string&gt;
+#&gt; [1] </span><span style='color: #BB0000;font-style: italic;'>red before </span><span style='font-style: italic;'>not red between</span><span style='color: #BB0000;font-style: italic;'> red after</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if a string has some ANSI styling — ansi_has_any • cli</title>
+<title>Format an error, warning or diagnostic message — format_error • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Check if a string has some ANSI styling — ansi_has_any" />
-<meta property="og:description" content="Check if a string has some ANSI styling" />
+<meta property="og:title" content="Format an error, warning or diagnostic message — format_error" />
+<meta property="og:description" content="You can then throw this message with stop() or rlang::abort()." />
 
 
 
@@ -129,43 +129,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if a string has some ANSI styling</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
-    <div class="hidden name"><code>ansi_has_any.Rd</code></div>
+    <h1>Format an error, warning or diagnostic message</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/format-conditions.R'><code>R/format-conditions.R</code></a></small>
+    <div class="hidden name"><code>format_error.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if a string has some ANSI styling</p>
+    <p>You can then throw this message with <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code> or <code><a href='https://rlang.r-lib.org/reference/abort.html'>rlang::abort()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='va'>string</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>format_error</span><span class='op'>(</span><span class='va'>message</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>format_warning</span><span class='op'>(</span><span class='va'>message</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>format_message</span><span class='op'>(</span><span class='va'>message</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>string</th>
-      <td><p>The string to check. It can also be a character
-vector.</p></td>
+      <th>message</th>
+      <td><p>It is formatted via a call to <code><a href='cli_bullets.html'>cli_bullets()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>.envir</th>
+      <td><p>Environment to evaluate the glue expressions in.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Logical vector, <code>TRUE</code> for the strings that have some
-ANSI styling.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other low level ANSI functions: 
-<code><a href='ansi_hide_cursor.html'>ansi_hide_cursor</a>()</code>,
-<code><a href='ansi_regex.html'>ansi_regex</a>()</code>,
-<code><a href='ansi_strip.html'>ansi_strip</a>()</code></p></div>
+    <p>The messages can use inline styling, pluralization and glue
+substitutions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## The second one has style if ANSI colors are supported</span>
-<span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='st'>"boo"</span>
+<span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='fu'>format_error</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+        <span class='st'>"{.var n} must be a numeric vector"</span>,
+  <span class='st'>"x"</span> <span class='op'>=</span> <span class='st'>"You've supplied a {.cls {class(n)}} vector."</span>
+<span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>len</span> <span class='op'>&lt;-</span> <span class='fl'>26</span>
+<span class='va'>idx</span> <span class='op'>&lt;-</span> <span class='fl'>100</span>
+<span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='fu'>format_error</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+        <span class='st'>"Must index an existing element:"</span>,
+  <span class='st'>"i"</span> <span class='op'>=</span> <span class='st'>"There {?is/are} {len} element{?s}."</span>,
+  <span class='st'>"x"</span> <span class='op'>=</span> <span class='st'>"You've tried to subset element {idx}."</span>
+<span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

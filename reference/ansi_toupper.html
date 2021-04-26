@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if a string has some ANSI styling — ansi_has_any • cli</title>
+<title>ANSI character translation and case folding — ansi_toupper • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Check if a string has some ANSI styling — ansi_has_any" />
-<meta property="og:description" content="Check if a string has some ANSI styling" />
+<meta property="og:title" content="ANSI character translation and case folding — ansi_toupper" />
+<meta property="og:description" content="There functions are similar to toupper(), tolower() and
+chartr(), but they keep the ANSI colors of the string." />
 
 
 
@@ -129,43 +130,91 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if a string has some ANSI styling</h1>
+    <h1>ANSI character translation and case folding</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
-    <div class="hidden name"><code>ansi_has_any.Rd</code></div>
+    <div class="hidden name"><code>ansi_toupper.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Check if a string has some ANSI styling</p>
+    <p>There functions are similar to <code><a href='https://rdrr.io/r/base/chartr.html'>toupper()</a></code>, <code><a href='https://rdrr.io/r/base/chartr.html'>tolower()</a></code> and
+<code><a href='https://rdrr.io/r/base/chartr.html'>chartr()</a></code>, but they keep the ANSI colors of the string.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='va'>string</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_toupper</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>ansi_tolower</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
+<span class='fu'>ansi_chartr</span><span class='op'>(</span><span class='va'>old</span>, <span class='va'>new</span>, <span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>string</th>
-      <td><p>The string to check. It can also be a character
-vector.</p></td>
+      <th>x</th>
+      <td><p>Input string. May have ANSI colors and styles.</p></td>
+    </tr>
+    <tr>
+      <th>old</th>
+      <td><p>a character string specifying the characters to be
+    translated.  If a character vector of length 2 or more is supplied,
+    the first element is used with a warning.</p></td>
+    </tr>
+    <tr>
+      <th>new</th>
+      <td><p>a character string specifying the translations. If a
+    character vector of length 2 or more is supplied, the first element
+    is used with a warning.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Logical vector, <code>TRUE</code> for the strings that have some
-ANSI styling.</p>
+    <p>Character vector of the same length as <code>x</code>, containing
+the translated strings. ANSI styles are retained.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other low level ANSI functions: 
-<code><a href='ansi_hide_cursor.html'>ansi_hide_cursor</a>()</code>,
-<code><a href='ansi_regex.html'>ansi_regex</a>()</code>,
-<code><a href='ansi_strip.html'>ansi_strip</a>()</code></p></div>
+    <div class='dont-index'><p>Other ANSI string operations: 
+<code><a href='ansi_align.html'>ansi_align</a>()</code>,
+<code><a href='ansi_columns.html'>ansi_columns</a>()</code>,
+<code><a href='ansi_nchar.html'>ansi_nchar</a>()</code>,
+<code><a href='ansi_strsplit.html'>ansi_strsplit</a>()</code>,
+<code><a href='ansi_strtrim.html'>ansi_strtrim</a>()</code>,
+<code><a href='ansi_strwrap.html'>ansi_strwrap</a>()</code>,
+<code><a href='ansi_substring.html'>ansi_substring</a>()</code>,
+<code><a href='ansi_substr.html'>ansi_substr</a>()</code>,
+<code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p>
+<p>Other ANSI string operations: 
+<code><a href='ansi_align.html'>ansi_align</a>()</code>,
+<code><a href='ansi_columns.html'>ansi_columns</a>()</code>,
+<code><a href='ansi_nchar.html'>ansi_nchar</a>()</code>,
+<code><a href='ansi_strsplit.html'>ansi_strsplit</a>()</code>,
+<code><a href='ansi_strtrim.html'>ansi_strtrim</a>()</code>,
+<code><a href='ansi_strwrap.html'>ansi_strwrap</a>()</code>,
+<code><a href='ansi_substring.html'>ansi_substring</a>()</code>,
+<code><a href='ansi_substr.html'>ansi_substr</a>()</code>,
+<code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p>
+<p>Other ANSI string operations: 
+<code><a href='ansi_align.html'>ansi_align</a>()</code>,
+<code><a href='ansi_columns.html'>ansi_columns</a>()</code>,
+<code><a href='ansi_nchar.html'>ansi_nchar</a>()</code>,
+<code><a href='ansi_strsplit.html'>ansi_strsplit</a>()</code>,
+<code><a href='ansi_strtrim.html'>ansi_strtrim</a>()</code>,
+<code><a href='ansi_strwrap.html'>ansi_strwrap</a>()</code>,
+<code><a href='ansi_substring.html'>ansi_substring</a>()</code>,
+<code><a href='ansi_substr.html'>ansi_substr</a>()</code>,
+<code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## The second one has style if ANSI colors are supported</span>
-<span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>ansi_has_any</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"foobar"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>ansi_toupper</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"Uppercase"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;ansi_string&gt;
+#&gt; [1] <span style='color: #BB0000;'>UPPERCASE</span><span></div><div class='input'>
+<span class='fu'>ansi_tolower</span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"LowerCase"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;ansi_string&gt;
+#&gt; [1] </span><span style='color: #BB0000;'>lowercase</span><span></div><div class='input'>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>col_green</a></span><span class='op'>(</span><span class='st'>"MiXeD"</span><span class='op'>)</span>, <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>" cAsE 123"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>ansi_chartr</span><span class='op'>(</span><span class='st'>"iXs"</span>, <span class='st'>"why"</span>, <span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; &lt;ansi_string&gt;
+#&gt; [1] </span><span style='color: #00BB00;'>MwheD</span><span style='color: #BB0000;'> cAyE 123</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
