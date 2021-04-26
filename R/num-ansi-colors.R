@@ -159,8 +159,15 @@ detect_tty_colors <- function() {
   # Emacs on Unix?
   if (os_type() == "unix" && is_emacs_with_color()) return(8L)
 
+  # RStudio terminal and Windows, apparently only eight colors
+  win10_build_ok <- win10_build() >= 16257
+  if (os_type() == "windows" && win10_build_ok &&
+      rstudio$detect()$type == "rstudio_terminal") {
+   return(8L)
+  }
+
   # Windows terminal with native color support?
-  if (os_type() == "windows" && win10_build() >= 16257) {
+  if (os_type() == "windows" && win10_build_ok) {
     # this is rather weird, but echo turns on color support :D
     system2("cmd", c("/c", "echo 1 >NUL"))
     return(256L)
