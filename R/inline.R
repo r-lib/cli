@@ -18,7 +18,6 @@ inline_generic <- function(app, x, style) {
   xx <- paste0(before, x, after)
   fmt <- style$fmt
   if (!is.null(fmt)) xx <- vcapply(xx, fmt)
-  attributes(xx) <- attributes(x)
   xx
 }
 
