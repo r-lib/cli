@@ -16,7 +16,7 @@ theme (id of the theme the element added), \code{styles} (computed styles
 for the element).
 }
 \description{
-Return the current state of a clie app. It includes the currencly
+Return the current state of a cli app. It includes the currently
 open tags, their ids, classes and their computed styles.
 }
 \details{

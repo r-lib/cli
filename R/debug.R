@@ -1,7 +1,7 @@
 
 #' Debug cli internals
 #'
-#' Return the current state of a clie app. It includes the currencly
+#' Return the current state of a cli app. It includes the currently
 #' open tags, their ids, classes and their computed styles.
 #'
 #' The returned data frame has a print method, and if you want to create
