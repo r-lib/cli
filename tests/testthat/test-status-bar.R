@@ -26,9 +26,9 @@ test_that("output while status bar is active", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
-    "\rstatus1",
-    "\r       \rout2\nstatus1",
-    "\rstatus2",
+    "\rstatus1\r",
+    "\r       \rout2\nstatus1\r",
+    "\rstatus2\r",
     "\r       \r"))
 })
 
@@ -41,7 +41,7 @@ test_that("interpolation", {
   }
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
-    "\rYou see 1+1=2, this is {cli}",
+    "\rYou see 1+1=2, this is {cli}\r",
     "\r                            \r"))
 })
 
@@ -55,8 +55,8 @@ test_that("update", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
-    "\rstatus1",
-    "\rstatus2",
+    "\rstatus1\r",
+    "\rstatus2\r",
     "\r       \r"))
 })
 
@@ -67,7 +67,7 @@ test_that("keep", {
     cli_status_clear()
   }
   out <- ansi_strip(capt0(f()))
-  expect_equal(out, "\r* This is the current status\n")
+  expect_equal(out, "\r* This is the current status\r\n")
 })
 
 test_that("multiple status bars", {
@@ -82,12 +82,12 @@ test_that("multiple status bars", {
   }
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
-    "\rstatus1",
-    "\r       \rtext1\nstatus1",        # emit text1, restore status1
-    "\rstatus2",                        # show status2
-    "\r       \rtext2\nstatus2",        # emit text2, restore status2
-    "\r       \rstatus1",               # clear status2, restore status1
-    "\r       \rtext3\nstatus1",        # emit text3, restore status1
+    "\rstatus1\r",
+    "\r       \rtext1\nstatus1\r",      # emit text1, restore status1
+    "\rstatus2\r",                      # show status2
+    "\r       \rtext2\nstatus2\r",      # emit text2, restore status2
+    "\r       \rstatus1\r",             # clear status2, restore status1
+    "\r       \rtext3\nstatus1\r",      # emit text3, restore status1
     "\r       \r"))                     # (auto)clear status1
 })
 
@@ -104,7 +104,7 @@ test_that("truncating", {
   }
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
-    "\rEiusmod enim mollit aute aliquip Lore...",
+    "\rEiusmod enim mollit aute aliquip Lore...\r",
     "\r                                        \r"))
 })
 
@@ -147,9 +147,9 @@ test_that("successful termination", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
-    "\rstatus1",
-    "\r       \rout2\nstatus1",
-    "\rstatus1 ... done\n"
+    "\rstatus1\r",
+    "\r       \rout2\nstatus1\r",
+    "\rstatus1 ... done\r\n"
   ))
 })
 
@@ -164,9 +164,9 @@ test_that("terminate with failed", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
-    "\rstatus1",
-    "\r       \rout2\nstatus1",
-    "\rstatus1 ... failed\n"
+    "\rstatus1\r",
+    "\r       \rout2\nstatus1\r",
+    "\rstatus1 ... failed\r\n"
   ))
 })
 
@@ -180,9 +180,9 @@ test_that("auto close with success", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
-    "\rstatus1",
-    "\r       \rout2\nstatus1",
-    "\rstatus1 ... done\n"
+    "\rstatus1\r",
+    "\r       \rout2\nstatus1\r",
+    "\rstatus1 ... done\r\n"
   ))
 })
 
@@ -198,9 +198,9 @@ test_that("auto close wtih failure", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "out1\n",
-    "\rstatus1",
-    "\r       \rout2\nstatus1",
-    "\rstatus1 ... failed\n"
+    "\rstatus1\r",
+    "\r       \rout2\nstatus1\r",
+    "\rstatus1 ... failed\r\n"
   ))
 })
 
@@ -218,7 +218,7 @@ test_that("auto close with styling", {
     if (is_interactive()) Sys.sleep(1)
   }
   out <- ansi_strip(capt0(f()))
-  expect_match(out, "status1 ... failed\n")
+  expect_match(out, "status1 ... failed\r\n")
 
   f2 <- function() {
     cli_text("out1")
@@ -233,7 +233,7 @@ test_that("auto close with styling", {
     if (is_interactive()) Sys.sleep(1)
   }
   out2 <- ansi_strip(capt0(f2()))
-  expect_match(out2, "status1 ... done\n")
+  expect_match(out2, "status1 ... done\r\n")
 })
 
 test_that("process auto close with success", {
@@ -282,16 +282,51 @@ test_that("Emojis are cleaned up properly", {
   exps <- c(
     paste0(
       "out1\n",
-      "\r\U0001F477",
-      "\r  \rout2\n\U0001F477",
-      "\r\u2728",
+      "\r\U0001F477\r",
+      "\r  \rout2\n\U0001F477\r",
+      "\r\u2728\r",
       "\r  \r"),
     paste0(
       "out1\n",
-      "\r<U+0001F477>",
-      "\r  \rout2\n<U+0001F477>",
-      "\r<U+2728>",
+      "\r<U+0001F477>\r",
+      "\r  \rout2\n<U+0001F477>\r",
+      "\r<U+2728>\r",
       "\r  \r")
   )
   expect_true(out %in% exps)
+})
+
+test_that("auto-close with done or failure", {
+  withr::local_options(list(
+    cli.ansi = FALSE,
+    cli.dynamic = TRUE,
+    cli.unicode = FALSE
+  ))
+  f <- function() {
+    cli_text("out1")
+    sb <- cli_process_start("status1")
+    cli_text("out2")
+  }
+  out <- ansi_strip(capt0(f()))
+  expect_match(out, "status1 ... done")
+
+  out <- ansi_strip(capt0(f()))
+  expect_match(out, "status1 ... done")
+
+  f2 <- function() {
+    cli_text("out1")
+    sb <- cli_process_start("status1")
+    cli_text("out2")
+    stop("oops")
+  }
+
+  out2 <- ansi_strip(capt0(tryCatch(f2(), error = function(err) NULL)))
+  expect_match(out2, fixed = TRUE, paste0(
+    "out1\n",
+    "\ri status1\r",
+    "\r         \r",
+    "out2\n",
+    "i status1\r",
+    "\rx status1 ... failed\r\n"
+  ))
 })
