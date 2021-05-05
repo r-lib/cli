@@ -40,10 +40,14 @@
 
 
 <meta property="og:title" content="Indicate the start and termination of some computation in the status bar — cli_process_start" />
-<meta property="og:description" content="Typically you call cli_process_start() to start the process, and then
-cli_process_done() when it is done. If an error happens before
-cli_process_done() is called, then cli automatically shows the message
-for unsuccessful termination." />
+<meta property="og:description" content="The status bar is the last line of the terminal. cli apps can use this
+to show status information, progress bars, etc. The status bar is kept
+intact by all semantic cli output.
+You call cli_process_start() to start a status.
+You may call cli_process_update() to update a status, if needed.
+You may call cli_process_done() or cli_process_failed() to manually
+terminate a status, if you are not relying on auto-termination (see
+above)." />
 
 
 <meta name="robots" content="noindex">
@@ -138,21 +142,33 @@ for unsuccessful termination." />
     </div>
 
     <div class="ref-description">
-    <p>Typically you call <code>cli_process_start()</code> to start the process, and then
-<code>cli_process_done()</code> when it is done. If an error happens before
-<code>cli_process_done()</code> is called, then cli automatically shows the message
-for unsuccessful termination.</p>
+    <p>The <em>status bar</em> is the last line of the terminal. cli apps can use this
+to show status information, progress bars, etc. The status bar is kept
+intact by all semantic cli output.</p>
+<p>You call <code>cli_process_start()</code> to start a status.</p>
+<p>You may call <code>cli_process_update()</code> to update a status, if needed.</p>
+<p>You may call <code>cli_process_done()</code> or <code>cli_process_failed()</code> to manually
+terminate a status, if you are not relying on auto-termination (see
+above).</p>
     </div>
 
     <pre class="usage"><span class='fu'>cli_process_start</span><span class='op'>(</span>
   <span class='va'>msg</span>,
-  msg_done <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>msg</span>, <span class='st'>"... done"</span><span class='op'>)</span>,
-  msg_failed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>msg</span>, <span class='st'>"... failed"</span><span class='op'>)</span>,
-  on_exit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"failed"</span>, <span class='st'>"done"</span><span class='op'>)</span>,
+  msg_done <span class='op'>=</span> <span class='va'>msg</span>,
+  msg_failed <span class='op'>=</span> <span class='va'>msg</span>,
+  on_exit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auto"</span>, <span class='st'>"autoclear"</span>, <span class='st'>"failed"</span>, <span class='st'>"done"</span><span class='op'>)</span>,
   msg_class <span class='op'>=</span> <span class='st'>"alert-info"</span>,
   done_class <span class='op'>=</span> <span class='st'>"alert-success"</span>,
   failed_class <span class='op'>=</span> <span class='st'>"alert-danger"</span>,
   .auto_close <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>cli_process_update</span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  msg <span class='op'>=</span> <span class='cn'>NULL</span>,
+  msg_done <span class='op'>=</span> <span class='cn'>NULL</span>,
+  msg_failed <span class='op'>=</span> <span class='cn'>NULL</span>,
   .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>)</span>
 
@@ -178,21 +194,33 @@ for unsuccessful termination.</p>
       <th>msg</th>
       <td><p>The message to show to indicate the start of the process or
 computation. It will be collapsed into a single string, and the first
-line is kept and cut to <code><a href='console_width.html'>console_width()</a></code>.</p></td>
+line is kept and cut to <code><a href='console_width.html'>console_width()</a></code>. You can use cli
+<a href='inline-markup.html'>inline markup</a> in this message. If the message
+contains <a href='https://glue.tidyverse.org/reference/glue.html'>glue</a> interpolation, then it will be evaluated
+every time the message is updated. <code>cli_process_update()</code> may update
+this message.</p></td>
     </tr>
     <tr>
       <th>msg_done</th>
-      <td><p>The message to use for successful termination.</p></td>
+      <td><p>The message to use for successful termination.
+You can use cli <a href='inline-markup.html'>inline markup</a> in this message. If the
+message contains <a href='https://glue.tidyverse.org/reference/glue.html'>glue</a> interpolation, then it will be
+evaluated before successful termination. <code>cli_process_update()</code> may
+update this message.</p></td>
     </tr>
     <tr>
       <th>msg_failed</th>
-      <td><p>The message to use for unsuccessful termination.</p></td>
+      <td><p>The message to use for unsuccessful termination.
+You can use cli <a href='inline-markup.html'>inline markup</a> in this message. If the
+message contains <a href='https://glue.tidyverse.org/reference/glue.html'>glue</a> interpolation, then it will be
+evaluated before unsuccessful termination. <code>cli_process_update()</code> may
+update this message.</p></td>
     </tr>
     <tr>
       <th>on_exit</th>
       <td><p>Whether this process should fail or terminate
 successfully when the calling function (or the environment in <code>.envir</code>)
-exits.</p></td>
+exits. By default cli auto-detects the correct mode of termination.</p></td>
     </tr>
     <tr>
       <th>msg_class</th>
@@ -202,72 +230,194 @@ string to suppress styling.</p></td>
     <tr>
       <th>done_class</th>
       <td><p>The style class to add to the successful termination
-message. Use an empty string to suppress styling.a</p></td>
+message. Use an empty string to suppress styling.</p></td>
     </tr>
     <tr>
       <th>failed_class</th>
       <td><p>The style class to add to the unsuccessful
-termination message. Use an empty string to suppress styling.a</p></td>
+termination message. Use an empty string to suppress styling.</p></td>
     </tr>
     <tr>
       <th>.auto_close</th>
-      <td><p>Whether to clear the status bar when the calling
-function finishes (or ‘.envir’ is removed from the stack, if
+      <td><p>Whether to terminate the status when the calling
+function finishes (or ‘.envir’ is removed from thae stack, if
 specified).</p></td>
     </tr>
     <tr>
       <th>.envir</th>
       <td><p>Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status bar if <code>.auto_close</code> is <code>TRUE</code>.</p></td>
+also used to auto-clear the status if <code>.auto_close</code> is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>id</th>
-      <td><p>Id of the status bar container to clear. If <code>id</code> is not the id
-of the current status bar (because it was overwritten by another
-status bar container), then the status bar is not cleared. If <code>NULL</code>
+      <td><p>Id of the status to clear. If <code>id</code> is not the id
+of the current status (because it was overwritten by another
+status ), then the status bar is not cleared. If <code>NULL</code>
 (the default) then the status bar is always cleared.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Id of the status bar container.</p>
+    <p><code>cli_process_start()</code> and <code>cli_process_update()</code> return the
+id of the status. <code>cli_process_done()</code> and <code>cli_process_failed()</code>
+return <code>NULL</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If you handle the errors of the process or computation, then you can do
-the opposite: call <code>cli_process_start()</code> with <code>on_exit = "done"</code>, and
-in the error handler call <code>cli_process_failed()</code>. cli will automatically
-call <code>cli_process_done()</code> on successful termination, when the calling
-function finishes.</p>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The life of a cli status</h3>
+
+
+<p>You <em>create</em> a cli status with <code><a href='cli_status.html'>cli_status()</a></code> or <code>cli_process_start()</code>. cli
+will show the new status in the status bar.</p>
+<p>If neccessary, you <em>update</em> a status with <code><a href='cli_status.html'>cli_status_update()</a></code> or
+<code>cli_process_update()</code>.</p>
+<p>You <em>terminate</em> a status with <code><a href='cli_status.html'>cli_status_clear()</a></code>, <code>cli_process_done()</code> or
+<code>cli_process_failed()</code>. When a status is terminated, it is removed from the
+status bar. Before that, it may still print a final summary message, which
+you can specify using the <code>msg_done</code> and <code>msg_failed</code> arguments.</p>
+<p>cli can also auto-terminate a status, see 'Automatic termination' below.</p>
+<p>A status has three modes of termination:</p><ul>
+<li><p><code>clear</code>: The status is removed from the status bar.</p></li>
+<li><p><code>done</code>: The status is removed from the status bar, but its <code>msg_done</code>
+message is printed as a regular cli message. This is typically a short
+summary of a task that has just finished, e.g.
+<code>Downloaded 14 files (1.5MB).</code>"</p></li>
+<li><p><code>failed</code>: The status is removed from the status bar, and its <code>msg_failed</code>
+message is printed as a regular cli message. (For auto-termination caused
+by an R error, this message typically shows up <em>under</em> R's error message.)</p></li>
+</ul>
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Status ids and the current status</h3>
+
+
+<p>When you create a status cli assigns an id to it. This id can be used to
+update or terminate the status.</p>
+<p>If you don't specify the id in <code><a href='cli_status.html'>cli_status_update()</a></code>,
+<code>cli_process_update()</code>, etc. then cli will manipulate the <em>current status</em>.
+The current status is the one that was last created in the caller
+(or in <code>.envir</code> if specified). This allows simpler code:<div class="r"></p><pre><span class='va'>done</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Downloading data files: {done}/{total}"</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>done</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>total</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>...</span>
+  <span class='fu'>cli_process_update</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='va'>...</span>
+
+<span class='va'>done</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Processing data files: {done}/{total}"</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>done</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>total</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>...</span>
+  <span class='fu'>cli_process_update</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</pre><p></div></p>
+<p>Here the <code>cli_process_update()</code> calls refer to previoues <code><a href='cli_status.html'>cli_status()</a></code>
+calls.</p>
+<p>Also note that we didn't have to terminate the first status explicitly,
+thanks to cli's automatic termination, see the next section.</p>
+<p>A similar example with the <code>cli_status*</code> API:<div class="r"></p><pre><span class='va'>done</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='fu'><a href='cli_status.html'>cli_status</a></span><span class='op'>(</span><span class='st'>"Downloading data files: {done}/{total}"</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>done</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>total</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>...</span>
+  <span class='fu'><a href='cli_status.html'>cli_status_update</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='va'>...</span>
+
+<span class='va'>done</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='fu'><a href='cli_status.html'>cli_status</a></span><span class='op'>(</span><span class='st'>"Processing data files: {done}/{total}"</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>done</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>total</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>...</span>
+  <span class='fu'><a href='cli_status.html'>cli_status_update</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</pre><p></div></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Automatic termination</h3>
+
+
+<p>Usually you will want the status to terminate automatically if an
+error happens and/or the function that created it quits.</p>
+<p>In most cases you also want to terminate the status if another
+status is created from the same called, via <code><a href='cli_status.html'>cli_status()</a></code> or
+<code>cli_process_start()</code>.</p>
+<p>If the <code>.auto_close</code> argument of <code><a href='cli_status.html'>cli_status()</a></code> and <code>cli_process_start()</code>
+is <code>TRUE</code> (the default), then cli will automatically terminate the status
+is these cases. This helps to reduce the clutter in the code caused by cli
+messages.</p>
+<p>If you don't want to terminate a status automatically, you need to specify
+<code>.auto_close = FALSE</code>. In this case, we suggest that you add an <code><a href='https://rdrr.io/r/base/on.exit.html'>on.exit()</a></code>
+or <code><a href='https://withr.r-lib.org/reference/defer.html'>withr::defer()</a></code> handler that terminates the status, to avoid keeping
+it on the screen after an error or interruption happens.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Multiple active statuses</h3>
+
+
+<p>It is possible to have multiple active cli statuses at the same time.
+This may happen when you creates statues from nested function calls, or
+when you specify <code>.auto_close = FALSE</code>.</p>
+<p>Nested statuses "just work" in general: if a nested level status terminates,
+cli will automatically show its immediate nesting status in the status bar.</p>
+<p>Currently, when you update a status, cli will show it in the status bar,
+even if it there are other statuses nested "inside" it. This behavior might
+change in the future, as it can cause flickering when multiple statuses are
+updated frequently.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Differences between <code>cli_status_*</code> and <code>cli_process_*</code></h3>
+
+
+<p>For historical reasons cli has two sets of functions to manage the status
+bar: the <code>cli_status*</code> functions and the <code>cli_process_*</code> functions.</p>
+<p>Both sets are equivalent, but have different defaults:</p><ul>
+<li><p><code>cli_process_*</code> prints termination messages by default.</p></li>
+<li><p><code>cli_process_*</code> by default styles the status messages, the same way as</p><ul>
+<li><p><code><a href='cli_alert.html'>cli_alert_info()</a></code>, while the status is active,</p></li>
+<li><p><code><a href='cli_alert.html'>cli_alert_success()</a></code> for successful termination,</p></li>
+<li><p><code><a href='cli_alert.html'>cli_alert_danger()</a></code> for unsuccessful termination.</p></li>
+</ul>
+
+<p>If you want to style the <code>cli_status*()</code> status messages, you need to
+add classes manually, e.g.<div class="r"></p><pre><span class='fu'><a href='cli_status.html'>cli_status</a></span><span class='op'>(</span>msg <span class='op'>=</span> <span class='st'>"{.alert Starting computation}"</span><span class='op'>)</span>
+</pre><p></div></p></li>
+<li><p><code>cli_process_*</code> omits the <code>... done</code> and <code>... failed</code> suffixes from the
+default termination messages, as the styling conveys this information.</p></li>
+</ul>
+
 <p>See examples below.</p>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other status bar: 
-<code><a href='cli_status_clear.html'>cli_status_clear</a>()</code>,
-<code><a href='cli_status_update.html'>cli_status_update</a>()</code>,
 <code><a href='cli_status.html'>cli_status</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Failure by default</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># interactive()</span>
+
+<span class='co'>## Success</span>
 <span class='va'>fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Calculating"</span><span class='op'>)</span>
-  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"Failed"</span><span class='op'>)</span>
-  <span class='fu'>cli_process_done</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Step one"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+
+  <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Step two"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>}</span>
-<span class='kw'><a href='https://rdrr.io/r/base/conditions.html'>tryCatch</a></span><span class='op'>(</span><span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>, error <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>err</span><span class='op'>)</span> <span class='va'>err</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> Calculating</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BB0000;'>✖</span><span> Calculating ... failed</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; &lt;simpleError in fun(): Failed&gt;</div><div class='input'>
-<span class='co'>## Success by default</span>
+<span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'>## Failure</span>
 <span class='va'>fun2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Calculating"</span>, on_exit <span class='op'>=</span> <span class='st'>"done"</span><span class='op'>)</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/conditions.html'>tryCatch</a></span><span class='op'>(</span><span class='op'>{</span>
-    <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-    <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"Failed"</span><span class='op'>)</span>
-  <span class='op'>}</span>, error <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>err</span><span class='op'>)</span> <span class='fu'>cli_process_failed</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Step one"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+
+  <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Step two"</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+
+  <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"oops"</span><span class='op'>)</span>
 <span class='op'>}</span>
+
 <span class='fu'>fun2</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> Calculating</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Calculating ... done</span></div><div class='output co'>#&gt; </div></span></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
