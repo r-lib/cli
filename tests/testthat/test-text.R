@@ -4,7 +4,7 @@ on.exit(stop_app(), add = TRUE)
 
 test_that("text is wrapped", {
   withr::local_options(cli.width = 60)
-  local_rng_version("3.5.0")
+  local_rng_version("3.3.0")
   set.seed(42)
   expect_snapshot(local({
     cli_div(class = "testcli", theme = test_style())

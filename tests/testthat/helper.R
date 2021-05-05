@@ -59,6 +59,6 @@ test_style <- function() {
 
 # to work around https://github.com/r-lib/withr/issues/167
 local_rng_version <- function(version, .local_envir = parent.frame()) {
-  withr::defer(RNGversion(getRversion()), envir = .local_envir)
+  withr::defer(RNGversion(as.character(getRversion())), envir = .local_envir)
   suppressWarnings(RNGversion(version))
 }

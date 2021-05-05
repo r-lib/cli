@@ -3,7 +3,7 @@ start_app()
 on.exit(stop_app(), add = TRUE)
 
 test_that_cli("add/remove/list themes", {
-  local_rng_version("3.5.0")
+  local_rng_version("3.3.0")
   set.seed(24)
 
   id <- default_app()$add_theme(list(".green" = list(color = "green")))
