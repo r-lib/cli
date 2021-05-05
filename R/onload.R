@@ -5,6 +5,7 @@ dummy <- function() { }
 
 clienv <- new.env()
 clienv$pid <- Sys.getpid()
+clienv$status <- list()
 
 .onLoad <- function(libname, pkgname) {
 

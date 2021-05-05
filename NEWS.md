@@ -1,6 +1,9 @@
 
 # cli development version
 
+* Better default behavior for the `cli_status*()` and `cli_process*()`
+  functions.
+
 # cli 2.5.0
 
 * New `style_no_*()` functions to locally undo styling.

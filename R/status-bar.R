@@ -1,44 +1,67 @@
 
 #' Update the status bar
 #'
-#' The status bar is the last line of the terminal. cli apps can use this
-#' to show status information, progress bars, etc. The status bar is kept
-#' intact by all semantic cli output.
+#' @description
+#' ```{r child = "man/chunks/status-desc.Rmd"}
+#' ```
 #'
-#' Use [cli_status_clear()] to clear the status bar.
+#' `cli_status() creates a status.
 #'
-#' Often status messages are associated with processes. E.g. the app starts
-#' downloading a large file, so it sets the status bar accordingly. Once the
-#' download is done (or has failed), the app typically updates the status bar
-#' again. cli automates much of this, via the `msg_done`, `msg_failed`, and
-#' `.auto_result` arguments. See examples below.
+#' `cli_status_update()` updates the contents of an existing status.
+#'
+#' `cli_status_clear()` terminates a status.
+#'
+#' @details
+#' ```{r child = "man/chunks/status.Rmd"}
+#' ```
+#'
+#' ```{r child = "man/chunks/status-diff.Rmd"}
+#' ```
 #'
 #' @param msg The text to show, a character vector. It will be
 #'   collapsed into a single string, and the first line is kept and cut to
 #'   [console_width()]. The message is often associated with the start of
-#'   a calculation.
-#' @param msg_done The message to use when the message is cleared, when
+#'   a calculation. You can use cli [inline markup][inline-markup] in this
+#'   message. If the message contains [glue][glue::glue()] interpolation,
+#'   then it will be evaluated every time the message is updated.
+#'   `cli_status_update()` may update this message.
+#' @param msg_done The message to use when the status is terminated, if
 #'   the calculation finishes successfully. If `.auto_close` is `TRUE`
 #'   and `.auto_result` is `"done"`, then this is printed automatically
-#'   when the calling function (or `.envir`) finishes.
-#' @param msg_failed The message to use when the message is cleared, when
+#'   when the calling function (or `.envir`) finishes. You can use cli
+#'   [inline markup][inline-markup] in this message. If the message contains
+#'   [glue][glue::glue()] interpolation, then it be evaluated only when
+#'   the status terminates. `cli_status_update()` may update this message.
+#' @param msg_failed The message to use when the status terminates, when
 #'   the calculation finishes unsuccessfully. If `.auto_close` is `TRUE`
 #'   and `.auto_result` is `"failed"`, then this is printed automatically
-#'   when the calling function (or `.envir`) finishes.
-#' @param .keep What to do when this status bar is cleared. If `TRUE` then
-#'   the content of this status bar is kept, as regular cli output (the
-#'   screen is scrolled up if needed). If `FALSE`, then this status bar
-#'   is deleted.
-#' @param .auto_close Whether to clear the status bar when the calling
-#'   function finishes (or ‘.envir’ is removed from the stack, if
+#'   when the calling function (or `.envir`) finishes. You can use cli
+#'   [inline markup][inline-markup] in this message. If the message contains
+#'   [glue][glue::glue()] interpolation, then it be evaluated only when
+#'   the status terminates. `cli_status_update()` may update this message.
+#' @param .keep This argument is now ignored, and only kept for
+#'   compatibility. Use the `.auto_result` argument to specify how to
+#'   auto-terminate the status. Or use the `result` argument of
+#'   `cli_status_clear()` if you clear the status manually.
+#' @param .auto_close Whether to terminate the status when the calling
+#'   function finishes (or ‘.envir’ is removed from thae stack, if
 #'   specified).
 #' @param .envir Environment to evaluate the glue expressions in. It is
-#'   also used to auto-clear the status bar if `.auto_close` is `TRUE`.
-#' @param .auto_result What to do when auto-closing the status bar.
-#' @return The id of the new status bar container element, invisibly.
+#'   also used to auto-clear the status if `.auto_close` is `TRUE`.
+#' @param .auto_result What to do when auto-terminating the status.
+#'   Possible values:
+#'   * `clear`: The status is removed from the status bar.
+#'   * `done`: The status is removed from the status bar, and the `msg_done`
+#'     message is printed.
+#'   * `failed`: The status is removed from the status bar, and the
+#'     `msg_failed` message is printed.
+#'   * `auto`: Automatically choose between `done`, for regular termination,
+#'      and `failed`, for R errors and interruptions.
+#'   * `autoclear` (default): Automatically choose between `clear`,
+#'      for regular termination, and `failed`, for R errors and
+#'      interruptions.
+#' @return `cli_status` returns the id of the new status, invisibly.
 #'
-#' @seealso [cli_process_start()] for a higher level interface to the
-#'   status bar, that adds automatic styling.
 #' @family status bar
 #' @export
 
@@ -46,143 +69,190 @@ cli_status <- function(msg, msg_done = paste(msg, "... done"),
                        msg_failed = paste(msg, "... failed"),
                        .keep = FALSE, .auto_close = TRUE,
                        .envir = parent.frame(),
-                       .auto_result = c("clear", "done", "failed", "auto")) {
+                       .auto_result = c("autoclear", "clear", "done",
+                                        "failed", "auto")) {
+
+  auto_result <- match.arg(.auto_result)
+  id <- new_uuid()
+  status_current_save(.envir, id, msg = msg, msg_done = msg_done,
+                      msg_failed = msg_failed, auto_close = .auto_close,
+                      auto_result = auto_result)
   cli__message(
     "status",
     list(
-      id = NULL,
-      msg = glue_cmd(msg, .envir = .envir),
-      msg_done = glue_cmd(msg_done, .envir = .envir),
-      msg_failed = glue_cmd(msg_failed, .envir = .envir),
-      keep = .keep,
-      auto_result = match.arg(.auto_result)
+      id = id,
+      msg = glue_cmd(msg, .envir = .envir)
     ),
     .auto_close = .auto_close,
-    .envir = .envir
+    .envir = .envir,
+    .auto_result = auto_result
   )
 }
 
-#' Clear the status bar
+#' @param id Id of the status to update or terminate. If it is `NULL` (the
+#'   default), then the current status is manipulated. If
+#'   `cli_status_update()` cannot find a status with `id` (or `id` is
+#'   `NULL`, and there is no current status), then a warning is issued.
+#' @param result The type of termination, may be `"clear"`, `"done"` or
+#'   `"failed"`. See more at the `.auto_result` parameter and below.
+#' @return `cli_status_clear` returns `NULL`.
 #'
-#' @param id Id of the status bar container to clear. If `id` is not the id
-#'   of the current status bar (because it was overwritten by another
-#'   status bar container), then the status bar is not cleared. If `NULL`
-#'   (the default) then the status bar is always cleared.
-#' @param result Whether to show a message for success or failure or just
-#'   clear the status bar.
-#' @param msg_done If not `NULL`, then the message to use for successful
-#'   process termination. This overrides the message given when the status
-#'   bar was created.
-#' @param msg_failed If not `NULL`, then the message to use for failed
-#'   process termination. This overrides the message give when the status
-#'   bar was created.
-#' @inheritParams cli_status
-#'
-#' @family status bar
+#' @rdname cli_status
 #' @export
 
 cli_status_clear <- function(id = NULL, result = c("clear", "done", "failed"),
                              msg_done = NULL, msg_failed = NULL,
                              .envir = parent.frame()) {
 
+  rec <- status_current_find(
+    .envir,
+    id = id,
+    msg_done = msg_done,
+    msg_failed = msg_failed
+  )
+
+  # cleaned up already?
+  if (is.null(rec)) return(invisible(NULL))
+
+  result <- match.arg(result[1], c("clear", "done", "failed", "auto", "autoclear"))
+  if (result %in% c("auto", "autoclear")) {
+    r1 <- stats::runif(1)
+    result <- if (identical(returnValue(r1), r1)) {
+      "failed"
+    } else {
+      if (result == "auto") "done" else "clear"
+    }
+  }
+
   cli__message(
     "status_clear",
     list(
-      id = id %||% NA_character_,
-      result = match.arg(result[1], c("clear", "done", "failed", "auto")),
-      msg_done = if (!is.null(msg_done)) glue_cmd(msg_done, .envir = .envir),
-      msg_failed = if (!is.null(msg_failed)) glue_cmd(msg_failed, .envir = .envir)
+      id = rec$id,
+      result = result,
+      msg_done = if (result == "done") glue_cmd(rec$msg_done, .envir = .envir),
+      msg_failed = if (result == "failed") glue_cmd(rec$msg_failed, .envir = .envir)
     )
   )
+  on.exit(status_current_clear(.envir), add = TRUE)
+
+  invisible(NULL)
 }
 
-#' Update the status bar
+#' @return `cli_status_update()` returns the id of the status.
 #'
-#' @param msg Text to update the status bar with. `NULL` if you don't want
-#'   to change it.
-#' @param msg_done Updated "done" message. `NULL` if you don't want to
-#'   change it.
-#' @param msg_failed Updated "failed" message. `NULL` if you don't want to
-#'   change it.
-#' @param id Id of the status bar to update. Defaults to the current
-#'   status bar container.
-#' @param .envir Environment to evaluate the glue expressions in.
-#' @return Id of the status bar container.
-#'
-#' @family status bar
+#' @rdname cli_status
 #' @export
 
 cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
                               msg_failed = NULL, .envir = parent.frame()) {
+  rec <- status_current_find(
+    .envir,
+    id = id,
+    msg = msg,
+    msg_done = msg_done,
+    msg_failed = msg_failed
+  )
+
+  # Gone?
+  if (is.null(rec)) {
+    warning("Cannot update cli status, already cleared")
+    return(invisible(NULL))
+  }
+
   cli__message(
     "status_update",
     list(
-      msg = if (!is.null(msg)) glue_cmd(msg, .envir = .envir),
-      msg_done = if (!is.null(msg_done)) glue_cmd(msg_done, .envir = .envir),
-      msg_failed = if (!is.null(msg_failed)) glue_cmd(msg_failed, .envir = .envir),
-      id = id %||% NA_character_
+      msg = glue_cmd(rec$msg, .envir = .envir),
+      id = rec$id
     )
   )
+
+  invisible(rec$id)
 }
 
 #' Indicate the start and termination of some computation in the status bar
 #'
-#' Typically you call `cli_process_start()` to start the process, and then
-#' `cli_process_done()` when it is done. If an error happens before
-#' `cli_process_done()` is called, then cli automatically shows the message
-#' for unsuccessful termination.
+#' @description
+#' ```{r child = "man/chunks/status-desc.Rmd"}
+#' ```
 #'
-#' If you handle the errors of the process or computation, then you can do
-#' the opposite: call `cli_process_start()` with `on_exit = "done"`, and
-#' in the error handler call `cli_process_failed()`. cli will automatically
-#' call `cli_process_done()` on successful termination, when the calling
-#' function finishes.
+#' You call `cli_process_start()` to start a status.
+#'
+#' You may call `cli_process_update()` to update a status, if needed.
+#'
+#' You may call `cli_process_done()` or `cli_process_failed()` to manually
+#' terminate a status, if you are not relying on auto-termination (see
+#' above).
+#'
+#' @details
+#' ```{r child = "man/chunks/status.Rmd"}
+#' ```
+#'
+#' ```{r child = "man/chunks/status-diff.Rmd"}
+#' ```
 #'
 #' See examples below.
 #'
 #' @param msg The message to show to indicate the start of the process or
 #'   computation. It will be collapsed into a single string, and the first
-#'   line is kept and cut to [console_width()].
+#'   line is kept and cut to [console_width()]. You can use cli
+#'   [inline markup][inline-markup] in this message. If the message
+#'   contains [glue][glue::glue()] interpolation, then it will be evaluated
+#'   every time the message is updated. `cli_process_update()` may update
+#'   this message.
 #' @param msg_done The message to use for successful termination.
+#'   You can use cli [inline markup][inline-markup] in this message. If the
+#'   message contains [glue][glue::glue()] interpolation, then it will be
+#'   evaluated before successful termination. `cli_process_update()` may
+#'   update this message.
 #' @param msg_failed The message to use for unsuccessful termination.
+#'   You can use cli [inline markup][inline-markup] in this message. If the
+#'   message contains [glue][glue::glue()] interpolation, then it will be
+#'   evaluated before unsuccessful termination. `cli_process_update()` may
+#'   update this message.
 #' @param on_exit Whether this process should fail or terminate
 #'   successfully when the calling function (or the environment in `.envir`)
-#'   exits.
+#'   exits. By default cli auto-detects the correct mode of termination.
 #' @param msg_class The style class to add to the message. Use an empty
 #'   string to suppress styling.
 #' @param done_class The style class to add to the successful termination
-#'   message. Use an empty string to suppress styling.a
+#'   message. Use an empty string to suppress styling.
 #' @param failed_class The style class to add to the unsuccessful
-#'   termination message. Use an empty string to suppress styling.a
+#'   termination message. Use an empty string to suppress styling.
 #' @inheritParams cli_status
-#' @return Id of the status bar container.
+#' @return `cli_process_start()` and `cli_process_update()` return the
+#'   id of the status. `cli_process_done()` and `cli_process_failed()`
+#'   return `NULL`.
 #'
 #' @family status bar
 #' @export
-#' @examples
+#' @examplesIf interactive()
 #'
-#' ## Failure by default
+#' ## Success
 #' fun <- function() {
-#'   cli_process_start("Calculating")
-#'   if (interactive()) Sys.sleep(1)
-#'   if (runif(1) < 0.5) stop("Failed")
-#'   cli_process_done()
-#' }
-#' tryCatch(fun(), error = function(err) err)
+#'   cli_process_start("Step one")
+#'   Sys.sleep(1)
 #'
-#' ## Success by default
-#' fun2 <- function() {
-#'   cli_process_start("Calculating", on_exit = "done")
-#'   tryCatch({
-#'     if (interactive()) Sys.sleep(1)
-#'     if (runif(1) < 0.5) stop("Failed")
-#'   }, error = function(err) cli_process_failed())
+#'   cli_process_start("Step two")
+#'   Sys.sleep(1)
 #' }
+#' fun()
+#'
+#' ## Failure
+#' fun2 <- function() {
+#'   cli_process_start("Step one")
+#'   Sys.sleep(1)
+#'
+#'   cli_process_start("Step two")
+#'   Sys.sleep(1)
+#'
+#'   stop("oops")
+#' }
+#'
 #' fun2()
 
-cli_process_start <- function(msg, msg_done = paste(msg, "... done"),
-                              msg_failed = paste(msg, "... failed"),
-                              on_exit = c("auto", "failed", "done"),
+cli_process_start <- function(msg, msg_done = msg, msg_failed = msg,
+                              on_exit = c("auto", "autoclear", "failed", "done"),
                               msg_class = "alert-info",
                               done_class = "alert-success",
                               failed_class = "alert-danger",
@@ -206,9 +276,28 @@ cli_process_start <- function(msg, msg_done = paste(msg, "... done"),
              .envir = .envir, .auto_result = match.arg(on_exit))
 }
 
-#' @param id Id of the status bar container to clear. If `id` is not the id
-#'   of the current status bar (because it was overwritten by another
-#'   status bar container), then the status bar is not cleared. If `NULL`
+#' @param id Id of the status to update or terminate. If it is `NULL` (the
+#'   default), then the current status is manipulated. If
+#'   `cli_status_update()` cannot find a status with `id` (or `id` is
+#'   `NULL`, and there is no current status), then a warning is issued.
+#'
+#' @rdname cli_process_start
+#' @export
+
+cli_process_update <- function(id = NULL, msg = NULL, msg_done = NULL,
+                               msg_failed = NULL, .envir = parent.frame()) {
+  cli_status_update(
+    id = id,
+    msg = msg,
+    msg_done = msg_done,
+    msg_failed = msg_failed,
+    .envir = .envir
+  )
+}
+
+#' @param id Id of the status to clear. If `id` is not the id
+#'   of the current status (because it was overwritten by another
+#'   status ), then the status bar is not cleared. If `NULL`
 #'   (the default) then the status bar is always cleared.
 #'
 #' @rdname cli_process_start
@@ -243,21 +332,75 @@ cli_process_failed <- function(id = NULL, msg = NULL, msg_failed = NULL,
 }
 
 # -----------------------------------------------------------------------
+# client side tools
+# -----------------------------------------------------------------------
 
-clii_status <- function(app, id, msg, msg_done, msg_failed, keep,
-                        auto_result) {
-
-  app$status_bar[[id]] <- list(
-    content = "",
+status_current_save <- function(.envir, id, msg, msg_done, msg_failed,
+                                auto_close, auto_result) {
+  key <- format(.envir)
+  old <- clienv$status[[key]]
+  if (!is.null(old) && old$id != id && old$auto_close) {
+    # no error, so status is "done"
+    if (old$auto_result == "auto") old$auto_result <- "done"
+    if (old$auto_result == "autoclear") old$auto_result <- "clear"
+    cli_status_clear(id = old$id, result = old$auto_result, .envir = .envir)
+  }
+  clienv$status[[id]] <- clienv$status[[key]] <- list(
+    id = id,
+    msg = msg,
     msg_done = msg_done,
     msg_failed = msg_failed,
-    keep = keep,
+    auto_close = auto_close,
     auto_result = auto_result
+  )
+  invisible()
+}
+
+status_current_find <- function(.envir, id = NULL, msg = NULL,
+                                msg_done = NULL, msg_failed = NULL) {
+  key <- id %||% format(.envir)
+  value <- clienv$status[[key]]
+  if (!is.null(value) && !is.null(msg)) {
+    clienv$status[[key]]$msg <- msg
+  }
+  if (!is.null(value) && !is.null(msg_done)) {
+    clienv$status[[key]]$msg_done <- msg_done
+  }
+  if (!is.null(value) && !is.null(msg_failed)) {
+    clienv$status[[key]]$msg_failed <- msg_failed
+  }
+  clienv$status[[key]]
+}
+
+status_current_clear <- function(.envir, id = NULL) {
+  key <- id %||% format(.envir)
+  old <- clienv$status[[key]]
+
+  # If removed by id, check if current, and remove by the other name as well
+  if (!is.null(id)) {
+    ekey <- format(.envir)
+    eold <- clienv$status[[ekey]]
+    if (!is.null(eold) && eold$id == id) {
+      clienv$status[[ekey]] <- NULL
+    }
+  }
+
+  clienv$status[[key]] <- NULL
+}
+
+# -----------------------------------------------------------------------
+# server side
+# -----------------------------------------------------------------------
+
+clii_status <- function(app, id, msg) {
+
+  app$status_bar[[id]] <- list(
+    content = ""
   )
   if (isTRUE(getOption("cli.hide_cursor", TRUE))) {
     ansi_hide_cursor(app$output)
   }
-  clii_status_update(app, id, msg, msg_done = NULL, msg_failed = NULL)
+  clii_status_update(app, id, msg)
 }
 
 clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
@@ -268,28 +411,17 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
   if (is.na(id)) return(invisible())
   if (! id %in% names(app$status_bar)) return(invisible())
 
-  if (result == "auto") {
-    r1 <- runif(1)
-    if (identical(returnValue(r1), r1)) {
-      result <- "failed"
-    } else {
-      result <- "done"
-    }
-  }
-
   if (result == "done") {
     msg <- msg_done %||% app$status_bar[[id]]$msg_done
-    clii_status_update(app, id, msg, NULL, NULL)
-    app$status_bar[[id]]$keep <- TRUE
+    clii_status_update(app, id, msg)
   } else if (result == "failed") {
     msg <- msg_failed %||% app$status_bar[[id]]$msg_failed
-    clii_status_update(app, id, msg, NULL, NULL)
-    app$status_bar[[id]]$keep <- TRUE
+    clii_status_update(app, id, msg)
   }
 
   if (names(app$status_bar)[1] == id) {
     ## This is the active one
-    if (app$status_bar[[id]]$keep) {
+    if (result != "clear") {
       ## Keep? Just emit it
       app$cat("\n")
 
@@ -302,7 +434,7 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
     }
 
   } else {
-    if (app$status_bar[[id]]$keep) {
+    if (result != "clear") {
       ## Keep?
       clii__clear_status_bar(app)
       app$cat(paste0(app$status_bar[[id]]$content, "\n"))
@@ -322,16 +454,12 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
   }
 }
 
-clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
+clii_status_update <- function(app, id, msg) {
   ## If NA then the most recent one
   if (is.na(id)) id <- names(app$status_bar)[1]
 
   ## If no active status bar, then ignore
   if (is.na(id)) return(invisible())
-
-  ## Update messages
-  if (!is.null(msg_done)) app$status_bar[[id]]$msg_done <- msg_done
-  if (!is.null(msg_failed)) app$status_bar[[id]]$msg_failed <- msg_failed
 
   ## Do we have a new message?
   if (is.null(msg)) return(invisible())
