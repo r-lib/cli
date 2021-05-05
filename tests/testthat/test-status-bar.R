@@ -323,6 +323,9 @@ test_that("auto-close with done or failure", {
   out <- ansi_strip(capt0(f()))
   expect_match(out, "v status1")
 
+  # This fails on older R versions, only if f2() is tryCatch()-ed.
+  if (getRversion() < "3.5.0") skip("Needs R 3.5.0")
+
   f2 <- function() {
     cli_text("out1")
     sb <- cli_process_start("status1")
