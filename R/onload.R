@@ -1,6 +1,10 @@
 
 ## nocov start
 
+#' @export
+
+should_tick <- FALSE
+
 dummy <- function() { }
 
 clienv <- new.env()

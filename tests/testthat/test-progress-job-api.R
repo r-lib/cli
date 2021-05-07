@@ -2,7 +2,7 @@
 test_that("job api basics", {
   h <- progress_handler_log(prefix = "> ")
   expect_snapshot(with_only_handler(h, {
-      id <- job_add("foobar", id = "xy")
+      id <- job_add("foobar", id = "xy", total = 100)
       job_add_progress(id = id)
       job_set_progress(id = id, 50)
       job_add_progress(id = id, 10)
