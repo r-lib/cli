@@ -1,13 +1,20 @@
 
+#' @useDynLib cli, .registration=TRUE
+NULL
+
 ## nocov start
 
 dummy <- function() { }
 
-clienv <- new.env()
+clienv <- new.env(parent = emptyenv())
 clienv$pid <- Sys.getpid()
 clienv$status <- list()
 
 .onLoad <- function(libname, pkgname) {
+
+  .Call(clic_start_thread, should_tick)
+
+  ccli_tick_reset <<- clic_tick_reset
 
   pkgenv <- environment(dummy)
   makeActiveBinding(
@@ -50,6 +57,10 @@ clienv$status <- list()
   if (is.null(getOption("callr.condition_handler_cli_message"))) {
     options(callr.condition_handler_cli_message = cli__default_handler)
   }
+}
+
+.onUnload <- function(libpath) {
+  .Call(clic_unload)
 }
 
 ## nocov end
