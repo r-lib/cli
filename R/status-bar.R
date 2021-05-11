@@ -87,6 +87,8 @@ cli_status <- function(msg, msg_done = paste(msg, "... done"),
     .envir = .envir,
     .auto_result = auto_result
   )
+
+  invisible(id)
 }
 
 #' @param id Id of the status to update or terminate. If it is `NULL` (the
@@ -492,6 +494,11 @@ clii_status_update <- function(app, id, msg) {
   } else {
     app$cat(paste0(content, "\n"))
   }
+
+  ## Reset timer
+  .Call(clic_tick_reset)
+
+  invisible()
 }
 
 clii__clear_status_bar <- function(app) {
