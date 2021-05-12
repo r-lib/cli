@@ -10,8 +10,16 @@ NULL
 # ------------------------------------------------------------------------
 
 cli__pb_bar <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "========--------"
+  # TODO: adjust length
+  # TODO: styling
+  if (is.na(pb$total)) return("")
+  width <- 30L
+  ratio <- pb$current / pb$total
+  complete_len <- round(width * ratio)
+  complete <- paste(rep("=", complete_len), collapse = "")
+  current <- if (pb$current == pb$total) "=" else ">"
+  incomplete <- paste(rep("-", width - complete_len), collapse = "")
+  paste0(complete, current, incomplete)
 }
 
 cli__pb_current <- function(pb = getOption("cli__pb")) {
