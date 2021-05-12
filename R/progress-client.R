@@ -59,6 +59,11 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     pb$current <- pb$current + (add %||% 1L)
   }
 
+  if (!is.na(pb$total) && pb$current == pb$total) {
+    cli_progress_done(id, .envir = .envir)
+    return(invisible(id))
+  }
+
   if (should_tick) {
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)

@@ -81,17 +81,17 @@ cli__pb_pid <- function(pb = getOption("cli__pb")) {
 }
 
 cli__pb_rate <- function(pb = getOption("cli__pb")) {
-  # TODO
+  warning("not implemented")
   "rate"
 }
 
 cli__pb_rate_raw <- function(pb = getOption("cli__pb")) {
-  # TODO
+  warning("not implemented")
   "rate_raw"
 }
 
 cli__pb_rate_bytes <- function(pb = getOption("cli__pb")) {
-  # TODO
+  warning("not implemented")
   "rate_bytes"
 }
 
