@@ -6,7 +6,11 @@ inline_generic <- function(app, x, style) {
   after <- call_if_fun(style$after)
   transform <- style$transform
   if (is.function(transform)) {
-    x <- transform(x)
+    if (length(formals(transform)) == 1) {
+      x <- transform(x)
+    } else {
+      x <- transform(x, app = app, style = style)
+    }
   }
   collapse <- style$collapse
   if (is.character(collapse)) {
@@ -17,7 +21,13 @@ inline_generic <- function(app, x, style) {
   }
   xx <- paste0(before, x, after)
   fmt <- style$fmt
-  if (!is.null(fmt)) xx <- vcapply(xx, fmt)
+  if (!is.null(fmt) && is.function(fmt)) {
+    if (length(formals(fmt)) == 1) {
+      xx <- vcapply(xx, fmt)
+    } else {
+      xx <- vcapply(xx, fmt, app = app, style = style)
+    }
+  }
   xx
 }
 

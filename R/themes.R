@@ -58,7 +58,8 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
   list(
     body = list(
       "class-map" = list(
-        fs_path = "file"
+        fs_path = "file",
+        "cli-progress-bar" = "progress-bar"
       )
     ),
 
@@ -180,7 +181,10 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       color = "blue"
     ),
     span.field = list(color = "green"),
-    span.cls = list(collapse = "/", color = "blue", before = "<", after = ">"
+    span.cls = list(collapse = "/", color = "blue", before = "<", after = ">"),
+    "span.progress-bar" = list(
+      transform = theme_progress_bar,
+      color = "green"
     )
   )
 }
@@ -218,6 +222,39 @@ quote_weird_name <- function(x) {
   }
 
   x
+}
+
+theme_progress_bar <- function(x, app, style) {
+  # TODO: adjust length
+  width <- 30L
+  ratio <- x$current / x$total
+  complete_len <- round(width * ratio)
+
+  def <- default_progress_style()
+  chr_complete <- style[["progress-complete"]] %||% def[["complete"]]
+  chr_incomplete <- style[["progress-incomplete"]] %||% def[["incomplete"]]
+  chr_current <- style[["progress-current"]] %||% def[["current"]]
+
+  complete <- paste(rep(chr_complete, complete_len), collapse = "")
+  current <- if (x$current == x$total) chr_complete else chr_current
+  incomplete <- paste(rep(chr_incomplete, width - complete_len), collapse = "")
+  paste0(complete, current, incomplete)
+}
+
+default_progress_style <- function() {
+  if (is_utf8_output()) {
+    list(
+      complete = "\u25A0",
+      current = "\u25A0",
+      incomplete = "\u00a0"
+    )
+  } else {
+    list(
+      complete = "=",
+      current = ">",
+      incomplete = "-"
+    )
+  }
 }
 
 detect_dark_theme <- function(dark) {

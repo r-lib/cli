@@ -116,7 +116,7 @@ pb__default_format <- function(type, total) {
   if (type == "iterator") {
     if (!is.na(total)) {
       paste0(
-        "{cli::pb_name}|{cli::pb_bar} {cli::pb_percent} | {cli::pb_status}",
+        "{cli::pb_name}{cli::pb_bar} {cli::pb_percent} | {cli::pb_status}",
         "ETA: {cli::pb_eta}"
       )
     } else {
