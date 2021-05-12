@@ -55,7 +55,11 @@ cli__pb_elapsed_raw <- function(pb = getOption("cli__pb")) {
 
 cli__pb_eta <- function(pb = NULL) {
   eta <- cli__pb_eta_raw(pb)
-  format_time_ago$vague_dt(eta, format = "terse")
+  if (is.na(eta)) {
+    "?"
+  } else {
+    format_time_ago$vague_dt(eta, format = "terse")
+  }
 }
 
 cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
