@@ -72,12 +72,13 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     opt <- options(cli__pb = pb)
     on.exit(options(opt), add = TRUE)
 
-    if (is.null(pb$status)) {
-      pb$status <- cli_status(pb$format, .auto_close = FALSE, .envir = .envir)
+    if (is.null(pb$statusbar)) {
+      sb <- cli_status(pb$format, .auto_close = FALSE, .envir = .envir)
     } else {
-      cli_status_update(id = pb$status, pb$format, .envir = .envir)
+      cli_status_update(id = pb$statusbar, pb$format, .envir = .envir)
     }
     pb <- getOption("cli__pb")
+    pb$statusbar <- pb$statusbar %||% sb
   }
 
   clienv$progress[[id]] <- pb
@@ -94,11 +95,11 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
   pb <- clienv$progress[[id]]
   if (is.null(pb)) return()
 
-  if (!is.null(pb$status)) {
+  if (!is.null(pb$statusbar)) {
     if (pb$clear) {
-      cli_status_clear(pb$status, result = "clear")
+      cli_status_clear(pb$statusbar, result = "clear")
     } else {
-      cli_status_clear(pb$status, result = "done", msg_done = pb$msg)
+      cli_status_clear(pb$statusbar, result = "done", msg_done = pb$msg)
     }
   }
 
