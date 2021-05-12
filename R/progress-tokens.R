@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------
 
 #' @export pb_bar pb_current pb_current_bytes pb_elapsed pb_elapsed_clock
-#' @export pb_elapsed_time pb_eta pb_eta_raw pb_id pb_name pb_percent
+#' @export pb_elapsed_raw pb_eta pb_eta_raw pb_id pb_name pb_percent
 #' @export pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin pb_status
 #' @export pb_timestamp pb_total pb_total_bytes
 NULL
@@ -30,7 +30,7 @@ cli__pb_elapsed <- function(pb = getOption("cli__pb")) {
 cli__pb_elapsed_clock <- function(pb = getOption("cli__pb")) {
   s <- as.double(Sys.time() - pb$start, units = "secs")
   hours <- floor(s / 3600)
-  minutes <- floor((s / 60) %% 60),
+  minutes <- floor((s / 60) %% 60)
   seconds <- round(s %% 60, 1)
   paste0(
     formatC(hours, width = 2, flag = "0"),
@@ -45,14 +45,19 @@ cli__pb_elapsed_raw <- function(pb = getOption("cli__pb")) {
   as.double(Sys.time() - pb$start, units = "secs")
 }
 
-cli__pb_eta <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "eta"
+cli__pb_eta <- function(pb = NULL) {
+  eta <- cli__pb_eta_raw(pb)
+  format_time_ago$vague_dt(eta, format = "terse")
 }
 
 cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "eta_raw"
+  set <- is.null(pb)
+  if (set) pb <- getOption("cli__pb")
+  if (is.na(pb$total)) return(NA_real_)
+  if (pb$current == pb$total) return(0)
+  if (pb$current == 0L) return(NA_real_)
+  elapsed <- as.double(Sys.time() - pb$start, units = "secs")
+  as.difftime(elapsed * (pb$total / pb$current - 1.0), units = "secs")
 }
 
 cli__pb_id <- function(pb = getOption("cli__pb")) {
@@ -68,7 +73,7 @@ cli__pb_name <- function(pb = getOption("cli__pb")) {
 }
 
 cli__pb_percent <- function(pb = getOption("cli__pb")) {
-  paste0(format(pb$current / pb$total * 100, digits = 2), "%")
+  paste0(format(pb$current / pb$total * 100, digits = 0, width = 3), "%")
 }
 
 cli__pb_pid <- function(pb = getOption("cli__pb")) {
@@ -90,9 +95,19 @@ cli__pb_rate_bytes <- function(pb = getOption("cli__pb")) {
   "rate_bytes"
 }
 
-cli__pb_spin <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "spin"
+cli__pb_spin <- function(pb = NULL) {
+  set <- is.null(pb)
+  if (set) pb <- getOption("cli__pb")
+
+  sp <- pb$spinner %||% get_spinner()
+  nx <- sp$state %||% 1L
+  out <- sp$frames[[nx]]
+  sp$state <- (nx + 1L) %% length(sp$frames) + 1L
+
+  pb$spinner <- sp
+  if (set) options(cli__pb = pb)
+
+  out
 }
 
 cli__pb_status <- function(pb = getOption("cli__pb")) {

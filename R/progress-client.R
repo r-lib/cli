@@ -72,6 +72,7 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     } else {
       cli_status_update(id = pb$status, pb$format, .envir = .envir)
     }
+    pb <- getOption("cli__pb")
   }
 
   clienv$progress[[id]] <- pb
