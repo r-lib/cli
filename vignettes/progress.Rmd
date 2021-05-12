@@ -1,0 +1,44 @@
+---
+title: "Progress bars in cli"
+author: "Gábor Csárdi"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  cache = TRUE
+)
+# Turn on ANSI colors
+options(cli.num_colors = 256L)
+asciicast::init_knitr_engine(
+  startup = quote({
+    library(cli)
+    set.seed(1) }),
+  echo = TRUE,
+  echo_input = FALSE)
+```
+
+# Demo
+
+```{r, setup}
+library(cli)
+```
+
+```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 5, asciicast_rows = 1)}
+cli_progress_bar(total = 100)
+for (i in 1:100) {
+  Sys.sleep(5/100)
+  cli_progress_update()
+}
+cli_progress_done()
+```
