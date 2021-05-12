@@ -82,7 +82,8 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
 
   clienv$progress[[id]] <- pb
 
-  invisible(id)
+  # Return TRUE, to allow cli_progress_update() && break in loops
+  invisible(TRUE)
 }
 
 #' @export
