@@ -91,9 +91,9 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
 
 cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
   id <- id %||% clienv$progress[[format(.envir)]]
-  if (is.null(id)) return()
+  if (is.null(id)) return(invisible())
   pb <- clienv$progress[[id]]
-  if (is.null(pb)) return()
+  if (is.null(pb)) return(invisible())
 
   if (!is.null(pb$statusbar)) {
     if (pb$clear) {
