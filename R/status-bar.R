@@ -394,12 +394,12 @@ status_current_clear <- function(.envir, id = NULL) {
 # server side
 # -----------------------------------------------------------------------
 
-clii_status <- function(app, id, msg) {
+clii_status <- function(app, id, msg, globalenv) {
 
   app$status_bar[[id]] <- list(
     content = ""
   )
-  if (isTRUE(getOption("cli.hide_cursor", TRUE))) {
+  if (isTRUE(getOption("cli.hide_cursor", TRUE)) && ! globalenv) {
     ansi_hide_cursor(app$output)
   }
   clii_status_update(app, id, msg)

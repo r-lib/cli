@@ -608,6 +608,8 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
 
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()
 
+  if (type == "status") args$globalenv <- identical(.envir, .GlobalEnv)
+
   if (.auto_close && !is.null(.envir) && !identical(.envir, .GlobalEnv)) {
     if (type == "status") {
       defer(cli_status_clear(id = args$id, result = .auto_result, .envir = .envir),
