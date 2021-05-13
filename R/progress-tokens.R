@@ -48,7 +48,7 @@ cli__pb_elapsed_raw <- function(pb = getOption("cli__pb")) {
   as.double(Sys.time() - pb$start, units = "secs")
 }
 
-cli__pb_eta <- function(pb = NULL) {
+cli__pb_eta <- function(pb = getOption("cli__pb")) {
   eta <- cli__pb_eta_raw(pb)
   if (is.na(eta)) {
     "?"
