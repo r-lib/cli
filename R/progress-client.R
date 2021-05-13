@@ -121,8 +121,8 @@ pb__default_format <- function(type, total) {
       )
     } else {
       paste0(
-        "[{cli::pb_spin}] {cli::pb_elapsed} {cli::pb_name}{cli::pb_status}",
-        "| {cli::pb_current} done ({cli::pb_rate})"
+        "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}",
+        "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
       )
     }
 
@@ -134,8 +134,8 @@ pb__default_format <- function(type, total) {
       )
     } else {
       paste0(
-        "[{cli::pb_spin}] {cli::pb_elapsed} {cli::pb_name}{cli::pb_status}",
-        "| {cli::pb_current} done ({cli::pb_rate})"
+        "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}",
+        "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
       )
     }
 
@@ -147,8 +147,8 @@ pb__default_format <- function(type, total) {
       )
     } else {
       paste0(
-        "[{cli::pb_spin}] {cli::pb_elapsed} {cli::pb_name}{cli::pb_status}",
-        "| {cli::pb_current_bytes} ({cli::pb_rate})"
+        "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}",
+        "{cli::pb_current_bytes} ({cli::pb_rate_bytes}) | {cli::pb_elapsed}"
       )
     }
   }

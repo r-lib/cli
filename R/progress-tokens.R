@@ -58,8 +58,6 @@ cli__pb_eta <- function(pb = NULL) {
 }
 
 cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
-  set <- is.null(pb)
-  if (set) pb <- getOption("cli__pb")
   if (is.na(pb$total)) return(NA_real_)
   if (pb$current == pb$total) return(0)
   if (pb$current == 0L) return(NA_real_)
@@ -88,18 +86,21 @@ cli__pb_pid <- function(pb = getOption("cli__pb")) {
 }
 
 cli__pb_rate <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "rate"
+  rate <- cli__pb_rate_raw(pb)
+  paste0(format(rate, digits = 2), "/s")
 }
 
 cli__pb_rate_raw <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "rate_raw"
+  eta <- cli__pb_elapsed_raw(pb)
+  pb$current / eta
 }
 
 cli__pb_rate_bytes <- function(pb = getOption("cli__pb")) {
-  # TODO
-  "rate_bytes"
+  rate <- cli__pb_rate_raw(pb)
+  paste0(
+    format_bytes$pretty_bytes(rate, style = "6"),
+    "/s"
+  )
 }
 
 cli__pb_spin <- function(pb = NULL) {
