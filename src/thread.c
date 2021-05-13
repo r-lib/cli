@@ -6,10 +6,10 @@
 
 static SEXP pflag = 0;
 static pthread_t tick_thread = { 0 };
-static int* flag = 0;
+int* cli_timer_flag = 0;
 
 void* clic_thread_func(void *arg) {
-  flag = (int*) arg;
+  cli_timer_flag = (int*) arg;
   struct timespec sp;
   sp.tv_sec = 0;
   sp.tv_nsec = 100 * 1000 * 1000;
@@ -17,7 +17,7 @@ void* clic_thread_func(void *arg) {
   while (1) {
     /* TODO: handle signals */
     nanosleep(&sp, NULL);
-    *flag = 1;
+    *cli_timer_flag = 1;
   }
 }
 
@@ -45,6 +45,6 @@ SEXP clic_stop_thread() {
 }
 
 SEXP clic_tick_reset() {
-  if (flag) *flag = 0;
+  if (cli_timer_flag) *cli_timer_flag = 0;
   return R_NilValue;
 }

@@ -19,4 +19,11 @@ void R_init_cli(DllInfo *dll) {
   R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
+
+  R_RegisterCCallable("cli",
+                      "cli_progress_bar",
+                      (DL_FUNC) &cli_progress_bar);
+  R_RegisterCCallable("cli",
+                      "cli_progress_update",
+                      (DL_FUNC) &cli_progress_update);
 }
