@@ -24,6 +24,12 @@ void R_init_cli(DllInfo *dll) {
                       "cli_progress_bar",
                       (DL_FUNC) &cli_progress_bar);
   R_RegisterCCallable("cli",
-                      "cli_progress_update",
-                      (DL_FUNC) &cli_progress_update);
+                      "cli_progress_set",
+                      (DL_FUNC) &cli_progress_set);
+  R_RegisterCCallable("cli",
+                      "cli_progress_add",
+                      (DL_FUNC) &cli_progress_add);
+  R_RegisterCCallable("cli",
+                      "cli_progress_done",
+                      (DL_FUNC) &cli_progress_done);
 }
