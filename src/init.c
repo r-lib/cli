@@ -1,5 +1,6 @@
 
 #include "cli.h"
+
 #include <R_ext/Rdynload.h>
 
 SEXP clic_unload() {
