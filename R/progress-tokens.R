@@ -30,13 +30,13 @@ cli__pb_current_bytes <- function(pb = getOption("cli__pb")) {
 
 cli__pb_elapsed <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) stop("No progress bar")
-  secs <- as.double(Sys.time() - pb$start, units = "secs")
+  secs <- .Call(clic_get_time) - pb$start
   format_time$pretty_sec(secs)
 }
 
 cli__pb_elapsed_clock <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) stop("No progress bar")
-  s <- as.double(Sys.time() - pb$start, units = "secs")
+  s <- .Call(clic_get_time) - pb$start
   hours <- floor(s / 3600)
   minutes <- floor((s / 60) %% 60)
   seconds <- round(s %% 60, 1)
@@ -51,7 +51,7 @@ cli__pb_elapsed_clock <- function(pb = getOption("cli__pb")) {
 
 cli__pb_elapsed_raw <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) stop("No progress bar")
-  as.double(Sys.time() - pb$start, units = "secs")
+  .Call(clic_get_time) - pb$start
 }
 
 cli__pb_eta <- function(pb = getOption("cli__pb")) {
@@ -69,7 +69,7 @@ cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
   if (is.na(pb$total)) return(NA_real_)
   if (pb$current == pb$total) return(0)
   if (pb$current == 0L) return(NA_real_)
-  elapsed <- as.double(Sys.time() - pb$start, units = "secs")
+  elapsed <- .Call(clic_get_time) - pb$start
   as.difftime(elapsed * (pb$total / pb$current - 1.0), units = "secs")
 }
 

@@ -13,7 +13,7 @@ cli_progress_bar <- function(name = NULL,
                              .auto_close = TRUE,
                              .envir = parent.frame()) {
 
-  start <- Sys.time()
+  start <- .Call(clic_get_time)
   id <- new_uuid()
   envkey <- format(.envir)
   type <- match.arg(type)
@@ -21,6 +21,7 @@ cli_progress_bar <- function(name = NULL,
     stop("Need to specify format if `type == \"custom\"")
   }
 
+  ## If changes, synchronize with C API in progress.c
   clienv$progress[[id]] <- list(
     name = name,
     status = status,

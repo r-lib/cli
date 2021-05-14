@@ -14,7 +14,7 @@ SEXP test0() {
 SEXP test1() {
   int i;
   int res = 0;
-  SEXP bar = PROTECT(cli_progress_bar());
+  SEXP bar = PROTECT(cli_progress_bar(2000000000));
   for (i = 0; i < 2000000000; i++) {
     if (SHOULD_TICK) cli_progress_set(bar, i);
     res += i % 2;
@@ -27,7 +27,7 @@ SEXP test1() {
 SEXP test2() {
   int i = 0;
   int res = 0;
-  SEXP bar = PROTECT(cli_progress_bar());
+  SEXP bar = PROTECT(cli_progress_bar(2000000000));
   int s, final, step = 2000000000 / 100000;
   for (s = 0; s < 100000; s++) {
     if (SHOULD_TICK) cli_progress_set(bar, i);

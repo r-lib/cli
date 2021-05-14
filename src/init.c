@@ -13,6 +13,7 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_stop_thread",  (DL_FUNC) clic_stop_thread,  0 },
   { "clic_tick_reset",   (DL_FUNC) clic_tick_reset,   0 },
   { "clic_unload",       (DL_FUNC) clic_unload,       0 },
+  { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
   { NULL, NULL, 0 }
 };
 

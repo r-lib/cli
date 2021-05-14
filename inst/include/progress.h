@@ -20,12 +20,12 @@ static int *cli__should_tick = &cli__false;
 
 #define SHOULD_TICK (CLI_UNLIKELY(*cli__should_tick))
 
-static R_INLINE SEXP cli_progress_bar() {
-  static SEXP (*ptr)(int **timer) = NULL;
+static R_INLINE SEXP cli_progress_bar(int total) {
+  static SEXP (*ptr)(int **, int) = NULL;
   if (ptr == NULL) {
-    ptr = (SEXP (*)(int **timer)) R_GetCCallable("cli", "cli_progress_bar");
+    ptr = (SEXP (*)(int **, int)) R_GetCCallable("cli", "cli_progress_bar");
   }
-  return ptr(&cli__should_tick);
+  return ptr(&cli__should_tick, total);
 }
 
 static R_INLINE void cli_progress_set(SEXP bar, int set) {
