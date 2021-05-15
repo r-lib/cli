@@ -26,6 +26,8 @@ int clock_gettime(int dummy, struct timespec* t) {
 #endif
 
 void* clic_thread_func(void *arg) {
+  int old;
+  pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
   flag = (int*) arg;
   struct timespec sp;
   sp.tv_sec = 0;
@@ -52,12 +54,30 @@ SEXP clic_start_thread(SEXP flag) {
 }
 
 SEXP clic_stop_thread() {
-  if (tick_thread) pthread_cancel(tick_thread);
-  memset(&tick_thread, 0, sizeof tick_thread);
+  int ret = 0;
+  /* This should not happen, but be extra careful */
+  if (tick_thread) {
+    ret = pthread_cancel(tick_thread);
+    if (ret) {
+      /* If we could not cancel, then accept the memory leak.
+	 We do not try to free the R object, because the tick
+	 thread might refer to it, still.
+	 The tick thread is always cancellable, so this should
+	 not happen. */
+      warning("Could not cancel cli thread");
+      return R_NilValue;
+    } else {
+      /* Wait for it to finish. Otherwise releasing the flag
+	 is risky because the tick thread might just use it. */
+      ret = pthread_join(tick_thread, NULL);
+    }
+  }
+
   if (pflag) {
     R_ReleaseObject(pflag);
     pflag = 0;
   }
+
   return R_NilValue;
 }
 
