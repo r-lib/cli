@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <time.h>
 
+SEXP cli_pkgenv = 0;
 static SEXP pflag = 0;
 static pthread_t tick_thread = { 0 };
 int* cli_timer_flag = 0;
@@ -21,8 +22,10 @@ void* clic_thread_func(void *arg) {
   }
 }
 
-SEXP clic_start_thread(SEXP flag) {
+SEXP clic_start_thread(SEXP flag, SEXP pkg) {
+  R_PreserveObject(pkg);
   R_PreserveObject(flag);
+  cli_pkgenv = pkg;
   pflag = flag;
   int ret = pthread_create(
     & tick_thread,
@@ -38,6 +41,7 @@ SEXP clic_stop_thread() {
   if (tick_thread) pthread_cancel(tick_thread);
   memset(&tick_thread, 0, sizeof tick_thread);
   if (pflag) {
+    R_ReleaseObject(cli_pkgenv);
     R_ReleaseObject(pflag);
     pflag = 0;
   }

@@ -14,11 +14,12 @@ clienv$progress <- list()
 
 .onLoad <- function(libname, pkgname) {
 
-  .Call(clic_start_thread, should_tick)
+  pkgenv <- environment(dummy)
+
+  .Call(clic_start_thread, should_tick, pkgenv)
 
   ccli_tick_reset <<- clic_tick_reset
 
-  pkgenv <- environment(dummy)
   makeActiveBinding(
     "symbol",
     function() {

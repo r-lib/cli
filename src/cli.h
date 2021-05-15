@@ -11,7 +11,9 @@ void cli_progress_set(SEXP bar, int set);
 void cli_progress_add(SEXP bar, int inc);
 void cli_progress_done(SEXP bar);
 
-SEXP clic_start_thread(SEXP flag);
+extern SEXP cli_pkgenv;
+
+SEXP clic_start_thread(SEXP flag, SEXP pkgenv);
 SEXP clic_stop_thread();
 SEXP clic_tick_reset();
 SEXP clic_get_time();

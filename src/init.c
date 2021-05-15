@@ -9,7 +9,7 @@ SEXP clic_unload() {
 }
 
 static const R_CallMethodDef callMethods[]  = {
-  { "clic_start_thread", (DL_FUNC) clic_start_thread, 1 },
+  { "clic_start_thread", (DL_FUNC) clic_start_thread, 2 },
   { "clic_stop_thread",  (DL_FUNC) clic_stop_thread,  0 },
   { "clic_tick_reset",   (DL_FUNC) clic_tick_reset,   0 },
   { "clic_unload",       (DL_FUNC) clic_unload,       0 },
