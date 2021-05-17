@@ -1,6 +1,6 @@
 
 #include <Rinternals.h>
-#include <progress.h>
+#include <cli/progress.h>
 
 SEXP test0() {
   int i;
