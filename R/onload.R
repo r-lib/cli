@@ -16,7 +16,11 @@ clienv$progress <- list()
 
   pkgenv <- environment(dummy)
 
-  .Call(clic_start_thread, should_tick, pkgenv)
+  ticktime <- as.integer(Sys.getenv("CLI_TICK_TIME", NA_character_))
+  if (is.na(ticktime)) {
+    ticktime <- if (interactive()) 100L else 3000L
+  }
+  .Call(clic_start_thread, should_tick, pkgenv, ticktime)
 
   ccli_tick_reset <<- clic_tick_reset
 

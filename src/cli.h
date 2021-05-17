@@ -13,7 +13,7 @@ void cli_progress_done(SEXP bar);
 
 extern SEXP cli_pkgenv;
 
-SEXP clic_start_thread(SEXP flag, SEXP pkgenv);
+SEXP clic_start_thread(SEXP flag, SEXP pkgenv, SEXP ticktime);
 SEXP clic_stop_thread();
 SEXP clic_tick_reset();
 SEXP clic_get_time();
