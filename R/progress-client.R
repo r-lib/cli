@@ -48,7 +48,7 @@ cli_progress_bar <- function(name = NULL,
 #' @export
 
 cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
-                                .envir = parent.frame()) {
+                                force = FALSE, .envir = parent.frame()) {
   id <- id %||% clienv$progress[[format(.envir)]]
   if (is.null(id)) stop("Cannot find last progress bar")
   pb <- clienv$progress[[id]]
@@ -65,7 +65,7 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     return(invisible(id))
   }
 
-  if (should_tick) {
+  if (should_tick || force) {
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
     }
