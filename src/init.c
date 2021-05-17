@@ -17,21 +17,21 @@ static const R_CallMethodDef callMethods[]  = {
   { NULL, NULL, 0 }
 };
 
+#define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
+
 void R_init_cli(DllInfo *dll) {
   R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
 
-  R_RegisterCCallable("cli",
-                      "cli_progress_bar",
-                      (DL_FUNC) &cli_progress_bar);
-  R_RegisterCCallable("cli",
-                      "cli_progress_set",
-                      (DL_FUNC) &cli_progress_set);
-  R_RegisterCCallable("cli",
-                      "cli_progress_add",
-                      (DL_FUNC) &cli_progress_add);
-  R_RegisterCCallable("cli",
-                      "cli_progress_done",
-                      (DL_FUNC) &cli_progress_done);
+  RCC(cli_progress_bar);
+  RCC(cli_progress_set_name);
+  RCC(cli_progress_set_status);
+  RCC(cli_progress_set_type);
+  RCC(cli_progress_set_format);
+  RCC(cli_progress_set_estimate);
+  RCC(cli_progress_set_clear);
+  RCC(cli_progress_set);
+  RCC(cli_progress_add);
+  RCC(cli_progress_done);
 }

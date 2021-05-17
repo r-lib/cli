@@ -106,7 +106,7 @@ SEXP cli_progress_bar(int **ptr, int total) {
   Rf_defineVar(Rf_install("total"),         Rf_ScalarInteger(total), bar);
   Rf_defineVar(Rf_install("format"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("estimate"),      R_NilValue,              bar);
-  Rf_defineVar(Rf_install("auto_estimate"), R_NilValue,              bar);
+  Rf_defineVar(Rf_install("auto_estimate"), Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
@@ -115,6 +115,35 @@ SEXP cli_progress_bar(int **ptr, int total) {
 
   UNPROTECT(1);
   return bar;
+}
+
+void cli_progress_set_name(SEXP bar, const char *name) {
+  Rf_setVar(Rf_install("name"), Rf_mkString(name), bar);
+}
+
+void cli_progress_set_status(SEXP bar, const char *status) {
+  Rf_setVar(Rf_install("status"), Rf_mkString(status), bar);
+}
+
+void cli_progress_set_type(SEXP bar, const char *type) {
+  Rf_setVar(Rf_install("type"), Rf_mkString(type), bar);
+}
+
+void cli_progress_set_format(SEXP bar, const char *format) {
+  Rf_setVar(Rf_install("format"), Rf_mkString(format), bar);
+}
+
+void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate) {
+  if (estimate < 0) {
+    Rf_setVar(Rf_install("estimate"), R_NilValue, bar);
+  } else {
+    Rf_setVar(Rf_install("estimate"), Rf_ScalarInteger(estimate), bar);
+  }
+  Rf_setVar(Rf_install("auto_estimate"), Rf_ScalarLogical(auto_estimate), bar);
+}
+
+void cli_progress_set_clear(SEXP bar, int clear) {
+  Rf_setVar(Rf_install("clear"), Rf_ScalarLogical(clear), bar);
 }
 
 void cli_progress_set(SEXP bar, int set) {
