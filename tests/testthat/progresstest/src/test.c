@@ -24,6 +24,24 @@ SEXP test1() {
   return ScalarInteger(res);
 }
 
+SEXP testx() {
+  int i;
+  int res = 0;
+  SEXP bar = PROTECT(cli_progress_bar(2000000000));
+  cli_progress_set_format(
+     bar,
+     "{%d} package{?s} {cli::pb_bar} | {cli::pb_elapsed}",
+     4
+  );
+  for (i = 0; i < 2000000000; i++) {
+    if (SHOULD_TICK) cli_progress_set(bar, i);
+    res += i % 2;
+  }
+  cli_progress_done(bar);
+  UNPROTECT(1);
+  return ScalarInteger(res);
+}
+
 SEXP test2() {
   int i = 0;
   int res = 0;
@@ -45,6 +63,7 @@ static const R_CallMethodDef CallEntries[] = {
   { "test0", (DL_FUNC) test0, 0 },
   { "test1", (DL_FUNC) test1, 0 },
   { "test2", (DL_FUNC) test2, 0 },
+  { "testx", (DL_FUNC) testx, 0 },
   { NULL, NULL, 0 }
 };
 

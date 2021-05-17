@@ -23,6 +23,13 @@ test2 <- function() {
   .Call(c_test2)
 }
 
+#' @export
+
+testx <- function() {
+  this <- "testx"
+  .Call(c_testx)
+}
+
 test3 <- function() {
   this <- "test3"
   test2()

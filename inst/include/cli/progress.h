@@ -2,6 +2,7 @@
 #define R_CLI_PROGRESS_H
 
 #include <R_ext/Rdynload.h>
+#include <stdarg.h>
 
 static int cli__false = 0;
 static int *cli__should_tick = &cli__false;
@@ -37,31 +38,22 @@ static R_INLINE void cli_progress_set_name(SEXP bar, const char *name) {
   ptr(bar, name);
 }
 
-static R_INLINE void cli_progress_set_status(SEXP bar, const char *name) {
+static R_INLINE void cli_progress_set_status(SEXP bar, const char *status) {
   static void (*ptr)(SEXP, const char*) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, const char*))
       R_GetCCallable("cli", "cli_progress_set_status");
   }
-  ptr(bar, name);
+  ptr(bar, status);
 }
 
-static R_INLINE void cli_progress_set_type(SEXP bar, const char *name) {
+static R_INLINE void cli_progress_set_type(SEXP bar, const char *type) {
   static void (*ptr)(SEXP, const char*) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, const char*))
       R_GetCCallable("cli", "cli_progress_set_type");
   }
-  ptr(bar, name);
-}
-
-static R_INLINE void cli_progress_set_format(SEXP bar, const char *name) {
-  static void (*ptr)(SEXP, const char*) = NULL;
-  if (ptr == NULL) {
-    ptr = (void (*)(SEXP, const char*))
-      R_GetCCallable("cli", "cli_progress_set_format");
-  }
-  ptr(bar, name);
+  ptr(bar, type);
 }
 
 static R_INLINE void cli_progress_set_estimate(SEXP bar,
@@ -90,6 +82,21 @@ static R_INLINE void cli_progress_set(SEXP bar, int set) {
     ptr = (void (*)(SEXP, int)) R_GetCCallable("cli", "cli_progress_set");
   }
   ptr(bar, set);
+}
+
+static R_INLINE void cli_progress_set_format(SEXP bar, const char *format, ...) {
+  static void (*ptr)(SEXP, const char*) = NULL;
+  static char str[1024];
+  if (ptr == NULL) {
+    ptr = (void (*)(SEXP, const char*))
+      R_GetCCallable("cli", "cli_progress_set_format");
+  }
+
+  va_list ap;
+  va_start(ap, format);
+  vsnprintf(str, sizeof(str) / sizeof(char), format, ap);
+
+  ptr(bar, str);
 }
 
 static R_INLINE void cli_progress_add(SEXP bar, int inc) {
