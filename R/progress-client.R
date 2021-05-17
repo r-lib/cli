@@ -22,19 +22,19 @@ cli_progress_bar <- function(name = NULL,
   }
 
   ## If changes, synchronize with C API in progress.c
-  clienv$progress[[id]] <- list(
-    name = name,
-    status = status,
-    type = match.arg(type),
-    total = total,
-    format = format,
-    estimate = estimate,
-    auto_estimate= auto_estimate,
-    clear = clear,
-    envkey = envkey,
-    current = 0L,
-    start = start
-  )
+  bar <- new.env(parent = emptyenv())
+  bar$name <- name
+  bar$status <- status
+  bar$type <- match.arg(type)
+  bar$total <- total
+  bar$format <- format
+  bar$estimate <- estimate
+  bar$auto_estimate <- auto_estimate
+  bar$clear <- clear
+  bar$envkey <- envkey
+  bar$current <- 0L
+  bar$start <- start
+  clienv$progress[[id]] <- bar
 
   clienv$progress[[envkey]] <- id
 
@@ -74,15 +74,11 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     on.exit(options(opt), add = TRUE)
 
     if (is.null(pb$statusbar)) {
-      sb <- cli_status(pb$format, .auto_close = FALSE, .envir = .envir)
+      pb$statusbar <- cli_status(pb$format, .auto_close = FALSE, .envir = .envir)
     } else {
       cli_status_update(id = pb$statusbar, pb$format, .envir = .envir)
     }
-    pb <- getOption("cli__pb")
-    pb$statusbar <- pb$statusbar %||% sb
   }
-
-  clienv$progress[[id]] <- pb
 
   # Return TRUE, to allow cli_progress_update() && break in loops
   invisible(TRUE)

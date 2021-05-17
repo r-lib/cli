@@ -64,6 +64,17 @@ static int cli_clock_gettime(int clk_id, struct timespec *t) {
 #define cli_clock_gettime(a,b) clock_gettime(a,b)
 #endif
 
+static R_INLINE SEXP new_env() {
+  SEXP env;
+  PROTECT(env = allocSExp(ENVSXP));
+  SET_FRAME(env, R_NilValue);
+  SET_ENCLOS(env, R_EmptyEnv);
+  SET_HASHTAB(env, R_NilValue);
+  SET_ATTRIB(env, R_NilValue);
+  UNPROTECT(1);
+  return env;
+}
+
 SEXP clic_get_time() {
   struct timespec t;
   int ret = cli_clock_gettime(CLOCK_MONOTONIC, &t);
@@ -88,55 +99,26 @@ SEXP cli_progress_bar(int **ptr, int total) {
   *ptr = cli_timer_flag;
 
   /* If changes, synchronize with R API in progress-client.R */
-  const char *names[] = {
-#define PB_NAME 0
-    "name",
-#define PB_STATUS 1
-    "status",
-#define PB_TYPE 2
-    "type",
-#define PB_TOTAL 3
-    "total",
-#define PB_FORMAT 4
-    "format",
-#define PB_ESTIMATE 5
-    "estimate",
-#define PB_AUTO_ESTIMATE 6
-    "auto_estimate",
-#define PB_CLEAR 7
-    "clear",
-#define PB_ENVKEY 8
-    "envkey",
-#define PB_CURRENT 9
-    "current",
-#define PB_START 10
-    "start",
-#define PB_STATUSBAR 11
-    "statusbar",
-    ""
-  };
-
-  SEXP bar = PROTECT(Rf_mkNamed(VECSXP, names));
-
-  SET_VECTOR_ELT(bar, PB_NAME,          Rf_mkString(""));
-  SET_VECTOR_ELT(bar, PB_STATUS,        Rf_mkString(""));
-  SET_VECTOR_ELT(bar, PB_TYPE,          Rf_mkString("iterator"));
-  SET_VECTOR_ELT(bar, PB_TOTAL,         Rf_ScalarInteger(total));
-  SET_VECTOR_ELT(bar, PB_FORMAT,        R_NilValue);
-  SET_VECTOR_ELT(bar, PB_ESTIMATE,      R_NilValue);
-  SET_VECTOR_ELT(bar, PB_AUTO_ESTIMATE, R_NilValue);
-  SET_VECTOR_ELT(bar, PB_CLEAR,         Rf_ScalarLogical(1));
-  SET_VECTOR_ELT(bar, PB_ENVKEY,        R_NilValue);
-  SET_VECTOR_ELT(bar, PB_CURRENT,       Rf_ScalarInteger(0));
-  SET_VECTOR_ELT(bar, PB_START,         clic_get_time());
-  SET_VECTOR_ELT(bar, PB_STATUSBAR,     R_NilValue);
+  SEXP bar = PROTECT(new_env());
+  Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
+  Rf_defineVar(Rf_install("status"),        Rf_mkString(""),         bar);
+  Rf_defineVar(Rf_install("type"),          Rf_mkString("iterator"), bar);
+  Rf_defineVar(Rf_install("total"),         Rf_ScalarInteger(total), bar);
+  Rf_defineVar(Rf_install("format"),        R_NilValue,              bar);
+  Rf_defineVar(Rf_install("estimate"),      R_NilValue,              bar);
+  Rf_defineVar(Rf_install("auto_estimate"), R_NilValue,              bar);
+  Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(1),     bar);
+  Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
+  Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
+  Rf_defineVar(Rf_install("start"),         clic_get_time(),         bar);
+  Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
 
   UNPROTECT(1);
   return bar;
 }
 
 void cli_progress_set(SEXP bar, int set) {
-  int *current = INTEGER(VECTOR_ELT(bar, PB_CURRENT));
+  int *current = INTEGER(Rf_findVar(Rf_install("current"), bar));
   *current = set;
   if (*cli_timer_flag) {
     cli__progress_update(bar);
@@ -145,7 +127,7 @@ void cli_progress_set(SEXP bar, int set) {
 }
 
 void cli_progress_add(SEXP bar, int inc) {
-  int *current = INTEGER(VECTOR_ELT(bar, PB_CURRENT));
+  int *current = INTEGER(Rf_findVar(Rf_install("current"), bar));
   (*current) += inc;
   if (*cli_timer_flag) {
     cli__progress_update(bar);
@@ -154,5 +136,7 @@ void cli_progress_add(SEXP bar, int inc) {
 }
 
 void cli_progress_done(SEXP bar) {
-  /* TODO: if there is a status bar, remove it */
+  SEXP call = PROTECT(Rf_lang2(install("progress_c_done"), bar));
+  PROTECT(Rf_eval(call, cli_pkgenv));
+  UNPROTECT(2);
 }
