@@ -40,6 +40,7 @@ test_that_cli("cli_warn", {
 })
 
 test_that_cli("cli_inform", {
+  withr::local_options(cli.ansi = FALSE)
   expect_snapshot({
     n <- "boo"
     cli_inform(c(

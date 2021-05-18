@@ -195,6 +195,8 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
+    Message <cliMessage>
+      
     Message <message>
       `n` must be a numeric vector
       x You've supplied a <character> vector.
@@ -208,6 +210,8 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
+    Message <cliMessage>
+      
     Message <message>
       Must index an existing element:
       i There are 26 elements.
@@ -218,6 +222,8 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
+    Message <cliMessage>
+      
     Message <message>
       [1m[22m[30m[47m[30m[47m`n`[47m[30m[49m[39m must be a numeric vector
       [31mx[39m You've supplied a [34m[34m<character>[34m[39m vector.
@@ -231,6 +237,8 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
+    Message <cliMessage>
+      
     Message <message>
       [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
@@ -241,6 +249,8 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
+    Message <cliMessage>
+      
     Message <message>
       `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
@@ -254,6 +264,8 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
+    Message <cliMessage>
+      
     Message <message>
       Must index an existing element:
       ℹ There are 26 elements.
@@ -264,6 +276,8 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
+    Message <cliMessage>
+      
     Message <message>
       [1m[22m[30m[47m[30m[47m`n`[47m[30m[49m[39m must be a numeric vector
       [31m✖[39m You've supplied a [34m[34m<character>[34m[39m vector.
@@ -277,6 +291,8 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
+    Message <cliMessage>
+      
     Message <message>
       [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.

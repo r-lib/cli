@@ -44,5 +44,6 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
 #' @export
 
 cli_inform <- function(message, ..., .envir = parent.frame()) {
+  cli_status("", "", "")
   rlang::inform(format_message(message, .envir = .envir), ...)
 }
