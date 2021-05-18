@@ -23,6 +23,7 @@ cli_progress_bar <- function(name = NULL,
 
   ## If changes, synchronize with C API in progress.c
   bar <- new.env(parent = emptyenv())
+  bar$id <- id
   bar$name <- name
   bar$status <- status
   bar$type <- match.arg(type)

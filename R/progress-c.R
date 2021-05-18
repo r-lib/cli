@@ -31,4 +31,9 @@ progress_c_done <- function(pb) {
       cli_status_clear(pb$statusbar, result = "done", msg_done = pb$msg)
     }
   }
+
+  if (!is.null(pb$id)) clienv$progress[[pb$id]] <- NULL
+  if (!is.null(pb$envkey)) clienv$progress[[pb$envkey]] <- NULL
+
+  NULL
 }

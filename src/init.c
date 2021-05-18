@@ -3,6 +3,7 @@
 #include "cleancall.h"
 
 #include <R_ext/Rdynload.h>
+#include <Rversion.h>
 
 SEXP clic_unload() {
   clic_stop_thread();
@@ -11,11 +12,15 @@ SEXP clic_unload() {
 
 static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
+
   { "clic_start_thread", (DL_FUNC) clic_start_thread, 3 },
   { "clic_stop_thread",  (DL_FUNC) clic_stop_thread,  0 },
   { "clic_tick_reset",   (DL_FUNC) clic_tick_reset,   0 },
   { "clic_unload",       (DL_FUNC) clic_unload,       0 },
   { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
+
+  { "clic_tick_along",   (DL_FUNC) clic_tick_along,   2 },
+
   { NULL, NULL, 0 }
 };
 
@@ -27,6 +32,10 @@ void R_init_cli(DllInfo *dll) {
   R_forceSymbols(dll, TRUE);
 
   cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
+
+#if R_VERSION >= R_Version(3, 5, 0)
+  cli_init_altrep(dll);
+#endif
 
   RCC(cli_progress_bar);
   RCC(cli_progress_set_name);
