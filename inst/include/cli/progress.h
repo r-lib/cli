@@ -21,12 +21,38 @@ static int *cli__should_tick = &cli__false;
 
 #define SHOULD_TICK (CLI_UNLIKELY(*cli__should_tick))
 
+static R_INLINE void cli_progress_done(SEXP bar) {
+  static void (*ptr)(SEXP) = NULL;
+  if (ptr == NULL) {
+    ptr = (void (*)(SEXP)) R_GetCCallable("cli", "cli_progress_done");
+  }
+  ptr(bar);
+}
+
+static void cli_progress_done2(SEXP bar) {
+  static void (*ptr)(SEXP) = NULL;
+  if (ptr == NULL) {
+    ptr = (void (*)(SEXP)) R_GetCCallable("cli", "cli_progress_done");
+  }
+  ptr(bar);
+}
+
 static R_INLINE SEXP cli_progress_bar(int total) {
   static SEXP (*ptr)(int **, int) = NULL;
   if (ptr == NULL) {
     ptr = (SEXP (*)(int **, int)) R_GetCCallable("cli", "cli_progress_bar");
   }
-  return ptr(&cli__should_tick, total);
+
+  SEXP bar = PROTECT(ptr(&cli__should_tick, total));
+
+#ifdef R_CLEANCALL_SUPPORT
+  if (r_cleancall_is_active()) {
+    r_call_on_early_exit((void (*)(void *)) cli_progress_done2, (void*) bar);
+  }
+#endif
+
+  UNPROTECT(1);
+  return bar;
 }
 
 static R_INLINE void cli_progress_set_name(SEXP bar, const char *name) {
@@ -105,14 +131,6 @@ static R_INLINE void cli_progress_add(SEXP bar, int inc) {
     ptr = (void (*)(SEXP, int)) R_GetCCallable("cli", "cli_progress_add");
   }
   ptr(bar, inc);
-}
-
-static R_INLINE void cli_progress_done(SEXP bar) {
-  static void (*ptr)(SEXP) = NULL;
-  if (ptr == NULL) {
-    ptr = (void (*)(SEXP)) R_GetCCallable("cli", "cli_progress_done");
-  }
-  ptr(bar);
 }
 
 #endif
