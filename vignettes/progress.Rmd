@@ -19,13 +19,29 @@ knitr::opts_chunk$set(
   cache = TRUE
 )
 # Turn on ANSI colors
-options(cli.num_colors = 256L)
+options(
+  cli.num_colors = 256L,
+  cli_speed = 1
+)
 asciicast::init_knitr_engine(
-  startup = quote({
+  startup = bquote({
+    Sys.setenv(CLI_SPEED_TIME = .(getOption("cli_speed")))
     library(cli)
-    set.seed(1) }),
+    .GlobalEnv$Sys.sleep <- function(time) {
+      base::Sys.sleep(time / .(getOption("cli_speed")))
+    }
+    set.seed(1)
+  }),
   echo = TRUE,
-  echo_input = FALSE)
+  echo_input = FALSE,
+  options = list(
+    asciicast_at = NULL,
+    asciicast_end_wait = 3 / getOption("cli_speed"),
+    asciicast_speed = 1 / getOption("cli_speed"),
+    asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
+  )
+)
+getOption("asciicast_speed")
 ```
 
 ```{r, setup}
@@ -34,9 +50,16 @@ library(cli)
 
 # Status bars
 
+```{asciicast, include = FALSE}
+# To test that we shimmed Sys.sleep and the time is speeded up
+Sys.sleep
+cli:::clienv$speed_time
+cli:::clienv$tick_time
+```
+
 ## Simplified API
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 f <- function() {
   cli_status("Task one is running...")
   Sys.sleep(2)
@@ -56,7 +79,7 @@ f()
 
 ## Alternative API
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 3)}
+```{asciicast}
 f <- function(n = 10) {
   cli_alert_info("About to start downloads of {n} file{?s}")
   i <- 0
@@ -74,7 +97,7 @@ f()
 
 40-60ns per iterations, without printing.
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 f <- function() {
   i <- 0L
   cli_status("{.alert-info Read {i} files}")
@@ -86,11 +109,11 @@ f <- function() {
 f()
 ```
 
-# Progress bars
+# Progress bars in R
 
 ## Explicit start, update and termination
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 cli_progress_bar(total = 100)
 for (i in 1:100) {
   Sys.sleep(5/100)
@@ -103,7 +126,7 @@ cli_progress_done()
 
 40-60ns per iterations, without printing.
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 f <- function() {
   cli_progress_bar(total = 10000)
   for (i in 1:10000) {
@@ -116,7 +139,7 @@ f()
 
 ## Unknown total
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 cli_progress_bar()
 for (i in 1:100) {
   Sys.sleep(5/100)
@@ -127,7 +150,7 @@ cli_progress_done()
 
 ## Downloads
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 cli_progress_bar(type = "download")
 for (i in 1:100) {
   Sys.sleep(5/100)
@@ -138,15 +161,15 @@ cli_progress_done()
 
 ## Custom format
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 f <- function() {
   cli_progress_bar(
-    total = 30000,
+    total = 20000,
     format = "Step {step} | {pb_bar} {pb_percent}"
   )
   step <- 1
   for (i in 1:10000) {
-    Sys.sleep(3/10000)
+    Sys.sleep(2/10000)
     if (should_tick) cli_progress_update(set = i)
   }
   step <- 2
@@ -163,7 +186,7 @@ f()
 A silly example, but you can use custom functions on progress
 bar tokens:
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 cli_progress_bar(
   total = 26,
   format = "This is step {.emph {letters[pb_current]}}."
@@ -176,7 +199,7 @@ for (i in 1:26) {
 
 ## While loops with `ticking()`
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 3, asciicast_rows = 1)}
+```{asciicast}
 i <- 0
 while (ticking(i < 100)) {
   Sys.sleep(3/100)
@@ -186,13 +209,32 @@ while (ticking(i < 100)) {
 
 ## Mapping with `tick_along()`
 
-Not implemented yet.
 Needs R 3.5.0.
-Should to be very fast, 2-3ns overhead per iteration.
 
-```{r, eval = FALSE}
-lapply(
-  tick_along(filenames),
-  function(i) readr::read_csv(filenames[i])
+```{asciicast}
+out <- lapply(
+  tick_along(letters),
+  function(i) Sys.sleep(1)
 )
+```
+
+# Progress bars in C
+
+```{asciicastcpp11}
+#include <cli/progress.h>
+SEXP progress_test1() {
+  int i;
+  SEXP bar = PROTECT(cli_progress_bar(1000));
+  for (i = 0; i < 1000; i++) {
+    cli_progress_sleep(0, 4 * 1000 * 1000);
+    if (SHOULD_TICK) cli_progress_set(bar, i);
+  }
+  cli_progress_done(bar);
+  UNPROTECT(1);
+  return Rf_ScalarInteger(i);
+}
+```
+
+```{asciicast, dependson = -1}
+progress_test1()
 ```
