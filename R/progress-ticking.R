@@ -1,12 +1,12 @@
 
 #' @export
 
-ticking <- function(cond, ..., .envir = parent.frame()) {
+ticking <- function(cond, name = NULL, ..., .envir = parent.frame()) {
   val <- force(cond)
 
   new <- is.null(clienv$progress[[format(.envir)]])
 
-  if (new && val) cli_progress_bar(..., .envir = .envir)
+  if (new && val) cli_progress_bar(name = name, ..., .envir = .envir)
 
   if (val) {
     cli_progress_update(.envir = .envir)
