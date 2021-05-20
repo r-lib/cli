@@ -9,15 +9,12 @@ static SEXP pflag = 0;
 static pthread_t tick_thread = { 0 };
 int* cli_timer_flag = 0;
 static struct timespec cli__tick_ts;
+double cli_speed_time = 1.0;
 
 void* clic_thread_func(void *arg) {
   cli_timer_flag = (int*) arg;
   int old;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
-  flag = (int*) arg;
-  struct timespec sp;
-  sp.tv_sec = 0;
-  sp.tv_nsec = 100 * 1000 * 1000;
 
   while (1) {
     /* TODO: handle signals */
@@ -26,29 +23,37 @@ void* clic_thread_func(void *arg) {
   }
 }
 
-SEXP clic_start_thread(SEXP flag, SEXP pkg, SEXP ticktime) {
-  int cticktime = INTEGER(ticktime)[0];
+static int start_thread(SEXP ticktime, SEXP speedtime) {
+  cli_speed_time = REAL(speedtime)[0];
+  int cticktime = INTEGER(ticktime)[0] / REAL(speedtime)[0];
+  if (cticktime == 0) cticktime = 1;
   cli__tick_ts.tv_sec = cticktime / 1000;
   cli__tick_ts.tv_nsec = (cticktime % 1000) * 1000 * 1000;
+
+  int ret = pthread_create(
+    & tick_thread,
+    /* attr = */ 0,
+    clic_thread_func,
+    /* arg = */ LOGICAL(pflag)
+  );
+
+  return ret;
+}
+
+SEXP clic_start_thread(SEXP flag, SEXP pkg, SEXP ticktime, SEXP speedtime) {
 
   R_PreserveObject(pkg);
   R_PreserveObject(flag);
   cli_pkgenv = pkg;
   pflag = flag;
 
-  int ret = pthread_create(
-    & tick_thread,
-    /* attr = */ 0,
-    clic_thread_func,
-    /* arg = */ LOGICAL(flag)
-  );
-
+  int ret = start_thread(ticktime, speedtime);
   if (ret) warning("Cannot create cli tick thread");
 
   return R_NilValue;
 }
 
-SEXP clic_stop_thread() {
+static int kill_thread() {
   int ret = 0;
   /* This should not happen, but be extra careful */
   if (tick_thread) {
@@ -60,7 +65,7 @@ SEXP clic_stop_thread() {
 	 The tick thread is always cancellable, so this should
 	 not happen. */
       warning("Could not cancel cli thread");
-      return R_NilValue;
+      return ret;
     } else {
       /* Wait for it to finish. Otherwise releasing the flag
 	 is risky because the tick thread might just use it. */
@@ -68,7 +73,12 @@ SEXP clic_stop_thread() {
     }
   }
 
-  if (pflag) {
+  return ret;
+}
+
+SEXP clic_stop_thread() {
+  int ret = kill_thread();
+  if (!ret && pflag) {
     R_ReleaseObject(cli_pkgenv);
     R_ReleaseObject(pflag);
     pflag = 0;
@@ -79,5 +89,17 @@ SEXP clic_stop_thread() {
 
 SEXP clic_tick_reset() {
   if (cli_timer_flag) *cli_timer_flag = 0;
+  return R_NilValue;
+}
+
+SEXP clic_tick_set(SEXP ticktime, SEXP speedtime) {
+  if (cli_timer_flag) *cli_timer_flag = 1;
+
+  int ret = kill_thread();
+  if (ret) error("Cannot terminate progress thread");
+
+  ret = start_thread(ticktime, speedtime);
+  if (ret) warning("Cannot create progress thread");
+
   return R_NilValue;
 }

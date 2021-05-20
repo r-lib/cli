@@ -170,3 +170,20 @@ void cli_progress_done(SEXP bar) {
   PROTECT(Rf_eval(call, cli_pkgenv));
   UNPROTECT(2);
 }
+
+extern double cli_speed_time;
+
+void cli_progress_sleep(int s, long ns) {
+  struct timespec ts;
+  int s2 = s;
+  long ns2 = ns;
+  if (cli_speed_time != 1.0) {
+    s2 = s / cli_speed_time;
+    ns2 =
+      (s / cli_speed_time - s2) * 1000 * 1000 * 1000 +
+      ns / cli_speed_time;
+  }
+  ts.tv_sec = s2;
+  ts.tv_nsec = ns2;
+  nanosleep(&ts, NULL);
+}

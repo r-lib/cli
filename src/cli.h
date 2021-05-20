@@ -16,6 +16,7 @@ void cli_progress_set_clear(SEXP bar, int);
 void cli_progress_set(SEXP bar, int set);
 void cli_progress_add(SEXP bar, int inc);
 void cli_progress_done(SEXP bar);
+void cli_progress_sleep(int s, long ns);
 
 SEXP cli__progress_update(SEXP bar);
 void cli_init_altrep(DllInfo *dll);
@@ -23,9 +24,10 @@ SEXP clic_tick_along(SEXP seq, SEXP bar);
 
 extern SEXP cli_pkgenv;
 
-SEXP clic_start_thread(SEXP flag, SEXP pkgenv, SEXP ticktime);
+SEXP clic_start_thread(SEXP flag, SEXP pkgenv, SEXP tick, SEXP speed);
 SEXP clic_stop_thread();
 SEXP clic_tick_reset();
 SEXP clic_get_time();
+SEXP clic_tick_set(SEXP ticktime, SEXP speedtime);
 
 #endif

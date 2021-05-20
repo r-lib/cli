@@ -6,30 +6,35 @@ NULL
 
 dummy <- function() { }
 
-load_time <- NULL
-speed_time <- 1.0
-tick_time <- 100L
-
 clienv <- new.env(parent = emptyenv())
 clienv$pid <- Sys.getpid()
 clienv$globalenv <- format(.GlobalEnv)
 clienv$status <- list()
 clienv$progress <- list()
 
+clienv$load_time <- NULL
+clienv$speed_time <- 1.0
+clienv$tick_time <- 200L
+
 .onLoad <- function(libname, pkgname) {
 
   pkgenv <- environment(dummy)
 
-  load_time <<- Sys.time()
-  speed_time <<- as.double(Sys.getenv("CLI_SPEED_TIME", "1.0"))
+  clienv$load_time <- Sys.time()
+
+  clienv$speed_time <- as.double(Sys.getenv("CLI_SPEED_TIME", "1.0"))
 
   tt <- as.integer(Sys.getenv("CLI_TICK_TIME", NA_character_))
   if (is.na(tt)) {
-    tt <- if (interactive()) 100L else 3000L
+    tt <- if (interactive()) 200L else 3000L
   }
-  tt <- tt / speed_time
-  tick_time <<- as.integer(tt)
-  .Call(clic_start_thread, should_tick, pkgenv, tick_time)
+  clienv$tick_time <- as.integer(tt)
+  .Call(
+    clic_start_thread,
+    should_tick, pkgenv,
+    clienv$tick_time,
+    clienv$speed_time
+  )
 
   ccli_tick_reset <<- clic_tick_reset
 
