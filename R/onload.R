@@ -6,6 +6,10 @@ NULL
 
 dummy <- function() { }
 
+load_time <- NULL
+speed_time <- 1.0
+tick_time <- 100L
+
 clienv <- new.env(parent = emptyenv())
 clienv$pid <- Sys.getpid()
 clienv$globalenv <- format(.GlobalEnv)
@@ -16,11 +20,16 @@ clienv$progress <- list()
 
   pkgenv <- environment(dummy)
 
-  ticktime <- as.integer(Sys.getenv("CLI_TICK_TIME", NA_character_))
-  if (is.na(ticktime)) {
-    ticktime <- if (interactive()) 100L else 3000L
+  load_time <<- Sys.time()
+  speed_time <<- as.double(Sys.getenv("CLI_SPEED_TIME", "1.0"))
+
+  tt <- as.integer(Sys.getenv("CLI_TICK_TIME", NA_character_))
+  if (is.na(tt)) {
+    tt <- if (interactive()) 100L else 3000L
   }
-  .Call(clic_start_thread, should_tick, pkgenv, ticktime)
+  tt <- tt / speed_time
+  tick_time <<- as.integer(tt)
+  .Call(clic_start_thread, should_tick, pkgenv, tick_time)
 
   ccli_tick_reset <<- clic_tick_reset
 
@@ -70,7 +79,7 @@ clienv$progress <- list()
   makeActiveBinding("pb_eta",            cli__pb_eta,           pkgenv)
   makeActiveBinding("pb_eta_raw",        cli__pb_eta_raw,       pkgenv)
   makeActiveBinding("pb_id",             cli__pb_id,            pkgenv)
-  makeActiveBinding("pb_name",           cli__pb_name,          pkgenv)  
+  makeActiveBinding("pb_name",           cli__pb_name,          pkgenv)
   makeActiveBinding("pb_percent",        cli__pb_percent,       pkgenv)
   makeActiveBinding("pb_pid",            cli__pb_pid,           pkgenv)
   makeActiveBinding("pb_rate",           cli__pb_rate,          pkgenv)

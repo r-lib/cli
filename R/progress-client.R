@@ -13,7 +13,7 @@ cli_progress_bar <- function(name = NULL,
                              .auto_close = TRUE,
                              .envir = parent.frame()) {
 
-  start <- .Call(clic_get_time)
+  start <- .Call(clic_get_time) * speed_time
   id <- new_uuid()
   envkey <- format(.envir)
   type <- match.arg(type)
