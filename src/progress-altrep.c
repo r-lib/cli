@@ -32,17 +32,11 @@ static R_xlen_t tick_along_Length(SEXP x) {
 }
 
 static int tick_along_integer_Elt(SEXP x, R_xlen_t i) {
-  i++;
   if (*cli_timer_flag) {
     SEXP bar = R_altrep_data2(x);
     int *current = INTEGER(Rf_findVar(Rf_install("current"), bar));
-    int *total = INTEGER(Rf_findVar(Rf_install("total"), bar));
-    if (*current != *total) {
-      *current = i;
-      cli__progress_update(bar);
-    } else {
-      cli_progress_done(bar);
-    }
+    *current = i;
+    cli__progress_update(bar);
     *cli_timer_flag = 0;
   }
   return i;
