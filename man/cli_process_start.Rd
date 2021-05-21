@@ -19,13 +19,7 @@ cli_process_start(
   .envir = parent.frame()
 )
 
-cli_process_update(
-  id = NULL,
-  msg = NULL,
-  msg_done = NULL,
-  msg_failed = NULL,
-  .envir = parent.frame()
-)
+cli_process_update(id = NULL, .envir = parent.frame())
 
 cli_process_done(
   id = NULL,
@@ -48,20 +42,17 @@ computation. It will be collapsed into a single string, and the first
 line is kept and cut to \code{\link[=console_width]{console_width()}}. You can use cli
 \link[=inline-markup]{inline markup} in this message. If the message
 contains \link[glue:glue]{glue} interpolation, then it will be evaluated
-every time the message is updated. \code{cli_process_update()} may update
-this message.}
+every time the message is updated.}
 
 \item{msg_done}{The message to use for successful termination.
 You can use cli \link[=inline-markup]{inline markup} in this message. If the
 message contains \link[glue:glue]{glue} interpolation, then it will be
-evaluated before successful termination. \code{cli_process_update()} may
-update this message.}
+evaluated before successful termination.}
 
 \item{msg_failed}{The message to use for unsuccessful termination.
 You can use cli \link[=inline-markup]{inline markup} in this message. If the
 message contains \link[glue:glue]{glue} interpolation, then it will be
-evaluated before unsuccessful termination. \code{cli_process_update()} may
-update this message.}
+evaluated before unsuccessful termination.}
 
 \item{on_exit}{Whether this process should fail or terminate
 successfully when the calling function (or the environment in \code{.envir})

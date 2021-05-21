@@ -200,18 +200,15 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #'   line is kept and cut to [console_width()]. You can use cli
 #'   [inline markup][inline-markup] in this message. If the message
 #'   contains [glue][glue::glue()] interpolation, then it will be evaluated
-#'   every time the message is updated. `cli_process_update()` may update
-#'   this message.
+#'   every time the message is updated.
 #' @param msg_done The message to use for successful termination.
 #'   You can use cli [inline markup][inline-markup] in this message. If the
 #'   message contains [glue][glue::glue()] interpolation, then it will be
-#'   evaluated before successful termination. `cli_process_update()` may
-#'   update this message.
+#'   evaluated before successful termination.
 #' @param msg_failed The message to use for unsuccessful termination.
 #'   You can use cli [inline markup][inline-markup] in this message. If the
 #'   message contains [glue][glue::glue()] interpolation, then it will be
-#'   evaluated before unsuccessful termination. `cli_process_update()` may
-#'   update this message.
+#'   evaluated before unsuccessful termination.
 #' @param on_exit Whether this process should fail or terminate
 #'   successfully when the calling function (or the environment in `.envir`)
 #'   exits. By default cli auto-detects the correct mode of termination.
@@ -280,19 +277,15 @@ cli_process_start <- function(msg, msg_done = msg, msg_failed = msg,
 
 #' @param id Id of the status to update or terminate. If it is `NULL` (the
 #'   default), then the current status is manipulated. If
-#'   `cli_status_update()` cannot find a status with `id` (or `id` is
+#'   `cli_process_update()` cannot find a status with `id` (or `id` is
 #'   `NULL`, and there is no current status), then a warning is issued.
 #'
 #' @rdname cli_process_start
 #' @export
 
-cli_process_update <- function(id = NULL, msg = NULL, msg_done = NULL,
-                               msg_failed = NULL, .envir = parent.frame()) {
+cli_process_update <- function(id = NULL, .envir = parent.frame()) {
   cli_status_update(
     id = id,
-    msg = msg,
-    msg_done = msg_done,
-    msg_failed = msg_failed,
     .envir = .envir
   )
 }
