@@ -135,7 +135,7 @@ cli_status_clear <- function(id = NULL, result = c("clear", "done", "failed"),
       msg_failed = if (result == "failed") glue_cmd(rec$msg_failed, .envir = .envir)
     )
   )
-  on.exit(status_current_clear(.envir), add = TRUE)
+  on.exit(status_current_clear(id = id), add = TRUE)
 
   invisible(NULL)
 }
@@ -342,6 +342,7 @@ status_current_save <- function(.envir, id, msg, msg_done, msg_failed,
   }
   clienv$status[[id]] <- clienv$status[[key]] <- list(
     id = id,
+    key = key,
     msg = msg,
     msg_done = msg_done,
     msg_failed = msg_failed,
@@ -367,20 +368,14 @@ status_current_find <- function(.envir, id = NULL, msg = NULL,
   clienv$status[[key]]
 }
 
-status_current_clear <- function(.envir, id = NULL) {
-  key <- id %||% format(.envir)
-  old <- clienv$status[[key]]
+status_current_clear <- function(id = NULL) {
+  old <- clienv$status[[id]]
+  clienv$status[[id]] <- NULL
 
   # If removed by id, check if current, and remove by the other name as well
-  if (!is.null(id)) {
-    ekey <- format(.envir)
-    eold <- clienv$status[[ekey]]
-    if (!is.null(eold) && eold$id == id) {
-      clienv$status[[ekey]] <- NULL
-    }
+  if (identical(clienv$status[[old$key]]$id, id)) {
+    clienv$status[[old$key]] <- NULL
   }
-
-  clienv$status[[key]] <- NULL
 }
 
 # -----------------------------------------------------------------------
