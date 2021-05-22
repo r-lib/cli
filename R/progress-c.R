@@ -2,6 +2,8 @@
 progress_c_update <- function(pb, auto_done = TRUE) {
   caller <- sys.frame(sys.nframe() - 1L)
 
+  pb$tick <- pb$tick + 1L
+
   if (is.null(pb$format)) {
     pb$format <- pb__default_format(pb$type, pb$total)
   }

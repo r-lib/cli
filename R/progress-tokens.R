@@ -118,20 +118,12 @@ cli__pb_rate_bytes <- function(pb = getOption("cli__pb")) {
   )
 }
 
-cli__pb_spin <- function(pb = NULL) {
-  set <- is.null(pb)
-  if (set) pb <- getOption("cli__pb")
+cli__pb_spin <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) return("")
 
-  sp <- pb$spinner %||% get_spinner()
-  nx <- sp$state %||% 1L
-  out <- sp$frames[[nx]]
-  sp$state <- (nx + 1L) %% length(sp$frames) + 1L
-
-  pb$spinner <- sp
-  if (set) options(cli__pb = pb)
-
-  out
+  pb$spinner <- pb$spinner %||% get_spinner()
+  nx <- pb$tick %% length(pb$spinner$frames) + 1L
+  pb$spinner$frames[[nx]]
 }
 
 cli__pb_status <- function(pb = getOption("cli__pb")) {

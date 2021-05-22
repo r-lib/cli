@@ -35,6 +35,7 @@ cli_progress_bar <- function(name = NULL,
   bar$envkey <- envkey
   bar$current <- 0L
   bar$start <- start
+  bar$tick <- 0L
   clienv$progress[[id]] <- bar
 
   clienv$progress[[envkey]] <- id
@@ -67,6 +68,7 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
   }
 
   if (should_tick || force) {
+    pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
     }

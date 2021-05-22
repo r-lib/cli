@@ -113,6 +113,7 @@ SEXP cli_progress_bar(int **ptr, int total) {
   Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
   Rf_defineVar(Rf_install("start"),         clic_get_time(),         bar);
   Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
+  Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
 
   UNPROTECT(1);
   return bar;
