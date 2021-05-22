@@ -10,12 +10,13 @@ cli_progress_bar <- function(name = NULL,
                              estimate = NULL,
                              auto_estimate = TRUE,
                              clear = TRUE,
+                             current = TRUE,
                              .auto_close = TRUE,
                              .envir = parent.frame()) {
 
   start <- .Call(clic_get_time)
   id <- new_uuid()
-  envkey <- if (.auto_close) format(.envir)
+  envkey <- format(.envir)
   type <- match.arg(type)
   if (type == "custom" && is.null(format)) {
     stop("Need to specify format if `type == \"custom\"")
@@ -32,20 +33,20 @@ cli_progress_bar <- function(name = NULL,
   bar$estimate <- estimate
   bar$auto_estimate <- auto_estimate
   bar$clear <- clear
-  bar$envkey <- envkey
+  bar$envkey <- if (current) envkey else NULL
   bar$current <- 0L
   bar$start <- start
   bar$tick <- 0L
   clienv$progress[[id]] <- bar
-
-  if (.auto_close) {
+  if (current) {
     if (!is.null(clienv$progress[[envkey]])) {
       cli_progress_done(clienv$progress[[envkey]])
     }
     clienv$progress[[envkey]] <- id
-    if (envkey != clienv$globalenv) {
-      defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
-    }
+  }
+
+  if (.auto_close && envkey != clienv$globalenv) {
+    defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
   }
 
   invisible(id)
@@ -112,7 +113,7 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
   }
 
   clienv$progress[[id]] <- NULL
-  clienv$progress[[envkey]] <- NULL
+  if (!is.null(pb$envkey)) clienv$progress[[pb$envkey]] <- NULL
 
   invisible(id)
 }
