@@ -15,7 +15,7 @@ cli_progress_bar <- function(name = NULL,
 
   start <- .Call(clic_get_time)
   id <- new_uuid()
-  envkey <- format(.envir)
+  envkey <- if (.auto_close) format(.envir)
   type <- match.arg(type)
   if (type == "custom" && is.null(format)) {
     stop("Need to specify format if `type == \"custom\"")
@@ -38,10 +38,14 @@ cli_progress_bar <- function(name = NULL,
   bar$tick <- 0L
   clienv$progress[[id]] <- bar
 
-  clienv$progress[[envkey]] <- id
-
-  if (.auto_close && envkey != clienv$globalenv) {
-    defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
+  if (.auto_close) {
+    if (!is.null(clienv$progress[[envkey]])) {
+      cli_progress_done(clienv$progress[[envkey]])
+    }
+    clienv$progress[[envkey]] <- id
+    if (envkey != clienv$globalenv) {
+      defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
+    }
   }
 
   invisible(id)
@@ -52,7 +56,10 @@ cli_progress_bar <- function(name = NULL,
 cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
                                 force = FALSE, .envir = parent.frame()) {
   id <- id %||% clienv$progress[[format(.envir)]]
-  if (is.null(id)) stop("Cannot find last progress bar")
+  if (is.null(id)) {
+    envkey <- format(.envir)
+    stop("Cannot find current progress bar for `", envkey, "`")
+  }
   pb <- clienv$progress[[id]]
   if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
 
@@ -90,7 +97,8 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
 #' @export
 
 cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
-  id <- id %||% clienv$progress[[format(.envir)]]
+  envkey <- format(.envir)
+  id <- id %||% clienv$progress[[envkey]]
   if (is.null(id)) return(invisible())
   pb <- clienv$progress[[id]]
   if (is.null(pb)) return(invisible())
@@ -103,7 +111,6 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
     }
   }
 
-  envkey <- format(.envir)
   clienv$progress[[id]] <- NULL
   clienv$progress[[envkey]] <- NULL
 
