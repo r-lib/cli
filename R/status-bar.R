@@ -57,7 +57,8 @@ cli_status <- function(msg, msg_done = paste(msg, "... done"),
       msg_done = glue_cmd(msg_done, .envir = .envir),
       msg_failed = glue_cmd(msg_failed, .envir = .envir),
       keep = .keep,
-      auto_result = match.arg(.auto_result)
+      auto_result = match.arg(.auto_result),
+      globalenv = identical(.envir, .GlobalEnv)
     ),
     .auto_close = .auto_close,
     .envir = .envir
@@ -249,7 +250,7 @@ cli_process_failed <- function(id = NULL, msg = NULL, msg_failed = NULL,
 # -----------------------------------------------------------------------
 
 clii_status <- function(app, id, msg, msg_done, msg_failed, keep,
-                        auto_result) {
+                        auto_result, globalenv) {
 
   app$status_bar[[id]] <- list(
     content = "",
@@ -258,7 +259,7 @@ clii_status <- function(app, id, msg, msg_done, msg_failed, keep,
     keep = keep,
     auto_result = auto_result
   )
-  if (isTRUE(getOption("cli.hide_cursor", TRUE))) {
+  if (isTRUE(getOption("cli.hide_cursor", TRUE)) && !isTRUE(globalenv)) {
     ansi_hide_cursor(app$output)
   }
   clii_status_update(app, id, msg, msg_done = NULL, msg_failed = NULL)
