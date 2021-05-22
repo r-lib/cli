@@ -63,25 +63,22 @@ test_that("update", {
 test_that("keep", {
   withr::local_options(list(cli.ansi = FALSE, cli.dynamic = TRUE))
   f <- function() {
-    cli_status("* This is the current status", .auto_result = "done")
+    cli_status("* This is the current status", .keep = TRUE)
+    cli_status_clear()
   }
   out <- ansi_strip(capt0(f()))
-  expect_equal(out, paste0(
-    "\r* This is the current status\r",
-    "\r* This is the current status ... done\r\n"
-  ))
+  expect_equal(out, "\r* This is the current status\r\n")
 })
 
 test_that("multiple status bars", {
   withr::local_options(list(cli.ansi = FALSE, cli.dynamic = TRUE))
   f <- function() {
-    sb1 <- cli_status("status1", .auto_close = FALSE)
+    sb1 <- cli_status("status1")
     cli_text("text1")
     sb2 <- cli_status("status2")
     cli_text("text2")
     cli_status_clear(sb2)
     cli_text("text3")
-    cli_status_clear(sb1)
   }
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
@@ -208,12 +205,6 @@ test_that("auto close wtih failure", {
 })
 
 test_that("auto close with styling", {
-  withr::local_options(list(
-    cli.num_colors = 1L,
-    cli.dynamic = TRUE,
-    cli.unicode = FALSE,
-    cli.ansi = FALSE
-  ))
   f <- function() {
     cli_text("out1")
     sb <- cli_status(
@@ -227,7 +218,7 @@ test_that("auto close with styling", {
     if (is_interactive()) Sys.sleep(1)
   }
   out <- ansi_strip(capt0(f()))
-  expect_match(out, "status1 ... failed\r\n", fixed = TRUE)
+  expect_match(out, "status1 ... failed", fixed = TRUE)
 
   f2 <- function() {
     cli_text("out1")
@@ -242,7 +233,7 @@ test_that("auto close with styling", {
     if (is_interactive()) Sys.sleep(1)
   }
   out2 <- ansi_strip(capt0(f2()))
-  expect_match(out2, "status1 ... done\r\n", fixed = TRUE)
+  expect_match(out2, "status1 ... done", fixed = TRUE)
 })
 
 test_that("process auto close with success", {
@@ -252,7 +243,7 @@ test_that("process auto close with success", {
     cli_text("out2")
   }
   out <- ansi_strip(capt0(f()))
-  expect_match(out, "v status1")
+  expect_match(out, "status1 ... done")
 })
 
 test_that("process auto close with failure", {
@@ -264,7 +255,7 @@ test_that("process auto close with failure", {
     if (is_interactive()) Sys.sleep(2)
   }
   out <- ansi_strip(capt0(f()))
-  expect_match(out, "x status1")
+  expect_match(out, "status1 ... failed")
 })
 
 test_that("Multiple spaces are no condensed in a status bar", {
@@ -307,10 +298,9 @@ test_that("Emojis are cleaned up properly", {
 
 test_that("auto-close with done or failure", {
   withr::local_options(list(
-    cli.num_colors = 1L,
+    cli.ansi = FALSE,
     cli.dynamic = TRUE,
-    cli.unicode = FALSE,
-    cli.ansi = FALSE
+    cli.unicode = FALSE
   ))
   f <- function() {
     cli_text("out1")
@@ -318,10 +308,10 @@ test_that("auto-close with done or failure", {
     cli_text("out2")
   }
   out <- ansi_strip(capt0(f()))
-  expect_match(out, "v status1")
+  expect_match(out, "status1 ... done")
 
   out <- ansi_strip(capt0(f()))
-  expect_match(out, "v status1")
+  expect_match(out, "status1 ... done")
 
   # This fails on older R versions, only if f2() is tryCatch()-ed.
   if (getRversion() < "3.5.0") skip("Needs R 3.5.0")
@@ -340,80 +330,6 @@ test_that("auto-close with done or failure", {
     "\r         \r",
     "out2\n",
     "i status1\r",
-    "\rx status1\r\n"
-  ))
-})
-
-test_that("current status bar", {
-  withr::local_options(list(
-    cli.num_colors = 1L,
-    cli.dynamic = TRUE,
-    cli.unicode = FALSE,
-    cli.ansi = FALSE
-  ))
-  f <- function() {
-    cli_process_start("task 1")
-    cli_process_start("task 2")
-    cli_process_start("task 3")
-  }
-
-  out2 <- ansi_strip(capt0(f()))
-  expect_match(out2, fixed = TRUE, paste0(
-    "i task 1\r",
-    "\rv task 1\r\n",
-    "\ri task 2\r",
-    "\rv task 2\r\n",
-    "\ri task 3\r",
-    "\rv task 3\r\n"
-  ))
-})
-
-test_that("current status bar autoclear", {
-  withr::local_options(list(
-    cli.num_colors = 1L,
-    cli.dynamic = TRUE,
-    cli.unicode = FALSE,
-    cli.ansi = FALSE
-  ))
-  f <- function() {
-    cli_process_start("task 1", on_exit = "autoclear")
-    cli_process_start("task 2", on_exit = "autoclear")
-    cli_process_start("task 3", on_exit = "autoclear")
-  }
-
-  out2 <- ansi_strip(capt0(f()))
-  expect_match(out2, fixed = TRUE, paste0(
-    "i task 1\r",
-    "\r        \r",
-    "\ri task 2\r",
-    "\r        \r",
-    "\ri task 3\r",
-    "\r        \r"
-  ))
-})
-
-test_that("current status bar is updated", {
-  withr::local_options(list(
-    cli.num_colors = 1L,
-    cli.dynamic = TRUE,
-    cli.unicode = FALSE,
-    cli.ansi = FALSE
-  ))
-
-  f <- function() {
-    i <- 1
-    cli_status("task {i}")
-    for (i in 1:3) {
-      cli_status_update()
-      if (is_interactive()) Sys.sleep(1)
-    }
-  }
-
-  out <- ansi_strip(capt0(f()))
-  expect_match(out, fixed = TRUE, paste0(
-    "\rtask 1\r",
-    "\rtask 2\r",
-    "\rtask 3\r",
-    "\r      \r"
+    "\rx status1 ... failed\r\n"
   ))
 })

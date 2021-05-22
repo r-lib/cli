@@ -603,16 +603,13 @@ cli_code <- function(lines = NULL, ..., language = "R",
 cli_recorded <- new.env(parent = emptyenv())
 
 cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
-                         .auto_result = NULL,
                          record = getOption("cli.record")) {
 
   if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()
 
-  if (type == "status") args$globalenv <- identical(.envir, .GlobalEnv)
-
   if (.auto_close && !is.null(.envir) && !identical(.envir, .GlobalEnv)) {
     if (type == "status") {
-      defer(cli_status_clear(id = args$id, result = .auto_result, .envir = .envir),
+      defer(cli_status_clear(id = args$id, result = args$auto_result),
             envir = .envir, priority = "first")
     } else {
       defer(cli_end(id = args$id), envir = .envir, priority = "first")

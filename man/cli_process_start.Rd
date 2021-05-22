@@ -2,24 +2,21 @@
 % Please edit documentation in R/status-bar.R
 \name{cli_process_start}
 \alias{cli_process_start}
-\alias{cli_process_update}
 \alias{cli_process_done}
 \alias{cli_process_failed}
 \title{Indicate the start and termination of some computation in the status bar}
 \usage{
 cli_process_start(
   msg,
-  msg_done = msg,
-  msg_failed = msg,
-  on_exit = c("auto", "autoclear", "failed", "done"),
+  msg_done = paste(msg, "... done"),
+  msg_failed = paste(msg, "... failed"),
+  on_exit = c("auto", "failed", "done"),
   msg_class = "alert-info",
   done_class = "alert-success",
   failed_class = "alert-danger",
   .auto_close = TRUE,
   .envir = parent.frame()
 )
-
-cli_process_update(id = NULL, .envir = parent.frame())
 
 cli_process_done(
   id = NULL,
@@ -39,231 +36,80 @@ cli_process_failed(
 \arguments{
 \item{msg}{The message to show to indicate the start of the process or
 computation. It will be collapsed into a single string, and the first
-line is kept and cut to \code{\link[=console_width]{console_width()}}. You can use cli
-\link[=inline-markup]{inline markup} in this message. If the message
-contains \link[glue:glue]{glue} interpolation, then it will be evaluated
-every time the message is updated.}
+line is kept and cut to \code{\link[=console_width]{console_width()}}.}
 
-\item{msg_done}{The message to use for successful termination.
-You can use cli \link[=inline-markup]{inline markup} in this message. If the
-message contains \link[glue:glue]{glue} interpolation, then it will be
-evaluated before successful termination.}
+\item{msg_done}{The message to use for successful termination.}
 
-\item{msg_failed}{The message to use for unsuccessful termination.
-You can use cli \link[=inline-markup]{inline markup} in this message. If the
-message contains \link[glue:glue]{glue} interpolation, then it will be
-evaluated before unsuccessful termination.}
+\item{msg_failed}{The message to use for unsuccessful termination.}
 
 \item{on_exit}{Whether this process should fail or terminate
 successfully when the calling function (or the environment in \code{.envir})
-exits. By default cli auto-detects the correct mode of termination.}
+exits.}
 
 \item{msg_class}{The style class to add to the message. Use an empty
 string to suppress styling.}
 
 \item{done_class}{The style class to add to the successful termination
-message. Use an empty string to suppress styling.}
+message. Use an empty string to suppress styling.a}
 
 \item{failed_class}{The style class to add to the unsuccessful
-termination message. Use an empty string to suppress styling.}
+termination message. Use an empty string to suppress styling.a}
 
-\item{.auto_close}{Whether to terminate the status when the calling
-function finishes (or ‘.envir’ is removed from thae stack, if
+\item{.auto_close}{Whether to clear the status bar when the calling
+function finishes (or ‘.envir’ is removed from the stack, if
 specified).}
 
 \item{.envir}{Environment to evaluate the glue expressions in. It is
-also used to auto-clear the status if \code{.auto_close} is \code{TRUE}.}
+also used to auto-clear the status bar if \code{.auto_close} is \code{TRUE}.}
 
-\item{id}{Id of the status to clear. If \code{id} is not the id
-of the current status (because it was overwritten by another
-status ), then the status bar is not cleared. If \code{NULL}
+\item{id}{Id of the status bar container to clear. If \code{id} is not the id
+of the current status bar (because it was overwritten by another
+status bar container), then the status bar is not cleared. If \code{NULL}
 (the default) then the status bar is always cleared.}
 }
 \value{
-\code{cli_process_start()} and \code{cli_process_update()} return the
-id of the status. \code{cli_process_done()} and \code{cli_process_failed()}
-return \code{NULL}.
+Id of the status bar container.
 }
 \description{
-The \emph{status bar} is the last line of the terminal. cli apps can use this
-to show status information, progress bars, etc. The status bar is kept
-intact by all semantic cli output.
-
-You call \code{cli_process_start()} to start a status.
-
-You may call \code{cli_process_update()} to update a status, if needed.
-
-You may call \code{cli_process_done()} or \code{cli_process_failed()} to manually
-terminate a status, if you are not relying on auto-termination (see
-above).
+Typically you call \code{cli_process_start()} to start the process, and then
+\code{cli_process_done()} when it is done. If an error happens before
+\code{cli_process_done()} is called, then cli automatically shows the message
+for unsuccessful termination.
 }
 \details{
-\subsection{The life of a cli status}{
-
-You \emph{create} a cli status with \code{\link[=cli_status]{cli_status()}} or \code{\link[=cli_process_start]{cli_process_start()}}. cli
-will show the new status in the status bar.
-
-If neccessary, you \emph{update} a status with \code{\link[=cli_status_update]{cli_status_update()}} or
-\code{\link[=cli_process_update]{cli_process_update()}}.
-
-You \emph{terminate} a status with \code{\link[=cli_status_clear]{cli_status_clear()}}, \code{\link[=cli_process_done]{cli_process_done()}} or
-\code{\link[=cli_process_failed]{cli_process_failed()}}. When a status is terminated, it is removed from the
-status bar. Before that, it may still print a final summary message, which
-you can specify using the \code{msg_done} and \code{msg_failed} arguments.
-
-cli can also auto-terminate a status, see 'Automatic termination' below.
-
-A status has three modes of termination:
-\itemize{
-\item \code{clear}: The status is removed from the status bar.
-\item \code{done}: The status is removed from the status bar, but its \code{msg_done}
-message is printed as a regular cli message. This is typically a short
-summary of a task that has just finished, e.g.
-\verb{Downloaded 14 files (1.5MB).}"
-\item \code{failed}: The status is removed from the status bar, and its \code{msg_failed}
-message is printed as a regular cli message. (For auto-termination caused
-by an R error, this message typically shows up \emph{under} R's error message.)
-}
-}
-
-\subsection{Status ids and the current status}{
-
-When you create a status cli assigns an id to it. This id can be used to
-update or terminate the status.
-
-If you don't specify the id in \code{\link[=cli_status_update]{cli_status_update()}},
-\code{\link[=cli_process_update]{cli_process_update()}}, etc. then cli will manipulate the \emph{current status}.
-The current status is the one that was last created in the caller
-(or in \code{.envir} if specified). This allows simpler code:\if{html}{\out{<div class="r">}}\preformatted{done <- 0
-cli_process_start("Downloading data files: \{done\}/\{total\}")
-for (done in seq_len(total)) \{
-  ...
-  cli_process_update()
-\}
-
-...
-
-done <- 0
-cli_process_start("Processing data files: \{done\}/\{total\}")
-for (done in seq_len(total)) \{
-  ...
-  cli_process_update()
-\}
-}\if{html}{\out{</div>}}
-
-Here the \code{\link[=cli_process_update]{cli_process_update()}} calls refer to previoues \code{\link[=cli_status]{cli_status()}}
-calls.
-
-Also note that we didn't have to terminate the first status explicitly,
-thanks to cli's automatic termination, see the next section.
-
-A similar example with the \verb{cli_status*} API:\if{html}{\out{<div class="r">}}\preformatted{done <- 0
-cli_status("Downloading data files: \{done\}/\{total\}")
-for (done in seq_len(total)) \{
-  ...
-  cli_status_update()
-\}
-
-...
-
-done <- 0
-cli_status("Processing data files: \{done\}/\{total\}")
-for (done in seq_len(total)) \{
-  ...
-  cli_status_update()
-\}
-}\if{html}{\out{</div>}}
-}
-
-\subsection{Automatic termination}{
-
-Usually you will want the status to terminate automatically if an
-error happens and/or the function that created it quits.
-
-In most cases you also want to terminate the status if another
-status is created from the same called, via \code{\link[=cli_status]{cli_status()}} or
-\code{\link[=cli_process_start]{cli_process_start()}}.
-
-If the \code{.auto_close} argument of \code{\link[=cli_status]{cli_status()}} and \code{\link[=cli_process_start]{cli_process_start()}}
-is \code{TRUE} (the default), then cli will automatically terminate the status
-is these cases. This helps to reduce the clutter in the code caused by cli
-messages.
-
-If you don't want to terminate a status automatically, you need to specify
-\code{.auto_close = FALSE}. In this case, we suggest that you add an \code{\link[=on.exit]{on.exit()}}
-or \code{\link[withr:defer]{withr::defer()}} handler that terminates the status, to avoid keeping
-it on the screen after an error or interruption happens.
-}
-
-\subsection{Multiple active statuses}{
-
-It is possible to have multiple active cli statuses at the same time.
-This may happen when you creates statues from nested function calls, or
-when you specify \code{.auto_close = FALSE}.
-
-Nested statuses "just work" in general: if a nested level status terminates,
-cli will automatically show its immediate nesting status in the status bar.
-
-Currently, when you update a status, cli will show it in the status bar,
-even if it there are other statuses nested "inside" it. This behavior might
-change in the future, as it can cause flickering when multiple statuses are
-updated frequently.
-}
-
-\subsection{Differences between \verb{cli_status_*} and \verb{cli_process_*}}{
-
-For historical reasons cli has two sets of functions to manage the status
-bar: the \verb{cli_status*} functions and the \verb{cli_process_*} functions.
-
-Both sets are equivalent, but have different defaults:
-\itemize{
-\item \verb{cli_process_*} prints termination messages by default.
-\item \verb{cli_process_*} by default styles the status messages, the same way as
-\itemize{
-\item \code{cli_alert_info()}, while the status is active,
-\item \code{cli_alert_success()} for successful termination,
-\item \code{cli_alert_danger()} for unsuccessful termination.
-}
-
-If you want to style the \verb{cli_status*()} status messages, you need to
-add classes manually, e.g.\if{html}{\out{<div class="r">}}\preformatted{cli_status(msg = "\{.alert Starting computation\}")
-}\if{html}{\out{</div>}}
-\item \verb{cli_process_*} omits the \verb{... done} and \verb{... failed} suffixes from the
-default termination messages, as the styling conveys this information.
-}
+If you handle the errors of the process or computation, then you can do
+the opposite: call \code{cli_process_start()} with \code{on_exit = "done"}, and
+in the error handler call \code{cli_process_failed()}. cli will automatically
+call \code{cli_process_done()} on successful termination, when the calling
+function finishes.
 
 See examples below.
 }
-}
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
-## Success
+## Failure by default
 fun <- function() {
-  cli_process_start("Step one")
-  Sys.sleep(1)
-
-  cli_process_start("Step two")
-  Sys.sleep(1)
+  cli_process_start("Calculating")
+  if (interactive()) Sys.sleep(1)
+  if (runif(1) < 0.5) stop("Failed")
+  cli_process_done()
 }
-fun()
+tryCatch(fun(), error = function(err) err)
 
-## Failure
+## Success by default
 fun2 <- function() {
-  cli_process_start("Step one")
-  Sys.sleep(1)
-
-  cli_process_start("Step two")
-  Sys.sleep(1)
-
-  stop("oops")
+  cli_process_start("Calculating", on_exit = "done")
+  tryCatch({
+    if (interactive()) Sys.sleep(1)
+    if (runif(1) < 0.5) stop("Failed")
+  }, error = function(err) cli_process_failed())
 }
-
 fun2()
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other status bar: 
+\code{\link{cli_status_clear}()},
+\code{\link{cli_status_update}()},
 \code{\link{cli_status}()}
 }
 \concept{status bar}

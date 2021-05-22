@@ -94,12 +94,13 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_rule(app, left, center, right, id),
 
     ## Status bar
-    status = function(id = NULL, msg, globalenv)
-      clii_status(app, id, msg, globalenv),
+    status = function(id = NULL, msg, msg_done = NULL, msg_failed = NULL,
+                      keep = FALSE, auto_result = "clear")
+      clii_status(app, id, msg, msg_done, msg_failed, keep, auto_result),
     status_clear = function(id = NULL, result, msg_done = NULL, msg_failed = NULL)
       clii_status_clear(app, id, result, msg_done, msg_failed),
-    status_update = function(id = NULL, msg)
-      clii_status_update(app, id, msg),
+    status_update = function(id = NULL, msg, msg_done = NULL, msg_failed = NULL)
+      clii_status_update(app, id, msg, msg_done, msg_failed),
 
     doc = NULL,
     themes = NULL,
