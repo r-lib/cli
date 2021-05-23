@@ -61,17 +61,17 @@ cli:::clienv$tick_time
 
 ```{asciicast}
 f <- function() {
-  cli_status("Task one is running...")
+  cli_progress_set_status("Task one is running...")
   Sys.sleep(2)
 
-  cli_status("Task two is running...")
+  cli_progress_set_status("Task two is running...")
   Sys.sleep(2)
 
   step <- 1L
-  cli_status("Task three is underway: step {step}")
+  cli_progress_set_status("Task three is underway: step {step}")
   for (step in 1:5) {
     Sys.sleep(0.5)
-    cli_status_update()
+    cli_progress_update()
   }
 }
 f()
@@ -83,11 +83,11 @@ f()
 f <- function(n = 10) {
   cli_alert_info("About to start downloads of {n} file{?s}")
   i <- 0
-  sb <- cli_process_start("Got {i}/{n} {qty(i)}file{?s}.")
+  cli_progress_step("Got {i}/{n} {qty(i)}file{?s}.")
   for (i in seq_len(n)) {
     Sys.sleep(0.5)
     if (i == 5) cli_alert_info("Already half way!")
-    cli_process_update()
+    cli_progress_update()
   }
 }
 f()
@@ -100,11 +100,12 @@ f()
 ```{asciicast}
 f <- function() {
   i <- 0L
-  cli_status("{.alert-info Read {i} files}")
+  cli_progress_set_status("{.alert-info Read {i} files}")
   for (i in 1:10000) {
     Sys.sleep(5/10000)
-    if (should_tick) cli_status_update()
+    if (should_tick) cli_progress_update()
   }
+  cli_progress_update()
 }
 f()
 ```
@@ -187,24 +188,30 @@ A silly example, but you can use custom functions on progress
 bar tokens:
 
 ```{asciicast}
-cli_progress_bar(
-  total = 26,
-  format = "This is step {.emph {letters[pb_current]}}."
-)
-for (i in 1:26) {
-  Sys.sleep(3/26)
-  cli_progress_update()
+f <- function() {
+  cli_progress_bar(
+    total = 26,
+    format = "{pb_spin} This is step {.emph {letters[pb_current]}}. {pb_spin}"
+  )
+  for (i in 1:26) {
+    Sys.sleep(3/26)
+    cli_progress_update()
+  }
 }
+f()
 ```
 
 ## While loops with `ticking()`
 
 ```{asciicast}
-i <- 0
-while (ticking(i < 100)) {
-  Sys.sleep(3/100)
-  i <- i + 1
+f <- function() {
+  i <- 0
+  while (ticking(i < 100)) {
+    Sys.sleep(3/100)
+    i <- i + 1
+  }
 }
+f()
 ```
 
 ## Mapping with `tick_along()`
@@ -213,7 +220,7 @@ Needs R 3.5.0.
 
 ```{asciicast}
 out <- lapply(
-  tick_along(letters),
+  tick_along(letters, "Letters"),
   function(i) Sys.sleep(1)
 )
 ```

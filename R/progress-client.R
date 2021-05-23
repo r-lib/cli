@@ -7,6 +7,8 @@ cli_progress_bar <- function(name = NULL,
                                       "custom"),
                              total = NA,
                              format = NULL,
+                             format_done = NULL,
+                             format_failed = NULL,
                              estimate = NULL,
                              auto_estimate = TRUE,
                              clear = TRUE,
@@ -30,6 +32,8 @@ cli_progress_bar <- function(name = NULL,
   bar$type <- match.arg(type)
   bar$total <- total
   bar$format <- format
+  bar$format_done <- format_done
+  bar$format_failed <- format_failed
   bar$estimate <- estimate
   bar$auto_estimate <- auto_estimate
   bar$clear <- clear
@@ -85,7 +89,14 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     on.exit(options(opt), add = TRUE)
 
     if (is.null(pb$statusbar)) {
-      pb$statusbar <- cli_status(pb$format, .auto_close = FALSE, .envir = .envir)
+      pb$statusbar <- cli_status(
+        pb$format,
+        msg_done = pb$format_done %||% pb$format,
+        msg_failed = pb$format_failed %||% pb$format,
+        .auto_close = FALSE,
+        .envir = .envir,
+
+      )
     } else {
       cli_status_update(id = pb$statusbar, pb$format, .envir = .envir)
     }
@@ -97,7 +108,8 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
 
 #' @export
 
-cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
+cli_progress_done <- function(id = NULL, .envir = parent.frame(),
+                              result = "auto") {
   envkey <- format(.envir)
   id <- id %||% clienv$progress[[envkey]]
   if (is.null(id)) return(invisible())
@@ -108,12 +120,60 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame()) {
     if (pb$clear) {
       cli_status_clear(pb$statusbar, result = "clear")
     } else {
-      cli_status_clear(pb$statusbar, result = "done", msg_done = pb$msg)
+      cli_status_clear(pb$statusbar, result = result)
     }
   }
 
   clienv$progress[[id]] <- NULL
   if (!is.null(pb$envkey)) clienv$progress[[pb$envkey]] <- NULL
+
+  invisible(id)
+}
+
+#' @export
+
+cli_progress_set_status <- function(msg,
+                                    current = TRUE,
+                                    .auto_close = TRUE,
+                                    .envir = parent.frame(),
+                                    ...) {
+
+  id <- cli_progress_bar(
+    type = "custom",
+    format = msg,
+    current = current,
+    .auto_close = .auto_close,
+    .envir = .envir,
+    ...
+  )
+
+  cli_progress_update(id = id, force = TRUE, .envir = .envir)
+
+  invisible(id)
+}
+
+#' @export
+
+cli_progress_step <- function(msg,
+                              msg_done = msg,
+                              msg_failed = msg,
+                              current = TRUE,
+                              .auto_close = TRUE,
+                              .envir = parent.frame(),
+                              ...) {
+  id <- cli_progress_bar(
+    type = "custom",
+    format = paste0("{.alert-info ", msg, "}"),
+    format_done = paste0("{.alert-success ", msg_done, "}"),
+    format_failed = paste0("{.alert-danger ", msg_failed, "}"),
+    clear = FALSE,
+    current = current,
+    .auto_close = .auto_close,
+    .envir = .envir,
+    ...
+  )
+
+  cli_progress_update(id = id, force = TRUE, .envir = .envir)
 
   invisible(id)
 }
