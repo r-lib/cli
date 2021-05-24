@@ -39,7 +39,7 @@ static int tick_along_integer_Elt(SEXP x, R_xlen_t i) {
     cli__progress_update(bar);
     *cli_timer_flag = 0;
   }
-  return i;
+  return i + 1;
 }
 
 void cli_init_altrep(DllInfo *dll) {
