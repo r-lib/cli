@@ -120,7 +120,13 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
     if (pb$clear) {
       cli_status_clear(pb$statusbar, result = "clear")
     } else {
-      cli_status_clear(pb$statusbar, result = result)
+      cli_status_clear(
+        pb$statusbar,
+        result = result,
+        msg_done = pb$format_done,
+        msg_failed = pb$format_failed,
+        .envir = .envir
+      )
     }
   }
 
