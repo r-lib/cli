@@ -44,7 +44,7 @@ cli_progress_bar <- function(name = NULL,
   clienv$progress[[id]] <- bar
   if (current) {
     if (!is.null(clienv$progress[[envkey]])) {
-      cli_progress_done(clienv$progress[[envkey]])
+      cli_progress_done(clienv$progress[[envkey]], .envir = .envir)
     }
     clienv$progress[[envkey]] <- id
   }
@@ -118,7 +118,7 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
 
   if (!is.null(pb$statusbar)) {
     if (pb$clear) {
-      cli_status_clear(pb$statusbar, result = "clear")
+      cli_status_clear(pb$statusbar, result = "clear", .envir = .envir)
     } else {
       cli_status_clear(
         pb$statusbar,
