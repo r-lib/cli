@@ -3,6 +3,9 @@
 
 #include <pthread.h>
 #include <time.h>
+#ifndef _WIN32
+#include <signal.h>
+#endif
 
 static SEXP pflag = 0;
 static pthread_t tick_thread = { 0 };
@@ -26,6 +29,14 @@ int clock_gettime(int dummy, struct timespec* t) {
 #endif
 
 void* clic_thread_func(void *arg) {
+#ifndef _WIN32
+  sigset_t set;
+  sigfillset(&set);
+  int ret = pthread_sigmask(SIG_SETMASK, &set, NULL);
+  /* We chicken out if the signals cannot be blocked. */
+  if (ret) return NULL;
+#endif
+
   int old;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
   flag = (int*) arg;
