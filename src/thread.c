@@ -3,6 +3,9 @@
 
 #include <pthread.h>
 #include <time.h>
+#ifndef _WIN32
+#include <signal.h>
+#endif
 
 SEXP cli_pkgenv = 0;
 static SEXP pflag = 0;
@@ -13,6 +16,15 @@ double cli_speed_time = 1.0;
 
 void* clic_thread_func(void *arg) {
   cli_timer_flag = (int*) arg;
+
+#ifndef _WIN32
+  sigset_t set;
+  sigfillset(&set);
+  int ret = pthread_sigmask(SIG_SETMASK, &set, NULL);
+  /* We chicken out if the signals cannot be blocked. */
+  if (ret) return NULL;
+#endif
+
   int old;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
 
