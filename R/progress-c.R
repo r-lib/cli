@@ -1,6 +1,6 @@
 
 progress_c_update <- function(pb, auto_done = TRUE) {
-  caller <- sys.frame(sys.nframe() - 1L)
+  caller <- pb$caller %||% sys.frame(sys.nframe() - 1L)
 
   pb$tick <- pb$tick + 1L
 
@@ -9,7 +9,7 @@ progress_c_update <- function(pb, auto_done = TRUE) {
   }
 
   if (auto_done && !is.na(pb$total) && pb$current == pb$total) {
-    progress_c_done(pb)
+    progress_c_done(pb, caller = caller)
     return(NULL)
   }
 
@@ -26,8 +26,8 @@ progress_c_update <- function(pb, auto_done = TRUE) {
   NULL
 }
 
-progress_c_done <- function(pb) {
-  caller <- sys.frame(sys.nframe() - 1L)
+progress_c_done <- function(pb, caller = NULL) {
+  caller <- caller %||% pb$caller %||% sys.frame(sys.nframe() - 1L)
   if (!is.null(pb$statusbar)) {
     if (pb$clear) {
       cli_status_clear(pb$statusbar, result = "clear")
@@ -40,8 +40,8 @@ progress_c_done <- function(pb) {
         if (!is.na(pb$total)) pb$current <- pb$total
         opt <- options(cli__pb = pb)
         on.exit(options(opt), add = TRUE)
-        cli_status_update(pb$statusbar, pb$format, .envir = caller$caller)
-        cli_status_clear(pb$statusbar, pb$format, result = "done", .envir = caller$caller)
+        cli_status_update(pb$statusbar, pb$format, .envir = caller)
+        cli_status_clear(pb$statusbar, pb$format, result = "done", .envir = caller)
       }
     }
     pb$statusbar <- NULL
