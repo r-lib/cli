@@ -4,8 +4,10 @@
 #include <R_ext/Rdynload.h>
 #include <stdarg.h>
 
-static int cli__false = 0;
-static int *cli__should_tick = &cli__false;
+typedef volatile int vint;
+
+static vint cli__false = 0;
+static vint *cli__should_tick = &cli__false;
 
 #ifndef __has_builtin         // Optional of course.
   #define __has_builtin(x) 0  // Compatibility with non-clang compilers.
@@ -38,9 +40,9 @@ static void cli_progress_done2(SEXP bar) {
 }
 
 static R_INLINE SEXP cli_progress_bar(int total) {
-  static SEXP (*ptr)(int **, int) = NULL;
+  static SEXP (*ptr)(vint **, int) = NULL;
   if (ptr == NULL) {
-    ptr = (SEXP (*)(int **, int)) R_GetCCallable("cli", "cli_progress_bar");
+    ptr = (SEXP (*)(vint **, int)) R_GetCCallable("cli", "cli_progress_bar");
   }
 
   SEXP bar = PROTECT(ptr(&cli__should_tick, total));

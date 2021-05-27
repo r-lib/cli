@@ -96,7 +96,7 @@ SEXP cli__progress_update(SEXP bar) {
 /* Public API                                                           */
 /* ---------------------------------------------------------------------*/
 
-SEXP cli_progress_bar(int **ptr, int total) {
+SEXP cli_progress_bar(vint **ptr, int total) {
   *ptr = cli_timer_flag;
 
   /* If changes, synchronize with R API in progress-client.R */
