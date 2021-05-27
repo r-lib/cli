@@ -25,6 +25,8 @@ static const R_CallMethodDef callMethods[]  = {
 };
 
 #define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
+
+void R_init_cli(DllInfo *dll) {
   R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
