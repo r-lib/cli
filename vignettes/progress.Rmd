@@ -61,80 +61,13 @@ The main features of the progress bar API are:
 
 # The R APIs
 
-cli has four sets of R functions to create and manage progress bars:
+cli has three sets of R functions to create and manage progress bars:
 
-* `tick_along()` for iteration, this is the best fit for mapping functions,
 * `ticking()`, primarily for `while` loops,
 * The explicit `cli_progress_bar()`, `cli_progress_update()`,
   `cli_progress_done()` API.
 * The `cli_progress_set_status()` and `cli_progress_step()` progress bar
   wrappers for a much simplified display.
-
-## Progress bars for mapping functions: `tick_along()`
-
-To add a progress bar to a call to `lapply()` and other mapping functions,
-wrap the sequence you are iterating over into `tick_along()`:
-
-```r
-lapply(tick_along(X), fun)
-```
-
-`tick_along()` returns a special index vector, that creates and updates a
-progress var, as the index elements are accessed.
-
-Note that if you use `tick_along()` then `lapply()` will pass the _indices_
-of the elements in `X` to `fun`, instead of the elements themselves.
-`tick_along()` expects that the index vector will be used only once,
-from beginning to end. To ensure these requirements, it is best if you
-never assign the return value of `tick_along()` to a variable.
-
-Here is a complete (albeit artificial), example that uses `tick_along()`:
-
-```{asciicast, tickalong}
-f <- function() {
-  urls <- rep("https://httpbin.org/delay/0.5", 5)
-  dls <- lapply(
-    tick_along(urls),
-    function(i) {
-      download.file(
-        urls[i],
-        quiet = TRUE,
-        file.path(tempdir(), i)
-      )
-    }
-  )
-}
-f()
-```
-
-`tick_along()` uses ALTREP, so it only works from R 3.5.0 and later.
-On older R versions it is equivalent to `seq_along()` and it does not
-create a progress bar.
-
-### `for` and `repeat` loops
-
-You can also use `tick_along()` in `for` loops, with the additional
-complication that if you use `break` then you need to signal the end of
-the progress bar explicitly:
-
-```r
-for (i in tick_along(seq)) {
-  ...
-  if (cond) cli_progress_done() && break
-  ...
-}
-```
-
-Alternatively, you can end the progress bar right after loop:
-
-```r
-for (i in tick_along(seq)) {
-  ...
-  if (cond) break
-  ...
-}
-cli_progress_done()
-```
 
 ## Progress bars for `while` loops: `ticking()`
 
@@ -310,17 +243,6 @@ f <- function() {
   }
 }
 f()
-```
-
-## Mapping with `tick_along()`
-
-Needs R 3.5.0.
-
-```{asciicast}
-out <- lapply(
-  tick_along(letters, "Letters"),
-  function(i) Sys.sleep(1)
-)
 ```
 
 # Progress bars in C
