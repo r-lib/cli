@@ -90,18 +90,21 @@ never assign the return value of `tick_along()` to a variable.
 
 Here is a complete (albeit artificial), example that uses `tick_along()`:
 
-```{r}
-urls <- rep("https://httpbin.org/delay/1", 5)
-lapply(
-  tick_along(urls),
-  function(i) {
-    download.file(
-      urls[i],
-      quiet = TRUE,
-      file.path(tempdir(), i)
-    )
-  }
-)
+```{asciicast, tickalong}
+f <- function() {
+  urls <- rep("https://httpbin.org/delay/0.5", 5)
+  dls <- lapply(
+    tick_along(urls),
+    function(i) {
+      download.file(
+        urls[i],
+        quiet = TRUE,
+        file.path(tempdir(), i)
+      )
+    }
+  )
+}
+f()
 ```
 
 `tick_along()` uses ALTREP, so it only works from R 3.5.0 and later.
@@ -322,7 +325,7 @@ out <- lapply(
 
 # Progress bars in C
 
-```{asciicastcpp11}
+```{asciicastcpp11 capi}
 #include <cli/progress.h>
 SEXP progress_test1() {
   int i;

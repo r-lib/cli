@@ -18,7 +18,7 @@ progress_c_update <- function(pb, auto_done = TRUE) {
 
   if (is.null(pb$statusbar)) {
     pb$statusbar <- cli_status(pb$format, .auto_close = FALSE, .envir = caller)
-    defer(progress_c_done(pb), envir = caller)
+    if (!identical(caller, .GlobalEnv)) defer(progress_c_done(pb), envir = caller)
   } else {
     cli_status_update(id = pb$statusbar, pb$format, .envir = caller)
   }

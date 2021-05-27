@@ -29,15 +29,15 @@ static const R_CallMethodDef callMethods[]  = {
 #define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
 
 void R_init_cli(DllInfo *dll) {
+#if R_VERSION >= R_Version(3, 5, 0)
+  cli_init_altrep(dll);
+#endif
+
   R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
 
   cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
-
-#if R_VERSION >= R_Version(3, 5, 0)
-  cli_init_altrep(dll);
-#endif
 
   RCC(cli_progress_bar);
   RCC(cli_progress_set_name);
