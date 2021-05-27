@@ -106,7 +106,9 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   Rf_defineVar(Rf_install("type"),          Rf_mkString("iterator"), bar);
   Rf_defineVar(Rf_install("total"),         Rf_ScalarInteger(total), bar);
   Rf_defineVar(Rf_install("format"),        R_NilValue,              bar);
-  Rf_defineVar(Rf_install("estimate"),      R_NilValue,              bar);
+  Rf_defineVar(Rf_install("format_done"),   R_NilValue,              bar);
+  Rf_defineVar(Rf_install("format_failed"), R_NilValue,              bar);
+  Rf_defineVar(Rf_install("estimate"),      Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("auto_estimate"), Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
