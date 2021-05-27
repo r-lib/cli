@@ -1,11 +1,9 @@
 
-#' Whether it is time to update the cli status bar
-#'
-#' TODO
-#'
 #' @export
 
-should_tick <- FALSE
+should_tick <- function() {
+  .Call(clic_should_tick)
+}
 
 #' `cli_tick_reset()` resets the cli status bar timer after an update
 #'

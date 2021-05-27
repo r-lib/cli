@@ -13,12 +13,13 @@ SEXP clic_unload() {
 static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
-  { "clic_start_thread", (DL_FUNC) clic_start_thread, 4 },
+  { "clic_start_thread", (DL_FUNC) clic_start_thread, 3 },
   { "clic_stop_thread",  (DL_FUNC) clic_stop_thread,  0 },
   { "clic_tick_reset",   (DL_FUNC) clic_tick_reset,   0 },
   { "clic_tick_set",     (DL_FUNC) clic_tick_set,     2 },
   { "clic_unload",       (DL_FUNC) clic_unload,       0 },
   { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
+  { "clic_should_tick",  (DL_FUNC) clic_should_tick,  0 },
 
   { "clic_tick_along",   (DL_FUNC) clic_tick_along,   2 },
 

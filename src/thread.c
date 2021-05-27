@@ -52,10 +52,8 @@ static int start_thread(SEXP ticktime, SEXP speedtime) {
   return ret;
 }
 
-SEXP clic_start_thread(SEXP flag, SEXP pkg, SEXP ticktime, SEXP speedtime) {
-
+SEXP clic_start_thread(SEXP pkg, SEXP ticktime, SEXP speedtime) {
   R_PreserveObject(pkg);
-  R_PreserveObject(flag);
   cli_pkgenv = pkg;
   pflag = flag;
 
@@ -114,4 +112,8 @@ SEXP clic_tick_set(SEXP ticktime, SEXP speedtime) {
   if (ret) warning("Cannot create progress thread");
 
   return R_NilValue;
+}
+
+SEXP clic_should_tick() {
+  return Rf_ScalarLogical(cli__timer_flag);
 }

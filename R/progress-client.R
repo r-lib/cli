@@ -79,7 +79,7 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     return(invisible(id))
   }
 
-  if (should_tick || force) {
+  if (should_tick() || force) {
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)

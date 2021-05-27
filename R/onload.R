@@ -28,10 +28,11 @@ clienv$tick_time <- 200L
   if (is.na(tt)) {
     tt <- if (interactive()) 200L else 3000L
   }
+
   clienv$tick_time <- as.integer(tt)
   .Call(
     clic_start_thread,
-    should_tick, pkgenv,
+    pkgenv,
     clienv$tick_time,
     clienv$speed_time
   )

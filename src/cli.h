@@ -24,10 +24,11 @@ SEXP clic_tick_along(SEXP seq, SEXP bar);
 
 extern SEXP cli_pkgenv;
 
-SEXP clic_start_thread(SEXP flag, SEXP pkgenv, SEXP tick, SEXP speed);
+SEXP clic_start_thread(SEXP pkgenv, SEXP tick, SEXP speed);
 SEXP clic_stop_thread();
 SEXP clic_tick_reset();
 SEXP clic_get_time();
 SEXP clic_tick_set(SEXP ticktime, SEXP speedtime);
+SEXP clic_should_tick();
 
 #endif
