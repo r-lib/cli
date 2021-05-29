@@ -31,6 +31,6 @@ SEXP clic_stop_thread();
 SEXP clic_tick_reset();
 SEXP clic_get_time();
 SEXP clic_tick_set(SEXP ticktime, SEXP speedtime);
-SEXP clic_should_tick();
+SEXP clic_make_timer();
 
 #endif

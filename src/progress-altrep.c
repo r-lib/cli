@@ -18,6 +18,7 @@ void cli_init_altrep(DllInfo *dll) { }
 
 R_altrep_class_t tick_along_t;
 R_altrep_class_t disable_gc_t;
+R_altrep_class_t cli_timer_t;
 
 static SEXP cli__current_progress_bar = 0;
 static SEXP cli__disable_gc = 0;
@@ -26,6 +27,28 @@ void *disable_gc_DataPtr(SEXP x, Rboolean writeable) {
   cli__progress_update(cli__current_progress_bar);
   return NULL;
 }
+
+/* --------------------------------------------------------------------- */
+
+static SEXP cli__timer = 0;
+
+SEXP clic_make_timer() {
+  return cli__timer;
+}
+
+R_xlen_t cli_timer_Length(SEXP x) {
+  return 1;
+}
+
+void* cli_timer_DataPtr(SEXP x, Rboolean writeable) {
+  return (void*) cli_timer_flag;
+}
+
+int cli_timer_Elt(SEXP x, R_xlen_t i) {
+  return *cli_timer_flag;
+}
+
+/* --------------------------------------------------------------------- */
 
 SEXP clic_tick_along(SEXP seq, SEXP bar) {
   SEXP val = R_new_altrep(tick_along_t, seq, bar);
@@ -111,6 +134,9 @@ int tick_along_Is_sorted(SEXP x) {
 }
 
 void cli_init_altrep(DllInfo *dll) {
+
+  // -- tick_along_t --------------------------------------------------
+
   tick_along_t = R_make_altinteger_class("tick_along_t", "cli", dll);
 
   // override ALTREP methods
@@ -131,11 +157,23 @@ void cli_init_altrep(DllInfo *dll) {
   // R_set_altinteger_No_NA_method(tick_along_t, tick_along_No_NA);
   R_set_altinteger_Is_sorted_method(tick_along_t, tick_along_Is_sorted);
 
+  // -- disable_gc_t --------------------------------------------------
+
   disable_gc_t = R_make_altinteger_class("disable_gc_t", "cli", dll);
   R_set_altvec_Dataptr_method(disable_gc_t, disable_gc_DataPtr);
 
   cli__disable_gc = R_new_altrep(disable_gc_t, R_NilValue, R_NilValue);
   R_PreserveObject(cli__disable_gc);
+
+  // -- cli_timer_t ---------------------------------------------------
+
+  cli_timer_t = R_make_altlogical_class("cli_timer_t", "cli", dll);
+  R_set_altrep_Length_method(cli_timer_t, cli_timer_Length);
+  R_set_altvec_Dataptr_method(cli_timer_t, cli_timer_DataPtr);
+  R_set_altlogical_Elt_method(cli_timer_t, cli_timer_Elt);
+
+  cli__timer = R_new_altrep(cli_timer_t, R_NilValue, R_NilValue);
+  R_PreserveObject(cli__timer);
 }
 
 #endif

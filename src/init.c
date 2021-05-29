@@ -19,7 +19,7 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_tick_set",     (DL_FUNC) clic_tick_set,     2 },
   { "clic_unload",       (DL_FUNC) clic_unload,       0 },
   { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
-  { "clic_should_tick",  (DL_FUNC) clic_should_tick,  0 },
+  { "clic_make_timer",   (DL_FUNC) clic_make_timer,   0 },
 
   { "clic_tick_along",   (DL_FUNC) clic_tick_along,   2 },
 

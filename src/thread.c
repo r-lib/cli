@@ -108,7 +108,3 @@ SEXP clic_tick_set(SEXP ticktime, SEXP speedtime) {
 
   return R_NilValue;
 }
-
-SEXP clic_should_tick() {
-  return Rf_ScalarLogical(cli__timer_flag);
-}

@@ -37,6 +37,8 @@ clienv$tick_time <- 200L
     clienv$speed_time
   )
 
+  should_tick <<- .Call(clic_make_timer);
+
   ccli_tick_reset <<- clic_tick_reset
 
   makeActiveBinding(
