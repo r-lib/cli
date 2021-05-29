@@ -17,6 +17,15 @@ void cli_init_altrep(DllInfo *dll) { }
 #include <R_ext/Altrep.h>
 
 R_altrep_class_t tick_along_t;
+R_altrep_class_t disable_gc_t;
+
+static SEXP cli__current_progress_bar = 0;
+static SEXP cli__disable_gc = 0;
+
+void *disable_gc_DataPtr(SEXP x, Rboolean writeable) {
+  cli__progress_update(cli__current_progress_bar);
+  return NULL;
+}
 
 SEXP clic_tick_along(SEXP seq, SEXP bar) {
   SEXP val = R_new_altrep(tick_along_t, seq, bar);
@@ -61,10 +70,11 @@ const void* tick_along_Dataptr_or_null(SEXP x) {
 // TODO: long vector support?
 int tick_along_Elt(SEXP x, R_xlen_t i) {
   if (*cli_timer_flag) {
+    *cli_timer_flag = 0;
     SEXP bar = R_altrep_data2(x);
     Rf_defineVar(Rf_install("current"), ScalarInteger((int) i), bar);
-    cli__progress_update(bar);
-    *cli_timer_flag = 0;
+    cli__current_progress_bar = bar;
+    DATAPTR(cli__disable_gc);
   }
   return (int) (i + 1);
 }
@@ -101,8 +111,7 @@ int tick_along_Is_sorted(SEXP x) {
 }
 
 void cli_init_altrep(DllInfo *dll) {
-  R_altrep_class_t cls = R_make_altinteger_class("tick_along_t", "cli", dll);
-  tick_along_t = cls;
+  tick_along_t = R_make_altinteger_class("tick_along_t", "cli", dll);
 
   // override ALTREP methods
   R_set_altrep_Duplicate_method(tick_along_t, tick_along_Duplicate);
@@ -120,7 +129,13 @@ void cli_init_altrep(DllInfo *dll) {
   R_set_altinteger_Max_method(tick_along_t, tick_along_Max);
   // R_set_altinteger_Min_method(tick_along_t, tick_along_Min);
   // R_set_altinteger_No_NA_method(tick_along_t, tick_along_No_NA);
-   R_set_altinteger_Is_sorted_method(tick_along_t, tick_along_Is_sorted);
+  R_set_altinteger_Is_sorted_method(tick_along_t, tick_along_Is_sorted);
+
+  disable_gc_t = R_make_altinteger_class("disable_gc_t", "cli", dll);
+  R_set_altvec_Dataptr_method(disable_gc_t, disable_gc_DataPtr);
+
+  cli__disable_gc = R_new_altrep(disable_gc_t, R_NilValue, R_NilValue);
+  R_PreserveObject(cli__disable_gc);
 }
 
 #endif
