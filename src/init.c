@@ -21,12 +21,18 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
   { "clic_should_tick",  (DL_FUNC) clic_should_tick,  0 },
 
+  { "clic_tick_along",   (DL_FUNC) clic_tick_along,   2 },
+
   { NULL, NULL, 0 }
 };
 
 #define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
 
 void R_init_cli(DllInfo *dll) {
+#if R_VERSION >= R_Version(3, 5, 0)
+  cli_init_altrep(dll);
+#endif
+
   R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
