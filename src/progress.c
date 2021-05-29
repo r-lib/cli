@@ -76,6 +76,13 @@ static R_INLINE SEXP new_env() {
   return env;
 }
 
+double clic__get_time() {
+  struct timespec t;
+  int ret = cli_clock_gettime(CLOCK_MONOTONIC, &t);
+  if (ret) R_THROW_POSIX_ERROR("Cannot query monotonic clock");
+  return (double) t.tv_sec + 1e-9 * (double) t.tv_nsec;
+}
+
 SEXP clic_get_time() {
   struct timespec t;
   int ret = cli_clock_gettime(CLOCK_MONOTONIC, &t);
@@ -100,11 +107,13 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   *ptr = cli_timer_flag;
 
   /* If changes, synchronize with R API in progress-client.R */
+  double now = clic__get_time();
   SEXP bar = PROTECT(new_env());
   Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("status"),        Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("type"),          Rf_mkString("iterator"), bar);
   Rf_defineVar(Rf_install("total"),         Rf_ScalarInteger(total), bar);
+  Rf_defineVar(Rf_install("show_after"),    Rf_ScalarReal(now + 2),  bar);
   Rf_defineVar(Rf_install("format"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("format_done"),   R_NilValue,              bar);
   Rf_defineVar(Rf_install("format_failed"), R_NilValue,              bar);
@@ -113,7 +122,7 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
-  Rf_defineVar(Rf_install("start"),         clic_get_time(),         bar);
+  Rf_defineVar(Rf_install("start"),         Rf_ScalarReal(now),      bar);
   Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
   Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
 
@@ -153,17 +162,21 @@ void cli_progress_set_clear(SEXP bar, int clear) {
 void cli_progress_set(SEXP bar, int set) {
   Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
   if (*cli_timer_flag) {
-    cli__progress_update(bar);
     *cli_timer_flag = 0;
+    double now = clic__get_time();
+    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    if (now > REAL(show_after)[0]) cli__progress_update(bar);
   }
 }
 
 void cli_progress_add(SEXP bar, int inc) {
-  int crnt = INTEGER(Rf_findVarInFrame3(Rf_install("current"), bar, 1))[0];
+  int crnt = INTEGER(Rf_findVarInFrame3(bar, Rf_install("current"), 1))[0];
   Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
   if (*cli_timer_flag) {
-    cli__progress_update(bar);
     *cli_timer_flag = 0;
+    double now = clic__get_time();
+    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    if (now > REAL(show_after)[0]) cli__progress_update(bar);
   }
 }
 

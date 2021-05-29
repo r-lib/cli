@@ -26,6 +26,8 @@ SEXP clic_tick_along(SEXP seq, SEXP bar);
 
 extern SEXP cli_pkgenv;
 
+double clic__get_time();
+
 SEXP clic_start_thread(SEXP pkgenv, SEXP tick, SEXP speed);
 SEXP clic_stop_thread();
 SEXP clic_tick_reset();

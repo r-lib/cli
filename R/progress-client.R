@@ -6,6 +6,7 @@ cli_progress_bar <- function(name = NULL,
                              type = c("iterator", "tasks", "download",
                                       "custom"),
                              total = NA,
+                             show_after = 2,
                              format = NULL,
                              format_done = NULL,
                              format_failed = NULL,
@@ -31,6 +32,7 @@ cli_progress_bar <- function(name = NULL,
   bar$status <- status
   bar$type <- match.arg(type)
   bar$total <- total
+  bar$show_after <- start + show_after
   bar$format <- format
   bar$format_done <- format_done
   bar$format_failed <- format_failed
@@ -79,7 +81,8 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     return(invisible(id))
   }
 
-  if (should_tick || force) {
+  now <- .Call(clic_get_time)
+  if (should_tick || force || now > bar$show_after) {
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)

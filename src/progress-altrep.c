@@ -95,9 +95,11 @@ int tick_along_Elt(SEXP x, R_xlen_t i) {
   if (*cli_timer_flag) {
     *cli_timer_flag = 0;
     SEXP bar = R_altrep_data2(x);
+    double now = clic__get_time();
     Rf_defineVar(Rf_install("current"), ScalarInteger((int) i), bar);
     cli__current_progress_bar = bar;
-    DATAPTR(cli__disable_gc);
+    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    if (now > REAL(show_after)[0]) DATAPTR(cli__disable_gc);
   }
   return (int) (i + 1);
 }
