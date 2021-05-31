@@ -18,6 +18,15 @@ clienv$tick_time <- 200L
 
 .onLoad <- function(libname, pkgname) {
 
+  # Try to restore cursor as much as we can
+  if (isatty(stdout())) {
+    reg.finalizer(clienv, function(e) cli::ansi_show_cursor(), TRUE)
+    addTaskCallback(
+      function(...) { cli::ansi_show_cursor(); TRUE },
+      "cli-show-cursor"
+    )
+  }
+
   pkgenv <- environment(dummy)
 
   clienv$load_time <- Sys.time()
