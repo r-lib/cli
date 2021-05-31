@@ -193,6 +193,12 @@ void cli_progress_done(SEXP bar) {
   UNPROTECT(2);
 }
 
+int cli_progress_num() {
+  SEXP clienv = Rf_findVarInFrame3(cli_pkgenv, Rf_install("clienv"), 1);
+  SEXP bars = Rf_findVarInFrame3(clienv, Rf_install("progress"), 1);
+  return LENGTH(bars);
+}
+
 extern double cli_speed_time;
 
 void cli_progress_sleep(int s, long ns) {

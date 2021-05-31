@@ -1,4 +1,10 @@
 
+# @export
+
+cli_progress_num <- function() {
+  length(clienv$progress)
+}
+
 #' @export
 
 cli_progress_bar <- function(name = NULL,

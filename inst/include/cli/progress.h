@@ -135,6 +135,14 @@ static R_INLINE void cli_progress_add(SEXP bar, int inc) {
   ptr(bar, inc);
 }
 
+static R_INLINE int cli_progress_num() {
+  static int (*ptr)() = NULL;
+  if (ptr == NULL) {
+    ptr = (int (*)()) R_GetCCallable("cli", "cli_progress_num");
+  }
+  return ptr();
+}
+
 static R_INLINE void cli_progress_sleep(int s, long ns) {
   static void (*ptr)(int, long) = NULL;
   if (ptr == NULL) {
