@@ -11,6 +11,7 @@ clienv$pid <- Sys.getpid()
 clienv$globalenv <- format(.GlobalEnv)
 clienv$status <- list()
 clienv$progress <- list()
+clienv$progress_ids <- list()
 
 clienv$load_time <- NULL
 clienv$speed_time <- 1.0

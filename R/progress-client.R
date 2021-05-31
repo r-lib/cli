@@ -60,10 +60,10 @@ cli_progress_bar <- function(name = NULL,
   bar$tick <- 0L
   clienv$progress[[id]] <- bar
   if (current) {
-    if (!is.null(clienv$progress[[envkey]])) {
-      cli_progress_done(clienv$progress[[envkey]], .envir = .envir)
+    if (!is.null(clienv$progress_ids[[envkey]])) {
+      cli_progress_done(clienv$progress_ids[[envkey]], .envir = .envir)
     }
-    clienv$progress[[envkey]] <- id
+    clienv$progress_ids[[envkey]] <- id
   }
 
   if (.auto_close && envkey != clienv$globalenv) {
@@ -77,7 +77,7 @@ cli_progress_bar <- function(name = NULL,
 
 cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
                                 force = FALSE, .envir = parent.frame()) {
-  id <- id %||% clienv$progress[[format(.envir)]]
+  id <- id %||% clienv$progress_ids[[format(.envir)]]
   if (is.null(id)) {
     envkey <- format(.envir)
     stop("Cannot find current progress bar for `", envkey, "`")
@@ -129,7 +129,7 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
 cli_progress_done <- function(id = NULL, .envir = parent.frame(),
                               result = "auto") {
   envkey <- format(.envir)
-  id <- id %||% clienv$progress[[envkey]]
+  id <- id %||% clienv$progress_ids[[envkey]]
   if (is.null(id)) return(invisible())
   pb <- clienv$progress[[id]]
   if (is.null(pb)) return(invisible())
@@ -149,7 +149,7 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
   }
 
   clienv$progress[[id]] <- NULL
-  if (!is.null(pb$envkey)) clienv$progress[[pb$envkey]] <- NULL
+  if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
 
   invisible(id)
 }

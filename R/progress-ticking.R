@@ -4,7 +4,7 @@
 ticking <- function(cond, name = NULL, ..., .envir = parent.frame()) {
   val <- force(cond)
 
-  new <- is.null(clienv$progress[[format(.envir)]])
+  new <- is.null(clienv$progress_ids[[format(.envir)]])
 
   if (new && val) cli_progress_bar(name = name, ..., .envir = .envir)
 

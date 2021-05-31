@@ -55,7 +55,7 @@ progress_altrep_done <- function(pb) {
     }
 
     if (!is.null(pb$id)) clienv$progress[[pb$id]] <- NULL
-    if (!is.null(pb$envkey)) clienv$progress[[pb$envkey]] <- NULL
+    if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
 
   }, error = function(err) {
     if (!isTRUE(pb$warned)) {
