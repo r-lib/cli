@@ -23,7 +23,9 @@ progress_altrep_update <- function(pb, auto_done = TRUE) {
       cli_status_update(id = pb$statusbar, pb$format, .envir = caller)
     }
   }, error = function(err) {
-    if (!isTRUE(pb$warned)) warning("cli progress bar update failed")
+    if (!isTRUE(pb$warned)) {
+      warning("cli progress bar update failed", immediate. = TRUE)
+    }
     pb$warned <- TRUE
   })
 
@@ -56,7 +58,9 @@ progress_altrep_done <- function(pb) {
     if (!is.null(pb$envkey)) clienv$progress[[pb$envkey]] <- NULL
 
   }, error = function(err) {
-    if (!isTRUE(pb$warned)) warning("cli progress bar update failed")
+    if (!isTRUE(pb$warned)) {
+      warning("cli progress bar update failed", immediate. = TRUE)
+    }
     pb$warned <- TRUE
   })
 
