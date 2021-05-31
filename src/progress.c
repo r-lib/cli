@@ -109,11 +109,15 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   /* If changes, synchronize with R API in progress-client.R */
   double now = clic__get_time();
   SEXP bar = PROTECT(new_env());
+  SEXP show_after = PROTECT(Rf_GetOption1(Rf_install("cli.progress_show_after")));
+  double sa = 2;
+  if (!isNull(show_after)) sa = REAL(show_after)[0];
+
   Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("status"),        Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("type"),          Rf_mkString("iterator"), bar);
   Rf_defineVar(Rf_install("total"),         Rf_ScalarInteger(total), bar);
-  Rf_defineVar(Rf_install("show_after"),    Rf_ScalarReal(now + 2),  bar);
+  Rf_defineVar(Rf_install("show_after"),    Rf_ScalarReal(now + sa), bar);
   Rf_defineVar(Rf_install("format"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("format_done"),   R_NilValue,              bar);
   Rf_defineVar(Rf_install("format_failed"), R_NilValue,              bar);
@@ -126,7 +130,7 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
   Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
 
-  UNPROTECT(1);
+  UNPROTECT(2);
   return bar;
 }
 

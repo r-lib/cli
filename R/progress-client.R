@@ -6,7 +6,6 @@ cli_progress_bar <- function(name = NULL,
                              type = c("iterator", "tasks", "download",
                                       "custom"),
                              total = NA,
-                             show_after = 2,
                              format = NULL,
                              format_done = NULL,
                              format_failed = NULL,
@@ -32,7 +31,7 @@ cli_progress_bar <- function(name = NULL,
   bar$status <- status
   bar$type <- match.arg(type)
   bar$total <- total
-  bar$show_after <- start + show_after
+  bar$show_after <- start + getOption("cli.progress_show_after", 2)
   bar$format <- format
   bar$format_done <- format_done
   bar$format_failed <- format_failed
