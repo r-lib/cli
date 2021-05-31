@@ -228,22 +228,6 @@ theme_progress_bar <- function(x, app, style) {
   make_progress_bar(x$current / x$total, style = style)
 }
 
-default_progress_style <- function() {
-  if (is_utf8_output()) {
-    list(
-      complete = "\u25A0",
-      current = "\u25A0",
-      incomplete = "\u00a0"
-    )
-  } else {
-    list(
-      complete = "=",
-      current = ">",
-      incomplete = "-"
-    )
-  }
-}
-
 detect_dark_theme <- function(dark) {
   tryCatch({
     if (dark == "auto") {

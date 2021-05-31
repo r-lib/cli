@@ -12,3 +12,56 @@ make_progress_bar <- function(percent, width = 30, style = list()) {
   incomplete <- paste(rep(chr_incomplete, width - complete_len), collapse = "")
   paste0(complete, current, incomplete)
 }
+
+default_progress_style <- function() {
+  opt <- progress_style(getOption("cli.progress_bar_style"))
+  if (is_utf8_output()) {
+    opu <- progress_style(getOption("cli.progress_bar_style_unicode"))
+    list(
+      complete = opu$complete %||% opt$complete %||% "\u25A0",
+      current = opu$current %||% opt$current %||% opu$complete %||%
+        opt$complete %||% "\u25A0",
+      incomplete = opu$incomplete %||% opt$incomplete %||% "\u00a0"
+    )
+  } else {
+    opa <- progress_style(getOption("cli.progress_bar_style_ascii"))
+    list(
+      complete = opa$complete %||% opt$complete %||% "=",
+      current = opa$current %||% opt$current %||% opa$complete %||%
+        opt$complete %||% ">",
+      incomplete = opa$incomplete %||% opt$icomplete %||% "-"
+    )
+  }
+}
+
+progress_style <- function(x) {
+  if (is.null(x)) return(x)
+  if (is_string(x)) return(builtin_progress_styles()[[x]])
+  x
+}
+
+builtin_progress_styles <- function() {
+  list(
+    classic = list(
+      complete = "#",
+      incomplete = "\u00a0"
+    ),
+    squares = list(
+      complete = "\u25a0",
+      incomplete = "\u00a0"
+    ),
+    dot = list(
+      complete = col_grey("\u2500"),
+      incomplete = col_grey("\u2500"),
+      current = col_red(symbol$record)
+    ),
+    fillsquares = list(
+      complete = "\u25a0",
+      incomplete = col_grey("\u25a1")
+    ),
+    bar = list(
+      complete = "\u2588",
+      incomplete = col_grey("\u2588")
+    )
+  )
+}
