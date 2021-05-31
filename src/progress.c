@@ -112,6 +112,9 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   SEXP show_after = PROTECT(Rf_GetOption1(Rf_install("cli.progress_show_after")));
   double sa = 2;
   if (!isNull(show_after)) sa = REAL(show_after)[0];
+  SEXP clear = PROTECT(Rf_GetOption1(Rf_install("cli.progress_clear")));
+  int cl = 1;
+  if (!isNull(clear)) cl = LOGICAL(clear)[0];
 
   Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("status"),        Rf_mkString(""),         bar);
@@ -123,7 +126,7 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   Rf_defineVar(Rf_install("format_failed"), R_NilValue,              bar);
   Rf_defineVar(Rf_install("estimate"),      Rf_ScalarLogical(1),     bar);
   Rf_defineVar(Rf_install("auto_estimate"), Rf_ScalarLogical(1),     bar);
-  Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(1),     bar);
+  Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(cl),    bar);
   Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
   Rf_defineVar(Rf_install("start"),         Rf_ScalarReal(now),      bar);
