@@ -16,7 +16,7 @@ SEXP test0() {
 SEXP test1() {
   int i;
   int res = 0;
-  SEXP bar = PROTECT(cli_progress_bar(2000000000));
+  SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   for (i = 0; i < 2000000000; i++) {
     if (SHOULD_TICK) cli_progress_set(bar, i);
     res += i % 2;
@@ -29,7 +29,7 @@ SEXP test1() {
 SEXP testx() {
   int i;
   int res = 0;
-  SEXP bar = PROTECT(cli_progress_bar(2000000000));
+  SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   cli_progress_set_format(
      bar,
      "{%d} package{?s} {cli::pb_bar} | {cli::pb_elapsed}",
@@ -47,7 +47,7 @@ SEXP testx() {
 SEXP test2() {
   int i = 0;
   int res = 0;
-  SEXP bar = PROTECT(cli_progress_bar(2000000000));
+  SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   int s, final, step = 2000000000 / 100000;
   for (s = 0; s < 100000; s++) {
     if (SHOULD_TICK) cli_progress_set(bar, i);
@@ -64,7 +64,7 @@ SEXP test2() {
 SEXP testc() {
   int i;
   int res = 0;
-  SEXP bar = PROTECT(cli_progress_bar(2000000000));
+  SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   for (i = 0; i < 2000000000; i++) {
     if (SHOULD_TICK) cli_progress_set(bar, i);
     res += i % 2;

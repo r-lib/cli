@@ -103,8 +103,14 @@ SEXP cli__progress_update(SEXP bar) {
 /* Public API                                                           */
 /* ---------------------------------------------------------------------*/
 
-SEXP cli_progress_bar(vint **ptr, int total) {
+SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   *ptr = cli_timer_flag;
+
+  /* FALSE means no progress bar */
+  if (config && Rf_isLogical(config) && LENGTH(config) == 1 &&
+      !LOGICAL(config)[0]) {
+    return R_NilValue;
+  }
 
   /* If changes, synchronize with R API in progress-client.R */
   double now = clic__get_time();
@@ -133,27 +139,62 @@ SEXP cli_progress_bar(vint **ptr, int total) {
   Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
   Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
 
+  if (!config) {
+    /* NULL pointer, use defaults */
+
+  } else if (Rf_isLogical(config) && LENGTH(config) == 1) {
+    /* TRUE, use defaults */
+
+  } else if (TYPEOF(config) == VECSXP) {
+    /* Proper config */
+    int i, n = LENGTH(config);
+    SEXP nms = getAttrib(config, R_NamesSymbol);
+    if (isNull(nms)) {
+      error("Invalid cli progress bar configuration, list elements must "
+            "be named.");
+    }
+    for (i = 0; i < n; i++) {
+      Rf_defineVar(
+        Rf_install(CHAR(STRING_ELT(nms, i))),
+        VECTOR_ELT(config, i),
+        bar
+     );
+    }
+
+  } else if (TYPEOF(config) == STRSXP) {
+    /* String, use as name */
+    Rf_defineVar(Rf_install("name"), config, bar);
+
+  } else {
+    error("Unknown cli progress bar configuation, see manual.");
+  }
+
   UNPROTECT(3);
   return bar;
 }
 
 void cli_progress_set_name(SEXP bar, const char *name) {
+  if (isNull(bar)) return;
   Rf_defineVar(Rf_install("name"), Rf_mkString(name), bar);
 }
 
 void cli_progress_set_status(SEXP bar, const char *status) {
+  if (isNull(bar)) return;
   Rf_defineVar(Rf_install("status"), Rf_mkString(status), bar);
 }
 
 void cli_progress_set_type(SEXP bar, const char *type) {
+  if (isNull(bar)) return;
   Rf_defineVar(Rf_install("type"), Rf_mkString(type), bar);
 }
 
 void cli_progress_set_format(SEXP bar, const char *format) {
+  if (isNull(bar)) return;
   Rf_defineVar(Rf_install("format"), Rf_mkString(format), bar);
 }
 
 void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate) {
+  if (isNull(bar)) return;
   if (estimate < 0) {
     Rf_defineVar(Rf_install("estimate"), R_NilValue, bar);
   } else {
@@ -163,10 +204,12 @@ void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate) {
 }
 
 void cli_progress_set_clear(SEXP bar, int clear) {
+  if (isNull(bar)) return;
   Rf_defineVar(Rf_install("clear"), Rf_ScalarLogical(clear), bar);
 }
 
 void cli_progress_set(SEXP bar, int set) {
+  if (isNull(bar)) return;
   Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
   if (*cli_timer_flag) {
     *cli_timer_flag = 0;
@@ -177,6 +220,7 @@ void cli_progress_set(SEXP bar, int set) {
 }
 
 void cli_progress_add(SEXP bar, int inc) {
+  if (isNull(bar)) return;
   int crnt = INTEGER(Rf_findVarInFrame3(bar, Rf_install("current"), 1))[0];
   Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
   if (*cli_timer_flag) {
@@ -188,6 +232,7 @@ void cli_progress_add(SEXP bar, int inc) {
 }
 
 void cli_progress_done(SEXP bar) {
+  if (isNull(bar)) return;
   SEXP call = PROTECT(Rf_lang2(install("progress_c_done"), bar));
   PROTECT(Rf_eval(call, cli_pkgenv));
   UNPROTECT(2);

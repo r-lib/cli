@@ -24,6 +24,7 @@ static vint *cli__should_tick = &cli__false;
 #define SHOULD_TICK (CLI_UNLIKELY(*cli__should_tick))
 
 static R_INLINE void cli_progress_done(SEXP bar) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP)) R_GetCCallable("cli", "cli_progress_done");
@@ -33,6 +34,7 @@ static R_INLINE void cli_progress_done(SEXP bar) {
 
 #ifdef R_CLEANCALL_SUPPORT
 static void cli_progress_done2(SEXP bar) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP)) R_GetCCallable("cli", "cli_progress_done");
@@ -41,13 +43,13 @@ static void cli_progress_done2(SEXP bar) {
 }
 #endif
 
-static R_INLINE SEXP cli_progress_bar(int total) {
-  static SEXP (*ptr)(vint **, int) = NULL;
+static R_INLINE SEXP cli_progress_bar(int total, SEXP config) {
+  static SEXP (*ptr)(vint **, int, SEXP) = NULL;
   if (ptr == NULL) {
-    ptr = (SEXP (*)(vint **, int)) R_GetCCallable("cli", "cli_progress_bar");
+    ptr = (SEXP (*)(vint **, int, SEXP)) R_GetCCallable("cli", "cli_progress_bar");
   }
 
-  SEXP bar = PROTECT(ptr(&cli__should_tick, total));
+  SEXP bar = PROTECT(ptr(&cli__should_tick, total, config));
 
 #ifdef R_CLEANCALL_SUPPORT
   if (r_cleancall_is_active()) {
@@ -60,6 +62,7 @@ static R_INLINE SEXP cli_progress_bar(int total) {
 }
 
 static R_INLINE void cli_progress_set_name(SEXP bar, const char *name) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, const char*) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, const char*))
@@ -69,6 +72,7 @@ static R_INLINE void cli_progress_set_name(SEXP bar, const char *name) {
 }
 
 static R_INLINE void cli_progress_set_status(SEXP bar, const char *status) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, const char*) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, const char*))
@@ -78,6 +82,7 @@ static R_INLINE void cli_progress_set_status(SEXP bar, const char *status) {
 }
 
 static R_INLINE void cli_progress_set_type(SEXP bar, const char *type) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, const char*) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, const char*))
@@ -89,6 +94,7 @@ static R_INLINE void cli_progress_set_type(SEXP bar, const char *type) {
 static R_INLINE void cli_progress_set_estimate(SEXP bar,
                                                int estimate,
                                                int auto_estimate) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, int, int) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, int, int))
@@ -98,6 +104,7 @@ static R_INLINE void cli_progress_set_estimate(SEXP bar,
 }
 
 static R_INLINE void cli_progress_set_clear(SEXP bar, int clear) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, int) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, int))
@@ -107,6 +114,7 @@ static R_INLINE void cli_progress_set_clear(SEXP bar, int clear) {
 }
 
 static R_INLINE void cli_progress_set(SEXP bar, int set) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, int) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, int)) R_GetCCallable("cli", "cli_progress_set");
@@ -115,6 +123,7 @@ static R_INLINE void cli_progress_set(SEXP bar, int set) {
 }
 
 static R_INLINE void cli_progress_set_format(SEXP bar, const char *format, ...) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, const char*) = NULL;
   static char str[1024];
   if (ptr == NULL) {
@@ -130,6 +139,7 @@ static R_INLINE void cli_progress_set_format(SEXP bar, const char *format, ...) 
 }
 
 static R_INLINE void cli_progress_add(SEXP bar, int inc) {
+  if (Rf_isNull(bar)) return;
   static void (*ptr)(SEXP, int) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, int)) R_GetCCallable("cli", "cli_progress_add");
