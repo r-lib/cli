@@ -1,5 +1,5 @@
 
-# @export
+#' @export
 
 cli_progress_num <- function() {
   length(clienv$progress)
