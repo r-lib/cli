@@ -24,7 +24,11 @@ static SEXP cli__current_progress_bar = 0;
 static SEXP cli__disable_gc = 0;
 
 void *disable_gc_DataPtr(SEXP x, Rboolean writeable) {
-  cli__progress_update(cli__current_progress_bar);
+  /* We can't throw a condition from C, unfortunately... */
+  SEXP call = PROTECT(Rf_lang2(install("progress_altrep_update"),
+                               cli__current_progress_bar));
+  Rf_eval(call, cli_pkgenv);
+  UNPROTECT(1);
   return NULL;
 }
 
