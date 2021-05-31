@@ -32,17 +32,11 @@ progress_c_done <- function(pb, caller = NULL) {
     if (pb$clear) {
       cli_status_clear(pb$statusbar, result = "clear")
     } else {
-      r1 <- stats::runif(1)
-      failed <- identical(returnValue(r1), r1)
-      if (failed) {
-        cli_status_clear(pb$statusbar, result = "clear")
-      } else {
-        if (!is.na(pb$total)) pb$current <- pb$total
-        opt <- options(cli__pb = pb)
-        on.exit(options(opt), add = TRUE)
-        cli_status_update(pb$statusbar, pb$format, .envir = caller)
-        cli_status_clear(pb$statusbar, pb$format, result = "done", .envir = caller)
-      }
+      if (!is.na(pb$total)) pb$current <- pb$total
+      opt <- options(cli__pb = pb)
+      on.exit(options(opt), add = TRUE)
+      cli_status_update(pb$statusbar, pb$format, .envir = caller)
+      cli_status_clear(pb$statusbar, pb$format, result = "done", .envir = caller)
     }
     pb$statusbar <- NULL
   }
