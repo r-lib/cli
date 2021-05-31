@@ -191,11 +191,16 @@ cli_progress_step <- function(msg,
 pb__default_format <- function(type, total) {
   if (type == "iterator") {
     if (!is.na(total)) {
+      opt <- getOption("cli.progress_format_iterator")
+      if (!is.null(opt)) return(opt)
       paste0(
         "{cli::pb_name}{cli::pb_bar} {cli::pb_percent} | {cli::pb_status}",
         "ETA: {cli::pb_eta}"
       )
     } else {
+      opt <- getOption("cli.progress_format_iterator_nototal") %||%
+        getOption("cli.progress_format_iterator")
+      if (!is.null(opt)) return(opt)
       paste0(
         "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}",
         "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
@@ -204,11 +209,16 @@ pb__default_format <- function(type, total) {
 
   } else if (type == "tasks") {
     if (!is.na(total)) {
+      opt <- getOption("cli.progress_format_tasks")
+      if (!is.null(opt)) return(opt)
       paste0(
         "[{cli::pb_spin}] {cli::pb_current}/{cli::pb_total} ",
         "ETA: {cli::pb_eta} | {cli::pb_name}{cli::pb_status}"
       )
     } else {
+      opt <- getOption("cli.progress_format_tasks_nototal") %||%
+        getOption("cli.progress_format_tasks")
+      if (!is.null(opt)) return(opt)
       paste0(
         "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}",
         "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
@@ -217,11 +227,16 @@ pb__default_format <- function(type, total) {
 
   } else if (type == "download") {
     if (!is.na(total)) {
+      opt <- getOption("cli.progress_format_download")
+      if (!is.null(opt)) return(opt)
       paste0(
         "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}| ",
         "{cli::pb_current_bytes}/{cli::pb_total_bytes} ETA: {cli::pb_eta}"
       )
     } else {
+      opt <- getOption("cli.progress_format_download_nototal") %||%
+        getOption("cli.progress_format_download")
+      if (!is.null(opt)) return(opt)
       paste0(
         "[{cli::pb_spin}] {cli::pb_name}{cli::pb_status}",
         "{cli::pb_current_bytes} ({cli::pb_rate_bytes}) | {cli::pb_elapsed}"
