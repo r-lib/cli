@@ -9,7 +9,7 @@ progress_altrep_update <- function(pb, auto_done = TRUE) {
     }
 
     if (auto_done && !is.na(pb$total) && pb$current == pb$total) {
-      progress_altrep_done(pb, caller = caller)
+      progress_altrep_done(pb)
       return(NULL)
     }
 
