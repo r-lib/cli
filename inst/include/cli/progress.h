@@ -31,6 +31,7 @@ static R_INLINE void cli_progress_done(SEXP bar) {
   ptr(bar);
 }
 
+#ifdef R_CLEANCALL_SUPPORT
 static void cli_progress_done2(SEXP bar) {
   static void (*ptr)(SEXP) = NULL;
   if (ptr == NULL) {
@@ -38,6 +39,7 @@ static void cli_progress_done2(SEXP bar) {
   }
   ptr(bar);
 }
+#endif
 
 static R_INLINE SEXP cli_progress_bar(int total) {
   static SEXP (*ptr)(vint **, int) = NULL;
