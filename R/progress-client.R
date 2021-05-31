@@ -7,6 +7,16 @@ cli_progress_num <- function() {
 
 #' @export
 
+cli_progress_cleanup <- function() {
+  while ((n <- cli_progress_num()) > 0) {
+    cli_progress_done(clienv$progress[[n]]$id)
+  }
+  ansi_show_cursor()
+  invisible()
+}
+
+#' @export
+
 cli_progress_bar <- function(name = NULL,
                              status = NULL,
                              type = c("iterator", "tasks", "download",
