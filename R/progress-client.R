@@ -97,7 +97,7 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
   }
 
   now <- .Call(clic_get_time)
-  if (should_tick || force || now > bar$show_after) {
+  if (should_tick || force || now > pb$show_after) {
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
