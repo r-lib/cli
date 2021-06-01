@@ -101,6 +101,8 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
+      pb$format_done <- pb$format_done %||% pb$format
+      pb$format_failed <- pb$format_failed %||% pb$format
     }
 
     opt <- options(cli__pb = pb)
@@ -138,6 +140,8 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
     if (pb$clear) {
       cli_status_clear(pb$statusbar, result = "clear", .envir = .envir)
     } else {
+      opt <- options(cli__pb = pb)
+      on.exit(options(opt), add = TRUE)
       cli_status_clear(
         pb$statusbar,
         result = result,
