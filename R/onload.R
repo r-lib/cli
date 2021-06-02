@@ -6,6 +6,9 @@ NULL
 
 dummy <- function() { }
 
+cli_timer_interactive <- 200L
+cli_timer_non_interactive <- 3000L
+
 clienv <- new.env(parent = emptyenv())
 clienv$pid <- Sys.getpid()
 clienv$globalenv <- format(.GlobalEnv)
@@ -36,7 +39,11 @@ clienv$tick_time <- 200L
 
   tt <- as.integer(Sys.getenv("CLI_TICK_TIME", NA_character_))
   if (is.na(tt)) {
-    tt <- if (interactive()) 200L else 3000L
+    tt <- if (interactive()) {
+      cli_timer_interactive
+    } else {
+      cli_timer_non_interactive
+    }
   }
 
   clienv$tick_time <- as.integer(tt)
