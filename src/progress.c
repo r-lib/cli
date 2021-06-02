@@ -103,6 +103,10 @@ SEXP cli__progress_update(SEXP bar) {
 /* Public API                                                           */
 /* ---------------------------------------------------------------------*/
 
+void cli_progress_init_timer(vint **ptr) {
+  *ptr = cli_timer_flag;
+}
+
 SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   *ptr = cli_timer_flag;
 

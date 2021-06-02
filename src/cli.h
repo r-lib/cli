@@ -20,6 +20,7 @@ void cli_progress_add(SEXP bar, int inc);
 void cli_progress_done(SEXP bar);
 void cli_progress_sleep(int s, long ns);
 int cli_progress_num();
+void cli_progress_init_timer(vint **ptr);
 
 SEXP cli__progress_update(SEXP bar);
 void cli_init_altrep(DllInfo *dll);

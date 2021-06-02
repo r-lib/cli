@@ -43,6 +43,14 @@ static void cli_progress_done2(SEXP bar) {
 }
 #endif
 
+static R_INLINE void cli_progress_init_timer() {
+  static void (*ptr)(vint **) = NULL;
+  if (ptr == NULL) {
+    ptr = (void (*)(vint **)) R_GetCCallable("cli", "cli_progress_init_timer");
+  }
+  ptr(&cli__should_tick);
+}
+
 static R_INLINE SEXP cli_progress_bar(int total, SEXP config) {
   static SEXP (*ptr)(vint **, int, SEXP) = NULL;
   if (ptr == NULL) {
