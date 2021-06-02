@@ -20,12 +20,14 @@ clienv$load_time <- NULL
 clienv$speed_time <- 1.0
 clienv$tick_time <- 200L
 
+task_callback <- NULL
+
 .onLoad <- function(libname, pkgname) {
 
   # Try to restore cursor as much as we can
   if (isatty(stdout())) {
     reg.finalizer(clienv, function(e) cli::ansi_show_cursor(), TRUE)
-    addTaskCallback(
+    task_callback <<- addTaskCallback(
       function(...) { cli::ansi_show_cursor(); TRUE },
       "cli-show-cursor"
     )
@@ -122,6 +124,7 @@ clienv$tick_time <- 200L
 }
 
 .onUnload <- function(libpath) {
+  tryCatch(removeTaskCallback(task_callback), error = function(e) NULL)
   .Call(clic_unload)
 }
 
