@@ -125,6 +125,8 @@ task_callback <- NULL
 
 .onUnload <- function(libpath) {
   tryCatch(removeTaskCallback(task_callback), error = function(e) NULL)
+  tryCatch(cli_progress_cleanup(), error = function(e) NULL)
+  tryCatch(ansi_show_cursor(), error = function(e) NULL)
   .Call(clic_unload)
 }
 
