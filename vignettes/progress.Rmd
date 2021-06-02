@@ -38,6 +38,7 @@ asciicast::init_knitr_engine(
 
 ```{asciicast include = FALSE}
 set.seed(1)
+Sys.setenv(CLI_TICK_TIME = "100")
 ```
 
 ```{asciicast, setup, cache = FALSE, include = FALSE}
@@ -59,7 +60,7 @@ the 'Advanced cli progress bars' article.
 From version 3.0.0 cli provides a set of functions to create progress bars.
 The main goals of the progress bar API are:
 
-* Reduce clutter. Try to avoids verbose syntax, unless necessary.
+* Reduce clutter. Try to avoid verbose syntax, unless necessary.
 * Flexibility from R and C/C++ code. Support all cli features in proress
   bars: glue interpolation, theming, pluralization, etc.
 * Predictably small performance penalty. A very small constant penalty
@@ -156,10 +157,6 @@ with the `cli.progress_show_after` global option.
 In this document we set the limit to zero, so progress bars are shown at
 their first update.
 
-## Downloads
-
-TODO
-
 ## Progress bars for mapping functions: `tick_along()`
 
 Note that this API is currently experimental.
@@ -171,28 +168,21 @@ wrap the sequence you are iterating over into `tick_along()`:
 lapply(tick_along(X), fun)
 ```
 
-`tick_along()` returns a special index vector, that creates and updates a
-progress var, as the index elements are accessed.
-
 Note that if you use `tick_along()` then `lapply()` will pass the _indices_
 of the elements in `X` to `fun`, instead of the elements themselves.
 `tick_along()` expects that the index vector will be used only once,
 from beginning to end. To ensure these requirements, it is best if you
 never assign the return value of `tick_along()` to a variable.
 
-Here is a complete (albeit artificial), example that uses `tick_along()`:
+Here is an example:
 
 ```{asciicast, tickalong}
 f <- function() {
-  urls <- rep("https://httpbin.org/delay/0.5", 5)
-  dls <- lapply(
-    tick_along(urls),
+  rawabc <- lapply(
+    tick_along(letters),
     function(i) {
-      download.file(
-        urls[i],
-        quiet = TRUE,
-        file.path(tempdir(), i)
-      )
+      charToRaw(letters[i])
+      Sys.sleep(0.5)
     }
   )
 }
@@ -203,11 +193,11 @@ f()
 On older R versions it is equivalent to `seq_along()` and it does not
 create a progress bar.
 
-### `for` and `repeat` loops
+### `for` loops
 
 You can also use `tick_along()` in `for` loops, with the additional
-complication that if you use `break` then you need to signal the end of
-the progress bar explicitly:
+complication that if you use `break` then you might need to terminate the
+progress bar explicitly:
 
 ```r
 for (i in tick_along(seq)) {
@@ -217,7 +207,7 @@ for (i in tick_along(seq)) {
 }
 ```
 
-Alternatively, you can end the progress bar right after loop:
+Alternatively, you can terminate the progress bar right after loop:
 
 ```r
 for (i in tick_along(seq)) {
@@ -228,20 +218,44 @@ for (i in tick_along(seq)) {
 cli_progress_done()
 ```
 
+If the function containing the `for` loop returns after the loop, or
+you create another progress bar with `tick_along()` or `cli_progress_bar()`,
+then no explicit `cli_progress_done()` is needed.
+
 ## Progress bars for `while` loops: `ticking()`
 
-# Customization
+The `ticking()` function lets you add progress bars to `while` loops.
+It creates the progress bar on the first call, and updates it on each
+subsequent call, until the loop condition evaluates to `FALSE`, which
+closes the progress bar.
 
-# Status bars
+Similarly to `tick_along()`, if you `break` out of the `while` loop, you
+have to terminate the progress bar manually:
 
-```{asciicast, include = FALSE}
-# To test that we shimmed Sys.sleep and the time is speeded up
-Sys.sleep
-cli:::clienv$speed_time
-cli:::clienv$tick_time
+```r
+while (ticking(cond)) {
+  ...
+  if (exit_cond) cli_progress_done() && break
+  ...
+}
 ```
 
+When you add a progress bar to a `while` loop, you need to make sure that
+no other progress bars are active in the same function, before the loop.
+Otherwise `ticking()` will continue updating the existing progress bar.
+
 ## Simplified API
+
+Often you don't need the full power of a progress bar, but only want to
+show a status message. The `cli_progress_set_status()` and
+`cli_progress_step()` functions are taylored for this.
+
+`cli_progress_set_status()` shows a (potentially dynamic) message in the
+status bar. For convenience, the progress bar rules still apply here (by
+default):
+* Status messages are removed when their calling function exits.
+* A status message removes the previous status message or progress bar
+  of the same caller function.
 
 ```{asciicast}
 f <- function() {
@@ -261,7 +275,16 @@ f <- function() {
 f()
 ```
 
-## Alternative API
+Status messages may use glue interpolation, cli styling and pluralization,
+as usual. You can call `cli_progress_update()` to update a status message.
+
+`cli_progress_step()` is slightly different from
+`cli_progress_set_status()`:
+* it adds cli's alert themes to the status messages, and
+* it keeps the messages on the screen after they are terminated.
+
+As usual, you can use `cli_progress_step()` to update an existing status
+message.
 
 ```{asciicast}
 f <- function(n = 10) {
@@ -277,63 +300,23 @@ f <- function(n = 10) {
 f()
 ```
 
-##  Tight loops
+`cli_progress_step()` automatically handles errors, and styles the
+status message accordingly:
 
-40-60ns per iterations, without printing.
-
-```{asciicast}
+```{asciicast step-error}
 f <- function() {
-  i <- 0L
-  cli_progress_set_status("{.alert-info Read {i} files}")
-  for (i in 1:10000) {
-    Sys.sleep(5/10000)
-    if (should_tick) cli_progress_update()
-  }
-  cli_progress_update()
+  cli_progress_step("First step, this will succeed")
+  Sys.sleep(1)
+  cli_progress_step("Second step, this will fail")
+  stop("Something is wrong here")
 }
 f()
 ```
 
-# Progress bars in R
-
-## Explicit start, update and termination
-
-```{asciicast}
-cli_progress_bar(total = 100)
-for (i in 1:100) {
-  Sys.sleep(5/100)
-  cli_progress_update()
-}
-cli_progress_done()
-```
-
-## Tight loops
-
-40-60ns per iterations, without printing.
-
-```{asciicast}
-f <- function() {
-  cli_progress_bar(total = 10000)
-  for (i in 1:10000) {
-    Sys.sleep(5/10000)
-    if (should_tick) cli_progress_update(set = i)
-  }
-}
-f()
-```
-
-## Unknown total
-
-```{asciicast}
-cli_progress_bar()
-for (i in 1:100) {
-  Sys.sleep(5/100)
-  cli_progress_update()
-}
-cli_progress_done()
-```
 
 ## Downloads
+
+TODO
 
 ```{asciicast}
 cli_progress_bar(type = "download")
@@ -342,90 +325,4 @@ for (i in 1:100) {
   cli_progress_update(1024)
 }
 cli_progress_done()
-```
-
-## Custom format
-
-```{asciicast}
-f <- function() {
-  cli_progress_bar(
-    total = 20000,
-    format = "Step {step} | {pb_bar} {pb_percent}"
-  )
-  step <- 1
-  for (i in 1:10000) {
-    Sys.sleep(2/10000)
-    if (should_tick) cli_progress_update(set = i)
-  }
-  step <- 2
-  for (i in 10001:20000) {
-    Sys.sleep(2/10000)
-    if (should_tick) cli_progress_update(set = i)
-  }
-}
-f()
-```
-
-## Very custom format
-
-A silly example, but you can use custom functions on progress
-bar tokens:
-
-```{asciicast}
-f <- function() {
-  cli_progress_bar(
-    total = 26,
-    format = "{pb_spin} This is step {.emph {letters[pb_current]}}. {pb_spin}"
-  )
-  for (i in 1:26) {
-    Sys.sleep(3/26)
-    cli_progress_update()
-  }
-}
-f()
-```
-
-## While loops with `ticking()`
-
-```{asciicast}
-f <- function() {
-  i <- 0
-  while (ticking(i < 100)) {
-    Sys.sleep(3/100)
-    i <- i + 1
-  }
-}
-f()
-```
-
-## Mapping with `tick_along()`
-
-Needs R 3.5.0.
-
-```{asciicast}
-out <- lapply(
-  tick_along(letters, "Letters"),
-  function(i) Sys.sleep(1)
-)
-```
-
-# Progress bars in C
-
-```{asciicastcpp11 capi}
-#include <cli/progress.h>
-SEXP progress_test1() {
-  int i;
-  SEXP bar = PROTECT(cli_progress_bar(1000));
-  for (i = 0; i < 1000; i++) {
-    cli_progress_sleep(0, 4 * 1000 * 1000);
-    if (SHOULD_TICK) cli_progress_set(bar, i);
-  }
-  cli_progress_done(bar);
-  UNPROTECT(1);
-  return Rf_ScalarInteger(i);
-}
-```
-
-```{asciicast, dependson = -1}
-progress_test1()
 ```

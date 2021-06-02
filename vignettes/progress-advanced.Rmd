@@ -36,13 +36,158 @@ asciicast::init_knitr_engine(
 
 # Overhead
 
+Progress bars come with a performance overhead. This section discusses how
+cli tries to minimize this overhead. If you are interested in benchmarks,
+see the 'cli progress bar benchmarks' article.
+
+In cli the overhead has three parts:
+1. creating and terminating the progress bar (startup cost),
+2. checking if the progress bar should be updated (update check cost), and
+3. performing the actual update, i.e. showing the progress bar on the
+   screen (update cost).
+
+Creating and terminating a progress bar has a constant overhead.
+
+Ideally a progress bar is not updated frequently, because the update cost
+is much bigger than an update check cost. This is why a progress bar update
+attempt has two parts: the update check and the actual update. The update
+check is typically performed in each iteration of a loop, and the update
+is only performed a constant number of times per second.
+
+To make the update check as fast as possible cli has an internal timer.
+
+## The cli timer
+
+```{r}
+library(cli)
+```
+
+All cli progress bars use the same timer. By default the timer alerts
+every `r cli:::cli_timer_interactive` milliseconds in interactive R sessions
+and every `r cli:::cli_timer_non_interactive` milliseconds in
+non-interactive sessions.
+
+Once the timer alerts, it stays alerted until it is reset, manually, or by
+a progress bar update.
+
+To allow fast update checks, the timer is available for the user, both in
+R and C code. In R code, `cli::should_tick` evaluates to `TRUE` if an update
+is due, and to `FALSE` otherwise. (On some R versions it evaluates to 1L and
+0L instead, but that is just as good to use in an `if` condition.) For best
+perfomance, import `should_tick` in your package.
+
+```{r}
+should_tick
+```
+
+`cli_tick_reset()` resets the timer. Progress bar updates also reset the
+timer, so it should be very rare that you need to call `cli_tick_reset()`
+explicitly.
+
+```{r}
+cli_tick_reset()
+should_tick
+```
+
+In C code, you can use the `SHOULD_TICK` macro instead. This evaluates to
+one if an update is needed, otherwise to zero. `SHOULD_TICK` only works
+if you already created a cli progress bar from C, or you called
+`cli_progress_init_timer()`, which initializes the cli timer without
+creating a progress bar. (If the timer is not initialized, then
+`SHOULD_TICK` evaluates to zero.)
+
+See more in 'The C API' section below.
+
+## Minimizing overhead
+
+To minimize progress bar overhead, `cli_progress_update()` and other update
+functions check the value of the timer, and only update the progress bar
+if the timer is due.
+
+To avoid the call to `cli_progress_update()` the developer can check the
+value of `should_tick`:
+
+```r
+cli_progress_bar(total = 100)
+for (i in 1:100) {
+  if (should_tick) cli_progress_update(set = i)
+}
+```
+
+Note that the `set` argument of `cli_progress_update()` is needed in this
+case, to correctly keep track of the progress of the loop.
+
+Similarly in C code:
+
+```c
+  SEXP bar = PROTECT(cli_progress_bar(num_iters, NULL));
+  for (i = 0; i < num_iters; i++) {
+    if (SHOULD_TICK) cli_progress_set(bar, i);
+    // ...
+  }
+  cli_progress_done(bar);
+```
+
 # Non-interactive R sessions
+
+TODO
+
+# Progress bars in scripts
+
+TODO
 
 # Customization
 
+TODO
+
 ## End user customization
 
+TODO
+
 ## Developer customization
+
+TODO
+
+## Custom format
+
+```{asciicast}
+f <- function() {
+  cli_progress_bar(
+    total = 20000,
+    format = "Step {step} | {pb_bar} {pb_percent}"
+  )
+  step <- 1
+  for (i in 1:10000) {
+    Sys.sleep(2/10000)
+    if (should_tick) cli_progress_update(set = i)
+  }
+  step <- 2
+  for (i in 10001:20000) {
+    Sys.sleep(2/10000)
+    if (should_tick) cli_progress_update(set = i)
+  }
+}
+f()
+```
+
+## Very custom format
+
+A silly example, but you can use custom functions on progress
+bar tokens:
+
+```{asciicast}
+f <- function() {
+  cli_progress_bar(
+    total = 26,
+    format = "{pb_spin} This is step {.emph {letters[pb_current]}}. {pb_spin}"
+  )
+  for (i in 1:26) {
+    Sys.sleep(3/26)
+    cli_progress_update()
+  }
+}
+f()
+```
 
 ## Clearing or keeping terminated progress bars
 
@@ -54,6 +199,23 @@ parameter are set, the parameter is used.
 
 # The C API
 
-# Cookbook
+TODO
 
-## Multiple progress bars from one function
+```{asciicastcpp11 capi}
+#include <cli/progress.h>
+SEXP progress_test1() {
+  int i;
+  SEXP bar = PROTECT(cli_progress_bar(1000));
+  for (i = 0; i < 1000; i++) {
+    cli_progress_sleep(0, 4 * 1000 * 1000);
+    if (SHOULD_TICK) cli_progress_set(bar, i);
+  }
+  cli_progress_done(bar);
+  UNPROTECT(1);
+  return Rf_ScalarInteger(i);
+}
+```
+
+```{asciicast, dependson = -1}
+progress_test1()
+```
