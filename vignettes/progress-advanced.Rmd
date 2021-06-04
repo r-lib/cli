@@ -103,12 +103,12 @@ cli_tick_reset()
 should_tick
 ```
 
-In C code, you can use the `SHOULD_TICK` macro instead. This evaluates to
-one if an update is needed, otherwise to zero. `SHOULD_TICK` only works
+In C code, you can use the `CLI_SHOULD_TICK` macro instead. This evaluates to
+one if an update is needed, otherwise to zero. `CLI_SHOULD_TICK` only works
 if you already created a cli progress bar from C, or you called
 `cli_progress_init_timer()`. The latter initializes the cli timer without
 creating a progress bar. (If the timer is not initialized, then
-`SHOULD_TICK` evaluates to zero.)
+`CLI_SHOULD_TICK` evaluates to zero.)
 
 See more in 'The C API' section below.
 
@@ -136,7 +136,7 @@ Similarly in C code:
 ```c
   SEXP bar = PROTECT(cli_progress_bar(num_iters, NULL));
   for (i = 0; i < num_iters; i++) {
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
     // ...
   }
   cli_progress_done(bar);
@@ -431,10 +431,10 @@ TODO
 #include <cli/progress.h>
 SEXP progress_test1() {
   int i;
-  SEXP bar = PROTECT(cli_progress_bar(1000));
+  SEXP bar = PROTECT(cli_progress_bar(1000, NULL));
   for (i = 0; i < 1000; i++) {
     cli_progress_sleep(0, 4 * 1000 * 1000);
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
   }
   cli_progress_done(bar);
   UNPROTECT(1);

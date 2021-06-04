@@ -21,7 +21,7 @@ static vint *cli__should_tick = &cli__false;
 #   define CLI_LIKELY(a)   a
 #endif
 
-#define SHOULD_TICK (CLI_UNLIKELY(*cli__should_tick))
+#define CLI_SHOULD_TICK (CLI_UNLIKELY(*cli__should_tick))
 
 static R_INLINE void cli_progress_done(SEXP bar) {
   if (Rf_isNull(bar)) return;

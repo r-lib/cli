@@ -18,7 +18,7 @@ SEXP test1() {
   int res = 0;
   SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   for (i = 0; i < 2000000000; i++) {
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
     res += i % 2;
   }
   cli_progress_done(bar);
@@ -36,7 +36,7 @@ SEXP testx() {
      4
   );
   for (i = 0; i < 2000000000; i++) {
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
     res += i % 2;
   }
   cli_progress_done(bar);
@@ -50,7 +50,7 @@ SEXP test2() {
   SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   int s, final, step = 2000000000 / 100000;
   for (s = 0; s < 100000; s++) {
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
     final = (s + 1) * step;
     for (i = s * step; i < final; i++) {
       res += i % 2;
@@ -66,7 +66,7 @@ SEXP testc() {
   int res = 0;
   SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
   for (i = 0; i < 2000000000; i++) {
-    if (SHOULD_TICK) cli_progress_set(bar, i);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
     res += i % 2;
   }
   error("sorry, can't do this any more");
