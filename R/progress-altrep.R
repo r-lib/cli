@@ -1,6 +1,7 @@
 
 progress_altrep_update <- function(pb, auto_done = TRUE) {
   tryCatch({
+    cli_tick_reset()
     caller <- pb$caller
     pb$tick <- pb$tick + 1L
 

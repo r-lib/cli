@@ -1,5 +1,7 @@
 
 progress_c_update <- function(pb, auto_done = TRUE) {
+  cli_tick_reset()
+
   caller <- pb$caller %||% sys.frame(sys.nframe() - 1L)
 
   pb$tick <- pb$tick + 1L
