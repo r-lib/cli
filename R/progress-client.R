@@ -1,10 +1,24 @@
 
+#' @title Progress bar utility functions.
+#' @details `cli_progress_num()` returns the number of currently
+#' active progress bars. (These do not currently include the progress
+#' bars created in C/C++ code.)
+#' @return `cli_progress_num()` returns an integer scalar.
+#'
+#' @rdname progress-utils
+#' @family progress bar
 #' @export
 
 cli_progress_num <- function() {
   length(clienv$progress)
 }
 
+#' @details `cli_progress_cleanup()` terminates all active progress bars.
+#' (It currently ignores progress bars created in the C/C++ code.)
+#' @return `cli_progress_cleanup() does not return anything.
+#'
+#' @rdname progress-utils
+#' @family progress bar
 #' @export
 
 cli_progress_cleanup <- function() {
