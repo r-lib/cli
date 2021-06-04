@@ -174,11 +174,11 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
 
 #' @export
 
-cli_progress_set_status <- function(msg,
-                                    current = TRUE,
-                                    .auto_close = TRUE,
-                                    .envir = parent.frame(),
-                                    ...) {
+cli_progress_message <- function(msg,
+                                 current = TRUE,
+                                 .auto_close = TRUE,
+                                 .envir = parent.frame(),
+                                 ...) {
 
   id <- cli_progress_bar(
     type = "custom",
