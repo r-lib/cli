@@ -40,6 +40,8 @@ progress_style <- function(x) {
   x
 }
 
+#' @export
+
 builtin_progress_styles <- function() {
   list(
     classic = list(
