@@ -89,8 +89,10 @@ cli_progress_bar <- function(name = NULL,
 
 #' @export
 
-cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
-                                force = FALSE, .envir = parent.frame()) {
+cli_progress_update <- function(add = NULL, set = NULL, status = NULL,
+                                id = NULL, force = FALSE,
+                                .envir = parent.frame()) {
+
   id <- id %||% clienv$progress_ids[[format(.envir)]]
   if (is.null(id)) {
     envkey <- format(.envir)
@@ -98,6 +100,8 @@ cli_progress_update <- function(add = NULL, set = NULL, id = NULL,
   }
   pb <- clienv$progress[[id]]
   if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
+
+  if (!is.null(status)) pb$status <- status
 
   if (!is.null(set)) {
     pb$current <- set
