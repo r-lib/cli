@@ -120,9 +120,9 @@ cli_progress_update <- function(add = NULL, set = NULL, status = NULL,
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
-      pb$format_done <- pb$format_done %||% pb$format
-      pb$format_failed <- pb$format_failed %||% pb$format
     }
+    pb$format_done <- pb$format_done %||% pb$format
+    pb$format_failed <- pb$format_failed %||% pb$format
 
     opt <- options(cli__pb = pb)
     on.exit(options(opt), add = TRUE)
