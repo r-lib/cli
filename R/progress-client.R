@@ -151,9 +151,9 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
                               result = "auto") {
   envkey <- format(.envir)
   id <- id %||% clienv$progress_ids[[envkey]]
-  if (is.null(id)) return(invisible())
+  if (is.null(id)) return(invisible(TRUE))
   pb <- clienv$progress[[id]]
-  if (is.null(pb)) return(invisible())
+  if (is.null(pb)) return(invisible(TRUE))
 
   if (!is.null(pb$statusbar)) {
     if (pb$clear) {
@@ -174,7 +174,7 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
   clienv$progress[[id]] <- NULL
   if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
 
-  invisible(id)
+  invisible(TRUE)
 }
 
 #' @export
