@@ -51,11 +51,17 @@ options(cli.progress_clear = FALSE)
 library(cli)
 options(cli.progress_show_after = 0)
 options(cli.progress_clear = FALSE)
+options(cli.progress_format_iterator = NULL)
+options(cli.progress_format_iterator_nototal = NULL)
+options(cli.progress_format_tasks = NULL)
+options(cli.progress_format_tasks_nototal = NULL)
+options(cli.progress_format_download = NULL)
+options(cli.progress_format_download_nototal = NULL)
 ```
 
-This document discusses the structure and the simplest uses of the cli
+This document discusses the structure and simplest uses of the cli
 progress bar API. For more advanced usage and the C progress bar API, see
-the 'Advanced cli progress bars' article.
+the 'Advanced cli progress bars' article and the manual pages.
 
 From version 3.0.0 cli provides a set of functions to create progress bars.
 The main goals of the progress bar API are:
@@ -72,8 +78,8 @@ cli has four sets of R functions to create and manage progress bars:
 
 * The tradional progress bar API: `cli_progress_bar()`,
   `cli_progress_update()`, `cli_progress_done()`.
-* The `cli_progress_set_status()` and `cli_progress_step()` progress bar
-  wrappers for a much simplified display.
+* The `cli_progress_message()` and `cli_progress_step()` progress bar
+  wrappers for a simplified display.
 * The `tick_along()` function for iteration.
   This is currently experimental.
 * The `ticking()` function, primarily for `while` loops.
@@ -110,7 +116,7 @@ For conciseness, the progress bar functions refer to the _current progress
 bar_ by default. Every function has at most one current progress bar at
 any time. The current progress bar of a function is terminated when the
 function creates another progress bar or when the function returns, errors
-or when it is interrupted.
+or is interrupted.
 
 The current progress bar lets us omit the `cli_progress_done()` call:
 
@@ -134,7 +140,8 @@ clean()
 ## Unknown total number of units
 
 In some cases the total number of progress units is unknown, so simply
-omit them from `cli_progress_bar()` (or set them to `NA`):
+omit them from `cli_progress_bar()` (or set them to `NA`). cli uses a
+different display when `total` is unknown:
 
 ```{asciicast unknown-total}
 walk_dirs <- function() {
@@ -148,33 +155,35 @@ walk_dirs <- function() {
 walk_dirs()
 ```
 
-## Quick progress bars
+## Quick loops
 
-By default, progress bars that are terminated within two seconds after
-they were created are not shown. The end user can configure this limit
+By default, cli does not show progress bars that are terminated within two
+seconds after their creation. The end user can configure this limit
 with the `cli.progress_show_after` global option.
 
-In this document we set the limit to zero, so progress bars are shown at
-their first update.
+For example, in this document we set the limit to zero seconds, so progress
+bars are shown at their first update.
 
 ## Progress bars for mapping functions: `tick_along()`
 
-Note that this API is currently experimental.
+`tick_along()` is currently experimental.
 
-To add a progress bar to a call to `lapply()` and other mapping functions,
-wrap the sequence you are iterating over into `tick_along()`:
+To add a progress bar to a call to `lapply()` or another mapping function,
+wrap the input sequence into `tick_along()`:
 
 ```r
 lapply(tick_along(X), fun)
 ```
 
-Note that if you use `tick_along()` then `lapply()` will pass the _indices_
+`tick_along()` works similarly to `seq_along()`, it returns an index vector.
+If you use `tick_along()`, then `lapply()` will pass the _indices_
 of the elements in `X` to `fun`, instead of the elements themselves.
-`tick_along()` expects that the index vector will be used only once,
-from beginning to end. To ensure these requirements, it is best if you
-never assign the return value of `tick_along()` to a variable.
 
-Here is an example:
+`tick_along()` expects that the index vector will be used only once,
+from beginning to end. It is best to never assign the return value of
+`tick_along()` to a variable.
+
+An example:
 
 ```{asciicast, tickalong}
 f <- function() {
@@ -196,7 +205,7 @@ create a progress bar.
 ### `for` loops
 
 You can also use `tick_along()` in `for` loops, with the additional
-complication that if you use `break` then you might need to terminate the
+complication that if you use `break`, then you might need to terminate the
 progress bar explicitly:
 
 ```r
@@ -206,6 +215,8 @@ for (i in tick_along(seq)) {
   ...
 }
 ```
+
+`cli_progress_done()` always returns `TRUE` to allow this form.
 
 Alternatively, you can terminate the progress bar right after loop:
 
@@ -224,13 +235,15 @@ then no explicit `cli_progress_done()` is needed.
 
 ## Progress bars for `while` loops: `ticking()`
 
+`ticking()` is experimental currently.
+
 The `ticking()` function lets you add progress bars to `while` loops.
 It creates the progress bar on the first call, and updates it on each
 subsequent call, until the loop condition evaluates to `FALSE`, which
-closes the progress bar.
+terminates the progress bar.
 
 Similarly to `tick_along()`, if you `break` out of the `while` loop, you
-have to terminate the progress bar manually:
+might have to terminate the progress bar manually:
 
 ```r
 while (ticking(cond)) {
@@ -242,31 +255,32 @@ while (ticking(cond)) {
 
 When you add a progress bar to a `while` loop, you need to make sure that
 no other progress bars are active in the same function, before the loop.
-Otherwise `ticking()` will continue updating the existing progress bar.
+Otherwise `ticking()` will continue updating the existing progress bar,
+instead of creating a new one.
 
 ## Simplified API
 
-Often you don't need the full power of a progress bar, but only want to
-show a status message. The `cli_progress_set_status()` and
+Often you don't need the full power of the progress bar API, and only want
+to show a status message. The `cli_progress_message()` and
 `cli_progress_step()` functions are taylored for this.
 
-`cli_progress_set_status()` shows a (potentially dynamic) message in the
-status bar. For convenience, the progress bar rules still apply here (by
-default):
+`cli_progress_message()` shows a (potentially templated) message in the
+status bar. For convenience, the progress bar rules still apply here by
+default:
 * Status messages are removed when their calling function exits.
 * A status message removes the previous status message or progress bar
   of the same caller function.
 
 ```{asciicast}
 f <- function() {
-  cli_progress_set_status("Task one is running...")
+  cli_progress_message("Task one is running...")
   Sys.sleep(2)
 
-  cli_progress_set_status("Task two is running...")
+  cli_progress_message("Task two is running...")
   Sys.sleep(2)
 
   step <- 1L
-  cli_progress_set_status("Task three is underway: step {step}")
+  cli_progress_message("Task three is underway: step {step}")
   for (step in 1:5) {
     Sys.sleep(0.5)
     cli_progress_update()
@@ -279,8 +293,9 @@ Status messages may use glue interpolation, cli styling and pluralization,
 as usual. You can call `cli_progress_update()` to update a status message.
 
 `cli_progress_step()` is slightly different from
-`cli_progress_set_status()`:
-* it adds cli's alert themes to the status messages, and
+`cli_progress_message()`:
+* it adds cli's alert themes to the status messages (info, success or
+  danger), and
 * it keeps the messages on the screen after they are terminated.
 
 As usual, you can use `cli_progress_step()` to update an existing status
@@ -313,16 +328,12 @@ f <- function() {
 f()
 ```
 
-
 ## Downloads
+
+### Downloads with httr
 
 TODO
 
-```{asciicast}
-cli_progress_bar(type = "download")
-for (i in 1:100) {
-  Sys.sleep(5/100)
-  cli_progress_update(1024)
-}
-cli_progress_done()
-```
+### Downloads with curl
+
+TODO
