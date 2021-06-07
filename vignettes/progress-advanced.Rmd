@@ -425,7 +425,27 @@ parameter are set, the parameter is used.
 
 # The C API
 
-TODO
+To use the C cli progress
+API in your package, you need to add cli to `LinkingTo` and `Imports`:
+```
+LinkingTo: cli
+Imports: cli
+```
+
+In the C files you want to use the API from include `cli/progress.h`:
+
+```c
+#include <cli/progress.h>
+```
+
+Now you are ready to call cli functions. The C API is similar to the
+traditional R API:
+
+1. `cli_progress_bar()` creates a progress bar.
+2. `cli_progress_update()` updates a progress bar.
+3. `cli_progress_done()` terminates it.
+
+A complete example:
 
 ```{asciicastcpp11 capi}
 #include <cli/progress.h>
@@ -442,6 +462,11 @@ SEXP progress_test1() {
 }
 ```
 
-```{asciicast, dependson = -1}
-progress_test1()
+```{asciicast, echo = FALSE, dependson = -1}
+invisible(progress_test1())
+```
+
+## C API reference
+
+```{r include = FALSE, cache = FALSE, child = cli:::docs_progress_c_api()}
 ```

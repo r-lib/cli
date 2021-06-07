@@ -11,7 +11,7 @@ editor_options:
     wrap: sentence
 ---
 
-```{r, include = FALSE, cache = FALSE}
+```{r, asciicast-setup, include = FALSE, cache = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -36,12 +36,12 @@ asciicast::init_knitr_engine(
 
 # Introduction
 
-```{asciicast include = FALSE}
+```{asciicast, asciicast-tick-time, include = FALSE}
 set.seed(1)
 Sys.setenv(CLI_TICK_TIME = "100")
 ```
 
-```{asciicast, setup, cache = FALSE, include = FALSE}
+```{asciicast, progress-setup setup, cache = FALSE, include = FALSE}
 library(cli)
 options(cli.progress_show_after = 0)
 options(cli.progress_clear = FALSE)
@@ -271,7 +271,7 @@ default:
 * A status message removes the previous status message or progress bar
   of the same caller function.
 
-```{asciicast}
+```{asciicast cli_progress_message}
 f <- function() {
   cli_progress_message("Task one is running...")
   Sys.sleep(2)
@@ -301,7 +301,7 @@ as usual. You can call `cli_progress_update()` to update a status message.
 As usual, you can use `cli_progress_step()` to update an existing status
 message.
 
-```{asciicast}
+```{asciicast cli_progress_step}
 f <- function(n = 10) {
   cli_alert_info("About to start downloads of {n} file{?s}")
   i <- 0

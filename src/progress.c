@@ -264,3 +264,23 @@ void cli_progress_sleep(int s, long ns) {
   ts.tv_nsec = ns2;
   nanosleep(&ts, NULL);
 }
+
+void cli_progress_update(SEXP bar, int set, int inc, int force) {
+  if (isNull(bar)) return;
+  if (set >= 0) {
+    Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
+  } else {
+    int crnt = INTEGER(Rf_findVarInFrame3(bar, Rf_install("current"), 1))[0];
+    if (inc != 0) {
+      Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
+    }
+  }
+  if (force) {
+    cli__progress_update(bar);
+  } else if (*cli_timer_flag) {
+    *cli_timer_flag = 0;
+    double now = clic__get_time();
+    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    if (now > REAL(show_after)[0]) cli__progress_update(bar);
+  }
+}
