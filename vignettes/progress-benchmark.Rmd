@@ -1,0 +1,299 @@
+---
+title: "cli progress bar benchmark"
+author: "Gábor Csárdi"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r, setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  cache = TRUE
+)
+```
+
+# Introduction
+
+We make sure that `should_tick` is not `TRUE`, by setting the timer
+to ten hours.
+
+```{r library, cache = FALSE}
+library(cli)
+# 10 hours
+cli:::cli_tick_set(10 * 60 * 60 * 1000)
+cli_tick_reset()
+should_tick
+```
+
+# R benchmarks
+
+## `should_tick`
+
+```{r should-tick}
+fun <- function() NULL
+ben_st <- bench::mark(
+  should_tick,
+  fun(),
+  .Call(ccli_tick_reset),
+  interactive(),
+  check = FALSE
+)
+ben_st
+plot(ben_st)
+```
+
+```{r should-tick2}
+ben_st2 <- bench::mark(
+  if (should_tick) foobar()
+)
+ben_st2
+```
+
+## `tick_along()`
+
+### `for` loop
+
+This is the baseline:
+
+```{r tick-along-for-f0}
+f0 <- function(n = 1e5) {
+  x <- 0
+  seq <- 1:n
+  for (i in seq) {
+    x <- x + i %% 2
+  }
+  x
+}
+```
+
+With progress bars:
+
+```{r tick-along-for-f}
+fp <- function(n = 1e5) {
+  x <- 0
+  seq <- 1:n
+  for (i in tick_along(seq)) {
+    x <- x + seq[[i]] %% 2
+  }
+  x
+}
+```
+
+Overhead per iteration:
+
+
+```{r tick-along-for-bench}
+ben_taf <- bench::mark(f0(), fp())
+ben_taf
+(ben_taf$median[2] - ben_taf$median[1]) / 1e5
+```
+
+```{r tick-along-for-bench2}
+ben_taf2 <- bench::mark(f0(1e6), fp(1e6))
+ben_taf2
+(ben_taf2$median[2] - ben_taf2$median[1]) / 1e6
+```
+
+```{r tick-along-for-bench3}
+ben_taf3 <- bench::mark(f0(1e7), fp(1e7))
+ben_taf3
+(ben_taf3$median[2] - ben_taf3$median[1]) / 1e7
+```
+
+```{r tick-along-for-bench4}
+ben_taf4 <- bench::mark(f0(1e8), fp(1e8))
+ben_taf4
+(ben_taf4$median[2] - ben_taf4$median[1]) / 1e8
+```
+
+### Mapping with lapply
+
+This is the baseline:
+
+```{r tick-along-map-f0}
+f0 <- function(n = 1e5) {
+  seq <- 1:n
+  ret <- lapply(seq, function(x) {
+    x %% 2
+  })
+  invisible(ret)
+}
+```
+
+With progress bars:
+
+```{r tick-along-map-f}
+fp <- function(n = 1e5) {
+  seq <- 1:n
+  ret <- lapply(tick_along(seq), function(i) {
+    seq[[i]] %% 2
+  })
+  invisible(ret)
+}
+```
+Overhead per iteration:
+
+```{r tick-along-map-bench}
+ben_tam <- bench::mark(f0(), fp())
+ben_tam
+(ben_tam$median[2] - ben_tam$median[1]) / 1e5
+```
+
+```{r tick-along-map-bench2}
+ben_tam2 <- bench::mark(f0(1e6), fp(1e6))
+ben_tam2
+(ben_tam2$median[2] - ben_tam2$median[1]) / 1e6
+```
+
+## `ticking()`
+
+```{r ticking-f0}
+f0 <- function(n = 1e5) {
+  i <- 0
+  x <- 0 
+  while (i < n) {
+    x <- x + i %% 2
+    i <- i + 1
+  }
+  x
+}
+```
+
+```{r ticking-fp}
+fp <- function(n = 1e5) {
+  i <- 0
+  x <- 0 
+  while (ticking(i < n)) {
+    x <- x + i %% 2
+    i <- i + 1
+  }
+  x
+}
+```
+
+```{r ticking}
+ben_tk <- bench::mark(f0(), fp())
+ben_tk
+(ben_tk$median[2] - ben_tk$median[1]) / 1e5
+```
+
+## Traditional API
+
+```{r api-f0}
+f0 <- function(n = 1e5) {
+  x <- 0
+  for (i in 1:n) {
+    x <- x + i %% 2
+  }
+  x
+}
+```
+
+```{r api-fp}
+fp <- function(n = 1e5) {
+  cli_progress_bar(total = n)
+  x <- 0
+  for (i in 1:n) {
+    x <- x + i %% 2
+    if (should_tick) cli_progress_update()
+  }
+  x
+}
+```
+
+```{r api}
+ben_api <- bench::mark(f0(), fp())
+ben_api
+(ben_api$median[2] - ben_api$median[1]) / 1e5
+```
+
+```{r api2}
+ben_api2 <- bench::mark(f0(1e6), fp(1e6))
+ben_api2
+(ben_api2$median[2] - ben_api2$median[1]) / 1e6
+```
+
+# C benchmarks
+
+Baseline function:
+
+```c
+SEXP test_baseline() {
+  int i;
+  int res = 0;
+  for (i = 0; i < 2000000000; i++) {
+    res += i % 2;
+  }
+  return ScalarInteger(res);
+}
+```
+
+Switch + modulo check:
+
+```c
+SEXP test_modulo(SEXP progress) {
+  int i;
+  int res = 0;
+  int progress_ = LOGICAL(progress)[0];
+  for (i = 0; i < 2000000000; i++) {
+    if (i % 10000 == 0 && progress_) cli_progress_set(R_NilValue, i);
+    res += i % 2;
+  }
+  return ScalarInteger(res);
+}
+```
+
+cli progress bar API:
+
+```c
+SEXP test_cli() {
+  int i;
+  int res = 0;
+  SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
+  for (i = 0; i < 2000000000; i++) {
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
+    res += i % 2;
+  }
+  cli_progress_done(bar);
+  UNPROTECT(1);
+  return ScalarInteger(res);
+}
+```
+
+```c
+SEXP test_cli_unroll() {
+  int i = 0;
+  int res = 0;
+  SEXP bar = PROTECT(cli_progress_bar(2000000000, NULL));
+  int s, final, step = 2000000000 / 100000;
+  for (s = 0; s < 100000; s++) {
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
+    final = (s + 1) * step;
+    for (i = s * step; i < final; i++) {
+      res += i % 2;
+    }
+  }
+  cli_progress_done(bar);
+  UNPROTECT(1);
+  return ScalarInteger(res);
+}
+```
+
+```{r capi}
+ben_c <- bench::mark(
+  test_baseline(),
+  test_modulo(),
+  test_cli(),
+  test_cli_unroll()
+)
+ben_c
+(ben_c$median[3] - ben_c$median[1]) / 2000000000
+```
