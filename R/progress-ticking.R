@@ -1,9 +1,13 @@
 
 #' Add a progress bar to a `while` loop
 #'
+#' @description
+#' Note that this function is currently experimental!
+#'
 #' Use `ticking()` in the condition of a while loop, to add a progress bar.
 #' It uses [cli_progress_bar()] internally.
 #'
+#' @details
 #' Usage:
 #'
 #' ```r

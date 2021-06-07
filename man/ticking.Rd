@@ -21,6 +21,8 @@ progress bar will be terminated.}
 The value of the \code{cond} condition.
 }
 \description{
+Note that this function is currently experimental!
+
 Use \code{ticking()} in the condition of a while loop, to add a progress bar.
 It uses \code{\link[=cli_progress_bar]{cli_progress_bar()}} internally.
 }

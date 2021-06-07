@@ -1,9 +1,13 @@
 
 #' Add a progress bar to a mapping function or for loop
 #'
+#' @description
+#' Note that this function is currently experimental!
+#'
 #' Use `tick_along()` in a mapping function or in a for loop, to add a
 #' progress bar. It uses [cli_progress_bar()] internally.
 #'
+#' @details
 #' Usage:
 #'
 #' ```r

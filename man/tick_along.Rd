@@ -23,6 +23,8 @@ An index vector from 1 to \code{length(x)} that triggers progress
 updates as you iterate over it.
 }
 \description{
+Note that this function is currently experimental!
+
 Use \code{tick_along()} in a mapping function or in a for loop, to add a
 progress bar. It uses \code{\link[=cli_progress_bar]{cli_progress_bar()}} internally.
 }
