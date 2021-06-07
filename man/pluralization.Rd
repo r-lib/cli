@@ -24,12 +24,12 @@ If you need pluralization without the semantic cli functions, see the
 In the simplest case the message contains a single \code{{}} glue
 substitution, which specifies the quantity that is used to select
 between the singular and plural forms. Pluralization uses markup that is
-similar to glue, but uses the \verb{\{?} and \verb{\}} delimiters:\if{html}{\out{<div class="r">}}\preformatted{library(cli)
+similar to glue, but uses the \verb{\{?} and \verb{\}} delimiters:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(cli)
 nfile <- 0; cli_text("Found \{nfile\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 0 files.
-}\if{html}{\out{<div class="r">}}\preformatted{nfile <- 1; cli_text("Found \{nfile\} file\{?s\}.")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 1; cli_text("Found \{nfile\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 1 file.
-}\if{html}{\out{<div class="r">}}\preformatted{nfile <- 2; cli_text("Found \{nfile\} file\{?s\}.")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 2; cli_text("Found \{nfile\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 2 files.
 }
 
@@ -41,9 +41,9 @@ messages.
 \subsection{Irregular plurals}{
 
 If the plural form is more difficult than a simple \code{s} suffix, then the
-singular and plural forms can be given, separated with a forward slash:\if{html}{\out{<div class="r">}}\preformatted{ndir <- 1; cli_text("Found \{ndir\} director\{?y/ies\}.")
+singular and plural forms can be given, separated with a forward slash:\if{html}{\out{<div class="sourceCode r">}}\preformatted{ndir <- 1; cli_text("Found \{ndir\} director\{?y/ies\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 1 directory.
-}\if{html}{\out{<div class="r">}}\preformatted{ndir <- 5; cli_text("Found \{ndir\} director\{?y/ies\}.")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{ndir <- 5; cli_text("Found \{ndir\} director\{?y/ies\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 5 directories.
 }
 }
@@ -52,11 +52,11 @@ singular and plural forms can be given, separated with a forward slash:\if{html}
 
 For readability, it is better to use the \code{no()} helper function to
 include a count in a message. \code{no()} prints the word “no” if the count
-is zero, and prints the numeric count otherwise:\if{html}{\out{<div class="r">}}\preformatted{nfile <- 0; cli_text("Found \{no(nfile)\} file\{?s\}.")
+is zero, and prints the numeric count otherwise:\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 0; cli_text("Found \{no(nfile)\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found no files.
-}\if{html}{\out{<div class="r">}}\preformatted{nfile <- 1; cli_text("Found \{no(nfile)\} file\{?s\}.")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 1; cli_text("Found \{no(nfile)\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 1 file.
-}\if{html}{\out{<div class="r">}}\preformatted{nfile <- 2; cli_text("Found \{no(nfile)\} file\{?s\}.")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 2; cli_text("Found \{no(nfile)\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found 2 files.
 }
 }
@@ -65,10 +65,10 @@ is zero, and prints the numeric count otherwise:\if{html}{\out{<div class="r">}}
 
 With the auto-collapsing feature of cli it is easy to include a list of
 objects in a message. When cli interprets a character vector as a
-pluralization quantity, it takes the length of the vector:\if{html}{\out{<div class="r">}}\preformatted{pkgs <- "pkg1"
+pluralization quantity, it takes the length of the vector:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- "pkg1"
 cli_text("Will remove the \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1 package.
-}\if{html}{\out{<div class="r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Will remove the \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1, pkg2, and pkg3 packages.
 }
@@ -77,10 +77,10 @@ Note that the length is only used for non-numeric vectors (when
 \code{is.numeric(x)} return \code{FALSE}). If you want to use the length of a
 numeric vector, convert it to character via \code{as.character()}.
 
-You can combine collapsed vectors with “no”, like this:\if{html}{\out{<div class="r">}}\preformatted{pkgs <- character()
+You can combine collapsed vectors with “no”, like this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- character()
 cli_text("Will remove \{?no/the/the\} \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove no packages.
-}\if{html}{\out{<div class="r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
+}\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Will remove \{?no/the/the\} \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove the pkg1, pkg2, and pkg3 packages.
 }
@@ -93,14 +93,14 @@ for larger quantities.
 \subsection{Choosing the right quantity}{
 
 When the text contains multiple glue \code{{}} substitutions, the one right
-before the pluralization markup is used. For example:\if{html}{\out{<div class="r">}}\preformatted{nfiles <- 3; ndirs <- 1
+before the pluralization markup is used. For example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfiles <- 3; ndirs <- 1
 cli_text("Found \{nfiles\} file\{?s\} and \{ndirs\} director\{?y/ies\}")
 }\if{html}{\out{</div>}}\preformatted{#> Found 3 files and 1 directory
 }
 
 This is sometimes not the the correct one. You can explicitly specify
 the correct quantity using the \code{qty()} function. This sets that quantity
-without printing anything:\if{html}{\out{<div class="r">}}\preformatted{nupd <- 3; ntotal <- 10
+without printing anything:\if{html}{\out{<div class="sourceCode r">}}\preformatted{nupd <- 3; ntotal <- 10
 cli_text("\{nupd\}/\{ntotal\} \{qty(nupd)\} file\{?s\} \{?needs/need\} updates")
 }\if{html}{\out{</div>}}\preformatted{#> 3/10 files need updates
 }

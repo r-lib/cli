@@ -36,13 +36,18 @@ default_progress_style <- function() {
 
 progress_style <- function(x) {
   if (is.null(x)) return(x)
-  if (is_string(x)) return(builtin_progress_styles()[[x]])
+  if (is_string(x)) return(cli_progress_styles()[[x]])
   x
 }
 
+#' List of built-in cli progress styles
+#'
+#' @return A named list with sublists containing elements
+#' `complete`, `incomplete` and potentially `current`.
+#'
 #' @export
 
-builtin_progress_styles <- function() {
+cli_progress_styles <- function() {
   list(
     classic = list(
       complete = "#",

@@ -100,6 +100,35 @@ NULL
 
 # ------------------------------------------------------------------------
 
+#' cli progress bar demo
+#'
+#' Useful for experimenting with format strings and for documentation.
+#' It creates a progress bar, iterates it until it terminates and saves the
+#' progress updates.
+#'
+#' @param name Passed to [cli_progress_bar()].
+#' @param status Passed to [cli_progress_bar()].
+#' @param type Passed to [cli_progress_bar()].
+#' @param total Passed to [cli_progress_bar()].
+#' @param .envir Passed to [cli_progress_bar()].
+#' @param ... Passed to [cli_progress_bar()].
+#' @param at The number of progress units to show and capture the progress
+#'   bar at. If `NULL`, then a sequence of states is generated to show the
+#'   progress from beginning to end.
+#' @param show_after Delay to show the progress bar. Overrides the
+#'   `cli.progress_show_after` option.
+#' @param live Whether to show the progress bat on the screen, or just
+#'   return the recorded updates. Defaults to the value of the
+#'   `cli.progress_demo_live` options. If unset, then it is `TRUE` in
+#'   interactive sessions.
+#' @param delay Delay between progress bar updates.
+#' @param start Time to subtract from the start time, to simulate a
+#'   progress bar that takes longer to run.
+#'
+#' @return List with class `cli_progress_demo`, which has a print and a
+#' format method for prretty printing. The `lines` entry contains the
+#' output lines, each correcponding to one update.
+#'
 #' @export
 
 cli_progress_demo <- function(name = NULL, status = NULL,

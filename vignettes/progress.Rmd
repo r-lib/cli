@@ -72,8 +72,6 @@ The main goals of the progress bar API are:
 * Predictably small performance penalty. A very small constant penalty
   per iteration, and a reasonable penalty per second.
 
-# The R APIs
-
 cli has four sets of R functions to create and manage progress bars:
 
 * The tradional progress bar API: `cli_progress_bar()`,
@@ -85,7 +83,7 @@ cli has four sets of R functions to create and manage progress bars:
 * The `ticking()` function, primarily for `while` loops.
   This is currently experimental.
 
-## The traditional progress bar API
+# The traditional progress bar API
 
 Add a progress bar in three steps:
 
@@ -110,7 +108,7 @@ clean()
 The traditional API provides full control w.r.t when to create, update and
 terminate a progress bar.
 
-## The current progress bar
+# The current progress bar
 
 For conciseness, the progress bar functions refer to the _current progress
 bar_ by default. Every function has at most one current progress bar at
@@ -137,25 +135,30 @@ clean <- function() {
 clean()
 ```
 
-## Unknown total number of units
+# Unknown total number of units
 
 In some cases the total number of progress units is unknown, so simply
 omit them from `cli_progress_bar()` (or set them to `NA`). cli uses a
 different display when `total` is unknown:
 
+```{asciicast unknown-total-seed, include = FALSE, cache = FALSE}
+set.seed(1)
+```
+
 ```{asciicast unknown-total}
 walk_dirs <- function() {
   cli_progress_bar("Walking directories")
-  cli_progress_update(force = TRUE)
   while (TRUE) {
     if (runif(1) < 0.01) break
+    Sys.sleep(0.01)
     cli_progress_update()
   }
+  cli_progress_update(force = TRUE)
 }
 walk_dirs()
 ```
 
-## Quick loops
+# Quick loops
 
 By default, cli does not show progress bars that are terminated within two
 seconds after their creation. The end user can configure this limit
@@ -164,7 +167,7 @@ with the `cli.progress_show_after` global option.
 For example, in this document we set the limit to zero seconds, so progress
 bars are shown at their first update.
 
-## Progress bars for mapping functions: `tick_along()`
+# Progress bars for mapping functions: `tick_along()`
 
 `tick_along()` is currently experimental.
 
@@ -202,7 +205,7 @@ f()
 On older R versions it is equivalent to `seq_along()` and it does not
 create a progress bar.
 
-### `for` loops
+## `for` loops
 
 You can also use `tick_along()` in `for` loops, with the additional
 complication that if you use `break`, then you might need to terminate the
@@ -233,7 +236,7 @@ If the function containing the `for` loop returns after the loop, or
 you create another progress bar with `tick_along()` or `cli_progress_bar()`,
 then no explicit `cli_progress_done()` is needed.
 
-## Progress bars for `while` loops: `ticking()`
+# Progress bars for `while` loops: `ticking()`
 
 `ticking()` is experimental currently.
 
@@ -258,7 +261,7 @@ no other progress bars are active in the same function, before the loop.
 Otherwise `ticking()` will continue updating the existing progress bar,
 instead of creating a new one.
 
-## Simplified API
+# Simplified API
 
 Often you don't need the full power of the progress bar API, and only want
 to show a status message. The `cli_progress_message()` and
@@ -318,22 +321,23 @@ f()
 `cli_progress_step()` automatically handles errors, and styles the
 status message accordingly:
 
-```{asciicast step-error}
+```{asciicast step-error, R.options = list(asciicast_rows = 3)}
 f <- function() {
   cli_progress_step("First step, this will succeed")
   Sys.sleep(1)
   cli_progress_step("Second step, this will fail")
+  Sys.sleep(1)
   stop("Something is wrong here")
 }
 f()
 ```
 
-## Downloads
+# Downloads
 
-### Downloads with httr
+## Downloads with httr
 
 TODO
 
-### Downloads with curl
+## Downloads with curl
 
 TODO
