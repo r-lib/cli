@@ -11,6 +11,13 @@ test0 <- function() {
 
 #' @export
 
+test00 <- function(progress = FALSE) {
+  this <- "test0"
+  .Call(c_test00, progress)
+}
+
+#' @export
+
 test1 <- function() {
   this <- "test1"
   .Call(c_test1)

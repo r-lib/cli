@@ -13,6 +13,17 @@ SEXP test0() {
   return ScalarInteger(res);
 }
 
+SEXP test00(SEXP progress) {
+  int i;
+  int res = 0;
+  int progress_ = LOGICAL(progress)[0];
+  for (i = 0; i < 2000000000; i++) {
+    if (i % 10000 == 0 && progress_) cli_progress_set(R_NilValue, i);
+    res += i % 2;
+  }
+  return ScalarInteger(res);
+}
+
 SEXP test1() {
   int i;
   int res = 0;
@@ -78,6 +89,7 @@ SEXP testc() {
 static const R_CallMethodDef CallEntries[] = {
   CLEANCALL_METHOD_RECORD,
   { "test0", (DL_FUNC) test0, 0 },
+  { "test00", (DL_FUNC) test00, 1 },
   { "test1", (DL_FUNC) test1, 0 },
   { "test2", (DL_FUNC) test2, 0 },
   { "testx", (DL_FUNC) testx, 0 },
