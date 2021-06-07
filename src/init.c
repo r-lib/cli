@@ -39,16 +39,18 @@ void R_init_cli(DllInfo *dll) {
 
   cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
 
+  RCC(cli_progress_add);
   RCC(cli_progress_bar);
+  RCC(cli_progress_done);
+  RCC(cli_progress_init_timer);
+  RCC(cli_progress_num);
+  RCC(cli_progress_set);
+  RCC(cli_progress_set_clear);
+  RCC(cli_progress_set_estimate);
+  RCC(cli_progress_set_format);
   RCC(cli_progress_set_name);
   RCC(cli_progress_set_status);
   RCC(cli_progress_set_type);
-  RCC(cli_progress_set_format);
-  RCC(cli_progress_set_estimate);
-  RCC(cli_progress_set_clear);
-  RCC(cli_progress_set);
-  RCC(cli_progress_add);
-  RCC(cli_progress_done);
-  RCC(cli_progress_num);
+  RCC(cli_progress_update);
   RCC(cli_progress_sleep);
 }

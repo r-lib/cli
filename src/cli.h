@@ -8,19 +8,20 @@
 typedef volatile int vint;
 
 extern volatile int* cli_timer_flag;
+void cli_progress_add(SEXP bar, int inc);
 SEXP cli_progress_bar(vint **ptr, int total, SEXP config);
+void cli_progress_done(SEXP bar);
+void cli_progress_init_timer(vint **ptr);
+int cli_progress_num();
+void cli_progress_set(SEXP bar, int set);
+void cli_progress_set_clear(SEXP bar, int);
+void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate);
+void cli_progress_set_format(SEXP bar, const char *name);
 void cli_progress_set_name(SEXP bar, const char *name);
 void cli_progress_set_status(SEXP bar, const char *name);
 void cli_progress_set_type(SEXP bar, const char *name);
-void cli_progress_set_format(SEXP bar, const char *name);
-void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate);
-void cli_progress_set_clear(SEXP bar, int);
-void cli_progress_set(SEXP bar, int set);
-void cli_progress_add(SEXP bar, int inc);
-void cli_progress_done(SEXP bar);
 void cli_progress_sleep(int s, long ns);
-int cli_progress_num();
-void cli_progress_init_timer(vint **ptr);
+void cli_progress_update(SEXP bar, int set, int inc, int force);
 
 SEXP cli__progress_update(SEXP bar);
 void cli_init_altrep(DllInfo *dll);
