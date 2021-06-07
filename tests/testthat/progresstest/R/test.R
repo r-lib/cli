@@ -4,28 +4,25 @@ NULL
 
 #' @export
 
-test0 <- function() {
-  this <- "test0"
+test_baseline <- function() {
   .Call(c_test0)
 }
 
 #' @export
 
-test00 <- function(progress = FALSE) {
-  this <- "test0"
+test_modulo <- function(progress = FALSE) {
   .Call(c_test00, progress)
 }
 
 #' @export
 
-test1 <- function() {
-  this <- "test1"
+test_cli <- function() {
   .Call(c_test1)
 }
 
 #' @export
 
-test2 <- function() {
+test_cli_unroll <- function() {
   this <- "test2"
   .Call(c_test2)
 }
