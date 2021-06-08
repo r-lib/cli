@@ -75,10 +75,10 @@ SEXP progress_along_Duplicate(SEXP x, Rboolean deep) {
 }
 
 Rboolean progress_along_Inspect(SEXP x,
-                            int pre,
-                            int deep,
-                            int pvec,
-                            void (*inspect_subtree)(SEXP, int, int, int)) {
+                                int pre,
+                                int deep,
+                                int pvec,
+                                void (*inspect_subtree)(SEXP, int, int, int)) {
 
   Rprintf(" progress_along %s\n", type2char(TYPEOF(x)));
   return FALSE;

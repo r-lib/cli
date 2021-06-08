@@ -13,16 +13,16 @@ SEXP clic_unload() {
 static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
-  { "clic_start_thread", (DL_FUNC) clic_start_thread, 3 },
-  { "clic_stop_thread",  (DL_FUNC) clic_stop_thread,  0 },
-  { "clic_tick_reset",   (DL_FUNC) clic_tick_reset,   0 },
-  { "clic_tick_set",     (DL_FUNC) clic_tick_set,     2 },
-  { "clic_unload",       (DL_FUNC) clic_unload,       0 },
-  { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
-  { "clic_make_timer",   (DL_FUNC) clic_make_timer,   0 },
-  { "clic_update_due",   (DL_FUNC) clic_update_due,   0 },
+  { "clic_start_thread",   (DL_FUNC) clic_start_thread,   3 },
+  { "clic_stop_thread",    (DL_FUNC) clic_stop_thread,    0 },
+  { "clic_tick_reset",     (DL_FUNC) clic_tick_reset,     0 },
+  { "clic_tick_set",       (DL_FUNC) clic_tick_set,       2 },
+  { "clic_unload",         (DL_FUNC) clic_unload,         0 },
+  { "clic_get_time",       (DL_FUNC) clic_get_time,       0 },
+  { "clic_make_timer",     (DL_FUNC) clic_make_timer,     0 },
+  { "clic_update_due",     (DL_FUNC) clic_update_due,     0 },
 
-  { "clic_progress_along",   (DL_FUNC) clic_progress_along,   2 },
+  { "clic_progress_along", (DL_FUNC) clic_progress_along, 2 },
 
   { NULL, NULL, 0 }
 };
