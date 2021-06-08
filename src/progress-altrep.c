@@ -179,6 +179,7 @@ void cli_init_altrep(DllInfo *dll) {
   R_set_altlogical_Elt_method(cli_timer_t, cli_timer_Elt);
 
   cli__timer = R_new_altrep(cli_timer_t, R_NilValue, R_NilValue);
+  MARK_NOT_MUTABLE(cli__timer);
   R_PreserveObject(cli__timer);
 }
 
