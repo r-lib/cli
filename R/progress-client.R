@@ -59,13 +59,14 @@
 #'
 #' @seealso [cli_progress_message()] and [cli_progress_step()] for simpler
 #'   progress messages.
+#' @aliases __cli_update_due cli_tick_reset ccli_tick_reset
 #' @export
 #' @examplesIf cli:::should_run_progress_examples()
 #' clean <- function() {
 #'   cli_progress_bar("Cleaning data", total = 100)
 #'   for (i in 1:100) {
 #'     Sys.sleep(5/100)
-#'     if (should_tick) cli_progress_update()
+#'     cli_progress_update()
 #'   }
 #' }
 #' clean()
@@ -177,8 +178,8 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
   }
 
   now <- .Call(clic_get_time)
-  if (force || (should_tick && now > pb$show_after)) {
-    if (should_tick) cli_tick_reset()
+  if (force || (`__cli_update_due` && now > pb$show_after)) {
+    if (`__cli_update_due`) cli_tick_reset()
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)

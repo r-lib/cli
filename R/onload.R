@@ -56,7 +56,7 @@ task_callback <- NULL
     clienv$speed_time
   )
 
-  should_tick <<- .Call(clic_make_timer);
+  `__cli_update_due` <<- .Call(clic_make_timer);
 
   ccli_tick_reset <<- clic_tick_reset
 

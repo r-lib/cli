@@ -2,6 +2,9 @@
 % Please edit documentation in R/progress-client.R
 \name{cli_progress_bar}
 \alias{cli_progress_bar}
+\alias{__cli_update_due}
+\alias{cli_tick_reset}
+\alias{ccli_tick_reset}
 \alias{cli_progress_update}
 \alias{cli_progress_done}
 \title{cli progress bars}
@@ -141,7 +144,7 @@ clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {
     Sys.sleep(5/100)
-    if (should_tick) cli_progress_update()
+    cli_progress_update()
   }
 }
 clean()
