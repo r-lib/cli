@@ -121,6 +121,11 @@ cli_progress_bar <- function(name = NULL,
     defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
   }
 
+  handlers <- cli_progress_select_handlers()
+  for (h in handlers) {
+    if ("create" %in% names(h)) h$create(bar, .envir = .envir)
+  }
+
   invisible(id)
 }
 
@@ -188,17 +193,16 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
     opt <- options(cli__pb = pb)
     on.exit(options(opt), add = TRUE)
 
-    if (is.null(pb$statusbar)) {
-      pb$statusbar <- cli_status(
-        pb$format,
-        msg_done = pb$format_done %||% pb$format,
-        msg_failed = pb$format_failed %||% pb$format,
-        .auto_close = FALSE,
-        .envir = .envir,
-
-      )
+    handlers <- cli_progress_select_handlers()
+    if (is.null(pb$added)) {
+      pb$added <- TRUE
+      for (h in handlers) {
+        if ("add" %in% names(h)) h$add(pb, .envir = .envir)
+      }
     } else {
-      cli_status_update(id = pb$statusbar, pb$format, .envir = .envir)
+      for (h in handlers) {
+        if ("set" %in% names(h)) h$set(pb, .envir = .envir)
+      }
     }
   }
 
@@ -226,19 +230,10 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
   pb <- clienv$progress[[id]]
   if (is.null(pb)) return(invisible(TRUE))
 
-  if (!is.null(pb$statusbar)) {
-    if (pb$clear) {
-      cli_status_clear(pb$statusbar, result = "clear", .envir = .envir)
-    } else {
-      opt <- options(cli__pb = pb)
-      on.exit(options(opt), add = TRUE)
-      cli_status_clear(
-        pb$statusbar,
-        result = result,
-        msg_done = pb$format_done,
-        msg_failed = pb$format_failed,
-        .envir = .envir
-      )
+  handlers <- cli_progress_select_handlers()
+  for (h in handlers) {
+    if ("complete" %in% names(h)) {
+      h$complete(pb, .envir = .envir, result = result)
     }
   }
 

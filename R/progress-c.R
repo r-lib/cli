@@ -15,14 +15,17 @@ progress_c_update <- function(pb, auto_done = TRUE) {
     return(NULL)
   }
 
-  opt <- options(cli__pb = pb)
-  on.exit(options(opt), add = TRUE)
-
-  if (is.null(pb$statusbar)) {
-    pb$statusbar <- cli_status(pb$format, .auto_close = FALSE, .envir = caller)
+  handlers <- cli_progress_select_handlers()
+  if (is.null(pb$added)) {
+    pb$added <- TRUE
+    for (h in handlers) {
+      if ("add" %in% names(h)) h$add(pb, .envir = caller)
+    }
     if (!identical(caller, .GlobalEnv)) defer(progress_c_done(pb), envir = caller)
   } else {
-    cli_status_update(id = pb$statusbar, pb$format, .envir = caller)
+    for (h in handlers) {
+      if ("set" %in% names(h)) h$set(pb, .envir = caller)
+    }
   }
 
   NULL
@@ -30,17 +33,12 @@ progress_c_update <- function(pb, auto_done = TRUE) {
 
 progress_c_done <- function(pb, caller = NULL) {
   caller <- caller %||% pb$caller %||% sys.frame(sys.nframe() - 1L)
-  if (!is.null(pb$statusbar)) {
-    if (pb$clear) {
-      cli_status_clear(pb$statusbar, result = "clear")
-    } else {
-      if (!is.na(pb$total)) pb$current <- pb$total
-      opt <- options(cli__pb = pb)
-      on.exit(options(opt), add = TRUE)
-      cli_status_update(pb$statusbar, pb$format, .envir = caller)
-      cli_status_clear(pb$statusbar, pb$format, result = "done", .envir = caller)
+
+  handlers <- cli_progress_select_handlers()
+  for (h in handlers) {
+    if ("complete" %in% names(h)) {
+      h$complete(pb, .envir = .envir, result = "done")
     }
-    pb$statusbar <- NULL
   }
 
   if (!is.null(pb$id)) clienv$progress[[pb$id]] <- NULL
