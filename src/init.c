@@ -20,6 +20,7 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_unload",       (DL_FUNC) clic_unload,       0 },
   { "clic_get_time",     (DL_FUNC) clic_get_time,     0 },
   { "clic_make_timer",   (DL_FUNC) clic_make_timer,   0 },
+  { "clic_update_due",   (DL_FUNC) clic_update_due,   0 },
 
   { "clic_progress_along",   (DL_FUNC) clic_progress_along,   2 },
 

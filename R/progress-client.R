@@ -175,8 +175,9 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
   }
 
   now <- .Call(clic_get_time)
-  if (force || (`__cli_update_due` && now > pb$show_after)) {
-    if (`__cli_update_due`) cli_tick_reset()
+  upd <- .Call(clic_update_due)
+  if (force || (upd && now > pb$show_after)) {
+    if (upd) cli_tick_reset()
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)

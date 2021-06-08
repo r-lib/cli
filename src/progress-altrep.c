@@ -40,6 +40,10 @@ SEXP clic_make_timer() {
   return cli__timer;
 }
 
+SEXP clic_update_due() {
+  return cli__timer;
+}
+
 R_xlen_t cli_timer_Length(SEXP x) {
   return 1;
 }
