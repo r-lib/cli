@@ -55,11 +55,11 @@ ben_st2 <- bench::mark(
 ben_st2
 ```
 
-## `tick_along()`
+## `cli_progress_along()`
 
 ```{r tick-along}
 seq <- 1:100000
-ta <- tick_along(seq)
+ta <- cli_progress_along(seq)
 bench::mark(seq[[1]], ta[[1]])
 ```
 
@@ -84,7 +84,7 @@ With progress bars:
 fp <- function(n = 1e5) {
   x <- 0
   seq <- 1:n
-  for (i in tick_along(seq)) {
+  for (i in cli_progress_along(seq)) {
     x <- x + seq[[i]] %% 2
   }
   x
@@ -149,7 +149,7 @@ With progress bars:
 ```{r tick-along-map-f}
 fp <- function(n = 1e5) {
   seq <- 1:n
-  ret <- lapply(tick_along(seq), function(i) {
+  ret <- lapply(cli_progress_along(seq), function(i) {
     seq[[i]] %% 2
   })
   invisible(ret)
@@ -201,7 +201,7 @@ With progress bars:
 ```{r tick-along-purrr-f}
 fp <- function(n = 1e5) {
   seq <- 1:n
-  ret <- purrr::map(tick_along(seq), function(i) {
+  ret <- purrr::map(cli_progress_along(seq), function(i) {
     seq[[i]] %% 2
   })
   invisible(ret)

@@ -72,17 +72,6 @@ The main goals of the progress bar API are:
 * Predictably small performance penalty. A very small constant penalty
   per iteration, and a reasonable penalty per second.
 
-cli has four sets of R functions to create and manage progress bars:
-
-* The tradional progress bar API: `cli_progress_bar()`,
-  `cli_progress_update()`, `cli_progress_done()`.
-* The `cli_progress_message()` and `cli_progress_step()` progress bar
-  wrappers for a simplified display.
-* The `tick_along()` function for iteration.
-  This is currently experimental.
-* The `ticking()` function, primarily for `while` loops.
-  This is currently experimental.
-
 # The traditional progress bar API
 
 Add a progress bar in three steps:
@@ -167,31 +156,31 @@ with the `cli.progress_show_after` global option.
 For example, in this document we set the limit to zero seconds, so progress
 bars are shown at their first update.
 
-# Progress bars for mapping functions: `tick_along()`
+# Progress bars for mapping functions: `cli_progress_along()`
 
-`tick_along()` is currently experimental.
+`cli_progress_along()` is currently experimental.
 
 To add a progress bar to a call to `lapply()` or another mapping function,
-wrap the input sequence into `tick_along()`:
+wrap the input sequence into `cli_progress_along()`:
 
 ```r
-lapply(tick_along(X), fun)
+lapply(cli_progress_along(X), fun)
 ```
 
-`tick_along()` works similarly to `seq_along()`, it returns an index vector.
-If you use `tick_along()`, then `lapply()` will pass the _indices_
+`cli_progress_along()` works similarly to `seq_along()`, it returns an index vector.
+If you use `cli_progress_along()`, then `lapply()` will pass the _indices_
 of the elements in `X` to `fun`, instead of the elements themselves.
 
-`tick_along()` expects that the index vector will be used only once,
+`cli_progress_along()` expects that the index vector will be used only once,
 from beginning to end. It is best to never assign the return value of
-`tick_along()` to a variable.
+`cli_progress_along()` to a variable.
 
 An example:
 
 ```{asciicast, tickalong}
 f <- function() {
   rawabc <- lapply(
-    tick_along(letters),
+    cli_progress_along(letters),
     function(i) {
       charToRaw(letters[i])
       Sys.sleep(0.5)
@@ -201,18 +190,18 @@ f <- function() {
 f()
 ```
 
-`tick_along()` uses ALTREP, so it only works from R 3.5.0 and later.
+`cli_progress_along()` uses ALTREP, so it only works from R 3.5.0 and later.
 On older R versions it is equivalent to `seq_along()` and it does not
 create a progress bar.
 
 ## `for` loops
 
-You can also use `tick_along()` in `for` loops, with the additional
+You can also use `cli_progress_along()` in `for` loops, with the additional
 complication that if you use `break`, then you might need to terminate the
 progress bar explicitly:
 
 ```r
-for (i in tick_along(seq)) {
+for (i in cli_progress_along(seq)) {
   ...
   if (cond) cli_progress_done() && break
   ...
@@ -224,7 +213,7 @@ for (i in tick_along(seq)) {
 Alternatively, you can terminate the progress bar right after loop:
 
 ```r
-for (i in tick_along(seq)) {
+for (i in cli_progress_along(seq)) {
   ...
   if (cond) break
   ...
@@ -233,33 +222,8 @@ cli_progress_done()
 ```
 
 If the function containing the `for` loop returns after the loop, or
-you create another progress bar with `tick_along()` or `cli_progress_bar()`,
+you create another progress bar with `cli_progress_along()` or `cli_progress_bar()`,
 then no explicit `cli_progress_done()` is needed.
-
-# Progress bars for `while` loops: `ticking()`
-
-`ticking()` is experimental currently.
-
-The `ticking()` function lets you add progress bars to `while` loops.
-It creates the progress bar on the first call, and updates it on each
-subsequent call, until the loop condition evaluates to `FALSE`, which
-terminates the progress bar.
-
-Similarly to `tick_along()`, if you `break` out of the `while` loop, you
-might have to terminate the progress bar manually:
-
-```r
-while (ticking(cond)) {
-  ...
-  if (exit_cond) cli_progress_done() && break
-  ...
-}
-```
-
-When you add a progress bar to a `while` loop, you need to make sure that
-no other progress bars are active in the same function, before the loop.
-Otherwise `ticking()` will continue updating the existing progress bar,
-instead of creating a new one.
 
 # Simplified API
 

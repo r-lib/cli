@@ -4,18 +4,18 @@
 #' @description
 #' Note that this function is currently experimental!
 #'
-#' Use `tick_along()` in a mapping function or in a for loop, to add a
+#' Use `cli_progress_along()` in a mapping function or in a for loop, to add a
 #' progress bar. It uses [cli_progress_bar()] internally.
 #'
 #' @details
 #' Usage:
 #'
 #' ```r
-#' lapply(tick_along(X), function(i) ...)
+#' lapply(cli_progress_along(X), function(i) ...)
 #' ```
 #'
 #' ```r
-#' for (i in tick_along(seq)) {
+#' for (i in cli_progress_along(seq)) {
 #'   ...
 #' }
 #' ```
@@ -25,7 +25,7 @@
 #' or right after the loop:
 #'
 #' ```r
-#' for (i in tick_along(seq)) {
+#' for (i in cli_progress_along(seq)) {
 #'   ...
 #'   if (cond) cli_progress_done() && break
 #'   ...
@@ -43,11 +43,10 @@
 #' updates as you iterate over it.
 #'
 #' @seealso [cli_progress_bar()] and the traditional progress bar API.
-#' [ticking()] to add a progress bar to a `while` loop.
 #'
 #' @export
 
-tick_along <- function(x,
+cli_progress_along <- function(x,
                        name = NULL,
                        total = length(x),
                        ...,
@@ -59,5 +58,5 @@ tick_along <- function(x,
   id <- cli_progress_bar(name = name, total = total, ..., .envir = .envir)
   sax <- seq_along(x)
   clienv$progress[[id]]$caller <- .envir
-  .Call(clic_tick_along, sax, clienv$progress[[id]])
+  .Call(clic_progress_along, sax, clienv$progress[[id]])
 }

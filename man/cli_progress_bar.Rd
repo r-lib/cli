@@ -5,6 +5,7 @@
 \alias{__cli_update_due}
 \alias{cli_tick_reset}
 \alias{ccli_tick_reset}
+\alias{ticking}
 \alias{cli_progress_update}
 \alias{cli_progress_done}
 \title{cli progress bars}
@@ -123,9 +124,6 @@ invisibly.
 This is the reference manual of the three functions that create,
 update and terminate progress bars. For a tutorial see the
 \href{https://cli.r-lib.org/articles/pluralization.html}{cli progress bars}.
-
-See \code{\link[=tick_along]{tick_along()}} for an API for mapping functions and \code{for} loops.
-See \code{\link[=ticking]{ticking()}} for an API for \code{while} loops.
 
 \code{cli_progress_bar()} creates a progress bar.
 

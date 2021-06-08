@@ -6,9 +6,6 @@
 #' update and terminate progress bars. For a tutorial see the
 #' [cli progress bars](https://cli.r-lib.org/articles/pluralization.html).
 #'
-#' See [tick_along()] for an API for mapping functions and `for` loops.
-#' See [ticking()] for an API for `while` loops.
-#'
 #' `cli_progress_bar()` creates a progress bar.
 #'
 #' @param name This is typically used as a label, and should be short,
@@ -59,7 +56,7 @@
 #'
 #' @seealso [cli_progress_message()] and [cli_progress_step()] for simpler
 #'   progress messages.
-#' @aliases __cli_update_due cli_tick_reset ccli_tick_reset
+#' @aliases __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @export
 #' @examplesIf cli:::should_run_progress_examples()
 #' clean <- function() {
