@@ -171,7 +171,8 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
   if (!is.null(set)) {
     pb$current <- set
   } else {
-    pb$current <- pb$current + (inc %||% 1L)
+    inc <- inc %||% 1L
+    pb$current <- pb$current + inc
   }
 
   if (!is.na(pb$total) && pb$current == pb$total) {
@@ -199,10 +200,10 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
       for (h in handlers) {
         if ("add" %in% names(h)) h$add(pb, .envir = .envir)
       }
-    } else {
-      for (h in handlers) {
-        if ("set" %in% names(h)) h$set(pb, .envir = .envir)
-      }
+    }
+
+    for (h in handlers) {
+      if ("set" %in% names(h)) h$set(pb, .envir = .envir)
     }
   }
 

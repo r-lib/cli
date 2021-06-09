@@ -44,7 +44,7 @@ progress_altrep_done <- function(pb) {
     handlers <- cli_progress_select_handlers()
     for (h in handlers) {
       if ("complete" %in% names(h)) {
-        h$complete(pb, .envir = .envir, result = "done")
+        h$complete(pb, .envir = caller, result = "done")
       }
     }
 
