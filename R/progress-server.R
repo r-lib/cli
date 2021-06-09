@@ -198,10 +198,33 @@ builtin_handler_rstudio <- list(
 
 # ------------------------------------------------------------------------
 
+builtin_handler_shiny <- list(
+  add = function(bar, .envir) {
+    bar$shiny_progress <- shiny::Progress$new(
+      shiny::getDefaultReactiveDomain(),
+      min = 0,
+      max = bar$total
+    )
+    bar$shiny_progress$set(message = bar$name %||% "", detail = bar$status %||% "")
+  },
+
+  set = function(bar, .envir) {
+    bar$shiny_progress$set(value = bar$current)
+  },
+
+  complete = function(bar, .envir, results) {
+    if (!is.null(bar$shiny_progress)) bar$shiny_progress$close()
+    bar$shiny_progress <- NULL
+  }
+)
+
+# ------------------------------------------------------------------------
+
 builtin_handlers <- list(
   cli = builtin_handler_cli,
   logger = builtin_handler_logger,
   progressr = builtin_handler_progressr,
   rstudio = builtin_handler_rstudio,
-  say = builtin_handler_say
+  say = builtin_handler_say,
+  shiny = builtin_handler_shiny
 )
