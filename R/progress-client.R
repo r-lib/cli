@@ -121,6 +121,9 @@ cli_progress_bar <- function(name = NULL,
     defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
   }
 
+  opt <- options(cli__pb = bar)
+  on.exit(options(opt), add = TRUE)
+
   bar$handlers <- cli_progress_select_handlers(bar, .envir)
   for (h in bar$handlers) {
     if ("create" %in% names(h)) h$create(bar, .envir = .envir)
@@ -230,6 +233,9 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
   pb <- clienv$progress[[id]]
   if (is.null(pb)) return(invisible(TRUE))
 
+  opt <- options(cli__pb = pb)
+  on.exit(options(opt), add = TRUE)
+
   for (h in pb$handlers) {
     if ("complete" %in% names(h)) {
       h$complete(pb, .envir = .envir, result = result)
@@ -241,6 +247,40 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
 
   invisible(TRUE)
 }
+
+#' Add text output to a progress bar
+#'
+#' The text is calculated via [cli_text()], so all cli features can be
+#' used here, including progress variables.
+#'
+#' The text is passed to the progress handler(s), that may or may not be
+#' able to print it.
+#'
+#' @param text Text to output. It is formatted via [cli_text()].
+#' @param id Progress bar id. The default is the current progress bar.
+#' @param .envir Environment to use for glue interpolation of `text`.
+#' @return `TRUE`, always.
+#'
+#' @export
+
+cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
+  envkey <- format(.envir)
+  id <- id %||% clienv$progress_ids[[envkey]]
+  if (is.null(id)) return(invisible(TRUE))
+  pb <- clienv$progress[[id]]
+  if (is.null(pb)) return(invisible(TRUE))
+
+  txt <- fmt(cli_text(text, .envir = .envir))
+  for (h in pb$handlers) {
+    if ("output" %in% names(h)) {
+      h$output(pb, .envir = .envir, text = txt)
+    }
+  }
+
+  invisible(TRUE)
+}
+
+# ------------------------------------------------------------------------
 
 #' Simplified cli progress messages
 #'
@@ -283,6 +323,8 @@ cli_progress_message <- function(msg,
 
   invisible(id)
 }
+
+# ------------------------------------------------------------------------
 
 #' Simplified cli progress messages, with styling
 #'

@@ -84,8 +84,6 @@ cli_progress_select_handlers <- function(bar, .envir) {
 
 builtin_handler_cli <- list(
   add = function(bar, .envir) {
-    opt <- options(cli__pb = bar)
-    on.exit(options(opt), add = TRUE)
     bar$cli_statusbar <- cli_status(
       bar$format,
       msg_done = bar$format_done %||% bar$format,
@@ -96,20 +94,14 @@ builtin_handler_cli <- list(
   },
 
   set = function(bar, .envir) {
-    opt <- options(cli__pb = bar)
-    on.exit(options(opt), add = TRUE)
     cli_status_update(id = bar$cli_statusbar, bar$format, .envir = .envir)
   },
 
   complete = function(bar, .envir, result) {
-    opt <- options(cli__pb = bar)
-    on.exit(options(opt), add = TRUE)
     if (isTRUE(bar$added)) {
       if (bar$clear) {
         cli_status_clear(bar$cli_statusbar, result = "clear", .envir = .envir)
       } else {
-        opt <- options(cli__pb = bar)
-        on.exit(options(opt), add = TRUE)
         cli_status_clear(
           bar$cli_statusbar,
           result = result,
@@ -120,6 +112,10 @@ builtin_handler_cli <- list(
       }
     }
     bar$cli_statusbar <- TRUE
+  },
+
+  output = function(bar, .envir, text) {
+    cli_verbatim(text)
   }
 )
 
@@ -152,6 +148,12 @@ builtin_handler_progressr <- list(
     if (!is.null(bar$progressr_progressor) && amount > 0) {
       bar$progressr_progressor(amount = amount, type = "finish")
     }
+  },
+
+  output = function(bar, .envir, text) {
+    if (!is.null(bar$progressr_progressor)) {
+      bar$progressr_progressor(message = text, class = "sticky", amount = 0)
+    }
   }
 )
 
@@ -177,6 +179,10 @@ builtin_handler_logger <- list(
 
   complete = function(bar, .envir, result) {
     logger_out(bar, "terminated")
+  },
+
+  output = function(bar, .envir, text) {
+    logger_out(bar, text)
   }
 )
 
@@ -251,8 +257,6 @@ builtin_handler_rstudio <- list(
         bar$rstudio_status <- bar$status
       }
     } else {
-      opt <- options(cli__pb = bar)
-      on.exit(options(opt), add = TRUE)
       status <- fmt(
         cli_text(bar$format),
         collapse = TRUE,
@@ -266,6 +270,10 @@ builtin_handler_rstudio <- list(
     if (!is.null(bar$rstudio_id)) {
       rstudioapi::jobRemove(bar$rstudio_id)
     }
+  },
+
+  output = function(bar, .envir, text) {
+    rstudioapi::jobAddOutput(bar$rstudio_id, text)
   }
 )
 
@@ -293,6 +301,8 @@ builtin_handler_shiny <- list(
     if (!is.null(bar$shiny_progress)) bar$shiny_progress$close()
     bar$shiny_progress <- NULL
   }
+
+  # TODO: can we do anything with `output`?
 )
 
 # ------------------------------------------------------------------------
