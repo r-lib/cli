@@ -93,8 +93,8 @@ cli_progress_bar <- function(name = NULL,
   bar$total <- total
   bar$show_after <- start + getOption("cli.progress_show_after", 2)
   bar$format <- format
-  bar$format_done <- format_done
-  bar$format_failed <- format_failed
+  bar$format_done <- format_done %||% format
+  bar$format_failed <- format_failed %||% format
   bar$clear <- clear
   bar$envkey <- if (current) envkey else NULL
   bar$current <- 0L
@@ -181,9 +181,9 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
     pb$tick <- pb$tick + 1L
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
+      pb$format_done <- pb$format_done %||% pb$format
+      pb$format_failed <- pb$format_failed %||% pb$format
     }
-    pb$format_done <- pb$format_done %||% pb$format
-    pb$format_failed <- pb$format_failed %||% pb$format
 
     opt <- options(cli__pb = pb)
     on.exit(options(opt), add = TRUE)
