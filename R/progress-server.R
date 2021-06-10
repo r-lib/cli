@@ -1,6 +1,65 @@
 
 # ------------------------------------------------------------------------
 
+#' cli progress handlers
+#'
+#' The progress handler(s) to use can be selected with global options.
+#'
+#' There are three options that specify which handlers will be selected,
+#' but most of the time you only need to use one of them. You can set these
+#' options to a character vector, the names of the built-in cli handlers you
+#' want to use:
+#'
+#' * If `cli.progress_handlers_only` is set, then these handlers are used,
+#'   without considering others and without checking if they are able to
+#'   handle a progress bar. This option is mainly intended for testing
+#'   purposes.
+#' * The handlers named in `cli.progress_handlers` are checked if they are
+#'   able to handle the progress bar, and from the ones that are, the first
+#'   one is selected. This is usually the option that the end use would want
+#'   to set.
+#' * The handlers named in `cli.progress_handlers_force` are always appended
+#'   to the ones selected via `cli.progress_handlers`. This option is useful
+#'   to add an additional handler, e.g. a logger that writes to a file.
+#'
+#' # The built-in progress handlers
+#'
+#' ### `cli`
+#'
+#' Use cli's internal status bar, the last line of the screen, to show the
+#' progress bar. This handler is always able to handle all progress bars.
+#'
+#' ### `logger`
+#'
+#' Log progress updates to the screeen, with one line for each update, with
+#' time stamps. This handler is always able to handle all progress bars.
+#'
+#' ### `progressr`
+#'
+#' Use the progressr package to create progress bars. This handler is
+#' always able to handle all progress bars. (The progressr package needs
+#' to be installed.)
+#'
+#' ### `rstudio`
+#'
+#' Use RStudio's job panel to show the progress bars. This handler is
+#' available at the RStudio console, in recent versions of RStudio.
+#'
+#' ### `say`
+#'
+#' Use the macOS command line `say` command to announce progress events
+#' in speech. Set the `cli.progress_say_frequency` option to set the
+#' minimum delay between `say` invocations, the default is three seconds.
+#' This handler is available on macOS, if the `say` command is on the path.
+#'
+#' ### `shiny`
+#'
+#' Use shiny's progress bars. This handler is available if a shiny app is
+#' running.
+#'
+#' @return `cli_progress_builtin_handlers()` returns the names of the
+#' currently supported progress handlers.
+#'
 #' @export
 
 cli_progress_builtin_handlers <- function() {
