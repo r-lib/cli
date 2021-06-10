@@ -410,7 +410,7 @@ pb__default_format <- function(type, total) {
       if (!is.null(opt)) return(opt)
       paste0(
         "{cli::pb_spin} {cli::pb_name}{cli::pb_status}| ",
-        "{cli::pb_current_bytes}/{cli::pb_total_bytes} ETA: {cli::pb_eta}"
+        "{cli::pb_current_bytes}/{cli::pb_total_bytes} {cli::pb_eta_str}"
       )
     } else {
       opt <- getOption("cli.progress_format_download_nototal") %||%

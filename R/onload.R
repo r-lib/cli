@@ -105,6 +105,7 @@ task_callback <- NULL
   makeActiveBinding("pb_elapsed_raw",    cli__pb_elapsed_raw,   pkgenv)
   makeActiveBinding("pb_eta",            cli__pb_eta,           pkgenv)
   makeActiveBinding("pb_eta_raw",        cli__pb_eta_raw,       pkgenv)
+  makeActiveBinding("pb_eta_str",        cli__pb_eta_str,       pkgenv)
   makeActiveBinding("pb_id",             cli__pb_id,            pkgenv)
   makeActiveBinding("pb_name",           cli__pb_name,          pkgenv)
   makeActiveBinding("pb_percent",        cli__pb_percent,       pkgenv)

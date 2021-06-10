@@ -28,6 +28,10 @@
 #' * `pb_eta_raw` is the estimated time until the end of the progress
 #' bar, in seconds.
 #'
+#' * `pb_eta_str` is the estimated time until the end of the progress bar.
+#' It includes the `"ETA:"` prefix. It is only shown if the time can be
+#' estimated, otherwise it is the empty string.
+#'
 #' * `pb_id` is the id of the progress bar. The id has the format
 #' `cli-<pid>-<counter>` where `<pid>` is the process id, and
 #' `<counter>` is an integer counter that is incremented every time
@@ -281,6 +285,12 @@ cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
   if (pb$current == 0L) return(NA_real_)
   elapsed <- (.Call(clic_get_time) - pb$start) * clienv$speed_time
   as.difftime(elapsed * (pb$total / pb$current - 1.0), units = "secs")
+}
+
+cli__pb_eta_str <- function(pb = getOption("cli__pb")) {
+  if (is.null(pb)) return("")
+  eta <- cli__pb_eta(pb)
+  if (eta != "?") paste0("ETA: ", eta) else ""
 }
 
 cli__pb_id <- function(pb = getOption("cli__pb")) {
