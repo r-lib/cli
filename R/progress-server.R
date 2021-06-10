@@ -63,7 +63,7 @@
 #' @export
 
 cli_progress_builtin_handlers <- function() {
-  names(builtin_handlers)
+  names(builtin_handlers())
 }
 
 cli_progress_select_handlers <- function(bar, .envir) {
@@ -71,13 +71,14 @@ cli_progress_select_handlers <- function(bar, .envir) {
   frc <- getOption("cli.progress_handlers_force")
   onl <- getOption("cli.progress_handlers_only")
 
-  if (!is.null(onl)) return(builtin_handlers[onl])
+  bin <- builtin_handlers()
+  if (!is.null(onl)) return(bin[onl])
 
-  hnd_imp <- builtin_handlers[hnd]
+  hnd_imp <- bin[hnd]
   hnd_able <- Filter(function(h) is.null(h$able) || h$able(bar, .envir), hnd_imp)
   if (length(hnd_able) > 1) hnd_able <- hnd_able[1]
 
-  c(hnd_able, builtin_handlers[frc])
+  c(hnd_able, bin[frc])
 }
 
 # ------------------------------------------------------------------------
@@ -307,11 +308,13 @@ builtin_handler_shiny <- list(
 
 # ------------------------------------------------------------------------
 
-builtin_handlers <- list(
-  cli = builtin_handler_cli,
-  logger = builtin_handler_logger,
-  progressr = builtin_handler_progressr,
-  rstudio = builtin_handler_rstudio,
-  say = builtin_handler_say,
-  shiny = builtin_handler_shiny
-)
+builtin_handlers <- function() {
+  list(
+    cli = builtin_handler_cli,
+    logger = builtin_handler_logger,
+    progressr = builtin_handler_progressr,
+    rstudio = builtin_handler_rstudio,
+    say = builtin_handler_say,
+    shiny = builtin_handler_shiny
+  )
+}
