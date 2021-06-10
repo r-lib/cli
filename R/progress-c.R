@@ -15,7 +15,7 @@ progress_c_update <- function(pb, auto_done = TRUE) {
     return(NULL)
   }
 
-  handlers <- cli_progress_select_handlers()
+  handlers <- cli_progress_select_handlers(pb, caller)
   if (is.null(pb$added)) {
     pb$added <- TRUE
     for (h in handlers) {

@@ -7,15 +7,18 @@ cli_progress_builtin_handlers <- function() {
   names(builtin_handlers)
 }
 
-cli_progress_select_handlers <- function() {
-  opt <- getOption("cli.progress_handlers")
-  if (is.null(opt)) {
-    list(builtin_handler_cli)
-  } else if (is.character(opt)) {
-    builtin_handlers[opt]
-  } else {
-    stop("`cli.progress_handlers` option must be a character vector")
-  }
+cli_progress_select_handlers <- function(bar, .envir) {
+  hnd <- getOption("cli.progress_handlers", c("shiny", "cli"))
+  frc <- getOption("cli.progress_handlers_force")
+  onl <- getOption("cli.progress_handlers_only")
+
+  if (!is.null(onl)) return(builtin_handlers[onl])
+
+  hnd_imp <- builtin_handlers[hnd]
+  hnd_able <- Filter(function(h) is.null(h$able) || h$able(bar, .envir), hnd_imp)
+  if (length(hnd_able) > 1) hnd_able <- hnd_able[1]
+
+  c(hnd_able, builtin_handlers[frc])
 }
 
 # ------------------------------------------------------------------------
@@ -135,6 +138,10 @@ say_update <- function(bar) {
 }
 
 builtin_handler_say <- list(
+  able = function(bar, .envir) {
+    Sys.info()[["sysname"]] == "Darwin" && Sys.which("say") != ""
+  },
+
   add = function(bar, .envir) {
     ## Nothing to do here
   },
@@ -154,6 +161,13 @@ builtin_handler_say <- list(
 # ------------------------------------------------------------------------
 
 builtin_handler_rstudio <- list(
+  able = function(bar, .envir) {
+    tryCatch(
+      .Platform$GUI == "Rstudio" && rstudioapi::isAvailable(),
+      error = function(err) FALSE
+    )
+  },
+
   add = function(bar, .envir) {
     total <- if (is.na(bar$total)) 0L else as.integer(bar$total)
     bar$status <- bar$status %||% ""
@@ -199,6 +213,10 @@ builtin_handler_rstudio <- list(
 # ------------------------------------------------------------------------
 
 builtin_handler_shiny <- list(
+  able = function(bar, .envir) {
+    "shiny" %in% loadedNamespaces() && shiny::isRunning()
+  },
+
   add = function(bar, .envir) {
     bar$shiny_progress <- shiny::Progress$new(
       shiny::getDefaultReactiveDomain(),

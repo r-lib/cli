@@ -121,7 +121,7 @@ cli_progress_bar <- function(name = NULL,
     defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
   }
 
-  bar$handlers <- cli_progress_select_handlers()
+  bar$handlers <- cli_progress_select_handlers(bar, .envir)
   for (h in bar$handlers) {
     if ("create" %in% names(h)) h$create(bar, .envir = .envir)
   }
