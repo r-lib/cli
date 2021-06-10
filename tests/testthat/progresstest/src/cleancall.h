@@ -4,6 +4,10 @@
 #include <Rversion.h>
 #include <R_ext/Rdynload.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // --------------------------------------------------------------------
 // Internals
 // --------------------------------------------------------------------
@@ -40,5 +44,9 @@ SEXP r_with_cleanup_context(SEXP (*fn)(void* data), void* data);
 void r_call_on_exit(void (*fn)(void* data), void* data);
 void r_call_on_early_exit(void (*fn)(void* data), void* data);
 int  r_cleancall_is_active();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

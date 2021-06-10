@@ -4,6 +4,10 @@
 #include <R_ext/Rdynload.h>
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ----------------------------------------------------------------------
 // Public API
 // ----------------------------------------------------------------------
@@ -433,5 +437,9 @@ static R_INLINE void cli_progress_update(SEXP bar,
   }
   ptr(bar, inc, set, force);
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
