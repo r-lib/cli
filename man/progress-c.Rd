@@ -114,23 +114,6 @@ one.
 }
 }
 
-\subsection{\code{cli_progress_set_estimate()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate);
-}\if{html}{\out{</div>}}
-
-This function sets the estimate for the progress bar, and also whether
-cli should try to calculate an estimate.
-\itemize{
-\item \code{bar}: progress bar object.
-\item \code{estimate} estimate for the remainder of the progress bar, in seconds.
-It is ignored if negative.
-\item \code{auto_estimate}: whether cli (or another progress bar backend) should
-try to calculate an ETA estimate. It is ignored if negative.
-}
-
-Note: these parameters are not used currently, so calling this function
-has no effect.
-}
-
 \subsection{\code{cli_progress_set_format()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_format(SEXP bar, const char *format, ...);
 }\if{html}{\out{</div>}}
 

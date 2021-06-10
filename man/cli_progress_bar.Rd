@@ -18,8 +18,6 @@ cli_progress_bar(
   format = NULL,
   format_done = NULL,
   format_failed = NULL,
-  estimate = NULL,
-  auto_estimate = TRUE,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
   .auto_close = TRUE,
@@ -65,13 +63,6 @@ the same as \code{format}.}
 
 \item{format_failed}{Format string for unsuccessful termination. By
 default the same as \code{format}.}
-
-\item{estimate}{Estimate for the total progress bar, inseconds. Not
-implemented yet.}
-
-\item{auto_estimate}{Whether cli should try to estimate how long the
-progress bar will take. Not implemented yet, the estimation is
-always on currently, and it is shown in the default display.}
 
 \item{clear}{Whether to remove the progress bar from the screen after
 it has temrinated.}

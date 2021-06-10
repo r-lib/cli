@@ -143,28 +143,6 @@ static R_INLINE void cli_progress_set(SEXP bar, int set);
 
 static R_INLINE void cli_progress_set_clear(SEXP bar, int clear);
 
-//' ### `cli_progress_set_estimate()`
-//'
-//' ```c
-//' void cli_progress_set_estimate(SEXP bar, int estimate, int auto_estimate);
-//' ```
-//'
-//' This function sets the estimate for the progress bar, and also whether
-//' cli should try to calculate an estimate.
-//'
-//' * `bar`: progress bar object.
-//' * `estimate` estimate for the remainder of the progress bar, in seconds.
-//'    It is ignored if negative.
-//' * `auto_estimate`: whether cli (or another progress bar backend) should
-//'   try to calculate an ETA estimate. It is ignored if negative.
-//'
-//' Note: these parameters are not used currently, so calling this function
-//' has no effect.
-
-static R_INLINE void cli_progress_set_estimate(SEXP bar,
-                                               int estimate,
-                                               int auto_estimate);
-
 //' ### `cli_progress_set_format()`
 //'
 //' ```c
@@ -353,18 +331,6 @@ static R_INLINE void cli_progress_set_type(SEXP bar, const char *type) {
       R_GetCCallable("cli", "cli_progress_set_type");
   }
   ptr(bar, type);
-}
-
-static R_INLINE void cli_progress_set_estimate(SEXP bar,
-                                               int estimate,
-                                               int auto_estimate) {
-  if (Rf_isNull(bar)) return;
-  static void (*ptr)(SEXP, int, int) = NULL;
-  if (ptr == NULL) {
-    ptr = (void (*)(SEXP, int, int))
-      R_GetCCallable("cli", "cli_progress_set_estimate");
-  }
-  ptr(bar, estimate, auto_estimate);
 }
 
 static R_INLINE void cli_progress_set_clear(SEXP bar, int clear) {

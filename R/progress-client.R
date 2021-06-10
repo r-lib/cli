@@ -28,11 +28,6 @@
 #'   the same as `format`.
 #' @param format_failed Format string for unsuccessful termination. By
 #'   default the same as `format`.
-#' @param estimate Estimate for the total progress bar, inseconds. Not
-#'   implemented yet.
-#' @param auto_estimate Whether cli should try to estimate how long the
-#'   progress bar will take. Not implemented yet, the estimation is
-#'   always on currently, and it is shown in the default display.
 #' @param clear Whether to remove the progress bar from the screen after
 #'   it has temrinated.
 #' @param current Whether to use this progress bar as the current progress
@@ -76,8 +71,6 @@ cli_progress_bar <- function(name = NULL,
                              format = NULL,
                              format_done = NULL,
                              format_failed = NULL,
-                             estimate = NULL,
-                             auto_estimate = TRUE,
                              clear = getOption("cli.progress_clear", TRUE),
                              current = TRUE,
                              .auto_close = TRUE,
@@ -102,8 +95,6 @@ cli_progress_bar <- function(name = NULL,
   bar$format <- format
   bar$format_done <- format_done
   bar$format_failed <- format_failed
-  bar$estimate <- estimate
-  bar$auto_estimate <- auto_estimate
   bar$clear <- clear
   bar$envkey <- if (current) envkey else NULL
   bar$current <- 0L

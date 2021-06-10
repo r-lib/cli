@@ -47,7 +47,6 @@ void R_init_cli(DllInfo *dll) {
   RCC(cli_progress_num);
   RCC(cli_progress_set);
   RCC(cli_progress_set_clear);
-  RCC(cli_progress_set_estimate);
   RCC(cli_progress_set_format);
   RCC(cli_progress_set_name);
   RCC(cli_progress_set_status);
