@@ -190,7 +190,9 @@ builtin_handler_logger <- list(
 # ------------------------------------------------------------------------
 
 say_out <- function(text) {
-  processx::process$new("say", text)
+  say <- getOption("cli.progress_say_command", "say")
+  args <- getOption("cli.progress_say_args", character())
+  processx::process$new(say, c(args, text))
 }
 
 say_update <- function(bar) {
@@ -205,6 +207,7 @@ say_update <- function(bar) {
 
 builtin_handler_say <- list(
   able = function(bar, .envir) {
+    if (!is.null(getOption("cli.progress_say_command"))) return(TRUE)
     Sys.info()[["sysname"]] == "Darwin" && Sys.which("say") != ""
   },
 
