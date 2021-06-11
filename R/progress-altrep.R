@@ -9,6 +9,9 @@ progress_altrep_update <- function(pb) {
       pb$format <- pb__default_format(pb$type, pb$total)
     }
 
+    opt <- options(cli__pb = pb)
+    on.exit(options(opt), add = TRUE)
+
     handlers <- cli_progress_select_handlers(pb, caller)
     if (is.null(pb$added)) {
       pb$added <- TRUE
