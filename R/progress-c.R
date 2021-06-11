@@ -15,6 +15,9 @@ progress_c_update <- function(pb, auto_done = TRUE) {
     return(NULL)
   }
 
+  opt <- options(cli__pb = pb)
+  on.exit(options(opt), add = TRUE)
+
   handlers <- cli_progress_select_handlers(pb, caller)
   if (is.null(pb$added)) {
     pb$added <- TRUE
