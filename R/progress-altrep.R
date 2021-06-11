@@ -1,5 +1,5 @@
 
-progress_altrep_update <- function(pb, auto_done = TRUE) {
+progress_altrep_update <- function(pb) {
   tryCatch({
     cli_tick_reset()
     caller <- pb$caller
@@ -7,11 +7,6 @@ progress_altrep_update <- function(pb, auto_done = TRUE) {
 
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
-    }
-
-    if (auto_done && !is.na(pb$total) && pb$current == pb$total) {
-      progress_altrep_done(pb)
-      return(NULL)
     }
 
     handlers <- cli_progress_select_handlers(pb, caller)
