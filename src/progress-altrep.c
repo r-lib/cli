@@ -177,10 +177,17 @@ void cli_init_altrep(DllInfo *dll) {
 
   // -- cli_timer_t ---------------------------------------------------
 
+#if R_VERSION < R_Version(3, 6, 0)
+  cli_timer_t = R_make_altinteger_class("cli_timer_t", "cli", dll);
+  R_set_altrep_Length_method(cli_timer_t, cli_timer_Length);
+  R_set_altvec_Dataptr_method(cli_timer_t, cli_timer_DataPtr);
+  R_set_altinteger_Elt_method(cli_timer_t, cli_timer_Elt);
+#else
   cli_timer_t = R_make_altlogical_class("cli_timer_t", "cli", dll);
   R_set_altrep_Length_method(cli_timer_t, cli_timer_Length);
   R_set_altvec_Dataptr_method(cli_timer_t, cli_timer_DataPtr);
   R_set_altlogical_Elt_method(cli_timer_t, cli_timer_Elt);
+#endif
 
   cli__timer = R_new_altrep(cli_timer_t, R_NilValue, R_NilValue);
   MARK_NOT_MUTABLE(cli__timer);
