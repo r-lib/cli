@@ -44,6 +44,9 @@ progress bar.
 in human readable form.
 \item \code{pb_eta_raw} is the estimated time until the end of the progress
 bar, in seconds.
+\item \code{pb_eta_str} is the estimated time until the end of the progress bar.
+It includes the \code{"ETA:"} prefix. It is only shown if the time can be
+estimated, otherwise it is the empty string.
 \item \code{pb_id} is the id of the progress bar. The id has the format
 \verb{cli-<pid>-<counter>} where \verb{<pid>} is the process id, and
 \verb{<counter>} is an integer counter that is incremented every time
