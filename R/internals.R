@@ -56,9 +56,10 @@ clii__cat_ln <- function(app, lines, indent, padding) {
   ## zero out margin
   app$margin <- 0
 
-  if (length(app$status_bar)) clii__clear_status_bar(app)
+  signal <- !identical(app$signal, FALSE)
+  if (signal && length(app$status_bar)) clii__clear_status_bar(app)
   app$cat(paste0(paste0(lines, "\n"), collapse = ""))
-  if (length(app$status_bar)) {
+  if (signal && length(app$status_bar)) {
     app$cat(paste0(app$status_bar[[1]]$content, "\r"))
   }
 }
