@@ -126,7 +126,7 @@ builtin_handler_progressr <- list(
   add = function(bar, .envir) {
     steps <- if (is.na(bar$total)) 0 else bar$total
     bar$progressr_last <- 0L
-    bar$progressr_progressor <- progressr::progressor(
+    bar$progressr_progressor <- asNamespace("progressr")$progressor(
       steps,
       auto_finish = FALSE,
       on_exit = TRUE,
