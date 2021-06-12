@@ -431,7 +431,7 @@ pb__default_format <- function(type, total) {
       opt <- getOption("cli.progress_format_download")
       if (!is.null(opt)) return(opt)
       paste0(
-        "{cli::pb_spin} {cli::pb_name}{cli::pb_status}| ",
+        "{cli::pb_name}{cli::pb_status}{cli::pb_bar}| ",
         "{cli::pb_current_bytes}/{cli::pb_total_bytes} {cli::pb_eta_str}"
       )
     } else {
@@ -439,7 +439,7 @@ pb__default_format <- function(type, total) {
         getOption("cli.progress_format_download")
       if (!is.null(opt)) return(opt)
       paste0(
-        "{cli::pb_spin} {cli::pb_name}{cli::pb_status}",
+        "{cli::pb_name}{cli::pb_status}{cli::pb_spin} ",
         "{cli::pb_current_bytes} ({cli::pb_rate_bytes}) | {cli::pb_elapsed}"
       )
     }
