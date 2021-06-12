@@ -33,6 +33,8 @@
 #' @param current Whether to use this progress bar as the current progress
 #'   bar of the calling function. See more at 'The current progress bar'
 #'   below.
+#' @param auto_terminate Whether to terminate the progress bar if the
+#'   number of current units reaches the number of total units.
 #' @param .auto_close Whether to terminate the progress bar when the
 #'   calling function (or the one with execution environment in `.envir`
 #'   exits. (Auto termination does not work for progress bars created
@@ -73,6 +75,7 @@ cli_progress_bar <- function(name = NULL,
                              format_failed = NULL,
                              clear = getOption("cli.progress_clear", TRUE),
                              current = TRUE,
+                             auto_terminate = type != "download",
                              .auto_close = TRUE,
                              .envir = parent.frame()) {
 
@@ -96,6 +99,7 @@ cli_progress_bar <- function(name = NULL,
   bar$format_done <- format_done %||% format
   bar$format_failed <- format_failed %||% format
   bar$clear <- clear
+  bar$auto_terminate <- auto_terminate
   bar$envkey <- if (current) envkey else NULL
   bar$current <- 0L
   bar$start <- start
@@ -170,6 +174,7 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
   }
 
   if (!is.na(pb$total) && pb$current == pb$total) {
+  if (pb$auto_terminate && !is.na(pb$total) && pb$current == pb$total) {
     cli_progress_done(id, .envir = .envir)
     return(invisible(id))
   }

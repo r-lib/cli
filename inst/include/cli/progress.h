@@ -63,6 +63,8 @@ static R_INLINE void cli_progress_add(SEXP bar, int inc);
 //' * `format_failed`: format string for unsuccessful termination.
 //' * `clear`: whether to remove the progress bar from the screen after
 //'   termination.
+//' * `auto_terminate`: whether to terminate the progress bar when the
+//'   number of current units equals the number of total progress units.
 //'
 //' #### Example
 //'

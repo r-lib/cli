@@ -53,6 +53,8 @@ seconds. This overrides the global \code{show_after} option.
 \item \code{format_failed}: format string for unsuccessful termination.
 \item \code{clear}: whether to remove the progress bar from the screen after
 termination.
+\item \code{auto_terminate}: whether to terminate the progress bar when the
+number of current units equals the number of total progress units.
 }
 \subsection{Example}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{#include <cli/progress.h>
 SEXP progress_test1() \{

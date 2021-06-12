@@ -135,6 +135,7 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   Rf_defineVar(Rf_install("format_done"),   R_NilValue,              bar);
   Rf_defineVar(Rf_install("format_failed"), R_NilValue,              bar);
   Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(cl),    bar);
+  Rf_defineVar(Rf_install("auto_terminate"), Rf_ScalarLogical(1),    bar);
   Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
   Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
   Rf_defineVar(Rf_install("start"),         Rf_ScalarReal(now),      bar);

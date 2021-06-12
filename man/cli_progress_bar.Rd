@@ -20,6 +20,7 @@ cli_progress_bar(
   format_failed = NULL,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
+  auto_terminate = type != "download",
   .auto_close = TRUE,
   .envir = parent.frame()
 )
@@ -70,6 +71,9 @@ it has temrinated.}
 \item{current}{Whether to use this progress bar as the current progress
 bar of the calling function. See more at 'The current progress bar'
 below.}
+
+\item{auto_terminate}{Whether to terminate the progress bar if the
+number of current units reaches the number of total units.}
 
 \item{.auto_close}{Whether to terminate the progress bar when the
 calling function (or the one with execution environment in \code{.envir}

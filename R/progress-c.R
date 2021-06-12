@@ -10,7 +10,8 @@ progress_c_update <- function(pb, auto_done = TRUE) {
     pb$format <- pb__default_format(pb$type, pb$total)
   }
 
-  if (auto_done && !is.na(pb$total) && pb$current == pb$total) {
+  if (pb$auto_terminate && auto_done && !is.na(pb$total) &&
+      pb$current == pb$total) {
     progress_c_done(pb, caller = caller)
     return(NULL)
   }
