@@ -349,7 +349,7 @@ cli__pb_spin <- function(pb = getOption("cli__pb")) {
 cli__pb_status <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) return("")
   if (!is.null(pb$status)) {
-    paste0(pb$name, " ")
+    paste0(pb$status, " ")
   } else {
     ""
   }
