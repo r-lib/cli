@@ -4,6 +4,7 @@
 
 #include <R.h>
 #include <Rinternals.h>
+#include <Rversion.h>
 
 typedef volatile int vint;
 
@@ -24,8 +25,11 @@ void cli_progress_update(SEXP bar, int set, int inc, int force);
 
 SEXP cli__progress_update(SEXP bar);
 SEXP clic_progress_along(SEXP seq, SEXP bar);
-
 extern SEXP cli_pkgenv;
+
+#if R_VERSION >= R_Version(3, 5, 0)
+void cli_init_altrep(DllInfo *dll);
+#endif
 
 double clic__get_time();
 
