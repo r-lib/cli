@@ -10,7 +10,7 @@ make_progress_bar <- function(percent, width = 30, style = list()) {
   complete <- paste(rep(chr_complete, complete_len), collapse = "")
   current <- if (percent == 100) chr_complete else chr_current
   incomplete <- paste(rep(chr_incomplete, width - complete_len), collapse = "")
-  paste0(complete, current, incomplete)
+  paste0(complete, current, incomplete, " ")
 }
 
 default_progress_style <- function() {
