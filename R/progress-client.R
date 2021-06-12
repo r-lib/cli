@@ -19,6 +19,12 @@
 #'   * `download`: download of one file,
 #'   * `custom`: custom type, `format` must not be `NULL` for this type.
 #' @param total Total number of progress units, or `NA` if it is unknown.
+#'   `cli_progress_update()` can update the total number of units. This is
+#'   handy if you don't know the size of a download at the beginning, and
+#'   also in some other casees. If `format` (plus `format_done` and
+#'   `format_done`) will be updated if you change `total` from `NA` to a
+#'   number, if you specify `NULL` for `format`. I.e. default format strings
+#'   will be updated, custom ones won't be.
 #' @param format Format string. It has to be specified for custom progress
 #'   bars, otherwise it is optional, and a default display is selected
 #'   based on the progress bat type and whether the number of total units
@@ -95,9 +101,9 @@ cli_progress_bar <- function(name = NULL,
   bar$type <- match.arg(type)
   bar$total <- total
   bar$show_after <- start + getOption("cli.progress_show_after", 2)
-  bar$format <- format
-  bar$format_done <- format_done %||% format
-  bar$format_failed <- format_failed %||% format
+  bar$format0 <- bar$format <- format
+  bar$format_done0 <- bar$format_done <- format_done %||% format
+  bar$format_failed0 <- bar$format_failed <- format_failed %||% format
   bar$clear <- clear
   bar$auto_terminate <- auto_terminate
   bar$envkey <- if (current) envkey else NULL
@@ -152,8 +158,8 @@ cli_progress_bar <- function(name = NULL,
 #' @name cli_progress_bar
 #' @export
 
-cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
-                                id = NULL, force = FALSE,
+cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
+                                status = NULL, id = NULL, force = FALSE,
                                 .envir = parent.frame()) {
 
   id <- id %||% clienv$progress_ids[[format(.envir)]]
@@ -173,7 +179,17 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
     pb$current <- pb$current + inc
   }
 
-  if (!is.na(pb$total) && pb$current == pb$total) {
+  if (!is.null(total)) {
+    if (is.na(pb$total) != is.na(total) || pb$total != total) {
+      pb$total <- total
+      if (!is.null(pb$format) && is.null(pb$format0)) {
+        pb$format <- pb__default_format(pb$type, pb$total)
+        pb$format_done <- pb$format_done0 %||% pb$format
+        pb$format_failed <- pb$format_failed0 %||% pb$format
+      }
+    }
+  }
+
   if (pb$auto_terminate && !is.na(pb$total) && pb$current == pb$total) {
     cli_progress_done(id, .envir = .envir)
     return(invisible(id))
@@ -184,10 +200,11 @@ cli_progress_update <- function(inc = NULL, set = NULL, status = NULL,
   if (force || (upd && now > pb$show_after)) {
     if (upd) cli_tick_reset()
     pb$tick <- pb$tick + 1L
+
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
-      pb$format_done <- pb$format_done %||% pb$format
-      pb$format_failed <- pb$format_failed %||% pb$format
+      pb$format_done <- pb$format_done0 %||% pb$format
+      pb$format_failed <- pb$format_failed0 %||% pb$format
     }
 
     opt <- options(cli__pb = pb)
