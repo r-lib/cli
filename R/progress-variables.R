@@ -309,7 +309,7 @@ cli__pb_name <- function(pb = getOption("cli__pb")) {
 
 cli__pb_percent <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) return("")
-  paste0(format(pb$current / pb$total * 100, digits = 0, width = 3), "%")
+  paste0(format(round(pb$current / pb$total * 100), width = 3), "%")
 }
 
 cli__pb_pid <- function(pb = getOption("cli__pb")) {
