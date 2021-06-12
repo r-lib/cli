@@ -12,6 +12,12 @@ SEXP clic_progress_along(SEXP seq, SEXP bar) {
 
 void cli_init_altrep(DllInfo *dll) { }
 
+SEXP clic_make_timer() { return R_NilValue; }
+
+SEXP clic_update_due() {
+  return ScalarLogical(*cli_timer_flag);
+}
+
 #else
 
 #include <R_ext/Altrep.h>

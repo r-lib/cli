@@ -56,7 +56,16 @@ task_callback <- NULL
     clienv$speed_time
   )
 
-  `__cli_update_due` <<- .Call(clic_make_timer);
+  if (getRversion() >= "3.5.0") {
+    `__cli_update_due` <<- .Call(clic_make_timer);
+  } else {
+    rm("__cli_update_due", envir = pkgenv)
+    makeActiveBinding(
+      "__cli_update_due",
+      function() .Call(clic_update_due),
+      pkgenv
+    )
+  }
 
   ccli_tick_reset <<- clic_tick_reset
 
