@@ -10,8 +10,6 @@ SEXP clic_progress_along(SEXP seq, SEXP bar) {
   return R_NilValue;
 }
 
-void cli_init_altrep(DllInfo *dll) { }
-
 SEXP clic_make_timer() { return R_NilValue; }
 
 SEXP clic_update_due() {

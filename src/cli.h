@@ -23,7 +23,6 @@ void cli_progress_sleep(int s, long ns);
 void cli_progress_update(SEXP bar, int set, int inc, int force);
 
 SEXP cli__progress_update(SEXP bar);
-void cli_init_altrep(DllInfo *dll);
 SEXP clic_progress_along(SEXP seq, SEXP bar);
 
 extern SEXP cli_pkgenv;
