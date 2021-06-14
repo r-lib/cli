@@ -71,9 +71,9 @@
 #' bytes, in a human readable format.
 #'
 #' @export pb_bar pb_current pb_current_bytes pb_elapsed pb_elapsed_clock
-#' @export pb_elapsed_raw pb_eta pb_eta_raw pb_id pb_name pb_percent
-#' @export pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin pb_status
-#' @export pb_timestamp pb_total pb_total_bytes
+#' @export pb_elapsed_raw pb_eta pb_eta_raw pb_eta_str pb_id pb_name
+#' @export pb_percent pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin
+#' @export pb_status pb_timestamp pb_total pb_total_bytes
 #'
 #' @aliases pb_bar pb_current pb_current_bytes pb_elapsed pb_elapsed_clock
 #' @aliases pb_elapsed_raw pb_eta pb_eta_raw pb_id pb_name pb_percent
