@@ -42,7 +42,8 @@
 #' @param auto_terminate Whether to terminate the progress bar if the
 #'   number of current units reaches the number of total units.
 #' @param extra Extra data to add to the progress bar. This can be
-#'   used in custom format strings for example.
+#'   used in custom format strings for example. It should be a named list.
+#'   `cli_progress_update()` can update the extra data.
 #' @param .auto_close Whether to terminate the progress bar when the
 #'   calling function (or the one with execution environment in `.envir`
 #'   exits. (Auto termination does not work for progress bars created
@@ -150,7 +151,6 @@ cli_progress_bar <- function(name = NULL,
 #' @param set Set the current number of progress units to this value.
 #'   Ignored if `NULL`.
 #' @param status New status string of the progress bar, if not `NULL`.
-#' @param extra Update for the extra data, if not `NULL`.
 #' @param id Progress bar to update or terminate. If `NULL`, then the
 #'   current progress bar of the calling function (or `.envir` if
 #'   specified) is updated or terminated.
@@ -178,7 +178,7 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
 
   if (!is.null(status)) pb$status <- status
 
-  if (!is.null(extra)) pb$extra <- extra
+  if (!is.null(extra)) pb$extra <- utils::modifyList(pb$extra, extra)
 
   if (!is.null(set)) {
     pb$current <- set
