@@ -41,6 +41,8 @@
 #'   below.
 #' @param auto_terminate Whether to terminate the progress bar if the
 #'   number of current units reaches the number of total units.
+#' @param extra Extra data to add to the progress bar. This can be
+#'   used in custom format strings for example.
 #' @param .auto_close Whether to terminate the progress bar when the
 #'   calling function (or the one with execution environment in `.envir`
 #'   exits. (Auto termination does not work for progress bars created
@@ -82,6 +84,7 @@ cli_progress_bar <- function(name = NULL,
                              clear = getOption("cli.progress_clear", TRUE),
                              current = TRUE,
                              auto_terminate = type != "download",
+                             extra = NULL,
                              .auto_close = TRUE,
                              .envir = parent.frame()) {
 
@@ -110,6 +113,7 @@ cli_progress_bar <- function(name = NULL,
   bar$current <- 0L
   bar$start <- start
   bar$tick <- 0L
+  bar$extra <- NULL
   clienv$progress[[id]] <- bar
   if (current) {
     if (!is.null(clienv$progress_ids[[envkey]])) {
@@ -146,6 +150,7 @@ cli_progress_bar <- function(name = NULL,
 #' @param set Set the current number of progress units to this value.
 #'   Ignored if `NULL`.
 #' @param status New status string of the progress bar, if not `NULL`.
+#' @param extra Update for the extra data, if not `NULL`.
 #' @param id Progress bar to update or terminate. If `NULL`, then the
 #'   current progress bar of the calling function (or `.envir` if
 #'   specified) is updated or terminated.
@@ -159,7 +164,8 @@ cli_progress_bar <- function(name = NULL,
 #' @export
 
 cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
-                                status = NULL, id = NULL, force = FALSE,
+                                status = NULL, extra = NULL,
+                                id = NULL, force = FALSE,
                                 .envir = parent.frame()) {
 
   id <- id %||% clienv$progress_ids[[format(.envir)]]
@@ -171,6 +177,8 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
   if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
 
   if (!is.null(status)) pb$status <- status
+
+  if (!is.null(extra)) pb$extra <- extra
 
   if (!is.null(set)) {
     pb$current <- set

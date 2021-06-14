@@ -32,6 +32,9 @@
 #' It includes the `"ETA:"` prefix. It is only shown if the time can be
 #' estimated, otherwise it is the empty string.
 #'
+#' * `pb_extra` can be used to access extra data, see the `extra` argument
+#' of `cli_progress_bar()` and `cli_progress_update()`.
+#'
 #' * `pb_id` is the id of the progress bar. The id has the format
 #' `cli-<pid>-<counter>` where `<pid>` is the process id, and
 #' `<counter>` is an integer counter that is incremented every time
@@ -71,12 +74,12 @@
 #' bytes, in a human readable format.
 #'
 #' @export pb_bar pb_current pb_current_bytes pb_elapsed pb_elapsed_clock
-#' @export pb_elapsed_raw pb_eta pb_eta_raw pb_eta_str pb_id pb_name
+#' @export pb_elapsed_raw pb_eta pb_eta_raw pb_eta_str pb_extra pb_id pb_name
 #' @export pb_percent pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin
 #' @export pb_status pb_timestamp pb_total pb_total_bytes
 #'
 #' @aliases pb_bar pb_current pb_current_bytes pb_elapsed pb_elapsed_clock
-#' @aliases pb_elapsed_raw pb_eta pb_eta_raw pb_eta_str pb_id pb_name
+#' @aliases pb_elapsed_raw pb_eta pb_eta_raw pb_eta_str pb_extra pb_id pb_name
 #' @aliases pb_percent pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin
 #' @aliases pb_status pb_timestamp pb_total pb_total_bytes
 #'
@@ -291,6 +294,11 @@ cli__pb_eta_str <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) return("")
   eta <- cli__pb_eta(pb)
   if (eta != "?") paste0("ETA: ", eta) else ""
+}
+
+cli__pb_extra <- function(pb = getOption("cli__pb")) {
+  if (is.null(pb)) return("")
+  pb$extra
 }
 
 cli__pb_id <- function(pb = getOption("cli__pb")) {

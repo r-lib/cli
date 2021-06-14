@@ -141,6 +141,7 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   Rf_defineVar(Rf_install("start"),         Rf_ScalarReal(now),      bar);
   Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
   Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
+  Rf_defineVar(Rf_install("extra"),         R_NilValue,              bar);
 
   if (!config) {
     /* NULL pointer, use defaults */

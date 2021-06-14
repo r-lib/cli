@@ -21,6 +21,7 @@ cli_progress_bar(
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
   auto_terminate = type != "download",
+  extra = NULL,
   .auto_close = TRUE,
   .envir = parent.frame()
 )
@@ -81,6 +82,9 @@ below.}
 
 \item{auto_terminate}{Whether to terminate the progress bar if the
 number of current units reaches the number of total units.}
+
+\item{extra}{Extra data to add to the progress bar. This can be
+used in custom format strings for example.}
 
 \item{.auto_close}{Whether to terminate the progress bar when the
 calling function (or the one with execution environment in \code{.envir}
