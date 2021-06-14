@@ -10,6 +10,7 @@
 \alias{pb_elapsed_raw}
 \alias{pb_eta}
 \alias{pb_eta_raw}
+\alias{pb_eta_str}
 \alias{pb_id}
 \alias{pb_name}
 \alias{pb_percent}

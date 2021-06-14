@@ -76,9 +76,9 @@
 #' @export pb_status pb_timestamp pb_total pb_total_bytes
 #'
 #' @aliases pb_bar pb_current pb_current_bytes pb_elapsed pb_elapsed_clock
-#' @aliases pb_elapsed_raw pb_eta pb_eta_raw pb_id pb_name pb_percent
-#' @aliases pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin pb_status
-#' @aliases pb_timestamp pb_total pb_total_bytes
+#' @aliases pb_elapsed_raw pb_eta pb_eta_raw pb_eta_str pb_id pb_name
+#' @aliases pb_percent pb_pid pb_rate pb_rate_raw pb_rate_bytes pb_spin
+#' @aliases pb_status pb_timestamp pb_total pb_total_bytes
 #'
 #' @name progress-variables
 #' @examples
