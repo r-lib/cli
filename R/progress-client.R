@@ -180,7 +180,8 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
   }
 
   if (!is.null(total)) {
-    if (is.na(pb$total) != is.na(total) || pb$total != total) {
+    if (is.na(pb$total) != is.na(total) ||
+        (!is.na(total) && pb$total != total)) {
       pb$total <- total
       if (!is.null(pb$format) && is.null(pb$format0)) {
         pb$format <- pb__default_format(pb$type, pb$total)
