@@ -92,9 +92,14 @@ builtin_handler_cli <- list(
       .auto_close = FALSE,
       .envir = .envir,
     )
+    bar$justadded <- TRUE
   },
 
   set = function(bar, .envir) {
+    if (isTRUE(bar$justadded)) {
+      bar$justadded <- FALSE
+      return()
+    }
     cli_status_update(id = bar$cli_statusbar, bar$format, .envir = .envir)
   },
 
