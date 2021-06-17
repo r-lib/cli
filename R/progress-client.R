@@ -118,7 +118,7 @@ cli_progress_bar <- function(name = NULL,
   clienv$progress[[id]] <- bar
   if (current) {
     if (!is.null(clienv$progress_ids[[envkey]])) {
-      cli_progress_done(clienv$progress_ids[[envkey]], .envir = .envir)
+      cli_progress_done(clienv$progress_ids[[envkey]], .envir = .envir, result = "done")
     }
     clienv$progress_ids[[envkey]] <- id
   }
@@ -200,7 +200,7 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
   }
 
   if (pb$auto_terminate && !is.na(pb$total) && pb$current == pb$total) {
-    cli_progress_done(id, .envir = .envir)
+    cli_progress_done(id, .envir = .envir, result = "done")
     return(invisible(id))
   }
 
