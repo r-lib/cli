@@ -12,6 +12,18 @@ capture_messages <- function(expr) {
   paste0(msgs, collapse = "")
 }
 
+capture_cli_messages <- function(expr) {
+  msgs <- character()
+  withCallingHandlers(
+    expr,
+    cliMessage = function(e) {
+      msgs <<- c(msgs, conditionMessage(e))
+      invokeRestart("muffleMessage")
+    }
+  )
+  msgs
+}
+
 capt <- function(expr, print_it = TRUE) {
   pr <- if (print_it) print else identity
   paste(capture.output(pr(expr)), collapse = "\n")
@@ -61,4 +73,12 @@ test_style <- function() {
 local_rng_version <- function(version, .local_envir = parent.frame()) {
   withr::defer(RNGversion(as.character(getRversion())), envir = .local_envir)
   suppressWarnings(RNGversion(version))
+}
+
+fix_times <- function(out) {
+  out <- sub("[(][ ]*[.0-9]+ [Mk]B/s[)]", "(8.5 MB/s)", out)
+  out <- sub("[(][0-9]+/s[)]", "(100/s)", out)
+  out <- sub(" [.0-9]+m?s", " 3ms", out)
+  out <- sub("ETA:[ ]*[.0-9]+m?s", "ETA:  1s", out)
+  out
 }
