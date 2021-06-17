@@ -13,6 +13,7 @@ volatile int cli__timer_flag = 1;
 volatile int* cli_timer_flag = &cli__timer_flag;
 struct timespec cli__tick_ts;
 double cli_speed_time = 1.0;
+int cli__reset = 1;
 
 void* clic_thread_func(void *arg) {
 #ifndef _WIN32
@@ -39,13 +40,18 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
   if (cticktime == 0) cticktime = 1;
   cli__tick_ts.tv_sec = cticktime / 1000;
   cli__tick_ts.tv_nsec = (cticktime % 1000) * 1000 * 1000;
+  int ret = 0;
 
-  int ret = pthread_create(
-    & tick_thread,
-    /* attr = */ 0,
-    clic_thread_func,
-    /* arg = */ NULL
-  );
+  if (! getenv("CLI_NO_THREAD")) {
+    ret = pthread_create(
+      & tick_thread,
+      /* attr = */ 0,
+      clic_thread_func,
+      /* arg = */ NULL
+    );
+  } else {
+    cli__reset = 0;
+  }
 
   return ret;
 }
@@ -93,7 +99,9 @@ SEXP clic_stop_thread() {
 }
 
 SEXP clic_tick_reset() {
-  cli__timer_flag = 0;
+  if (cli__reset) {
+    cli__timer_flag = 0;
+  }
   return R_NilValue;
 }
 

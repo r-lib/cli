@@ -105,7 +105,7 @@ const void* progress_along_Dataptr_or_null(SEXP x) {
 // TODO: long vector support?
 int progress_along_Elt(SEXP x, R_xlen_t i) {
   if (*cli_timer_flag) {
-    *cli_timer_flag = 0;
+    if (cli__reset) *cli_timer_flag = 0;
     SEXP bar = R_altrep_data2(x);
     double now = clic__get_time();
     Rf_defineVar(Rf_install("current"), ScalarInteger((int) i), bar);
