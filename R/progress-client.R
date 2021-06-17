@@ -288,9 +288,11 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
 cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
   envkey <- format(.envir)
   id <- id %||% clienv$progress_ids[[envkey]]
-  if (is.null(id)) return(invisible(TRUE))
+  if (is.null(id)) {
+    stop("Cannot find current progress bar for `", envkey, "`")
+  }
   pb <- clienv$progress[[id]]
-  if (is.null(pb)) return(invisible(TRUE))
+  if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
 
   txt <- fmt(cli_text(text, .envir = .envir))
   for (h in pb$handlers) {
