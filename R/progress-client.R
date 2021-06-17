@@ -114,7 +114,7 @@ cli_progress_bar <- function(name = NULL,
   bar$current <- 0L
   bar$start <- start
   bar$tick <- 0L
-  bar$extra <- NULL
+  bar$extra <- extra
   clienv$progress[[id]] <- bar
   if (current) {
     if (!is.null(clienv$progress_ids[[envkey]])) {
