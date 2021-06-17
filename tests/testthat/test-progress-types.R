@@ -81,7 +81,7 @@ test_that("customize with options, iterator", {
   withr::local_options(
     cli.dynamic = TRUE,
     cli.ansi = TRUE,
-    cli.progress_format_iterator = "new format {pb_current}",
+    cli.progress_format_iterator = "new format {cli::pb_current}",
     cli.progress_format_iterator_nototal = NULL
   )
 
@@ -94,7 +94,7 @@ test_that("customize with options, iterator", {
   expect_snapshot(capture_cli_messages(fun("iterator", NA)))
 
   withr::local_options(
-    cli.progress_format_iterator_nototal = "new too {pb_current}"
+    cli.progress_format_iterator_nototal = "new too {cli::pb_current}"
   )
 
   expect_snapshot(capture_cli_messages(fun("iterator", 100)))
@@ -105,7 +105,7 @@ test_that("customize with options, tasks", {
   withr::local_options(
     cli.dynamic = TRUE,
     cli.ansi = TRUE,
-    cli.progress_format_tasks = "new format {pb_current}",
+    cli.progress_format_tasks = "new format {cli::pb_current}",
     cli.progress_format_tasks_nototal = NULL
   )
 
@@ -118,7 +118,7 @@ test_that("customize with options, tasks", {
   expect_snapshot(capture_cli_messages(fun("tasks", NA)))
 
   withr::local_options(
-    cli.progress_format_tasks_nototal = "new too {pb_current}"
+    cli.progress_format_tasks_nototal = "new too {cli::pb_current}"
   )
 
   expect_snapshot(capture_cli_messages(fun("tasks", 100)))
@@ -129,7 +129,7 @@ test_that("customize with options, download", {
   withr::local_options(
     cli.dynamic = TRUE,
     cli.ansi = TRUE,
-    cli.progress_format_download = "new format {pb_current_bytes}",
+    cli.progress_format_download = "new format {cli::pb_current_bytes}",
     cli.progress_format_download_nototal = NULL
   )
 
@@ -142,7 +142,7 @@ test_that("customize with options, download", {
   expect_snapshot(capture_cli_messages(fun("download", NA, 512 * 1024)))
 
   withr::local_options(
-    cli.progress_format_download_nototal = "new too {pb_current_bytes}"
+    cli.progress_format_download_nototal = "new too {cli::pb_current_bytes}"
   )
 
   expect_snapshot(capture_cli_messages(fun("download", 1024 * 1024, 512 * 1024)))

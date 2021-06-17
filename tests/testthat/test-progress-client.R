@@ -5,7 +5,7 @@ test_that("cli_progress_bar", {
     bar <- cli_progress_bar(
       name = "name",
       status = "status",
-      format = "{cli::pb_spin} {cli::pb_name}{cli::pb_status}{pb_current}"
+      format = "{cli::pb_spin} {cli::pb_name}{cli::pb_status}{cli::pb_current}"
     )
     cli_progress_update(force = TRUE)
     cli_progress_done(id = bar)
@@ -76,7 +76,7 @@ test_that("cli_progress_update can update status", {
     bar <- cli_progress_bar(
       name = "name",
       status = "status",
-      format = "{cli::pb_spin} {cli::pb_name}{cli::pb_status}{pb_current}"
+      format = "{cli::pb_spin} {cli::pb_name}{cli::pb_status}{cli::pb_current}"
     )
     cli_progress_update(force = TRUE)
     cli_progress_update(status = "new status", force = TRUE)
