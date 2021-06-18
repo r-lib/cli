@@ -77,8 +77,20 @@ local_rng_version <- function(version, .local_envir = parent.frame()) {
 
 fix_times <- function(out) {
   out <- sub("[(][ ]*[.0-9]+ [Mk]B/s[)]", "(8.5 MB/s)", out)
-  out <- sub("[(][0-9]+/s[)]", "(100/s)", out)
+  out <- sub("[(][.0-9]+/s[)]", "(100/s)", out)
   out <- sub(" [.0-9]+m?s", " 3ms", out)
   out <- sub("ETA:[ ]*[.0-9]+m?s", "ETA:  1s", out)
   out
+}
+
+fix_logger_output <- function(lines) {
+  sub(
+    paste0(
+      "^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T",
+      "[0-9][0-9]:[0-9][0-9]:[0-9][0-9]\\+00:00 ",
+      "cli-[0-9]+-[0-9]+ "
+    ),
+    "2021-06-18T00:09:14+00:00 cli-36434-1 ",
+    lines
+  )
 }
