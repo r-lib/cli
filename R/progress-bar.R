@@ -29,7 +29,7 @@ default_progress_style <- function() {
       complete = opa$complete %||% opt$complete %||% "=",
       current = opa$current %||% opt$current %||% opa$complete %||%
         opt$complete %||% ">",
-      incomplete = opa$incomplete %||% opt$icomplete %||% "-"
+      incomplete = opa$incomplete %||% opt$incomplete %||% "-"
     )
   }
 }
