@@ -45,7 +45,8 @@ SEXP clic_make_timer() {
 }
 
 SEXP clic_update_due() {
-  return cli__timer;
+  /* This will make a copy, which leads to better semantics. */
+  return ScalarLogical(*cli_timer_flag);
 }
 
 R_xlen_t cli_timer_Length(SEXP x) {

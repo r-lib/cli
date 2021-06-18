@@ -9,7 +9,7 @@
 typedef volatile int vint;
 
 extern volatile int* cli_timer_flag;
-extern int cli__reset;
+extern volatile int cli__reset;
 void cli_progress_add(SEXP bar, int inc);
 SEXP cli_progress_bar(vint **ptr, int total, SEXP config);
 void cli_progress_done(SEXP bar);
@@ -39,6 +39,8 @@ SEXP clic_stop_thread();
 SEXP clic_tick_reset();
 SEXP clic_get_time();
 SEXP clic_tick_set(SEXP ticktime, SEXP speedtime);
+SEXP clic_tick_pause(SEXP state);
+SEXP clic_tick_resume(SEXP state);
 SEXP clic_make_timer();
 SEXP clic_update_due();
 

@@ -13,7 +13,7 @@ volatile int cli__timer_flag = 1;
 volatile int* cli_timer_flag = &cli__timer_flag;
 struct timespec cli__tick_ts;
 double cli_speed_time = 1.0;
-int cli__reset = 1;
+volatile int cli__reset = 1;
 
 void* clic_thread_func(void *arg) {
 #ifndef _WIN32
@@ -30,7 +30,7 @@ void* clic_thread_func(void *arg) {
   while (1) {
     /* TODO: handle signals */
     nanosleep(&cli__tick_ts, NULL);
-    cli__timer_flag = 1;
+    if (cli__reset) cli__timer_flag = 1;
   }
 }
 
@@ -114,5 +114,17 @@ SEXP clic_tick_set(SEXP ticktime, SEXP speedtime) {
   ret = cli__start_thread(ticktime, speedtime);
   if (ret) warning("Cannot create progress thread");
 
+  return R_NilValue;
+}
+
+SEXP clic_tick_pause(SEXP state) {
+  cli__reset = 0;
+  cli__timer_flag = LOGICAL(state)[0];
+  return R_NilValue;
+}
+
+SEXP clic_tick_resume(SEXP state) {
+  cli__timer_flag = LOGICAL(state)[0];
+  cli__reset = 1;
   return R_NilValue;
 }
