@@ -184,7 +184,7 @@ builtin_handler_logger <- list(
   },
 
   complete = function(bar, .envir, result) {
-    logger_out(bar, "terminated")
+    logger_out(bar, paste0("terminated (", result, ")"))
   },
 
   output = function(bar, .envir, text) {
