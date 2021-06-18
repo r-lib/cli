@@ -55,7 +55,12 @@ cli_progress_along <- function(x,
   name; total; .envir; list(...)
 
   if (getRversion() < "3.5.0") return(seq_along(x))
-  id <- cli_progress_bar(name = name, total = total, ..., .envir = .envir)
+  id <- cli_progress_bar(name = name, total = total, ...,
+                         .auto_close = FALSE, .envir = .envir)
+  closeenv <- sys.frame(-1)
+  if (format(closeenv) != clienv$globalenv) {
+    defer(cli_progress_done(id = id, .envir = .envir), envir = closeenv)
+  }
   sax <- seq_along(x)
   clienv$progress[[id]]$caller <- .envir
   .Call(clic_progress_along, sax, clienv$progress[[id]])
@@ -80,7 +85,6 @@ progress_altrep_update <- function(pb) {
       for (h in handlers) {
         if ("add" %in% names(h)) h$add(pb, .envir = caller)
       }
-      if (!identical(caller, .GlobalEnv)) defer(progress_altrep_done(pb), envir = caller)
     } else {
       for (h in handlers) {
         if ("set" %in% names(h)) h$set(pb, .envir = caller)
@@ -89,31 +93,6 @@ progress_altrep_update <- function(pb) {
   }, error = function(err) {
     if (!isTRUE(pb$warned)) {
       warning("cli progress bar update failed: ", conditionMessage(err),
-              immediate. = TRUE)
-    }
-    pb$warned <- TRUE
-  })
-
-  NULL
-}
-
-progress_altrep_done <- function(pb) {
-  tryCatch({
-    caller <- pb$caller
-
-    handlers <- cli_progress_select_handlers()
-    for (h in handlers) {
-      if ("complete" %in% names(h)) {
-        h$complete(pb, .envir = caller, result = "done")
-      }
-    }
-
-    if (!is.null(pb$id)) clienv$progress[[pb$id]] <- NULL
-    if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
-
-  }, error = function(err) {
-    if (!isTRUE(pb$warned)) {
-      warning("cli progress bar update failed:", conditionMessage(err),
               immediate. = TRUE)
     }
     pb$warned <- TRUE
