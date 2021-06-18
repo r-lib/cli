@@ -258,6 +258,15 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
   opt <- options(cli__pb = pb)
   on.exit(options(opt), add = TRUE)
 
+  if (result == "auto") {
+    r1 <- stats::runif(1)
+    if (identical(returnValue(r1), r1)) {
+      result <- "failed"
+    } else {
+      result <- "done"
+    }
+  }
+
   for (h in pb$handlers) {
     if ("complete" %in% names(h)) {
       h$complete(pb, .envir = .envir, result = result)
