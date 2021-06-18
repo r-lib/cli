@@ -328,6 +328,7 @@ cli__pb_pid <- function(pb = getOption("cli__pb")) {
 cli__pb_rate <- function(pb = getOption("cli__pb")) {
   if (is.null(pb)) return("")
   rate <- cli__pb_rate_raw(pb)
+  if (is.nan(rate) || is.na(rate) || is.infinite(rate)) return("?/s")
   paste0(format(rate, digits = 2), "/s")
 }
 
