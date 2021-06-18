@@ -172,7 +172,7 @@ cli_progress_demo <- function(name = NULL, status = NULL,
   last <- is.null(at)
   if (is.null(at)) {
     if (is.na(total)) {
-      at <- 1:50
+      at <- 1:5
     } else {
       at <- seq_len(total)
     }
