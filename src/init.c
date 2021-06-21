@@ -10,9 +10,12 @@ SEXP clic_unload() {
   return R_NilValue;
 }
 
+SEXP clic_dataptr(SEXP x);
+
 static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
+  { "clic_dataptr",        (DL_FUNC) clic_dataptr,        1 },
   { "clic_start_thread",   (DL_FUNC) clic_start_thread,   3 },
   { "clic_stop_thread",    (DL_FUNC) clic_stop_thread,    0 },
   { "clic_tick_reset",     (DL_FUNC) clic_tick_reset,     0 },

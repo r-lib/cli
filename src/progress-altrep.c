@@ -16,6 +16,17 @@ SEXP clic_update_due() {
   return ScalarLogical(*cli_timer_flag);
 }
 
+SEXP clic_dataptr(SEXP x) {
+  int i, n = LENGTH(x);
+  SEXP ret = PROTECT(allocVector(INTSXP, n));
+  for (i = 0; i < n; i++) {
+    INTEGER(ret)[i] = INTEGER(x)[i] * 2;
+  }
+
+  UNPROTECT(1);
+  return ret;
+}
+
 #else
 
 #include <R_ext/Altrep.h>
@@ -168,7 +179,7 @@ void cli_init_altrep(DllInfo *dll) {
   R_set_altinteger_Get_region_method(progress_along_t, progress_along_Get_region);
   R_set_altinteger_Sum_method(progress_along_t, progress_along_Sum);
   R_set_altinteger_Max_method(progress_along_t, progress_along_Max);
-  // R_set_altinteger_Min_method(progress_along_t, progress_along_Min);
+  R_set_altinteger_Min_method(progress_along_t, progress_along_Min);
   // R_set_altinteger_No_NA_method(progress_along_t, progress_along_No_NA);
   R_set_altinteger_Is_sorted_method(progress_along_t, progress_along_Is_sorted);
 
@@ -197,6 +208,17 @@ void cli_init_altrep(DllInfo *dll) {
   cli__timer = R_new_altrep(cli_timer_t, R_NilValue, R_NilValue);
   MARK_NOT_MUTABLE(cli__timer);
   R_PreserveObject(cli__timer);
+}
+
+SEXP clic_dataptr(SEXP x) {
+  int i, n = LENGTH(x);
+  SEXP ret = PROTECT(allocVector(INTSXP, n));
+  for (i = 0; i < n; i++) {
+    INTEGER(ret)[i] = INTEGER(x)[i] + INTEGER_RO(x)[i];
+  }
+
+  UNPROTECT(1);
+  return ret;
 }
 
 #endif

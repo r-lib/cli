@@ -108,3 +108,25 @@ test_that("length 1 seq", {
   capture_cli_messages(ret <- cli_with_ticks(fun()))
   expect_identical(ret, 1L)
 })
+
+test_that("ALTREP methods", {
+  if (getRversion() < "3.5.0") skip("Needs ALTREP")
+  seq <- cli_progress_along(1:10)
+  expect_output(.Internal(inspect(seq)), "progress_along")
+
+  expect_equal(is.unsorted(seq), FALSE)
+  expect_equal(sum(seq), sum(1:10))
+
+  seq <- cli_progress_along(letters)
+  expect_equal(min(seq), 1L)
+  expect_equal(max(seq), length(letters))
+
+  z <- cli_progress_along(character())
+  expect_equal(min(z), Inf)
+
+  seq <- cli_progress_along(letters)
+  expect_equal(.Call(clic_dataptr, seq), seq_along(letters) * 2)
+
+  seq2 <- seq
+  expect_silent(seq2[1] <- 100)
+})
