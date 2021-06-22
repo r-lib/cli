@@ -29,6 +29,8 @@ static const R_CallMethodDef callMethods[]  = {
 
   { "clic_progress_along", (DL_FUNC) clic_progress_along, 2 },
 
+  { "clic__find_var",      (DL_FUNC) clic__find_var,      2 },
+
   { NULL, NULL, 0 }
 };
 

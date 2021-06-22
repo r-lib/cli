@@ -91,6 +91,23 @@ SEXP clic_get_time() {
   return Rf_ScalarReal(ts);
 }
 
+SEXP clic__find_var(SEXP rho, SEXP symbol) {
+  SEXP ret = Rf_findVarInFrame3(rho, symbol, TRUE);
+  if (ret == R_UnboundValue) {
+    error("Cannot find variable `", PRINTNAME(symbol), "`");
+
+  } else if (TYPEOF(ret) == PROMSXP) {
+    PROTECT(ret);
+    SEXP ret2 = Rf_eval(ret, rho);
+    UNPROTECT(1);
+    return(ret2);
+
+  } else {
+    return ret;
+  }
+}
+
+
 SEXP cli__progress_update(SEXP bar) {
   /* We can't throw a condition from C, unfortunately... */
   SEXP call = PROTECT(Rf_lang2(install("progress_c_update"), bar));
@@ -208,19 +225,19 @@ void cli_progress_set(SEXP bar, int set) {
   if (*cli_timer_flag) {
     *cli_timer_flag = 0;
     double now = clic__get_time();
-    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
   }
 }
 
 void cli_progress_add(SEXP bar, int inc) {
   if (isNull(bar)) return;
-  int crnt = INTEGER(Rf_findVarInFrame3(bar, Rf_install("current"), 1))[0];
+  int crnt = INTEGER(clic__find_var(bar, Rf_install("current")))[0];
   Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
   if (*cli_timer_flag) {
     *cli_timer_flag = 0;
     double now = clic__get_time();
-    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
   }
 }
@@ -233,8 +250,10 @@ void cli_progress_done(SEXP bar) {
 }
 
 int cli_progress_num() {
-  SEXP clienv = Rf_findVarInFrame3(cli_pkgenv, Rf_install("clienv"), 1);
-  SEXP bars = Rf_findVarInFrame3(clienv, Rf_install("progress"), 1);
+  SEXP clienv = clic__find_var(cli_pkgenv, Rf_install("clienv"));
+  if (clienv == R_UnboundValue) error("Cannot find 'clienv'");
+  SEXP bars = clic__find_var(clienv, Rf_install("progress"));
+  if (bars == R_UnboundValue) error("Cannot find 'clienv$progress'");
   return LENGTH(bars);
 }
 
@@ -260,7 +279,7 @@ void cli_progress_update(SEXP bar, int set, int inc, int force) {
   if (set >= 0) {
     Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
   } else {
-    int crnt = INTEGER(Rf_findVarInFrame3(bar, Rf_install("current"), 1))[0];
+    int crnt = INTEGER(clic__find_var(bar, Rf_install("current")))[0];
     if (inc != 0) {
       Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
     }
@@ -270,7 +289,7 @@ void cli_progress_update(SEXP bar, int set, int inc, int force) {
   } else if (*cli_timer_flag) {
     *cli_timer_flag = 0;
     double now = clic__get_time();
-    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
   }
 }

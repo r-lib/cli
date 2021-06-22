@@ -122,7 +122,7 @@ int progress_along_Elt(SEXP x, R_xlen_t i) {
     double now = clic__get_time();
     Rf_defineVar(Rf_install("current"), ScalarInteger((int) i), bar);
     cli__current_progress_bar = bar;
-    SEXP show_after = Rf_findVarInFrame3(bar, Rf_install("show_after"), 1);
+    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) DATAPTR(cli__disable_gc);
   }
   return (int) (i + 1);

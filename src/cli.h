@@ -33,6 +33,7 @@ void cli_init_altrep(DllInfo *dll);
 #endif
 
 double clic__get_time();
+SEXP clic__find_var(SEXP rho, SEXP symbol);
 
 SEXP clic_start_thread(SEXP pkgenv, SEXP tick, SEXP speed);
 SEXP clic_stop_thread();
