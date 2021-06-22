@@ -30,7 +30,8 @@ test_that("cli_progress_message error", {
   outfile <- tempfile()
   on.exit(unlink(outfile), add = TRUE)
   expect_error(callr::r(fun2, stdout = outfile, stderr = outfile), "oopsie")
-  expect_snapshot(rawToChar(readBin(outfile, "raw", 1000)))
+  out <- rawToChar(readBin(outfile, "raw", 1000))
+  expect_snapshot(win2unix(out))
 })
 
 start_app()
@@ -60,5 +61,6 @@ test_that("cli_progress_step error", {
   outfile <- tempfile()
   on.exit(unlink(outfile), add = TRUE)
   expect_error(callr::r(fun, stdout = outfile, stderr = "2>&1"), "oopsie")
-  expect_snapshot(rawToChar(readBin(outfile, "raw", 1000)))
+  out <- rawToChar(readBin(outfile, "raw", 1000))
+  expect_snapshot(win2unix(out))
 })

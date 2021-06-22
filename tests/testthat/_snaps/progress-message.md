@@ -16,7 +16,7 @@
 ---
 
     Code
-      rawToChar(readBin(outfile, "raw", 1000))
+      win2unix(out)
     Output
       [1] "\033[?25l\rSimplest progress 'bar', `fn()` 2 twos\033[K\r\r\033[K\033[?25hError in (function ()  : oopsie\n"
 
@@ -32,7 +32,7 @@
 # cli_progress_step error
 
     Code
-      rawToChar(readBin(outfile, "raw", 1000))
+      win2unix(out)
     Output
       [1] "i First step\nv First step\n\ni Second step\nx Second step\n\nError in (function ()  : oopsie\n"
 

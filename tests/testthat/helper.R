@@ -150,3 +150,7 @@ create_c_function_call <- function(code, args, header = NULL) {
     "}\n"
   )
 }
+
+win2unix <- function (str) {
+  gsub("\r\n", "\n", str, fixed = TRUE, useBytes = TRUE)
+}
