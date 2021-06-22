@@ -344,14 +344,14 @@
     Code
       cli__pb_timestamp(list())
     Output
-      [1] "2021-06-18T02:09:14+00:00"
+      [1] "2021-06-18T00:09:14+00:00"
 
 ---
 
     Code
       cli__pb_timestamp(list())
     Output
-      [1] "2021-06-18T02:09:34+00:00"
+      [1] "2021-06-18T00:09:34+00:00"
 
 # pb_total_bytes
 

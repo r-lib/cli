@@ -214,7 +214,7 @@ test_that("pb_status", {
 
 test_that("pb_timestamp", {
   expect_equal(cli__pb_timestamp(NULL), "")
-  fake <- .POSIXct(1623974954)
+  fake <- .POSIXct(1623974954, tz = "GMT")
   mockery::stub(cli__pb_timestamp, "Sys.time", fake)
   expect_snapshot(cli__pb_timestamp(list()))
 
