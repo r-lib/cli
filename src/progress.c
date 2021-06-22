@@ -160,8 +160,8 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
   Rf_defineVar(Rf_install("extra"),         R_NilValue,              bar);
 
-  if (!config) {
-    /* NULL pointer, use defaults */
+  if (!config || Rf_isNull(config)) {
+    /* NULL pointer or R NULL, use defaults */
 
   } else if (Rf_isLogical(config) && LENGTH(config) == 1) {
     /* TRUE, use defaults */
