@@ -32,12 +32,16 @@ cli_tick_resume <- function(state = TRUE) {
 
 cli_with_ticks <- function(expr) {
   on.exit(cli_tick_resume(TRUE), add = TRUE)
+  opts <- options(cli.progress_show_after = 0)
+  on.exit(options(opts), add = TRUE)
   cli_tick_pause(TRUE)
   expr
 }
 
 cli_without_ticks <- function(expr) {
   on.exit(cli_tick_resume(TRUE), add = TRUE)
+  opts <- options(cli.progress_show_after = 0)
+  on.exit(options(opts), add = TRUE)
   cli_tick_pause(FALSE)
   expr
 }
