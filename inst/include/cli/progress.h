@@ -403,7 +403,7 @@ static R_INLINE void cli_progress_update(SEXP bar,
   if (ptr == NULL) {
     ptr = (void (*)(SEXP, int, int, int)) R_GetCCallable("cli", "cli_progress_update");
   }
-  ptr(bar, inc, set, force);
+  ptr(bar, set, inc, force);
 }
 
 #ifdef __cplusplus
