@@ -1,9 +1,10 @@
 
 test_that("c api #1", {
+  skip_on_cran()
   withr::local_options(cli.ansi = TRUE, cli.dynamic = TRUE)
   withr::local_options(cli.progress_handlers_only = "cli")
 
-  dll <- make_c_function(test_path("progress-1.c"))
+  dll <- make_c_function(test_path("progress-1.c"), linkingto = "cli")
   on.exit(dyn.unload(dll[["path"]]), add = TRUE)
 
   # simple crud
@@ -67,12 +68,6 @@ test_that("c api #1", {
   cli_progress_done()
   expect_true(before + 1 == after)
 
-  # cli_progress_sleep
-  tic <- .Call(clic_get_time)
-  .Call(dll$clitest__progress_sleep, 0L, 10L * 1000L * 1000L)
-  toc <- .Call(clic_get_time)
-  expect_true(toc - tic > 0.01)
-
   # cli_progress_update
   out <- capture_cli_messages(cli_without_ticks(
     ret <- .Call(dll$clitest__progress_update)
@@ -94,10 +89,17 @@ test_that("c api #1", {
   ))
   out <- fix_logger_output(out)
   expect_snapshot(out)
+
+  # cli_progress_sleep
+  tic <- .Call(clic_get_time)
+  .Call(dll$clitest__progress_sleep, 0L, 100L * 1000L * 1000L)
+  toc <- .Call(clic_get_time)
+  expect_true(toc - tic > 0.05)
 })
 
 test_that("c api #2", {
-  dll <- make_c_function(test_path("progress-2.c"))
+  skip_on_cran()
+  dll <- make_c_function(test_path("progress-2.c"), linkingto = "cli")
   ret <- cli_with_ticks(.Call(dll$clitest__init_timer))
   expect_equal(ret, c(0L, 1L))
 })

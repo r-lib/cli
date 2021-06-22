@@ -118,7 +118,8 @@ make_c_function <- function(file = NULL,
   cflags <- ""
   for (pkg in linkingto) {
     pkgdir <- file.path(find.package(pkg), "include")
-    cflags <- paste(cflags, "-I", pkgdir)
+    lcldir <- file.path(find.package(pkg), "inst", "include")
+    cflags <- paste(cflags, "-I", pkgdir, "-I", lcldir)
   }
   env <- c(PKG_CFLAGS = cflags)
   callr::rcmd(
