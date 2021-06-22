@@ -25,14 +25,14 @@
     Code
       msgs
     Output
-      [1] "\ri First step\033[K\r"  "\rv First step\033[K\r" 
-      [3] "\n"                      "\ri Second step\033[K\r"
-      [5] "\rv Second step\033[K\r" "\n"                     
+      [1] "\ri First step\033[K\r"       "\rv First step [1s]\033[K\r" 
+      [3] "\n"                           "\ri Second step\033[K\r"     
+      [5] "\rv Second step [1s]\033[K\r" "\n"                          
 
 # cli_progress_step error
 
     Code
       win2unix(out)
     Output
-      [1] "i First step\nv First step\n\ni Second step\nx Second step\n\nError in (function ()  : oopsie\n"
+      [1] "i First step\nv First step [1s]\n\ni Second step\nx Second step [1s]\n\nError in (function ()  : oopsie\n"
 

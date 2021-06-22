@@ -44,7 +44,7 @@ test_that("cli_progress_step", {
     cli_progress_step("First step")
     cli_progress_step("Second step")
   }
-  msgs <- capture_cli_messages(fun())
+  msgs <- fix_times(capture_cli_messages(fun()))
   expect_snapshot(msgs)
 })
 
@@ -61,6 +61,6 @@ test_that("cli_progress_step error", {
   outfile <- tempfile()
   on.exit(unlink(outfile), add = TRUE)
   expect_error(callr::r(fun, stdout = outfile, stderr = "2>&1"), "oopsie")
-  out <- rawToChar(readBin(outfile, "raw", 1000))
+  out <- fix_times(rawToChar(readBin(outfile, "raw", 1000)))
   expect_snapshot(win2unix(out))
 })

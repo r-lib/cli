@@ -390,11 +390,17 @@ cli_progress_step <- function(msg,
                               .auto_close = TRUE,
                               .envir = parent.frame(),
                               ...) {
+
+  ts <- " {.timestamp {cli::pb_elapsed}}"
+  format <- paste0("{.alert-info ", msg, "}")
+  format_done <- paste0("{.alert-success ", msg_done, ts, "}")
+  format_failed <- paste0("{.alert-danger ", msg_failed, ts, "}")
+
   id <- cli_progress_bar(
     type = "custom",
-    format = paste0("{.alert-info ", msg, "}"),
-    format_done = paste0("{.alert-success ", msg_done, "}"),
-    format_failed = paste0("{.alert-danger ", msg_failed, "}"),
+    format = format,
+    format_done = format_done,
+    format_failed = format_failed,
     clear = FALSE,
     current = current,
     .auto_close = .auto_close,

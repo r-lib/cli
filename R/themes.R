@@ -185,7 +185,8 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     "span.progress-bar" = list(
       transform = theme_progress_bar,
       color = "green"
-    )
+    ),
+    span.timestamp = list(before = "[", after = "]", color = "grey")
   )
 }
 
