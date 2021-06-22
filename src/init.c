@@ -12,6 +12,22 @@ SEXP clic_unload() {
 
 SEXP clic_dataptr(SEXP x);
 
+#ifdef GCOV_COMPILE
+
+void __gcov_flush();
+SEXP clic__gcov_flush() {
+  __gcov_flush();
+  return R_NilValue;
+}
+
+#else
+
+SEXP clic__gcov_flush() {
+  return R_NilValue;
+}
+
+#endif
+
 static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
@@ -30,6 +46,7 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_progress_along", (DL_FUNC) clic_progress_along, 2 },
 
   { "clic__find_var",      (DL_FUNC) clic__find_var,      2 },
+  { "clic__gcov_flush",    (DL_FUNC) clic__gcov_flush,    0 },
 
   { NULL, NULL, 0 }
 };
