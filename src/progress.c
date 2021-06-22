@@ -29,13 +29,13 @@ static int cli_clock_gettime(int clk_id, struct timespec *t) {
   memset(t, 0, sizeof(*t));
   if (clk_id == CLOCK_REALTIME) {
     struct timeval now;
-    int rv = gettimeofday(&now, NULL);
-    if (rv) {
-      return rv;
-    }
-    t->tv_sec = now.tv_sec;
-    t->tv_nsec = now.tv_usec * 1000;
-    return 0;
+    int rv = gettimeofday(&now, NULL); // __NO_COVERAGE__
+    if (rv) {                          // __NO_COVERAGE__
+      return rv;                       // __NO_COVERAGE__
+    }                                  // __NO_COVERAGE__
+    t->tv_sec = now.tv_sec;            // __NO_COVERAGE__
+    t->tv_nsec = now.tv_usec * 1000;   // __NO_COVERAGE__
+    return 0;                          // __NO_COVERAGE__
 
   } else if (clk_id == CLOCK_MONOTONIC) {
     static uint64_t clock_start_time = 0;
@@ -59,7 +59,7 @@ static int cli_clock_gettime(int clk_id, struct timespec *t) {
     t->tv_nsec = now % 1000000000;
     return 0;
   }
-  return EINVAL; /* EINVAL - Clock ID is unknown */
+  return EINVAL; /* EINVAL - Clock ID is unknown */ // __NO_COVERAGE__
 }
 #else
 #define cli_clock_gettime(a,b) clock_gettime(a,b)
@@ -264,11 +264,11 @@ void cli_progress_sleep(int s, long ns) {
   int s2 = s;
   long ns2 = ns;
   if (cli_speed_time != 1.0) {
-    s2 = s / cli_speed_time;
-    ns2 =
-      (s / cli_speed_time - s2) * 1000 * 1000 * 1000 +
-      ns / cli_speed_time;
-  }
+    s2 = s / cli_speed_time;                            // __NO_COVERAGE__
+    ns2 =                                               // __NO_COVERAGE__
+      (s / cli_speed_time - s2) * 1000 * 1000 * 1000 +  // __NO_COVERAGE__
+      ns / cli_speed_time;                              // __NO_COVERAGE__
+  }                                                     // __NO_COVERAGE__
   ts.tv_sec = s2;
   ts.tv_nsec = ns2;
   nanosleep(&ts, NULL);

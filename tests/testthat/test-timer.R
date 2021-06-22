@@ -11,3 +11,8 @@ test_that("ALTREP methods", {
     `__cli_update_due`[1]
   })
 })
+
+test_that("cli_tick_set", {
+  skip_on_cran()
+  expect_silent(cli_tick_set())
+})

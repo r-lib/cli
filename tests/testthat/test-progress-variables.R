@@ -5,6 +5,7 @@ test_that("cli_progress_demo", {
   expect_snapshot(out)
 
   out <- cli_progress_demo(live = FALSE, at = NULL, total = 3)
+  out$lines <- fix_times(out$lines)
   expect_snapshot(out)
 
   out <- cli_progress_demo(live = FALSE, at = NULL, total = NA, delay = 0.001)

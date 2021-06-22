@@ -77,8 +77,8 @@ int cli__kill_thread() {
 	 thread might refer to it, still.
 	 The tick thread is always cancellable, so this should
 	 not happen. */
-      warning("Could not cancel cli thread");
-      return ret;
+      warning("Could not cancel cli thread"); // __NO_COVERAGE__
+      return ret;                             // __NO_COVERAGE__
     } else {
       /* Wait for it to finish. Otherwise releasing the flag
 	 is risky because the tick thread might just use it. */
