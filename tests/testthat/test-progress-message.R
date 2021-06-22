@@ -48,6 +48,7 @@ test_that("cli_progress_step", {
 })
 
 test_that("cli_progress_step error", {
+  if (getRversion() < "3.5.0") skip("Needs R 3.5.0")
   fun <- function() {
     withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
     suppressWarnings(testthat::local_reproducible_output())
