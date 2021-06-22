@@ -86,6 +86,14 @@ test_that("c api #1", {
     ret <- .Call(dll$clitest__progress_update3)
   ))
   expect_snapshot(out)
+
+  # C progress bars have ids
+  withr::local_options(cli.progress_handlers_only = "logger")
+  out <- capture.output(cli_with_ticks(
+    ret <- .Call(dll$clitest__progress_crud, NULL)
+  ))
+  out <- fix_logger_output(out)
+  expect_snapshot(out)
 })
 
 test_that("c api #2", {

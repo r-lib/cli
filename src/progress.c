@@ -5,6 +5,7 @@
 
 #include <errno.h>
 #include <time.h>
+#include <unistd.h>
 
 /* ---------------------------------------------------------------------*/
 /* Internals                                                            */
@@ -107,6 +108,7 @@ SEXP clic__find_var(SEXP rho, SEXP symbol) {
   }
 }
 
+static int cli__counter = 0;
 
 SEXP cli__progress_update(SEXP bar) {
   /* We can't throw a condition from C, unfortunately... */
@@ -143,6 +145,12 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   int cl = 1;
   if (!isNull(clear)) cl = LOGICAL(clear)[0];
 
+  char idstr[64];
+  static pid_t pid = 0;
+  if (pid == 0) pid = getpid();
+  snprintf(idstr, sizeof(idstr) - 1, "cli-%d-%d", pid, cli__counter++);
+
+  Rf_defineVar(Rf_install("id"),            Rf_mkString(idstr),      bar);
   Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("status"),        Rf_mkString(""),         bar);
   Rf_defineVar(Rf_install("type"),          Rf_mkString("iterator"), bar);
