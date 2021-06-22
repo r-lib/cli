@@ -25,17 +25,18 @@ progress_c_update <- function(pb, auto_done = TRUE) {
     for (h in handlers) {
       if ("add" %in% names(h)) h$add(pb, .envir = caller)
     }
-    if (!identical(caller, .GlobalEnv)) defer(progress_c_done(pb), envir = caller)
-  } else {
-    for (h in handlers) {
-      if ("set" %in% names(h)) h$set(pb, .envir = caller)
-    }
+  }
+
+  for (h in handlers) {
+    if ("set" %in% names(h)) h$set(pb, .envir = caller)
   }
 
   NULL
 }
 
 progress_c_done <- function(pb, caller = NULL) {
+  if (isTRUE(pb$done)) return()
+
   caller <- caller %||% pb$caller %||% sys.frame(sys.nframe() - 1L)
 
   handlers <- cli_progress_select_handlers()
@@ -47,6 +48,8 @@ progress_c_done <- function(pb, caller = NULL) {
 
   if (!is.null(pb$id)) clienv$progress[[pb$id]] <- NULL
   if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
+
+  pb$done <- TRUE
 
   NULL
 }
