@@ -1,5 +1,6 @@
 
 test_that("cli_progress_demo", {
+  withr::local_options(cli.ansi = TRUE)
   out <- cli_progress_demo(live = FALSE, at = 50)
   out$lines <- fix_times(out$lines)
   expect_snapshot(out)
