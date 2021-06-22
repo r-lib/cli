@@ -148,7 +148,7 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   char idstr[64];
   static pid_t pid = 0;
   if (pid == 0) pid = getpid();
-  snprintf(idstr, sizeof(idstr) - 1, "cli-%d-%d", pid, cli__counter++);
+  snprintf(idstr, sizeof(idstr) - 1, "cli-%d-%d", (int) pid, cli__counter++);
 
   Rf_defineVar(Rf_install("id"),            Rf_mkString(idstr),      bar);
   Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
