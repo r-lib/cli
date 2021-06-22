@@ -223,7 +223,7 @@ void cli_progress_set(SEXP bar, int set) {
   if (isNull(bar)) return;
   Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
   if (*cli_timer_flag) {
-    *cli_timer_flag = 0;
+    if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
@@ -235,7 +235,7 @@ void cli_progress_add(SEXP bar, int inc) {
   int crnt = INTEGER(clic__find_var(bar, Rf_install("current")))[0];
   Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
   if (*cli_timer_flag) {
-    *cli_timer_flag = 0;
+    if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
@@ -287,7 +287,7 @@ void cli_progress_update(SEXP bar, int set, int inc, int force) {
   if (force) {
     cli__progress_update(bar);
   } else if (*cli_timer_flag) {
-    *cli_timer_flag = 0;
+    if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
