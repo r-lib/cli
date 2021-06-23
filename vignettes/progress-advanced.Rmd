@@ -1,0 +1,412 @@
+---
+title: "Advanced cli progress bars"
+author: "Gábor Csárdi"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  cache = TRUE
+)
+# Turn on ANSI colors
+options(
+  cli.num_colors = 256L
+)
+asciicast::init_knitr_engine(
+  echo = TRUE,
+  echo_input = FALSE,
+  options = list(
+    asciicast_at = NULL,
+    asciicast_end_wait = 3,
+    asciicast_speed = 1,
+    asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
+  )
+)
+```
+
+```{asciicast, setup, cache = FALSE, include = FALSE}
+library(cli)
+options(cli.progress_show_after = 0)
+options(cli.progress_clear = FALSE)
+options(cli.progress_format_iterator = NULL)
+options(cli.progress_format_iterator_nototal = NULL)
+options(cli.progress_format_tasks = NULL)
+options(cli.progress_format_tasks_nototal = NULL)
+options(cli.progress_format_download = NULL)
+options(cli.progress_format_download_nototal = NULL)
+```
+
+```{asciicast}
+library(cli)
+```
+
+# Overhead
+
+cli progress bars do have an overhead that may or may not be significant
+for your use case. In the R API, if you have a tight loop, then you should
+not update the progress bar too often.
+
+## Minimizing overhead
+
+To minimize progress bar overhead, `cli_progress_update()` uses an internal
+timer and only update the progress bar on the screen if the timer is due.
+
+In C code, you can refer to the timer directly to avoid an update.
+The `CLI_SHOULD_TICK` macro evaluates to one if the timer is due and an
+update is needed, otherwise to zero. `CLI_SHOULD_TICK` only works if you
+already created a cli progress bar from C, or you called
+`cli_progress_init_timer()`. The latter initializes the cli timer without
+creating a progress bar. (If the timer is not initialized, then
+`CLI_SHOULD_TICK` evaluates to zero.)
+
+```c
+  SEXP bar = PROTECT(cli_progress_bar(num_iters, NULL));
+  for (i = 0; i < num_iters; i++) {
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
+    // ...
+  }
+  cli_progress_done(bar);
+```
+
+# Non-interactive R sessions
+
+Non-interactive R sessions typically have two differences to interactive
+ones. First, by default the cli timer signals every
+`r cli:::cli_timer_non_interactive` milliseconds, instead of
+`r cli:::cli_timer_interactive` milliseconds.
+
+Second, non-interactive sessions often do not have a dynamic terminal,
+so cli cannot create and update a status bar in the last row of the
+display. In this case cli simply prints every progress update as a new
+line to the screen.
+
+<!-- TODO: example -->
+
+# Progress bars in scripts
+
+You can use progress bars in R scripts, just like you use them in R
+packages.
+
+In an R script you might create a progress bar from the global environment,
+instead from within a function call. The global environment also has a
+_current_ progress bar, so when you create a progress bar from the global
+environment, the previous one from the same environment is terminated.
+However, there is not function to return from, so the last progress bar
+of the script will be only terminated when the script terminates, or when
+you explicitly terminate it using `cli_progress_done()`.
+
+<!-- # Nested progress bars TODO -->
+
+# Customization
+
+cli progress bars can be customized by the developer and the end user,
+by setting options, providing function arguments and regular cli themes.
+
+Some aspects can only be customized by the developer, and some others can
+only be customized by the end user. Others can be customized by both,
+with the end user's setting taking precedence.
+
+## Developer customization
+
+### About progress bar types
+
+Each progress bar type has a default display (format string), which can be
+configured by the end user. The current progress bar types are, with their
+default display, with known and unknown number of total progress units.
+
+### `iterator`
+
+Typically for loops and mapping functions. It shows a bar
+by default, if the total number of iterations is known.
+
+```{asciicast echo = FALSE,  R.options = list(asciicast_at = "end")}
+cli_progress_demo("Data cleaning", total = 100, at = 50, clear = FALSE)
+```
+
+```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+cli_progress_demo("Data cleaning", at = 50, clear = FALSE)
+```
+
+### `tasks`
+
+For a list of tasks, by default it shows a `current/total` display.
+
+```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+cli_progress_demo(
+  "Finding data files", total = 100, at = 50,
+  clear = FALSE, type = "tasks"
+)
+```
+
+```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+cli_progress_demo(
+  "Finding data files", at = 50,
+  clear = FALSE, type = "tasks"
+)
+```
+
+### `download`
+
+For downloads, progress units are shown as bytes by default here.
+
+```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+cli_progress_demo(
+  "Downloading", total = 10280, at = 5120, clear = FALSE,
+  type = "download"
+)
+```
+
+```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+cli_progress_demo(
+  "Downloading", at = 5120, clear = FALSE,
+  type = "download"
+)
+```
+
+### `custom`
+
+For custom displays, the developer has to specify an format string
+for `custom` progress bars.
+
+### Custom format strings (by the developer)
+
+The developer can specify a custom format string for a progress bar.
+For `custom` progress bars, this is compulsory. Format strings may use glue
+templating, cli pluralization and cli theming. They can also use a number
+of built-in cli progress variables, see 'Progress variables' below.
+
+```{asciicast}
+f <- function() {
+  cli_progress_bar(
+    total = 20000,
+    format = "Step {step} | {pb_bar} {pb_percent}"
+  )
+  step <- 1
+  for (i in 1:10000) {
+    Sys.sleep(2/10000)
+    cli_progress_update(set = i)
+  }
+  step <- 2
+  for (i in 10001:20000) {
+    Sys.sleep(2/10000)
+    cli_progress_update(set = i)
+  }
+}
+f()
+```
+
+For `custom` progress bars cli always uses the specified format string.
+For other types, the end user might customize the format string, see below.
+
+## End user customization
+
+### Quick loops
+
+The `cli.progress_show_after` (default is two seconds) option is the number
+seconds to wait before showing a progress bar. 
+
+### Custom bars
+
+The end user can customize how a progress bar will look, by setting one
+or more of the following options:
+
+* `cli.progress_bar_style`
+* `cli.progress_bar_style_unicode`
+* `cli.progress_bar_style_ascii`
+
+On UTF-8 displays `cli.progress_bar_style_unicode` is used, if set.
+Otherwise `cli.progress_bar_style` is used. On non UTF-8 displays
+`cli.progress_bar_style_ascii` is used, if set. Otherwise
+`cli.progress_bar_style` is used.
+
+These options can be set to a built-in progress bar style name:
+
+```{r include = FALSE}
+library(cli)
+```
+
+```{r}
+names(cli_progress_styles())
+```
+
+```{asciicast}
+options(cli.progress_bar_style = "fillsquares")
+f <- function() lapply(cli_progress_along(letters), function(l) Sys.sleep(0.2))
+x <- f()
+```
+
+```{asciicast include = FALSE, cache = FALSE}
+options(cli.progress_bar_style = NULL)
+```
+
+Alternatively, they can be set to a list with entries `complete`,
+`incomplete` and `current`, to specify the characters (or strings) for the
+parts of the progress bar:
+
+```{asciicast}
+options(cli.progress_bar_style = list(
+  complete = cli::col_yellow("\u2605"),
+  incomplete = cli::col_grey("\u00b7")
+))
+f <- function() lapply(cli_progress_along(letters), function(l) Sys.sleep(0.2))
+x <- f()
+```
+
+```{asciicast include = FALSE}
+options(cli.progress_bar_style = NULL)
+```
+
+### Custom spinners
+
+Options to customize cli spinners:
+
+* `cli.spinner`
+* `cli.spinner_unicode`
+* `cli.spinner_ascii`
+
+On UTF-8 displays `cli.spinner_unicode` is used, if set, otherwise
+`cli.spinner`. On ASCII displays `cli.spinner_ascii` is used, if set,
+otherwise `cli.spinner`.
+
+Use `list_spinners()` to list all spinners and `demo_spinners()` to take
+a peek at them.
+
+```{asciicast custom-spinner}
+options(cli.spinner = "moon")
+f <- function() {
+  cli_progress_bar(format = strrep("{cli::pb_spin} ", 20), clear = TRUE)
+  for (i in 1:100) {
+    Sys.sleep(5/100)
+    cli_progress_update()
+  }
+}
+f()
+```
+
+### Custom format strings
+
+The end user may use a number of global options to customize how the
+built-in progress bar types are displayed on the screen:
+
+* `cli.progress_format_iterator` is used for `iterator` progress bars.
+* `cli.progress_format_iterator_nototal` is used for `iterator` progress
+   bars with an unknown number of total units.
+* `cli.progress_format_tasks` is used for `tasks` progress bars.
+* `cli.progress_format_tasks_nototal` is used for `tasks` progress
+   bars with an unknown number of total units.
+* `cli.progress_format_download` is used for `download` progress bars.
+* `cli.progress_format_download_nototal` is used for `download` progress
+   bars with an unknown number of total units.
+
+
+## Progress variables
+
+Custom format strings may use progress variables in glue interpolated
+expressions, to refer to the state of the progress bar. See
+`?"progress-variables"` in the manual for the list of supported variables.
+
+If you refer to a progress variable from a package, you need need to
+import it or qualify the reference with `cli::`. When you set a custom
+format string as an end user option, we suggest that you always use the
+qualified form, in case the cli package is not attached. For example, to
+set a minimal display for downloads you might write 
+
+```{asciicast include = FALSE, cache = FALSE}
+options(cli.progress_format_download =
+  paste0(
+    "{cli::col_cyan('\u2B07')} {cli::pb_spin} ",
+    "{cli::pb_name}[{cli::pb_current_bytes}/{cli::pb_total_bytes}]"
+  )
+)
+```
+
+```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+cli_progress_demo(
+"Downloading", total = 10280, at = 5121, clear = FALSE,
+  type = "download"
+)
+```
+
+You can use your own expressions and functions on progress bar tokens.
+E.g. to show the current number of steps with letters instead of numbers,
+use `letters[pb_current]`:
+
+```{asciicast function-of-token}
+f <- function() {
+  cli_progress_bar(
+    total = 26,
+    format = "{pb_spin} This is step {.emph {letters[pb_current]}}. {pb_spin}"
+  )
+  for (i in 1:26) {
+    Sys.sleep(3/26)
+    cli_progress_update()
+  }
+}
+f()
+```
+
+## Clearing or keeping terminated progress bars
+
+By default terminated progress bars are removed from the screen. The end
+user can set the `cli.progress_clear` option to `FALSE` to override the
+default. In addition, the developer can also change the default, using the
+`clear` parameter of `cli_progress_bar()`. If both the option and the
+parameter are set, the parameter is used.
+
+# The C API
+
+To use the C cli progress
+API in your package, you need to add cli to `LinkingTo` and `Imports`:
+```
+LinkingTo: cli
+Imports: cli
+```
+
+In the C files you want to use the API from include `cli/progress.h`:
+
+```c
+#include <cli/progress.h>
+```
+
+Now you are ready to call cli functions. The C API is similar to the
+traditional R API:
+
+1. `cli_progress_bar()` creates a progress bar.
+2. `cli_progress_update()` updates a progress bar.
+3. `cli_progress_done()` terminates it.
+
+A complete example:
+
+```{asciicastcpp11 capi}
+#include <cli/progress.h>
+SEXP progress_test1() {
+  int i;
+  SEXP bar = PROTECT(cli_progress_bar(1000, NULL));
+  for (i = 0; i < 1000; i++) {
+    cli_progress_sleep(0, 4 * 1000 * 1000);
+    if (CLI_SHOULD_TICK) cli_progress_set(bar, i);
+  }
+  cli_progress_done(bar);
+  UNPROTECT(1);
+  return Rf_ScalarInteger(i);
+}
+```
+
+```{asciicast, echo = FALSE, dependson = -1}
+invisible(progress_test1())
+```
+
+## C API reference
+
+```{r include = FALSE, cache = FALSE, child = cli:::docs_progress_c_api()}
+```

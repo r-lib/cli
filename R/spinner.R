@@ -17,8 +17,12 @@ usethis::use_data(spinners, internal = TRUE)
 #' `cli` contains many different spinners, you choose one according to your
 #' taste.
 #'
-#' @param which The name of the chosen spinner. The default depends on
-#'   whether the platform supports Unicode.
+#' @param which The name of the chosen spinner. If `NULL`, then the default
+#'   is used, which can be customized via the `cli.spinner_unicode`,
+#'   `cli.spinner_ascii` and `cli.spinner` options. (The latter applies to
+#'   both Unicode and ASCII displays. These options can be set to the name
+#'   of a builting spinner, or to a list that has an entry called `frames`,
+#'   a character vector of frames.
 #' @return A list with entries: `name`, `interval`: the suggested update
 #'   interval in milliseconds and `frames`: the character vector of the
 #'   spinner's frames.
@@ -30,17 +34,38 @@ usethis::use_data(spinners, internal = TRUE)
 #' get_spinner("shark")
 
 get_spinner <- function(which = NULL) {
-  stopifnot(is.null(which) || is_string(which))
+  stopifnot(is.null(which) || is_string(which) || is.list(which))
 
   if (is.null(which)) {
-    which <- if (is_utf8_output()) "dots" else "line"
+    if (is_utf8_output()) {
+      which <-
+        getOption("cli.spinner_unicode") %||%
+        getOption("cli.spinner") %||%
+        "dots"
+    } else {
+      which <-
+        getOption("cli.spinner_ascii") %||%
+        getOption("cli.spinner") %||%
+        "line"
+    }
   }
 
-  row <- match(which, spinners$name)
-  list(
-    name = which,
-    interval = spinners$interval[[row]],
-    frames = spinners$frames[[row]])
+  if (is.character(which)) {
+    row <- match(which, spinners$name)
+    which <- list(
+      name = which,
+      interval = spinners$interval[[row]],
+      frames = spinners$frames[[row]])
+  }
+
+  if (!is.character(which$frames)) {
+    stop("Spinner frames must be a character vector")
+  }
+
+  which$name <- which$name %||% NA_character_
+  which$interval <- which$interval %||% 100L
+
+  which
 }
 
 #' List all available spinners

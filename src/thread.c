@@ -7,26 +7,13 @@
 #include <signal.h>
 #endif
 
-static SEXP pflag = 0;
-static pthread_t tick_thread = { 0 };
-static int* flag = 0;
-
-/* TODO: this might not be monitonic. replace with better approach */
-#if defined(__MACH__) && !defined(CLOCK_REALTIME)
-#include <sys/time.h>
-#define CLOCK_REALTIME 0
-#define CLOCK_MONOTONIC 0
-// clock_gettime is not implemented on older versions of OS X (< 10.12).
-// If implemented, CLOCK_REALTIME will have already been defined.
-int clock_gettime(int dummy, struct timespec* t) {
-  struct timeval now;
-  int rv = gettimeofday(&now, NULL);
-  if (rv) return rv;
-  t->tv_sec  = now.tv_sec;
-  t->tv_nsec = now.tv_usec * 1000;
-  return 0;
-}
-#endif
+SEXP cli_pkgenv = 0;
+pthread_t tick_thread = { 0 };
+volatile int cli__timer_flag = 1;
+volatile int* cli_timer_flag = &cli__timer_flag;
+struct timespec cli__tick_ts;
+double cli_speed_time = 1.0;
+volatile int cli__reset = 1;
 
 void* clic_thread_func(void *arg) {
 #ifndef _WIN32
@@ -39,32 +26,47 @@ void* clic_thread_func(void *arg) {
 
   int old;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
-  flag = (int*) arg;
-  struct timespec sp;
-  sp.tv_sec = 0;
-  sp.tv_nsec = 100 * 1000 * 1000;
 
   while (1) {
     /* TODO: handle signals */
-    nanosleep(&sp, NULL);
-    *flag = 1;
+    nanosleep(&cli__tick_ts, NULL);
+    if (cli__reset) cli__timer_flag = 1;
   }
 }
 
-SEXP clic_start_thread(SEXP flag) {
-  R_PreserveObject(flag);
-  pflag = flag;
-  int ret = pthread_create(
-    & tick_thread,
-    /* attr = */ 0,
-    clic_thread_func,
-    /* arg = */ LOGICAL(flag)
-  );
+int cli__start_thread(SEXP ticktime, SEXP speedtime) {
+  cli_speed_time = REAL(speedtime)[0];
+  int cticktime = INTEGER(ticktime)[0] / REAL(speedtime)[0];
+  if (cticktime == 0) cticktime = 1;
+  cli__tick_ts.tv_sec = cticktime / 1000;
+  cli__tick_ts.tv_nsec = (cticktime % 1000) * 1000 * 1000;
+  int ret = 0;
+
+  if (! getenv("CLI_NO_THREAD")) {
+    ret = pthread_create(
+      & tick_thread,
+      /* attr = */ 0,
+      clic_thread_func,
+      /* arg = */ NULL
+    );
+  } else {
+    cli__reset = 0;
+  }
+
+  return ret;
+}
+
+SEXP clic_start_thread(SEXP pkg, SEXP ticktime, SEXP speedtime) {
+  R_PreserveObject(pkg);
+  cli_pkgenv = pkg;
+ 
+  int ret = cli__start_thread(ticktime, speedtime);
   if (ret) warning("Cannot create cli tick thread");
+
   return R_NilValue;
 }
 
-SEXP clic_stop_thread() {
+int cli__kill_thread() {
   int ret = 0;
   /* This should not happen, but be extra careful */
   if (tick_thread) {
@@ -75,8 +77,8 @@ SEXP clic_stop_thread() {
 	 thread might refer to it, still.
 	 The tick thread is always cancellable, so this should
 	 not happen. */
-      warning("Could not cancel cli thread");
-      return R_NilValue;
+      warning("Could not cancel cli thread"); // __NO_COVERAGE__
+      return ret;                             // __NO_COVERAGE__
     } else {
       /* Wait for it to finish. Otherwise releasing the flag
 	 is risky because the tick thread might just use it. */
@@ -84,15 +86,45 @@ SEXP clic_stop_thread() {
     }
   }
 
-  if (pflag) {
-    R_ReleaseObject(pflag);
-    pflag = 0;
+  return ret;
+}
+
+SEXP clic_stop_thread() {
+  int ret = cli__kill_thread();
+  if (!ret) {
+    R_ReleaseObject(cli_pkgenv);
   }
 
   return R_NilValue;
 }
 
 SEXP clic_tick_reset() {
-  if (flag) *flag = 0;
+  if (cli__reset) {
+    cli__timer_flag = 0;
+  }
+  return R_NilValue;
+}
+
+SEXP clic_tick_set(SEXP ticktime, SEXP speedtime) {
+  cli__timer_flag = 1;
+
+  int ret = cli__kill_thread();
+  if (ret) error("Cannot terminate progress thread");
+
+  ret = cli__start_thread(ticktime, speedtime);
+  if (ret) warning("Cannot create progress thread");
+
+  return R_NilValue;
+}
+
+SEXP clic_tick_pause(SEXP state) {
+  cli__reset = 0;
+  cli__timer_flag = LOGICAL(state)[0];
+  return R_NilValue;
+}
+
+SEXP clic_tick_resume(SEXP state) {
+  cli__timer_flag = LOGICAL(state)[0];
+  cli__reset = 1;
   return R_NilValue;
 }

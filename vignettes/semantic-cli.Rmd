@@ -314,26 +314,28 @@ cli supports creating a status bar in the last line of the console, if the termi
 This is supported in all terminals, in RStudio, Emacs, RGui, R.app, etc.
 It is not supported if the output is a file, e.g. typically on CI systems.
 
-`cli_process_start()` creates a new status and shows it in the status bar and `cli_process_update()` updates a status.
-By default cli automatically terminates the status and updates the status bar accordingly.
+`cli_status()` creates a new status bar, `cli_status_update()` updates a status bar, and `cli_status_clear()` clears it.
+`cli_status()` returns an id, that can be used in `cli_status_update()` and `cli_status_clear()` to refer to the right status bar.
 
 While it is possible to create multiple status bars, on a typical terminal only one of them can be shown at any time.
-To reduce the number of calls to cli and thus clutter in the code, cli by default terminates a status if another one is created from the same caller.
+cli by default shows the one that was last created or updated.
 
 While the status bar is active, cli can still produce output, as normal.
 This output is created "above" the status bar, which is always kept in the last line of the screen.
 See the following example:
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 30, asciicast_rows = 3)}
-f <- function(n = 10) {
-  cli_alert_info("About to start downloads of {n} file{?s}")
-  i <- 0
-  sb <- cli_process_start("Got {i}/{n} {qty(i)}file{?s}.")
-  for (i in seq_len(n)) {
+```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 30)}
+f <- function() {
+  cli_alert_info("About to start downloads.")
+  sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
+  for (i in 9:1) {
     Sys.sleep(0.5)
-    if (i == 5) cli_alert_info("Already half way!")
-    cli_process_update()
+    if (i == 5) cli_alert_success("Already half-way!")
+    cli_status_update(id = sb,
+      "{symbol$arrow_right} Got {10-i} file{?s}, downloading {i}")
   }
+  cli_status_clear(id = sb)
+  cli_alert_success("Downloads done.")
 }
 f()
 ```

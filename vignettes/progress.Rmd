@@ -1,0 +1,307 @@
+---
+title: "Introduction to progress bars in cli"
+author: "Gábor Csárdi"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r, asciicast-setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  cache = TRUE
+)
+# Turn on ANSI colors
+options(
+  cli.num_colors = 256L
+)
+asciicast::init_knitr_engine(
+  echo = TRUE,
+  echo_input = FALSE,
+  options = list(
+    asciicast_at = NULL,
+    asciicast_end_wait = 3,
+    asciicast_speed = 1,
+    asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
+  )
+)
+```
+
+# Introduction
+
+```{asciicast, asciicast-tick-time, include = FALSE}
+set.seed(1)
+Sys.setenv(CLI_TICK_TIME = "100")
+```
+
+```{asciicast, progress-setup setup, cache = FALSE, include = FALSE}
+library(cli)
+options(cli.progress_show_after = 0)
+options(cli.progress_clear = FALSE)
+options(cli.progress_format_iterator = NULL)
+options(cli.progress_format_iterator_nototal = NULL)
+options(cli.progress_format_tasks = NULL)
+options(cli.progress_format_tasks_nototal = NULL)
+options(cli.progress_format_download = NULL)
+options(cli.progress_format_download_nototal = NULL)
+```
+
+```r
+library(cli)
+options(cli.progress_show_after = 0)
+options(cli.progress_clear = FALSE)
+```
+
+This document discusses the structure and simplest uses of the cli
+progress bar API. For more advanced usage and the C progress bar API, see
+the 'Advanced cli progress bars' article and the manual pages.
+
+From version 3.0.0 cli provides a set of functions to create progress bars.
+The main goals of the progress bar API are:
+
+* Reduce clutter. Try to avoid verbose syntax, unless necessary.
+* Flexibility from R and C/C++ code. Support all cli features in proress
+  bars: glue interpolation, theming, pluralization, etc.
+* Predictably small performance penalty. A very small constant penalty
+  per iteration, and a reasonable penalty per second.
+
+# The traditional progress bar API
+
+Add a progress bar in three steps:
+
+1. Call `cli_progress_bar()` to add create a progress bar.
+2. Call `cli_progress_update()` to update it.
+3. Call `cli_progress_done()` to terminate it.
+
+For example:
+
+```{asciicast classic-example}
+clean <- function() {
+  cli_progress_bar("Cleaning data", total = 100)
+  for (i in 1:100) {
+    Sys.sleep(5/100)
+    cli_progress_update()
+  }
+  cli_progress_done()
+}
+clean()
+```
+
+The traditional API provides full control w.r.t when to create, update and
+terminate a progress bar.
+
+# The current progress bar
+
+For conciseness, the progress bar functions refer to the _current progress
+bar_ by default. Every function has at most one current progress bar at
+any time. The current progress bar of a function is terminated when the
+function creates another progress bar or when the function returns, errors
+or is interrupted.
+
+The current progress bar lets us omit the `cli_progress_done()` call:
+
+```{asciicast current}
+clean <- function() {
+  cli_progress_bar("Cleaning data #1", total = 100)
+  for (i in 1:100) {
+    Sys.sleep(3/100)
+    cli_progress_update()
+  }
+
+  cli_progress_bar("Cleaning data #2", total = 100)
+  for (i in 1:100) {
+    Sys.sleep(3/100)
+    cli_progress_update()
+  }
+}
+clean()
+```
+
+# Unknown total number of units
+
+In some cases the total number of progress units is unknown, so simply
+omit them from `cli_progress_bar()` (or set them to `NA`). cli uses a
+different display when `total` is unknown:
+
+```{asciicast unknown-total-seed, include = FALSE, cache = FALSE}
+set.seed(1)
+```
+
+```{asciicast unknown-total}
+walk_dirs <- function() {
+  cli_progress_bar("Walking directories")
+  while (TRUE) {
+    if (runif(1) < 0.01) break
+    Sys.sleep(0.01)
+    cli_progress_update()
+  }
+  cli_progress_update(force = TRUE)
+}
+walk_dirs()
+```
+
+# Quick loops
+
+By default, cli does not show progress bars that are terminated within two
+seconds after their creation. The end user can configure this limit
+with the `cli.progress_show_after` global option.
+
+For example, in this document we set the limit to zero seconds, so progress
+bars are shown at their first update.
+
+# Progress bars for mapping functions: `cli_progress_along()`
+
+`cli_progress_along()` is currently experimental.
+
+To add a progress bar to a call to `lapply()` or another mapping function,
+wrap the input sequence into `cli_progress_along()`:
+
+```r
+lapply(cli_progress_along(X), fun)
+```
+
+`cli_progress_along()` works similarly to `seq_along()`, it returns an index vector.
+If you use `cli_progress_along()`, then `lapply()` will pass the _indices_
+of the elements in `X` to `fun`, instead of the elements themselves.
+
+`cli_progress_along()` expects that the index vector will be used only once,
+from beginning to end. It is best to never assign the return value of
+`cli_progress_along()` to a variable.
+
+An example:
+
+```{asciicast, tickalong}
+f <- function() {
+  rawabc <- lapply(
+    cli_progress_along(letters),
+    function(i) {
+      charToRaw(letters[i])
+      Sys.sleep(0.5)
+    }
+  )
+}
+f()
+```
+
+`cli_progress_along()` uses ALTREP, so it only works from R 3.5.0 and later.
+On older R versions it is equivalent to `seq_along()` and it does not
+create a progress bar.
+
+## `for` loops
+
+You can also use `cli_progress_along()` in `for` loops, with the additional
+complication that if you use `break`, then you might need to terminate the
+progress bar explicitly:
+
+```r
+for (i in cli_progress_along(seq)) {
+  ...
+  if (cond) cli_progress_done() && break
+  ...
+}
+```
+
+`cli_progress_done()` always returns `TRUE` to allow this form.
+
+Alternatively, you can terminate the progress bar right after loop:
+
+```r
+for (i in cli_progress_along(seq)) {
+  ...
+  if (cond) break
+  ...
+}
+cli_progress_done()
+```
+
+If the function containing the `for` loop returns after the loop, or
+you create another progress bar with `cli_progress_along()` or `cli_progress_bar()`,
+then no explicit `cli_progress_done()` is needed.
+
+# Simplified API
+
+Often you don't need the full power of the progress bar API, and only want
+to show a status message. The `cli_progress_message()` and
+`cli_progress_step()` functions are taylored for this.
+
+`cli_progress_message()` shows a (potentially templated) message in the
+status bar. For convenience, the progress bar rules still apply here by
+default:
+* Status messages are removed when their calling function exits.
+* A status message removes the previous status message or progress bar
+  of the same caller function.
+
+```{asciicast cli_progress_message}
+f <- function() {
+  cli_progress_message("Task one is running...")
+  Sys.sleep(2)
+
+  cli_progress_message("Task two is running...")
+  Sys.sleep(2)
+
+  step <- 1L
+  cli_progress_message("Task three is underway: step {step}")
+  for (step in 1:5) {
+    Sys.sleep(0.5)
+    cli_progress_update()
+  }
+}
+f()
+```
+
+Status messages may use glue interpolation, cli styling and pluralization,
+as usual. You can call `cli_progress_update()` to update a status message.
+
+`cli_progress_step()` is slightly different from
+`cli_progress_message()`:
+* it adds cli's alert themes to the status messages (info, success or
+  danger), and
+* it keeps the messages on the screen after they are terminated.
+
+As usual, you can use `cli_progress_step()` to update an existing status
+message.
+
+```{asciicast cli_progress_step}
+f <- function(n = 10) {
+  cli_alert_info("About to start downloads of {n} file{?s}")
+  i <- 0
+  cli_progress_step("Got {i}/{n} {qty(i)}file{?s}.")
+  for (i in seq_len(n)) {
+    Sys.sleep(0.5)
+    if (i == 5) cli_alert_info("Already half way!")
+    cli_progress_update()
+  }
+}
+f()
+```
+
+`cli_progress_step()` automatically handles errors, and styles the
+status message accordingly:
+
+```{asciicast step-error, R.options = list(asciicast_rows = 3)}
+f <- function() {
+  cli_progress_step("First step, this will succeed")
+  Sys.sleep(1)
+  cli_progress_step("Second step, this will fail")
+  Sys.sleep(1)
+  stop("Something is wrong here")
+}
+f()
+```
+
+<!-- # Downloads -->
+
+<!-- ## Downloads with httr -->
+
+<!-- TODO -->
+
+<!-- ## Downloads with curl -->
+
+<!-- TODO -->

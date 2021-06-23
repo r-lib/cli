@@ -58,7 +58,8 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
   list(
     body = list(
       "class-map" = list(
-        fs_path = "file"
+        fs_path = "file",
+        "cli-progress-bar" = "progress-bar"
       )
     ),
 
@@ -180,8 +181,12 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       color = "blue"
     ),
     span.field = list(color = "green"),
-    span.cls = list(collapse = "/", color = "blue", before = "<", after = ">"
-    )
+    span.cls = list(collapse = "/", color = "blue", before = "<", after = ">"),
+    "span.progress-bar" = list(
+      transform = theme_progress_bar,
+      color = "green"
+    ),
+    span.timestamp = list(before = "[", after = "]", color = "grey")
   )
 }
 
@@ -218,6 +223,10 @@ quote_weird_name <- function(x) {
   }
 
   x
+}
+
+theme_progress_bar <- function(x, app, style) {
+  make_progress_bar(x$current / x$total, style = style)
 }
 
 detect_dark_theme <- function(dark) {

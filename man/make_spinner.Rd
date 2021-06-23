@@ -12,8 +12,12 @@ make_spinner(
 )
 }
 \arguments{
-\item{which}{The name of the chosen spinner. The default depends on
-whether the platform supports Unicode.}
+\item{which}{The name of the chosen spinner. If \code{NULL}, then the default
+is used, which can be customized via the \code{cli.spinner_unicode},
+\code{cli.spinner_ascii} and \code{cli.spinner} options. (The latter applies to
+both Unicode and ASCII displays. These options can be set to the name
+of a builting spinner, or to a list that has an entry called \code{frames},
+a character vector of frames.}
 
 \item{stream}{The stream to use for the spinner. Typically this is
 standard error, or maybe the standard output stream.
