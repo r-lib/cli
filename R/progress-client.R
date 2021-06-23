@@ -105,9 +105,9 @@ cli_progress_bar <- function(name = NULL,
   bar$type <- match.arg(type)
   bar$total <- total
   bar$show_after <- start + getOption("cli.progress_show_after", 2)
-  bar$format0 <- bar$format <- format
-  bar$format_done0 <- bar$format_done <- format_done %||% format
-  bar$format_failed0 <- bar$format_failed <- format_failed %||% format
+  bar$format_orig <- bar$format <- format
+  bar$format_done_orig <- bar$format_done <- format_done %||% format
+  bar$format_failed_orig <- bar$format_failed <- format_failed %||% format
   bar$clear <- clear
   bar$auto_terminate <- auto_terminate
   bar$envkey <- if (current) envkey else NULL
@@ -191,10 +191,10 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
     if (is.na(pb$total) != is.na(total) ||
         (!is.na(total) && pb$total != total)) {
       pb$total <- total
-      if (!is.null(pb$format) && is.null(pb$format0)) {
+      if (!is.null(pb$format) && is.null(pb$format_orig)) {
         pb$format <- pb__default_format(pb$type, pb$total)
-        pb$format_done <- pb$format_done0 %||% pb$format
-        pb$format_failed <- pb$format_failed0 %||% pb$format
+        pb$format_done <- pb$format_done_orig %||% pb$format
+        pb$format_failed <- pb$format_failed_orig %||% pb$format
       }
     }
   }
@@ -212,8 +212,8 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
 
     if (is.null(pb$format)) {
       pb$format <- pb__default_format(pb$type, pb$total)
-      pb$format_done <- pb$format_done0 %||% pb$format
-      pb$format_failed <- pb$format_failed0 %||% pb$format
+      pb$format_done <- pb$format_done_orig %||% pb$format
+      pb$format_failed <- pb$format_failed_orig %||% pb$format
     }
 
     opt <- options(cli__pb = pb)
