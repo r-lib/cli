@@ -267,7 +267,7 @@ builtin_handler_rstudio <- list(
       }
     } else {
       status <- fmt(
-        cli_text(bar$format),
+        cli_text(bar$format, .envir = .envir),
         collapse = TRUE,
         strip_newline = TRUE
       )
