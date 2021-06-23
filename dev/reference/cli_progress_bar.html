@@ -6,27 +6,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CLI progress bar — cli_progress_bar • cli</title>
+<title>cli progress bars — cli_progress_bar • cli</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,9 +39,14 @@
 
 
 
-<meta property="og:title" content="CLI progress bar — cli_progress_bar" />
-<meta property="og:description" content="A progress bar using the progress package" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="cli progress bars — cli_progress_bar" />
+<meta property="og:description" content="This is the reference manual of the three functions that create,
+update and terminate progress bars. For a tutorial see the
+cli progress bars.
+cli_progress_bar() creates a progress bar.
+cli_progress_update() updates the state of a progress bar, and
+potentially the display as well.
+cli_progress_done() terminates a progress bar." />
 
 
 <meta name="robots" content="noindex">
@@ -55,7 +64,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,17 +78,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.9.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.5.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/faq.html">FAQ</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -92,13 +98,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/pluralization.html">CLI pluralization</a>
+      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    </li>
+    <li>
+      <a href="../articles/progress.html">Introduction to progress bars in cli</a>
+    </li>
+    <li>
+      <a href="../articles/progress-advanced.html">Advanced cli progress bars</a>
+    </li>
+    <li>
+      <a href="../articles/pluralization.html">cli pluralization</a>
     </li>
     <li>
       <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
-    <li>
-      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
     </li>
     <li>
       <a href="../articles/usethis-ui.html">From usethis::ui functions to cli</a>
@@ -106,13 +118,13 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/r-lib/cli">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/r-lib/cli/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -129,72 +141,200 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>CLI progress bar</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cli.R'><code>R/cli.R</code></a></small>
+    <h1>cli progress bars</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/progress-client.R'><code>R/progress-client.R</code></a></small>
     <div class="hidden name"><code>cli_progress_bar.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A progress bar using the progress package</p>
+    <p>This is the reference manual of the three functions that create,
+update and terminate progress bars. For a tutorial see the
+<a href='https://cli.r-lib.org/articles/pluralization.html'>cli progress bars</a>.</p>
+<p><code>cli_progress_bar()</code> creates a progress bar.</p>
+<p><code>cli_progress_update()</code> updates the state of a progress bar, and
+potentially the display as well.</p>
+<p><code>cli_progress_done()</code> terminates a progress bar.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cli_progress_bar</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>cli_progress_bar</span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  status <span class='op'>=</span> <span class='cn'>NULL</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"iterator"</span>, <span class='st'>"tasks"</span>, <span class='st'>"download"</span>, <span class='st'>"custom"</span><span class='op'>)</span>,
+  total <span class='op'>=</span> <span class='cn'>NA</span>,
+  format <span class='op'>=</span> <span class='cn'>NULL</span>,
+  format_done <span class='op'>=</span> <span class='cn'>NULL</span>,
+  format_failed <span class='op'>=</span> <span class='cn'>NULL</span>,
+  clear <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"cli.progress_clear"</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
+  current <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  auto_terminate <span class='op'>=</span> <span class='va'>type</span> <span class='op'>!=</span> <span class='st'>"download"</span>,
+  extra <span class='op'>=</span> <span class='cn'>NULL</span>,
+  .auto_close <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>cli_progress_update</span><span class='op'>(</span>
+  inc <span class='op'>=</span> <span class='cn'>NULL</span>,
+  set <span class='op'>=</span> <span class='cn'>NULL</span>,
+  total <span class='op'>=</span> <span class='cn'>NULL</span>,
+  status <span class='op'>=</span> <span class='cn'>NULL</span>,
+  extra <span class='op'>=</span> <span class='cn'>NULL</span>,
+  id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  force <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='fu'>cli_progress_done</span><span class='op'>(</span>id <span class='op'>=</span> <span class='cn'>NULL</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>, result <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>All arguments are passed to the constuctor of the
-<a href='https://rdrr.io/pkg/progress/man/progress_bar.html'>progress::progress_bar</a> class.</p></td>
+      <th>name</th>
+      <td><p>This is typically used as a label, and should be short,
+at most 20 characters.</p></td>
+    </tr>
+    <tr>
+      <th>status</th>
+      <td><p>New status string of the progress bar, if not <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Type of the progress bar. It is used to select a default
+display if <code>format</code> is not specified. Currently supported types:</p><ul>
+<li><p><code>iterator</code>: e.g. a for loop or a mapping function,</p></li>
+<li><p><code>tasks</code>: a (typically small) number of tasks,</p></li>
+<li><p><code>download</code>: download of one file,</p></li>
+<li><p><code>custom</code>: custom type, <code>format</code> must not be <code>NULL</code> for this type.</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>total</th>
+      <td><p>Total number of progress units, or <code>NA</code> if it is unknown.
+<code>cli_progress_update()</code> can update the total number of units. This is
+handy if you don't know the size of a download at the beginning, and
+also in some other casees. If <code>format</code> (plus <code>format_done</code> and
+<code>format_done</code>) will be updated if you change <code>total</code> from <code>NA</code> to a
+number, if you specify <code>NULL</code> for <code>format</code>. I.e. default format strings
+will be updated, custom ones won't be.</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>Format string. It has to be specified for custom progress
+bars, otherwise it is optional, and a default display is selected
+based on the progress bat type and whether the number of total units
+is known. Format strings may contain glue substitution, the support
+pluralization and cli styling.</p></td>
+    </tr>
+    <tr>
+      <th>format_done</th>
+      <td><p>Format string for successful termination. By default
+the same as <code>format</code>.</p></td>
+    </tr>
+    <tr>
+      <th>format_failed</th>
+      <td><p>Format string for unsuccessful termination. By
+default the same as <code>format</code>.</p></td>
+    </tr>
+    <tr>
+      <th>clear</th>
+      <td><p>Whether to remove the progress bar from the screen after
+it has temrinated.</p></td>
+    </tr>
+    <tr>
+      <th>current</th>
+      <td><p>Whether to use this progress bar as the current progress
+bar of the calling function. See more at 'The current progress bar'
+below.</p></td>
+    </tr>
+    <tr>
+      <th>auto_terminate</th>
+      <td><p>Whether to terminate the progress bar if the
+number of current units reaches the number of total units.</p></td>
+    </tr>
+    <tr>
+      <th>extra</th>
+      <td><p>Extra data to add to the progress bar. This can be
+used in custom format strings for example. It should be a named list.
+<code>cli_progress_update()</code> can update the extra data.</p></td>
+    </tr>
+    <tr>
+      <th>.auto_close</th>
+      <td><p>Whether to terminate the progress bar when the
+calling function (or the one with execution environment in <code>.envir</code>
+exits. (Auto termination does not work for progress bars created
+from the global environment, e.g. from a script.)</p></td>
+    </tr>
+    <tr>
+      <th>.envir</th>
+      <td><p>The environment to use for auto-termination and for glue
+substitution. It is also used to find and set the current progress bar.</p></td>
+    </tr>
+    <tr>
+      <th>inc</th>
+      <td><p>Increment in progress units. This is ignored if <code>set</code> is
+not <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>set</th>
+      <td><p>Set the current number of progress units to this value.
+Ignored if <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>Progress bar to update or terminate. If <code>NULL</code>, then the
+current progress bar of the calling function (or <code>.envir</code> if
+specified) is updated or terminated.</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>Whether to force a display update, even if no update is
+due.</p></td>
+    </tr>
+    <tr>
+      <th>result</th>
+      <td><p>String to select successful or unsuccessful termination.
+It is only used if the progress bar is not cleared from the screen.
+It can be one of <code>"done"</code>, <code>"failed"</code>, <code>"clear"</code>, and <code>"auto"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A remote progress bar object that can be used the same way
-as <a href='https://rdrr.io/pkg/progress/man/progress_bar.html'>progress::progress_bar</a>, see examples below.</p>
+    <p><code>cli_progress_bar()</code> returns the id of the new progress bar.
+The id is a string constant.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The current progress bar</h3>
+
+
+<p>If <code>current = TRUE</code> (the default), then the new progress bar will be
+the <em>current</em> progress bar of the calling frame. The previous current
+progress bar of the same frame, if there is any, is terminated.</p>
+
+<p><code>cli_progress_update()</code> returns the id of the progress bar,
+invisibly.</p>
+<p><code>cli_progress_done()</code> returns <code>TRUE</code>, invisibly, always.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>cli_progress_update()</code> updates the state of the progress bar and
+potentially outputs the new progress bar to the display as well.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='cli_progress_message.html'>cli_progress_message()</a></code> and <code><a href='cli_progress_step.html'>cli_progress_step()</a></code> for simpler
+progress messages.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>cli_progress_bar</span>(<span class='kw'>total</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-  <span class='fu'><a href='cli_alert.html'>cli_alert_info</a></span>(<span class='st'>"Starting computation"</span>)
-  <span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>10</span>) { <span class='no'>p</span>$<span class='fu'>tick</span>(); <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.2</span>) }
-  <span class='fu'><a href='cli_alert.html'>cli_alert_success</a></span>(<span class='st'>"Done"</span>)
-}</div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    <span style='color: #00BBBB;'>ℹ</span><span> Starting computation</span></div><div class='output co'>#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149
-#&gt; Error in mycall(sym_write, fd, data) : 
-#&gt;   Cannot write to fd (system error 9, Bad file descriptor) @client.c:149</div><div class='output co'>#&gt; <span class='message'>    </span><span style='color: #00BB00;'>✔</span><span> Done</span></div></span></pre>
+    <pre class="examples"><div class='input'><span class='va'>clean</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>cli_progress_bar</span><span class='op'>(</span><span class='st'>"Cleaning data"</span>, total <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+    <span class='fu'>cli_progress_update</span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+<span class='fu'>clean</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Cleaning data <span style='color: #00BB00;'>■■■■■■■■■                       </span>  25% | ETA:  6s</span></div><div class='output co'>#&gt; <span class='message'>Cleaning data <span style='color: #00BB00;'>■■■■■■■■■■■■■■■■■               </span>  52% | ETA:  4s</span></div><div class='output co'>#&gt; <span class='message'>Cleaning data <span style='color: #00BB00;'>■■■■■■■■■■■■■■■■■■■■■■■■■■■     </span>  87% | ETA:  1s</span></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -205,7 +345,7 @@ as <a href='https://rdrr.io/pkg/progress/man/progress_bar.html'>progress::progre
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
