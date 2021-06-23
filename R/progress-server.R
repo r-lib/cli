@@ -288,6 +288,18 @@ builtin_handler_rstudio <- list(
 
 # ------------------------------------------------------------------------
 
+shiny_detail <- function(bar, .envir) {
+  if (is.null(bar$format_orig)) {
+    bar$status %||% ""
+  } else {
+    fmt(
+      cli_text(bar$format, .envir = .envir),
+      collapse = TRUE,
+      strip_newline = TRUE
+    )
+  }
+}
+
 builtin_handler_shiny <- list(
   able = function(bar, .envir) {
     "shiny" %in% loadedNamespaces() && shiny::isRunning()
@@ -299,15 +311,27 @@ builtin_handler_shiny <- list(
       min = 0,
       max = bar$total
     )
-    bar$shiny_progress$set(message = bar$name %||% "", detail = bar$status %||% "")
+    bar$shiny_progress$set(
+      message = bar$name %||% "",
+      detail = shiny_detail(bar, .envir)
+    )
   },
 
   set = function(bar, .envir) {
-    bar$shiny_progress$set(value = bar$current)
+    bar$shiny_progress$set(
+      value = bar$current,
+      detail = shiny_detail(bar, .envir)
+    )
   },
 
   complete = function(bar, .envir, results) {
-    if (!is.null(bar$shiny_progress)) bar$shiny_progress$close()
+    if (!is.null(bar$shiny_progress)) {
+      bar$shiny_progress$set(
+        value = bar$current,
+        detail = shiny_detail(bar, .envir)
+      )
+      bar$shiny_progress$close()
+    }
     bar$shiny_progress <- NULL
   }
 
