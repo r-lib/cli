@@ -262,8 +262,26 @@ as usual. You can call `cli_progress_update()` to update a status message.
 `cli_progress_step()` is slightly different from
 `cli_progress_message()`:
 * it adds cli's alert themes to the status messages (info, success or
-  danger), and
+  danger),
+* prints the duration of each step (by default), and
 * it keeps the messages on the screen after they are terminated.
+
+```{asciicast cli_progress_step_simple}
+f <- function() {
+  cli_progress_step("Downloading data")
+  Sys.sleep(2)
+
+  cli_progress_step("Importing data")
+  Sys.sleep(1)
+
+  cli_progress_step("Cleaning data")
+  Sys.sleep(2)
+
+  cli_progress_step("Fitting model")
+  Sys.sleep(3)
+}
+f()
+```
 
 As usual, you can use `cli_progress_step()` to update an existing status
 message.
