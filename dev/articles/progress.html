@@ -260,9 +260,25 @@
 <span class="fu">f</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_message.svg" width="100%"></p>
 <p>Status messages may use glue interpolation, cli styling and pluralization, as usual. You can call <code><a href="../reference/cli_progress_bar.html">cli_progress_update()</a></code> to update a status message.</p>
-<p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> is slightly different from <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>: * it adds cli’s alert themes to the status messages (info, success or danger), and * it keeps the messages on the screen after they are terminated.</p>
-<p>As usual, you can use <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> to update an existing status message.</p>
+<p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> is slightly different from <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>: * it adds cli’s alert themes to the status messages (info, success or danger), * prints the duration of each step (by default), and * it keeps the messages on the screen after they are terminated.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Downloading data"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+
+  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Importing data"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+
+  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Cleaning data"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
+
+  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Fitting model"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu">f</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="progress_files/figure-html/cli_progress_step_simple.svg" width="100%"></p>
+<p>As usual, you can use <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> to update an existing status message.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"About to start downloads of {n} file{?s}"</span><span class="op">)</span>
   <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
@@ -276,7 +292,7 @@
 <span class="fu">f</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step.svg" width="100%"></p>
 <p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> automatically handles errors, and styles the status message accordingly:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"First step, this will succeed"</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
