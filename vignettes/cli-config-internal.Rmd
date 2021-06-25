@@ -1,0 +1,172 @@
+---
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+These are env vars and options are for cli developers, users should not
+rely of them as they may change between cli releases.
+
+## Internal environment variables
+
+### `ASCIICAST`
+
+Used to detect an asciicast subprocess in RStudio.
+
+### `ANSICON`
+
+Used to detect ANSICON when detecting the number of ANSI colors.
+
+### `CI`
+
+Used to detect if the code is running on a CI.
+If yes, we avoid ANSI hyperlinks.
+
+### `CLI_DEBUG_BAD_END`
+
+Whether to warn about `cli_end()` calls when there is no container to close.
+
+### `CLI_NO_BUILTIN_THEME`
+
+Set it to `true` to omit the builtin theme.
+
+### `CLI_SPEED_TIME`
+
+Can be used to speed up cli's timer.
+It is a factor, e.g. setting it to 2 makes cli's time go twice as fast.
+
+### `CLI_TICK_TIME`
+
+How often the cli timer should alert, in milliseconds.
+
+### `CMDER_ROOT`
+
+Used to detect cmder when detecting the number of ANSI colors.
+
+### `COLORTERM`
+
+Used when detecting ANSI color support.
+
+### `ConEmuANSI`
+
+Used to detect ConEmu when detecting the number of ANSI colors.
+
+### `EMACS`
+
+Used to detect Emacs.
+
+### `INSIDE_EMACS`
+
+Used to detect Emacs.
+
+### `NOT_CRAN`
+
+Set to `true` to run tests / examples / checks, that do not run on CRAN.
+
+### `_R_CHECK_PACKAGE_NAME_`
+
+Used to detect `R CMD check`.
+
+### `R_BROWSER`
+
+Used to detect the RStudio build pane.
+
+### `R_GUI_APP_VERSION`
+
+Used to detect R.app on macOS, to decide if the console has ANSI control
+sequences.
+
+### `R_PACKAGE_DIR`
+
+Used to detect if the code is running under `R CMD INSTALL`.
+
+### `R_PDFVIEWER`
+
+Used to detect the RStudio build pane.
+
+### `R_PROGRESS_NO_EXAMPLES`
+
+Set to `true` to avoid running examples, outside of `R CMD check`.
+
+### `RSTUDIO`
+
+Used to detect RStudio, in various functions.
+
+### `RSTUDIO_CONSOLE_COLOR`
+
+Used to detect the number of colors in RStudio.
+See [num_ansi_colors()].
+
+### `RSTUDIO_CONSOLE_WIDTH`
+
+Used to auto-detect console width in RStudio.
+
+### `RSTUDIO_TERM`
+
+Used to detect the RStudio build pane.
+
+### `TEAMCITY_VERSION`
+
+Used to detect the TeamCity CI, to turn off ANSI hyperlinks.
+
+### `TERM`
+
+Used to detect if the console has ANSI control sequences, in a terminal.
+
+### `TERM_PROGRAM`
+
+Used to detect iTerm for the dark theme detection and the ANSI hyperlink
+support detection.
+
+### `TERM_PROGRAM_VERSION`
+
+Used to detect a suitable iTerm version for ANSI hyperlink support.
+
+### `TESTTHAT`
+
+Used to detect running in testthat tests.
+
+### `VTE_VERSION`
+
+Used to detect a suitable VTE version for ANSI hyperlinks.
+
+## Internal options
+
+### `cli__pb`
+
+This option is set to the progress bar that is being updated, when
+interpolatinf the format string.
+
+### `cli.record`
+
+Internal option to mark the state that cli is recording messages.
+
+### `crayon.colors`
+
+Deprecated option for the number of ANSI colors, that is still supported
+by cli, when the new options are not set.
+See [num_ansi_colors()].
+
+### `crayon.enabled`
+
+Deprecated option to turn ANSI colors on/off.
+This is still supported by cli when the new options are not set.
+See [num_ansi_colors()].
+
+### `crayon.hyperlink`
+
+Whether to assume ANSI hyperlink support.
+See [ansi_has_hyperlink_support()].
+
+### `knitr.in.progress`
+
+Used to detect knitr when detecting interactive sessions and ANSI color
+support.
+
+### `rstudio.notebook.executing`
+
+Used to detect knitr when detecting interactive sessions.

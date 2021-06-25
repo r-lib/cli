@@ -64,6 +64,15 @@ Use the macOS command line \code{say} command to announce progress events
 in speech. Set the \code{cli.progress_say_frequency} option to set the
 minimum delay between \code{say} invocations, the default is three seconds.
 This handler is available on macOS, if the \code{say} command is on the path.
+
+The external command and its arguments can be configured with options:
+\itemize{
+\item \code{cli_progress_say_args}: command line arguments, e.g. you can use this
+to select a voice on macOS,
+\item \code{cli_progress_say_command}: external command to run,
+\item \code{cli_progress_say_frequency}: wait at least this many seconds between
+calling the external command.
+}
 }
 
 \subsection{\code{shiny}}{

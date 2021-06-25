@@ -52,6 +52,14 @@
 #' minimum delay between `say` invocations, the default is three seconds.
 #' This handler is available on macOS, if the `say` command is on the path.
 #'
+#' The external command and its arguments can be configured with options:
+#'
+#' * `cli_progress_say_args`: command line arguments, e.g. you can use this
+#'   to select a voice on macOS,
+#' * `cli_progress_say_command`: external command to run,
+#' * `cli_progress_say_frequency`: wait at least this many seconds between
+#'   calling the external command.
+#'
 #' ### `shiny`
 #'
 #' Use shiny's progress bars. This handler is available if a shiny app is

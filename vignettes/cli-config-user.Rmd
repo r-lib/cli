@@ -1,0 +1,210 @@
+---
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+These are env vars and options that usrs may set, to modify the behavior
+of cli.
+
+## User facing environment variables
+
+### `NO_COLOR`
+
+Set to a nonempty value to turn off ANSI colors.
+See [num_ansi_colors()].
+
+### `R_CLI_DYNAMIC`
+
+Set to `true`, `TRUE` or `True` to assume a dynamic terminal, that supports `\r`.
+Set to anything else to assume a non-dynamic terminal.
+See [is_dynamic_tty()].
+
+### `R_CLI_NUM_COLORS`
+
+Set to a positive integer to assume a given number of colors.
+See [num_ansi_colors()].
+
+## User facing options
+
+### `cli.ansi`
+
+Set to `true`, `TRUE` or `True` to assume a terminal that supports ANSI
+control sequences.
+Set to anything else to assume a non-ANSI terminal.
+See [is_ansi_tty()].
+
+### `cli.default_handler`
+
+General handler function for all cli conditions.
+See https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1
+
+### `cli.dynamic`
+
+Set to `TRUE` to assume a dynamic terminal, that supports `\r`.
+Set to anything else to assume a non-dynamic terminal.
+See [is_dynamic_tty()].
+
+### `cli.hide_cursor`
+
+Whether the cli status bar should try to hide the cursor on termianals.
+Set the `FALSE` if the hidden cursor causes issues.
+
+### `cli.hyperlink`
+
+Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
+ANSI hyperlinks.
+Set to anything else to assume no hyperlink support.
+See [style_hyperlink()].
+
+### `cli.num_colors`
+
+Number of ANSI colors. See [num_ansi_colors()].
+
+### `cli.message_class`
+
+Character vector of classes to add to cli's conditions.
+
+### `cli.progress_bar_style`
+
+Progress bar style.
+See [cli_progress_styles()].
+
+### `cli.progress_bar_style_ascii`
+
+Progress bar style on ASCII consoles.
+See [cli_progress_styles()].
+
+
+### `cli.progress_bar_style_unicode`
+
+Progress bar style on Unicode (UTF-8) consoles;
+See [cli_progress_styles()].
+
+### `cli.progress_clear`
+
+Whether to clear terminated progress bar from the screen on dynamic terminals.
+See [cli_progress_bar()].
+
+### `cli.progress_demo_live`
+
+Whether `cli_progress_demo()` should show a live demo, or just record the
+progress bar frames.
+
+### `cli.progress_format_download`
+
+Default format string for `download` progress bars.
+
+### `cli.progress_format_download_nototal`
+
+Default format string for `download` progress bars with unknown totals.
+
+### `cli.progress_format_iterator`
+
+Default format string for `iterator` progress bars.
+
+### `cli.progress_format_iterator_nototal`
+
+Default format string for `iterator` progress bars with unknown total number
+of progress units.
+
+### `cli.progress_format_tasks`
+
+Default format string for `tasks` progress bars.
+
+### `cli.progress_format_tasks_nototal`
+
+Default format string for `tasks` progress bars with unknown totals.
+
+### `cli.progress_handlers`
+
+Progress handlers to try.
+See [cli_progress_builtin_handlers()].
+
+### `cli.progress_handlers_force`
+
+Progress handlers that will always be used, even if another handler
+was already selected.
+See [cli_progress_builtin_handlers()].
+
+### `cli.progress_handlers_only`
+
+Progress handlers to force, ignoring handlers set in
+`cli.progress_handlers` and `cli.progress_handlers_force`.
+See [cli_progress_builtin_handlers()].
+
+### `cli.progress_say_args`
+
+Command line arguments for the `say` progress handlers.
+See [cli_progress_builtin_handlers()].
+
+### `cli.progress_say_command`
+
+External command to use in the `say` progress handler.
+See [cli_progress_builtin_handlers()].
+
+### `cli.progress_say_frequency`
+
+Minimum delay between `say` calls in the `say` progress handler.
+`say` ignores very frequent updates, to keep the speech comprehensible.
+See [cli_progress_builtin_handlers()].
+
+### `cli.progress_show_after`
+
+Delay before showing a progress bar, in seconds.
+Progress bars that finish before this delay are not shown at all.
+
+### `cli.spinner`
+
+Default spinner to use, see [get_spinner()].
+
+### `cli.spinner_ascii`
+
+Default spinner to use on ASCII terminals, see [get_spinner()].
+
+### `cli.spinner_unicode`
+
+Default spinner to use on Unicode terminals, see [get_spinner()].
+
+### `cli.theme`
+
+Default cli theme, in addition to the built-in theme.
+This option in intended for the package developers.
+See [themes] and [start_app()].
+
+### `cli_theme_dark`
+
+Whether cli should assume a dark theme for the builtin theme.
+See [builtin_theme()].
+
+### `cli.unicode`
+
+Whether to assume a Unicode terminal.
+If not set, then it is auto-detected.
+See [is_utf8_output()].
+
+### `cli.user_theme`
+
+cli user theme.
+This option is intended for end users.
+See [themes].
+
+### `cli.width`
+
+Terminal width to assume.
+If not set, then it is auto-detected.
+See [console_width()].
+
+### `rlib_interactive`
+
+Whether to assume an interactive R session.
+If not set, then it is auto-detected.
+
+### `width`
+
+Terminal width.
+This is used on some platforms, if `cli.width` is not set.

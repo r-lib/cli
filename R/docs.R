@@ -35,3 +35,17 @@ docs_progress_c_api <- function() {
 #' ```{r include = FALSE, cache = FALSE, child = cli:::docs_progress_c_api()}
 #' ```
 NULL
+
+#' @title cli environment variables and options
+#' @name cli-config
+#'
+#' @section User facing configuration:
+#'
+#' ```{r include = FALSE, child = "vignettes/cli-config-user.Rmd"}
+#' ```
+#'
+#' @section Internal configuration:
+#'
+#' ```{r include = FALSE, child = "vignettes/cli-config-internal.Rmd"}
+#' ```
+NULL

@@ -42,10 +42,25 @@ progress_style <- function(x) {
 
 #' List of built-in cli progress styles
 #'
+#' The following options are used to select a style:
+#' * `cli_progress_bar_style`
+#' * `cli_progress_bar_style_ascii`
+#' * `cli_progress_bar_style_unicode`
+#'
+#' On Unicode terminals (if [is_utf8_output()] is `TRUE`), the
+#' `cli_progress_bar_style_unicode` and `cli_progress_bar_style`
+#' options are used.
+#'
+#' On ASCII terminals (if [is_utf8_output()] is `FALSE`), the
+#' `cli_pgoress_bar_style_ascii` and `cli_progress_bar_style` options
+#' are are used.
+#'
 #' @return A named list with sublists containing elements
 #' `complete`, `incomplete` and potentially `current`.
 #'
 #' @export
+#' @examples
+#' cli_progress_styles()
 
 cli_progress_styles <- function() {
   list(
