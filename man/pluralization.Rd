@@ -123,7 +123,7 @@ and interpreted.
 \subsection{Quantities}{
 \enumerate{
 \item \code{{}} substitutions define quantities. If the value of a \code{{}}
-substitution is numeric (i.e. \code{is.numeric(x)} holds), then it has to
+substitution is numeric (when \code{is.numeric(x)} holds), then it has to
 have length one to define a quantity. This is only enforced if the
 \code{{}} substitution is used for pluralization. The quantity is defined
 as the value of \code{{}} then, rounded with \code{as.integer()}. If the value
