@@ -300,6 +300,23 @@ f <- function(n = 10) {
 f()
 ```
 
+If you can update the status message frequently enough, then you can also
+add a spinner to it:
+
+```{asciicast cli_progress_step_spinner, R.options = list(asciicast_rows = 6)}
+f <- function() {
+  cli_progress_step("Downloading data", spinner = TRUE)
+  for (i in 1:100) { cli_progress_update(); Sys.sleep(2/100) }
+  cli_progress_step("Importing data", spinner = TRUE)
+  for (i in 1:100) { cli_progress_update(); Sys.sleep(1/100) }
+  cli_progress_step("Cleaning data", spinner = TRUE)
+  for (i in 1:100) { cli_progress_update(); Sys.sleep(2/100) }
+  cli_progress_step("Fitting model", spinner = TRUE)
+  for (i in 1:100) { cli_progress_update(); Sys.sleep(3/100) }
+}
+f()
+```
+
 `cli_progress_step()` automatically handles errors, and styles the
 status message accordingly:
 

@@ -8,6 +8,8 @@ cli_progress_step(
   msg,
   msg_done = msg,
   msg_failed = msg,
+  spinner = FALSE,
+  class = if (!spinner) ".alert-info",
   current = TRUE,
   .auto_close = TRUE,
   .envir = parent.frame(),
@@ -26,6 +28,13 @@ this it is the same as \code{msg} and it is styled as a cli success alert
 \item{msg_failed}{Message to show on unsuccessful termination. By
 default it is the same as \code{msg} and it is styled as a cli danger alert
 (see \code{\link[=cli_alert_danger]{cli_alert_danger()}}).}
+
+\item{spinner}{Whether to show a spinner at the beginning of the line.
+To make the spinner spin, you'll need to call \code{cli_progress_update()}
+regularly.}
+
+\item{class}{cli class to add to the message. By default there is no
+class for steps with a spinner.}
 
 \item{current}{Passed to \code{\link[=cli_progress_bar]{cli_progress_bar()}}.}
 

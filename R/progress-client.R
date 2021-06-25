@@ -376,6 +376,11 @@ cli_progress_message <- function(msg,
 #' @param msg_failed Message to show on unsuccessful termination. By
 #'   default it is the same as `msg` and it is styled as a cli danger alert
 #'   (see [cli_alert_danger()]).
+#' @param spinner Whether to show a spinner at the beginning of the line.
+#'   To make the spinner spin, you'll need to call `cli_progress_update()`
+#'   regularly.
+#' @param class cli class to add to the message. By default there is no
+#'   class for steps with a spinner.
 #' @param current Passed to [cli_progress_bar()].
 #' @param .auto_close Passed to [cli_progress_bar()].
 #' @param .envir Passed to [cli_progress_bar()].
@@ -386,16 +391,25 @@ cli_progress_message <- function(msg,
 cli_progress_step <- function(msg,
                               msg_done = msg,
                               msg_failed = msg,
+                              spinner = FALSE,
+                              class = if (!spinner) ".alert-info",
                               current = TRUE,
                               .auto_close = TRUE,
                               .envir = parent.frame(),
                               ...) {
 
+  format <- paste0(
+    if (!is.null(class)) paste0("{", class, " "),
+    if (spinner) "{cli::pb_spin} ",
+    msg,
+    if (!is.null(class)) "}"
+  )
   ts <- " {.timestamp {cli::pb_elapsed}}"
-  format <- paste0("{.alert-info ", msg, "}")
   format_done <- paste0("{.alert-success ", msg_done, ts, "}")
   format_failed <- paste0("{.alert-danger ", msg_failed, ts, "}")
 
+  opt <- options(cli.progress_show_after = 0)
+  on.exit(options(opt), add = TRUE)
   id <- cli_progress_bar(
     type = "custom",
     format = format,
