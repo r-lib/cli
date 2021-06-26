@@ -7,6 +7,9 @@
 * New functions for progress bars, please see the new articles at
   https://cli.r-lib.org/articles/ for details.
 
+* New `cli_abort()`, `cli_warn()` and `cli_inform()` functions, to throw
+  errors with cli pluralization and styling.
+
 # cli 2.5.0
 
 * New `style_no_*()` functions to locally undo styling.
@@ -18,9 +21,6 @@
 
 * `cli_memo()` was renamed to `cli_bullets()`, as it is by default
   formatted as a bullet list (#250).
-
-* New `cli_abort()`, `cli_warn()` and `cli_inform()` functions, to throw
-  errors with cli pluralization and styling.
 
 * New `ansi_toupper()`, `ansi_tolower` and `ansi_chartr()` functions,
   the ANSI styling aware variants of `toupper()`, `tolower()` and
