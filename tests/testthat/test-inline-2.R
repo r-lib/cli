@@ -86,3 +86,9 @@ test_that(".q always double quotes", {
     cli_text("just a {.q string}, nothing more")
   )
 })
+
+test_that(".or", {
+  expect_snapshot(
+    cli_text("{.or {letters[1:5]}}")
+  )
+})

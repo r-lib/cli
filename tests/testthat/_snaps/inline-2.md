@@ -203,3 +203,10 @@
     Message <cliMessage>
       just a "string", nothing more
 
+# .or
+
+    Code
+      cli_text("{.or {letters[1:5]}}")
+    Message <cliMessage>
+      a, b, c, d or e
+
