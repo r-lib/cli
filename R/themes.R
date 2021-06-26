@@ -162,7 +162,7 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     span.strong = list("font-weight" = "bold"),
     span.code = theme_code_tick(dark),
 
-    span.q   = list(fmt = quote_weird_name),
+    span.q   = list(fmt = quote_weird_name2),
     span.pkg = list(color = "blue"),
     span.fn = theme_function(dark),
     span.fun = theme_function(dark),
@@ -190,7 +190,7 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
   )
 }
 
-quote_weird_name <- function(x) {
+quote_weird_name0 <- function(x) {
   x <- gsub(" ", "\u00a0", x)
   x2 <- ansi_strip(x)
 
@@ -218,11 +218,20 @@ quote_weird_name <- function(x) {
     }
   }
 
-  if (wfst || wlst || num_ansi_colors() == 1) {
-    x <- paste0("'", x, "'")
-  }
+  list(x, wfst || wlst)
+}
 
-  x
+quote_weird_name <- function(x) {
+  x2 <- quote_weird_name0(x)
+  if (x2[[2]] || num_ansi_colors() == 1) {
+    x2[[1]] <- paste0("'", x2[[1]], "'")
+  }    
+  x2[[1]]
+}
+
+quote_weird_name2 <- function(x) {
+  x2 <- quote_weird_name0(x)
+  paste0("\"", x2[[1]], "\"")
 }
 
 theme_progress_bar <- function(x, app, style) {

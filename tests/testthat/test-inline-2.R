@@ -80,3 +80,9 @@ test_that("cli_format() is used for .val", {
     cli_text("Some random numbers: {.val {runif(4)}}.")
   })
 })
+
+test_that(".q always double quotes", {
+  expect_snapshot(
+    cli_text("just a {.q string}, nothing more")
+  )
+})

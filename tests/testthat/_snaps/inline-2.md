@@ -196,3 +196,10 @@
     Message <cliMessage>
       Some random numbers: 0.13, 0.66, 0.71, and 0.46.
 
+# .q always double quotes
+
+    Code
+      cli_text("just a {.q string}, nothing more")
+    Message <cliMessage>
+      just a "string", nothing more
+
