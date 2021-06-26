@@ -37,9 +37,12 @@ console_width <- function() {
   if (!is.null(cwopt)) {
     if (!is.numeric(cwopt)) stop("options(\"cli.width\") must be integer")
     if (length(cwopt) != 1) stop("options(\"cli.width\") must be a scalar")
-    if (!is.finite(cwopt)) stop("options(\"cli.width\") must be finite")
     if (is.na(cwopt)) stop("options(\"cli.width\") cannot be NA")
-    cwopti <- as.integer(cwopt)
+    if (cwopt == Inf) {
+      cwopti <- .Machine$integer.max
+    } else {
+      cwopti <- as.integer(cwopt)
+    }
     if (cwopti <= 0) stop("options(\"cli.width\") must be a positive integer")
     return(cwopti)
   }

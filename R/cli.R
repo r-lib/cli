@@ -68,6 +68,24 @@ fmt <- function(expr, collapse = FALSE, strip_newline = FALSE, app = NULL) {
   cli__fmt(rec, collapse, strip_newline, app)
 }
 
+#' Format and returns a line of text
+#'
+#' You can use this function to format a line of cli text, without emitting
+#' it to the screen. It uses [cli_text()] internally.
+#'
+#' @param ... Passed to [cli_text()].
+#' @return Character scalar, the formatted string.
+#'
+#' @export
+#' @examples
+#' format_inline("This is a message for {.emph later}.")
+
+format_inline <- function(...) {
+  opts <- options(cli.width = Inf)
+  on.exit(options(opts), add = TRUE)
+  fmt(cli_text(...))
+}
+
 #' CLI text
 #'
 #' It is wrapped to the screen width automatically. It may contain inline

@@ -1,6 +1,9 @@
 
 # cli development version
 
+* New `format_inline()` function to format a cli string without emitting
+  it (#278).
+
 * New functions for progress bars, please see the new articles at
   https://cli.r-lib.org/articles/ for details.
 
