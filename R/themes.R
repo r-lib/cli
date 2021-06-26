@@ -128,10 +128,6 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ul = list(
       "list-style-type" = function() symbol$bullet
     ),
-    "ul ul" = list(
-      "list-style-type" = function() symbol$circle
-    ),
-    "ul ul ul" = list("list-style-type" = function() symbol$line),
 
     # This means that list elements have a margin, if they are nested
     "ul ul li" = list("margin-left" = 2),
