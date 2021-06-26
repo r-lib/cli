@@ -175,6 +175,7 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     span.url = list(before = "<", after = ">", color = "blue",
                     "font-style" = "italic"),
     span.var = theme_code_tick(dark),
+    span.col = theme_code_tick(dark),
     span.envvar = theme_code_tick(dark),
     span.val = list(
       transform = function(x, ...) cli_format(x, ...),
