@@ -1,6 +1,9 @@
 
 # cli development version
 
+* New functions for progress bars, please see the new articles at
+  https://cli.r-lib.org/articles/ for details.
+
 # cli 2.5.0
 
 * New `style_no_*()` functions to locally undo styling.
