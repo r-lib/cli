@@ -50,7 +50,7 @@ cli_format.default <- function(x, style = NULL, ...) {
 #' @export
 
 cli_format.character <- function(x, style = NULL, ...) {
-  quote <- style$string_quote %||% "'"
+  quote <- style$string_quote %||% "\""
   encodeString(x, quote = quote)
 }
 

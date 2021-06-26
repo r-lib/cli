@@ -176,6 +176,7 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
                     "font-style" = "italic"),
     span.var = theme_code_tick(dark),
     span.col = theme_code_tick(dark),
+    span.str = list(fmt = encode_string),
     span.envvar = theme_code_tick(dark),
     span.val = list(
       transform = function(x, ...) cli_format(x, ...),
@@ -189,6 +190,10 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
     ),
     span.timestamp = list(before = "[", after = "]", color = "grey")
   )
+}
+
+encode_string <- function(x) {
+  encodeString(x, quote = "\"")
 }
 
 quote_weird_name0 <- function(x) {

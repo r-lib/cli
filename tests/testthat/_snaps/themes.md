@@ -106,8 +106,8 @@
         cli_alert("{.emph {.val this is not}}")
       })
     Message <cliMessage>
-      > [34m[3m[34m'this is blue'[34m[23m[39m
-      > [0m[22m[23m[24m[27m[28m[29m[49m[3m[0m[22m[3m[24m[27m[28m[29m[49m'this is not'[0m[22m[23m[24m[27m[28m[29m[49m[23m[39m
+      > [34m[3m[34m"this is blue"[34m[23m[39m
+      > [0m[22m[23m[24m[27m[28m[29m[49m[3m[0m[22m[3m[24m[27m[28m[29m[49m"this is not"[0m[22m[23m[24m[27m[28m[29m[49m[23m[39m
 
 ---
 
@@ -118,8 +118,8 @@
         cli_alert("{.emph {.val this is not}}")
       })
     Message <cliMessage>
-      > [34m[3m[34m'this is blue'[34m[23m[39m
-      > [0m[22m[23m[24m[27m[28m[29m[49m[3m[0m[22m[3m[24m[27m[28m[29m[49m'this is not'[0m[22m[23m[24m[27m[28m[29m[49m[23m[39m
+      > [34m[3m[34m"this is blue"[34m[23m[39m
+      > [0m[22m[23m[24m[27m[28m[29m[49m[3m[0m[22m[3m[24m[27m[28m[29m[49m"this is not"[0m[22m[23m[24m[27m[28m[29m[49m[23m[39m
 
 # NULL will undo background color [ansi]
 
