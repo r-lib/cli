@@ -54,6 +54,39 @@ format_error <- function(message, .envir = parent.frame()) {
   update_rstudio_color(formatted1)
 }
 
+#' @details
+#' `format_error_handler()`, `format_error_body()` and
+#' `format_error_footer()` are for advanced users. They let you format
+#' an error message piecewise. See [rlang::cnd_message()].
+#'
+#' @export
+#' @rdname format_error
+
+format_error_header <- function(message, .envir = parent.frame()) {
+  names(message) <- rep("1", length(message))
+  format_error(message, .envir = .envir)
+}
+
+#' @export
+#' @rdname format_error
+
+format_error_body <- function(message, .envir = parent.frame()) {
+  if (is.null(names(message)) || names(message)[1] == "") {
+    names(message)[1] <- "empty"
+  }
+  format_error(message, .envir = .envir)
+}
+
+#' @rdname format_error
+#' @export
+
+format_error_footer <- function(message, .envir = parent.frame()) {
+  if (is.null(names(message)) || names(message)[1] == "") {
+    names(message)[1] <- "empty"
+  }
+  format_error(message, .envir = .envir)
+}
+
 #' @rdname format_error
 #' @export
 
