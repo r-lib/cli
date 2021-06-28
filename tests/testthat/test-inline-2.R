@@ -91,4 +91,7 @@ test_that(".or", {
   expect_snapshot(
     cli_text("{.or {letters[1:5]}}")
   )
+  expect_snapshot(
+    cli_text("{.or {letters[1:2]}}")
+  )
 })

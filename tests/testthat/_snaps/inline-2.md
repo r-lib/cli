@@ -208,5 +208,12 @@
     Code
       cli_text("{.or {letters[1:5]}}")
     Message <cliMessage>
-      a, b, c, d or e
+      a, b, c, d, or e
+
+---
+
+    Code
+      cli_text("{.or {letters[1:2]}}")
+    Message <cliMessage>
+      a or b
 
