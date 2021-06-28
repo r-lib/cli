@@ -319,3 +319,17 @@
     Output
       [32mcolor me interested[39m
 
+# named first element
+
+    Code
+      format_error(c(`*` = "foo", `*` = "bar"))
+    Output
+      [1] "* foo\n* bar"
+
+---
+
+    Code
+      format_warning(c(`*` = "foo", `*` = "bar"))
+    Output
+      [1] "* foo\n* bar"
+

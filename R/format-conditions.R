@@ -29,10 +29,12 @@
 #' @export
 
 format_error <- function(message, .envir = parent.frame()) {
-  message[1] <- paste0("Error: ", message[1])
+  if (is.null(names(message)) || names(message)[1] == "") {
+    # The default theme will make this bold
+    names(message)[1] <- "1"
+  }
 
-  # The default theme will make this bold
-  names(message)[1] <- "1"
+  message[1] <- paste0("Error: ", message[1])
 
   rsconsole <- c("rstudio_console", "rstudio_console_starting")
   if (rstudio_detect()$type %in% rsconsole) {
@@ -47,16 +49,19 @@ format_error <- function(message, .envir = parent.frame()) {
   }, collapse = TRUE, strip_newline = TRUE)
 
   # remove "Error: " that was only needed for the wrapping
-  formatted2 <- ansi_substr(formatted1, 8, nchar(formatted1))
+  formatted1[1] <- sub("Error: ", "", formatted1[1])
 
-  update_rstudio_color(formatted2)
+  update_rstudio_color(formatted1)
 }
 
 #' @rdname format_error
 #' @export
 
 format_warning <- function(message, .envir = parent.frame()) {
-  names(message)[1] <- "1"
+  if (is.null(names(message)) || names(message)[1] == "") {
+    # The default theme will make this bold
+    names(message)[1] <- "1"
+  }
 
   formatted1 <- fmt({
     cli_div(class = "cli_rlang cli_warn")

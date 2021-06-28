@@ -113,3 +113,12 @@ test_that_cli(config = "ansi", "update_rstudio_color", {
   )
   expect_snapshot(cat(update_rstudio_color("color me interested")))
 })
+
+test_that("named first element", {
+  expect_snapshot(
+    format_error(c("*" = "foo", "*" = "bar"))
+  )
+  expect_snapshot(
+    format_warning(c("*" = "foo", "*" = "bar"))
+  )
+})
