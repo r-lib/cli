@@ -67,8 +67,13 @@ clii__cat_ln <- function(app, lines, indent, padding) {
 clii__vspace <- function(app, n) {
   if (app$margin < n) {
     sp <- strrep("\n", n - app$margin)
+    signal <- !identical(app$signal, FALSE)
+    if (signal && length(app$status_bar)) clii__clear_status_bar(app)
     clii__message(sp, appendLF = FALSE, output = app$output, signal = app$signal)
     app$margin <- n
+    if (signal && length(app$status_bar)) {
+      app$cat(paste0(app$status_bar[[1]]$content, "\r"))
+    }
   }
 }
 
