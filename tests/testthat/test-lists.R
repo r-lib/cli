@@ -228,3 +228,15 @@ test_that_cli(configs = c("plain", "unicode"), "dl, with first item", {
     cli_end(lid)
   }))
 })
+
+test_that_cli(configs = "ansi", "styling pieces of a dl", {
+  expect_snapshot(local({
+    cli_div(
+      theme = list(
+        .dt = list(after = " -> "),
+        .dd = list(color = "blue")
+      )
+    )
+    cli_dl(c(foo = "bar", bar = "baz"))
+  }))
+})

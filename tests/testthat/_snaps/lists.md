@@ -576,3 +576,14 @@
       that: bar
       other: foobar
 
+# styling pieces of a dl [ansi]
+
+    Code
+      local({
+        cli_div(theme = list(.dt = list(after = " -> "), .dd = list(color = "blue")))
+        cli_dl(c(foo = "bar", bar = "baz"))
+      })
+    Message <cliMessage>
+      foo -> [34m[34mbar[34m[39m
+      bar -> [34m[34mbaz[34m[39m
+

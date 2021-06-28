@@ -3,7 +3,7 @@ call_if_fun <- function(x) {
   if (is.function(x)) x() else x
 }
 
-clii__xtext <- function(app, text, .list, indent, padding) {
+clii__xtext <- function(app, text, .list, indent, padding, ln = TRUE) {
   style <- app$get_current_style()
   text <- app$inline(text, .list = .list)
   exdent <- style$`text-exdent` %||% 0L

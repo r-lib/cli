@@ -129,6 +129,10 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       "list-style-type" = function() symbol$bullet
     ),
 
+    # these are tags in HTML, but in cli they are inline
+    span.dt = list(after = ": "),
+    span.dd = list(),
+
     # This means that list elements have a margin, if they are nested
     "ul ul li" = list("margin-left" = 2),
     "ul ol li" = list("margin-left" = 2),
