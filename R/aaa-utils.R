@@ -128,9 +128,15 @@ try_silently <- function(expr) {
   suppressWarnings(tryCatch(expr, error = function(x) x))
 }
 
-random_id <- function() {
-  paste(sample(c(letters, LETTERS, 0:9), 7, replace = TRUE), collapse = "")
-}
+random_id <- local({
+  i <- 0
+  function() {
+    i <<- i + 1
+    paste0("FCkNXbE-", i)
+  }
+})
+
+random_marker <- "ImzV8dciA4cn4POI"
 
 str_trim <- function(x) {
   sub("^\\s+", "", sub("\\s+$", "", x))

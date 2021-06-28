@@ -259,7 +259,7 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
   on.exit(options(opt), add = TRUE)
 
   if (result == "auto") {
-    r1 <- stats::runif(1)
+    r1 <- random_marker
     if (identical(returnValue(r1), r1)) {
       result <- "failed"
     } else {

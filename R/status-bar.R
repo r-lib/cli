@@ -274,7 +274,7 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
   if (! id %in% names(app$status_bar)) return(invisible())
 
   if (result == "auto") {
-    r1 <- stats::runif(1)
+    r1 <- random_marker
     if (identical(returnValue(r1), r1)) {
       result <- "failed"
     } else {

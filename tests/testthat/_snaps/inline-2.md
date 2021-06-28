@@ -194,7 +194,7 @@
       cli_div(theme = list(.val = list(digits = 2)))
       cli_text("Some random numbers: {.val {runif(4)}}.")
     Message <cliMessage>
-      Some random numbers: 0.13, 0.66, 0.71, and 0.46.
+      Some random numbers: 0.91, 0.94, 0.29, and 0.83.
 
 # .q always double quotes
 
