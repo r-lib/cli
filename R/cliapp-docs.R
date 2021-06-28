@@ -42,7 +42,7 @@
 #' * `cls` for an S3, S4, R6 or other class name.
 #' * `code` for a piece of code.
 #' * `dt` is used for the terms in a definition list ([cli_dl()]).
-#' * `dd` is used for the descriptions in a definition list ([cli_dd()]).
+#' * `dd` is used for the descriptions in a definition list ([cli_dl()]).
 #' * `email` for an email address.
 #' * `emph` for emphasized text.
 #' * `envvar` for the name of an environment variable.
