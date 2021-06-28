@@ -491,6 +491,17 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   # Workaround for bad Unicode width
   x <- unicode_pre(x)
 
+  # Form feeds are forced line breaks
+  x <- gsub("\f", "\n\n\f\n\n", x, fixed = TRUE, useBytes = TRUE)
+  fix_ff <- function(x) {
+    rem <- which(x == "\f")
+    if (length(rem)) {
+      x[-c(rem - 1, rem, rem + 1)]
+    } else {
+      x
+    }
+  }
+
   # First we need to remove the multiple spaces, to make it easier to
   # map the strings later on. We do this per paragraph, to keep paragraphs.
   pars <- strsplit(x, "\n[ \t\n]*\n", perl = TRUE)
@@ -514,7 +525,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
   xs <- ansi_strip(xx)
   xw0 <- base::strwrap(xs, width = width, indent = indent, exdent = exdent)
-  if (xs == xx) return(ansi_string(unicode_post(xw0)))
+  if (xs == xx) return(ansi_string(unicode_post(fix_ff(xw0))))
 
   xw <- trimws(xw0, "left")
   indent <- nchar(xw0) - nchar(xw)
@@ -563,7 +574,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   })
 
   indent <- strrep(" ", indent)
-  ansi_string(unicode_post(paste0(indent, wrp)))
+  ansi_string(unicode_post(fix_ff(paste0(indent, wrp))))
 }
 
 #' Truncate an ANSI string

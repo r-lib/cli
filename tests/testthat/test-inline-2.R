@@ -95,3 +95,13 @@ test_that(".or", {
     cli_text("{.or {letters[1:2]}}")
   )
 })
+
+test_that("line breaks", {
+  txt <- paste(
+    "Cupidatat deserunt culpa enim deserunt minim aliqua tempor fugiat",
+    "cupidatat laboris officia esse ex aliqua. Ullamco mollit adipisicing",
+    "anim."
+  )
+  txt2 <- paste0(txt, "\f", txt)
+  expect_snapshot(ansi_strwrap(txt2, width = 60))
+})

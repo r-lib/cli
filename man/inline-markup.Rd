@@ -125,6 +125,19 @@ cli_text("Will install \{length(pkgs)\} package\{?s\}: \{.pkg \{pkgs\}\}")
 See \link{pluralization} for details.
 }
 
+\section{Wrapping}{
+
+
+Most cli containers wrap the text to width the container's width,
+while observing margins requested by the theme.
+
+To avoid a line break, you can use the UTF_8 non-breaking space
+character: \verb{\\u00a0}. cli will not break a line here.
+
+To force a line break, insert a form feed character: \verb{\\f} or
+\verb{\\u000c}. cli will insert a line break there.
+}
+
 \examples{
 ## Some inline markup examples
 cli_ul()

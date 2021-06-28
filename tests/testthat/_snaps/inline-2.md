@@ -217,3 +217,16 @@
     Message <cliMessage>
       a or b
 
+# line breaks
+
+    Code
+      ansi_strwrap(txt2, width = 60)
+    Output
+      <ansi_string>
+      [1] Cupidatat deserunt culpa enim deserunt minim aliqua tempor
+      [2] fugiat cupidatat laboris officia esse ex aliqua. Ullamco  
+      [3] mollit adipisicing anim.                                  
+      [4] Cupidatat deserunt culpa enim deserunt minim aliqua tempor
+      [5] fugiat cupidatat laboris officia esse ex aliqua. Ullamco  
+      [6] mollit adipisicing anim.                                  
+

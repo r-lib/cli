@@ -122,6 +122,17 @@
 #'
 #' See [pluralization] for details.
 #'
+#' @section Wrapping:
+#'
+#' Most cli containers wrap the text to width the container's width,
+#' while observing margins requested by the theme.
+#'
+#' To avoid a line break, you can use the UTF_8 non-breaking space
+#' character: `\u00a0`. cli will not break a line here.
+#'
+#' To force a line break, insert a form feed character: `\f` or
+#' `\u000c`. cli will insert a line break there.
+#'
 #' @name inline-markup
 #' @examples
 #' ## Some inline markup examples
