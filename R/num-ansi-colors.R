@@ -167,7 +167,9 @@ detect_tty_colors <- function() {
   win10_build_ok <- win10_build() >= 16257
   if (os_type() == "windows" && win10_build_ok &&
       rstudio$detect()$type == "rstudio_terminal") {
-   return(8L)
+    # this is rather weird, but echo turns on color support :D
+    system2("cmd", c("/c", "echo 1 >NUL"))
+    return(8L)
   }
 
   # Windows terminal with native color support?
