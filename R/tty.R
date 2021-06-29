@@ -246,10 +246,12 @@ r_utf8 <- function(func,
     stdout = out,
     stderr = out
   )
-  opts$load_hook <- c(
-    opts$load_hook,
-    "invisible(cli:::set_embedded_utf8())"
-  )
+  if (.Platform$OS.type == "windows") {
+    opts$load_hook <- c(
+      opts$load_hook,
+      "invisible(cli:::set_embedded_utf8())"
+    )
+  }
   rp <- callr::r_process$new(opts)
   rp$wait(timeout)
   if (rp$is_alive()) {

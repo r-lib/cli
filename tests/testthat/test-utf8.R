@@ -12,6 +12,7 @@ test_that("UTF-8 output on Windows", {
     options(cli.unicode = TRUE)
     options(cli.num_colors = 1)
     options(cli.width = 70)
+    options(cli.dynamic = FALSE)
     Sys.setenv(RSTUDIO = NA)
 
     s1 <- "\u30DE\u30EB\u30C1\u30D0\u30A4\u30C8\u306E\u30BF\u30A4\u30C8\u30EB"
