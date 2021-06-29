@@ -43,7 +43,7 @@ cli__fmt <- function(record, collapse = FALSE, strip_newline = FALSE,
   old <- app$output
   on.exit(app$output <- old, add = TRUE)
   on.exit(app$signal <- NULL, add = TRUE)
-  out <- rawConnection(raw(1000), open = "w")
+  out <- rawConnection(raw(1000), open = "wb")
   on.exit(close(out), add = TRUE)
   app$output <- out
   app$signal <- FALSE
@@ -53,6 +53,7 @@ cli__fmt <- function(record, collapse = FALSE, strip_newline = FALSE,
   }
 
   txt <- rawToChar(rawConnectionValue(out))
+  Encoding(txt) <- "UTF-8"
   if (!collapse) {
     txt <- unlist(strsplit(txt, "\n", fixed = TRUE))
   } else if (strip_newline) {
