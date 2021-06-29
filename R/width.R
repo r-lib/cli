@@ -11,9 +11,9 @@
 #'
 #' Then we try to determine the size of the terminal or console window:
 #' * If we are not in RStudio, or we are in an RStudio temrinal,
-#'   then we try to use the `ps::ps_tty_size()` function to query the
-#'   terminal size. This might fail if ps is not installed or R is not
-#'   running in a terminal, but failures are ignored.
+#'   then we try to use the `tty_size()` function to query the
+#'   terminal size. This might fail if R is not running in a terminal,
+#'   but failures are ignored.
 #' * If we are in the RStudio build pane, then the `RSTUDIO_CONSOLE_WIDTH`
 #'   environment variable is used. If the build pane is resized, then this
 #'   environment variable is not accurate any more, and the output might
@@ -85,8 +85,19 @@ console_width <- function() {
   width
 }
 
+tty_size <- function() {
+  tryCatch(
+    ret <- .Call(clic_tty_size),
+    error = function(err) {
+      class(err) <- c("ps_unknown_tty_size", class(err))
+      stop(err)
+    }
+  )
+  c(width = ret[1], height = ret[2])
+}
+
 terminal_width <- function() {
-  w <- tryCatch(ps::ps_tty_size()[["width"]], error = function(e) NULL)
+  w <- tryCatch(tty_size()[["width"]], error = function(e) NULL)
   # this is probably a pty that does not set the width, use st sensible
   if (!is.null(w) && w == 0) w <- 80L
   w

@@ -24,9 +24,9 @@ and error is thrown.
 Then we try to determine the size of the terminal or console window:
 \itemize{
 \item If we are not in RStudio, or we are in an RStudio temrinal,
-then we try to use the \code{ps::ps_tty_size()} function to query the
-terminal size. This might fail if ps is not installed or R is not
-running in a terminal, but failures are ignored.
+then we try to use the \code{tty_size()} function to query the
+terminal size. This might fail if R is not running in a terminal,
+but failures are ignored.
 \item If we are in the RStudio build pane, then the \code{RSTUDIO_CONSOLE_WIDTH}
 environment variable is used. If the build pane is resized, then this
 environment variable is not accurate any more, and the output might
