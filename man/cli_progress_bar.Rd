@@ -37,7 +37,7 @@ cli_progress_update(
   .envir = parent.frame()
 )
 
-cli_progress_done(id = NULL, .envir = parent.frame(), result = "auto")
+cli_progress_done(id = NULL, .envir = parent.frame(), result = "done")
 }
 \arguments{
 \item{name}{This is typically used as a label, and should be short,
