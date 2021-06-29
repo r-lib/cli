@@ -48,6 +48,9 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic__find_var",      (DL_FUNC) clic__find_var,      2 },
   { "clic__gcov_flush",    (DL_FUNC) clic__gcov_flush,    0 },
 
+  { "clic_get_embedded_utf8", (DL_FUNC) clic_get_embedded_utf8, 0 },
+  { "clic_set_embedded_utf8", (DL_FUNC) clic_set_embedded_utf8, 1 },
+
   { NULL, NULL, 0 }
 };
 
