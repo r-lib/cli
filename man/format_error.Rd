@@ -2,20 +2,11 @@
 % Please edit documentation in R/format-conditions.R
 \name{format_error}
 \alias{format_error}
-\alias{format_error_header}
-\alias{format_error_body}
-\alias{format_error_footer}
 \alias{format_warning}
 \alias{format_message}
 \title{Format an error, warning or diagnostic message}
 \usage{
 format_error(message, .envir = parent.frame())
-
-format_error_header(message, .envir = parent.frame())
-
-format_error_body(message, .envir = parent.frame())
-
-format_error_footer(message, .envir = parent.frame())
 
 format_warning(message, .envir = parent.frame())
 
@@ -32,10 +23,6 @@ You can then throw this message with \code{\link[=stop]{stop()}} or \code{rlang:
 \details{
 The messages can use inline styling, pluralization and glue
 substitutions.
-
-\code{format_error_handler()}, \code{format_error_body()} and
-\code{format_error_footer()} are for advanced users. They let you format
-an error message piecewise. See \code{\link[rlang:cnd_message]{rlang::cnd_message()}}.
 }
 \examples{
 \dontrun{
