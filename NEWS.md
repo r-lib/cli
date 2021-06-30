@@ -1,14 +1,14 @@
 
 # cli development version
 
-* New `format_inline()` function to format a cli string without emitting
-  it (#278).
-
 * New functions for progress bars, please see the new articles at
   https://cli.r-lib.org/articles/ for details.
 
 * New `cli_abort()`, `cli_warn()` and `cli_inform()` functions, to throw
   errors with cli pluralization and styling.
+
+* New `format_inline()` function to format a cli string without emitting
+  it (#278).
 
 # cli 2.5.0
 
