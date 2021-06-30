@@ -1,5 +1,5 @@
 
-# cli development version
+# cli 3.0.0
 
 * New functions for progress bars, please see the new articles at
   https://cli.r-lib.org/articles/ for details.
