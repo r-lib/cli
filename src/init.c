@@ -31,6 +31,8 @@ SEXP clic__gcov_flush() {
 static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
+  { "clic_tty_size",       (DL_FUNC) clic_tty_size,       0 },
+
   { "clic_dataptr",        (DL_FUNC) clic_dataptr,        1 },
   { "clic_start_thread",   (DL_FUNC) clic_start_thread,   3 },
   { "clic_stop_thread",    (DL_FUNC) clic_stop_thread,    0 },

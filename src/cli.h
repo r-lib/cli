@@ -6,6 +6,8 @@
 #include <Rinternals.h>
 #include <Rversion.h>
 
+SEXP clic_tty_size();
+
 typedef volatile int vint;
 
 extern volatile int* cli_timer_flag;
