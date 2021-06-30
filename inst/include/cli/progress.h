@@ -164,10 +164,10 @@ static R_INLINE void cli_progress_set_clear(SEXP bar, int clear);
 //' string.
 //'
 //' Format strings may contain glue substitutions, referring to
-//' [progress variables][progress-variables], plurarlization, and cli
+//' [progress variables][progress-variables], pluralization, and cli
 //' styling.
 //'
-//' [progress-variables]: https://cli.r-lib.org/reference/progress-variables.html
+//' [progress-variables]: https://cli.r-lib.org/dev/reference/progress-variables.html
 
 static R_INLINE void cli_progress_set_format(SEXP bar, const char *format, ...);
 

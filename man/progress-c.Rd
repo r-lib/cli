@@ -133,7 +133,7 @@ call \code{cli_progress_add()}, \code{cli_progress_set()} or
 string.
 
 Format strings may contain glue substitutions, referring to
-\href{https://cli.r-lib.org/reference/progress-variables.html}{progress variables}, plurarlization, and cli
+\href{https://cli.r-lib.org/dev/reference/progress-variables.html}{progress variables}, pluralization, and cli
 styling.
 }
 
