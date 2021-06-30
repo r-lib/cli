@@ -59,7 +59,10 @@ cli_progress_along <- function(x,
                          .auto_close = FALSE, .envir = .envir)
   closeenv <- sys.frame(-1)
   if (format(closeenv) != clienv$globalenv) {
-    defer(cli_progress_done(id = id, .envir = .envir), envir = closeenv)
+    defer(
+      cli_progress_done(id = id, .envir = .envir, result = "auto"),
+      envir = closeenv
+    )
   }
   sax <- seq_along(x)
   clienv$progress[[id]]$caller <- .envir

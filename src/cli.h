@@ -45,4 +45,7 @@ SEXP clic_tick_resume(SEXP state);
 SEXP clic_make_timer();
 SEXP clic_update_due();
 
+SEXP clic_get_embedded_utf8();
+SEXP clic_set_embedded_utf8(SEXP value);
+
 #endif

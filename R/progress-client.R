@@ -124,7 +124,10 @@ cli_progress_bar <- function(name = NULL,
   }
 
   if (.auto_close && envkey != clienv$globalenv) {
-    defer(cli_progress_done(id = id, .envir = .envir), envir = .envir)
+    defer(
+      cli_progress_done(id = id, .envir = .envir, result = "auto"),
+      envir = .envir
+    )
   }
 
   opt <- options(cli__pb = bar)
@@ -248,7 +251,7 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
 #' @export
 
 cli_progress_done <- function(id = NULL, .envir = parent.frame(),
-                              result = "auto") {
+                              result = "done") {
   envkey <- format(.envir)
   id <- id %||% clienv$progress_ids[[envkey]]
   if (is.null(id)) return(invisible(TRUE))

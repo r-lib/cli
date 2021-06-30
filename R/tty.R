@@ -224,3 +224,87 @@ ansi_with_hidden_cursor <- function(expr, stream = "auto") {
   on.exit(ansi_show_cursor(), add = TRUE)
   expr
 }
+
+get_embedded_utf8 <- function() {
+  .Call(clic_get_embedded_utf8)
+}
+
+set_embedded_utf8 <- function(value = TRUE) {
+  .Call(clic_set_embedded_utf8, value)
+}
+
+r_utf8 <- function(func,
+                   args = list(),
+                   package = FALSE,
+                   timeout = 5000L) {
+  out <- tempfile()
+  on.exit(unlink(out), add = TRUE)
+  opts <- callr::r_process_options(
+    func = func,
+    args = args,
+    package = package,
+    stdout = out,
+    stderr = out
+  )
+  if (.Platform$OS.type == "windows") {
+    opts$load_hook <- c(
+      opts$load_hook,
+      "invisible(cli:::set_embedded_utf8())"
+    )
+  }
+  rp <- callr::r_process$new(opts)
+  rp$wait(timeout)
+  if (rp$is_alive()) {
+    rp$kill()
+    stop("R subprocess timeout")
+  }
+  list(
+    status = rp$get_exit_status(),
+    stdout = fix_r_utf8_output(readBin(out, "raw", file.size(out)))
+  )
+}
+
+fix_r_utf8_output <- function(x) {
+  beg <- grepRaw(as.raw(c(2, 255, 254)), x, fixed = TRUE, all = TRUE)
+  end <- grepRaw(as.raw(c(3, 255, 254)), x, fixed = TRUE, all = TRUE)
+
+  # In case the output is incomplete, and an UTF-8 tag is left open
+  if (length(end) < length(beg)) end <- c(end, length(x) + 1L)
+
+  if (length(beg) != length(end)) stop("Invalid output from UTF-8 R")
+
+  # Easier to handle corner cases with this
+  beg <- c(beg, length(x) + 1L)
+  end <- c(end, length(x) + 1L)
+
+  out <- file(open = "w+b")
+  size <- 0L
+  on.exit(close(out), add = TRUE)
+
+  doutf8 <- function(from, to) {
+    if (from > to) return()
+    writeBin(x[from:to], out)
+    size <<- size + (to - from + 1L)
+  }
+  donati <- function(from, to) {
+    if (from > to) return()
+    xx <- iconv(list(x[from:to]), "", "UTF-8", toRaw = TRUE)[[1]]
+    writeBin(xx, out)
+    size <<- size + length(xx)
+  }
+
+  # Initial native part
+  if (beg[1] > 1) donati(1, beg[1] - 1L)
+
+  # UTF-8 chunk, and native part after them
+  for (i in seq_along(beg)) {
+    doutf8(beg[i] + 3L, end[i] - 1L)
+    if (i < length(beg)) {
+      donati(end[i] + 3L, beg[i + 1L] - 1L)
+    }
+  }
+
+  chr <- readChar(out, size)
+  Encoding(chr) <- "UTF-8"
+  chr
+}

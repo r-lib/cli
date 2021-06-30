@@ -90,7 +90,7 @@ get_real_output <- function(output) {
   output
 }
 
-clii__message <- function(..., domain = NULL, appendLF = TRUE,
+clii__message <- function(..., domain = NA, appendLF = TRUE,
                           output = stderr(), signal = TRUE) {
 
   msg <- .makeMessage(..., domain = domain, appendLF = appendLF)
@@ -100,14 +100,23 @@ clii__message <- function(..., domain = NULL, appendLF = TRUE,
   msg <- gsub("\u00a0", " ", msg, fixed = TRUE)
 
   if (identical(signal, FALSE)) {
-    cat(msg, file = output, sep = "")
+    safe_cat0(msg, file = output)
 
   } else {
     withRestarts(muffleMessage = function() NULL, {
       cond <- simpleMessage(msg)
       class(cond) <- c("cliMessage", class(cond))
       signalCondition(cond)
-      cat(msg, file = output, sep = "")
+      safe_cat0(msg, file = output)
     })
+  }
+}
+
+safe_cat0 <- function(x, file) {
+  if (inherits(file, "rawConnection")) {
+    x <- enc2utf8(x)
+    writeBin(charToRaw(x), file)
+  } else {
+    cat(x, file = file, sep = "")
   }
 }
