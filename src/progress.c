@@ -110,6 +110,8 @@ SEXP clic__find_var(SEXP rho, SEXP symbol) {
 
 static int cli__counter = 0;
 
+#define P(x) PROTECT(x)
+
 SEXP cli__progress_update(SEXP bar) {
   /* We can't throw a condition from C, unfortunately... */
   SEXP call = PROTECT(Rf_lang2(install("progress_c_update"), bar));
@@ -150,23 +152,25 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   if (pid == 0) pid = getpid();
   snprintf(idstr, sizeof(idstr) - 1, "cli-%d-%d", (int) pid, cli__counter++);
 
-  Rf_defineVar(Rf_install("id"),            Rf_mkString(idstr),      bar);
-  Rf_defineVar(Rf_install("name"),          Rf_mkString(""),         bar);
-  Rf_defineVar(Rf_install("status"),        Rf_mkString(""),         bar);
-  Rf_defineVar(Rf_install("type"),          Rf_mkString("iterator"), bar);
-  Rf_defineVar(Rf_install("total"),         Rf_ScalarInteger(total), bar);
-  Rf_defineVar(Rf_install("show_after"),    Rf_ScalarReal(now + sa), bar);
-  Rf_defineVar(Rf_install("format"),        R_NilValue,              bar);
-  Rf_defineVar(Rf_install("format_done"),   R_NilValue,              bar);
-  Rf_defineVar(Rf_install("format_failed"), R_NilValue,              bar);
-  Rf_defineVar(Rf_install("clear"),         Rf_ScalarLogical(cl),    bar);
-  Rf_defineVar(Rf_install("auto_terminate"), Rf_ScalarLogical(1),    bar);
-  Rf_defineVar(Rf_install("envkey"),        R_NilValue,              bar);
-  Rf_defineVar(Rf_install("current"),       Rf_ScalarInteger(0),     bar);
-  Rf_defineVar(Rf_install("start"),         Rf_ScalarReal(now),      bar);
-  Rf_defineVar(Rf_install("statusbar"),     R_NilValue,              bar);
-  Rf_defineVar(Rf_install("tick"),          Rf_ScalarInteger(0),     bar);
-  Rf_defineVar(Rf_install("extra"),         R_NilValue,              bar);
+  Rf_defineVar(P(Rf_install("id")),             P(Rf_mkString(idstr)),      bar);
+  Rf_defineVar(P(Rf_install("name")),           P(Rf_mkString("")),         bar);
+  Rf_defineVar(P(Rf_install("status")),         P(Rf_mkString("")),         bar);
+  Rf_defineVar(P(Rf_install("type")),           P(Rf_mkString("iterator")), bar);
+  Rf_defineVar(P(Rf_install("total")),          P(Rf_ScalarInteger(total)), bar);
+  Rf_defineVar(P(Rf_install("show_after")),     P(Rf_ScalarReal(now + sa)), bar);
+  Rf_defineVar(P(Rf_install("format")),         R_NilValue,                 bar);
+  Rf_defineVar(P(Rf_install("format_done")),    R_NilValue,                 bar);
+  Rf_defineVar(P(Rf_install("format_failed")),  R_NilValue,                 bar);
+  Rf_defineVar(P(Rf_install("clear")),          P(Rf_ScalarLogical(cl)),    bar);
+  Rf_defineVar(P(Rf_install("auto_terminate")), P(Rf_ScalarLogical(1)),     bar);
+  Rf_defineVar(P(Rf_install("envkey")),         R_NilValue,                 bar);
+  Rf_defineVar(P(Rf_install("current")),        P(Rf_ScalarInteger(0)),     bar);
+  Rf_defineVar(P(Rf_install("start")),          P(Rf_ScalarReal(now)),      bar);
+  Rf_defineVar(P(Rf_install("statusbar")),      R_NilValue,                 bar);
+  Rf_defineVar(P(Rf_install("tick")),           P(Rf_ScalarInteger(0)),     bar);
+  Rf_defineVar(P(Rf_install("extra")),          R_NilValue,                 bar);
+
+  UNPROTECT(28);
 
   if (!config || Rf_isNull(config)) {
     /* NULL pointer or R NULL, use defaults */
@@ -203,65 +207,108 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
 }
 
 void cli_progress_set_name(SEXP bar, const char *name) {
-  if (isNull(bar)) return;
-  Rf_defineVar(Rf_install("name"), Rf_mkString(name), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  Rf_defineVar(PROTECT(Rf_install("name")), PROTECT(Rf_mkString(name)), bar);
+  UNPROTECT(3);
 }
 
 void cli_progress_set_status(SEXP bar, const char *status) {
-  if (isNull(bar)) return;
-  Rf_defineVar(Rf_install("status"), Rf_mkString(status), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  Rf_defineVar(PROTECT(Rf_install("status")), PROTECT(Rf_mkString(status)), bar);
+  UNPROTECT(3);
 }
 
 void cli_progress_set_type(SEXP bar, const char *type) {
-  if (isNull(bar)) return;
-  Rf_defineVar(Rf_install("type"), Rf_mkString(type), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  Rf_defineVar(PROTECT(Rf_install("type")), PROTECT(Rf_mkString(type)), bar);
+  UNPROTECT(3);
 }
 
 void cli_progress_set_format(SEXP bar, const char *format) {
-  if (isNull(bar)) return;
-  Rf_defineVar(Rf_install("format"), Rf_mkString(format), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  Rf_defineVar(PROTECT(Rf_install("format")), PROTECT(Rf_mkString(format)), bar);
+  UNPROTECT(3);
 }
 
 void cli_progress_set_clear(SEXP bar, int clear) {
-  if (isNull(bar)) return;
-  Rf_defineVar(Rf_install("clear"), Rf_ScalarLogical(clear), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  Rf_defineVar(PROTECT(Rf_install("clear")), PROTECT(Rf_ScalarLogical(clear)), bar);
+  UNPROTECT(3);
 }
 
 void cli_progress_set(SEXP bar, int set) {
-  if (isNull(bar)) return;
-  Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  Rf_defineVar(PROTECT(Rf_install("current")), PROTECT(ScalarInteger(set)), bar);
   if (*cli_timer_flag) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
-    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
+    SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
+    UNPROTECT(2);
   }
+  UNPROTECT(3);
 }
 
 void cli_progress_add(SEXP bar, int inc) {
-  if (isNull(bar)) return;
-  int crnt = INTEGER(clic__find_var(bar, Rf_install("current")))[0];
-  Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  SEXP current = PROTECT(Rf_install("current"));
+  int crnt = INTEGER(PROTECT(clic__find_var(bar, current)))[0];
+  Rf_defineVar(current, PROTECT(ScalarInteger(crnt + inc)), bar);
   if (*cli_timer_flag) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
-    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
+    SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
+    UNPROTECT(2);
   }
+  UNPROTECT(4);
 }
 
 void cli_progress_done(SEXP bar) {
-  if (isNull(bar)) return;
-  SEXP call = PROTECT(Rf_lang2(install("progress_c_done"), bar));
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  SEXP call = PROTECT(Rf_lang2(PROTECT(install("progress_c_done")), bar));
   PROTECT(Rf_eval(call, cli_pkgenv));
-  UNPROTECT(2);
+  UNPROTECT(4);
 }
 
 int cli_progress_num() {
-  SEXP clienv = clic__find_var(cli_pkgenv, Rf_install("clienv"));
+  SEXP clienv = PROTECT(clic__find_var(cli_pkgenv, Rf_install("clienv")));
   if (clienv == R_UnboundValue) error("Cannot find 'clienv'");
-  SEXP bars = clic__find_var(clienv, Rf_install("progress"));
+  SEXP bars = PROTECT(clic__find_var(clienv, Rf_install("progress")));
   if (bars == R_UnboundValue) error("Cannot find 'clienv$progress'");
+  UNPROTECT(2);
   return LENGTH(bars);
 }
 
@@ -283,21 +330,32 @@ void cli_progress_sleep(int s, long ns) {
 }
 
 void cli_progress_update(SEXP bar, int set, int inc, int force) {
-  if (isNull(bar)) return;
+  PROTECT(bar);
+  if (isNull(bar)) {
+    UNPROTECT(1);
+    return;
+  }
+  SEXP current = PROTECT(Rf_install("current"));
   if (set >= 0) {
-    Rf_defineVar(Rf_install("current"), ScalarInteger(set), bar);
+    Rf_defineVar(current, PROTECT(ScalarInteger(set)), bar);
+    UNPROTECT(1);
   } else {
-    int crnt = INTEGER(clic__find_var(bar, Rf_install("current")))[0];
+    int crnt = INTEGER(PROTECT(clic__find_var(bar, current)))[0];
     if (inc != 0) {
-      Rf_defineVar(Rf_install("current"), ScalarInteger(crnt + inc), bar);
+      Rf_defineVar(current, PROTECT(ScalarInteger(crnt + inc)), bar);
+      UNPROTECT(1);
     }
+    UNPROTECT(1);
   }
   if (force) {
     cli__progress_update(bar);
   } else if (*cli_timer_flag) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
-    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
+    SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
     if (now > REAL(show_after)[0]) cli__progress_update(bar);
+    UNPROTECT(2);
   }
+
+  UNPROTECT(2);
 }
