@@ -56,33 +56,33 @@ Some of the more commonly used cli elements, and features.
 
 One liner messages to inform or warn.
 
-``` asciicast
+``` r
 pkgs <- c("foo", "bar", "foobar")
 cli_alert_success("Downloaded {length(pkgs)} packages.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-2.svg" width="100%" />
 
-``` asciicast
+``` r
 db_url <- "example.com:port"
 cli_alert_info("Reopened database {.url {db_url}}.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-3.svg" width="100%" />
 
-``` asciicast
+``` r
 cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-4.svg" width="100%" />
 
-``` asciicast
+``` r
 cli_alert_danger("Failed to connect to database.")
 ```
 
 <img src="man/figures/README/unnamed-chunk-5.svg" width="100%" />
 
-``` asciicast
+``` r
 cli_alert("A generic alert")
 ```
 
@@ -92,19 +92,19 @@ cli_alert("A generic alert")
 
 Three levels of headings.
 
-``` asciicast
+``` r
 cli_h1("Heading 1")
 ```
 
 <img src="man/figures/README/unnamed-chunk-7.svg" width="100%" />
 
-``` asciicast
+``` r
 cli_h2("Heading 2")
 ```
 
 <img src="man/figures/README/unnamed-chunk-8.svg" width="100%" />
 
-``` asciicast
+``` r
 cli_h3("Heading 3")
 ```
 
@@ -114,7 +114,7 @@ cli_h3("Heading 3")
 
 Ordered, unordered and description lists, that can be nested.
 
-``` asciicast
+``` r
 fun <- function() {
   cli_ol()
   cli_li("Item 1")
@@ -134,7 +134,7 @@ fun()
 
 Theming via a CSS-like language.
 
-``` asciicast
+``` r
 fun <- function() {
   cli_div(theme = list(span.emph = list(color = "orange")))
   cli_text("This is very {.emph important}")
@@ -151,7 +151,7 @@ fun()
 Automatic command substitution via the
 [glue](https://github.com/tidyverse/glue) package.
 
-``` asciicast
+``` r
 size <- 123143123
 dt <- 1.3454
 cli_alert_info(c(
@@ -165,7 +165,7 @@ cli_alert_info(c(
 
 Pluralization support.
 
-``` asciicast
+``` r
 nfiles <- 3
 ndirs <- 1
 cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
