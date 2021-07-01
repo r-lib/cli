@@ -75,7 +75,7 @@ for unsuccessful termination." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -98,7 +98,13 @@ for unsuccessful termination." />
       <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
     </li>
     <li>
-      <a href="../articles/pluralization.html">CLI pluralization</a>
+      <a href="../articles/progress.html">Introduction to progress bars in cli</a>
+    </li>
+    <li>
+      <a href="../articles/progress-advanced.html">Advanced cli progress bars</a>
+    </li>
+    <li>
+      <a href="../articles/pluralization.html">cli pluralization</a>
     </li>
     <li>
       <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
@@ -148,7 +154,7 @@ for unsuccessful termination.</p>
   <span class='va'>msg</span>,
   msg_done <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>msg</span>, <span class='st'>"... done"</span><span class='op'>)</span>,
   msg_failed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>msg</span>, <span class='st'>"... failed"</span><span class='op'>)</span>,
-  on_exit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"failed"</span>, <span class='st'>"done"</span><span class='op'>)</span>,
+  on_exit <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auto"</span>, <span class='st'>"failed"</span>, <span class='st'>"done"</span><span class='op'>)</span>,
   msg_class <span class='op'>=</span> <span class='st'>"alert-info"</span>,
   done_class <span class='op'>=</span> <span class='st'>"alert-success"</span>,
   failed_class <span class='op'>=</span> <span class='st'>"alert-danger"</span>,
@@ -257,7 +263,7 @@ function finishes.</p>
   <span class='fu'>cli_process_done</span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='kw'><a href='https://rdrr.io/r/base/conditions.html'>tryCatch</a></span><span class='op'>(</span><span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>, error <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>err</span><span class='op'>)</span> <span class='va'>err</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> Calculating</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BB0000;'>✖</span><span> Calculating ... failed</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; &lt;simpleError in fun(): Failed&gt;</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Calculating</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span> Calculating ... done</span></div><div class='output co'>#&gt; </div><div class='input'>
 <span class='co'>## Success by default</span>
 <span class='va'>fun2</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'>cli_process_start</span><span class='op'>(</span><span class='st'>"Calculating"</span>, on_exit <span class='op'>=</span> <span class='st'>"done"</span><span class='op'>)</span>
@@ -267,7 +273,7 @@ function finishes.</p>
   <span class='op'>}</span>, error <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>err</span><span class='op'>)</span> <span class='fu'>cli_process_failed</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='fu'>fun2</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> Calculating</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Calculating ... done</span></div><div class='output co'>#&gt; </div></span></pre>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Calculating</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BB0000;'>✖</span> Calculating ... failed</span></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

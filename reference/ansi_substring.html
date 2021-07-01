@@ -75,7 +75,7 @@ calculating the positions within the string." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -98,7 +98,13 @@ calculating the positions within the string." />
       <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
     </li>
     <li>
-      <a href="../articles/pluralization.html">CLI pluralization</a>
+      <a href="../articles/progress.html">Introduction to progress bars in cli</a>
+    </li>
+    <li>
+      <a href="../articles/progress-advanced.html">Advanced cli progress bars</a>
+    </li>
+    <li>
+      <a href="../articles/pluralization.html">cli pluralization</a>
     </li>
     <li>
       <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
@@ -192,10 +198,10 @@ the requested substrings. ANSI styles are retained.</p>
 <span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>red</span><span> default </span><span style='color: #00BB00;'>green</span><span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str</span>, <span class='fl'>1</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>red</span><span> d </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str</span>, <span class='fl'>1</span>, <span class='fl'>15</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>red</span><span> default </span><span style='color: #00BB00;'>gre</span><span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str</span>, <span class='fl'>3</span>, <span class='fl'>7</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>d</span><span> def </div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #BB0000;'>red</span> default <span style='color: #00BB00;'>green</span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str</span>, <span class='fl'>1</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #BB0000;'>red</span> d </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str</span>, <span class='fl'>1</span>, <span class='fl'>15</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #BB0000;'>red</span> default <span style='color: #00BB00;'>gre</span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str</span>, <span class='fl'>3</span>, <span class='fl'>7</span><span class='op'>)</span>, <span class='st'>"\n"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #BB0000;'>d</span> def </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>5</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "red d"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>15</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "red default gre"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fl'>7</span><span class='op'>)</span>
@@ -207,10 +213,10 @@ the requested substrings. ANSI styles are retained.</p>
 <span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str2</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; another </span><span style='color: #BB0000;'>multi-</span><span style='color: #BB0000;text-decoration: underline;'>style</span><span> text </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str2</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; another <span style='color: #BB0000;'>multi-</span><span style='color: #BB0000; text-decoration: underline;'>style</span> text </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_substring</span><span class='op'>(</span><span class='va'>str2</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; other
-#&gt; her </span><span style='color: #BB0000;'>multi-</span><span style='color: #BB0000;text-decoration: underline;'>styl</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "other"          "her multi-styl"</div></span></pre>
+#&gt; her <span style='color: #BB0000;'>multi-</span><span style='color: #BB0000; text-decoration: underline;'>styl</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substring</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7</span>, <span class='fl'>18</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "other"          "her multi-styl"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

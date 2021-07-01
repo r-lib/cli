@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -95,7 +95,13 @@
       <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
     </li>
     <li>
-      <a href="../articles/pluralization.html">CLI pluralization</a>
+      <a href="../articles/progress.html">Introduction to progress bars in cli</a>
+    </li>
+    <li>
+      <a href="../articles/progress-advanced.html">Advanced cli progress bars</a>
+    </li>
+    <li>
+      <a href="../articles/pluralization.html">cli pluralization</a>
     </li>
     <li>
       <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
@@ -159,12 +165,12 @@ knowing the exact cli pluralization rules.</p>
 <p>In the simplest case the message contains a single <code>{}</code> glue
 substitution, which specifies the quantity that is used to select
 between the singular and plural forms. Pluralization uses markup that is
-similar to glue, but uses the <code>{?</code> and <code>}</code> delimiters:<div class="r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/r-lib/cli#readme'>cli</a></span><span class='op'>)</span>
+similar to glue, but uses the <code>{?</code> and <code>}</code> delimiters:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://cli.r-lib.org'>cli</a></span><span class='op'>)</span>
 <span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 0 files.</span>
-</pre><p><div class="r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 1 file.</span>
-</pre><p><div class="r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 2 files.</span>
 </pre>
 
@@ -176,9 +182,9 @@ messages.</p>
 
 
 <p>If the plural form is more difficult than a simple <code>s</code> suffix, then the
-singular and plural forms can be given, separated with a forward slash:<div class="r"></p><pre><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span>
+singular and plural forms can be given, separated with a forward slash:<div class="sourceCode r"></p><pre><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 1 directory.</span>
-</pre><p><div class="r"></p><pre><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 5 directories.</span>
 </pre>
 
@@ -188,11 +194,11 @@ singular and plural forms can be given, separated with a forward slash:<div clas
 
 <p>For readability, it is better to use the <code><a href='no.html'>no()</a></code> helper function to
 include a count in a message. <code><a href='no.html'>no()</a></code> prints the word “no” if the count
-is zero, and prints the numeric count otherwise:<div class="r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
+is zero, and prints the numeric count otherwise:<div class="sourceCode r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found no files.</span>
-</pre><p><div class="r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 1 file.</span>
-</pre><p><div class="r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 2 files.</span>
 </pre>
 
@@ -202,10 +208,10 @@ is zero, and prints the numeric count otherwise:<div class="r"></p><pre><span cl
 
 <p>With the auto-collapsing feature of cli it is easy to include a list of
 objects in a message. When cli interprets a character vector as a
-pluralization quantity, it takes the length of the vector:<div class="r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='st'>"pkg1"</span>
+pluralization quantity, it takes the length of the vector:<div class="sourceCode r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='st'>"pkg1"</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Will remove the {.pkg {pkgs}} package{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Will remove the pkg1 package.</span>
-</pre><p><div class="r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Will remove the {.pkg {pkgs}} package{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</span>
 </pre>
@@ -213,10 +219,10 @@ pluralization quantity, it takes the length of the vector:<div class="r"></p><pr
 <p>Note that the length is only used for non-numeric vectors (when
 <code><a href='https://rdrr.io/r/base/numeric.html'>is.numeric(x)</a></code> return <code>FALSE</code>). If you want to use the length of a
 numeric vector, convert it to character via <code><a href='https://rdrr.io/r/base/character.html'>as.character()</a></code>.</p>
-<p>You can combine collapsed vectors with “no”, like this:<div class="r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>
+<p>You can combine collapsed vectors with “no”, like this:<div class="sourceCode r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Will remove no packages.</span>
-</pre><p><div class="r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
+</pre><p><div class="sourceCode r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</span>
 </pre>
@@ -229,14 +235,14 @@ for larger quantities.</p>
 
 
 <p>When the text contains multiple glue <code>{}</code> substitutions, the one right
-before the pluralization markup is used. For example:<div class="r"></p><pre><span class='va'>nfiles</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ndirs</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+before the pluralization markup is used. For example:<div class="sourceCode r"></p><pre><span class='va'>nfiles</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ndirs</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Found {nfiles} file{?s} and {ndirs} director{?y/ies}"</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; Found 3 files and 1 directory</span>
 </pre>
 
 <p>This is sometimes not the the correct one. You can explicitly specify
 the correct quantity using the <code><a href='no.html'>qty()</a></code> function. This sets that quantity
-without printing anything:<div class="r"></p><pre><span class='va'>nupd</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ntotal</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+without printing anything:<div class="sourceCode r"></p><pre><span class='va'>nupd</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ntotal</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates"</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>#&gt; 3/10 files need updates</span>
 </pre>
@@ -257,7 +263,7 @@ and interpreted.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href=
 
 <ol>
 <li><p><code>{}</code> substitutions define quantities. If the value of a <code>{}</code>
-substitution is numeric (i.e. <code><a href='https://rdrr.io/r/base/numeric.html'>is.numeric(x)</a></code> holds), then it has to
+substitution is numeric (when <code><a href='https://rdrr.io/r/base/numeric.html'>is.numeric(x)</a></code> holds), then it has to
 have length one to define a quantity. This is only enforced if the
 <code>{}</code> substitution is used for pluralization. The quantity is defined
 as the value of <code>{}</code> then, rounded with <code><a href='https://rdrr.io/r/base/integer.html'>as.integer()</a></code>. If the value

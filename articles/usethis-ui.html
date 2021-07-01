@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
       </span>
     </div>
 
@@ -54,7 +54,13 @@
       <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
     </li>
     <li>
-      <a href="../articles/pluralization.html">CLI pluralization</a>
+      <a href="../articles/progress.html">Introduction to progress bars in cli</a>
+    </li>
+    <li>
+      <a href="../articles/progress-advanced.html">Advanced cli progress bars</a>
+    </li>
+    <li>
+      <a href="../articles/pluralization.html">cli pluralization</a>
     </li>
     <li>
       <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
@@ -92,7 +98,7 @@
       <h1 data-toc-skip>From usethis::ui functions to cli</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2021-04-26</h4>
+            <h4 class="date">2021-07-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/usethis-ui.Rmd"><code>vignettes/usethis-ui.Rmd</code></a></small>
       <div class="hidden name"><code>usethis-ui.Rmd</code></div>
@@ -102,7 +108,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/cli#readme">cli</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org">usethis</a></span><span class="op">)</span></code></pre></div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
@@ -117,12 +123,15 @@
 <a href="#usethisui_code" class="anchor"></a><code>usethis::ui_code()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_code(x)</a></code></pre>
-<pre class="asciicast"><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo("Redocument with {ui_code('devtools::document()')}")</a></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-2.svg" width="100%"></p>
 <p>In general inline code formatting can be done with inline styles in cli. The default theme has a <code>"code"</code> class, but it also one for functions, so this can be either of:</p>
-<pre class="asciicast"><code><a href="../reference/cli_ul.html">cli_ul("Redocument with {.code devtools::document()}")</a></code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"Redocument with {.code devtools::document()}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-3.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/cli_ul.html">cli_ul("Redocument with {.fun devtools::document}")</a></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"Redocument with {.fun devtools::document}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-4.svg" width="100%"></p>
 </div>
 <div id="usethisui_code_block" class="section level2">
@@ -130,10 +139,12 @@
 <a href="#usethisui_code_block" class="anchor"></a><code>usethis::ui_code_block()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_code_block(x, copy = interactive(), .envir = parent.frame())</a></code></pre>
-<pre class="asciicast"><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_code_block("{format(cli_code)}")</a></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_code_block</a></span><span class="op">(</span><span class="st">"{format(cli_code)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-5.svg" width="100%"></p>
 <p><code><a href="../reference/cli_code.html">cli_code()</a></code> produces similar output and it also syntax highlight R code:</p>
-<pre class="asciicast"><code><a href="../reference/cli_code.html">cli_code(format(cli_code))</a></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_code.html">cli_code</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">cli_code</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-6.svg" width="100%"></p>
 <p>However, cli does not copy stuff to the clipboard, so this has to be done separately.</p>
 <p>Another difference is that it also does not run glue substitutions on the code text, so if you want that to happen you’ll need to do that before the cli call.</p>
@@ -143,23 +154,26 @@
 <a href="#usethisui_done" class="anchor"></a><code>usethis::ui_done()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_done(x, .envir = parent.frame())</a></code></pre>
-<pre class="asciicast"><code>name &lt;- "VignetteBuilder"
-value &lt;- "knitr, rmarkdown"
-ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
+<span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-7.svg" width="100%"></p>
 <p>This is probably closest to <code><a href="../reference/cli_alert.html">cli_alert_success()</a></code>:</p>
-<pre class="asciicast"><code><a href="../reference/cli_alert.html">cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")</a></code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-8.svg" width="100%"></p>
 <p>If you want to handle success and failure, then maybe the <code>cli_process_*()</code> functions are a better fit:</p>
-<pre class="asciicast"><code><a href="https://rdrr.io/r/base/conditions.html">tryCatch({
-    cli_process_start("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")
-    Sys.sleep(1) # &lt;- do the task here, we just sleep
-    cli_process_done() },
-  error = function(err) {
-    cli_process_failed()
-    cli_alert_danger("Failed to ...")
-  }
-)</a></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="op">{</span>
+    <span class="fu"><a href="../reference/cli_process_start.html">cli_process_start</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># &lt;- do the task here, we just sleep</span>
+    <span class="fu"><a href="../reference/cli_process_start.html">cli_process_done</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>,
+  error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="../reference/cli_process_start.html">cli_process_failed</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="fu"><a href="../reference/cli_alert.html">cli_alert_danger</a></span><span class="op">(</span><span class="st">"Failed to ..."</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-9.svg" width="100%"></p>
 </div>
 <div id="usethisui_field" class="section level2">
@@ -167,22 +181,27 @@ ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")</c
 <a href="#usethisui_field" class="anchor"></a><code>usethis::ui_field()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_field(x)</a></code></pre>
-<pre class="asciicast"><code>name &lt;- "VignetteBuilder"
-value &lt;- "knitr, rmarkdown"
-ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
+<span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-10.svg" width="100%"></p>
 <p>cli has a <code>"field"</code> class for inline styling:</p>
-<pre class="asciicast"><code><a href="../reference/cli_alert.html">cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")</a></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-11.svg" width="100%"></p>
 <p>Just like <code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_field()</a></code> and similar usethis functions, cli collapses inline vectors, before styling:</p>
-<pre class="asciicast"><code>name &lt;- c("Depends", "Imports", "Suggests")
-ui_done("Setting the {ui_field(name)} field(s) in DESCRIPTION")</code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span><span class="op">)</span>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting the {ui_field(name)} field(s) in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-12.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/cli_alert.html">cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")</a></code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting the {.field {name}} field{?s} in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-13.svg" width="100%"></p>
 <p>cli also helps you with the correct pluralization:</p>
-<pre class="asciicast"><code>name &lt;- "Depends"
-cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"Depends"</span>
+<span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting the {.field {name}} field{?s} in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-14.svg" width="100%"></p>
 </div>
 <div id="usethisui_info" class="section level2">
@@ -190,10 +209,12 @@ cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")</code>
 <a href="#usethisui_info" class="anchor"></a><code>usethis::ui_info()</code>
 </h2>
 <pre><code>usethis::ui_info((x, .envir = parent.frame())</code></pre>
-<pre class="asciicast"><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_info("No labels need renaming")</a></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_info</a></span><span class="op">(</span><span class="st">"No labels need renaming"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-15.svg" width="100%"></p>
 <p>This is simply <code><a href="../reference/cli_alert.html">cli_alert_info()</a></code>:</p>
-<pre class="asciicast"><code><a href="../reference/cli_alert.html">cli_alert_info("No labels need renaming")</a></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"No labels need renaming"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-16.svg" width="100%"></p>
 </div>
 <div id="usethisui_line" class="section level2">
@@ -201,10 +222,12 @@ cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")</code>
 <a href="#usethisui_line" class="anchor"></a><code>usethis::ui_line()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_line(x, .envir = parent.frame())</a></code></pre>
-<pre class="asciicast"><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_line("No matching issues/PRs found.")</a></code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_line</a></span><span class="op">(</span><span class="st">"No matching issues/PRs found."</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-17.svg" width="100%"></p>
 <p>This is just a line of text, so <code><a href="../reference/cli_text.html">cli_text()</a></code> is fine for this. One difference is that <code><a href="../reference/cli_text.html">cli_text()</a></code> will automatically wrap the long lines.</p>
-<pre class="asciicast"><code><a href="../reference/cli_text.html">cli_text("No matching issues/PRs found.")</a></code></pre>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"No matching issues/PRs found."</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-18.svg" width="100%"></p>
 </div>
 <div id="usethisui_nope" class="section level2">
@@ -219,7 +242,8 @@ cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")</code>
 <a href="#usethisui_oops" class="anchor"></a><code>usethis::ui_oops()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_oops(x, .envir = parent.frame())</a></code></pre>
-<pre class="asciicast"><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_oops("Can't validate token. Is the network reachable?")</a></code></pre>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_oops</a></span><span class="op">(</span><span class="st">"Can't validate token. Is the network reachable?"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-19.svg" width="100%"></p>
 <p>This is mostly just <code><a href="../reference/cli_alert.html">cli_alert_danger()</a></code>, but for see also the <code>cli_process_*()</code> alternatives at <code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_done()</a></code>.</p>
 </div>
@@ -229,11 +253,13 @@ cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_path(x, base = NULL)</a></code></pre>
 <p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_path()</a></code> formats paths as relative to the project or the supplied base directory, and also appends a <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> to directories. cli does not do any of these, but it does have inline markup for files and paths:</p>
-<pre class="asciicast"><code>logo_path &lt;- file.path("man", "figures", "logo.svg")
-img &lt;- "/tmp/some-image.svg"
-ui_done("Copied {ui_path(img)} to {ui_path(logo_path)}")</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">logo_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"man"</span>, <span class="st">"figures"</span>, <span class="st">"logo.svg"</span><span class="op">)</span>
+<span class="va">img</span> <span class="op">&lt;-</span> <span class="st">"/tmp/some-image.svg"</span>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Copied {ui_path(img)} to {ui_path(logo_path)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-20.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/cli_alert.html">cli_alert_success("Copied {.file {img}} to {.file {logo_path}}")</a></code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Copied {.file {img}} to {.file {logo_path}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-21.svg" width="100%"></p>
 </div>
 <div id="usethisui_stop" class="section level2">
@@ -250,9 +276,11 @@ ui_done("Copied {ui_path(img)} to {ui_path(logo_path)}")</code></pre>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_todo(x, .envir = parent.frame())</a></code></pre>
 <p>This is a bullet, so either <code><a href="../reference/cli_ul.html">cli_ul()</a></code> or <code><a href="../reference/cli_alert.html">cli_alert_info()</a></code> should be appropriate:</p>
-<pre class="asciicast"><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo("Redocument with {ui_code('devtools::document()')}")</a></code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-22.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/cli_ul.html">cli_ul("Redocument with {.fun devtools::document}")</a></code></pre>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"Redocument with {.fun devtools::document}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-23.svg" width="100%"></p>
 </div>
 <div id="usethisui_value" class="section level2">
@@ -261,11 +289,13 @@ ui_done("Copied {ui_path(img)} to {ui_path(logo_path)}")</code></pre>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_value(x)</a></code></pre>
 <p>The <code>"value"</code> inline class is appropriate for this.</p>
-<pre class="asciicast"><code>name &lt;- "VignetteBuilder"
-value &lt;- "knitr, rmarkdown"
-ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")</code></pre>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
+<span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-24.svg" width="100%"></p>
-<pre class="asciicast"><code><a href="../reference/cli_alert.html">cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")</a></code></pre>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-25.svg" width="100%"></p>
 </div>
 <div id="usethisui_warn" class="section level2">
