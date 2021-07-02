@@ -4,7 +4,7 @@
 #'
 #' These functions let you create error, warning or diagnostic
 #' messages with cli formatting, including inline styling,
-#' pluralization andglue substitutions.
+#' pluralization and glue substitutions.
 #'
 #' @param message It is formatted via a call to [cli_bullets()].
 #' @param ... Passed to [rlang::abort()], [rlang::warn()] or
