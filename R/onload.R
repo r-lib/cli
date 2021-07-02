@@ -41,7 +41,7 @@ task_callback <- NULL
 
   tt <- as.integer(Sys.getenv("CLI_TICK_TIME", NA_character_))
   if (is.na(tt)) {
-    tt <- if (interactive()) {
+    tt <- if (interactive() || is_dynamic_tty()) {
       cli_timer_interactive
     } else {
       cli_timer_non_interactive
