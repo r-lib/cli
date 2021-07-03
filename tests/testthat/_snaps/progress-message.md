@@ -11,14 +11,15 @@
       readLines(outfile)
     Output
       [1] "Simplest progress 'bar', `fn()` 2 twos"
-      [2] "Error in (function ()  : oopsie"       
+      [2] "Simplest progress 'bar', `fn()` 2 twos"
+      [3] "Error in (function ()  : oopsie"       
 
 ---
 
     Code
       win2unix(out)
     Output
-      [1] "\033[?25l\rSimplest progress 'bar', `fn()` 2 twos\033[K\r\r\033[K\033[?25hError in (function ()  : oopsie\n"
+      [1] "\033[?25l\rSimplest progress 'bar', `fn()` 2 twos\033[K\r\rSimplest progress 'bar', `fn()` 2 twos\033[K\r\r\033[K\033[?25hError in (function ()  : oopsie\n"
 
 # cli_progress_step
 

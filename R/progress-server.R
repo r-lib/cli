@@ -99,7 +99,8 @@ builtin_handler_cli <- list(
       msg_failed = bar$format_failed %||% bar$format,
       .auto_close = FALSE,
       .envir = .envir,
-    )
+      )
+    bar$last_shown <- bar$current
     bar$justadded <- TRUE
   },
 
@@ -108,12 +109,18 @@ builtin_handler_cli <- list(
       bar$justadded <- FALSE
       return()
     }
+    bar$last_shown <- bar$current
     cli_status_update(id = bar$cli_statusbar, bar$format, .envir = .envir)
   },
 
   complete = function(bar, .envir, result) {
     if (isTRUE(bar$added)) {
       if (bar$clear) {
+        # Show the full bar non-dynamic ttys
+        if (!is_dynamic_tty() &&
+            !identical(bar$last_shown, bar$current)) {
+          cli_status_update(id = bar$cli_statusbar, bar$format, .envir = .envir)
+        }
         cli_status_clear(bar$cli_statusbar, result = "clear", .envir = .envir)
       } else {
         cli_status_clear(
