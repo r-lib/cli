@@ -24,7 +24,7 @@ cli_inform(message, ..., .envir = parent.frame())
 \description{
 These functions let you create error, warning or diagnostic
 messages with cli formatting, including inline styling,
-pluralization andglue substitutions.
+pluralization and glue substitutions.
 }
 \examples{
 \dontrun{
