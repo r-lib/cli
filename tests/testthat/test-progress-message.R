@@ -8,6 +8,10 @@ test_that("cli_progress_message", {
 })
 
 test_that("cli_progress_message error", {
+  # we need the env var as well, because the on.exit handler of the progress
+  # bar might run after the on.exit handler that removes the `cli.dynamic`
+  # option.
+  withr::local_envvar(R_CLI_DYNAMIC = "false")
   fun <- function() {
     withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
     suppressWarnings(testthat::local_reproducible_output())
@@ -20,6 +24,10 @@ test_that("cli_progress_message error", {
   expect_error(callr::r(fun, stdout = outfile, stderr = outfile), "oopsie")
   expect_snapshot(readLines(outfile))
 
+  # we need the env var as well, because the on.exit handler of the progress
+  # bar might run after the on.exit handler that removes the `cli.dynamic`
+  # option.
+  withr::local_envvar(R_CLI_DYNAMIC = "true")
   fun2 <- function() {
     withr::local_options(cli.dynamic = TRUE, cli.ansi = TRUE)
     suppressWarnings(testthat::local_reproducible_output())
