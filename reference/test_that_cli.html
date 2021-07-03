@@ -196,93 +196,129 @@ currently.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># testthat cannot record or compare snapshots when you run these</span>
-<span class='co'># examples interactively, so you might want to copy them into a test</span>
-<span class='co'># file</span>
-
-<span class='co'># Default configurations</span>
-<span class='fu'>cli</span><span class='fu'>::</span><span class='fu'>test_that_cli</span><span class='op'>(</span><span class='st'>"success"</span>, <span class='op'>{</span>
-  <span class='fu'>expect_snapshot</span><span class='op'>(</span><span class='op'>{</span>
-    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cli_alert.html'>cli_alert_success</a></span><span class='op'>(</span><span class='st'>"wow"</span><span class='op'>)</span>
-  <span class='op'>}</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [plain]</span> ─────────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [ansi]</span> ──────────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [unicode]</span> ───────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [fancy]</span> ─────────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; </div><div class='output co'>#&gt; [[1]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] FALSE
-#&gt; </div><div class='input'>
-<span class='co'># Only use two configurations, because this output does not have colors</span>
-<span class='fu'>cli</span><span class='fu'>::</span><span class='fu'>test_that_cli</span><span class='op'>(</span>configs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"plain"</span>, <span class='st'>"unicode"</span><span class='op'>)</span>, <span class='st'>"cat_bullet"</span>, <span class='op'>{</span>
-  <span class='fu'>expect_snapshot</span><span class='op'>(</span><span class='op'>{</span>
-    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cat_line.html'>cat_bullet</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
-  <span class='op'>}</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:14:3): cat_bullet [plain]</span> ─────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:14:3): cat_bullet [unicode]</span> ───────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; </div><div class='output co'>#&gt; [[1]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[2]]
-#&gt; NULL
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[4]]
-#&gt; NULL
-#&gt; </div><div class='input'>
-<span class='co'># You often need to evaluate all cli calls of a test case in the same</span>
-<span class='co'># environment. Use `local()` to do that:</span>
-<span class='fu'>cli</span><span class='fu'>::</span><span class='fu'>test_that_cli</span><span class='op'>(</span><span class='st'>"theming"</span>, <span class='op'>{</span>
-  <span class='fu'>expect_snapshot</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/eval.html'>local</a></span><span class='op'>(</span><span class='op'>{</span>
-    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>".alert"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='st'>"!!! "</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cli_alert.html'>cli_alert</a></span><span class='op'>(</span><span class='st'>"wow"</span><span class='op'>)</span>
-  <span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [plain]</span> ────────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [ansi]</span> ─────────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [unicode]</span> ──────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; 
-#&gt; ── <span style='color: #FFAF00; font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [fancy]</span> ────────────────────────────────────────
-#&gt; Error: could not find function "expect_snapshot"
-#&gt; </div><div class='output co'>#&gt; [[1]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] FALSE
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># testthat cannot record or compare snapshots when you run these</span></span>
+<span class='r-in'><span class='co'># examples interactively, so you might want to copy them into a test</span></span>
+<span class='r-in'><span class='co'># file</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Default configurations</span></span>
+<span class='r-in'><span class='fu'>cli</span><span class='fu'>::</span><span class='fu'>test_that_cli</span><span class='op'>(</span><span class='st'>"success"</span>, <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_snapshot.html'>expect_snapshot</a></span><span class='op'>(</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cli_alert.html'>cli_alert_success</a></span><span class='op'>(</span><span class='st'>"wow"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [plain]</span><span> ─────────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [ansi]</span><span> ──────────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [unicode]</span><span> ───────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:7:3): success [fancy]</span><span> ─────────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Only use two configurations, because this output does not have colors</span></span>
+<span class='r-in'><span class='fu'>cli</span><span class='fu'>::</span><span class='fu'>test_that_cli</span><span class='op'>(</span>configs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"plain"</span>, <span class='st'>"unicode"</span><span class='op'>)</span>, <span class='st'>"cat_bullet"</span>, <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_snapshot.html'>expect_snapshot</a></span><span class='op'>(</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cat_line.html'>cat_bullet</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:14:3): cat_bullet [plain]</span><span> ─────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:14:3): cat_bullet [unicode]</span><span> ───────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># You often need to evaluate all cli calls of a test case in the same</span></span>
+<span class='r-in'><span class='co'># environment. Use `local()` to do that:</span></span>
+<span class='r-in'><span class='fu'>cli</span><span class='fu'>::</span><span class='fu'>test_that_cli</span><span class='op'>(</span><span class='st'>"theming"</span>, <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'>testthat</span><span class='fu'>::</span><span class='fu'><a href='https://testthat.r-lib.org/reference/expect_snapshot.html'>expect_snapshot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/eval.html'>local</a></span><span class='op'>(</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>".alert"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='st'>"!!! "</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>    <span class='fu'>cli</span><span class='fu'>::</span><span class='fu'><a href='cli_alert.html'>cli_alert</a></span><span class='op'>(</span><span class='st'>"wow"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>}</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [plain]</span><span> ────────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [ansi]</span><span> ─────────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [unicode]</span><span> ──────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── <span style='color: #FFAF00;font-weight: bold;'>Error</span><span style='font-weight: bold;'> (&lt;text&gt;:22:3): theming [fancy]</span><span> ────────────────────────────────────────</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Error: `expect_snapshot()` requires the 3rd edition.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-weight: bold;'>Backtrace:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 1. </span><span>testthat::expect_snapshot(...)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #555555;'> 2. </span><span>testthat:::edition_require(3, "expect_snapshot()")</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
