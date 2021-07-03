@@ -169,125 +169,123 @@ format() method. See examples below." />
     <p>Character vector, one element for each line of the printout.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'></span>
-<span class='r-in'><span class='co'># Let's create format and print methods for a new S3 class that</span></span>
-<span class='r-in'><span class='co'># represents the an installed R package: `r_package`</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># An `r_package` will contain the DESCRIPTION metadata of the package</span></span>
-<span class='r-in'><span class='co'># and also its installation path.</span></span>
-<span class='r-in'><span class='va'>new_r_package</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>pkg</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'>  <span class='kw'><a href='https://rdrr.io/r/base/conditions.html'>tryCatch</a></span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='va'>desc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageDescription</a></span><span class='op'>(</span><span class='va'>pkg</span><span class='op'>)</span>,</span>
-<span class='r-in'>    warning <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"Cannot find R package `"</span>, <span class='va'>pkg</span>, <span class='st'>"`"</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-in'>  <span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>desc</span>, <span class='st'>"file"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>pkg</span><span class='op'>)</span> <span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span></span>
-<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>desc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>unclass</a></span><span class='op'>(</span><span class='va'>desc</span><span class='op'>)</span>, lib <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span><span class='op'>)</span>,</span>
-<span class='r-in'>    class <span class='op'>=</span> <span class='st'>"r_package"</span></span>
-<span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-in'><span class='op'>}</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='va'>format.r_package</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'>  <span class='fu'>cli_format_method</span><span class='op'>(</span><span class='op'>{</span></span>
-<span class='r-in'>    <span class='fu'><a href='cli_h1.html'>cli_h1</a></span><span class='op'>(</span><span class='st'>"{.pkg {x$desc$Package}} {cli::symbol$line} {x$desc$Title}"</span><span class='op'>)</span></span>
-<span class='r-in'>    <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{x$desc$Description}"</span><span class='op'>)</span></span>
-<span class='r-in'>    <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
-<span class='r-in'>      <span class='st'>"Version: {x$desc$Version}"</span>,</span>
-<span class='r-in'>      <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>$</span><span class='va'>Maintainer</span><span class='op'>)</span><span class='op'>)</span> <span class='st'>"Maintainer: {x$desc$Maintainer}"</span>,</span>
-<span class='r-in'>      <span class='st'>"License: {x$desc$License}"</span></span>
-<span class='r-in'>    <span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-in'>    <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>$</span><span class='va'>URL</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"See more at {.url {x$desc$URL}}"</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='op'>}</span><span class='op'>)</span></span>
-<span class='r-in'><span class='op'>}</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Now the print method is easy:</span></span>
-<span class='r-in'><span class='va'>print.r_package</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span></span>
-<span class='r-in'><span class='op'>}</span></span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># Try it out</span></span>
-<span class='r-in'><span class='fu'>new_r_package</span><span class='op'>(</span><span class='st'>"cli"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Package</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "cli"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Title</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Helpers for Developing Command Line Interfaces"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Version</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "3.0.0"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$`Authors@R`</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", role = c(\"ctb\")),\n    person(\"Kirill\", \"Müller\", role = c(\"ctb\")),\n    person(\"RStudio\", role = \"cph\")\n    )"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Description</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "A suite of tools to build attractive command line interfaces\n    ('CLIs'), from semantic elements: headings, lists, alerts, paragraphs,\n    etc. Supports custom themes via a 'CSS'-like language. It also contains a\n    number of lower level 'CLI' elements: rules, boxes, trees, and\n    'Unicode' symbols with 'ASCII' alternatives. It support ANSI colors and\n    text styles as well."</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$License</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "MIT + file LICENSE"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$URL</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "https://cli.r-lib.org, https://github.com/r-lib/cli#readme"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$BugReports</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "https://github.com/r-lib/cli/issues"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$RoxygenNote</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "7.1.1.9001"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Roxygen</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "list(markdown = TRUE)"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Depends</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "R (&gt;= 2.10)"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Imports</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "glue,\nutils"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Suggests</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "callr,\ncovr,\ngrDevices,\nhtmlwidgets,\nknitr,\nmethods,\nmockery,\nprettycode (&gt;= 1.1.0),\nprocessx,\nps (&gt;= 1.3.4.9000),\nrlang,\nrmarkdown,\nrstudioapi,\nshiny,\ntestthat,\ntibble,\nwithr"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$`Config/testthat/edition`</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "3"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Encoding</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "UTF-8"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Author</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb],\n  RStudio [cph]"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Maintainer</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $desc$Built</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "R 4.0.5; x86_64-apple-darwin17.0; 2021-07-03 13:23:09 UTC; unix"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"file")</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/Users/gaborcsardi/Library/R/4.0/library/cli/Meta/package.rds"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> $lib</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/Users/gaborcsardi/Library/R/4.0/library"</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"class")</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "r_package"</span>
-<span class='r-in'></span>
-<span class='r-in'><span class='co'># The formatting of the output depends on the current theme:</span></span>
-<span class='r-in'><span class='va'>opt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>cli.theme <span class='op'>=</span> <span class='fu'><a href='simple_theme.html'>simple_theme</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>new_r_package</span><span class='op'>(</span><span class='st'>"cli"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>──</span><span> </span><span style='color: #0000BB;font-weight: bold;'>cli</span><span style='color: #00BBBB;font-weight: bold;'> ─ Helpers for Developing Command Line Interfaces</span><span> </span><span style='color: #00BBBB;'>────────────────────────</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> semantic elements: headings, lists, alerts, paragraphs, etc. Supports custom</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> themes via a 'CSS'-like language. It also contains a number of lower level</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII'</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> alternatives. It support ANSI colors and text styles as well.</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> • Version: 3.0.0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> • Maintainer: Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> • License: MIT + file LICENSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> See more at <span style='color: #0000BB;font-style: italic;'>&lt;https://cli.r-lib.org, https://github.com/r-lib/cli#readme&gt;</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='va'>opt</span><span class='op'>)</span>  <span class='co'># &lt;- restore theme</span></span>
-</pre>
+    <pre class="examples"><div class='input'>
+<span class='co'># Let's create format and print methods for a new S3 class that</span>
+<span class='co'># represents the an installed R package: `r_package`</span>
+
+<span class='co'># An `r_package` will contain the DESCRIPTION metadata of the package</span>
+<span class='co'># and also its installation path.</span>
+<span class='va'>new_r_package</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>pkg</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/conditions.html'>tryCatch</a></span><span class='op'>(</span>
+    <span class='va'>desc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageDescription</a></span><span class='op'>(</span><span class='va'>pkg</span><span class='op'>)</span>,
+    warning <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>e</span><span class='op'>)</span> <span class='kw'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span><span class='op'>(</span><span class='st'>"Cannot find R package `"</span>, <span class='va'>pkg</span>, <span class='st'>"`"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+  <span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>desc</span>, <span class='st'>"file"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span> <span class='op'>!=</span> <span class='va'>pkg</span><span class='op'>)</span> <span class='va'>file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>desc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/class.html'>unclass</a></span><span class='op'>(</span><span class='va'>desc</span><span class='op'>)</span>, lib <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>dirname</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span><span class='op'>)</span>,
+    class <span class='op'>=</span> <span class='st'>"r_package"</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='va'>format.r_package</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>cli_format_method</span><span class='op'>(</span><span class='op'>{</span>
+    <span class='fu'><a href='cli_h1.html'>cli_h1</a></span><span class='op'>(</span><span class='st'>"{.pkg {x$desc$Package}} {cli::symbol$line} {x$desc$Title}"</span><span class='op'>)</span>
+    <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{x$desc$Description}"</span><span class='op'>)</span>
+    <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+      <span class='st'>"Version: {x$desc$Version}"</span>,
+      <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>$</span><span class='va'>Maintainer</span><span class='op'>)</span><span class='op'>)</span> <span class='st'>"Maintainer: {x$desc$Maintainer}"</span>,
+      <span class='st'>"License: {x$desc$License}"</span>
+    <span class='op'>)</span><span class='op'>)</span>
+    <span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>desc</span><span class='op'>$</span><span class='va'>URL</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"See more at {.url {x$desc$URL}}"</span><span class='op'>)</span>
+  <span class='op'>}</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='co'># Now the print method is easy:</span>
+<span class='va'>print.r_package</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='co'># Try it out</span>
+<span class='fu'>new_r_package</span><span class='op'>(</span><span class='st'>"cli"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $desc
+#&gt; $desc$Package
+#&gt; [1] "cli"
+#&gt; 
+#&gt; $desc$Title
+#&gt; [1] "Helpers for Developing Command Line Interfaces"
+#&gt; 
+#&gt; $desc$Version
+#&gt; [1] "3.0.0"
+#&gt; 
+#&gt; $desc$`Authors@R`
+#&gt; [1] "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", role = c(\"ctb\")),\n    person(\"Kirill\", \"Müller\", role = c(\"ctb\")),\n    person(\"RStudio\", role = \"cph\")\n    )"
+#&gt; 
+#&gt; $desc$Description
+#&gt; [1] "A suite of tools to build attractive command line interfaces\n    ('CLIs'), from semantic elements: headings, lists, alerts, paragraphs,\n    etc. Supports custom themes via a 'CSS'-like language. It also contains a\n    number of lower level 'CLI' elements: rules, boxes, trees, and\n    'Unicode' symbols with 'ASCII' alternatives. It support ANSI colors and\n    text styles as well."
+#&gt; 
+#&gt; $desc$License
+#&gt; [1] "MIT + file LICENSE"
+#&gt; 
+#&gt; $desc$URL
+#&gt; [1] "https://cli.r-lib.org, https://github.com/r-lib/cli#readme"
+#&gt; 
+#&gt; $desc$BugReports
+#&gt; [1] "https://github.com/r-lib/cli/issues"
+#&gt; 
+#&gt; $desc$RoxygenNote
+#&gt; [1] "7.1.1.9001"
+#&gt; 
+#&gt; $desc$Roxygen
+#&gt; [1] "list(markdown = TRUE)"
+#&gt; 
+#&gt; $desc$Depends
+#&gt; [1] "R (&gt;= 2.10)"
+#&gt; 
+#&gt; $desc$Imports
+#&gt; [1] "glue,\nutils"
+#&gt; 
+#&gt; $desc$Suggests
+#&gt; [1] "callr,\ncovr,\ngrDevices,\nhtmlwidgets,\nknitr,\nmethods,\nmockery,\nprettycode (&gt;= 1.1.0),\nprocessx,\nps (&gt;= 1.3.4.9000),\nrlang,\nrmarkdown,\nrstudioapi,\nshiny,\ntestthat,\ntibble,\nwithr"
+#&gt; 
+#&gt; $desc$`Config/testthat/edition`
+#&gt; [1] "3"
+#&gt; 
+#&gt; $desc$Encoding
+#&gt; [1] "UTF-8"
+#&gt; 
+#&gt; $desc$Author
+#&gt; [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb],\n  RStudio [cph]"
+#&gt; 
+#&gt; $desc$Maintainer
+#&gt; [1] "Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;"
+#&gt; 
+#&gt; $desc$Built
+#&gt; [1] "R 4.1.0; x86_64-apple-darwin17.0; 2021-07-03 14:21:30 UTC; unix"
+#&gt; 
+#&gt; attr(,"file")
+#&gt; [1] "/Users/runner/work/_temp/Library/cli/Meta/package.rds"
+#&gt; 
+#&gt; $lib
+#&gt; [1] "/Users/runner/work/_temp/Library"
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "r_package"</div><div class='input'>
+<span class='co'># The formatting of the output depends on the current theme:</span>
+<span class='va'>opt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span>cli.theme <span class='op'>=</span> <span class='fu'><a href='simple_theme.html'>simple_theme</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>new_r_package</span><span class='op'>(</span><span class='st'>"cli"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; <span style='color: #00BBBB;'>──</span> <span style='color: #0000BB; font-weight: bold;'>cli</span><span style='color: #00BBBB; font-weight: bold;'> ─ Helpers for Developing Command Line Interfaces</span> <span style='color: #00BBBB;'>────────────────────────</span>
+#&gt; A suite of tools to build attractive command line interfaces ('CLIs'), from
+#&gt; semantic elements: headings, lists, alerts, paragraphs, etc. Supports custom
+#&gt; themes via a 'CSS'-like language. It also contains a number of lower level
+#&gt; 'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII'
+#&gt; alternatives. It support ANSI colors and text styles as well.
+#&gt; • Version: 3.0.0
+#&gt; • Maintainer: Gábor Csárdi &lt;csardi.gabor@gmail.com&gt;
+#&gt; • License: MIT + file LICENSE
+#&gt; See more at <span style='color: #0000BB; font-style: italic;'>&lt;https://cli.r-lib.org, https://github.com/r-lib/cli#readme&gt;</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='va'>opt</span><span class='op'>)</span>  <span class='co'># &lt;- restore theme</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
