@@ -82,16 +82,21 @@ creating a progress bar. (If the timer is not initialized, then
 
 # Non-interactive R sessions
 
-Non-interactive R sessions often do not have a dynamic terminal, so cli cannot
-create and update a status bar in the last row of the display. In this case cli
-simply prints every progress update as a new line to the screen.
+cli output is different if the terminal or platform is not _dynamic_, i.e.
+if it does not support the `\r` character to move the cursor to the
+beginning of the line without starting a new line. This often happens when
+R is running non-interactively and the standard error is redirected to a
+file. cli uses the `cli::is_dynamic_tty()` function to determine if the
+output supports `\r`.
 
-Frequently updating the progress in this fashion would produce a lot of noisy
-output, which is why cli falls back to using a slower timer update interval in
-this scenario. By default the cli timer signals every 
-`r cli:::cli_timer_non_interactive` milliseconds in a non-interactive session
-without a dynamic terminal, instead of `r cli:::cli_timer_interactive`
-milliseconds.
+On a non-dynamic terminal, cli simply prints progress updates as new
+lines to the screen. Frequently updating the progress in this fashion would
+produce a lot of output, so on non-dynamic terminals cli falls back to a
+slower timer update interval.
+
+By default the cli timer signals every `r cli:::cli_timer_non_dynamic`
+milliseconds in an R session without a dynamic terminal, instead
+of `r cli:::cli_timer_dynamic` milliseconds.
 
 <!-- TODO: example -->
 
