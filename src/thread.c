@@ -89,14 +89,20 @@ int cli__kill_thread() {
   return ret;
 }
 
+#ifndef __has_feature
+  #define __has_feature(x) 0
+#endif
+
 SEXP clic_stop_thread() {
   int ret = 1;
-#if defined(__has_feature)
+#if defined(__clang__) && defined(__has_feature)
 # if __has_feature(address_sanitizer)
-  /* do nothing */
+  /* clang in ASAN, do nothing */
 # else
   ret = cli__kill_thread();
-#endif
+# endif
+#else
+  ret = cli__kill_thread();
 #endif
   if (!ret) {
     R_ReleaseObject(cli_pkgenv);
