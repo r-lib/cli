@@ -90,7 +90,14 @@ int cli__kill_thread() {
 }
 
 SEXP clic_stop_thread() {
-  int ret = cli__kill_thread();
+  int ret = 1;
+#if defined(__has_feature)
+# if __has_feature(address_sanitizer)
+  /* do nothing */
+# else
+  ret = cli__kill_thread();
+#endif
+#endif
   if (!ret) {
     R_ReleaseObject(cli_pkgenv);
   }

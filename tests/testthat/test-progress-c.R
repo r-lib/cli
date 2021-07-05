@@ -120,6 +120,9 @@ test_that("clic__find_var", {
 })
 
 test_that("unloading stops the thread", {
+  # It is important to skip this on CRAN, because in ASAN we do not
+  # kill the tick thread on unload, because it triggers an ASAN crash,
+  # which is similar to https://github.com/google/sanitizers/issues/1152
   skip_on_cran()
   fun <- function() {
     before <- ps::ps_num_threads()
