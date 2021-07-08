@@ -51,7 +51,7 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
       /* arg = */ NULL
     );
     /* detaching makes it easier to clean up resources */
-    if (!ret) pthread_detach(&tick_thread);
+    if (!ret) pthread_detach(tick_thread);
   } else {
     cli__reset = 0;
   }
