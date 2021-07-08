@@ -56,6 +56,9 @@ task_callback <- NULL
     clienv$speed_time
   )
 
+  # For valgrind: https://github.com/r-lib/cli/issues/311
+  reg.finalizer(asNamespace("cli"), function(x) .Call(clic_unload), TRUE)
+
   if (getRversion() >= "3.5.0") {
     `__cli_update_due` <<- .Call(clic_make_timer);
   } else {
