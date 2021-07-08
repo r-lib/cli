@@ -748,3 +748,9 @@ ansi_convert <- function(x, converter, ...) {
 
   ansi_string(out)
 }
+
+#' @export
+
+ansi_simplify <- function(x) {
+  .Call(clic_ansi_simplify, as.character(x))
+}

@@ -32,6 +32,7 @@ static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
   { "clic_tty_size",       (DL_FUNC) clic_tty_size,       0 },
+  { "clic_ansi_simplify",  (DL_FUNC) clic_ansi_simplify,  1 },
 
   { "clic_dataptr",        (DL_FUNC) clic_dataptr,        1 },
   { "clic_start_thread",   (DL_FUNC) clic_start_thread,   3 },

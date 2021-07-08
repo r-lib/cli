@@ -7,6 +7,7 @@
 #include <Rversion.h>
 
 SEXP clic_tty_size();
+SEXP clic_ansi_simplify(SEXP x);
 
 typedef volatile int vint;
 
