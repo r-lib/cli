@@ -8,10 +8,15 @@
 
 #define BUFFER_SIZE 4096
 
+#define CLI_COL_256 9
+#define CLI_COL_RGB 10
+
 struct cli_color {
-  char col;                   /* 0-7, 9 off, 8 is 8 bit, 10 is 24 bit */
-  char r, g, b;
+  char col;                   /* 1-8, 0 off, 9 is 8 bit, 10 is 24 bit */
+  unsigned char r, g, b;
 };
+
+#define DIFFERENT_COLOR(c1,c2) memcmp(&(c1), &(c2), sizeof(struct cli_color))
 
 struct cli_sgr_state {
   struct cli_color fg;
@@ -29,7 +34,7 @@ struct cli_sgr_state {
 struct cli_ansi_state {
   struct cli_sgr_state old;
   struct cli_sgr_state new;
-  char off;
+  char off;                     /* TODO: can we handle this better? */
 };
 
 static inline void check_len(size_t len,
@@ -72,6 +77,27 @@ static inline void check_len(size_t len,
     memcpy(*bptr, from, len);                                     \
     *bptr += len;                                                 \
   } while (0)
+
+static void clic__parse_color(const char *txt, struct cli_color *col) {
+  /* This can be:
+   * - 5;<n>
+   * - 2;<r>;<g>;<b>
+   * TODO: handle empty paramters, which should be zero
+   */
+
+  col->r = col->g = col->b = 0;
+
+  if (*txt != ';') return;
+  txt++;
+
+  if (*txt == '5') {
+    col->col = CLI_COL_256;
+    sscanf(txt, "5;%hhu", &col->r);
+  } else if (*txt == '2') {
+    col->col = CLI_COL_RGB;
+    sscanf(txt, "2;%hhu;%hhu;%hhu", &col->r, &col->g, &col->b);
+  }
+}
 
 static void clic__ansi_process(const char *param,
                                const char *intermed,
@@ -134,8 +160,8 @@ static void clic__ansi_process(const char *param,
   } else if (num >= 30 && num <= 37) {
     state->new.fg.col = num - 30 + 1;
 
-  /* } else if (num == 38) { */
-  /*   clic__parse_new_color(endptr, &state); */
+  } else if (num == 38) {
+    clic__parse_color(endptr, &state->new.fg);
 
   } else if (num == 39) {
     state->new.fg.col = 0;
@@ -143,8 +169,8 @@ static void clic__ansi_process(const char *param,
   } else if (num >= 40 && num <= 47) {
     state->new.bg.col = num - 40 + 1;
 
-    /* } else if (num == 48) { */
-    /* TODO */
+  } else if (num == 48) {
+    clic__parse_color(endptr, &state->new.bg);
 
   } else if (num == 49) {
     state->new.bg.col = 0;
@@ -163,7 +189,7 @@ static void clic__state_update(char **buffer,
   /* TODO: better 0 handling */
   /* TODO: 22 turns off two bits */
 
-  char col[10];
+  char col[20];
 
   if (state->off) {
     EMIT("0");
@@ -225,15 +251,29 @@ static void clic__state_update(char **buffer,
 
   if (state->new.fg.col == 0 && state->old.fg.col != 0) {
     EMIT("39");
-  } else if (state->new.fg.col != state->old.fg.col) {
-    snprintf(col, sizeof(col), "\033[%dm", (int) state->new.fg.col + 29);
+  } else if (DIFFERENT_COLOR(state->new.fg, state->old.fg)) {
+    if (state->new.fg.col == CLI_COL_256) {
+      snprintf(col, sizeof(col), "\033[38;5;%um", state->new.fg.r);
+    } else if (state->new.fg.col == CLI_COL_RGB) {
+      snprintf(col, sizeof(col), "\033[38;2;%u;%u;%um",
+               state->new.fg.r, state->new.fg.g, state->new.fg.b);
+    } else {
+      snprintf(col, sizeof(col), "\033[%um", state->new.fg.col + 29);
+    }
     EMITS(col);
   }
 
   if (state->new.bg.col == 0 && state->old.bg.col != 0) {
     EMIT("49");
-  } else if (state->new.bg.col != state->old.bg.col) {
-    snprintf(col, sizeof(col), "\033[%dm", (int) state->new.bg.col + 39);
+  } else if (DIFFERENT_COLOR(state->new.bg, state->old.bg)) {
+    if (state->new.bg.col == CLI_COL_256) {
+      snprintf(col, sizeof(col), "\033[48;5;%um", state->new.bg.r);
+    } else if (state->new.bg.col == CLI_COL_RGB) {
+      snprintf(col, sizeof(col), "\033[48;2;%u;%u;%um",
+               state->new.bg.r, state->new.bg.g, state->new.bg.b);
+    } else {
+      snprintf(col, sizeof(col), "\033[%um", state->new.bg.col + 39);
+    }
     EMITS(col);
   }
 
