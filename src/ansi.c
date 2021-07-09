@@ -8,20 +8,28 @@
 
 #define BUFFER_SIZE 4096
 
+struct cli_color {
+  char col;                   /* 0-7, 9 off, 8 is 8 bit, 10 is 24 bit */
+  char r, g, b;
+};
+
+struct cli_sgr_state {
+  struct cli_color fg;
+  struct cli_color bg;
+  char bold;
+  char faint;
+  char italic;
+  char underline;
+  char blink;
+  char inverse;
+  char hide;
+  char crossedout;
+};
+
 struct cli_ansi_state {
-  char new_off;
-  char bold, new_bold;
-  char faint, new_faint;
-  char italic, new_italic;
-  char underline, new_underline;
-  char blink, new_blink;
-  char inverse, new_inverse;
-  char hide, new_hide;
-  char crossedout, new_crossedout;
-  char col_fg, new_col_fg;      /* 1-8, 9 is 8 bit, 10 is 24 bit */
-  char col_bg, new_col_bg;      /* 1-8, 9 is 8 bit, 10 is 24 bit */
-  /* TODO: 8 bit colors */
-  /* TODO: 24 bit colors */
+  struct cli_sgr_state old;
+  struct cli_sgr_state new;
+  char off;
 };
 
 static inline void check_len(size_t len,
@@ -65,157 +73,177 @@ static inline void check_len(size_t len,
     *bptr += len;                                                 \
   } while (0)
 
-void clic__ansi_process(const char *param,
-                        const char *intermed,
-                        const char *end,
-                        char **buffer,
-                        char **bptr,
-                        size_t *buffer_size,
-                        struct cli_ansi_state *state) {
+static void clic__ansi_process(const char *param,
+                               const char *intermed,
+                               const char *end,
+                               char **buffer,
+                               char **bptr,
+                               size_t *buffer_size,
+                               struct cli_ansi_state *state) {
   char *endptr;
   long num = strtol(param, &endptr, 10);
   if (endptr == param && num == 0) {
-    if (state->bold || state->faint || state->italic || state->underline ||
-        state->blink || state->inverse || state->inverse || state->hide ||
-        state->crossedout || state->col_fg || state->col_bg) {
-      EMIT("0");
-      memset(state, 0, sizeof(*state));
-    }
+    state->off = 1;
+    memset(&state->new, 0, sizeof(state->new));
 
   } else if (num == 1) {
-    if (!state->bold) {
-      state->bold = 1;
-      EMIT("1");
-    }
+    state->new.bold = 1;
 
   } else if (num == 2) {
-    if (!state->faint) {
-      state->faint = 1;
-      EMIT("2");
-    }
+    state->new.faint = 1;
 
   } else if (num == 3) {
-    if (!state->italic) {
-      state->italic = 1;
-      EMIT("3");
-    }
+    state->new.italic = 1;
 
   } else if (num == 4) {
-    if (!state->underline) {
-      state->underline = 1;
-      EMIT("4");
-    }
+    state->new.underline = 1;
 
   } else if (num == 5) {
-    if (!state->blink) {
-      state->blink = 1;
-      EMIT("5");
-    }
+    state->new.blink = 1;
 
   } else if (num == 7) {
-    if (!state->inverse) {
-      state->inverse = 1;
-      EMIT("7");
-    }
+    state->new.inverse = 1;
 
   } else if (num == 8) {
-    if (state->hide) {
-      state->hide = 1;
-      EMIT("8");
-    }
+    state->new.hide = 1;
 
   } else if (num == 9) {
-    if (state->crossedout) {
-      state->crossedout = 1;
-      EMIT("9");
-    }
+    state->new.crossedout = 1;
 
   } else if (num == 22) {
-    if (state->bold || state->faint) {
-      state->bold = state->faint = 0;
-      EMIT("22");
-    }
+    state->new.bold = state->new.faint = 0;
 
   } else if (num == 23) {
-    if (state->italic) {
-      state->italic = 0;
-      EMIT("23");
-    }
+    state->new.italic = 0;
 
   } else if (num == 24) {
-    if (state->underline) {
-      state->underline = 0;
-      EMIT("24");
-    }
+    state->new.underline = 0;
 
   } else if (num == 25) {
-    if (state->blink) {
-      state->blink = 0;
-      EMIT("25");
-    }
+    state->new.blink = 0;
 
   } else if (num == 27) {
-    if (state->inverse) {
-      state->inverse = 0;
-      EMIT("27");
-    }
+    state->new.inverse = 0;
 
   } else if (num == 28) {
-    if (state->hide) {
-      state->hide = 0;
-      EMIT("28");
-    }
+    state->new.hide = 0;
 
   } else if (num == 29) {
-    if (state->crossedout) {
-      state->crossedout = 0;
-      EMIT("29");
-    }
+    state->new.crossedout = 0;
 
   } else if (num >= 30 && num <= 37) {
-    int col = num - 30 + 1;
-    if (state->col_fg != col) {
-      char str[10];
-      state->col_fg = col;
-      snprintf(str, sizeof(str), "\033[%ldm", num);
-      EMITS(str);
-    }
+    state->new.fg.col = num - 30 + 1;
 
-    /* } else if (num == 38) { */
-    /* TODO */
+  /* } else if (num == 38) { */
+  /*   clic__parse_new_color(endptr, &state); */
 
   } else if (num == 39) {
-    if (state->col_fg) {
-      state->col_fg = 0;
-      EMIT("39");
-    }
+    state->new.fg.col = 0;
 
   } else if (num >= 40 && num <= 47) {
-    int col = num - 40 + 1;
-    if (state->col_bg != col) {
-      char str[10];
-      state->col_bg = col;
-      snprintf(str, sizeof(str), "\033[%ldm", num);
-      EMITS(str);
-    }
+    state->new.bg.col = num - 40 + 1;
 
     /* } else if (num == 48) { */
     /* TODO */
 
   } else if (num == 49) {
-    if (state->col_bg != 0) {
-      state->col_bg = 0;
-      EMIT("49");
-    }
+    state->new.bg.col = 0;
 
   } else {
-    /* Keep tag as is */
+    /* Keep tag as is, and emit it right away */
     EMITL(param - 2, end);
   }
 }
 
+static void clic__state_update(char **buffer,
+                               char **bptr,
+                               size_t *buffer_size,
+                               struct cli_ansi_state *state) {
+
+  /* TODO: better 0 handling */
+  /* TODO: 22 turns off two bits */
+
+  char col[10];
+
+  if (state->off) {
+    EMIT("0");
+  }
+
+  if (state->new.bold > state->old.bold) {
+    EMIT("1");
+  } else if (state->new.bold < state->old.bold) {
+    EMIT("22");
+  }
+
+  if (state->new.faint > state->old.faint) {
+    EMIT("2");
+  } else if (state->new.faint < state->old.faint) {
+    EMIT("22");
+  }
+
+  if (state->new.italic > state->old.italic) {
+    EMIT("3");
+  } else if (state->new.italic < state->old.italic) {
+    EMIT("23");
+  }
+
+  if (state->new.underline > state->old.underline) {
+    EMIT("4");
+  } else if (state->new.underline < state->old.underline) {
+    EMIT("24");
+  }
+
+  if (state->new.blink > state->old.blink) {
+    EMIT("5");
+  } else if (state->new.blink < state->old.blink) {
+    EMIT("25");
+  }
+
+  if (state->new.inverse > state->old.inverse) {
+    EMIT("7");
+  } else if (state->new.inverse < state->old.inverse) {
+    EMIT("27");
+  }
+
+  if (state->new.hide > state->old.hide) {
+    EMIT("8");
+  } else if (state->new.hide < state->old.hide) {
+    EMIT("28");
+  }
+
+  if (state->new.crossedout > state->old.crossedout) {
+    EMIT("9");
+  } else if (state->new.crossedout < state->old.crossedout) {
+    EMIT("29");
+  }
+
+  if (state->new.bold > state->old.bold) {
+    EMIT("1");
+  } else if (state->new.bold < state->old.bold) {
+    EMIT("22");
+  }
+
+  if (state->new.fg.col == 0 && state->old.fg.col != 0) {
+    EMIT("39");
+  } else if (state->new.fg.col != state->old.fg.col) {
+    snprintf(col, sizeof(col), "\033[%dm", (int) state->new.fg.col + 29);
+    EMITS(col);
+  }
+
+  if (state->new.bg.col == 0 && state->old.bg.col != 0) {
+    EMIT("49");
+  } else if (state->new.bg.col != state->old.bg.col) {
+    snprintf(col, sizeof(col), "\033[%dm", (int) state->new.bg.col + 39);
+    EMITS(col);
+  }
+
+  state->off = 0;
+  state->old = state->new;
+}
+
 SEXP clic_ansi_simplify(SEXP sx) {
-  struct cli_ansi_state state = { 0 };
+  struct cli_ansi_state state;
+  memset(&state, 0, sizeof(state));
   char buffer_[BUFFER_SIZE];
   size_t buffer_size = sizeof(buffer_);
   char *buffer = buffer_;
@@ -243,6 +271,7 @@ SEXP clic_ansi_simplify(SEXP sx) {
         if (*s_end >= 0x40 && *s_end <= 0x7e) {
           size_t n = s_start - shaft;
           if (n > 0) {
+            clic__state_update(&buffer, &bptr, &buffer_size, &state);
             check_len(n, &buffer, &bptr, &buffer_size);
             memcpy(bptr, shaft, n);
             bptr += n;
@@ -268,6 +297,7 @@ SEXP clic_ansi_simplify(SEXP sx) {
       SET_STRING_ELT(result, i, str);
 
     } else {
+      clic__state_update(&buffer, &bptr, &buffer_size, &state);
       if (*shaft) {
         size_t n = x - shaft;
         if (n > 0) {
