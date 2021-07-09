@@ -6,7 +6,105 @@
 #include <string.h>
 #include <stdlib.h>
 
+/* ---------------------------------------------------------------------- */
+
 #define BUFFER_SIZE 4096
+
+static char static_buffer[BUFFER_SIZE];
+
+struct cli_buffer {
+  char *buf;
+  char *ptr;
+  size_t size;
+};
+
+static void clic__buffer_init(struct cli_buffer *buf);
+static void clic__buffer_free(struct cli_buffer *buf);
+static void clic__buffer_reset(struct cli_buffer *buf);
+static inline char *clic__buffer_get(struct cli_buffer *buf);
+static inline size_t clic__buffer_size(struct cli_buffer *buf);
+static inline void clic__buffer_push_str(struct cli_buffer *buf,
+                                         const char *str);
+static inline void clic__buffer_push_str_len(struct cli_buffer *buf,
+                                             const char *str,
+                                             size_t len);
+static inline void clic__buffer_push_piece(struct cli_buffer *buf,
+                                           const char *from,
+                                           const char *to);
+static void clic__buffer_realloc(struct cli_buffer *buf, size_t size);
+static void clic__buffer_checklen(struct cli_buffer *buf, size_t len);
+
+static void clic__buffer_init(struct cli_buffer *buf) {
+  buf->buf = static_buffer;
+  buf->ptr = static_buffer;
+  buf->size = sizeof(static_buffer);
+}
+
+static void clic__buffer_reset(struct cli_buffer *buf) {
+  buf->ptr = buf->buf;
+}
+
+static inline char *clic__buffer_get(struct cli_buffer *buf) {
+  return buf->buf;
+}
+
+static inline size_t clic__buffer_size(struct cli_buffer *buf) {
+  return buf->ptr - buf->buf;
+}
+
+static void clic__buffer_free(struct cli_buffer *buf) {
+  if (buf->buf != static_buffer) free(buf->buf);
+}
+
+static inline void clic__buffer_push_str(struct cli_buffer *buf,
+                                         const char *str) {
+  clic__buffer_checklen(buf, strlen(str));
+  buf->ptr = stpcpy(buf->ptr, str);
+}
+
+static inline void clic__buffer_push_str_len(struct cli_buffer *buf,
+                                             const char *str,
+                                             size_t len) {
+  clic__buffer_checklen(buf, len);
+  memcpy(buf->ptr, str, len);
+  buf->ptr += len;
+}
+
+static inline void clic__buffer_push_piece(struct cli_buffer *buf,
+                                           const char *from,
+                                           const char *to) {
+  size_t len = to - from + 1;
+  clic__buffer_checklen(buf, len);
+  memcpy(buf->ptr, from, len);
+  buf->ptr += len;
+}
+
+static void clic__buffer_realloc(struct cli_buffer *buf, size_t size) {
+  size_t current = buf->ptr - buf->buf;
+  char *old = buf->buf;
+  buf->size = size;
+  if (buf->buf == static_buffer) {
+    buf->buf = malloc(size);
+    if (!buf->buf) R_THROW_SYSTEM_ERROR("ANSI string error");
+    memcpy(buf->buf, old, current);
+  } else {
+    buf->buf = realloc(buf->buf, size);
+    if (!buf->buf) R_THROW_SYSTEM_ERROR("ANSI string error");
+  }
+  buf->ptr = buf->buf + current;
+}
+
+ static void clic__buffer_checklen(struct cli_buffer *buf, size_t len) {
+
+  if (buf->ptr + len >= buf->buf + buf->size) {
+    size_t current = buf->ptr - buf->buf;
+    size_t prop = buf->size * 2;
+    if (prop < current + len) prop = current + len;
+    clic__buffer_realloc(buf, prop);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
 
 #define CLI_COL_256 9
 #define CLI_COL_RGB 10
@@ -37,47 +135,6 @@ struct cli_ansi_state {
   char off;                     /* TODO: can we handle this better? */
 };
 
-static inline void check_len(size_t len,
-                             char **buffer,
-                             char **bptr,
-                             size_t *buffer_size) {
-  if (*bptr + len >= *buffer + *buffer_size) {
-    size_t current = *bptr - *buffer;
-    size_t prop = *buffer_size * 2;
-    if (prop < current + len) prop = current + len;
-    char *old = *buffer;
-    if (*buffer_size == BUFFER_SIZE) {
-      *buffer_size = prop;
-      *buffer = malloc(*buffer_size);
-      if (!*buffer) R_THROW_SYSTEM_ERROR("ANSI string error");
-      memcpy(*buffer, old, current);
-      *bptr = *buffer + current;
-    } else {
-      *buffer_size = prop;
-      *buffer = realloc(*buffer, *buffer_size);
-      if (!*buffer) R_THROW_SYSTEM_ERROR("ANSI string error");
-      *bptr = *buffer + current;
-    }
-  }
-}
-
-#define EMIT(s) do {                                              \
-    check_len(strlen("\033[" s "m"), buffer, bptr, buffer_size);  \
-    *bptr = stpcpy(*bptr, "\033[" s "m");                         \
-  } while (0);
-
-#define EMITS(s) do {                                             \
-    check_len(strlen(s), buffer, bptr, buffer_size);              \
-    *bptr = stpcpy(*bptr, s);                                     \
-  } while (0);
-
-#define EMITL(from, to) do {                                      \
-    size_t len = to - (from) + 1;                                 \
-    check_len(len, buffer, bptr, buffer_size);                    \
-    memcpy(*bptr, from, len);                                     \
-    *bptr += len;                                                 \
-  } while (0)
-
 static void clic__parse_color(const char *txt, struct cli_color *col) {
   /* This can be:
    * - 5;<n>
@@ -102,9 +159,7 @@ static void clic__parse_color(const char *txt, struct cli_color *col) {
 static void clic__ansi_process(const char *param,
                                const char *intermed,
                                const char *end,
-                               char **buffer,
-                               char **bptr,
-                               size_t *buffer_size,
+                               struct cli_buffer *buffer,
                                struct cli_ansi_state *state) {
   char *endptr;
   long num = strtol(param, &endptr, 10);
@@ -177,13 +232,14 @@ static void clic__ansi_process(const char *param,
 
   } else {
     /* Keep tag as is, and emit it right away */
-    EMITL(param - 2, end);
+    clic__buffer_push_piece(buffer, param - 2, end);
   }
 }
 
-static void clic__state_update(char **buffer,
-                               char **bptr,
-                               size_t *buffer_size,
+#define EMIT(s) clic__buffer_push_str(buffer, "\033[" s "m")
+#define EMITS(s) clic__buffer_push_str(buffer, (s))
+
+static void clic__state_update(struct cli_buffer *buffer,
                                struct cli_ansi_state *state) {
 
   /* TODO: better 0 handling */
@@ -284,10 +340,8 @@ static void clic__state_update(char **buffer,
 SEXP clic_ansi_simplify(SEXP sx) {
   struct cli_ansi_state state;
   memset(&state, 0, sizeof(state));
-  char buffer_[BUFFER_SIZE];
-  size_t buffer_size = sizeof(buffer_);
-  char *buffer = buffer_;
-  char *bptr = buffer;
+  struct cli_buffer buffer;
+  clic__buffer_init(&buffer);
   R_xlen_t i, len = XLENGTH(sx);
   SEXP result = allocVector(STRSXP, len);
   for (i = 0; i < len; i++) {
@@ -299,7 +353,8 @@ SEXP clic_ansi_simplify(SEXP sx) {
     const char *s_param;
     const char *s_intermed;
     const char *s_end;
-    bptr = buffer;
+
+    clic__buffer_reset(&buffer);
 
     while (*x != 0) {
       if (*x == '\033' && *(x + 1) == '[') {
@@ -311,18 +366,14 @@ SEXP clic_ansi_simplify(SEXP sx) {
         if (*s_end >= 0x40 && *s_end <= 0x7e) {
           size_t n = s_start - shaft;
           if (n > 0) {
-            clic__state_update(&buffer, &bptr, &buffer_size, &state);
-            check_len(n, &buffer, &bptr, &buffer_size);
-            memcpy(bptr, shaft, n);
-            bptr += n;
+            clic__state_update(&buffer, &state);
+            clic__buffer_push_str_len(&buffer, shaft, n);
           }
 
           clic__ansi_process(s_param,
                              s_intermed,
                              s_end,
                              &buffer,
-                             &bptr,
-                             &buffer_size,
                              &state);
 
           x = shaft = s_end + 1;
@@ -337,20 +388,26 @@ SEXP clic_ansi_simplify(SEXP sx) {
       SET_STRING_ELT(result, i, str);
 
     } else {
-      clic__state_update(&buffer, &bptr, &buffer_size, &state);
+      clic__state_update(&buffer, &state);
       if (*shaft) {
         size_t n = x - shaft;
         if (n > 0) {
-          check_len(n, &buffer, &bptr, &buffer_size);
-          memcpy(bptr, shaft, n);
-          bptr += n;
+          clic__buffer_push_str_len(&buffer, shaft, n);
         }
       }
-      SET_STRING_ELT(result, i, Rf_mkCharLenCE(buffer, bptr - buffer, CE_NATIVE));
+      SET_STRING_ELT(
+        result,
+        i,
+        Rf_mkCharLenCE(
+          clic__buffer_get(&buffer),
+          clic__buffer_size(&buffer),
+          CE_NATIVE
+        )
+      );
     }
   }
 
-  if (buffer_size != BUFFER_SIZE) free(buffer);
+  clic__buffer_free(&buffer);
 
   return result;
 }
