@@ -25,9 +25,9 @@ static inline char *clic__buffer_get(struct cli_buffer *buf);
 static inline size_t clic__buffer_size(struct cli_buffer *buf);
 static inline void clic__buffer_push_str(struct cli_buffer *buf,
                                          const char *str);
-static inline void clic__buffer_push_str_len(struct cli_buffer *buf,
-                                             const char *str,
-                                             size_t len);
+/* static inline void clic__buffer_push_str_len(struct cli_buffer *buf, */
+/*                                              const char *str, */
+/*                                              size_t len); */
 static inline void clic__buffer_push_piece(struct cli_buffer *buf,
                                            const char *from,
                                            const char *to);
@@ -62,18 +62,18 @@ static inline void clic__buffer_push_str(struct cli_buffer *buf,
   buf->ptr = stpcpy(buf->ptr, str);
 }
 
-static inline void clic__buffer_push_str_len(struct cli_buffer *buf,
-                                             const char *str,
-                                             size_t len) {
-  clic__buffer_checklen(buf, len);
-  memcpy(buf->ptr, str, len);
-  buf->ptr += len;
-}
+/* static inline void clic__buffer_push_str_len(struct cli_buffer *buf, */
+/*                                              const char *str, */
+/*                                              size_t len) { */
+/*   clic__buffer_checklen(buf, len); */
+/*   memcpy(buf->ptr, str, len); */
+/*   buf->ptr += len; */
+/* } */
 
 static inline void clic__buffer_push_piece(struct cli_buffer *buf,
                                            const char *from,
                                            const char *to) {
-  size_t len = to - from + 1;
+  size_t len = to - from;
   clic__buffer_checklen(buf, len);
   memcpy(buf->ptr, from, len);
   buf->ptr += len;
@@ -156,11 +156,11 @@ static void clic__parse_color(const char *txt, struct cli_color *col) {
   }
 }
 
-static void clic__ansi_process(const char *param,
-                               const char *intermed,
-                               const char *end,
-                               struct cli_buffer *buffer,
-                               struct cli_ansi_state *state) {
+static void clic__ansi_update_state(const char *param,
+                                    const char *intermed,
+                                    const char *end,
+                                    struct cli_buffer *buffer,
+                                    struct cli_ansi_state *state) {
   char *endptr;
   long num = strtol(param, &endptr, 10);
   if (endptr == param && num == 0) {
@@ -239,8 +239,8 @@ static void clic__ansi_process(const char *param,
 #define EMIT(s) clic__buffer_push_str(buffer, "\033[" s "m")
 #define EMITS(s) clic__buffer_push_str(buffer, (s))
 
-static void clic__state_update(struct cli_buffer *buffer,
-                               struct cli_ansi_state *state) {
+static void clic__state_update_buffer(struct cli_buffer *buffer,
+                                      struct cli_ansi_state *state) {
 
   /* TODO: better 0 handling */
   /* TODO: 22 turns off two bits */
@@ -337,13 +337,27 @@ static void clic__state_update(struct cli_buffer *buffer,
   state->old = state->new;
 }
 
-SEXP clic_ansi_simplify(SEXP sx) {
-  struct cli_ansi_state state;
-  memset(&state, 0, sizeof(state));
-  struct cli_buffer buffer;
-  clic__buffer_init(&buffer);
+typedef void (*clic__start_callback_t)(const char *str,
+                                       void *data);
+typedef void (*clic__tag_callback_t)(const char *param,
+                                     const char *intermed,
+                                     const char *end,
+                                     void *data);
+typedef void (*clic__text_callback_t)(const char *str,
+                                      const char *end,
+                                      void *data);
+typedef void (*clic__end_callback_t)(SEXP rstr,
+                                     const char *str,
+                                     void *data);
+
+void clic__ansi_iterator(SEXP sx,
+                         clic__start_callback_t start_cb,
+                         clic__tag_callback_t tag_cb,
+                         clic__text_callback_t text_cb,
+                         clic__end_callback_t end_cb,
+                         void *data) {
+
   R_xlen_t i, len = XLENGTH(sx);
-  SEXP result = allocVector(STRSXP, len);
   for (i = 0; i < len; i++) {
     SEXP str = STRING_ELT(sx, i);
     const char *ox = CHAR(str);
@@ -354,7 +368,7 @@ SEXP clic_ansi_simplify(SEXP sx) {
     const char *s_intermed;
     const char *s_end;
 
-    clic__buffer_reset(&buffer);
+    if (start_cb) start_cb(ox, data);
 
     while (*x != 0) {
       if (*x == '\033' && *(x + 1) == '[') {
@@ -364,18 +378,8 @@ SEXP clic_ansi_simplify(SEXP sx) {
         s_end = s_intermed;
         while (*s_end >= 0x20 && *s_end <= 0x2f) s_end++;
         if (*s_end >= 0x40 && *s_end <= 0x7e) {
-          size_t n = s_start - shaft;
-          if (n > 0) {
-            clic__state_update(&buffer, &state);
-            clic__buffer_push_str_len(&buffer, shaft, n);
-          }
-
-          clic__ansi_process(s_param,
-                             s_intermed,
-                             s_end,
-                             &buffer,
-                             &state);
-
+          if (s_start > shaft && text_cb) text_cb(shaft, s_start, data);
+          if (tag_cb) tag_cb(s_param, s_intermed, s_end, data);
           x = shaft = s_end + 1;
         }
         x = *s_end ? s_end + 1 : s_end;
@@ -384,30 +388,85 @@ SEXP clic_ansi_simplify(SEXP sx) {
       }
     }
 
-    if (shaft == ox) {
-      SET_STRING_ELT(result, i, str);
+    if (x > shaft && text_cb) text_cb(shaft, x, data);
 
-    } else {
-      clic__state_update(&buffer, &state);
-      if (*shaft) {
-        size_t n = x - shaft;
-        if (n > 0) {
-          clic__buffer_push_str_len(&buffer, shaft, n);
-        }
-      }
-      SET_STRING_ELT(
-        result,
-        i,
-        Rf_mkCharLenCE(
-          clic__buffer_get(&buffer),
-          clic__buffer_size(&buffer),
-          CE_NATIVE
-        )
-      );
-    }
+    if (end_cb) end_cb(str, ox, data);
+  }
+}
+
+struct simplify_data {
+  struct cli_ansi_state state;
+  struct cli_buffer buffer;
+  const char *str;
+  R_xlen_t done;
+  size_t num_tags;
+  SEXP result;
+};
+
+static void simplify_cb_start(const char *str, void *vdata) {
+  struct simplify_data *data = vdata;
+  data->str = str;
+  data->num_tags = 0;
+  clic__buffer_reset(&data->buffer);
+}
+
+static void simplify_cb_tag(const char *param,
+                            const char *intermed,
+                            const char *end,
+                            void *vdata) {
+  struct simplify_data *data = vdata;
+  data->num_tags ++;
+  clic__ansi_update_state(param, intermed, end, &data->buffer, &data->state);
+}
+
+static void simplify_cb_text(const char *str,
+                             const char *end,
+                             void *vdata) {
+  struct simplify_data *data = vdata;
+  clic__state_update_buffer(&data->buffer, &data->state);
+  clic__buffer_push_piece(&data->buffer, str, end);
+}
+
+static void simplify_cb_end(SEXP rstr,
+                            const char *str,
+                            void *vdata) {
+  struct simplify_data *data = vdata;
+  clic__state_update_buffer(&data->buffer, &data->state);
+  if (data->num_tags == 0) {
+    SET_STRING_ELT(data->result, data->done, rstr);
+
+  } else {
+    SET_STRING_ELT(
+      data->result,
+      data->done,
+      Rf_mkCharLenCE(
+        clic__buffer_get(&data->buffer),
+        clic__buffer_size(&data->buffer),
+        CE_NATIVE
+      )
+    );
   }
 
-  clic__buffer_free(&buffer);
+  data->done ++;
+}
 
-  return result;
+SEXP clic_ansi_simplify(SEXP sx) {
+  struct simplify_data data;
+  memset(&data.state, 0, sizeof(data.state));
+  clic__buffer_init(&data.buffer);
+  data.done = 0;
+  data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
+
+  clic__ansi_iterator(
+    sx,
+    simplify_cb_start,
+    simplify_cb_tag,
+    simplify_cb_text,
+    simplify_cb_end, &data
+  );
+
+  clic__buffer_free(&data.buffer);
+
+  UNPROTECT(1);
+  return data.result;
 }
