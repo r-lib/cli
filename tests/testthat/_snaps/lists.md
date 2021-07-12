@@ -584,6 +584,6 @@
         cli_dl(c(foo = "bar", bar = "baz"))
       })
     Message <cliMessage>
-      foo -> [34m[34mbar[34m[39m
-      bar -> [34m[34mbaz[34m[39m
+      foo -> [34mbar[39m
+      bar -> [34mbaz[39m
 

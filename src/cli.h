@@ -8,6 +8,7 @@
 
 SEXP clic_tty_size();
 SEXP clic_ansi_simplify(SEXP x);
+SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
 
 SEXP clic_utf8_display_width(SEXP x);
 
@@ -50,10 +51,14 @@ SEXP clic_tick_resume(SEXP state);
 SEXP clic_make_timer();
 SEXP clic_update_due();
 
+/** Indicates whether a given unsigned integer is a valid ASCII codepoint */
+#define UTF8LITE_IS_ASCII(x) \
+	((x) <= 0x7F)
+
 /** Given the first byte in a valid UTF-8 byte sequence, determine the number of
  *  total bytes */
 
-#define UTF8LITE_UTF8_TOTAL_LEN(u) \
+#define UTF8LITE_UTF8_TOTAL_LEN(x) \
 	(  ((x) & 0x80) == 0x00 ? 1 \
 	 : ((x) & 0xE0) == 0xC0 ? 2 \
 	 : ((x) & 0xF0) == 0xE0 ? 3 : 4)

@@ -111,7 +111,7 @@ test_that("ansi_substr keeps color", {
   )
   expect_equal(
     ansi_substr("\033[31mred\033[39mfoo\033[31mred\033[39mbar", 7, 7),
-    ansi_string("\033[31m\033[39m\033[31mr\033[39m")
+    ansi_string("\033[31mr\033[39m")
   )
 })
 

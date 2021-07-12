@@ -1,7 +1,7 @@
 
 ansi_string <- function(x) {
   if (!is.character(x)) x <- as.character(x)
-  class(x) <- unique(c("ansi_string", class(x)))
+  class(x) <- unique(c("ansi_string", class(x), "character"))
   x
 }
 
@@ -61,38 +61,6 @@ ansi_strip <- function(string) {
   clean <- gsub(ansi_regex(), "", string, perl = TRUE)
   class(clean) <- setdiff(class(clean), "ansi_string")
   clean
-}
-
-
-## Create a mapping between the string and its style-less version.
-## This is useful to work with the colored string.
-
-map_to_ansi <- function(x, text = NULL) {
-
-  if (is.null(text)) {
-    text <- non_matching(re_table(ansi_regex(), x), x, empty=TRUE)
-  }
-
-  map <- lapply(
-    text,
-    function(text) {
-      cbind(
-        pos = cumsum(c(1, text[, "length"], Inf)),
-        offset = c(text[, "start"] - 1, utils::tail(text[, "end"], 1), NA)
-      )
-    })
-
-  function(pos) {
-    pos <- rep(pos, length.out = length(map))
-    mapply(pos, map, FUN = function(pos, table) {
-      if (pos < 1) {
-        pos
-      } else {
-        slot <- which(pos < table[, "pos"])[1] - 1
-        table[slot, "offset"] + pos - table[slot, "pos"] + 1
-      }
-    })
-  }
 }
 
 #' Count number of characters in an ANSI colored string
@@ -187,26 +155,9 @@ ansi_substr <- function(x, start, stop) {
   if (anyNA(start) || anyNA(stop)) {
     stop("non-numeric substring arguments not supported")
   }
-  ansi <- re_table(ansi_regex(), x)
-  text <- non_matching(ansi, x, empty=TRUE)
-  mapper <- map_to_ansi(x, text = text)
-  ansi_substr_internal(x, mapper, start, stop)
-}
-
-ansi_substr_internal <- function(x, mapper, start, stop) {
-  nstart <- mapper(start)
-  nstop  <- mapper(stop)
-
-  bef <- base::substr(x, 1, nstart - 1)
-  aft <- base::substr(x, nstop + 1, base::nchar(x))
-  ansi_bef <- vapply(regmatches(bef, gregexpr(ansi_regex(), bef)),
-                     paste, collapse = "", FUN.VALUE = "")
-  ansi_aft <- vapply(regmatches(aft, gregexpr(ansi_regex(), aft)),
-                     paste, collapse = "", FUN.VALUE = "")
-
-  ansi_string(
-    paste(sep = "", ansi_bef, base::substr(x, nstart, nstop), ansi_aft)
-  )
+  start <- rep_len(start, length(x))
+  stop <- rep_len(stop, length(x))
+  .Call(clic_ansi_substr, x, start, stop)
 }
 
 #' Substring(s) of an ANSI colored string
@@ -258,7 +209,9 @@ ansi_substring <- function(text, first, last = 1000000L) {
   if (!is.character(text)) text <- as.character(text)
   n <- max(lt <- length(text), length(first), length(last))
   if (lt && lt < n) text <- rep_len(text, length.out = n)
-  ansi_substr(text, as.integer(first), as.integer(last))
+  first <- rep_len(as.integer(first), n)
+  last <- rep_len(as.integer(last), n)
+  .Call(clic_ansi_substr, text, first, last)
 }
 
 
@@ -439,7 +392,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
   }
 
   if (any(sl > 0L | rl > 0L)) {
-    x <- ansi_substr(x, 1 + sl, ansi_nchar(x) - rl)
+    x <- .Call(clic_ansi_substr, x, 1L + sl, ansi_nchar(x) - rl)
   }
 
   ansi_string(x)
@@ -560,15 +513,11 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   }
   splits <- c(splits, xsidx)
 
-  ansi <- re_table(ansi_regex(), xx)
-  text <- non_matching(ansi, xx, empty=TRUE)
-  mapper <- map_to_ansi(xx, text = text)
-
   wrp <- vcapply(seq_along(splits[-1]), function(i) {
     from <- splits[i]
     to <- splits[i + 1L] - 1L
     while (from %in% drop) from <- from + 1L
-    ansi_substr_internal(xx, mapper, from, to)
+    .Call(clic_ansi_substr, xx, from, to)
   })
 
   indent <- strrep(" ", indent)
@@ -602,7 +551,7 @@ ansi_strtrim <- function(x, width = console_width(),
 
   # First we cut according to _characters_. This might be too wide if we
   # have wide characters.
-  xt <- ansi_substr(x, 1, width)
+  xt <- .Call(clic_ansi_substr, x, 1L, as.integer(width))
   tw <- ansi_nchar(ellipsis, "width")
 
   # If there was a cut, or xt is too wise (using _width_!), that's bad
@@ -611,7 +560,7 @@ ansi_strtrim <- function(x, width = console_width(),
   # until they are narrow enough.
   bad0 <- bad <- xt != x | ansi_nchar(xt, "width") > width
   while (any(bad)) {
-    xt[bad] <- ansi_substr(xt[bad], 1, ansi_nchar(xt[bad]) - 1L)
+    xt[bad] <- .Call(clic_ansi_substr, xt[bad], 1L, ansi_nchar(xt[bad]) - 1L)
     bad <- ansi_nchar(xt, "width") > width - tw
   }
 
