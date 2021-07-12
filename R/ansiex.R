@@ -705,5 +705,6 @@ ansi_convert <- function(x, converter, ...) {
 #' @export
 
 ansi_simplify <- function(x) {
-  .Call(clic_ansi_simplify, as.character(x))
+  if (!is.character(x)) x <- as.character(x)
+  .Call(clic_ansi_simplify, x)
 }
