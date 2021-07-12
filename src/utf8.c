@@ -7,30 +7,6 @@
 #include "cli.h"
 #include "errors.h"
 
-#define UTF8LITE_UTF8_ENCODE_LEN(u) \
-	((u) <= 0x7F     ? 1 : \
-	 (u) <= 0x07FF   ? 2 : \
-	 (u) <= 0xFFFF   ? 3 : 4)
-
-/** Last valid unicode codepoint */
-#define UTF8LITE_CODE_MAX 0x10FFFF
-
-/** Indicates whether a 16-bit code unit is a UTF-16 high surrogate.
- *  High surrogates are in the range 0xD800 `(1101 1000 0000 0000)`
- *  to 0xDBFF `(1101 1011 1111 1111)`. */
-#define UTF8LITE_IS_UTF16_HIGH(x) (((x) & 0xFC00) == 0xD800)
-
-/** Indicates whether a 16-bit code unit is a UTF-16 low surrogate.
- *  Low surrogates are in the range 0xDC00 `(1101 1100 0000 0000)`
- *  to 0xDFFF `(1101 1111 1111 1111)`. */
-#define UTF8LITE_IS_UTF16_LOW(x) (((x) & 0xFC00) == 0xDC00)
-
-/** Indicates whether a given unsigned integer is a valid unicode codepoint */
-#define UTF8LITE_IS_UNICODE(x) \
-	(((x) <= UTF8LITE_CODE_MAX) \
-	 && !UTF8LITE_IS_UTF16_HIGH(x) \
-	 && !UTF8LITE_IS_UTF16_LOW(x))
-
 void utf8lite_decode_utf8(const uint8_t **bufptr, int32_t *codeptr) {
   const uint8_t *ptr = *bufptr;
   int32_t code;
@@ -85,7 +61,7 @@ void utf8lite_encode_utf8(int32_t code, uint8_t **bufptr) {
   *bufptr = ptr;
 }
 
-static char display_width_map[7] = {
+static int display_width_map[7] = {
   /* CHARWIDTH_NONE =      */ 0,
   /* CHARWIDTH_IGNORABLE = */ 0,
   /* CHARWIDTH_MARK =      */ 0,
@@ -94,6 +70,17 @@ static char display_width_map[7] = {
   /* CHARWIDTH_WIDE =      */ 2,
   /* CHARWIDTH_EMOJI =     */ 2
 };
+
+/* Display width of a single code point */
+
+int clic__utf8_display_width_char(const uint8_t **x) {
+  int32_t code;
+  utf8lite_decode_utf8(x, &code);
+  if (!UTF8LITE_IS_UNICODE(code)) {
+    R_THROW_ERROR("Invalid UTF-8 string");
+  }
+  return display_width_map[charwidth(code)];
+}
 
 SEXP clic_utf8_display_width(SEXP x) {
   R_xlen_t i, len = XLENGTH(x);
