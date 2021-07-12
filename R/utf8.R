@@ -18,3 +18,10 @@ is_utf8_output <- function() {
     l10n_info()$`UTF-8` && !is_latex_output()
   }
 }
+
+# @export
+
+utf8_display_width <- function(x) {
+  x <- enc2utf8(x)
+  .Call(clic_utf8_display_width, x)
+}

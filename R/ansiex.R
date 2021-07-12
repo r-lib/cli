@@ -105,8 +105,6 @@ map_to_ansi <- function(x, text = NULL) {
 #'   coarced to character.
 #' @param type Whether to count characters, bytes, or calculate the
 #'   display width of the string. Passed to [base::nchar()].
-#' @param ... Additional arguments, passed on to [base::nchar()]
-#'   after removing ANSI escape sequences.
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
@@ -124,14 +122,14 @@ map_to_ansi <- function(x, text = NULL) {
 #' ansi_nchar(str)
 #' nchar(ansi_strip(str))
 
-ansi_nchar <- function(x, type = c("chars", "bytes", "width"), ...) {
+ansi_nchar <- function(x, type = c("chars", "bytes", "width")) {
   type <- match.arg(type)
-  if (type == "width") x <- unicode_pre(x)
-  ansi_nchar_bad(x, type = type, ...)
-}
-
-ansi_nchar_bad <- function(x, ...) {
-  base::nchar(ansi_strip(x), ...)
+  x <- ansi_strip(x)
+  if (type == "width") {
+    utf8_display_width(x)
+  } else {
+    base::nchar(x, allowNA = FALSE, keepNA = TRUE)
+  }
 }
 
 #' Substring(s) of an ANSI colored string

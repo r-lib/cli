@@ -9,6 +9,8 @@
 SEXP clic_tty_size();
 SEXP clic_ansi_simplify(SEXP x);
 
+SEXP clic_utf8_display_width(SEXP x);
+
 typedef volatile int vint;
 
 extern volatile int* cli_timer_flag;
