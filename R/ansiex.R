@@ -696,6 +696,12 @@ ansi_convert <- function(x, converter, ...) {
   ansi_string(out)
 }
 
+#' Simplify ANSI styling tags
+#'
+#' It creates an equivalent, but possibly shorter ANSI styled string, by
+#' removing duplicate and empty tags.
+#'
+#' @param x Input string
 #' @export
 
 ansi_simplify <- function(x) {

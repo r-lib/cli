@@ -479,7 +479,19 @@ SEXP clic_ansi_simplify(SEXP sx) {
 
   clic__buffer_free(&data.buffer);
 
-  UNPROTECT(1);
+  SEXP ocls = PROTECT(getAttrib(sx, R_ClassSymbol));
+  int oclslen = LENGTH(ocls);
+  int has_as = Rf_inherits(sx, "ansi_string");
+  int has_ch = Rf_inherits(sx, "character");
+  int i, j = 0, clslen = oclslen + !has_as + !has_ch;
+  SEXP cls = PROTECT(allocVector(STRSXP, clslen));
+  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
+  for (i = 0; i < oclslen; i++) {
+    SET_STRING_ELT(cls, j++, STRING_ELT(ocls, i));
+  }
+  if (!has_ch) SET_STRING_ELT(cls, j++, mkChar("character"));
+  setAttrib(data.result, R_ClassSymbol, cls);
+  UNPROTECT(3);
   return data.result;
 }
 
