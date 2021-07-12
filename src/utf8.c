@@ -1,4 +1,8 @@
 
+/* Much of this is adapted from the great utf8lite library:
+ * https://github.com/patperry/utf8lite
+ */
+
 #include "charwidth.h"
 #include "cli.h"
 #include "errors.h"
@@ -50,6 +54,7 @@ void utf8lite_decode_utf8(const uint8_t **bufptr, int32_t *codeptr) {
 
   while (nc-- > 0) {
     ch = *ptr++;
+    if (ch == 0) R_THROW_ERROR("Incomplete UTF-8 character");
     code = (code << 6) + (ch & 0x3F);
   }
 
@@ -101,19 +106,14 @@ SEXP clic_utf8_display_width(SEXP x) {
       pres[i] = NA_INTEGER;
     } else {
       const uint8_t *chr = (const uint8_t*) CHAR(x1);
-      const uint8_t *end = chr;
       int32_t code;
       int len = 0;
       while (*chr) {
-        utf8lite_decode_utf8(&end, &code);
+        utf8lite_decode_utf8(&chr, &code);
         if (!UTF8LITE_IS_UNICODE(code)) {
           R_THROW_ERROR("Invalid UTF-8 string in element %ld,", i + 1);
         }
         len += display_width_map[charwidth(code)];
-        while (*chr && chr < end) chr++;
-      }
-      if (chr < end) {
-        R_THROW_ERROR("Invalid UTF-8 string in element %ld,", i + 1);
       }
       pres[i] = len;
     }
