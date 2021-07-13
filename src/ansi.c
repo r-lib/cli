@@ -287,59 +287,85 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMIT("0");
   }
 
-  if (state->new.bold > state->old.bold) {
-    EMIT("1");
-  } else if (state->new.bold < state->old.bold) {
+  /* Closing tags ------------------------------------------------------ */
+
+  if (state->old.bg.col != 0 && state->new.bg.col != state->old.bg.col) {
+    EMIT("49");
+  }
+
+  if (state->old.fg.col != 0 && state->new.fg.col != state->old.fg.col) {
+    EMIT("39");
+  }
+
+  if (state->new.crossedout < state->old.crossedout) {
+    EMIT("29");
+  }
+
+  if (state->new.hide < state->old.hide) {
+    EMIT("28");
+  }
+
+  if (state->new.inverse < state->old.inverse) {
+    EMIT("27");
+  }
+
+  if (state->new.blink < state->old.blink) {
+    EMIT("25");
+  }
+
+  if (state->new.underline < state->old.underline) {
+    EMIT("24");
+  }
+
+  if (state->new.italic < state->old.italic) {
+    EMIT("23");
+  }
+
+  if (state->new.faint < state->old.faint) {
+    EMIT("22");
+  }
+
+  if (state->new.bold < state->old.bold) {
     /* TODO: handle bold + faint interaction */
     EMIT("22");
   }
 
+  /* Opening tags in reverse order ------------------------------------- */
+
+  if (state->new.bold > state->old.bold) {
+    EMIT("1");
+  }
+
   if (state->new.faint > state->old.faint) {
     EMIT("2");
-  } else if (state->new.faint < state->old.faint) {
-    EMIT("22");
   }
 
   if (state->new.italic > state->old.italic) {
     EMIT("3");
-  } else if (state->new.italic < state->old.italic) {
-    EMIT("23");
   }
 
   if (state->new.underline > state->old.underline) {
     EMIT("4");
-  } else if (state->new.underline < state->old.underline) {
-    EMIT("24");
   }
 
   if (state->new.blink > state->old.blink) {
     EMIT("5");
-  } else if (state->new.blink < state->old.blink) {
-    EMIT("25");
   }
 
   if (state->new.inverse > state->old.inverse) {
     EMIT("7");
-  } else if (state->new.inverse < state->old.inverse) {
-    EMIT("27");
   }
 
   if (state->new.hide > state->old.hide) {
     EMIT("8");
-  } else if (state->new.hide < state->old.hide) {
-    EMIT("28");
   }
 
   if (state->new.crossedout > state->old.crossedout) {
     EMIT("9");
-  } else if (state->new.crossedout < state->old.crossedout) {
-    EMIT("29");
   }
 
-  if (state->new.fg.col == 0 && state->old.fg.col != 0) {
-    EMIT("39");
-  } else if (DIFFERENT_COLOR(state->new.fg, state->old.fg)) {
-    if (state->old.fg.col != 0) EMIT("39");
+  if (state->new.fg.col != 0 &&
+      DIFFERENT_COLOR(state->new.fg, state->old.fg)) {
     if (state->new.fg.col == CLI_COL_256) {
       snprintf(col, sizeof(col), "\033[38;5;%um", state->new.fg.r);
     } else if (state->new.fg.col == CLI_COL_RGB) {
@@ -351,10 +377,8 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMITS(col);
   }
 
-  if (state->new.bg.col == 0 && state->old.bg.col != 0) {
-    EMIT("49");
-  } else if (DIFFERENT_COLOR(state->new.bg, state->old.bg)) {
-    if (state->old.bg.col != 0) EMIT("49");
+  if (state->new.bg.col != 0 &&
+      DIFFERENT_COLOR(state->new.bg, state->old.bg)) {
     if (state->new.bg.col == CLI_COL_256) {
       snprintf(col, sizeof(col), "\033[48;5;%um", state->new.bg.r);
     } else if (state->new.bg.col == CLI_COL_RGB) {
