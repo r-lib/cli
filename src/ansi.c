@@ -127,13 +127,13 @@ struct cli_sgr_state {
   char inverse;
   char hide;
   char crossedout;
-  char unknown;
-  char off;
 };
 
 struct cli_ansi_state {
   struct cli_sgr_state old;
   struct cli_sgr_state new;
+  char unknown;
+  char off;
 };
 
 static void clic__readnum(char **ptr, unsigned int *num) {
@@ -194,7 +194,7 @@ static void clic__ansi_update_state(const char *param,
     long num = strtol(startptr, &endptr, 10);
     if (endptr == startptr || num == 0) {
       memset(&state->new, 0, sizeof(state->new));
-      state->new.off = 1;
+      state->off = 1;
 
     } else if (num == 1) {
       state->new.bold = 1;
@@ -261,8 +261,8 @@ static void clic__ansi_update_state(const char *param,
 
     } else {
       /* Keep tag as is, and emit it right away */
-      state->new.unknown = 1;
-      clic__buffer_push_piece(buffer, param - 2, end);
+      state->unknown = 1;
+      clic__buffer_push_piece(buffer, param - 2, end + 1);
     }
 
     /* The next attribute, if any */
@@ -278,17 +278,15 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
 
   char col[20];
 
-  if (state->new.unknown && state->new.off) {
+  if (state->unknown && state->off) {
+    state->unknown = state->off = 0;
     EMIT("0");
   }
 
   if (state->new.bold > state->old.bold) {
     EMIT("1");
   } else if (state->new.bold < state->old.bold) {
-    /* This also closes faint, so don't close that again. */
-    if (state->new.faint < state->old.faint) {
-      state->new.faint = state->old.faint;
-    }
+    /* TODO: handle bold + faint interaction */
     EMIT("22");
   }
 
@@ -337,6 +335,7 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
   if (state->new.fg.col == 0 && state->old.fg.col != 0) {
     EMIT("39");
   } else if (DIFFERENT_COLOR(state->new.fg, state->old.fg)) {
+    if (state->old.fg.col != 0) EMIT("39");
     if (state->new.fg.col == CLI_COL_256) {
       snprintf(col, sizeof(col), "\033[38;5;%um", state->new.fg.r);
     } else if (state->new.fg.col == CLI_COL_RGB) {
@@ -351,6 +350,7 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
   if (state->new.bg.col == 0 && state->old.bg.col != 0) {
     EMIT("49");
   } else if (DIFFERENT_COLOR(state->new.bg, state->old.bg)) {
+    if (state->old.bg.col != 0) EMIT("49");
     if (state->new.bg.col == CLI_COL_256) {
       snprintf(col, sizeof(col), "\033[48;5;%um", state->new.bg.r);
     } else if (state->new.bg.col == CLI_COL_RGB) {
@@ -362,7 +362,6 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMITS(col);
   }
 
-  state->new.off = 0;
   state->old = state->new;
 }
 
