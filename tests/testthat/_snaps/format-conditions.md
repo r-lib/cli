@@ -31,7 +31,7 @@
         stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
       })
     Error <simpleError>
-      [1m[22m[1m[1m[1m[1m[30m[47m`n`[1m[1m[39m[49m must be a numeric vector[1m[22m
+      [1m[22m[1m[1m[1m[30m[47m`n`[1m[39m[49m must be a numeric vector[1m[22m
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -81,7 +81,7 @@
         stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
       })
     Error <simpleError>
-      [1m[22m[1m[1m[1m[1m[30m[47m`n`[1m[1m[39m[49m must be a numeric vector[1m[22m
+      [1m[22m[1m[1m[1m[30m[47m`n`[1m[39m[49m must be a numeric vector[1m[22m
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -127,7 +127,7 @@
       n <- "boo"
       warning(format_warning(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
     Warning <simpleWarning>
-      [1m[22m[1m[1m[1m[1m[30m[47m`n`[1m[1m[39m[49m must be a numeric vector[1m[22m
+      [1m[22m[1m[1m[1m[30m[47m`n`[1m[39m[49m must be a numeric vector[1m[22m
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -173,7 +173,7 @@
       n <- "boo"
       warning(format_warning(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
     Warning <simpleWarning>
-      [1m[22m[1m[1m[1m[1m[30m[47m`n`[1m[1m[39m[49m must be a numeric vector[1m[22m
+      [1m[22m[1m[1m[1m[30m[47m`n`[1m[39m[49m must be a numeric vector[1m[22m
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---

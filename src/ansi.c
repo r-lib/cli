@@ -135,25 +135,66 @@ struct cli_ansi_state {
   char off;                     /* TODO: can we handle this better? */
 };
 
-static void clic__parse_color(const char *txt, struct cli_color *col) {
+static void clic__parse_color(char **ptr, const char *end, struct cli_color *col) {
   /* This can be:
    * - 5;<n>
    * - 2;<r>;<g>;<b>
    * TODO: handle empty paramters, which should be zero
    */
 
+  char *txt = *ptr;
+
   col->r = col->g = col->b = 0;
 
   if (*txt != ';') return;
   txt++;
 
-  if (*txt == '5') {
+  char backup = *end;
+  char *end2 = (char*) end;
+  *end2 = '\0';
+  int len = -1, ret = -1;
+
+  unsigned int r = 0, g = 0, b = 0;
+
+  if (*txt == '5' && *(txt + 1) == ';') {
     col->col = CLI_COL_256;
-    sscanf(txt, "5;%hhu", &col->r);
-  } else if (*txt == '2') {
+    ret = sscanf(txt, "5;%u%n", &r, &len);
+    col->r = (unsigned char) r;
+  } else if (*txt == '2' && *(txt + 1) == ';') {
     col->col = CLI_COL_RGB;
-    sscanf(txt, "2;%hhu;%hhu;%hhu", &col->r, &col->g, &col->b);
+    ret = sscanf(txt, "2;%u;%u;%u%n", &r, &g, &b, &len);
+    col->r = (unsigned char) r;
+    col->g = (unsigned char) g;
+    col->b = (unsigned char) b;
   }
+
+  if (ret == -1) {
+    /* unknown tag, we'll ignore the whole tag */
+    *ptr = (char *) end;
+
+  } else if (len == -1) {
+    /* invalid or empty tag, we set missing colors to zero */
+    if (*txt == '5') {
+      txt += 2;
+      /* we drop the parameter, whatever it is */
+      while (txt < end && *txt != ';') txt++;
+    } else if (*txt == '2') {
+      txt += 2;
+      /* we drop three parameters */
+      while (txt < end && *txt != ';') txt++;
+      if (*txt == ';') txt++;
+      while (txt < end && *txt != ';') txt++;
+      if (*txt == ';') txt++;
+      while (txt < end && *txt != ';') txt++;
+    }
+    *ptr = txt;
+
+  } else {
+    /* everything is fine, correct tag */
+    *ptr += len + 1;
+  }
+
+  *end2 = backup;
 }
 
 static void clic__ansi_update_state(const char *param,
@@ -161,79 +202,85 @@ static void clic__ansi_update_state(const char *param,
                                     const char *end,
                                     struct cli_buffer *buffer,
                                     struct cli_ansi_state *state) {
-  char *endptr;
-  long num = strtol(param, &endptr, 10);
-  if (endptr == param && num == 0) {
-    state->off = 1;
-    memset(&state->new, 0, sizeof(state->new));
 
-  } else if (num == 1) {
-    state->new.bold = 1;
+  char *startptr = (char*) param, *endptr;
+  do {
+    long num = strtol(startptr, &endptr, 10);
+    if (endptr == startptr || num == 0) {
+      state->off = 1;
+      memset(&state->new, 0, sizeof(state->new));
 
-  } else if (num == 2) {
-    state->new.faint = 1;
+    } else if (num == 1) {
+      state->new.bold = 1;
 
-  } else if (num == 3) {
-    state->new.italic = 1;
+    } else if (num == 2) {
+      state->new.faint = 1;
 
-  } else if (num == 4) {
-    state->new.underline = 1;
+    } else if (num == 3) {
+      state->new.italic = 1;
 
-  } else if (num == 5) {
-    state->new.blink = 1;
+    } else if (num == 4) {
+      state->new.underline = 1;
 
-  } else if (num == 7) {
-    state->new.inverse = 1;
+    } else if (num == 5) {
+      state->new.blink = 1;
 
-  } else if (num == 8) {
-    state->new.hide = 1;
+    } else if (num == 7) {
+      state->new.inverse = 1;
 
-  } else if (num == 9) {
-    state->new.crossedout = 1;
+    } else if (num == 8) {
+      state->new.hide = 1;
 
-  } else if (num == 22) {
-    state->new.bold = state->new.faint = 0;
+    } else if (num == 9) {
+      state->new.crossedout = 1;
 
-  } else if (num == 23) {
-    state->new.italic = 0;
+    } else if (num == 22) {
+      state->new.bold = state->new.faint = 0;
 
-  } else if (num == 24) {
-    state->new.underline = 0;
+    } else if (num == 23) {
+      state->new.italic = 0;
 
-  } else if (num == 25) {
-    state->new.blink = 0;
+    } else if (num == 24) {
+      state->new.underline = 0;
 
-  } else if (num == 27) {
-    state->new.inverse = 0;
+    } else if (num == 25) {
+      state->new.blink = 0;
 
-  } else if (num == 28) {
-    state->new.hide = 0;
+    } else if (num == 27) {
+      state->new.inverse = 0;
 
-  } else if (num == 29) {
-    state->new.crossedout = 0;
+    } else if (num == 28) {
+      state->new.hide = 0;
 
-  } else if (num >= 30 && num <= 37) {
-    state->new.fg.col = num - 30 + 1;
+    } else if (num == 29) {
+      state->new.crossedout = 0;
 
-  } else if (num == 38) {
-    clic__parse_color(endptr, &state->new.fg);
+    } else if (num >= 30 && num <= 37) {
+      state->new.fg.col = num - 30 + 1;
 
-  } else if (num == 39) {
-    state->new.fg.col = 0;
+    } else if (num == 38) {
+      clic__parse_color(&endptr, intermed, &state->new.fg);
 
-  } else if (num >= 40 && num <= 47) {
-    state->new.bg.col = num - 40 + 1;
+    } else if (num == 39) {
+      state->new.fg.col = 0;
 
-  } else if (num == 48) {
-    clic__parse_color(endptr, &state->new.bg);
+    } else if (num >= 40 && num <= 47) {
+      state->new.bg.col = num - 40 + 1;
 
-  } else if (num == 49) {
-    state->new.bg.col = 0;
+    } else if (num == 48) {
+      clic__parse_color(&endptr, intermed, &state->new.bg);
 
-  } else {
-    /* Keep tag as is, and emit it right away */
-    clic__buffer_push_piece(buffer, param - 2, end);
-  }
+    } else if (num == 49) {
+      state->new.bg.col = 0;
+
+    } else {
+      /* Keep tag as is, and emit it right away */
+      clic__buffer_push_piece(buffer, param - 2, end);
+    }
+
+    /* The next attribute, if any */
+    startptr = endptr + 1;
+  } while (endptr < intermed && *endptr == ';');
 }
 
 #define EMIT(s) clic__buffer_push_str(buffer, "\033[" s "m")
@@ -242,11 +289,9 @@ static void clic__ansi_update_state(const char *param,
 static void clic__state_update_buffer(struct cli_buffer *buffer,
                                       struct cli_ansi_state *state) {
 
-  /* TODO: better 0 handling */
-  /* TODO: 22 turns off two bits */
-
   char col[20];
 
+  /* TODO: handle this better */
   if (state->off) {
     EMIT("0");
   }
@@ -254,6 +299,10 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
   if (state->new.bold > state->old.bold) {
     EMIT("1");
   } else if (state->new.bold < state->old.bold) {
+    /* This also closes faint, so don't close that again. */
+    if (state->new.faint < state->old.faint) {
+      state->new.faint = state->old.faint;
+    }
     EMIT("22");
   }
 
@@ -297,12 +346,6 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMIT("9");
   } else if (state->new.crossedout < state->old.crossedout) {
     EMIT("29");
-  }
-
-  if (state->new.bold > state->old.bold) {
-    EMIT("1");
-  } else if (state->new.bold < state->old.bold) {
-    EMIT("22");
   }
 
   if (state->new.fg.col == 0 && state->old.fg.col != 0) {
@@ -377,7 +420,7 @@ void clic__ansi_iterator(SEXP sx,
         while (*s_intermed >= 0x30 && *s_intermed <= 0x3f) s_intermed++;
         s_end = s_intermed;
         while (*s_end >= 0x20 && *s_end <= 0x2f) s_end++;
-        if (*s_end >= 0x40 && *s_end <= 0x7e) {
+        if (*s_end == 'm') {
           if (s_start > shaft && text_cb) {
             if (text_cb(shaft, s_start, data)) goto end;
           }
