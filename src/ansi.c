@@ -106,11 +106,15 @@ static void clic__buffer_realloc(struct cli_buffer *buf, size_t size) {
 
 /* ---------------------------------------------------------------------- */
 
-#define CLI_COL_256 9
-#define CLI_COL_RGB 10
+#define CLI_COL_256 254
+#define CLI_COL_RGB 255
 
 struct cli_color {
-  char col;                   /* 1-8, 0 off, 9 is 8 bit, 10 is 24 bit */
+  /* 0 is off
+   * 30-37, 40-47, 90-97, 100-107
+   * CLI_COL_256 (254) is 8 bit
+   * CLI_COL_RGB (255) is 24 bit */
+  unsigned char col;
   unsigned char r, g, b;
 };
 
@@ -241,8 +245,8 @@ static void clic__ansi_update_state(const char *param,
     } else if (num == 29) {
       state->new.crossedout = 0;
 
-    } else if (num >= 30 && num <= 37) {
-      state->new.fg.col = num - 30 + 1;
+    } else if ((num >= 30 && num <= 37) || (num >= 90 && num <= 97)) {
+      state->new.fg.col = num;
 
     } else if (num == 38) {
       clic__parse_color(&endptr, intermed, &state->new.fg);
@@ -250,8 +254,8 @@ static void clic__ansi_update_state(const char *param,
     } else if (num == 39) {
       state->new.fg.col = 0;
 
-    } else if (num >= 40 && num <= 47) {
-      state->new.bg.col = num - 40 + 1;
+    } else if ((num >= 40 && num <= 47) || (num >= 100 && num <= 107)) {
+      state->new.bg.col = num;
 
     } else if (num == 48) {
       clic__parse_color(&endptr, intermed, &state->new.bg);
@@ -342,7 +346,7 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
       snprintf(col, sizeof(col), "\033[38;2;%u;%u;%um",
                state->new.fg.r, state->new.fg.g, state->new.fg.b);
     } else {
-      snprintf(col, sizeof(col), "\033[%um", state->new.fg.col + 29);
+      snprintf(col, sizeof(col), "\033[%um", state->new.fg.col);
     }
     EMITS(col);
   }
@@ -357,7 +361,7 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
       snprintf(col, sizeof(col), "\033[48;2;%u;%u;%um",
                state->new.bg.r, state->new.bg.g, state->new.bg.b);
     } else {
-      snprintf(col, sizeof(col), "\033[%um", state->new.bg.col + 39);
+      snprintf(col, sizeof(col), "\033[%um", state->new.bg.col);
     }
     EMITS(col);
   }
