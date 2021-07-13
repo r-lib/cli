@@ -469,6 +469,7 @@ static int simplify_cb_end(SEXP rstr,
                            const char *str,
                            void *vdata) {
   struct simplify_data *data = vdata;
+  memset(&data->state.new, 0, sizeof(struct cli_sgr_state));
   clic__state_update_buffer(&data->buffer, &data->state);
   if (data->num_tags == 0) {
     SET_STRING_ELT(data->result, data->done, rstr);
@@ -593,6 +594,7 @@ static int substr_cb_end(SEXP rstr,
                          const char *str,
                          void *vdata) {
   struct substr_data *data = vdata;
+  memset(&data->state.new, 0, sizeof(struct cli_sgr_state));
   clic__state_update_buffer(&data->buffer, &data->state);
   SET_STRING_ELT(
     data->result,
