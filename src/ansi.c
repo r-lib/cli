@@ -135,64 +135,49 @@ struct cli_ansi_state {
   char off;                     /* TODO: can we handle this better? */
 };
 
+static void clic__readnum(char **ptr, unsigned int *num) {
+  int len = 0;
+  if ((*ptr)[0] != ';') return;
+  (*ptr) ++;
+  sscanf(*ptr, "%u%n", num, &len);
+  *ptr += len;
+  while (**ptr != ';' && **ptr != '\0') (*ptr) ++;
+}
+
 static void clic__parse_color(char **ptr, const char *end, struct cli_color *col) {
   /* This can be:
    * - 5;<n>
    * - 2;<r>;<g>;<b>
-   * TODO: handle empty paramters, which should be zero
    */
 
-  char *txt = *ptr;
+  /* Has to start with ;5; or ;2;, otherwise we skip the whole tag */
+  if ((*ptr)[0] != ';' ||
+      ((*ptr)[1] != '5' && (*ptr)[1] != '2') ||
+      (*ptr)[2] != ';') {
+    *ptr = (char*) end;
+    col->r = col->g = col->b = 0;
+    return;
+  }
 
-  col->r = col->g = col->b = 0;
+  col->col = (*ptr)[1] == '5' ? CLI_COL_256 : CLI_COL_RGB;
+  (*ptr) += 2;
 
-  if (*txt != ';') return;
-  txt++;
-
+  /* Temporarily create a zero terminated string for sscanf */
   char backup = *end;
   char *end2 = (char*) end;
   *end2 = '\0';
-  int len = -1, ret = -1;
 
   unsigned int r = 0, g = 0, b = 0;
 
-  if (*txt == '5' && *(txt + 1) == ';') {
-    col->col = CLI_COL_256;
-    ret = sscanf(txt, "5;%u%n", &r, &len);
-    col->r = (unsigned char) r;
-  } else if (*txt == '2' && *(txt + 1) == ';') {
-    col->col = CLI_COL_RGB;
-    ret = sscanf(txt, "2;%u;%u;%u%n", &r, &g, &b, &len);
-    col->r = (unsigned char) r;
-    col->g = (unsigned char) g;
-    col->b = (unsigned char) b;
+  clic__readnum(ptr, &r);
+  if (col->col == CLI_COL_RGB) {
+    clic__readnum(ptr, &g);
+    clic__readnum(ptr, &b);
   }
 
-  if (ret == -1) {
-    /* unknown tag, we'll ignore the whole tag */
-    *ptr = (char *) end;
-
-  } else if (len == -1) {
-    /* invalid or empty tag, we set missing colors to zero */
-    if (*txt == '5') {
-      txt += 2;
-      /* we drop the parameter, whatever it is */
-      while (txt < end && *txt != ';') txt++;
-    } else if (*txt == '2') {
-      txt += 2;
-      /* we drop three parameters */
-      while (txt < end && *txt != ';') txt++;
-      if (*txt == ';') txt++;
-      while (txt < end && *txt != ';') txt++;
-      if (*txt == ';') txt++;
-      while (txt < end && *txt != ';') txt++;
-    }
-    *ptr = txt;
-
-  } else {
-    /* everything is fine, correct tag */
-    *ptr += len + 1;
-  }
+  col->r = (unsigned char) r;
+  col->g = (unsigned char) g;
+  col->b = (unsigned char) b;
 
   *end2 = backup;
 }
