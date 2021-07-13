@@ -75,16 +75,17 @@ fmt <- function(expr, collapse = FALSE, strip_newline = FALSE, app = NULL) {
 #' it to the screen. It uses [cli_text()] internally.
 #'
 #' @param ... Passed to [cli_text()].
+#' @param .envir Environment to evaluate the expressions in.
 #' @return Character scalar, the formatted string.
 #'
 #' @export
 #' @examples
 #' format_inline("This is a message for {.emph later}.")
 
-format_inline <- function(...) {
+format_inline <- function(..., .envir = parent.frame()) {
   opts <- options(cli.width = Inf)
   on.exit(options(opts), add = TRUE)
-  fmt(cli_text(...))
+  fmt(cli_text(..., .envir = .envir))
 }
 
 #' CLI text
