@@ -127,12 +127,13 @@ struct cli_sgr_state {
   char inverse;
   char hide;
   char crossedout;
+  char unknown;
+  char off;
 };
 
 struct cli_ansi_state {
   struct cli_sgr_state old;
   struct cli_sgr_state new;
-  char off;                     /* TODO: can we handle this better? */
 };
 
 static void clic__readnum(char **ptr, unsigned int *num) {
@@ -192,8 +193,8 @@ static void clic__ansi_update_state(const char *param,
   do {
     long num = strtol(startptr, &endptr, 10);
     if (endptr == startptr || num == 0) {
-      state->off = 1;
       memset(&state->new, 0, sizeof(state->new));
+      state->new.off = 1;
 
     } else if (num == 1) {
       state->new.bold = 1;
@@ -260,6 +261,7 @@ static void clic__ansi_update_state(const char *param,
 
     } else {
       /* Keep tag as is, and emit it right away */
+      state->new.unknown = 1;
       clic__buffer_push_piece(buffer, param - 2, end);
     }
 
@@ -276,8 +278,7 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
 
   char col[20];
 
-  /* TODO: handle this better */
-  if (state->off) {
+  if (state->new.unknown && state->new.off) {
     EMIT("0");
   }
 
@@ -361,7 +362,7 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMITS(col);
   }
 
-  state->off = 0;
+  state->new.off = 0;
   state->old = state->new;
 }
 
