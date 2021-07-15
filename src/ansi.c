@@ -675,3 +675,174 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
 }
 
 /* ---------------------------------------------------------------------- */
+
+struct html_data {
+  struct cli_ansi_state state;
+  struct cli_buffer buffer;
+  const char *str;
+  R_xlen_t done;
+  SEXP result;
+  char had_tags;
+};
+
+#define EMITS1(s) do {                            \
+  if (first) {                                    \
+    EMITS("<span class=\"ansi");                  \
+    first = 0;                                    \
+  }                                               \
+  EMITS(s); } while (0)
+
+
+static void clic__html_start(struct html_data *data) {
+
+  struct cli_buffer *buffer = &data->buffer;
+  struct cli_ansi_state *state = &data->state;
+
+  char col[64];
+
+  int first = 1;
+ /* Opening tags ------------------------------------------------------ */
+
+  if (state->new.bold > state->old.bold) {
+    EMITS1(" ansi-bold");
+  }
+
+  if (state->new.faint > state->old.faint) {
+    EMITS1(" ansi-faint");
+  }
+
+  if (state->new.italic > state->old.italic) {
+    EMITS1(" ansi-italic");
+  }
+
+  if (state->new.underline > state->old.underline) {
+    EMITS1(" ansi-underline");
+  }
+
+  if (state->new.blink > state->old.blink) {
+    EMITS1(" ansi-blink");
+  }
+
+  if (state->new.inverse > state->old.inverse) {
+    EMITS1(" ansi-inverse");
+  }
+
+  if (state->new.hide > state->old.hide) {
+    EMITS1(" ansi-hide");
+  }
+
+  if (state->new.crossedout > state->old.crossedout) {
+    EMITS1(" ansi-crossedout");
+  }
+
+  if (state->new.fg.col != 0 &&
+      DIFFERENT_COLOR(state->new.fg, state->old.fg)) {
+    if (state->new.fg.col == CLI_COL_256) {
+      snprintf(col, sizeof(col), " ansi-color-%u", state->new.fg.r);
+    } else if (state->new.fg.col == CLI_COL_RGB) {
+      snprintf(col, sizeof(col), " ansi-color-%u-%u-%u",
+               state->new.fg.r, state->new.fg.g, state->new.fg.b);
+    } else {
+      unsigned char ncol = state->new.fg.col - 30;
+      if (ncol > 7) ncol -= 60;
+      snprintf(col, sizeof(col), " ansi-color-%u", ncol);
+    }
+    EMITS1(col);
+  }
+
+  if (state->new.bg.col != 0 &&
+      DIFFERENT_COLOR(state->new.bg, state->old.bg)) {
+    if (state->new.bg.col == CLI_COL_256) {
+      snprintf(col, sizeof(col), " ansi-bg-color-%u",
+               state->new.bg.r);
+    } else if (state->new.bg.col == CLI_COL_RGB) {
+      snprintf(col, sizeof(col), " ansi-bg-color-%u-%u-%u",
+               state->new.bg.r, state->new.bg.g, state->new.bg.b);
+    } else {
+      unsigned char ncol = state->new.bg.col - 40;
+      if (ncol > 7) ncol -= 60;
+      snprintf(col, sizeof(col), " ansi-bg-color-%u", ncol);
+    }
+    EMITS1(col);
+  }
+
+  state->old = state->new;
+
+  if (!first) EMITS("\">");
+  data->had_tags = !first;
+}
+
+static void clic__html_end(struct html_data *data) {
+
+  struct cli_buffer *buffer = &data->buffer;
+  if (data->had_tags) EMITS("</span>");
+}
+
+static int html_cb_start(const char *str, void *vdata) {
+  struct html_data *data = vdata;
+  data->str = str;
+  clic__buffer_reset(&data->buffer);
+  return 0;
+}
+
+static int html_cb_tag(const char *param,
+                       const char *intermed,
+                       const char *end,
+                       void *vdata) {
+  struct html_data *data = vdata;
+  clic__ansi_update_state(param, intermed, end, &data->buffer, &data->state);
+  return 0;
+}
+
+static int html_cb_text(const char *str,
+                        const char *end,
+                        void *vdata) {
+  struct html_data *data = vdata;
+  clic__html_start(data);
+  clic__buffer_push_piece(&data->buffer, str, end);
+  clic__html_end(data);
+  return 0;
+}
+
+static int html_cb_end(SEXP rstr,
+                       const char *str,
+                       void *vdata) {
+  struct html_data *data = vdata;
+  memset(&data->state.new, 0, sizeof(data->state.new));
+  SET_STRING_ELT(
+    data->result,
+    data->done,
+    Rf_mkCharLenCE(
+      clic__buffer_get(&data->buffer),
+      clic__buffer_size(&data->buffer),
+      CE_NATIVE
+    )
+  );
+
+  data->done++;
+  return 0;
+}
+
+SEXP clic_ansi_html(SEXP sx) {
+  struct html_data data;
+  memset(&data.state, 0, sizeof(data.state));
+  clic__buffer_init(&data.buffer);
+  data.done = 0;
+  data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
+
+  clic__ansi_iterator(
+    sx,
+    html_cb_start,
+    html_cb_tag,
+    html_cb_text,
+    html_cb_end,
+    &data
+  );
+
+  clic__buffer_free(&data.buffer);
+
+  UNPROTECT(1);
+  return data.result;
+}
+
+/* ---------------------------------------------------------------------- */

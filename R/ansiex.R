@@ -702,9 +702,164 @@ ansi_convert <- function(x, converter, ...) {
 #' removing duplicate and empty tags.
 #'
 #' @param x Input string
+#' @return Simplified `ansi_string` vector.
+#'
 #' @export
 
 ansi_simplify <- function(x) {
   if (!is.character(x)) x <- as.character(x)
   .Call(clic_ansi_simplify, x)
+}
+
+#' Convert ANSI styled text to HTML
+#'
+#' @param x Input character vector.
+#' @param escape_reserved Whether to escape characters that are reserved
+#'   in HTML (`&`, `<` and `>`).
+#' @return Character vector of HTML.
+#'
+#' @family ANSI to HTML conversion
+#' @export
+#' @examplesIf cli:::has_packages(c("prettycode", "htmltools", "withr"))
+#' ## Syntax highlight the source code of an R function with ANSI tags,
+#' ## and export it to a HTML file.
+#' code <- withr::with_options(
+#'   list(ansi.num_colors = 256),
+#'   prettycode::highlight(format(ansi_html))
+#' )
+#' hcode <- paste(ansi_html(code), collapse = "\n")
+#' css <- paste(format(ansi_html_style()), collapse=  "\n")
+#' page <- htmltools::tagList(
+#'   htmltools::tags$head(htmltools::tags$style(css)),
+#'   htmltools::tags$pre(htmltools::HTML(hcode))
+#' )
+#'
+#' if (interactive()) htmltools::html_print(page)
+
+ansi_html <- function(x, escape_reserved = TRUE) {
+  if (!is.character(x)) x <- as.character(x)
+  if (escape_reserved) {
+    x <- gsub("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
+  }
+  .Call(clic_ansi_html, x)
+}
+
+ansi_themes <- rbind(
+  read.table(
+    "tools/ansi-themes.txt",
+    comment = ";",
+    stringsAsFactors = FALSE
+  ),
+  read.table(
+    "tools/ansi-iterm-themes.txt",
+    comment = ";",
+    stringsAsFactors = FALSE
+  )
+)
+
+#' CSS styles for the output of `ansi_html()`
+#'
+#'
+#'
+#' @param colors Whether or not to include colors. `FALSE` will not include
+#'   colors, `TRUE` or `8` will include eight colors (plus their bright
+#'   variants), `256` will include 256 colors.
+#' @param theme Character scalar, theme to use for the first eight colors
+#'   plus their bright variants. Terminals define these colors differently,
+#'   and cli includes a couple of examples. Sources of themes:
+#'   * https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
+#'   * iTerm2 builtin themes
+#'   * https://github.com/sindresorhus/iterm2-snazzy
+#' @return Named list of CSS declaration blocks, where the names are
+#'   CSS selectors. It has a `format()` and `print()` methods, which you
+#'   can use to write the output to a CSS or HTML file.
+#'
+#' @family ANSI to HTML conversion
+#' @export
+#' @examples
+#' ansi_html_style(colors = FALSE)
+#' ansi_html_style(colors = 8, theme = "iterm-snazzy")
+
+ansi_html_style <- function(colors = TRUE, theme = NULL) {
+  if (is.character(theme)) {
+    theme <- match.arg(theme)
+    theme <- as.list(ansi_themes[theme, ])
+  }
+
+  stopifnot(
+    isTRUE(colors) || identical(colors, FALSE) ||
+      (is_count(colors) && colors %in% c(8,256)),
+    is_string(theme) || is.list(theme) && length(theme) == 16
+  )
+
+  ret <- list(
+    ".ansi-bold"       = "{ font-weight: bold;             }",
+    # .ansi-faint ???
+    ".ansi-italic"     = "{ font-style: italic;            }",
+    ".ansi-underline"  = "{ text-decoration: underline;    }",
+    ".ansi-blink"      = "{ text-decoration: blink;        }",
+    # .ansi-inverse ???
+    ".ansi-hide"       = "{ visibility: hidden;            }",
+    ".ansi-crossedout" = "{ text-decoration: line-through; }"
+  )
+
+  if (!identical(colors, FALSE)) {
+    fg <- structure(
+      names = paste0(".ansi-color-", 0:15),
+      paste0("{ color: ", theme, " }")
+    )
+    bg <- structure(
+      names = paste0(".ansi-bg-color-", 0:15),
+      paste0("{ background-color: ", theme, " }")
+    )
+    ret <- c(ret, fg, bg)
+  }
+
+  if (isTRUE(colors) || colors == 256) {
+    grid <- expand.grid(r = 0:5, g = 0:5, b = 0:5)
+    num <- 16 + 36 * grid$r + 6 * grid$g + grid$b
+    cols <- grDevices::rgb(grid$r, grid$g, grid$b, maxColorValue = 5)
+    fg256 <- structure(
+      names = paste0(".ansi-color-", num),
+      paste0("{ color: ", tolower(cols), " }")
+    )
+    bg256 <- structure(
+      names = paste0(".ansi-bg-color-", num),
+      paste0("{ background-color: ", tolower(cols), " }")
+    )
+    gr <- seq(1, 24)
+    grcols <- grDevices::rgb(gr, gr, gr, maxColorValue = 25)
+    fggrey <- structure(
+      names = paste0(".ansi-color-", 232:255),
+      paste0("{ color: ", tolower(grcols), " }")
+    )
+    bggrey <- structure(
+      names = paste0(".ansi-bg-color-", 232:255),
+      paste0("{ background-color: ", tolower(grcols), " }")
+    )
+    ret <- c(ret, fg256, fggrey, bg256, bggrey)
+  }
+
+  class(ret) <- "cli_ansi_html_style"
+  ret
+}
+
+# This avoids duplication, but messes up the source ref of the function...
+formals(ansi_html_style)$theme <- c("vscode", setdiff(rownames(ansi_themes), "vscode"))
+attr(body(ansi_html_style), "srcref") <- NULL
+attr(body(ansi_html_style), "wholeSrcref") <- NULL
+attr(body(ansi_html_style), "srcfile") <- NULL
+
+#' @export
+
+format.cli_ansi_html_style <- function(x, ...) {
+  paste0(format(names(x)), " ", x)
+}
+
+#' @export
+
+print.cli_ansi_html_style <- function(x, ...) {
+  cat(format(x, ...), sep = "\n")
 }

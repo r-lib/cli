@@ -31,8 +31,8 @@
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
     Error <rlang_error>
-      [1m[22m[1m[1m[30m[47m[1m[30m[47m`n`[47m[30m[1m[49m[39m must be a numeric vector[1m[22m
-      [31mx[39m You've supplied a [34m[34m<character>[34m[39m vector.
+      [1m[22m[1m[1m[1m[30m[47m`n`[49m[39m[1m must be a numeric vector[1m[22m
+      [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
 
@@ -81,8 +81,8 @@
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
     Error <rlang_error>
-      [1m[22m[1m[1m[30m[47m[1m[30m[47m`n`[47m[30m[1m[49m[39m must be a numeric vector[1m[22m
-      [31m✖[39m You've supplied a [34m[34m<character>[34m[39m vector.
+      [1m[22m[1m[1m[1m[30m[47m`n`[49m[39m[1m must be a numeric vector[1m[22m
+      [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
 
@@ -127,8 +127,8 @@
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
     Warning <warning>
-      [1m[22m[1m[1m[30m[47m[1m[30m[47m`n`[47m[30m[1m[49m[39m must be a numeric vector[1m[22m
-      [31mx[39m You've supplied a [34m[34m<character>[34m[39m vector.
+      [1m[22m[1m[1m[1m[30m[47m`n`[49m[39m[1m must be a numeric vector[1m[22m
+      [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
 
@@ -173,8 +173,8 @@
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
     Warning <warning>
-      [1m[22m[1m[1m[30m[47m[1m[30m[47m`n`[47m[30m[1m[49m[39m must be a numeric vector[1m[22m
-      [31m✖[39m You've supplied a [34m[34m<character>[34m[39m vector.
+      [1m[22m[1m[1m[1m[30m[47m`n`[49m[39m[1m must be a numeric vector[1m[22m
+      [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
 
@@ -225,8 +225,8 @@
     Message <cliMessage>
       
     Message <message>
-      [1m[22m[30m[47m[30m[47m`n`[47m[30m[49m[39m must be a numeric vector
-      [31mx[39m You've supplied a [34m[34m<character>[34m[39m vector.
+      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
 
@@ -279,8 +279,8 @@
     Message <cliMessage>
       
     Message <message>
-      [1m[22m[30m[47m[30m[47m`n`[47m[30m[49m[39m must be a numeric vector
-      [31m✖[39m You've supplied a [34m[34m<character>[34m[39m vector.
+      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
 

@@ -6,3 +6,7 @@ is_yes <- function(x) {
 format_iso_8601 <- function(p) {
   format(p, "%Y-%m-%dT%H:%M:%S+00:00")
 }
+
+has_packages <- function(pkgs) {
+  all(vapply(pkgs, requireNamespace, logical(1), quietly = TRUE))
+}

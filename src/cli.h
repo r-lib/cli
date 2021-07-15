@@ -9,6 +9,7 @@
 SEXP clic_tty_size();
 SEXP clic_ansi_simplify(SEXP x);
 SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
+SEXP clic_ansi_html(SEXP x);
 
 SEXP clic_utf8_display_width(SEXP x);
 

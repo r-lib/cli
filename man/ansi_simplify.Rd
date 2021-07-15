@@ -9,6 +9,9 @@ ansi_simplify(x)
 \arguments{
 \item{x}{Input string}
 }
+\value{
+Simplified \code{ansi_string} vector.
+}
 \description{
 It creates an equivalent, but possibly shorter ANSI styled string, by
 removing duplicate and empty tags.
