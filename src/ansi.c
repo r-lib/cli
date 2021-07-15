@@ -399,6 +399,10 @@ typedef int (*clic__tag_callback_t)(const char *param,
                                    const char *intermed,
                                    const char *end,
                                    void *data);
+typedef int (*clic__tag_callback_t)(const char *param,
+                                   const char *intermed,
+                                   const char *end,
+                                   void *data);
 typedef int (*clic__text_callback_t)(const char *str,
                                       const char *end,
                                       void *data);
@@ -408,7 +412,8 @@ typedef int (*clic__end_callback_t)(SEXP rstr,
 
 void clic__ansi_iterator(SEXP sx,
                          clic__start_callback_t start_cb,
-                         clic__tag_callback_t tag_cb,
+                         clic__tag_callback_t sgr_cb,
+                         clic__tag_callback_t csi_cb,
                          clic__text_callback_t text_cb,
                          clic__end_callback_t end_cb,
                          void *data) {
@@ -433,15 +438,19 @@ void clic__ansi_iterator(SEXP sx,
         while (*s_intermed >= 0x30 && *s_intermed <= 0x3f) s_intermed++;
         s_end = s_intermed;
         while (*s_end >= 0x20 && *s_end <= 0x2f) s_end++;
-        if (*s_end == 'm') {
-          if (s_start > shaft && text_cb) {
-            if (text_cb(shaft, s_start, data)) goto end;
-          }
-          if (tag_cb) {
-            if (tag_cb(s_param, s_intermed, s_end, data)) goto end;
-          }
-          x = shaft = s_end + 1;
+        if (s_start > shaft && text_cb) {
+          if (text_cb(shaft, s_start, data)) goto end;
         }
+        if (*s_end == 'm') {
+          if (sgr_cb) {
+            if (sgr_cb(s_param, s_intermed, s_end, data)) goto end;
+          }
+        } else {
+          if (csi_cb) {
+            if (csi_cb(s_param, s_intermed, s_end, data)) goto end;
+          }
+        }
+        shaft = s_end + 1;
         x = *s_end ? s_end + 1 : s_end;
       } else {
         x++;
@@ -464,6 +473,7 @@ struct simplify_data {
   R_xlen_t done;
   size_t num_tags;
   SEXP result;
+  char keep_csi;
 };
 
 static int simplify_cb_start(const char *str, void *vdata) {
@@ -474,13 +484,27 @@ static int simplify_cb_start(const char *str, void *vdata) {
   return 0;
 }
 
-static int simplify_cb_tag(const char *param,
+static int simplify_cb_sgr(const char *param,
                            const char *intermed,
                            const char *end,
                            void *vdata) {
   struct simplify_data *data = vdata;
   data->num_tags ++;
   clic__ansi_update_state(param, intermed, end, &data->buffer, &data->state);
+  return 0;
+}
+
+static int simplify_cb_csi(const char *param,
+                           const char *intermed,
+                           const char *end,
+                           void *vdata) {
+  struct simplify_data *data = vdata;
+  if (data->keep_csi) {
+    clic__buffer_push_piece(&data->buffer, param - 2, end + 1);
+  } else {
+    /* Need to count, to avoid a verbatim STRSXP copy */
+    data->num_tags ++;
+  }
   return 0;
 }
 
@@ -518,17 +542,19 @@ static int simplify_cb_end(SEXP rstr,
   return 0;
 }
 
-SEXP clic_ansi_simplify(SEXP sx) {
+SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
   struct simplify_data data;
   memset(&data.state, 0, sizeof(data.state));
   clic__buffer_init(&data.buffer);
   data.done = 0;
   data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
+  data.keep_csi = LOGICAL(keep_csi)[0];
 
   clic__ansi_iterator(
     sx,
     simplify_cb_start,
-    simplify_cb_tag,
+    simplify_cb_sgr,
+    simplify_cb_csi,
     simplify_cb_text,
     simplify_cb_end,
     &data
@@ -573,7 +599,7 @@ static int substr_cb_start(const char *str, void *vdata) {
   return 0;
 }
 
-static int substr_cb_tag(const char *param,
+static int substr_cb_sgr(const char *param,
                          const char *intermed,
                          const char *end,
                          void *vdata) {
@@ -650,7 +676,8 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
   clic__ansi_iterator(
     sx,
     substr_cb_start,
-    substr_cb_tag,
+    substr_cb_sgr,
+    NULL,
     substr_cb_text,
     substr_cb_end,
     &data
@@ -683,6 +710,7 @@ struct html_data {
   R_xlen_t done;
   SEXP result;
   char had_tags;
+  char keep_csi;
 };
 
 #define EMITS1(s) do {                            \
@@ -785,12 +813,23 @@ static int html_cb_start(const char *str, void *vdata) {
   return 0;
 }
 
-static int html_cb_tag(const char *param,
+static int html_cb_sgr(const char *param,
                        const char *intermed,
                        const char *end,
                        void *vdata) {
   struct html_data *data = vdata;
   clic__ansi_update_state(param, intermed, end, &data->buffer, &data->state);
+  return 0;
+}
+
+static int html_cb_csi(const char *param,
+                       const char *intermed,
+                       const char *end,
+                       void *vdata) {
+  struct html_data *data = vdata;
+  if (data->keep_csi) {
+    clic__buffer_push_piece(&data->buffer, param - 2, end + 1);
+  }
   return 0;
 }
 
@@ -823,17 +862,19 @@ static int html_cb_end(SEXP rstr,
   return 0;
 }
 
-SEXP clic_ansi_html(SEXP sx) {
+SEXP clic_ansi_html(SEXP sx, SEXP keep_csi) {
   struct html_data data;
   memset(&data.state, 0, sizeof(data.state));
   clic__buffer_init(&data.buffer);
   data.done = 0;
   data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
+  data.keep_csi = LOGICAL(keep_csi)[0];
 
   clic__ansi_iterator(
     sx,
     html_cb_start,
-    html_cb_tag,
+    html_cb_sgr,
+    html_cb_csi,
     html_cb_text,
     html_cb_end,
     &data

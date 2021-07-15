@@ -32,9 +32,9 @@ static const R_CallMethodDef callMethods[]  = {
   CLEANCALL_METHOD_RECORD,
 
   { "clic_tty_size",       (DL_FUNC) clic_tty_size,       0 },
-  { "clic_ansi_simplify",  (DL_FUNC) clic_ansi_simplify,  1 },
+  { "clic_ansi_simplify",  (DL_FUNC) clic_ansi_simplify,  2 },
   { "clic_ansi_substr",    (DL_FUNC) clic_ansi_substr,    3 },
-  { "clic_ansi_html",      (DL_FUNC) clic_ansi_html,      1 },
+  { "clic_ansi_html",      (DL_FUNC) clic_ansi_html,      2 },
 
   { "clic_utf8_display_width", (DL_FUNC) clic_utf8_display_width, 1 },
 

@@ -702,13 +702,16 @@ ansi_convert <- function(x, converter, ...) {
 #' removing duplicate and empty tags.
 #'
 #' @param x Input string
+#' @param csi What to do with non-SGR ANSI sequences, either `"keep"`,
+#'   or `"drop"` them.
 #' @return Simplified `ansi_string` vector.
 #'
 #' @export
 
-ansi_simplify <- function(x) {
+ansi_simplify <- function(x, csi = c("keep", "drop")) {
   if (!is.character(x)) x <- as.character(x)
-  .Call(clic_ansi_simplify, x)
+  csi <- match.arg(csi)
+  .Call(clic_ansi_simplify, x, csi == "keep")
 }
 
 #' Convert ANSI styled text to HTML
@@ -716,6 +719,8 @@ ansi_simplify <- function(x) {
 #' @param x Input character vector.
 #' @param escape_reserved Whether to escape characters that are reserved
 #'   in HTML (`&`, `<` and `>`).
+#' @param csi What to do with non-SGR ANSI sequences, either `"keep"`,
+#'   or `"drop"` them.
 #' @return Character vector of HTML.
 #'
 #' @family ANSI to HTML conversion
@@ -736,14 +741,15 @@ ansi_simplify <- function(x) {
 #'
 #' if (interactive()) htmltools::html_print(page)
 
-ansi_html <- function(x, escape_reserved = TRUE) {
+ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
   if (!is.character(x)) x <- as.character(x)
+  csi <- match.arg(csi)
   if (escape_reserved) {
     x <- gsub("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
     x <- gsub("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
     x <- gsub(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
   }
-  .Call(clic_ansi_html, x)
+  .Call(clic_ansi_html, x, csi == "keep")
 }
 
 ansi_themes <- rbind(

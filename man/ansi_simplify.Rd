@@ -4,10 +4,13 @@
 \alias{ansi_simplify}
 \title{Simplify ANSI styling tags}
 \usage{
-ansi_simplify(x)
+ansi_simplify(x, csi = c("keep", "drop"))
 }
 \arguments{
 \item{x}{Input string}
+
+\item{csi}{What to do with non-SGR ANSI sequences, either \code{"keep"},
+or \code{"drop"} them.}
 }
 \value{
 Simplified \code{ansi_string} vector.

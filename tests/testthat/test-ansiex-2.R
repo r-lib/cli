@@ -108,3 +108,22 @@ test_that("simplify w/o tags", {
     expect_equal(ansi_simplify(c[[1]]), ansi_string(c[[2]]))
   }  
 })
+
+test_that("CSI sequences", {
+  expect_equal(
+    ansi_simplify("foo\033[10Abar", csi = "drop"),
+    ansi_string("foobar")
+  )
+  expect_equal(
+    ansi_simplify("\033[1mfoo\033[0m\033[10Abar", csi = "drop"),
+    ansi_string("\033[1mfoo\033[22mbar")
+  )
+  expect_equal(
+    ansi_simplify("foo\033[10Abar", csi = "keep"),
+    ansi_string("foo\033[10Abar")
+  )
+  expect_equal(
+    ansi_simplify("\033[1mfoo\033[0m\033[10Abar", csi = "keep"),
+    ansi_string("\033[1mfoo\033[10A\033[22mbar")
+  )
+})

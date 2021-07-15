@@ -4,13 +4,16 @@
 \alias{ansi_html}
 \title{Convert ANSI styled text to HTML}
 \usage{
-ansi_html(x, escape_reserved = TRUE)
+ansi_html(x, escape_reserved = TRUE, csi = c("drop", "keep"))
 }
 \arguments{
 \item{x}{Input character vector.}
 
 \item{escape_reserved}{Whether to escape characters that are reserved
 in HTML (\code{&}, \code{<} and \code{>}).}
+
+\item{csi}{What to do with non-SGR ANSI sequences, either \code{"keep"},
+or \code{"drop"} them.}
 }
 \value{
 Character vector of HTML.
@@ -22,7 +25,6 @@ Convert ANSI styled text to HTML
 \dontshow{if (cli:::has_packages(c("prettycode", "htmltools", "withr"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ## Syntax highlight the source code of an R function with ANSI tags,
 ## and export it to a HTML file.
-
 code <- withr::with_options(
   list(ansi.num_colors = 256),
   prettycode::highlight(format(ansi_html))
