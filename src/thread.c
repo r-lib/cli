@@ -50,8 +50,12 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
       clic_thread_func,
       /* arg = */ NULL
     );
-    /* detaching makes it easier to clean up resources */
+    /* detaching makes it easier to clean up resources
+     * On Windows this causes issues and the thread cannot
+     * be cancelled, so we don't do it there. */
+#ifndef _WIN32
     if (!ret) pthread_detach(tick_thread);
+#endif
   } else {
     cli__reset = 0;
   }
@@ -62,7 +66,7 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
 SEXP clic_start_thread(SEXP pkg, SEXP ticktime, SEXP speedtime) {
   R_PreserveObject(pkg);
   cli_pkgenv = pkg;
- 
+
   int ret = cli__start_thread(ticktime, speedtime);
   if (ret) warning("Cannot create cli tick thread");
 
