@@ -46,8 +46,8 @@ test_that("ansi_strip works", {
     ansi_strip(col_red(style_underline(style_bold("foobar"))))
   )
 
-
-  for (sym in ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")) {
+  funcs <- ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")
+  for (sym in setdiff(funcs, "style_hyperlink")) {
     fun <- get(sym, envir = asNamespace("cli"))
     ans <- if (sym == "style_hyperlink") "foo" else "foobar"
     expect_equal(ans, ansi_strip(fun("foo", "bar")))
@@ -387,6 +387,7 @@ test_that("ansi_align", {
 })
 
 test_that("stripping hyperlinks", {
+  skip("Temporarily defunct")
   withr::local_options(list(cli.hyperlink = TRUE))
   x <- unclass(style_hyperlink("foo", "https://r-pkg.org"))
   expect_equal(

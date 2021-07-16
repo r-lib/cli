@@ -951,3 +951,107 @@ SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi) {
   UNPROTECT(1);
   return data.result;
 }
+
+/* ---------------------------------------------------------------------- */
+
+struct strip_data {
+  struct cli_buffer buffer;
+  R_xlen_t done;
+  size_t num_tags;
+  SEXP result;
+  char sgr;
+  char csi;
+};
+
+static int strip_cb_start(const char *str, void *vdata) {
+  struct strip_data *data = vdata;
+  data->num_tags = 0;
+  clic__buffer_reset(&data->buffer);
+  return 0;
+}
+
+static int strip_cb_sgr(const char *param,
+                        const char *intermed,
+                        const char *end,
+                        void *vdata) {
+  struct strip_data *data = vdata;
+  if (data->sgr) {
+    data->num_tags ++;
+  } else {
+    clic__buffer_push_piece(&data->buffer, param, end);
+  }
+  return 0;
+}
+
+static int strip_cb_csi(const char *param,
+                        const char *intermed,
+                        const char *end,
+                        void *vdata) {
+  struct strip_data *data = vdata;
+  if (data->csi) {
+    data->num_tags ++;
+  } else {
+    clic__buffer_push_piece(&data->buffer, param, end);
+  }
+  return 0;
+}
+
+static int strip_cb_text(const char *str,
+                        const char *end,
+                        void *vdata) {
+  struct strip_data *data = vdata;
+  clic__buffer_push_piece(&data->buffer, str, end);
+  return 0;
+}
+
+static int strip_cb_end(SEXP rstr,
+                          const char *str,
+                          void *vdata) {
+  struct strip_data *data = vdata;
+  if (data->num_tags == 0) {
+    SET_STRING_ELT(data->result, data->done, rstr);
+
+  } else {
+    SET_STRING_ELT(
+      data->result,
+      data->done,
+      Rf_mkCharLenCE(
+        clic__buffer_get(&data->buffer),
+        clic__buffer_size(&data->buffer),
+        CE_NATIVE
+      )
+    );
+  }
+
+  data->done ++;
+  return 0;
+}
+
+/* TODO: this would benefit from a non-iterator implementation, that
+   would be much faster. */
+
+/* TODO: strip hyperlinks */
+
+SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi) {
+  struct strip_data data;
+  clic__buffer_init(&data.buffer);
+  data.done = 0;
+  data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
+  data.sgr = LOGICAL(sgr)[0];
+  data.csi = LOGICAL(csi)[0];
+
+  clic__ansi_iterator(
+    sx,
+    strip_cb_start,
+    strip_cb_sgr,
+    strip_cb_csi,
+    strip_cb_text,
+    strip_cb_end,
+    &data
+  );
+
+  clic__buffer_free(&data.buffer);
+
+  UNPROTECT(1);
+  return data.result;
+}

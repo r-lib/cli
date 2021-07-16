@@ -57,17 +57,23 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
 #' from the result.
 #'
 #' @param string The input string.
-#' @return The cleaned up string.
+#' @param sgr Whether to remove for SGR (styling) control sequences.
+#' @param csi Whether to remove for non-SGR control sequences.
+#' @return The cleaned up string. Note that `ansi_strip()` always drops
+#' the `ansi_string` class, wven if `sgr` and sci` are `FALSE`.
 #'
 #' @family low level ANSI functions
 #' @export
 #' @examples
 #' ansi_strip(col_red("foobar")) == "foobar"
 
-ansi_strip <- function(string) {
+ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
   if (!is.character(string)) string <- as.character(string)
-
-  clean <- gsub(ansi_regex(), "", string, perl = TRUE)
+  stopifnot(
+    is_flag(sgr),
+    is_flag(csi)
+  )
+  clean <- .Call(clic_ansi_strip, string, sgr, csi)
   class(clean) <- setdiff(class(clean), "ansi_string")
   clean
 }
