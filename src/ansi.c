@@ -455,6 +455,8 @@ void clic__ansi_iterator(SEXP sx,
       } else {
         x++;
       }
+      /* This is not needed, but slightly faster this way */
+      while (*x != '\033' && *x != '\0') x++;
     }
 
     if (x > shaft && text_cb) text_cb(shaft, x, data);
