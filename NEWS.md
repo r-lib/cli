@@ -1,5 +1,6 @@
 # cli (development version)
 
+* `ansi_strtrim()` now correctly keeps `NA` values (#309).
 
 # cli 3.0.0
 
