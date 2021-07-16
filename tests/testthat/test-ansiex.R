@@ -26,9 +26,11 @@ test_that("ansi_has_any works", {
     cli.hyperlink = TRUE
   ))
   expect_false(ansi_has_any("foobar"))
-  for (sym in ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")) {
+  funcs <- ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")
+
+  for (sym in setdiff(funcs, "style_hyperlink")) {
     fun <- get(sym, envir = asNamespace("cli"))
-    expect_true(ansi_has_any(fun("foo", "bar")))
+    expect_true(ansi_has_any(fun("foo", "bar")), label = sym)
   }
 })
 

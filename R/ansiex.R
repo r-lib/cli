@@ -30,6 +30,8 @@ ansi_regex <- function() {
 #'
 #' @param string The string to check. It can also be a character
 #'   vector.
+#' @param sgr Whether to look for SGR (styling) control sequences.
+#' @param csi Whether to look for non-SGR control sequences.
 #' @return Logical vector, `TRUE` for the strings that have some
 #'   ANSI styling.
 #'
@@ -40,8 +42,13 @@ ansi_regex <- function() {
 #' ansi_has_any("foobar")
 #' ansi_has_any(col_red("foobar"))
 
-ansi_has_any <- function(string) {
-  grepl(ansi_regex(), string, perl = TRUE)
+ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
+  if (!is.character(string)) string <- as.character(string)
+  stopifnot(
+    is_flag(sgr),
+    is_flag(csi)
+  )
+  .Call(clic_ansi_has_any, string, sgr, csi)
 }
 
 #' Remove ANSI escape sequences from a string
@@ -58,6 +65,8 @@ ansi_has_any <- function(string) {
 #' ansi_strip(col_red("foobar")) == "foobar"
 
 ansi_strip <- function(string) {
+  if (!is.character(string)) string <- as.character(string)
+
   clean <- gsub(ansi_regex(), "", string, perl = TRUE)
   class(clean) <- setdiff(class(clean), "ansi_string")
   clean

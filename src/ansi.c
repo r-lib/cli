@@ -889,3 +889,70 @@ SEXP clic_ansi_html(SEXP sx, SEXP keep_csi) {
 }
 
 /* ---------------------------------------------------------------------- */
+
+struct has_any_data {
+  R_xlen_t done;
+  SEXP result;
+  char sgr;
+  char csi;
+  char has;
+};
+
+static int has_any_cb_sgr(const char *param,
+                          const char *intermed,
+                          const char *end,
+                          void *vdata) {
+  struct has_any_data *data = vdata;
+  if (data->sgr) {
+    data->has = 1;
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+static int has_any_cb_csi(const char *param,
+                          const char *intermed,
+                          const char *end,
+                          void *vdata) {
+  struct has_any_data *data = vdata;
+  if (data->csi) {
+    data->has = 1;
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+
+static int has_any_cb_end(SEXP rstr,
+                          const char *str,
+                          void *vdata) {
+  struct has_any_data *data = vdata;
+  LOGICAL(data->result)[data->done] = data->has;
+  data->has = 0;
+  data->done ++;
+  return 0;
+}
+
+SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi) {
+  struct has_any_data data;
+  data.done = 0;
+  data.has = 0;
+  data.result = PROTECT(allocVector(LGLSXP, XLENGTH(sx)));
+  data.sgr = LOGICAL(sgr)[0];
+  data.csi = LOGICAL(csi)[0];
+
+  clic__ansi_iterator(
+    sx,
+    /* cb_start = */ 0,
+    has_any_cb_sgr,
+    has_any_cb_csi,
+    /* cb_text = */ 0,
+    has_any_cb_end,
+    &data
+  );
+
+  UNPROTECT(1);
+  return data.result;
+}

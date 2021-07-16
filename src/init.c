@@ -35,6 +35,7 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_ansi_simplify",  (DL_FUNC) clic_ansi_simplify,  2 },
   { "clic_ansi_substr",    (DL_FUNC) clic_ansi_substr,    3 },
   { "clic_ansi_html",      (DL_FUNC) clic_ansi_html,      2 },
+  { "clic_ansi_has_any",   (DL_FUNC) clic_ansi_has_any,   3 },
 
   { "clic_utf8_display_width", (DL_FUNC) clic_utf8_display_width, 1 },
 

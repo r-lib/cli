@@ -127,3 +127,24 @@ test_that("CSI sequences", {
     ansi_string("\033[1mfoo\033[10A\033[22mbar")
   )
 })
+
+test_that("ansi_has_any", {
+  T <- TRUE
+  F <- FALSE
+  expect_false(ansi_has_any("foobar",                sgr = T, csi = T))
+  expect_true (ansi_has_any("\033[1mfoobar",         sgr = T, csi = T))
+  expect_true (ansi_has_any("\033[10Afoobar",        sgr = T, csi = T))
+  expect_true (ansi_has_any("\033[10A\033[1mfoobar", sgr = T, csi = T))
+  expect_false(ansi_has_any("foobar",                sgr = T, csi = F))
+  expect_true (ansi_has_any("\033[1mfoobar",         sgr = T, csi = F))
+  expect_false(ansi_has_any("\033[10Afoobar",        sgr = T, csi = F))
+  expect_true (ansi_has_any("\033[10A\033[1mfoobar", sgr = T, csi = F))
+  expect_false(ansi_has_any("foobar",                sgr = F, csi = T))
+  expect_false(ansi_has_any("\033[1mfoobar",         sgr = F, csi = T))
+  expect_true (ansi_has_any("\033[10Afoobar",        sgr = F, csi = T))
+  expect_true (ansi_has_any("\033[10A\033[1mfoobar", sgr = F, csi = T))
+  expect_false(ansi_has_any("foobar",                sgr = F, csi = F))
+  expect_false(ansi_has_any("\033[1mfoobar",         sgr = F, csi = F))
+  expect_false(ansi_has_any("\033[10Afoobar",        sgr = F, csi = F))
+  expect_false(ansi_has_any("\033[10A\033[1mfoobar", sgr = F, csi = F))
+})
