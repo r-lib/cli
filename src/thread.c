@@ -14,6 +14,7 @@ volatile int* cli_timer_flag = &cli__timer_flag;
 struct timespec cli__tick_ts;
 double cli_speed_time = 1.0;
 volatile int cli__reset = 1;
+static int unloaded = 0;
 
 void* clic_thread_func(void *arg) {
 #ifndef _WIN32
@@ -49,6 +50,12 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
       clic_thread_func,
       /* arg = */ NULL
     );
+    /* detaching makes it easier to clean up resources
+     * On Windows this causes issues and the thread cannot
+     * be cancelled, so we don't do it there. */
+#ifndef _WIN32
+    if (!ret) pthread_detach(tick_thread);
+#endif
   } else {
     cli__reset = 0;
   }
@@ -59,7 +66,7 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
 SEXP clic_start_thread(SEXP pkg, SEXP ticktime, SEXP speedtime) {
   R_PreserveObject(pkg);
   cli_pkgenv = pkg;
- 
+
   int ret = cli__start_thread(ticktime, speedtime);
   if (ret) warning("Cannot create cli tick thread");
 
@@ -79,10 +86,6 @@ int cli__kill_thread() {
 	 not happen. */
       warning("Could not cancel cli thread"); // __NO_COVERAGE__
       return ret;                             // __NO_COVERAGE__
-    } else {
-      /* Wait for it to finish. Otherwise releasing the flag
-	 is risky because the tick thread might just use it. */
-      ret = pthread_join(tick_thread, NULL);
     }
   }
 
@@ -94,6 +97,7 @@ int cli__kill_thread() {
 #endif
 
 SEXP clic_stop_thread() {
+  if (unloaded) return R_NilValue;
   int ret = 1;
 #if defined(__clang__) && defined(__has_feature)
 # if __has_feature(address_sanitizer)
@@ -107,6 +111,8 @@ SEXP clic_stop_thread() {
   if (!ret) {
     R_ReleaseObject(cli_pkgenv);
   }
+
+  unloaded = 1;
 
   return R_NilValue;
 }
