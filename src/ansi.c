@@ -471,7 +471,6 @@ void clic__ansi_iterator(SEXP sx,
 struct simplify_data {
   struct cli_ansi_state state;
   struct cli_buffer buffer;
-  const char *str;
   R_xlen_t done;
   size_t num_tags;
   SEXP result;
@@ -480,7 +479,6 @@ struct simplify_data {
 
 static int simplify_cb_start(const char *str, void *vdata) {
   struct simplify_data *data = vdata;
-  data->str = str;
   data->num_tags = 0;
   clic__buffer_reset(&data->buffer);
   return 0;
@@ -585,7 +583,6 @@ SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
 struct substr_data {
   struct cli_ansi_state state;
   struct cli_buffer buffer;
-  const char *str;
   R_xlen_t done;
   SEXP result;
   int *start;
@@ -595,7 +592,6 @@ struct substr_data {
 
 static int substr_cb_start(const char *str, void *vdata) {
   struct substr_data *data = vdata;
-  data->str = str;
   data->pos = 1;
   clic__buffer_reset(&data->buffer);
   return 0;
@@ -810,7 +806,6 @@ static void clic__html_end(struct html_data *data) {
 
 static int html_cb_start(const char *str, void *vdata) {
   struct html_data *data = vdata;
-  data->str = str;
   clic__buffer_reset(&data->buffer);
   return 0;
 }
