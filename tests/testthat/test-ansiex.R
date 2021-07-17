@@ -518,7 +518,7 @@ test_that("ansi_strwrap newlines", {
   )
 })
 
-test_that("ansi_strtrim", {
+test_that_cli(configs = c("plain", "ansi"), "ansi_strtrim", {
   withr::local_options(c(cli.unicode = FALSE))
   setup_unicode_width_fix()
   cases <- list(
@@ -530,7 +530,8 @@ test_that("ansi_strtrim", {
     list(
       strrep("\u231A", 6),
       ansi_string(paste0(strrep("\u231A", 3), "..."))),
-    list(col_red("1"), col_red("1"))
+    list(col_red("1"), col_red("1")),
+    list(c("foo", NA, col_red("bar")), ansi_string(c("foo", NA, col_red("bar"))))
   )
 
   for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
