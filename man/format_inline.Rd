@@ -4,10 +4,12 @@
 \alias{format_inline}
 \title{Format and returns a line of text}
 \usage{
-format_inline(...)
+format_inline(..., .envir = parent.frame())
 }
 \arguments{
 \item{...}{Passed to \code{\link[=cli_text]{cli_text()}}.}
+
+\item{.envir}{Environment to evaluate the expressions in.}
 }
 \value{
 Character scalar, the formatted string.
