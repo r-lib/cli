@@ -18,10 +18,10 @@ test_that("RGB colors", {
   cases <- list(
     list("\033[38;5;123mfoo\033[39m", "\033[38;5;123mfoo\033[39m"),
     list("\033[38;2;1;2;3mfoo\033[39m", "\033[38;2;1;2;3mfoo\033[39m"),
-    list("\033[38;2;mfoo\033[39m", "\033[38;2;0;0;0mfoo\033[39m"), 
+    list("\033[38;2;mfoo\033[39m", "\033[38;2;0;0;0mfoo\033[39m"),
     list("\033[48;5;123mfoo\033[49m", "\033[48;5;123mfoo\033[49m"),
     list("\033[48;2;1;2;3mfoo\033[49m", "\033[48;2;1;2;3mfoo\033[49m"),
-    list("\033[48;2;mfoo\033[49m", "\033[48;2;0;0;0mfoo\033[49m"), 
+    list("\033[48;2;mfoo\033[49m", "\033[48;2;0;0;0mfoo\033[49m"),
     ## bad tags are skipped completely
     list("\033[48;4;12mfoo\033[49m", "foo")
   )
@@ -97,7 +97,7 @@ test_that("unknown tags are kept as is, and [0m is also kept for then", {
   )
   for (c in cases) {
     expect_equal(ansi_simplify(c[[1]]), ansi_string(c[[2]]))
-  }  
+  }
 })
 
 test_that("simplify w/o tags", {
@@ -106,7 +106,7 @@ test_that("simplify w/o tags", {
   )
   for (c in cases) {
     expect_equal(ansi_simplify(c[[1]]), ansi_string(c[[2]]))
-  }  
+  }
 })
 
 test_that("CSI sequences", {
@@ -147,4 +147,30 @@ test_that("ansi_has_any", {
   expect_false(ansi_has_any("\033[1mfoobar",         sgr = F, csi = F))
   expect_false(ansi_has_any("\033[10Afoobar",        sgr = F, csi = F))
   expect_false(ansi_has_any("\033[10A\033[1mfoobar", sgr = F, csi = F))
+})
+
+test_that("NA", {
+  T <- TRUE
+  F <- FALSE
+  s <- c("foo", NA, "bar", "\033[1mfoobar")
+
+  expect_equal(
+    ansi_simplify(s),
+    ansi_string(c("foo", NA, "bar", "\033[1mfoobar\033[22m"))
+  )
+  expect_equal(is.na(ansi_simplify(s)), c(F, T, F, F))
+
+  expect_equal(
+    ansi_substr(s, 1, 2),
+    ansi_string(c("fo", NA, "ba", "\033[1mfo\033[22m"))
+  )
+  expect_equal(is.na(ansi_substr(s, 1, 2)), c(F, T, F, F))
+
+  expect_snapshot(ansi_html(s))
+  expect_equal(is.na(ansi_html(s)), c(F, T, F, F))
+
+  expect_equal(ansi_has_any(s), c(F, NA, F, T))
+
+  expect_equal(ansi_strip(s), c("foo", NA, "bar", "foobar"))
+  expect_equal(is.na(ansi_strip(s)), c(F, T, F, F))
 })

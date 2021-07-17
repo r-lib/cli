@@ -393,7 +393,8 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
   state->old = state->new;
 }
 
-typedef int (*clic__start_callback_t)(const char *str,
+typedef int (*clic__start_callback_t)(SEXP rstr,
+                                      const char *str,
                                       void *data);
 typedef int (*clic__tag_callback_t)(const char *param,
                                    const char *intermed,
@@ -429,7 +430,8 @@ void clic__ansi_iterator(SEXP sx,
     const char *s_intermed;
     const char *s_end;
 
-    if (start_cb) if (start_cb(ox, data)) goto end;
+    if (start_cb) if (start_cb(str, ox, data)) goto end;
+    if (str == NA_STRING) goto end;
 
     while (*x != 0) {
       if (*x == '\033' && *(x + 1) == '[') {
@@ -477,7 +479,7 @@ struct simplify_data {
   char keep_csi;
 };
 
-static int simplify_cb_start(const char *str, void *vdata) {
+static int simplify_cb_start(SEXP rstr, const char *str, void *vdata) {
   struct simplify_data *data = vdata;
   data->num_tags = 0;
   clic__buffer_reset(&data->buffer);
@@ -590,11 +592,11 @@ struct substr_data {
   int pos;
 };
 
-static int substr_cb_start(const char *str, void *vdata) {
+static int substr_cb_start(SEXP rstr, const char *str, void *vdata) {
   struct substr_data *data = vdata;
   data->pos = 1;
   clic__buffer_reset(&data->buffer);
-  return 0;
+  return rstr == NA_STRING;
 }
 
 static int substr_cb_sgr(const char *param,
@@ -648,15 +650,19 @@ static int substr_cb_end(SEXP rstr,
   struct substr_data *data = vdata;
   memset(&data->state.new, 0, sizeof(struct cli_sgr_state));
   clic__state_update_buffer(&data->buffer, &data->state);
-  SET_STRING_ELT(
-    data->result,
-    data->done,
-    Rf_mkCharLenCE(
-      clic__buffer_get(&data->buffer),
-      clic__buffer_size(&data->buffer),
-      CE_NATIVE
-    )
-  );
+  if (rstr == NA_STRING) {
+    SET_STRING_ELT(data->result, data->done, rstr);
+  } else {
+    SET_STRING_ELT(
+      data->result,
+      data->done,
+      Rf_mkCharLenCE(
+        clic__buffer_get(&data->buffer),
+        clic__buffer_size(&data->buffer),
+        CE_NATIVE
+     )
+    );
+  }
 
   data->done++;
   return 0;
@@ -804,10 +810,10 @@ static void clic__html_end(struct html_data *data) {
   if (data->had_tags) EMITS("</span>");
 }
 
-static int html_cb_start(const char *str, void *vdata) {
+static int html_cb_start(SEXP rstr, const char *str, void *vdata) {
   struct html_data *data = vdata;
   clic__buffer_reset(&data->buffer);
-  return 0;
+  return rstr == NA_STRING;
 }
 
 static int html_cb_sgr(const char *param,
@@ -845,15 +851,19 @@ static int html_cb_end(SEXP rstr,
                        void *vdata) {
   struct html_data *data = vdata;
   memset(&data->state.new, 0, sizeof(data->state.new));
-  SET_STRING_ELT(
-    data->result,
-    data->done,
-    Rf_mkCharLenCE(
-      clic__buffer_get(&data->buffer),
-      clic__buffer_size(&data->buffer),
-      CE_NATIVE
-    )
-  );
+  if (rstr == NA_STRING) {
+    SET_STRING_ELT(data->result, data->done, rstr);
+  } else {
+    SET_STRING_ELT(
+      data->result,
+      data->done,
+      Rf_mkCharLenCE(
+        clic__buffer_get(&data->buffer),
+        clic__buffer_size(&data->buffer),
+        CE_NATIVE
+      )
+    );
+  }
 
   data->done++;
   return 0;
@@ -924,7 +934,11 @@ static int has_any_cb_end(SEXP rstr,
                           const char *str,
                           void *vdata) {
   struct has_any_data *data = vdata;
-  LOGICAL(data->result)[data->done] = data->has;
+  if (rstr == NA_STRING) {
+    LOGICAL(data->result)[data->done] = NA_LOGICAL;
+  } else {
+    LOGICAL(data->result)[data->done] = data->has;
+  }
   data->has = 0;
   data->done ++;
   return 0;
@@ -963,7 +977,7 @@ struct strip_data {
   char csi;
 };
 
-static int strip_cb_start(const char *str, void *vdata) {
+static int strip_cb_start(SEXP rstr, const char *str, void *vdata) {
   struct strip_data *data = vdata;
   data->num_tags = 0;
   clic__buffer_reset(&data->buffer);
