@@ -4,6 +4,7 @@
  */
 
 #include "charwidth.h"
+#include "graphbreak.h"
 #include "cli.h"
 #include "errors.h"
 
@@ -71,15 +72,221 @@ static int display_width_map[7] = {
   /* CHARWIDTH_EMOJI =     */ 2
 };
 
-/* Display width of a single code point */
+struct grapheme_iterator {
+  const uint8_t *nxt_ptr;
+  int32_t nxt_code;
+  int nxt_prop;
+  int nxt_cw;
+  const uint8_t *cnd;
+  int cnd_width;
+  char cnd_width_done;          /* -1: do not measure width */
+};
 
-int clic__utf8_display_width_char(const uint8_t **x) {
-  int32_t code;
-  utf8lite_decode_utf8(x, &code);
-  if (!UTF8LITE_IS_UNICODE(code)) {
-    R_THROW_ERROR("Invalid UTF-8 string");
+#define NEXT() do {                                             \
+    iter->cnd = iter->nxt_ptr;                                  \
+    if (*(iter->nxt_ptr) == '\0') {                             \
+      iter->nxt_prop = -1;                                      \
+    } else {                                                    \
+      utf8lite_decode_utf8(&iter->nxt_ptr, &iter->nxt_code);    \
+      iter->nxt_prop = graph_break(iter->nxt_code);             \
+    }                                                           \
+    if (iter->cnd_width_done >= 0) {                            \
+      if (iter->nxt_cw >= 0) {                                  \
+        if (!iter->cnd_width_done) {                            \
+          iter->cnd_width += display_width_map[iter->nxt_cw];   \
+          if (iter->nxt_cw == CHARWIDTH_EMOJI) {                \
+            iter->cnd_width_done = 1;                           \
+          }                                                     \
+        }                                                       \
+      }                                                         \
+      iter->nxt_cw = charwidth(iter->nxt_code);                 \
+    }                                                           \
+  } while (0)
+
+static void clic_utf8_graphscan_make(struct grapheme_iterator *iter,
+                                     const uint8_t *txt,
+                                     int width) {
+  iter->nxt_ptr = txt;
+  iter->nxt_cw = -1;
+  iter->cnd_width = 0;
+  iter->cnd_width_done = -1 * (width == 0);
+  NEXT();
+}
+
+static void clic_utf8_graphscan_next(struct grapheme_iterator *iter,
+                                     uint8_t **ptr,
+                                     int *width) {
+  if (ptr) *ptr = (uint8_t*) iter->cnd;
+
+ Start:
+  // GB2: Break at the end of text
+  if (iter->nxt_prop < 0) {
+    goto Break;
   }
-  return display_width_map[charwidth(code)];
+
+  switch (iter->nxt_prop) {
+  case GRAPH_BREAK_CR:
+    NEXT();
+    goto CR;
+
+  case GRAPH_BREAK_CONTROL:
+  case GRAPH_BREAK_LF:
+    // Break after controls
+    // GB4: (Newline | LF) +
+    NEXT();
+    goto Break;
+
+  case GRAPH_BREAK_L:
+    NEXT();
+    goto L;
+
+  case GRAPH_BREAK_LV:
+  case GRAPH_BREAK_V:
+    NEXT();
+    goto V;
+
+  case GRAPH_BREAK_LVT:
+  case GRAPH_BREAK_T:
+    NEXT();
+    goto T;
+
+  case GRAPH_BREAK_PREPEND:
+    NEXT();
+    goto Prepend;
+
+  case GRAPH_BREAK_EXTENDED_PICTOGRAPHIC:
+    NEXT();
+    goto Extended_Pictographic;
+
+  case GRAPH_BREAK_REGIONAL_INDICATOR:
+    NEXT();
+    goto Regional_Indicator;
+
+  case GRAPH_BREAK_EXTEND:
+  case GRAPH_BREAK_SPACINGMARK:
+  case GRAPH_BREAK_ZWJ:
+  case GRAPH_BREAK_OTHER:
+    NEXT();
+    goto MaybeBreak;
+  }
+
+  R_THROW_ERROR("internal error, unhandled grapheme break property");
+
+ CR:
+  // GB3: Do not break within CRLF
+  // GB4: Otherwise break after controls
+  if (iter->nxt_prop == GRAPH_BREAK_LF) {
+    NEXT();
+  }
+  goto Break;
+
+ L:
+  // GB6: Do not break Hangul syllable sequences.
+  switch (iter->nxt_prop) {
+  case GRAPH_BREAK_L:
+    NEXT();
+    goto L;
+
+  case GRAPH_BREAK_V:
+  case GRAPH_BREAK_LV:
+    NEXT();
+    goto V;
+
+  case GRAPH_BREAK_LVT:
+    NEXT();
+    goto T;
+
+  default:
+    goto MaybeBreak;
+  }
+
+
+ V:
+  // GB7: Do not break Hangul syllable sequences.
+  switch (iter->nxt_prop) {
+  case GRAPH_BREAK_V:
+    NEXT();
+    goto V;
+
+  case GRAPH_BREAK_T:
+    NEXT();
+    goto T;
+
+  default:
+    goto MaybeBreak;
+  }
+
+ T:
+  // GB8: Do not break Hangul syllable sequences.
+  switch (iter->nxt_prop) {
+  case GRAPH_BREAK_T:
+    NEXT();
+    goto T;
+
+  default:
+    goto MaybeBreak;
+  }
+
+ Prepend:
+  switch (iter->nxt_prop) {
+  case GRAPH_BREAK_CONTROL:
+  case GRAPH_BREAK_CR:
+  case GRAPH_BREAK_LF:
+    // GB5: break before controls
+    goto Break;
+
+  default:
+    // GB9b: do not break after Prepend characters.
+    goto Start;
+  }
+
+ Extended_Pictographic:
+  // GB9:  Do not break before extending characters
+  while (iter->nxt_prop == GRAPH_BREAK_EXTEND) {
+    NEXT();
+  }
+  // GB9: Do not break before ZWJ
+  if (iter->nxt_prop == GRAPH_BREAK_ZWJ) {
+    NEXT();
+    // GB11: Do not break within emoji modifier sequences
+    // or emoji zwj sequences.
+    if (iter->nxt_prop == GRAPH_BREAK_EXTENDED_PICTOGRAPHIC) {
+      NEXT();
+      goto Extended_Pictographic;
+    }
+  }
+  goto MaybeBreak;
+
+ Regional_Indicator:
+  // Do not break within emoji flag sequences. That is, do not break
+  // between regional indicator (RI) symbols if there is an odd number
+  // of RI characters before the break point
+  if (iter->nxt_prop == GRAPH_BREAK_REGIONAL_INDICATOR) {
+    // GB12/13: [^RI] RI * RI
+    NEXT();
+  }
+  goto MaybeBreak;
+
+ MaybeBreak:
+  // GB9: Do not break before extending characters or ZWJ.
+  // GB9a: Do not break before SpacingMark [extended grapheme clusters]
+  // GB999: Otherwise, break everywhere
+  switch (iter->nxt_prop) {
+  case GRAPH_BREAK_EXTEND:
+  case GRAPH_BREAK_SPACINGMARK:
+  case GRAPH_BREAK_ZWJ:
+    NEXT();
+    goto MaybeBreak;
+
+  default:
+    goto Break;
+  }
+
+ Break:
+  if (width) *width = iter->cnd_width;
+  iter->cnd_width = 0;
+  if (iter->cnd_width_done > 0) iter->cnd_width_done = 0;
+  return;
 }
 
 SEXP clic_utf8_display_width(SEXP x) {
@@ -92,15 +299,15 @@ SEXP clic_utf8_display_width(SEXP x) {
     if (x1 == NA_STRING) {
       pres[i] = NA_INTEGER;
     } else {
+      struct grapheme_iterator iter;
       const uint8_t *chr = (const uint8_t*) CHAR(x1);
-      int32_t code;
+      clic_utf8_graphscan_make(&iter, chr, /* width= */ 1);
       int len = 0;
-      while (*chr) {
-        utf8lite_decode_utf8(&chr, &code);
-        if (!UTF8LITE_IS_UNICODE(code)) {
-          R_THROW_ERROR("Invalid UTF-8 string in element %ld,", i + 1);
-        }
-        len += display_width_map[charwidth(code)];
+      int width;
+      while (iter.nxt_prop != -1) {
+        uint8_t *current = 0;
+        clic_utf8_graphscan_next(&iter, &current, &width);
+        len += width;
       }
       pres[i] = len;
     }
