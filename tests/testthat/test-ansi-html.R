@@ -75,3 +75,12 @@ test_that("CSI", {
     "<span class=\"ansi ansi-bold\">foo</span>\033[10Abar"
   )
 })
+
+test_that("ansi_html_style", {
+  expect_snapshot(
+    ansi_html_style(colors = 8)
+  )
+  expect_snapshot(
+    ansi_html_style(colors = 256, theme = "ubuntu")
+  )
+})

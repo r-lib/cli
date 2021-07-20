@@ -126,6 +126,14 @@ test_that("CSI sequences", {
     ansi_simplify("\033[1mfoo\033[0m\033[10Abar", csi = "keep"),
     ansi_string("\033[1mfoo\033[10A\033[22mbar")
   )
+  expect_equal(
+    ansi_strip("\033[1mfoo\033[10Abar\033[0m", csi = TRUE, sgr = FALSE),
+    "\033[1mfoobar\033[0m"
+  )
+  expect_equal(
+    ansi_strip("\033[1mfoo\033[10Abar\033[0m", csi = FALSE, sgr = TRUE),
+    "foo\033[10Abar"
+  )
 })
 
 test_that("ansi_has_any", {
@@ -173,4 +181,21 @@ test_that("NA", {
 
   expect_equal(ansi_strip(s), c("foo", NA, "bar", "foobar"))
   expect_equal(is.na(ansi_strip(s)), c(F, T, F, F))
+})
+
+test_that("strrep", {
+  expect_equal(strrep(character(), 5), character())
+  expect_equal(strrep("a", 5), "aaaaa")
+})
+
+test_that("convert to character", {
+  expect_false(ansi_has_any(123))
+  expect_equal(ansi_strip(123), "123")
+  expect_equal(ansi_substr(1234, 2, 3), ansi_string("23"))
+  expect_equal(ansi_substring(1234, 2, 3), ansi_string("23"))
+  expect_equal(ansi_strsplit(1234, 2), list(ansi_string(c("1", "34"))))
+  expect_equal(ansi_trimws(123), ansi_string("123"))
+  expect_equal(ansi_strwrap(123), ansi_string("123"))
+  expect_equal(ansi_simplify(123), ansi_string("123"))
+  expect_equal(ansi_html(123), "123")
 })
