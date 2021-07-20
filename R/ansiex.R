@@ -83,14 +83,13 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 
 #' Count number of characters in an ANSI colored string
 #'
-#' This is a color-aware counterpart of [base::nchar()],
-#' which does not do well, since it also counts the ANSI control
-#' characters.
+#' This is a color-aware counterpart of [utf8_nchar()]. By default it
+#' counts Unicode grapheme clusters, instead of code points.
 #'
-#' @param x Character vector, potentially ANSO styled, or a vector to be
-#'   coarced to character.
-#' @param type Whether to count characters, bytes, or calculate the
-#'   display width of the string. Passed to [base::nchar()].
+#' @param x Character vector, potentially ANSI styled, or a vector to be
+#'   coarced to character. If it converted to UTF-8.
+#' @param type Whether to count graphemes (characters), code points,
+#'   bytes, or calculate the display width of the string. 
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
@@ -108,15 +107,11 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 #' ansi_nchar(str)
 #' nchar(ansi_strip(str))
 
-ansi_nchar <- function(x, type = c("chars", "bytes", "width")) {
-  type <- match.arg(type)
-  x <- enc2utf8(x)
+ansi_nchar <- function(x,
+                       type = c("chars", "bytes", "width", "graphemes",
+                                "codepoints")) {
   x <- ansi_strip(x)
-  if (type == "width") {
-    utf8_display_width(x)
-  } else {
-    base::nchar(x, allowNA = FALSE, keepNA = TRUE)
-  }
+  utf8_nchar(x, type)
 }
 
 #' Substring(s) of an ANSI colored string

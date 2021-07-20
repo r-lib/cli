@@ -318,3 +318,30 @@ SEXP clic_utf8_display_width(SEXP x) {
   UNPROTECT(1);
   return res;
 }
+
+SEXP clic_utf8_nchar_graphemes(SEXP x) {
+  R_xlen_t i, len = XLENGTH(x);
+  SEXP res = PROTECT(allocVector(INTSXP, len));
+  int *pres = INTEGER(res);
+
+  for (i = 0; i < len; i++) {
+    SEXP x1 = STRING_ELT(x, i);
+    if (x1 == NA_STRING) {
+      pres[i] = NA_INTEGER;
+    } else {
+      struct grapheme_iterator iter;
+      const uint8_t *chr = (const uint8_t*) CHAR(x1);
+      int len = 0;
+      clic_utf8_graphscan_make(&iter, chr, /* width= */ 1);
+      while (iter.nxt_prop != -1) {
+        clic_utf8_graphscan_next(&iter, NULL, NULL);
+        len ++;
+      }
+
+      pres[i] = len;
+    }
+  }
+
+  UNPROTECT(1);
+  return res;
+}

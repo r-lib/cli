@@ -4,23 +4,22 @@
 \alias{ansi_nchar}
 \title{Count number of characters in an ANSI colored string}
 \usage{
-ansi_nchar(x, type = c("chars", "bytes", "width"))
+ansi_nchar(x, type = c("chars", "bytes", "width", "graphemes", "codepoints"))
 }
 \arguments{
-\item{x}{Character vector, potentially ANSO styled, or a vector to be
-coarced to character.}
+\item{x}{Character vector, potentially ANSI styled, or a vector to be
+coarced to character. If it converted to UTF-8.}
 
-\item{type}{Whether to count characters, bytes, or calculate the
-display width of the string. Passed to \code{\link[base:nchar]{base::nchar()}}.}
+\item{type}{Whether to count graphemes (characters), code points,
+bytes, or calculate the display width of the string.}
 }
 \value{
 Numeric vector, the length of the strings in the character
 vector.
 }
 \description{
-This is a color-aware counterpart of \code{\link[base:nchar]{base::nchar()}},
-which does not do well, since it also counts the ANSI control
-characters.
+This is a color-aware counterpart of \code{\link[=utf8_nchar]{utf8_nchar()}}. By default it
+counts Unicode grapheme clusters, instead of code points.
 }
 \examples{
 str <- paste(
