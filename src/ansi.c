@@ -535,7 +535,7 @@ static int simplify_cb_end(SEXP rstr,
       Rf_mkCharLenCE(
         clic__buffer_get(&data->buffer),
         clic__buffer_size(&data->buffer),
-        CE_NATIVE
+        CE_UTF8
       )
     );
   }
@@ -659,7 +659,7 @@ static int substr_cb_end(SEXP rstr,
       Rf_mkCharLenCE(
         clic__buffer_get(&data->buffer),
         clic__buffer_size(&data->buffer),
-        CE_NATIVE
+        CE_UTF8
      )
     );
   }
@@ -860,7 +860,7 @@ static int html_cb_end(SEXP rstr,
       Rf_mkCharLenCE(
         clic__buffer_get(&data->buffer),
         clic__buffer_size(&data->buffer),
-        CE_NATIVE
+        CE_UTF8
       )
     );
   }
@@ -1032,7 +1032,7 @@ static int strip_cb_end(SEXP rstr,
       Rf_mkCharLenCE(
         clic__buffer_get(&data->buffer),
         clic__buffer_size(&data->buffer),
-        CE_NATIVE
+        CE_UTF8
       )
     );
   }

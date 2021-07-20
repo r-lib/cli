@@ -1,6 +1,7 @@
 
 ansi_string <- function(x) {
   if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
   class(x) <- unique(c("ansi_string", class(x), "character"))
   x
 }
@@ -44,6 +45,7 @@ ansi_regex <- function() {
 
 ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
   if (!is.character(string)) string <- as.character(string)
+  string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
     is_flag(csi)
@@ -69,6 +71,7 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
 
 ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
   if (!is.character(string)) string <- as.character(string)
+  string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
     is_flag(csi)
@@ -107,6 +110,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 
 ansi_nchar <- function(x, type = c("chars", "bytes", "width")) {
   type <- match.arg(type)
+  x <- enc2utf8(x)
   x <- ansi_strip(x)
   if (type == "width") {
     utf8_display_width(x)
@@ -170,6 +174,7 @@ ansi_substr <- function(x, start, stop) {
   if (anyNA(start) || anyNA(stop)) {
     stop("non-numeric substring arguments not supported")
   }
+  x <- enc2utf8(x)
   start <- rep_len(start, length(x))
   stop <- rep_len(stop, length(x))
   .Call(clic_ansi_substr, x, start, stop)
@@ -224,6 +229,7 @@ ansi_substring <- function(text, first, last = 1000000L) {
   if (!is.character(text)) text <- as.character(text)
   n <- max(lt <- length(text), length(first), length(last))
   if (lt && lt < n) text <- rep_len(text, length.out = n)
+  text <- enc2utf8(text)
   first <- rep_len(as.integer(first), n)
   last <- rep_len(as.integer(last), n)
   .Call(clic_ansi_substr, text, first, last)
@@ -270,6 +276,7 @@ ansi_strsplit <- function(x, split, ...) {
   split <- try(as.character(split), silent=TRUE)
   if(inherits(split, "try-error") || !is.character(split) || length(split) > 1L)
     stop("`split` must be character of length <= 1, or must coerce to that")
+  x <- enc2utf8(x)
   if(!length(split)) split <- ""
   plain <- ansi_strip(x)
   splits <- re_table(split, plain, ...)
@@ -322,6 +329,7 @@ ansi_align <- function(text, width = console_width(),
                       type = "width") {
 
   align <- match.arg(align)
+  text <- enc2utf8(text)
   nc <- ansi_nchar(text, type = type)
 
   if (!length(text)) return(ansi_string(text))
@@ -388,6 +396,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
 
   if (!is.character(x)) x <- as.character(x)
   which <- match.arg(which)
+  x <- enc2utf8(x)
   if (!length(x)) return(ansi_string(x))
 
   sl <- 0L
@@ -444,6 +453,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
                          exdent = 0, simplify = TRUE) {
 
   if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
   if (length(x) == 0) {
     return(ansi_string(x))
   }
@@ -560,6 +570,8 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 ansi_strtrim <- function(x, width = console_width(),
                          ellipsis = symbol$ellipsis) {
 
+  x <- enc2utf8(x)
+
   # Unicode width notes. We have nothing to fix here, because we'll just
   # use ansi_substr() and ansi_nchar(), which work correctly with wide
   # characters.
@@ -633,6 +645,8 @@ ansi_columns <- function(text, width = console_width(), sep = " ",
   fill <- match.arg(fill)
   align <- match.arg(align)
 
+  x <- enc2utf8(x)
+
   if (length(text) == 0) return(ansi_string(text))
 
   swdh <- ansi_nchar(sep, type = "width")
@@ -703,6 +717,7 @@ ansi_chartr <- function(old, new, x) {
 }
 
 ansi_convert <- function(x, converter, ...) {
+  x <- enc2utf8(x)
   ansi <- re_table(ansi_regex(), x)
   text <- non_matching(ansi, x, empty=TRUE)
   out <- mapply(x, text, USE.NAMES = FALSE, FUN = function(x1, t1) {
@@ -732,6 +747,7 @@ ansi_convert <- function(x, converter, ...) {
 ansi_simplify <- function(x, csi = c("keep", "drop")) {
   if (!is.character(x)) x <- as.character(x)
   csi <- match.arg(csi)
+  x <- enc2utf8(x)
   .Call(clic_ansi_simplify, x, csi == "keep")
 }
 
@@ -765,6 +781,7 @@ ansi_simplify <- function(x, csi = c("keep", "drop")) {
 ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
   if (!is.character(x)) x <- as.character(x)
   csi <- match.arg(csi)
+  x <- enc2utf8(x)
   if (escape_reserved) {
     x <- gsub("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
     x <- gsub("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
