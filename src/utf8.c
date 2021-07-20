@@ -99,7 +99,9 @@ struct grapheme_iterator {
           }                                                     \
         }                                                       \
       }                                                         \
-      iter->nxt_cw = charwidth(iter->nxt_code);                 \
+      if (iter->nxt_prop != -1) {                               \
+        iter->nxt_cw = charwidth(iter->nxt_code);               \
+      }                                                         \
     }                                                           \
   } while (0)
 
