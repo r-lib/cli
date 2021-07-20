@@ -58,8 +58,10 @@ static void clic__buffer_free(struct cli_buffer *buf) {
 
 static inline void clic__buffer_push_str(struct cli_buffer *buf,
                                          const char *str) {
-  clic__buffer_checklen(buf, strlen(str));
-  buf->ptr = stpcpy(buf->ptr, str);
+  size_t len = strlen(str);
+  clic__buffer_checklen(buf, len);
+  strcpy(buf->ptr, str);
+  buf->ptr += len;
 }
 
 /* static inline void clic__buffer_push_str_len(struct cli_buffer *buf, */
