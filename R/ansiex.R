@@ -645,7 +645,7 @@ ansi_columns <- function(text, width = console_width(), sep = " ",
   fill <- match.arg(fill)
   align <- match.arg(align)
 
-  x <- enc2utf8(x)
+  text <- enc2utf8(text)
 
   if (length(text) == 0) return(ansi_string(text))
 
