@@ -994,7 +994,7 @@ static int strip_cb_sgr(const char *param,
   if (data->sgr) {
     data->num_tags ++;
   } else {
-    clic__buffer_push_piece(&data->buffer, param, end);
+    clic__buffer_push_piece(&data->buffer, param - 2, end + 1);
   }
   return 0;
 }
@@ -1007,7 +1007,7 @@ static int strip_cb_csi(const char *param,
   if (data->csi) {
     data->num_tags ++;
   } else {
-    clic__buffer_push_piece(&data->buffer, param, end);
+    clic__buffer_push_piece(&data->buffer, param - 2, end + 1);
   }
   return 0;
 }
