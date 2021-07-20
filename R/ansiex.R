@@ -271,6 +271,7 @@ ansi_strsplit <- function(x, split, ...) {
   split <- try(as.character(split), silent=TRUE)
   if(inherits(split, "try-error") || !is.character(split) || length(split) > 1L)
     stop("`split` must be character of length <= 1, or must coerce to that")
+  if (!is.character(x)) x <- as.character(x)
   x <- enc2utf8(x)
   if(!length(split)) split <- ""
   plain <- ansi_strip(x)
