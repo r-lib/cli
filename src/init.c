@@ -16,6 +16,7 @@ SEXP clic_dataptr(SEXP x);
 
 void __gcov_flush();
 SEXP clic__gcov_flush() {
+  REprintf("Flushing coverage info\n");
   __gcov_flush();
   return R_NilValue;
 }
