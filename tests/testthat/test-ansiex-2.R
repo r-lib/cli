@@ -238,6 +238,8 @@ test_that("ansi_nchar", {
 })
 
 test_that("ansi_align with graphemes", {
+  withr::local_options(cli.num_colors = 256)
+
   b <- col_red(c(
     "\U0001f477\U0001f3fb",
     "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
@@ -257,5 +259,26 @@ test_that("ansi_align with graphemes", {
   expect_equal(
     ansi_align(b, width = 10, align = "right"),
     ansi_string(paste0(strrep(" ", 8), b))
+  )
+})
+
+test_that("ansi_columns with graphemes", {
+  withr::local_options(cli.num_colors = 256)
+
+  b <- col_red(c(
+    "\U0001f477\U0001f3fb",
+    "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
+    "\U0001f477\U0001f3fd\u200d\u2640\ufe0f",
+    "\U0001f477",
+    "\U0001f477\U0001f3fe\u200d\u2640\ufe0f"
+  ))
+
+  expect_equal(
+    ansi_columns(b, width = 6),
+    ansi_string(c(
+      paste0(b[1], " ", b[2], " "),
+      paste0(b[3], " ", b[4], " "),
+      paste0(b[5], "    ")
+    ))
   )
 })
