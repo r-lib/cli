@@ -22,6 +22,8 @@ clienv$tick_time <- 200L
 
 task_callback <- NULL
 
+clienv$unloaded <- FALSE
+
 .onLoad <- function(libname, pkgname) {
 
   # Try to restore cursor as much as we can
@@ -57,7 +59,7 @@ task_callback <- NULL
   )
 
   # For valgrind: https://github.com/r-lib/cli/issues/311
-  reg.finalizer(asNamespace("cli"), function(x) .Call(clic_unload), TRUE)
+  reg.finalizer(asNamespace("cli"), function(x) x$unload(), TRUE)
 
   if (getRversion() >= "3.5.0") {
     `__cli_update_due` <<- .Call(clic_make_timer);
@@ -137,11 +139,16 @@ task_callback <- NULL
   }
 }
 
+unload <- function() {
+  if (!clienv$unloaded) .Call(clic_unload)
+  clienv$unloaded <- TRUE
+}
+
 .onUnload <- function(libpath) {
   tryCatch(removeTaskCallback(task_callback), error = function(e) NULL)
   tryCatch(cli_progress_cleanup(), error = function(e) NULL)
   tryCatch(ansi_show_cursor(), error = function(e) NULL)
-  .Call(clic_unload)
+  unload()
 }
 
 ## nocov end
