@@ -202,13 +202,13 @@ test_that("convert to character", {
 })
 
 test_that("ansi_nchar", {
-  b <- c(
+  b <- col_red(c(
     "\U0001f477\U0001f3fb",
     "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
     "\U0001f477\U0001f3fd\u200d\u2640\ufe0f",
     "\U0001f477",
     "\U0001f477\U0001f3fe\u200d\u2640\ufe0f"
-  )
+  ))
   expect_equal(ansi_nchar(b), rep(1L, 5))
   expect_equal(ansi_nchar(b, "chars"), rep(1L, 5))
   expect_equal(ansi_nchar(b, "bytes"), c(8L, 17L, 17L, 4L, 17L))
@@ -235,4 +235,27 @@ test_that("ansi_nchar", {
   expect_equal(ansi_nchar("", "width"), 0L)
   expect_equal(ansi_nchar("", "graphemes"), 0L)
   expect_equal(ansi_nchar("", "codepoints"), 0L)
+})
+
+test_that("ansi_align with graphemes", {
+  b <- col_red(c(
+    "\U0001f477\U0001f3fb",
+    "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
+    "\U0001f477\U0001f3fd\u200d\u2640\ufe0f",
+    "\U0001f477",
+    "\U0001f477\U0001f3fe\u200d\u2640\ufe0f"
+  ))
+
+  expect_equal(
+    ansi_align(b, width = 10, align = "left"),
+    ansi_string(paste0(b, strrep(" ", 8)))
+  )
+  expect_equal(
+    ansi_align(b, width = 10, align = "center"),
+    ansi_string(paste0(strrep(" ", 4), b, strrep(" ", 4)))
+  )
+  expect_equal(
+    ansi_align(b, width = 10, align = "right"),
+    ansi_string(paste0(strrep(" ", 8), b))
+  )
 })
