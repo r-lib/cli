@@ -42,6 +42,7 @@ static const R_CallMethodDef callMethods[]  = {
 
   { "clic_utf8_display_width",   (DL_FUNC) clic_utf8_display_width,   1 },
   { "clic_utf8_nchar_graphemes", (DL_FUNC) clic_utf8_nchar_graphemes, 1 },
+  { "clic_utf8_substr",          (DL_FUNC) clic_utf8_substr,          3 },
 
   { "clic_dataptr",        (DL_FUNC) clic_dataptr,        1 },
   { "clic_start_thread",   (DL_FUNC) clic_start_thread,   3 },

@@ -29,6 +29,7 @@ is_utf8_output <- function() {
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
+#' @family UTF-8 string manipulation
 #' @export
 #' @examples
 #' # Grapheme example, emoji with combining characters. This is a single
@@ -71,5 +72,47 @@ utf8_nchar <- function(x, type = c("chars", "bytes", "width", "graphemes",
   } else { # bytes
     base::nchar(x, allowNA = FALSE, keepNA = TRUE, type = "bytes")
   }
+}
 
+#' Substring of an UTF-8 string
+#'
+#' This function uses grapheme clusters instaed of Unicode code points in
+#' UTF-8 strings.
+#'
+#' @param x Character vector.
+#' @param start Starting index or indices, recycled to match the length
+#'   of `x`.
+#' @param stop Ending index or indices, recycled to match the length of
+#'   `x`.
+#' @return Character vector of the same length as `x`, containing
+#'   the requested substrings.
+#'
+#' @family UTF-8 string manipulation
+#' @export
+#' @examples
+#' # Five grapheme clusters, select the middle three
+#' str <- paste0(
+#'   "\U0001f477\U0001f3ff\u200d\u2640\ufe0f",
+#'   "\U0001f477\U0001f3ff",
+#'   "\U0001f477\u200d\u2640\ufe0f",
+#'   "\U0001f477\U0001f3fb",
+#'   "\U0001f477\U0001f3ff")
+#' cat(str)
+#' str24 <- utf8_substr(str, 2, 4)
+#' cat(str24)
+
+utf8_substr <- function(x, start, stop) {
+  if (!is.character(x)) x <- as.character(x)
+  start <- as.integer(start)
+  stop <- as.integer(stop)
+  if (!length(start) || !length(stop)) {
+    stop("invalid substring arguments")
+  }
+  if (anyNA(start) || anyNA(stop)) {
+    stop("non-numeric substring arguments not supported")
+  }
+  x <- enc2utf8(x)
+  start <- rep_len(start, length(x))
+  stop <- rep_len(stop, length(x))
+  .Call(clic_utf8_substr, x, start, stop)
 }

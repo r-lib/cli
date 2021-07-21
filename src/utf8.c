@@ -334,3 +334,43 @@ SEXP clic_utf8_nchar_graphemes(SEXP x) {
   UNPROTECT(1);
   return res;
 }
+
+SEXP clic_utf8_substr(SEXP x, SEXP sstart, SEXP sstop) {
+  R_xlen_t i, len = XLENGTH(x);
+  SEXP res = PROTECT(allocVector(STRSXP, len));
+
+  for (i = 0; i < len; i++) {
+    SEXP x1 = STRING_ELT(x, i);
+    if (x1 == NA_STRING) {
+      SET_STRING_ELT(res, i, x1);
+    } else {
+      const uint8_t *str = (const uint8_t*) CHAR(x1);
+      int pos = 1;
+      int start = INTEGER(sstart)[i];
+      int stop = INTEGER(sstop)[i];
+      struct grapheme_iterator iter;
+
+      /* Skip initial part */
+      clic_utf8_graphscan_make(&iter, (const uint8_t*) str, /* width = */ 0);
+      while (pos < start && iter.nxt_prop != -1) {
+        clic_utf8_graphscan_next(&iter, NULL, NULL);
+        pos++;
+      }
+      const char* from = (const char*) iter.cnd;
+
+      /* Iterate to the end */
+      while (pos <= stop && iter.nxt_prop != -1) {
+        clic_utf8_graphscan_next(&iter, NULL, NULL);
+        pos++;
+      }
+      const char *to = (const char*) iter.cnd;
+
+      if (from < to) {
+        SET_STRING_ELT(res, i, Rf_mkCharLenCE(from, to - from, CE_UTF8));
+      }
+    }
+  }
+
+  UNPROTECT(1);
+  return res;
+}

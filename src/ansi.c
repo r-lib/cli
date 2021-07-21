@@ -617,24 +617,37 @@ static int substr_cb_text(const char *str,
   int start = data->start[data->done];
   int stop = data->stop[data->done];
 
+  char *end2 = (char*) end;
+  char oldend = *end2;
+  *end2 = '\0';
+
   /* Skip before start */
-  while (data->pos < start && str < end) {
-    int len = UTF8LITE_UTF8_TOTAL_LEN(*str);
-    str += len;
-    data->pos++;
+  struct grapheme_iterator iter;
+  if (data->pos < start) {
+    clic_utf8_graphscan_make(&iter, (const uint8_t*) str, /* width = */ 0);
+    while (data->pos < start && iter.nxt_prop != -1) {
+      clic_utf8_graphscan_next(&iter, NULL,  NULL);
+      data->pos++;
+    }
+    str = (const char*) iter.cnd;
   }
 
   /* Add before stop */
-  const char *from = str;
-  while (data->pos <= stop && str < end) {
-    int len = UTF8LITE_UTF8_TOTAL_LEN(*str);
-    str += len;
-    data->pos++;
+  if (data->pos <= stop) {
+    const char *from = str;
+    clic_utf8_graphscan_make(&iter, (const uint8_t*) str, /* width = */ 0);
+    while (data->pos <= stop && iter.nxt_prop != -1) {
+      clic_utf8_graphscan_next(&iter, NULL, NULL);
+      data->pos++;
+    }
+    str = (const char*) iter.cnd;
+    if (from < str) {
+      clic__state_update_buffer(&data->buffer, &data->state);
+      clic__buffer_push_piece(&data->buffer, from, str);
+    }
   }
-  if (from < str) {
-    clic__state_update_buffer(&data->buffer, &data->state);
-    clic__buffer_push_piece(&data->buffer, from, str);
-  }
+
+  *end2 = oldend;
 
   /* If we are done, then just close all open tags */
   if (data->pos > stop) {

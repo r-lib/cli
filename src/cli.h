@@ -18,6 +18,7 @@ SEXP clic_ansi_nchar(SEXP x, SEXP type);
 
 SEXP clic_utf8_nchar_graphemes(SEXP x);
 SEXP clic_utf8_display_width(SEXP x);
+SEXP clic_utf8_substr(SEXP sx, SEXP start, SEXP stop);
 
 typedef volatile int vint;
 

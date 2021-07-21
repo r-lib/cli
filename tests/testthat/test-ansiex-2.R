@@ -282,3 +282,25 @@ test_that("ansi_columns with graphemes", {
     ))
   )
 })
+
+test_that("ansi_substr with graphemes", {
+  withr::local_options(cli.num_colors = 256)
+
+  b <- col_red(c(
+    "\U0001f477\U0001f3fb",
+    "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
+    "\U0001f477\U0001f3fd\u200d\u2640\ufe0f",
+    "\U0001f477",
+    "\U0001f477\U0001f3fe\u200d\u2640\ufe0f"
+  ))
+  bb <- paste0(b, collapse = "")
+
+  expect_equal(
+    ansi_substr(bb, 2, 4),
+    col_red(paste0(
+      "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
+      "\U0001f477\U0001f3fd\u200d\u2640\ufe0f",
+      "\U0001f477"
+    ))
+  )
+})
