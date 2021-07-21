@@ -198,4 +198,41 @@ test_that("convert to character", {
   expect_equal(ansi_strwrap(123), ansi_string("123"))
   expect_equal(ansi_simplify(123), ansi_string("123"))
   expect_equal(ansi_html(123), "123")
+  expect_equal(ansi_nchar(123), 3)
+})
+
+test_that("ansi_nchar", {
+  b <- c(
+    "\U0001f477\U0001f3fb",
+    "\U0001f477\U0001f3fc\u200d\u2642\ufe0f",
+    "\U0001f477\U0001f3fd\u200d\u2640\ufe0f",
+    "\U0001f477",
+    "\U0001f477\U0001f3fe\u200d\u2640\ufe0f"
+  )
+  expect_equal(ansi_nchar(b), rep(1L, 5))
+  expect_equal(ansi_nchar(b, "chars"), rep(1L, 5))
+  expect_equal(ansi_nchar(b, "bytes"), c(8L, 17L, 17L, 4L, 17L))
+  expect_equal(ansi_nchar(b, "width"), rep(2L, 5))
+  expect_equal(ansi_nchar(b, "graphemes"), rep(1L, 5))
+  expect_equal(ansi_nchar(b, "codepoints"), c(2L, 5L, 5L, 1L, 5L))
+
+  bb <- paste0(b, collapse = "")
+  expect_equal(ansi_nchar(bb), sum(rep(1L, 5)))
+  expect_equal(ansi_nchar(bb, "chars"), sum(rep(1L, 5)))
+  expect_equal(ansi_nchar(bb, "bytes"), sum(c(8L, 17L, 17L, 4L, 17L)))
+  expect_equal(ansi_nchar(bb, "width"), sum(rep(2L, 5)))
+  expect_equal(ansi_nchar(bb, "graphemes"), sum(rep(1L, 5)))
+  expect_equal(ansi_nchar(bb, "codepoints"), sum(c(2L, 5L, 5L, 1L, 5L)))
+
+  expect_equal(ansi_nchar(character(), "chars"), integer())
+  expect_equal(ansi_nchar(character(), "bytes"), integer())
+  expect_equal(ansi_nchar(character(), "width"), integer())
+  expect_equal(ansi_nchar(character(), "graphemes"), integer())
+  expect_equal(ansi_nchar(character(), "codepoints"), integer())
+
+  expect_equal(ansi_nchar("", "chars"), 0L)
+  expect_equal(ansi_nchar("", "bytes"), 0L)
+  expect_equal(ansi_nchar("", "width"), 0L)
+  expect_equal(ansi_nchar("", "graphemes"), 0L)
+  expect_equal(ansi_nchar("", "codepoints"), 0L)
 })

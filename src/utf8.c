@@ -72,16 +72,6 @@ static int display_width_map[7] = {
   /* CHARWIDTH_EMOJI =     */ 2
 };
 
-struct grapheme_iterator {
-  const uint8_t *nxt_ptr;
-  int32_t nxt_code;
-  int nxt_prop;
-  int nxt_cw;
-  const uint8_t *cnd;
-  int cnd_width;
-  char cnd_width_done;          /* -1: do not measure width */
-};
-
 #define NEXT() do {                                             \
     iter->cnd = iter->nxt_ptr;                                  \
     if (*(iter->nxt_ptr) == '\0') {                             \
@@ -105,9 +95,9 @@ struct grapheme_iterator {
     }                                                           \
   } while (0)
 
-static void clic_utf8_graphscan_make(struct grapheme_iterator *iter,
-                                     const uint8_t *txt,
-                                     int width) {
+void clic_utf8_graphscan_make(struct grapheme_iterator *iter,
+                              const uint8_t *txt,
+                              int width) {
   iter->nxt_ptr = txt;
   iter->nxt_cw = -1;
   iter->cnd_width = 0;
@@ -115,9 +105,9 @@ static void clic_utf8_graphscan_make(struct grapheme_iterator *iter,
   NEXT();
 }
 
-static void clic_utf8_graphscan_next(struct grapheme_iterator *iter,
-                                     uint8_t **ptr,
-                                     int *width) {
+void clic_utf8_graphscan_next(struct grapheme_iterator *iter,
+                              uint8_t **ptr,
+                              int *width) {
   if (ptr) *ptr = (uint8_t*) iter->cnd;
 
  Start:
@@ -307,8 +297,7 @@ SEXP clic_utf8_display_width(SEXP x) {
       int len = 0;
       int width;
       while (iter.nxt_prop != -1) {
-        uint8_t *current = 0;
-        clic_utf8_graphscan_next(&iter, &current, &width);
+        clic_utf8_graphscan_next(&iter, NULL, &width);
         len += width;
       }
       pres[i] = len;
@@ -332,7 +321,7 @@ SEXP clic_utf8_nchar_graphemes(SEXP x) {
       struct grapheme_iterator iter;
       const uint8_t *chr = (const uint8_t*) CHAR(x1);
       int len = 0;
-      clic_utf8_graphscan_make(&iter, chr, /* width= */ 1);
+      clic_utf8_graphscan_make(&iter, chr, /* width= */ 0);
       while (iter.nxt_prop != -1) {
         clic_utf8_graphscan_next(&iter, NULL, NULL);
         len ++;

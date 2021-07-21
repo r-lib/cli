@@ -14,6 +14,7 @@ SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
 SEXP clic_ansi_html(SEXP x, SEXP keep_csi);
 SEXP clic_ansi_has_any(SEXP x, SEXP sgr, SEXP csi);
 SEXP clic_ansi_strip(SEXP x, SEXP sgr, SEXP csi);
+SEXP clic_ansi_nchar(SEXP x, SEXP type);
 
 SEXP clic_utf8_nchar_graphemes(SEXP x);
 SEXP clic_utf8_display_width(SEXP x);
@@ -91,5 +92,23 @@ SEXP clic_update_due();
 SEXP clic_get_embedded_utf8();
 SEXP clic_set_embedded_utf8(SEXP value);
 int clic__utf8_display_width_char(const uint8_t **x);
+
+struct grapheme_iterator {
+  const uint8_t *nxt_ptr;
+  int32_t nxt_code;
+  int nxt_prop;
+  int nxt_cw;
+  const uint8_t *cnd;
+  int cnd_width;
+  char cnd_width_done;          /* -1: do not measure width */
+};
+
+void clic_utf8_graphscan_make(struct grapheme_iterator *iter,
+                              const uint8_t *txt,
+                              int width);
+
+void clic_utf8_graphscan_next(struct grapheme_iterator *iter,
+                              uint8_t **ptr,
+                              int *width);
 
 #endif

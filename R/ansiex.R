@@ -110,8 +110,12 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 ansi_nchar <- function(x,
                        type = c("chars", "bytes", "width", "graphemes",
                                 "codepoints")) {
-  x <- ansi_strip(x)
-  utf8_nchar(x, type)
+  type <- match.arg(type)
+  if (type == "chars") type <- "graphemes"
+  type <- match(type, c("graphemes", "bytes", "width", "codepoints"))
+  if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
+  .Call(clic_ansi_nchar, x, type)
 }
 
 #' Substring(s) of an ANSI colored string

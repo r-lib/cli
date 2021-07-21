@@ -1071,3 +1071,131 @@ SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi) {
   UNPROTECT(1);
   return data.result;
 }
+
+/* ---------------------------------------------------------------------- */
+
+#define NCHAR_TYPE_GRAPHEMES  1
+#define NCHAR_TYPE_BYTES      2
+#define NCHAR_TYPE_WIDTH      3
+#define NCHAR_TYPE_CODEPOINTS 4
+
+struct nchar_data {
+  R_xlen_t done;
+  int *resptr;
+  int *result;
+};
+
+static int nchar_cb_start(SEXP rstr, const char *str, void *vdata) {
+  struct nchar_data *data = vdata;
+  data->resptr = data->result + data->done;
+  if (rstr == NA_STRING) {
+    *data->resptr = NA_INTEGER;
+    return 1;
+  } else {
+    *data->resptr = 0;
+    return 0;
+  }
+}
+
+static int nchar_cb_text_graphemes(const char *str,
+                                   const char *end,
+                                   void *vdata) {
+  struct nchar_data *data = vdata;
+  char *end2 = (char*) end;
+  char oldend = *end2;
+  int len = 0;
+  struct grapheme_iterator iter;
+
+  *end2 = '\0';
+  clic_utf8_graphscan_make(&iter, (const uint8_t*) str, /* width = */ 0);
+  while (iter.nxt_prop != -1) {
+    clic_utf8_graphscan_next(&iter, NULL, NULL);
+    len ++;
+  }
+  *data->resptr += len;
+
+  *end2 = oldend;
+  return 0;
+}
+
+static int nchar_cb_text_bytes(const char *str,
+                               const char *end,
+                               void *vdata) {
+  struct nchar_data *data = vdata;
+  *data->resptr += (end - str);
+  return 0;
+}
+
+static int nchar_cb_text_width(const char *str,
+                               const char *end,
+                               void *vdata) {
+  struct nchar_data *data = vdata;
+  char *end2 = (char*) end;
+  char oldend = *end2;
+  int len = 0, width;
+  struct grapheme_iterator iter;
+
+  *end2 = '\0';
+  clic_utf8_graphscan_make(&iter, (const uint8_t*) str, /* width = */ 1);
+  while (iter.nxt_prop != -1) {
+    clic_utf8_graphscan_next(&iter, NULL, &width);
+    len += width;
+  }
+  *data->resptr += len;
+
+  *end2 = oldend;
+  return 0;
+}
+
+static int nchar_cb_text_codepoints(const char *str,
+                                    const char *end,
+                                    void *vdata) {
+  struct nchar_data *data = vdata;
+
+  while (str < end) {
+    int len = UTF8LITE_UTF8_TOTAL_LEN(*str);
+    str += len;
+    *data->resptr += 1;
+  }
+
+  return 0;
+}
+
+static int nchar_cb_end(SEXP rstr,
+                          const char *str,
+                          void *vdata) {
+  struct nchar_data *data = vdata;
+  data->done ++;
+  return 0;
+}
+
+  static clic__text_callback_t nchar_text_cbs[] = {
+    nchar_cb_text_graphemes,
+    nchar_cb_text_bytes,
+    nchar_cb_text_width,
+    nchar_cb_text_codepoints
+  };
+
+  /* TODO: this would benefit from a non-iterator implementation, that
+     would be much faster. */
+
+SEXP clic_ansi_nchar(SEXP sx, SEXP type) {
+  int ctype = INTEGER(type)[0] - 1;
+  struct nchar_data data;
+  data.done = 0;
+  SEXP result = PROTECT(allocVector(INTSXP, XLENGTH(sx)));
+  data.result = INTEGER(result);
+
+  clic__ansi_iterator(
+    sx,
+    nchar_cb_start,
+    /* sgr   = */ NULL,
+    /* csi   = */ NULL,
+    nchar_text_cbs[ctype],
+    nchar_cb_end,
+    &data
+  );
+
+  UNPROTECT(1);
+  return result;
+}
