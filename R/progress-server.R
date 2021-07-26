@@ -123,11 +123,12 @@ builtin_handler_cli <- list(
         }
         cli_status_clear(bar$cli_statusbar, result = "clear", .envir = .envir)
       } else {
+        if (result == "done" && !is.na(bar$total)) bar$current <- bar$total
         cli_status_clear(
           bar$cli_statusbar,
           result = result,
-          msg_done = bar$format_done,
-          msg_failed = bar$format_failed,
+          msg_done = bar$format_done %||% bar$format,
+          msg_failed = bar$format_failed %||% bar$format,
           .envir = .envir
         )
       }
