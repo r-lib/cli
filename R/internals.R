@@ -7,16 +7,22 @@ clii__xtext <- function(app, text, .list, indent, padding, ln = TRUE) {
   style <- app$get_current_style()
   text <- app$inline(text, .list = .list)
   exdent <- style$`text-exdent` %||% 0L
+
+  esc <- function(x) gsub(" ", "\u00a0", x)
+
+  bef <- call_if_fun(style$before)
+  if (!is.null(bef)) text[1] <- paste0(esc(bef), text[1])
+  aft <- call_if_fun(style$after)
+  if (!is.null(aft)) text[length(text)] <- paste0(text[length(text)], esc(aft))
+
+  if (!is.null(style$fmt)) text <- style$fmt(text)
+
   text <- ansi_strwrap(
     text,
     exdent = exdent,
     width = app$get_width(extra = padding)
   )
 
-  text[1] <- paste0(call_if_fun(style$before), text[1])
-  text[length(text)] <- paste0(text[length(text)], call_if_fun(style$after))
-
-  if (!is.null(style$fmt)) text <- style$fmt(text)
   app$cat_ln(text, indent = indent, padding)
   invisible(app)
 }
