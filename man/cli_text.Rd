@@ -13,29 +13,73 @@ concatenated into a single string. Newlines are \emph{not} preserved.}
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }
 \description{
-It is wrapped to the screen width automatically. It may contain inline
-markup. (See \link{inline-markup}.)
+Write some text to the screen. This function is most appropriate for
+longer paragraphs. See \code{\link[=cli_alert]{cli_alert()}} for shorter status messages.
 }
-\examples{
-cli_text("Hello world!")
-cli_text(packageDescription("cli")$Description)
+\details{
+\subsection{Text wrapping}{
 
-## Arguments are concatenated
-cli_text("this", "that")
+Text is wrapped to the console width, see \code{\link[=console_width]{console_width()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(cli:::lorem_ipsum())
+}\if{html}{\out{</div>}}
 
-## Command substitution
-greeting <- "Hello"
-subject <- "world"
-cli_text("{greeting} {subject}!")
+\if{html}{\figure{cli-text.svg}}
+}
 
-## Inline theming
-cli_text("The {.fn cli_text} function in the {.pkg cli} package")
+\subsection{New lines}{
 
-## Use within container elements
-ul <- cli_ul()
-cli_li()
-cli_text("{.emph First} item")
-cli_li()
-cli_text("{.emph Second} item")
+A \code{cli_text()} call always appends a newline character to the end.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("First line.")
+cli_text("Second line.")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-text-newline.svg}}
+}
+
+\subsection{Stlying}{
+
+You can use \link[=inline-markup]{inline markup}, as usual.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("The \{.fn cli_text\} function in the \{.pkg cli\} package.")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-text-markup.svg}}
+}
+
+\subsection{Interpolation}{
+
+String interpolation via glue works as usual. Interpolated vectors
+are collapsed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pos <- c(5, 14, 25, 26)
+cli_text("We have \{length(pos)\} missing measurements: \{pos\}.")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-text-glue.svg}}
+}
+
+\subsection{Styling and interpolation}{
+
+Use double braces to combine styling and string interpolation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- "cli-text"
+pkg <- "cli"
+cli_text("The \{.fn \{fun\}\} function in the \{.pkg \{pkg\}\} package.")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-text-glue-style.svg}}
+}
+
+\subsection{Multiple arguments}{
+
+Arguments are concatenated.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(c("This ", "will ", "all "), "be ", "one ", "sentence.")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-text-concat.svg}}
+}
+
+\subsection{Containers}{
+
+You can use \code{cli_text()} within cli \link{containers}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{ul <- cli_ul()
+cli_li("First item.")
+cli_text("Still the \{.emph first\} item")
+cli_li("Second item.")
+cli_text("Still the \{.emph second\} item")
 cli_end(ul)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-text-containers.svg}}
+}
 }

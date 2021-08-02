@@ -33,18 +33,27 @@ The id of the new container element, invisibly.
 See \link{containers}. A \code{cli_div} container is special, because it may
 add new themes, that are valid within the container.
 }
-\examples{
-## div with custom theme
-d <- cli_div(theme = list(h1 = list(color = "blue",
+\details{
+\subsection{Custom themes}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(h1 = list(color = "cyan",
                                     "font-weight" = "bold")))
 cli_h1("Custom title")
 cli_end(d)
+}\if{html}{\out{</div>}}
 
-## Close automatically
-div <- function() {
+\if{html}{\figure{cli-div.svg}}
+}
+
+\subsection{Auto-closing}{
+
+By default a \code{cli_div()} is closed automatically when the calling
+frame exits.\if{html}{\out{<div class="sourceCode r">}}\preformatted{div <- function() \{
   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
   cli_text("This is yellow")
-}
+\}
 div()
 cli_text("This is not yellow any more")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-div-close.svg}}
+}
 }

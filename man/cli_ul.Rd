@@ -39,23 +39,26 @@ The id of the new container element, invisibly.
 \description{
 An unordered list is a container, see \link{containers}.
 }
-\examples{
-## Specifying the items at the beginning
-cli_ul(c("one", "two", "three"))
+\details{
+\subsection{Adding all items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_ul(c("one", "two", "three"))
+\}
+fun()
+}\if{html}{\out{</div>}}
 
-## Adding items one by one
-cli_ul()
-cli_li("one")
-cli_li("two")
-cli_li("three")
-cli_end()
+\if{html}{\figure{cli-ul.svg}}
+}
 
-## Complex item, added gradually.
-cli_ul()
-cli_li()
-cli_verbatim("Beginning of the {.emph first} item")
-cli_text("Still the first item")
-cli_end()
-cli_li("Second item")
-cli_end()
+\subsection{Adding items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_ul()
+  cli_li("\{.emph one\}")
+  cli_li("\{.emph two\}")
+  cli_li("\{.emph three\}")
+  cli_end()
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-ul-2.svg}}
+}
 }

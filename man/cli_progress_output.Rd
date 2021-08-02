@@ -22,5 +22,22 @@ used here, including progress variables.
 }
 \details{
 The text is passed to the progress handler(s), that may or may not be
-able to print it.
+able to print it.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_alert_info("Before the progress bar")
+  cli_progress_bar("Calculating", total = 100)
+  for (i in 1:50) \{
+    Sys.sleep(4/100)
+    cli_progress_update()
+  \}
+  cli_progress_output("Already half way!")
+  for (i in 1:50) \{
+    Sys.sleep(4/100)
+    cli_progress_update()
+  \}
+  cli_alert_info("All done")
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-output2.svg}}
 }

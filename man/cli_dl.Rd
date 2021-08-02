@@ -38,14 +38,25 @@ The id of the new container element, invisibly.
 \description{
 A definition list is a container, see \link{containers}.
 }
-\examples{
-## Specifying the items at the beginning
-cli_dl(c(foo = "one", bar = "two", baz = "three"))
+\details{
+\subsection{All items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_dl(c(foo = "one", bar = "two", baz = "three"))
+\}
+fun()
+}\if{html}{\out{</div>}}
 
-## Adding items one by one
-cli_dl()
-cli_li(c(foo = "one"))
-cli_li(c(bar = "two"))
-cli_li(c(baz = "three"))
-cli_end()
+\if{html}{\figure{cli-dl.svg}}
+}
+
+\subsection{Items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_dl()
+  cli_li(c(foo = "\{.emph one\}"))
+  cli_li(c(bar = "two"))
+  cli_li(c(baz = "three"))
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-dl-2.svg}}
+}
 }

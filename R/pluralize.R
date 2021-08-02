@@ -1,5 +1,5 @@
 
-#' CLI pluralization
+#' About cli pluralization
 #'
 #' @name pluralization
 #' @family pluralization

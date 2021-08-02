@@ -23,10 +23,13 @@ themes.}
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }
 \description{
-CLI headings
+cli has three levels of headings.
 }
-\examples{
-cli_h1("Main title")
-cli_h2("Subtitle")
-cli_text("And some regular text....")
+\details{
+This is how the headings look with the default builtin theme.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_h1("Header \{.emph 1\}")
+cli_h2("Header \{.emph 2\}")
+cli_h3("Header \{.emph 3\}")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-h1.svg}}
 }

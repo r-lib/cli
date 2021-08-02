@@ -3,6 +3,7 @@
 
 #' Draw a sparkline bar graph with unicode block characters
 #'
+#' @description
 #' Rendered using [block elements](https://en.wikipedia.org/wiki/Block_Elements).
 #' In most common fixed width fonts these are rendered wider than regular
 #' characters which means they are not suitable if you need precise alignment.
@@ -11,18 +12,31 @@
 #' do not look good. You can use [is_utf8_output()] to test for support
 #' for them.
 #'
+#' @details
+#'
+#' ```{asciicast spark-bar-1}
+#' x <- seq(0, 1, length = 6)
+#' spark_bar(x)
+#' ```
+#'
+#' ```{asciicast spark-bar-2}
+#' x <- seq(0, 1, length = 6)
+#' spark_bar(sample(x))
+#' ```
+#'
+#' ```{asciicast spark-bar-3}
+#' spark_bar(seq(0, 1, length = 8))
+#' ```
+#'
+#' `NA`s are left out:
+#'
+#' ```{asciicast spark-bar-na}
+#' spark_bar(c(0, NA, 0.5, NA, 1))
+#' ```
+#'
 #' @param x A numeric vector between 0 and 1
 #' @export
 #' @seealso [spark_line()]
-#' @examples
-#' x <- seq(0, 1, length = 6)
-#' spark_bar(x)
-#' spark_bar(sample(x))
-#'
-#' spark_bar(seq(0, 1, length = 8))
-#'
-#' # NAs are left out
-#' spark_bar(c(0, NA, 0.5, NA, 1))
 
 spark_bar <- function(x) {
   stopifnot(is.numeric(x))
@@ -75,12 +89,16 @@ spark_bar_chars <- function(x, bars = NULL) {
 #' do not look good. You can use [is_utf8_output()] to test for support
 #' for them.
 #'
+#' @details
+#'
+#' ```{asciicast spark-line}
+#' x <- seq(0, 1, length = 10)
+#' spark_line(x)
+#' ```
+#'
 #' @inheritParams spark_bar
 #' @export
 #' @seealso [spark_bar()]
-#' @examples
-#' x <- seq(0, 1, length = 10)
-#' spark_line(x)
 
 spark_line <- function(x) {
   stopifnot(is.numeric(x))

@@ -9,8 +9,8 @@ output:
   rmarkdown::html_document:
     toc: true
     toc_depth: 2
-editor_options: 
-  markdown: 
+editor_options:
+  markdown:
     wrap: sentence
 ---
 
@@ -33,13 +33,20 @@ asciicast::init_knitr_engine(
 
 # Introduction
 
-Starting from version 2.0.0, the cli package can build a semantic Command Line Interface (CLI).
-By *semantic* we mean that `cli_*` functions that create console output are focused on the role of the text in the CLI, as opposed to how exactly it is formatted.
-The formatting of the CLI can be specified separately, and can be also customized by the end user.
-This is not unlike how HTML and CSS works as well, so it might be already familiar.
+The cli package helps you build a command line interface (CLI) without
+getting lost in details (colors, wrapping, spacing, etc.) of how each piece
+of the output is formatted.
+Instead, you can build command line output from semantic elements: lists,
+alerts, quotes code blocks, headers, etc.
+The formatting of each element is specified separately, in one or more
+cli _themes_.
+cli comes with a builtin theme, and if you are satisfied with that, then
+you never need to worry about formatting.
+A semantic cli is similar to how HTML and CSS work together to create a
+web site.
 
-The semantic `cli_*` functions create semantic elements: headings, lists, alerts, paragraphs, etc.
-In this introduction we will go over these functions and also some common features of them.
+In this introduction we will go over the functions that create semantic
+CLI elements, and also some common features of them.
 
 # Building a command line interface
 
@@ -82,6 +89,8 @@ Text is automatically wrapped to the terminal width.
 ```{asciicast}
 cli_text(cli:::lorem_ipsum())
 ```
+
+Text may have ANSI style markup,
 
 ## Paragraphs
 

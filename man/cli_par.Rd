@@ -22,13 +22,17 @@ also used to auto-close the container if \code{.auto_close} is \code{TRUE}.}
 The id of the new container element, invisibly.
 }
 \description{
-See \link{containers}.
+The builtin theme leaves an empty line between paragraphs.
+See also \link{containers}.
 }
-\examples{
-id <- cli_par()
-cli_text("First paragraph")
-cli_end(id)
-id <- cli_par()
-cli_text("Second paragraph")
-cli_end(id)
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{clifun <- function() \{
+  cli_par()
+  cli_text(cli:::lorem_ipsum())
+\}
+clifun()
+clifun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-par.svg}}
 }

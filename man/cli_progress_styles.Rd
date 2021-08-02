@@ -25,8 +25,13 @@ options are used.
 
 On ASCII terminals (if \code{\link[=is_utf8_output]{is_utf8_output()}} is \code{FALSE}), the
 \code{cli_pgoress_bar_style_ascii} and \code{cli_progress_bar_style} options
-are are used.
-}
-\examples{
-cli_progress_styles()
+are are used.\if{html}{\out{<div class="sourceCode r">}}\preformatted{for (style in names(cli_progress_styles())) \{
+  options(cli.progress_bar_style = style)
+  label <- ansi_align(paste0("Style '", style, "'"), 20)
+  print(cli_progress_demo(label, live = FALSE, at = 66, total = 100))
+\}
+options(cli.progress_var_style = NULL)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-style.svg}}
 }

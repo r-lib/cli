@@ -47,14 +47,20 @@ Character scalar, the rule.
 \description{
 The rule can include either a centered text label, or labels on the
 left and right side.
-}
-\details{
+
 To color the labels, use the functions \verb{col_*}, \verb{bg_*} and \verb{style_*}
 functions, see \link{ansi-styles}, and the examples below.
 To color the line, either these functions directly, or the \code{line_col}
 option.
 }
-\section{Line styles}{
+\details{
+\subsection{Simple rule}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-simple.svg}}
+}
+
+\subsection{Line styles}{
 
 Some strings for the \code{line} argument are interpreted specially:
 \itemize{
@@ -62,41 +68,57 @@ Some strings for the \code{line} argument are interpreted specially:
 \item \code{"double"}: (same as \code{2}), a double line,
 \item \code{"bar1"}, \code{"bar2"}, \code{"bar3"}, etc., \code{"bar8"} uses varying height bars.
 }
+\subsection{Double rule}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(line = 2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-double.svg}}
 }
 
-\examples{
-
-## Simple rule
-rule()
-
-## Double rule
-rule(line = 2)
-
-## Bars
-rule(line = "bar2")
+\subsection{Bars}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(line = "bar2")
 rule(line = "bar5")
+}\if{html}{\out{</div>}}
 
-## Left label
-rule(left = "Results")
+\if{html}{\figure{rule-bars.svg}}
+}
 
-## Centered label
-rule(center = " * RESULTS * ")
+\subsection{Custom lines}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = "TITLE", line = "~")
+}\if{html}{\out{</div>}}
 
-## Colored labels
-rule(center = col_red(" * RESULTS * "))
+\if{html}{\figure{rule-custom-line.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = "TITLE", line = col_blue("~-"))
+}\if{html}{\out{</div>}}
 
-## Colored line
-rule(center = col_red(" * RESULTS * "), line_col = "red")
-
-## Custom line
-rule(center = "TITLE", line = "~")
-
-## More custom line
-rule(center = "TITLE", line = col_blue("~-"))
-
-## Even more custom line
-rule(center = bg_red(" ", symbol$star, "TITLE",
+\if{html}{\figure{rule-custom-line-2.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = bg_red(" ", symbol$star, "TITLE",
   symbol$star, " "),
-  line = "\u2582",
+  line = "\\u2582",
   line_col = "orange")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-custom-line-3.svg}}
+}
+
+}
+
+\subsection{Left label}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(left = "Results")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-left-label.svg}}
+}
+
+\subsection{Centered label}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = " * RESULTS * ")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-center-label.svg}}
+}
+
+\subsection{Colored labels}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = col_red(" * RESULTS * "))
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-colored-label.svg}}
+}
+
+\subsection{Colored line}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = col_red(" * RESULTS * "), line_col = "red")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{rule-colored-line.svg}}
+}
 }

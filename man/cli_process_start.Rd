@@ -4,7 +4,8 @@
 \alias{cli_process_start}
 \alias{cli_process_done}
 \alias{cli_process_failed}
-\title{Indicate the start and termination of some computation in the status bar}
+\title{Indicate the start and termination of some computation in the status bar
+(superseded)}
 \usage{
 cli_process_start(
   msg,
@@ -71,6 +72,10 @@ status bar container), then the status bar is not cleared. If \code{NULL}
 Id of the status bar container.
 }
 \description{
+\strong{The \verb{cli_process_*()} functions are superseded by
+the \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}} functions,
+because they have a better default behavior.}
+
 Typically you call \code{cli_process_start()} to start the process, and then
 \code{cli_process_done()} when it is done. If an error happens before
 \code{cli_process_done()} is called, then cli automatically shows the message
@@ -107,6 +112,9 @@ fun2 <- function() {
 fun2()
 }
 \seealso{
+The \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}}
+functions, for a superior API.
+
 Other status bar: 
 \code{\link{cli_status_clear}()},
 \code{\link{cli_status_update}()},

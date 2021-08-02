@@ -29,6 +29,14 @@ also used to auto-close the container if \code{.auto_close} is \code{TRUE}.}
 \description{
 A section that is quoted from another source. It is typically indented.
 }
-\examples{
-cli_blockquote(cli:::lorem_ipsum(), citation = "Nobody, ever")
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{evil <- paste(
+  "The real problem is that programmers have spent far too much time",
+  "worrying about efficiency in the wrong places and at the wrong",
+  "times; premature optimization is the root of all evil (or at least",
+  "most of it) in programming.")
+cli_blockquote(evil, citation = "Donald Ervin Knuth")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-blockquote.svg}}
 }

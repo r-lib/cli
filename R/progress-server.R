@@ -70,6 +70,8 @@
 #'
 #' @export
 
+# TODO: examples
+
 cli_progress_builtin_handlers <- function() {
   names(builtin_handlers())
 }

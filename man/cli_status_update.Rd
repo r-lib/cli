@@ -2,7 +2,7 @@
 % Please edit documentation in R/status-bar.R
 \name{cli_status_update}
 \alias{cli_status_update}
-\title{Update the status bar}
+\title{Update the status bar (superseded)}
 \usage{
 cli_status_update(
   id = NULL,
@@ -31,9 +31,16 @@ change it.}
 Id of the status bar container.
 }
 \description{
+\strong{The \verb{cli_status_*()} functions are superseded by
+the \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}} functions,
+because they have a better default behavior.}
+
 Update the status bar
 }
 \seealso{
+The \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}}
+functions, for a superior API.
+
 Other status bar: 
 \code{\link{cli_process_start}()},
 \code{\link{cli_status_clear}()},
