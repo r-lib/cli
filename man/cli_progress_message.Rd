@@ -35,6 +35,27 @@ message, without progress units.
 \code{cli_progress_message()} always shows the message, even if no
 update is due. When the progress message is terminated, it is removed
 from the screen by default.
+
+Note that the message can be dynamic: if you update it with
+\code{\link[=cli_progress_update]{cli_progress_update()}}, then cli uses the current values in the string
+substitutions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_progress_message("Task one is running...")
+  Sys.sleep(2)
+
+  cli_progress_message("Task two is running...")
+  Sys.sleep(2)
+
+  step <- 1L
+  cli_progress_message("Task three is underway: step \{step\}")
+  for (step in 1:5) \{
+    Sys.sleep(0.5)
+    cli_progress_update()
+  \}
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-message.svg}}
 }
 \seealso{
 \code{\link[=cli_progress_bar]{cli_progress_bar()}} for the complete progress bar API.

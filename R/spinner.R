@@ -17,6 +17,19 @@ usethis::use_data(spinners, internal = TRUE)
 #' `cli` contains many different spinners, you choose one according to your
 #' taste.
 #'
+#' ```{asciicast get-spinner, R.options = list(asciicast_at = NULL)}
+#' options(cli.spinner = "hearts")
+#' fun <- function() {
+#'   cli_progress_bar("Spinning")
+#'   for (i in 1:100) {
+#'     Sys.sleep(4/100)
+#'     cli_progress_update()
+#'   }
+#' }
+#' fun()
+#' options(cli.spinner = NULL)
+#' ```
+#'
 #' @param which The name of the chosen spinner. If `NULL`, then the default
 #'   is used, which can be customized via the `cli.spinner_unicode`,
 #'   `cli.spinner_ascii` and `cli.spinner` options. (The latter applies to
@@ -29,9 +42,6 @@ usethis::use_data(spinners, internal = TRUE)
 #'
 #' @family spinners
 #' @export
-#' @examples
-#' get_spinner()
-#' get_spinner("shark")
 
 get_spinner <- function(which = NULL) {
   stopifnot(is.null(which) || is_string(which) || is.list(which))
@@ -113,24 +123,32 @@ list_spinners <- function() {
 #' The spinner is automatically throttled to its ideal update frequency.
 #'
 #' @section Examples:
-#' ```
+#'
 #' ## Default spinner
+#'
+#' ```{asciicast make-spinner-default, R.options = list(asciicast_at = NULL)}
 #' sp1 <- make_spinner()
 #' fun_with_spinner <- function() {
 #'   lapply(1:100, function(x) { sp1$spin(); Sys.sleep(0.05) })
 #'   sp1$finish()
 #' }
 #' ansi_with_hidden_cursor(fun_with_spinner())
+#' ```
 #'
 #' ## Spinner with a template
+#'
+#' ```{asciicast make-spinner-template, R.options = list(asciicast_at = NULL)}
 #' sp2 <- make_spinner(template = "Computing {spin}")
 #' fun_with_spinner2 <- function() {
 #'   lapply(1:100, function(x) { sp2$spin(); Sys.sleep(0.05) })
 #'   sp2$finish()
 #' }
 #' ansi_with_hidden_cursor(fun_with_spinner2())
+#' ```
 #'
 #' ## Custom spinner
+#'
+#' ```{asciicast make-spinner-custom, R.options = list(asciicast_at = NULL)}
 #' sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading {spin}")
 #' fun_with_spinner3 <- function() {
 #'   lapply(1:100, function(x) { sp3$spin(); Sys.sleep(0.05) })
@@ -267,14 +285,16 @@ print.cli_spinner <- function(x, ...) {
 #'
 #' Each spinner is shown for about 2-3 seconds.
 #'
+#' @details
+#'
+#' ```{asciicast demo-spinners, R.options =list(asciicast_at = NULL)}
+#' demo_spinners("clock")
+#' ```
+#'
 #' @param which Character vector, which spinners to demo.
 #'
 #' @family spinners
 #' @export
-#' @examples
-#' \dontrun{
-#'   demo_spinners(sample(list_spinners(), 10))
-#' }
 
 demo_spinners <- function(which = NULL) {
   stopifnot(is.null(which) || is.character(which))
@@ -300,7 +320,7 @@ demo_spinners <- function(which = NULL) {
   }
 }
 
-demo_spinners_terminal <- function() {
+demo_spinners_terminal <- function(ticks = 100 * 3000) {
   up <- function(n) cat(paste0("\u001B[", n, "A"))
   show <- function() cat("\u001b[?25h")
   hide <- function() cat("\u001b[?25l")
@@ -326,7 +346,7 @@ demo_spinners_terminal <- function() {
 
   hide()
 
-  for (tick in 0:1000000) {
+  for (tick in 0:ticks) {
     tic <- Sys.time()
     wframe <- trunc(tick / intervals) %% num_frames + 1
     sp <- mapply(frames, wframe, FUN = "[")

@@ -8,17 +8,57 @@
 #' progress bar. It uses [cli_progress_bar()] internally.
 #'
 #' @details
-#' Usage:
 #'
-#' ```r
-#' lapply(cli_progress_along(X), function(i) ...)
-#' ```
+#' ## `for` loop
+#'
+#' A `for` loop with `cli_progress_along()` looks like this:
 #'
 #' ```r
 #' for (i in cli_progress_along(seq)) {
 #'   ...
 #' }
 #' ```
+#'
+#' A complete example:
+#'
+#' ```{asciicast progress-along-1, R.options = list(asciicast_at = NULL)}
+#' clifun <- function() {
+#'   for (i in cli_progress_along(1:100, "Downloading")) {
+#'      Sys.sleep(4/100)
+#'   }
+#' }
+#' clifun()
+#' ```
+#'
+#' ## `lapply()` and other mapping functions
+#'
+#' They will look like this:
+#'
+#' ```r
+#' lapply(cli_progress_along(X), function(i) ...)
+#' ```
+#'
+#' A complete example:
+#'
+#' ```{asciicast progress-along-2, R.options = list(asciicast_at = NULL)}
+#' res <- lapply(cli_progress_along(1:100, "Downloading"), function(i) {
+#'   Sys.sleep(4/100)
+#' })
+#' ```
+#'
+#' ## Custom format string
+#'
+#' ```{asciicast progress-along-3, R.options = list(asciicast_at = NULL)}
+#' clifun <- function() {
+#'   for (i in cli_progress_along(1:100,
+#'       format = "Downloading data file {cli::pb_current}")) {
+#'      Sys.sleep(4/100)
+#'   }
+#' }
+#' clifun()
+#' ```
+#'
+#' ## Breaking out of loops
 #'
 #' Note that if you use `break` in the `for` loop, you probably want to
 #' terminate the progress bar explicitly when breaking out of the loop,

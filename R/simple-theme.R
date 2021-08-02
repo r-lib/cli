@@ -1,40 +1,38 @@
 
 #' A simple CLI theme
 #'
-#' Note that this is in addition to the builtin theme. To use this theme,
-#' you can set it as the `cli.theme` option:
+#' To use this theme, you can set it as the `cli.theme` option.
+#' Note that this is in addition to the builtin theme, which is still in
+#' effect.
 #'
-#' ```
+#' ```r
 #' options(cli.theme = cli::simple_theme())
 #' ```
 #'
 #' and then CLI apps started after this will use it as the default theme.
 #' You can also use it temporarily, in a div element:
 #'
-#' ```
+#' ```r
 #' cli_div(theme = cli::simple_theme())
 #' ```
 #'
-#' @param dark Whether the theme should be optiomized for a dark
-#'   background. If `"auto"`, then cli will try to detect this.
-#'   Detection usually works in recent RStudio versions, and in iTerm
-#'   on macOS, but not on other platforms.
+#' # Showcase
 #'
-#' @seealso [themes], [builtin_theme()].
-#' @export
-#' @examples
-#' cli_div(theme = cli::simple_theme())
+#' ```{asciicast simple-theme}
+#' show <- cli_div(theme = cli::simple_theme())
 #'
 #' cli_h1("Heading 1")
 #' cli_h2("Heading 2")
 #' cli_h3("Heading 3")
 #'
+#' cli_par()
 #' cli_alert_danger("Danger alert")
 #' cli_alert_warning("Warning alert")
 #' cli_alert_info("Info alert")
 #' cli_alert_success("Success alert")
 #' cli_alert("Alert for starting a process or computation",
 #'   class = "alert-start")
+#' cli_end()
 #'
 #' cli_text("Packages and versions: {.pkg cli} {.version 1.0.0}.")
 #' cli_text("Time intervals: {.timestamp 3.4s}")
@@ -54,14 +52,17 @@
 #'   'mtcars %>%',
 #'   '  group_by(cyl) %>%',
 #'   '  mutate(rank = min_rank(desc(mpg)))')
-#' cli_end()
 #'
-#' cli_h2("Even longer code chunk")
-#' cli_par(class = "code R")
-#' cli_verbatim(format(ls))
-#' cli_end()
+#' cli_end(show)
+#' ```
 #'
-#' cli_end()
+#' @param dark Whether the theme should be optiomized for a dark
+#'   background. If `"auto"`, then cli will try to detect this.
+#'   Detection usually works in recent RStudio versions, and in iTerm
+#'   on macOS, but not on other platforms.
+#'
+#' @seealso [themes], [builtin_theme()].
+#' @export
 
 simple_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
 

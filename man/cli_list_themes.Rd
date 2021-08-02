@@ -22,5 +22,5 @@ Each data frame has columns:
 If there is no active app, then it calls \code{\link[=start_app]{start_app()}}.
 }
 \seealso{
-themes
+\link{themes}
 }

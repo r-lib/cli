@@ -39,10 +39,7 @@ fails.)
 }
 \details{
 A node might appear multiple times in the tree, or might not appear
-at all.
-}
-\examples{
-data <- data.frame(
+at all.\if{html}{\out{<div class="sourceCode r">}}\preformatted{data <- data.frame(
   stringsAsFactors = FALSE,
   package = c("processx", "backports", "assertthat", "Matrix",
     "magrittr", "rprojroot", "clisymbols", "prettyunits", "withr",
@@ -61,10 +58,13 @@ data <- data.frame(
   ))
 )
 tree(data)
-tree(data, root = "rcmdcheck")
+}\if{html}{\out{</div>}}
 
-# Colored nodes
-data$label <- paste(data$package,
+\if{html}{\figure{tree.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{tree(data, root = "rcmdcheck")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{tree-root.svg}}
+\subsection{Colored nodes}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{data$label <- paste(data$package,
   style_dim(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
     "2.2.2", "1.3.4", "1.0.2", "0.6.12", "2.2.1", "1.2.1.9002",
@@ -72,11 +72,13 @@ data$label <- paste(data$package,
   )
 roots <- ! data$package \%in\% unlist(data$dependencies)
 data$label[roots] <- col_cyan(style_italic(data$label[roots]))
-tree(data)
 tree(data, root = "rcmdcheck")
+}\if{html}{\out{</div>}}
 
-# Trimming
-pkgdeps <- list(
+\if{html}{\figure{tree-colored.svg}}
+}
+
+\subsection{Trimming}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgdeps <- list(
   "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",
     "R6@2.4.0", "Rcpp@1.0.2", "rlang@0.4.0", "tibble@2.1.3",
     "tidyselect@0.2.5"),
@@ -113,11 +115,15 @@ pkgs <- data.frame(
   deps = I(unname(pkgdeps))
 )
 
-tree(pkgs)
 tree(pkgs, trim = TRUE)
+}\if{html}{\out{</div>}}
 
-# Mark the trimmed nodes
+\if{html}{\figure{tree-trimming.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Mark the trimmed nodes
 pkgs$label <- pkgs$name
 pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
 tree(pkgs, trim = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{tree-trim-mark.svg}}
+}
 }

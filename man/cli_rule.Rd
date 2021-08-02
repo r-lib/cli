@@ -28,34 +28,33 @@ and returned.}
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }
 \description{
-It can be used to separate parts of the output. The line style of the
-rule can be changed via the the \code{line-type} property. Possible values
-are:
+It can be used to separate parts of the output.
 }
 \details{
+\subsection{Inline styling and interpolation}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkg <- "mypackage"
+cli_rule(left = "\{.pkg \{pkg\}\} results")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-rule.svg}}
+}
+
+\subsection{Theming}{
+
+The line style of the rule can be changed via the the \code{line-type}
+property. Possible values are:
 \itemize{
 \item \code{"single"}: (same as \code{1}), a single line,
 \item \code{"double"}: (same as \code{2}), a double line,
 \item \code{"bar1"}, \code{"bar2"}, \code{"bar3"}, etc., \code{"bar8"} uses varying height bars.
 }
 
-Colors and background colors can similarly changed via a theme, see
-examples below.
-}
-\examples{
-cli_rule()
-cli_text(packageDescription("cli")$Description)
-cli_rule()
-
-# Theming
-d <- cli_div(theme = list(rule = list(
-  color = "blue",
-  "background-color" = "darkgrey",
+Colors and background colors can similarly changed via a theme.\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(rule = list(
+  color = "cyan",
   "line-type" = "double")))
-cli_rule("Left", right = "Right")
+cli_rule("Summary", right = "\{.pkg mypackage\}")
 cli_end(d)
+}\if{html}{\out{</div>}}
 
-# Interpolation
-cli_rule(left = "One plus one is {1+1}")
-cli_rule(left = "Package {.pkg mypackage}")
+\if{html}{\figure{cli-rule-line-type.svg}}
+}
 }

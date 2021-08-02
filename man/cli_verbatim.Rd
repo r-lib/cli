@@ -13,8 +13,24 @@ printed on a new line.}
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }
 \description{
-It is not wrapped, but printed as is.
+It is not wrapped, but printed as is. Long lines will overflow.
+No glue substitution is performed on verbatim text.
 }
-\examples{
-cli_verbatim("This has\nthree", "lines")
+\details{
+\subsection{Line breaks}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("This has\\nthree\\nlines,")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-verbatim.svg}}
+}
+
+\subsection{Special characters}{
+
+No glue substritution happens here.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("No string \{interpolation\} or \{.emph styling\} here")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-verbatim-2.svg}}
+}
+}
+\seealso{
+\code{\link[=cli_code]{cli_code()}} for printing R or other source code.
 }

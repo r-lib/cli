@@ -45,10 +45,7 @@ It works well together with \code{\link[=boxx]{boxx()}}, see the example below.
 }
 \details{
 If a string does not fit into the specified \code{width}, it will be
-truncated using \code{\link[=ansi_strtrim]{ansi_strtrim()}}.
-}
-\examples{
-fmt <- ansi_columns(
+truncated using \code{\link[=ansi_strtrim]{ansi_strtrim()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fmt <- ansi_columns(
   paste(col_red("foo"), 1:10),
   width = 50,
   fill = "rows",
@@ -56,9 +53,10 @@ fmt <- ansi_columns(
   align = "center",
   sep = "   "
 )
-fmt
-ansi_nchar(fmt, type = "width")
-boxx(fmt, padding = c(0,1,0,1), header = col_green("foobar"))
+boxx(fmt, padding = c(0,1,0,1), header = col_cyan("Columns"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{ansi-column.svg}}
 }
 \seealso{
 Other ANSI string operations: 

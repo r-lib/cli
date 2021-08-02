@@ -39,23 +39,42 @@ The id of the new container element, invisibly.
 \description{
 An ordered list is a container, see \link{containers}.
 }
-\examples{
-## Specifying the items at the beginning
-cli_ol(c("one", "two", "three"))
+\details{
+\subsection{Adding all items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_ol(c("one", "two", "three"))
+\}
+fun()
+}\if{html}{\out{</div>}}
 
-## Adding items one by one
-cli_ol()
-cli_li("one")
-cli_li("two")
-cli_li("three")
-cli_end()
+\if{html}{\figure{cli-ol.svg}}
+}
 
-## Nested lists
-cli_div(theme = list(ol = list("margin-left" = 2)))
-cli_ul()
-cli_li("one")
-cli_ol(c("foo", "bar", "foobar"))
-cli_li("two")
-cli_end()
-cli_end()
+\subsection{Adding items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{## Adding items one by one
+fun <- function() \{
+  cli_ol()
+  cli_li("\{.emph one\}")
+  cli_li("\{.emph two\}")
+  cli_li("\{.emph three\}")
+  cli_end()
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-ol-2.svg}}
+}
+
+\subsection{Nested lists}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_div(theme = list(ol = list("margin-left" = 2)))
+  cli_ul()
+  cli_li("one")
+  cli_ol(c("foo", "bar", "foobar"))
+  cli_li("two")
+  cli_end()
+  cli_end()
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-ol-3.svg}}
+}
 }

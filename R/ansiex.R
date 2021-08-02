@@ -338,6 +338,35 @@ ansi_strsplit <- function(x, split, ...) {
 
 #' Align an ANSI colored string
 #'
+#' @details
+#'
+#' ```{asciicast ansi-align}
+#' str <- c(
+#'   col_red("This is red"),
+#'   style_bold("This is bold")
+#' )
+#' astr <- ansi_align(str, width = 30)
+#' boxx(astr)
+#' ```
+#'
+#' ```{asciicast ansi-align-center}
+#' str <- c(
+#'   col_red("This is red"),
+#'   style_bold("This is bold")
+#' )
+#' astr <- ansi_align(str, align = "center", width = 30)
+#' boxx(astr)
+#' ```
+#'
+#' ```{asciicast ansi-align-right}
+#' str <- c(
+#'   col_red("This is red"),
+#'   style_bold("This is bold")
+#' )
+#' astr <- ansi_align(str, align = "right", width = 30)
+#' boxx(astr)
+#' ```
+#'
 #' @param text The character vector to align.
 #' @param width Width of the field to align in.
 #' @param align Whether to align `"left"`, `"center"` or `"right"`.
@@ -346,10 +375,8 @@ ansi_strsplit <- function(x, split, ...) {
 #'
 #' @family ANSI string operations
 #' @export
-#' @examples
-#' ansi_align(col_red("foobar"), 20, "left")
-#' ansi_align(col_red("foobar"), 20, "center")
-#' ansi_align(col_red("foobar"), 20, "right")
+
+# TODO: show wide Unicode charadcters, once they work in asciicast
 
 ansi_align <- function(text, width = console_width(),
                       align = c("left", "center", "right"),
@@ -629,6 +656,18 @@ ansi_strtrim <- function(x, width = console_width(),
 #' If a string does not fit into the specified `width`, it will be
 #' truncated using [ansi_strtrim()].
 #'
+#' ```{asciicast ansi-column}
+#' fmt <- ansi_columns(
+#'   paste(col_red("foo"), 1:10),
+#'   width = 50,
+#'   fill = "rows",
+#'   max_cols=10,
+#'   align = "center",
+#'   sep = "   "
+#' )
+#' boxx(fmt, padding = c(0,1,0,1), header = col_cyan("Columns"))
+#' ```
+#'
 #' @param text Character vector to format. Each element will formatted
 #'   as a cell of a table.
 #' @param width Width of the screen.
@@ -644,18 +683,6 @@ ansi_strtrim <- function(x, width = console_width(),
 #'
 #' @family ANSI string operations
 #' @export
-#' @examples
-#' fmt <- ansi_columns(
-#'   paste(col_red("foo"), 1:10),
-#'   width = 50,
-#'   fill = "rows",
-#'   max_cols=10,
-#'   align = "center",
-#'   sep = "   "
-#' )
-#' fmt
-#' ansi_nchar(fmt, type = "width")
-#' boxx(fmt, padding = c(0,1,0,1), header = col_green("foobar"))
 
 ansi_columns <- function(text, width = console_width(), sep = " ",
                          fill = c("rows", "cols"), max_cols = 4,

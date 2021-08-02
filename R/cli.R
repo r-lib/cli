@@ -8,17 +8,19 @@
 #' Use this function to build a more complex piece of CLI that would not
 #' make sense to show in pieces.
 #'
-#' @param expr Expression that contains `cli_*` calls. Their output is
-#' collected and sent as a single message.
-#' @return Nothing.
-#'
-#' @export
-#' @examples
+#' ```{asciicast cli-cli}
 #' cli({
 #'   cli_h1("Title")
 #'   cli_h2("Subtitle")
 #'   cli_ul(c("this", "that", "end"))
 #' })
+#' ```
+#'
+#' @param expr Expression that contains `cli_*` calls. Their output is
+#' collected and sent as a single message.
+#' @return Nothing.
+#'
+#' @export
 
 cli <- function(expr) {
   cond <- cli__message_create("meta", cli__rec(expr))
@@ -74,13 +76,15 @@ fmt <- function(expr, collapse = FALSE, strip_newline = FALSE, app = NULL) {
 #' You can use this function to format a line of cli text, without emitting
 #' it to the screen. It uses [cli_text()] internally.
 #'
+#' `format_inline()` performs no width-wrapping.
+#'
 #' @param ... Passed to [cli_text()].
 #' @param .envir Environment to evaluate the expressions in.
 #' @return Character scalar, the formatted string.
 #'
 #' @export
 #' @examples
-#' format_inline("This is a message for {.emph later}.")
+#' format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 
 format_inline <- function(..., .envir = parent.frame()) {
   opts <- options(cli.width = Inf)
@@ -90,36 +94,82 @@ format_inline <- function(..., .envir = parent.frame()) {
 
 #' CLI text
 #'
-#' It is wrapped to the screen width automatically. It may contain inline
-#' markup. (See [inline-markup].)
+#' Write some text to the screen. This function is most appropriate for
+#' longer paragraphs. See [cli_alert()] for shorter status messages.
+#'
+#' @details
+#'
+#' ## Text wrapping
+#'
+#' Text is wrapped to the console width, see [console_width()].
+#'
+#' ```{asciicast cli-text}
+#' cli_text(cli:::lorem_ipsum())
+#' ```
+#'
+#' ## New lines
+#'
+#' A `cli_text()` call always appends a newline character to the end.
+#'
+#' ```{asciicast cli-text-newline}
+#' cli_text("First line.")
+#' cli_text("Second line.")
+#' ```
+#'
+#' ## Stlying
+#'
+#' You can use [inline markup][inline-markup], as usual.
+#'
+#' ```{asciicast cli-text-markup}
+#' cli_text("The {.fn cli_text} function in the {.pkg cli} package.")
+#' ```
+#'
+#' ## Interpolation
+#'
+#' String interpolation via glue works as usual. Interpolated vectors
+#' are collapsed.
+#'
+#' ```{asciicast cli-text-glue}
+#' pos <- c(5, 14, 25, 26)
+#' cli_text("We have {length(pos)} missing measurements: {pos}.")
+#' ```
+#'
+#' ## Styling and interpolation
+#'
+#' Use double braces to combine styling and string interpolation.
+#'
+#' ```{asciicast cli-text-glue-style}
+#' fun <- "cli-text"
+#' pkg <- "cli"
+#' cli_text("The {.fn {fun}} function in the {.pkg {pkg}} package.")
+#' ```
+#'
+#' ## Multiple arguments
+#'
+#' Arguments are concatenated.
+#'
+#' ```{asciicast cli-text-concat}
+#' cli_text(c("This ", "will ", "all "), "be ", "one ", "sentence.")
+#' ```
+#'
+#' ## Containers
+#'
+#' You can use `cli_text()` within cli [containers].
+#'
+#' ```{asciicast cli-text-containers}
+#' ul <- cli_ul()
+#' cli_li("First item.")
+#' cli_text("Still the {.emph first} item")
+#' cli_li("Second item.")
+#' cli_text("Still the {.emph second} item")
+#' cli_end(ul)
+#' ```
 #'
 #' @param ... The text to show, in character vectors. They will be
 #'   concatenated into a single string. Newlines are _not_ preserved.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
 #' @export
-#' @examples
-#' cli_text("Hello world!")
-#' cli_text(packageDescription("cli")$Description)
-#'
-#' ## Arguments are concatenated
-#' cli_text("this", "that")
-#'
-#' ## Command substitution
-#' greeting <- "Hello"
-#' subject <- "world"
-#' cli_text("{greeting} {subject}!")
-#'
-#' ## Inline theming
-#' cli_text("The {.fn cli_text} function in the {.pkg cli} package")
-#'
-#' ## Use within container elements
-#' ul <- cli_ul()
-#' cli_li()
-#' cli_text("{.emph First} item")
-#' cli_li()
-#' cli_text("{.emph Second} item")
-#' cli_end(ul)
 
 cli_text <- function(..., .envir = parent.frame()) {
   cli__message("text", list(text = glue_cmd(..., .envir = .envir)))
@@ -127,21 +177,49 @@ cli_text <- function(..., .envir = parent.frame()) {
 
 #' CLI verbatim text
 #'
-#' It is not wrapped, but printed as is.
+#' It is not wrapped, but printed as is. Long lines will overflow.
+#' No glue substitution is performed on verbatim text.
+#'
+#' @details
+#'
+#' ## Line breaks
+#'
+#' ```{asciicast cli-verbatim}
+#' cli_verbatim("This has\nthree\nlines,")
+#' ```
+#'
+#' ## Special characters
+#'
+#' No glue substritution happens here.
+#'
+#' ```{asciicast cli-verbatim-2}
+#' cli_verbatim("No string {interpolation} or {.emph styling} here")
+#' ```
 #'
 #' @param ... The text to show, in character vectors. Each element is
 #'   printed on a new line.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
+#' @seealso [cli_code()] for printing R or other source code.
 #' @export
-#' @examples
-#' cli_verbatim("This has\nthree", "lines")
 
 cli_verbatim <- function(..., .envir = parent.frame()) {
   cli__message("verbatim", c(list(...), list(.envir = .envir)))
 }
 
 #' CLI headings
+#'
+#' cli has three levels of headings.
+#'
+#' @details
+#'
+#' This is how the headings look with the default builtin theme.
+#'
+#' ```{asciicast, cli-h1}
+#' cli_h1("Header {.emph 1}")
+#' cli_h2("Header {.emph 2}")
+#' cli_h3("Header {.emph 3}")
+#' ```
 #'
 #' @param text Text of the heading. It can contain inline markup.
 #' @param id Id of the heading element, string. It can be used in themes.
@@ -150,10 +228,6 @@ cli_verbatim <- function(..., .envir = parent.frame()) {
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
 #' @export
-#' @examples
-#' cli_h1("Main title")
-#' cli_h2("Subtitle")
-#' cli_text("And some regular text....")
 
 cli_h1 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
   cli__message("h1", list(text = glue_cmd(text, .envir = .envir), id = id,
@@ -181,6 +255,31 @@ cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
 #' See [containers]. A `cli_div` container is special, because it may
 #' add new themes, that are valid within the container.
 #'
+#' @details
+#'
+#' ## Custom themes
+#'
+#' ```{asciicast cli-div}
+#' d <- cli_div(theme = list(h1 = list(color = "cyan",
+#'                                     "font-weight" = "bold")))
+#' cli_h1("Custom title")
+#' cli_end(d)
+#' ```
+#'
+#' ## Auto-closing
+#'
+#' By default a `cli_div()` is closed automatically when the calling
+#' frame exits.
+#'
+#' ```{asciicast cli-div-close}
+#' div <- function() {
+#'   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
+#'   cli_text("This is yellow")
+#' }
+#' div()
+#' cli_text("This is not yellow any more")
+#' ```
+#'
 #' @param id Element id, a string. If `NULL`, then a new id is generated
 #'   and returned.
 #' @param class Class name, sting. Can be used in themes.
@@ -192,20 +291,6 @@ cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
-#' @examples
-#' ## div with custom theme
-#' d <- cli_div(theme = list(h1 = list(color = "blue",
-#'                                     "font-weight" = "bold")))
-#' cli_h1("Custom title")
-#' cli_end(d)
-#'
-#' ## Close automatically
-#' div <- function() {
-#'   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
-#'   cli_text("This is yellow")
-#' }
-#' div()
-#' cli_text("This is not yellow any more")
 
 cli_div <- function(id = NULL, class = NULL, theme = NULL,
                     .auto_close = TRUE, .envir = parent.frame()) {
@@ -215,7 +300,17 @@ cli_div <- function(id = NULL, class = NULL, theme = NULL,
 
 #' CLI paragraph
 #'
-#' See [containers].
+#' The builtin theme leaves an empty line between paragraphs.
+#' See also [containers].
+#'
+#' ```{asciicast cli-par}
+#' clifun <- function() {
+#'   cli_par()
+#'   cli_text(cli:::lorem_ipsum())
+#' }
+#' clifun()
+#' clifun()
+#' ```
 #'
 #' @param id Element id, a string. If `NULL`, then a new id is generated
 #'   and returned.
@@ -224,13 +319,6 @@ cli_div <- function(id = NULL, class = NULL, theme = NULL,
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
-#' @examples
-#' id <- cli_par()
-#' cli_text("First paragraph")
-#' cli_end(id)
-#' id <- cli_par()
-#' cli_text("Second paragraph")
-#' cli_end(id)
 
 cli_par <- function(id = NULL, class = NULL, .auto_close = TRUE,
                     .envir = parent.frame()) {
@@ -240,18 +328,66 @@ cli_par <- function(id = NULL, class = NULL, .auto_close = TRUE,
 
 #' Close a CLI container
 #'
-#' @param id Id of the container to close. If missing, the current
-#' container is closed, if any.
+#' Containers aut0-close by default, but sometimes you need to explicitly
+#' close them. Closing a container also closes all of its nested
+#' containeers.
 #'
-#' @export
-#' @examples
-#' ## If id is omitted
+#' @details
+#'
+#' ## Explicit closing
+#'
+#' ```{asciicast cli-end}
+#' cnt <- cli_par()
+#' cli_text("First paragraph.")
+#' cli_end(cnt)
+#' cnt <- cli_par()
+#' cli_text("Second paragraph.")
+#' cli_end(cnt)
+#' ```
+#'
+#' ## Closing a stack of containers
+#'
+#' ```{asciicast cli-end-many}
+#' list <- cli_ul()
+#' cli_li("Item one:")
+#' cli_li("Item two:")
+#' cli_par()
+#' cli_text("Still item two.")
+#' cli_end(list)
+#' cli_text("Not in the list any more")
+#' ```
+#'
+#' ## Omitting `id`
+#'
+#' If `id` is omitted, the container that was opened last will be closed.
+#'
+#' ```{asciicast cli-end-noid}
 #' cli_par()
 #' cli_text("First paragraph")
 #' cli_end()
 #' cli_par()
 #' cli_text("Second paragraph")
 #' cli_end()
+#' ```
+#'
+#' ## Debugging containers
+#'
+#' You can use the internal `cli:::cli_debug_doc()` function to see the
+#' currently open containers.
+#'
+#' ```{asciicast cli-end-debug}
+#' fun <- function() {
+#'   cli_div(id = "mydiv")
+#'   cli_par(class = "myclass")
+#'   cli:::cli_debug_doc()
+#' }
+#' fun()
+#' ```
+#'
+#' @param id Id of the container to close. If missing, the current
+#' container is closed, if any.
+#'
+#' @export
 
 cli_end <- function(id = NULL) {
   cli__message("end", list(id = id %||% NA_character_))
@@ -260,6 +396,30 @@ cli_end <- function(id = NULL) {
 #' Unordered CLI list
 #'
 #' An unordered list is a container, see [containers].
+#'
+#' @details
+#'
+#' ## Adding all items at once
+#'
+#' ```{asciicast cli-ul}
+#' fun <- function() {
+#'   cli_ul(c("one", "two", "three"))
+#' }
+#' fun()
+#' ```
+#'
+#' ## Adding items one by one
+#'
+#' ```{asciicast cli-ul-2}
+#' fun <- function() {
+#'   cli_ul()
+#'   cli_li("{.emph one}")
+#'   cli_li("{.emph two}")
+#'   cli_li("{.emph three}")
+#'   cli_end()
+#' }
+#' fun()
+#' ```
 #'
 #' @param items If not `NULL`, then a character vector. Each element of
 #'   the vector will be one list item, and the list container will be
@@ -274,25 +434,7 @@ cli_end <- function(id = NULL) {
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
-#' @examples
-#' ## Specifying the items at the beginning
-#' cli_ul(c("one", "two", "three"))
-#'
-#' ## Adding items one by one
-#' cli_ul()
-#' cli_li("one")
-#' cli_li("two")
-#' cli_li("three")
-#' cli_end()
-#'
-#' ## Complex item, added gradually.
-#' cli_ul()
-#' cli_li()
-#' cli_verbatim("Beginning of the {.emph first} item")
-#' cli_text("Still the first item")
-#' cli_end()
-#' cli_li("Second item")
-#' cli_end()
+
 
 cli_ul <- function(items = NULL, id = NULL, class = NULL,
                    .close = TRUE, .auto_close = TRUE,
@@ -309,29 +451,50 @@ cli_ul <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' An ordered list is a container, see [containers].
 #'
+#' @details
+#'
+#' ## Adding all items at once
+#'
+#' ```{asciicast cli-ol}
+#' fun <- function() {
+#'   cli_ol(c("one", "two", "three"))
+#' }
+#' fun()
+#' ```
+#'
+#' ## Adding items one by one
+#'
+#' ```{asciicast cli-ol-2}
+#' ## Adding items one by one
+#' fun <- function() {
+#'   cli_ol()
+#'   cli_li("{.emph one}")
+#'   cli_li("{.emph two}")
+#'   cli_li("{.emph three}")
+#'   cli_end()
+#' }
+#' fun()
+#' ```
+#'
+#' ## Nested lists
+#'
+#' ```{asciicast cli-ol-3}
+#' fun <- function() {
+#'   cli_div(theme = list(ol = list("margin-left" = 2)))
+#'   cli_ul()
+#'   cli_li("one")
+#'   cli_ol(c("foo", "bar", "foobar"))
+#'   cli_li("two")
+#'   cli_end()
+#'   cli_end()
+#' }
+#' fun()
+#' ```
+#'
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
-#' @examples
-#' ## Specifying the items at the beginning
-#' cli_ol(c("one", "two", "three"))
-#'
-#' ## Adding items one by one
-#' cli_ol()
-#' cli_li("one")
-#' cli_li("two")
-#' cli_li("three")
-#' cli_end()
-#'
-#' ## Nested lists
-#' cli_div(theme = list(ol = list("margin-left" = 2)))
-#' cli_ul()
-#' cli_li("one")
-#' cli_ol(c("foo", "bar", "foobar"))
-#' cli_li("two")
-#' cli_end()
-#' cli_end()
 
 cli_ol <- function(items = NULL, id = NULL, class = NULL,
                    .close = TRUE, .auto_close = TRUE,
@@ -348,22 +511,35 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' A definition list is a container, see [containers].
 #'
+#' @details
+#'
+#' ## All items at once
+#'
+#' ```{asciicast cli-dl}
+#' fun <- function() {
+#'   cli_dl(c(foo = "one", bar = "two", baz = "three"))
+#' }
+#' fun()
+#' ```
+#'
+#' ## Items one by one
+#'
+#' ```{asciicast cli-dl-2}
+#' fun <- function() {
+#'   cli_dl()
+#'   cli_li(c(foo = "{.emph one}"))
+#'   cli_li(c(bar = "two"))
+#'   cli_li(c(baz = "three"))
+#' }
+#' fun()
+#' ```
+#'
 #' @param items Named character vector, or `NULL`. If not `NULL`, they
 #'   are used as list items.
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
-#' @examples
-#' ## Specifying the items at the beginning
-#' cli_dl(c(foo = "one", bar = "two", baz = "three"))
-#'
-#' ## Adding items one by one
-#' cli_dl()
-#' cli_li(c(foo = "one"))
-#' cli_li(c(bar = "two"))
-#' cli_li(c(baz = "three"))
-#' cli_end()
 
 cli_dl <- function(items = NULL, id = NULL, class = NULL,
                    .close = TRUE, .auto_close = TRUE,
@@ -380,6 +556,22 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' A list item is a container, see [containers].
 #'
+#' @details
+#'
+#' ## Nested lists
+#'
+#' ```{asciicast cli-li}
+#' fun <- function() {
+#'   ul <- cli_ul()
+#'   cli_li("one:")
+#'   cli_ol(letters[1:3])
+#'   cli_li("two:")
+#'   cli_li("three")
+#'   cli_end(ul)
+#' }
+#' fun()
+#' ```
+#'
 #' @param items Character vector of items, or `NULL`.
 #' @param id Id of the new container. Can be used for closing it with
 #'   [cli_end()] or in themes. If `NULL`, then an id is generated and
@@ -389,22 +581,6 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
-#' @examples
-#' ## Adding items one by one
-#' cli_ul()
-#' cli_li("one")
-#' cli_li("two")
-#' cli_li("three")
-#' cli_end()
-#'
-#' ## Complex item, added gradually.
-#' cli_ul()
-#' cli_li()
-#' cli_verbatim("Beginning of the {.emph first} item")
-#' cli_text("Still the first item")
-#' cli_end()
-#' cli_li("Second item")
-#' cli_end()
 
 cli_li <- function(items = NULL, id = NULL, class = NULL,
                    .auto_close = TRUE, .envir = parent.frame()) {
@@ -420,6 +596,46 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' Alerts are typically short status messages.
 #'
+#' @details
+#'
+#' ## Success
+#'
+#' ```{asciicast alert-success}
+#' nbld <- 11
+#' tbld <- prettyunits::pretty_sec(5.6)
+#' cli_alert_success("Built {.emph {nbld}} status report{?s} in {tbld}.")
+#' ```
+#'
+#' ## Info
+#'
+#' ```{asciicast alert-info}
+#' cfl <- "~/.cache/files/latest.cache"
+#' cli_alert_info("Updating cache file {.path {cfl}}.")
+#' ```
+#'
+#' ## Warning
+#'
+#' ```{asciicast alert-warning}
+#' cfl <- "~/.cache/files/latest.cache"
+#' cli_alert_warning("Failed to update cache file {.path {cfl}}.")
+#' ```
+#'
+#' ## Danger
+#'
+#' ```{asciicast alert-danger}
+#' cfl <- "~/.config/report.yaml"
+#' cli_alert_danger("Cannot validate config file at {.path {cfl}}.")
+#' ```
+#'
+#' ## Text wrapping
+#'
+#' Alerts are printed without wrapping, unless you set `wrap = TRUE`:
+#'
+#' ```{asciicast alert-wrap, R.options = list(asciicast_rows = 4)}
+#' cli_alert_info("Data columns: {.val {names(mtcars)}}.")
+#' cli_alert_info("Data columns: {.val {names(mtcars)}}.", wrap = TRUE)
+#' ```
+#'
 #' @param text Text of the alert.
 #' @param id Id of the alert element. Can be used in themes.
 #' @param class Class of the alert element. Can be used in themes.
@@ -427,13 +643,6 @@ cli_li <- function(items = NULL, id = NULL, class = NULL,
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
 #' @export
-#' @examples
-#'
-#' cli_alert("Cannot lock package library.")
-#' cli_alert_success("Package {.pkg cli} installed successfully.")
-#' cli_alert_danger("Could not download {.pkg cli}.")
-#' cli_alert_warning("Internet seems to be unreacheable.")
-#' cli_alert_info("Downloaded 1.45MiB of data")
 
 cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
                       .envir = parent.frame()) {
@@ -514,38 +723,41 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 
 #' CLI horizontal rule
 #'
-#' It can be used to separate parts of the output. The line style of the
-#' rule can be changed via the the `line-type` property. Possible values
-#' are:
+#' It can be used to separate parts of the output.
+#'
+#' @details
+#'
+#' ## Inline styling and interpolation
+#'
+#' ```{asciicast cli-rule}
+#' pkg <- "mypackage"
+#' cli_rule(left = "{.pkg {pkg}} results")
+#' ```
+#'
+#' ## Theming
+#'
+#' The line style of the rule can be changed via the the `line-type`
+#' property. Possible values are:
 #'
 #' * `"single"`: (same as `1`), a single line,
 #' * `"double"`: (same as `2`), a double line,
 #' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
 #'
-#' Colors and background colors can similarly changed via a theme, see
-#' examples below.
+#' Colors and background colors can similarly changed via a theme.
+#'
+#' ```{asciicast cli-rule-line-type}
+#' d <- cli_div(theme = list(rule = list(
+#'   color = "cyan",
+#'   "line-type" = "double")))
+#' cli_rule("Summary", right = "{.pkg mypackage}")
+#' cli_end(d)
+#' ```
 #'
 #' @param .envir Environment to evaluate the glue expressions in.
 #' @inheritParams rule
 #' @inheritParams cli_div
 #'
 #' @export
-#' @examples
-#' cli_rule()
-#' cli_text(packageDescription("cli")$Description)
-#' cli_rule()
-#'
-#' # Theming
-#' d <- cli_div(theme = list(rule = list(
-#'   color = "blue",
-#'   "background-color" = "darkgrey",
-#'   "line-type" = "double")))
-#' cli_rule("Left", right = "Right")
-#' cli_end(d)
-#'
-#' # Interpolation
-#' cli_rule(left = "One plus one is {1+1}")
-#' cli_rule(left = "Package {.pkg mypackage}")
 
 cli_rule <- function(left = "", center = "", right = "", id = NULL,
                      .envir = parent.frame()) {
@@ -559,13 +771,22 @@ cli_rule <- function(left = "", center = "", right = "", id = NULL,
 #'
 #' A section that is quoted from another source. It is typically indented.
 #'
+#' @details
+#'
+#' ```{asciicast cli-blockquote}
+#' evil <- paste(
+#'   "The real problem is that programmers have spent far too much time",
+#'   "worrying about efficiency in the wrong places and at the wrong",
+#'   "times; premature optimization is the root of all evil (or at least",
+#'   "most of it) in programming.")
+#' cli_blockquote(evil, citation = "Donald Ervin Knuth")
+#' ```
+#'
 #' @export
 #' @param quote Text of the quotation.
 #' @param citation Source of the quotation, typically a link or the name
 #'   of a person.
 #' @inheritParams cli_div
-#' @examples
-#' cli_blockquote(cli:::lorem_ipsum(), citation = "Nobody, ever")
 
 cli_blockquote <- function(quote, citation = NULL, id = NULL,
                            class = NULL, .envir = parent.frame()) {
@@ -587,6 +808,16 @@ cli_blockquote <- function(quote, citation = NULL, id = NULL,
 #' containers specially. In particular, it adds syntax highlighting to
 #' valid R code.
 #'
+#' @details
+#'
+#' ```{asciicast cli-code}
+#' myfun <- function() {
+#'   message("Just an example function")
+#'   graphics::pairs(iris, col = 1:4)
+#' }
+#' cli_code(format(myfun))
+#' ```
+#'
 #' @param lines Chracter vector, each line will be a line of code, and
 #'   newline charactes also create new lines. Note that _no_ glue
 #'   substitution is performed on the code.
@@ -605,8 +836,6 @@ cli_blockquote <- function(quote, citation = NULL, id = NULL,
 #' @return The id of the container that contains the code.
 #'
 #' @export
-#' @examples
-#' cli_code(format(cli::cli_blockquote))
 
 cli_code <- function(lines = NULL, ..., language = "R",
                      .auto_close = TRUE, .envir = environment()) {

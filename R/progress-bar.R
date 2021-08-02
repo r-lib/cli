@@ -55,12 +55,19 @@ progress_style <- function(x) {
 #' `cli_pgoress_bar_style_ascii` and `cli_progress_bar_style` options
 #' are are used.
 #'
+#' ```{asciicast progress-style}
+#' for (style in names(cli_progress_styles())) {
+#'   options(cli.progress_bar_style = style)
+#'   label <- ansi_align(paste0("Style '", style, "'"), 20)
+#'   print(cli_progress_demo(label, live = FALSE, at = 66, total = 100))
+#' }
+#' options(cli.progress_var_style = NULL)
+#' ```
+#'
 #' @return A named list with sublists containing elements
 #' `complete`, `incomplete` and potentially `current`.
 #'
 #' @export
-#' @examples
-#' cli_progress_styles()
 
 cli_progress_styles <- function() {
   list(

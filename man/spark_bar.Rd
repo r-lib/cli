@@ -13,21 +13,29 @@ spark_bar(x)
 Rendered using \href{https://en.wikipedia.org/wiki/Block_Elements}{block elements}.
 In most common fixed width fonts these are rendered wider than regular
 characters which means they are not suitable if you need precise alignment.
-}
-\details{
+
 You might want to avoid sparklines on non-UTF-8 systems, because they
 do not look good. You can use \code{\link[=is_utf8_output]{is_utf8_output()}} to test for support
 for them.
 }
-\examples{
-x <- seq(0, 1, length = 6)
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- seq(0, 1, length = 6)
 spark_bar(x)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{spark-bar-1.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- seq(0, 1, length = 6)
 spark_bar(sample(x))
+}\if{html}{\out{</div>}}
 
-spark_bar(seq(0, 1, length = 8))
+\if{html}{\figure{spark-bar-2.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{spark_bar(seq(0, 1, length = 8))
+}\if{html}{\out{</div>}}
 
-# NAs are left out
-spark_bar(c(0, NA, 0.5, NA, 1))
+\if{html}{\figure{spark-bar-3.svg}}
+
+\code{NA}s are left out:\if{html}{\out{<div class="sourceCode r">}}\preformatted{spark_bar(c(0, NA, 0.5, NA, 1))
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{spark-bar-na.svg}}
 }
 \seealso{
 \code{\link[=spark_line]{spark_line()}}

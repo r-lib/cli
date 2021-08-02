@@ -1,5 +1,5 @@
 
-#' CLI inline markup
+#' About inline markup in the semantic cli
 #'
 #' @section Command substitution:
 #'
@@ -11,7 +11,7 @@
 #' to parts of the text, and these classes can be used in themes. For
 #' example
 #'
-#' ```
+#' ```{asciicast inline-text}
 #' cli_text("This is {.emph important}.")
 #' ```
 #'
@@ -20,7 +20,7 @@
 #' If you want to mix classes with interpolation, add another pair of
 #' braces:
 #'
-#' ```
+#' ```{asciicast inline-text-2}
 #' adjective <- "great"
 #' cli_text("This is {.emph {adjective}}.")
 #' ```
@@ -29,7 +29,7 @@
 #' themes, you can use the `span.emph` CSS selector to change how inline
 #' text is emphasized:
 #'
-#' ```
+#' ```{asciicast inline-text-3}
 #' cli_div(theme = list(span.emph = list(color = "red")))
 #' adjective <- "nice and red"
 #' cli_text("This is {.emph {adjective}}.")
@@ -57,10 +57,32 @@
 #' * `var` for a variable name.
 #' * `val` for a generic "value".
 #'
-#' See examples below.
+#' ```{asciicast inline-examples}
+#' ul <- cli_ul()
+#' cli_li("{.emph Emphasized} text.")
+#' cli_li("{.strong Strong} importance.")
+#' cli_li("A piece of code: {.code sum(a) / length(a)}.")
+#' cli_li("A package name: {.pkg cli}.")
+#' cli_li("A function name: {.fn cli_text}.")
+#' cli_li("A keyboard key: press {.kbd ENTER}.")
+#' cli_li("A file name: {.file /usr/bin/env}.")
+#' cli_li("An email address: {.email bugs.bunny@acme.com}.")
+#' cli_li("A URL: {.url https://acme.com}.")
+#' cli_li("An environment variable: {.envvar R_LIBS}.")
+#' cli_end(ul)
+#' ```
 #'
-#' You can simply add new classes by defining them in the theme, and then
-#' using them, see the example below.
+#' You can add new classes by defining them in the theme, and then using
+#' them.
+#'
+#' ```{asciicast inline-newclass}
+#' cli_div(theme = list(
+#'   span.myclass = list(color = "lightgrey"),
+#'   "span.myclass" = list(before = "<<"),
+#'   "span.myclass" = list(after = ">>")))
+#' cli_text("This is {.myclass in angle brackets}.")
+#' cli_end()
+#' ```
 #'
 #' ## Highlighting weird-looking values
 #'
@@ -81,10 +103,26 @@
 #' glue substitutions, after formatting. This is handy to create lists of
 #' files, packages, etc.
 #'
+#' ```{asciicast inline-collapse}
+#' pkgs <- c("pkg1", "pkg2", "pkg3")
+#' cli_text("Packages: {pkgs}.")
+#' cli_text("Packages: {.pkg {pkgs}}.")
+#' ```
+#'
+#' Class names are collapsed differently by default
+#'
+#' ```{asciicast inline-collapse-2}
+#' x <- Sys.time()
+#' cli_text("Hey, {.var x} has class {.cls {class(x)}}.")
+#' ```
+#'
 #' By default cli truncates long vectors. The truncation limit is by default
 #' one hundred elements, but you can change it with the `vec_trunc` style.
 #'
-#' See examples below.
+#' ```{asciicast inline-collapse-trunc}
+#' nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
+#' cli_text("Column names: {nms}.")
+#' ```
 #'
 #' @section Formatting values:
 #'
@@ -99,7 +137,7 @@
 #' might contain `{` and `}` characters. The simplest solution for this is
 #' to refer to the string from a template:
 #'
-#' ```
+#' ```{asciicast inline-escape}
 #' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
 #' cli_alert_warning("{msg}")
 #' ```
@@ -107,8 +145,8 @@
 #' If you want to explicitly escape `{` and `}` characters, just double
 #' them:
 #'
-#' ```
-#' cli_alert_warning("A warning with {{ braces }}")
+#' ```{asciicast inline-escape-2}
+#' cli_alert_warning("A warning with {{ braces }}.")
 #' ```
 #'
 #' See also examples below.
@@ -117,7 +155,9 @@
 #'
 #' All cli commands that emit text support pluralization. Some examples:
 #'
-#' ```
+#' ```{asciicast inline-plural}
+#' ndirs <- 1
+#' nfiles <- 13
 #' cli_alert_info("Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}.")
 #' cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
 #' ```
@@ -136,79 +176,62 @@
 #' `\u000c`. cli will insert a line break there.
 #'
 #' @name inline-markup
-#' @examples
-#' ## Some inline markup examples
-#' cli_ul()
-#' cli_li("{.emph Emphasized} text")
-#' cli_li("{.strong Strong} importance")
-#' cli_li("A piece of code: {.code sum(a) / length(a)}")
-#' cli_li("A package name: {.pkg cli}")
-#' cli_li("A function name: {.fn cli_text}")
-#' cli_li("A keyboard key: press {.kbd ENTER}")
-#' cli_li("A file name: {.file /usr/bin/env}")
-#' cli_li("An email address: {.email bugs.bunny@acme.com}")
-#' cli_li("A URL: {.url https://acme.com}")
-#' cli_li("An environment variable: {.envvar R_LIBS}")
-#' cli_end()
-#'
-#' ## Adding a new class
-#' cli_div(theme = list(
-#'   span.myclass = list(color = "lightgrey"),
-#'   "span.myclass" = list(before = "["),
-#'   "span.myclass" = list(after = "]")))
-#' cli_text("This is {.myclass in brackets}.")
-#' cli_end()
-#'
-#' ## Collapsing
-#' pkgs <- c("pkg1", "pkg2", "pkg3")
-#' cli_text("Packages: {pkgs}.")
-#' cli_text("Packages: {.pkg {pkgs}}")
-#'
-#' ## Custom truncation, style set via cli_vec
-#' nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
-#' cli_text("Column names: {nms}.")
-#'
-#' ## Classes are collapsed differently by default
-#' x <- Sys.time()
-#' cli_text("Hey {.var x} has class {.cls {class(x)}}")
-#'
-#' ## Escaping
-#' msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
-#' cli_alert_warning("{msg}")
-#'
-#' cli_alert_warning("A warning with {{ braces }}")
 NULL
 
-#' CLI containers
+#' About cli containers
 #'
 #' Container elements may contain other elements. Currently the following
 #' commands create container elements: [cli_div()], [cli_par()], the list
 #' elements: [cli_ul()], [cli_ol()], [cli_dl()], and list items are
 #' containers as well: [cli_li()].
 #'
-#' Container elements need to be closed with [cli_end()]. For convenience,
-#' they have an `.auto_close` argument, which instructs the container
-#' element to be closed automatically when the function that created it
-#' terminates (either regularly, or with an error).
+#' ## Themes
 #'
-#' @name containers
-#' @examples
-#' ## div with custom theme
+#' A container can add a new theme, which is removed when the container
+#' exits.
+#'
+#' ```{asciicast cnt-theme}
 #' d <- cli_div(theme = list(h1 = list(color = "blue",
 #'                                     "font-weight" = "bold")))
 #' cli_h1("Custom title")
 #' cli_end(d)
+#' ```
 #'
-#' ## Close automatically
+#' ## Auto-closing
+#'
+#' Container elements are closed with [cli_end()]. For convenience,
+#' by default they are closed automatically when the function that created
+#' them terminated (either regularly or with an error). The default
+#' behavior can be changed with the `.auto_close` argument.
+#'
+#' ```{asciicast cnt-auto-close}
 #' div <- function() {
 #'   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
 #'   cli_text("This is yellow")
 #' }
 #' div()
 #' cli_text("This is not yellow any more")
+#' ```
+#'
+#' ## Debugging
+#'
+#' You can use the internal `cli:::cli_debug_doc()` function to see the
+#' currently open containers.
+#'
+#' ```{asciicast cnt-debug, echo = -1}
+#' stop_app()
+#' fun <- function() {
+#'   cli_div(id = "mydiv")
+#'   cli_par(class = "myclass")
+#'   cli:::cli_debug_doc()
+#' }
+#' fun()
+#' ```
+#'
+#' @name containers
 NULL
 
-#' CLI themes
+#' About cli themes
 #'
 #' CLI elements can be styled via a CSS-like language of selectors and
 #' properties. Only a small subset of CSS3 is supported, and
@@ -333,4 +356,7 @@ NULL
 #' )
 #' ```
 #' @name themes
+
+# TODO: examples
+
 NULL

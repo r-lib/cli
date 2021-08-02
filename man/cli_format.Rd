@@ -29,20 +29,37 @@ style. \verb{\{.val \{expr\}\}} calls \code{cli_format()} automatically on the v
 of \code{expr}, before styling and collapsing it.
 }
 \details{
-It is possible to define new S3 methods for \code{cli_format} and then
-these will be used automatically for \verb{\{.val ...\}} expressions.
-}
-\examples{
-things <- c(rep("this", 3), "that")
-cli_format(things)
-cli_text("{.val {things}}")
+\subsection{Default style}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{months <- month.name[1:3]
+cli_text("\{.val \{months\}\}")
+}\if{html}{\out{</div>}}
 
-nums <- 1:5 / 7
-cli_format(nums, style = list(digits = 2))
-cli_text("{.val {nums}}")
+\if{html}{\figure{cli-format-default.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{nums <- 1:5 / 7
+cli_text("\{.val \{nums\}\}")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-format-num.svg}}
+}
+
+\subsection{Styling with themes}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{nums <- 1:5 / 7
 divid <- cli_div(theme = list(.val = list(digits = 3)))
-cli_text("{.val {nums}}")
+cli_text("\{.val \{nums\}\}")
 cli_end(divid)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-format-theme.svg}}
+
+It is possible to define new S3 methods for \code{cli_format} and then
+these will be used automatically for \verb{\{.val ...\}} expressions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_format.month <- function(x, style = NULL, ...) \{
+  x <- encodeString(substr(x, 1, 3), quote = "\\"")
+  NextMethod("cli_format")
+\}
+registerS3method("cli_format", "month", cli_format.month)
+months <- structure(month.name[1:3], class = "month")
+cli_text("\{.val \{months\}\}")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-format-class.svg}}
+}
 }
 \seealso{
 \code{\link[=cli_vec]{cli_vec()}}

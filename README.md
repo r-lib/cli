@@ -32,11 +32,12 @@ Features
     paragraphs.
 -   Theming via a CSS-like language.
 -   Terminal colors and font styles.
--   Create cli elements in subprocesses, using the
-    [callr](https://github.com/r-lib/callr) package.
 -   All cli text can contain interpreted string literals, via the
     [glue](https://github.com/tidyverse/glue) package.
+-   Progress bars from R and C code.
+-   Error and warning messages with rich text formatting.
 -   Support for pluralized messages.
+-   ANSI styled string manipulation.
 
 Installation
 ============
@@ -61,32 +62,32 @@ pkgs <- c("foo", "bar", "foobar")
 cli_alert_success("Downloaded {length(pkgs)} packages.")
 ```
 
-<img src="man/figures/README/unnamed-chunk-2.svg" width="100%" />
+<img src="man/figures/README/alert-success.svg" width="100%" />
 
 ``` r
 db_url <- "example.com:port"
 cli_alert_info("Reopened database {.url {db_url}}.")
 ```
 
-<img src="man/figures/README/unnamed-chunk-3.svg" width="100%" />
+<img src="man/figures/README/alert-info.svg" width="100%" />
 
 ``` r
 cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
 
-<img src="man/figures/README/unnamed-chunk-4.svg" width="100%" />
+<img src="man/figures/README/alert-warning.svg" width="100%" />
 
 ``` r
 cli_alert_danger("Failed to connect to database.")
 ```
 
-<img src="man/figures/README/unnamed-chunk-5.svg" width="100%" />
+<img src="man/figures/README/alert-danger.svg" width="100%" />
 
 ``` r
 cli_alert("A generic alert")
 ```
 
-<img src="man/figures/README/unnamed-chunk-6.svg" width="100%" />
+<img src="man/figures/README/alert.svg" width="100%" />
 
 ### Headings
 
@@ -96,19 +97,19 @@ Three levels of headings.
 cli_h1("Heading 1")
 ```
 
-<img src="man/figures/README/unnamed-chunk-7.svg" width="100%" />
+<img src="man/figures/README/h1.svg" width="100%" />
 
 ``` r
 cli_h2("Heading 2")
 ```
 
-<img src="man/figures/README/unnamed-chunk-8.svg" width="100%" />
+<img src="man/figures/README/h2.svg" width="100%" />
 
 ``` r
 cli_h3("Heading 3")
 ```
 
-<img src="man/figures/README/unnamed-chunk-9.svg" width="100%" />
+<img src="man/figures/README/h3.svg" width="100%" />
 
 ### Lists
 
@@ -128,7 +129,7 @@ fun <- function() {
 fun()
 ```
 
-<img src="man/figures/README/unnamed-chunk-10.svg" width="100%" />
+<img src="man/figures/README/lists.svg" width="100%" />
 
 ### Themes
 
@@ -144,7 +145,7 @@ fun <- function() {
 fun()
 ```
 
-<img src="man/figures/README/unnamed-chunk-11.svg" width="100%" />
+<img src="man/figures/README/themes.svg" width="100%" />
 
 ### Command substitution
 
@@ -159,7 +160,7 @@ cli_alert_info(c(
   "{prettyunits::pretty_sec(dt)}"))
 ```
 
-<img src="man/figures/README/unnamed-chunk-12.svg" width="100%" />
+<img src="man/figures/README/glue.svg" width="100%" />
 
 ### Pluralization
 
@@ -171,13 +172,29 @@ ndirs <- 1
 cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
 ```
 
-<img src="man/figures/README/unnamed-chunk-13.svg" width="100%" />
+<img src="man/figures/README/plurals.svg" width="100%" />
+
+### Progress bars
+
+``` r
+clean <- function() {
+  cli_progress_bar("Cleaning data", total = 100)
+  for (i in 1:100) {
+    Sys.sleep(5/100)
+    cli_progress_update()
+  }
+}
+clean()
+```
+
+<img src="man/figures/README/progress.svg" width="100%" />
 
 Documentation
 -------------
 
-See at <https://cli.r-lib.org/> and also in the installed package:
-`?"inline-markup"`, `?containers`, `?themes`, `?pluralization`.
+See at
+[https://cli.r-lib.org/](https://cli.r-lib.org/reference/index.html) and
+also in the installed package: `help(package = "cli")`.
 
 License
 =======

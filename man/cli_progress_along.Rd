@@ -35,11 +35,50 @@ Use \code{cli_progress_along()} in a mapping function or in a for loop, to add a
 progress bar. It uses \code{\link[=cli_progress_bar]{cli_progress_bar()}} internally.
 }
 \details{
-Usage:\if{html}{\out{<div class="sourceCode r">}}\preformatted{lapply(cli_progress_along(X), function(i) ...)
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{for (i in cli_progress_along(seq)) \{
+\subsection{\code{for} loop}{
+
+A \code{for} loop with \code{cli_progress_along()} looks like this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{for (i in cli_progress_along(seq)) \{
   ...
 \}
 }\if{html}{\out{</div>}}
+
+A complete example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{clifun <- function() \{
+  for (i in cli_progress_along(1:100, "Downloading")) \{
+     Sys.sleep(4/100)
+  \}
+\}
+clifun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-along-1.svg}}
+}
+
+\subsection{\code{lapply()} and other mapping functions}{
+
+They will look like this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{lapply(cli_progress_along(X), function(i) ...)
+}\if{html}{\out{</div>}}
+
+A complete example:\if{html}{\out{<div class="sourceCode r">}}\preformatted{res <- lapply(cli_progress_along(1:100, "Downloading"), function(i) \{
+  Sys.sleep(4/100)
+\})
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-along-2.svg}}
+}
+
+\subsection{Custom format string}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{clifun <- function() \{
+  for (i in cli_progress_along(1:100,
+      format = "Downloading data file \{cli::pb_current\}")) \{
+     Sys.sleep(4/100)
+  \}
+\}
+clifun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-along-3.svg}}
+}
+
+\subsection{Breaking out of loops}{
 
 Note that if you use \code{break} in the \code{for} loop, you probably want to
 terminate the progress bar explicitly when breaking out of the loop,
@@ -49,6 +88,7 @@ or right after the loop:\if{html}{\out{<div class="sourceCode r">}}\preformatted
   ...
 \}
 }\if{html}{\out{</div>}}
+}
 }
 \seealso{
 \code{\link[=cli_progress_bar]{cli_progress_bar()}} and the traditional progress bar API.

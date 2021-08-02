@@ -42,10 +42,7 @@ The builtin theme defines the following item types:
 }
 
 You can define new item type by simply defining theming for the
-corresponding \verb{memo-item-<name>} classes.
-}
-\examples{
-cli_bullets(c(
+corresponding \verb{memo-item-<name>} classes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_bullets(c(
         "noindent",
   " " = "indent",
   "*" = "bullet",
@@ -55,4 +52,7 @@ cli_bullets(c(
   "!" = "warning",
   "i" = "info"
 ))
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-bullets.svg}}
 }

@@ -70,6 +70,8 @@
 #'
 #' @export
 
+# TODO: examples
+
 cli_progress_builtin_handlers <- function() {
   names(builtin_handlers())
 }
@@ -305,7 +307,7 @@ builtin_handler_rstudio <- list(
 # ------------------------------------------------------------------------
 
 shiny_detail <- function(bar, .envir) {
-  if (is.null(bar$format_orig)) {
+  status <- if (is.null(bar$format_orig)) {
     bar$status %||% ""
   } else {
     fmt(
@@ -314,6 +316,19 @@ shiny_detail <- function(bar, .envir) {
       strip_newline = TRUE
     )
   }
+  output <- bar$shiny_output %||% ""
+  paste0(
+    status,
+    if (status != "" && output != "") "\n",
+    output
+  )
+}
+
+last_lines <- function(txt, keep = 5) {
+  txt <- sub("^\n*", "", txt)
+  txt <- sub("\n*$", "", txt)
+  lines <- strwrap(txt, width = 40)
+  paste(utils::tail(lines, keep), collapse = "\n")
 }
 
 builtin_handler_shiny <- list(
@@ -349,9 +364,16 @@ builtin_handler_shiny <- list(
       bar$shiny_progress$close()
     }
     bar$shiny_progress <- NULL
-  }
+  },
 
-  # TODO: can we do anything with `output`?
+  output = function(bar, .envir, text) {
+    bar$shiny_output <-
+      last_lines(paste0(bar$shiny_output, " \u2022 ", text))
+    bar$shiny_progress$set(
+      value = bar$current,
+      detail = shiny_detail(bar, .envir)
+    )
+  }
 )
 
 # ------------------------------------------------------------------------

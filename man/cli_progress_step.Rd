@@ -51,4 +51,86 @@ message, without progress units.
 \details{
 \code{cli_progress_step()} always shows the progress message,
 even if no update is due.
+\subsection{Basic use}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{f <- function() \{
+  cli_progress_step("Downloading data")
+  Sys.sleep(2)
+  cli_progress_step("Importing data")
+  Sys.sleep(1)
+  cli_progress_step("Cleaning data")
+  Sys.sleep(2)
+  cli_progress_step("Fitting model")
+  Sys.sleep(3)
+\}
+f()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-step.svg}}
+}
+
+\subsection{Spinner}{
+
+You can add a spinner to some or all steps with \code{spinner = TRUE},
+but not that this will only work if you call \code{\link[=cli_progress_update]{cli_progress_update()}}
+regularly.\if{html}{\out{<div class="sourceCode r">}}\preformatted{f <- function() \{
+  cli_progress_step("Downloading data", spinner = TRUE)
+  for (i in 1:100) \{ Sys.sleep(2/100); cli_progress_update() \}
+  cli_progress_step("Importing data")
+  Sys.sleep(1)
+  cli_progress_step("Cleaning data")
+  Sys.sleep(2)
+  cli_progress_step("Fitting model", spinner = TRUE)
+  for (i in 1:100) \{ Sys.sleep(3/100); cli_progress_update() \}
+\}
+f()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-step-spin.svg}}
+}
+
+\subsection{Dynamic messages}{
+
+You can make the step messages dynamic, using glue templates.
+Since \code{cli_progress_step()} show that message immediately, we need
+to initialize \code{msg} first.\if{html}{\out{<div class="sourceCode r">}}\preformatted{f <- function() \{
+  msg <- ""
+  cli_progress_step("Downloading data\{msg\}", spinner = TRUE)
+  for (i in 1:100) \{
+    Sys.sleep(2/100)
+    msg <- glue::glue(", got file \{i\}/100")
+    cli_progress_update()
+  \}
+  cli_progress_step("Importing data")
+  Sys.sleep(1)
+  cli_progress_step("Cleaning data")
+  Sys.sleep(2)
+  cli_progress_step("Fitting model", spinner = TRUE)
+  for (i in 1:100) \{ Sys.sleep(3/100); cli_progress_update() \}
+\}
+f()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-step-dynamic.svg}}
+}
+
+\subsection{Termination messages}{
+
+You can specify a different message for successful and/or
+unsuccessful termination:\if{html}{\out{<div class="sourceCode r">}}\preformatted{f <- function() \{
+  size <- 0L
+  cli_progress_step(
+    "Downloading data.",
+    msg_done = "Downloaded \{prettyunits::pretty_bytes(size)\}.",
+    spinner = TRUE
+  )
+  for (i in 1:100) \{
+    Sys.sleep(3/100)
+    size <- size + 8192
+    cli_progress_update()
+  \}
+\}
+f()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{progress-step-msg.svg}}
+}
 }

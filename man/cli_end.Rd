@@ -11,14 +11,58 @@ cli_end(id = NULL)
 container is closed, if any.}
 }
 \description{
-Close a CLI container
+Containers aut0-close by default, but sometimes you need to explicitly
+close them. Closing a container also closes all of its nested
+containeers.
 }
-\examples{
-## If id is omitted
+\details{
+\subsection{Explicit closing}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cnt <- cli_par()
+cli_text("First paragraph.")
+cli_end(cnt)
+cnt <- cli_par()
+cli_text("Second paragraph.")
+cli_end(cnt)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-end.svg}}
+}
+
+\subsection{Closing a stack of containers}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{list <- cli_ul()
+cli_li("Item one:")
+cli_li("Item two:")
 cli_par()
+cli_text("Still item two.")
+cli_end(list)
+cli_text("Not in the list any more")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-end-many.svg}}
+}
+
+\subsection{Omitting \code{id}}{
+
+If \code{id} is omitted, the container that was opened last will be closed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_par()
 cli_text("First paragraph")
 cli_end()
 cli_par()
 cli_text("Second paragraph")
 cli_end()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-end-noid.svg}}
+}
+
+\subsection{Debugging containers}{
+
+You can use the internal \code{cli:::cli_debug_doc()} function to see the
+currently open containers.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  cli_div(id = "mydiv")
+  cli_par(class = "myclass")
+  cli:::cli_debug_doc()
+\}
+fun()
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-end-debug.svg}}
+}
 }
