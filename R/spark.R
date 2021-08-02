@@ -35,6 +35,18 @@ spark_bar <- function(x) {
   )
 }
 
+#' @export
+
+format.cli_spark <- function(x, ...) {
+  unclass(x)
+}
+
+#' @export
+
+print.cli_spark <- function(x, ...) {
+  cat(format(x, ...), sep = "\n")
+}
+
 spark_bar_chars <- function(x, bars = NULL) {
 
   if (is.null(bars)) {
