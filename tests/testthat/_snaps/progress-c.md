@@ -42,7 +42,7 @@
        [3] "\rnew name stats 3\033[K\r" "\rnew name stats 4\033[K\r"
        [5] "\rnew name stats 5\033[K\r" "\rnew name stats 6\033[K\r"
        [7] "\rnew name stats 7\033[K\r" "\rnew name stats 8\033[K\r"
-       [9] "\rnew name stats 9\033[K\r" "\rnew name stats 1\033[K\r"
+       [9] "\rnew name stats 9\033[K\r" "\r\033[K\r"                
       [11] "\n"                        
 
 ---

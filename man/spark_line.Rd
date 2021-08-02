@@ -14,9 +14,12 @@ You might want to avoid sparklines on non-UTF-8 systems, because they
 do not look good. You can use \code{\link[=is_utf8_output]{is_utf8_output()}} to test for support
 for them.
 }
-\examples{
-x <- seq(0, 1, length = 10)
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- seq(0, 1, length = 10)
 spark_line(x)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{spark-line.svg}}
 }
 \seealso{
 \code{\link[=spark_bar]{spark_bar()}}

@@ -33,20 +33,18 @@ The id of the new container element, invisibly.
 \description{
 A list item is a container, see \link{containers}.
 }
-\examples{
-## Adding items one by one
-cli_ul()
-cli_li("one")
-cli_li("two")
-cli_li("three")
-cli_end()
+\details{
+\subsection{Nested lists}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+  ul <- cli_ul()
+  cli_li("one:")
+  cli_ol(letters[1:3])
+  cli_li("two:")
+  cli_li("three")
+  cli_end(ul)
+\}
+fun()
+}\if{html}{\out{</div>}}
 
-## Complex item, added gradually.
-cli_ul()
-cli_li()
-cli_verbatim("Beginning of the {.emph first} item")
-cli_text("Still the first item")
-cli_end()
-cli_li("Second item")
-cli_end()
+\if{html}{\figure{cli-li.svg}}
+}
 }

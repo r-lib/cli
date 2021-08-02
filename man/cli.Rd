@@ -20,12 +20,12 @@ piece of output from multiple \verb{cli_*} calls.
 }
 \details{
 Use this function to build a more complex piece of CLI that would not
-make sense to show in pieces.
-}
-\examples{
-cli({
+make sense to show in pieces.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli(\{
   cli_h1("Title")
   cli_h2("Subtitle")
   cli_ul(c("this", "that", "end"))
-})
+\})
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-cli.svg}}
 }

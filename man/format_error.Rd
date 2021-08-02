@@ -22,22 +22,21 @@ You can then throw this message with \code{\link[=stop]{stop()}} or \code{rlang:
 }
 \details{
 The messages can use inline styling, pluralization and glue
-substitutions.
-}
-\examples{
-\dontrun{
-n <- "boo"
+substitutions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{n <- "boo"
 stop(format_error(c(
-        "{.var n} must be a numeric vector",
-  "x" = "You've supplied a {.cls {class(n)}} vector."
+        "\{.var n\} must be a numeric vector",
+  "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 )))
+}\if{html}{\out{</div>}}
 
-len <- 26
+\if{html}{\figure{format-error.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
 stop(format_error(c(
         "Must index an existing element:",
-  "i" = "There {?is/are} {len} element{?s}.",
-  "x" = "You've tried to subset element {idx}."
+  "i" = "There \{?is/are\} \{len\} element\{?s\}.",
+  "x" = "You've tried to subset element \{idx\}."
 )))
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{format-error-2.svg}}
 }

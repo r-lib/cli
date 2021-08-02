@@ -10,14 +10,15 @@ make_line <- function(x, char = symbol$line, col = NULL) {
   if (cw == 1) {
     line <- paste(rep(char, x), collapse = "")
   } else {
-    line <- substr(paste(rep(char, ceiling(x / cw)), collapse = ""), 1, x)
+    line <- ansi_substr(paste(rep(char, ceiling(x / cw)), collapse = ""), 1, x)
   }
 
-  apply_style(line, col)
+  unclass(apply_style(line, col))
 }
 
 #' Make a rule with one or two text labels
 #'
+#' @description
 #' The rule can include either a centered text label, or labels on the
 #' left and right side.
 #'
@@ -25,6 +26,75 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #' functions, see [ansi-styles], and the examples below.
 #' To color the line, either these functions directly, or the `line_col`
 #' option.
+#'
+#'
+#' @details
+#' ## Simple rule
+#'
+#' ```{asciicast rule-simple}
+#' rule()
+#' ```
+#'
+#' ## Line styles
+#' Some strings for the `line` argument are interpreted specially:
+#'
+#' * `"single"`: (same as `1`), a single line,
+#' * `"double"`: (same as `2`), a double line,
+#' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
+#'
+#' ### Double rule
+#'
+#' ```{asciicast rule-double}
+#' rule(line = 2)
+#' ```
+#'
+#' ### Bars
+#'
+#' ```{asciicast rule-bars}
+#' rule(line = "bar2")
+#' rule(line = "bar5")
+#' ```
+#'
+#' ### Custom lines
+#'
+#' ```{asciicast rule-custom-line}
+#' rule(center = "TITLE", line = "~")
+#' ```
+#'
+#' ```{asciicast rule-custom-line-2}
+#' rule(center = "TITLE", line = col_blue("~-"))
+#' ```
+#'
+#' ```{asciicast rule-custom-line-3}
+#' rule(center = bg_red(" ", symbol$star, "TITLE",
+#'   symbol$star, " "),
+#'   line = "\u2582",
+#'   line_col = "orange")
+#' ```
+#'
+#' ## Left label
+#'
+#' ```{asciicast rule-left-label}
+#' rule(left = "Results")
+#' ```
+#'
+#' ## Centered label
+#'
+#' ```{asciicast rule-center-label}
+#' rule(center = " * RESULTS * ")
+#' ```
+#'
+#' ## Colored labels
+#'
+#' ```{asciicast rule-colored-label}
+#' rule(center = col_red(" * RESULTS * "))
+#' ```
+#'
+#' ## Colored line
+#'
+#' ```{asciicast rule-colored-line}
+#' rule(center = col_red(" * RESULTS * "), line_col = "red")
+#' ```
 #'
 #' @param left Label to show on the left. It interferes with the `center`
 #'   label, only at most one of them can be present.
@@ -46,49 +116,7 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #'   [base::options()].
 #' @return Character scalar, the rule.
 #'
-#' @section Line styles:
-#' Some strings for the `line` argument are interpreted specially:
-#'
-#' * `"single"`: (same as `1`), a single line,
-#' * `"double"`: (same as `2`), a double line,
-#' * `"bar1"`, `"bar2"`, `"bar3"`, etc., `"bar8"` uses varying height bars.
-#'
 #' @export
-#' @examples
-#'
-#' ## Simple rule
-#' rule()
-#'
-#' ## Double rule
-#' rule(line = 2)
-#'
-#' ## Bars
-#' rule(line = "bar2")
-#' rule(line = "bar5")
-#'
-#' ## Left label
-#' rule(left = "Results")
-#'
-#' ## Centered label
-#' rule(center = " * RESULTS * ")
-#'
-#' ## Colored labels
-#' rule(center = col_red(" * RESULTS * "))
-#'
-#' ## Colored line
-#' rule(center = col_red(" * RESULTS * "), line_col = "red")
-#'
-#' ## Custom line
-#' rule(center = "TITLE", line = "~")
-#'
-#' ## More custom line
-#' rule(center = "TITLE", line = col_blue("~-"))
-#'
-#' ## Even more custom line
-#' rule(center = bg_red(" ", symbol$star, "TITLE",
-#'   symbol$star, " "),
-#'   line = "\u2582",
-#'   line_col = "orange")
 
 rule <- function(left = "", center = "", right = "", line = 1,
                  col = NULL, line_col = col, background_col = NULL,
@@ -115,20 +143,20 @@ rule <- function(left = "", center = "", right = "", line = 1,
   options <- as.list(environment())
   options$line <- get_line_char(options$line)
 
-  res <- if (nchar(center)) {
-    if (nchar(left) || nchar(right)) {
+  res <- if (ansi_nchar(center)) {
+    if (ansi_nchar(left) || ansi_nchar(right)) {
       stop(sQuote("center"), " cannot be specified with ", sQuote("left"),
            " or ", sQuote("right"))
     }
     rule_center(options)
 
-  } else if (nchar(left) && nchar(right)) {
+  } else if (ansi_nchar(left) && ansi_nchar(right)) {
     rule_left_right(options)
 
-  } else if (nchar(left)) {
+  } else if (ansi_nchar(left)) {
     rule_left(options)
 
-  } else if (nchar(right)) {
+  } else if (ansi_nchar(right)) {
     rule_right(options)
 
   } else {

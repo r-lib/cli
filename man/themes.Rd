@@ -2,7 +2,7 @@
 % Please edit documentation in R/cliapp-docs.R
 \name{themes}
 \alias{themes}
-\title{CLI themes}
+\title{About cli themes}
 \description{
 CLI elements can be styled via a CSS-like language of selectors and
 properties. Only a small subset of CSS3 is supported, and

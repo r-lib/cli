@@ -6,18 +6,15 @@
 #' The messages can use inline styling, pluralization and glue
 #' substitutions.
 #'
-#' @param message It is formatted via a call to [cli_bullets()].
-#' @param .envir Environment to evaluate the glue expressions in.
-#'
-#' @export
-#' @examples
-#' \dontrun{
+#' ```{asciicast format-error}
 #' n <- "boo"
 #' stop(format_error(c(
 #'         "{.var n} must be a numeric vector",
 #'   "x" = "You've supplied a {.cls {class(n)}} vector."
 #' )))
+#' ```
 #'
+#' ```{asciicast format-error-2}
 #' len <- 26
 #' idx <- 100
 #' stop(format_error(c(
@@ -25,7 +22,11 @@
 #'   "i" = "There {?is/are} {len} element{?s}.",
 #'   "x" = "You've tried to subset element {idx}."
 #' )))
-#' }
+#' ```
+#'
+#' @param message It is formatted via a call to [cli_bullets()].
+#' @param .envir Environment to evaluate the glue expressions in.
+#'
 #' @export
 
 format_error <- function(message, .envir = parent.frame()) {

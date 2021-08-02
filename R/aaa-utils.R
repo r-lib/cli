@@ -1,4 +1,43 @@
 
+#' @details
+#' ```{r setup, cache = FALSE}
+#' init_knitr_for_roxygen()
+#' ```
+#' @noRd
+#'
+NULL
+
+init_knitr_for_roxygen <- function() {
+  # Make progress bars a bit smoother
+  Sys.setenv(CLI_TICK_TIME = "100")
+
+  # Turn on ANSI colors
+  options(
+    cli.num_colors = 256L,
+    asciicast_cols = 70
+  )
+
+  proc <- .GlobalEnv$.knitr_asciicast_process
+  if (is.null(proc) || !proc$is_alive()) {
+    asciicast::init_knitr_engine(
+      startup = quote({
+        options(cli.width = 70)
+        options(cli.progress_show_after = 0)
+        options(cli.progress_clear = FALSE)
+        library(cli)
+        set.seed(1) }),
+      echo = TRUE,
+      echo_input = FALSE,
+      options = list(
+        asciicast_cols = 70,
+        asciicast_end_wait = 3
+      )
+    )
+  }
+
+  invisible("")
+}
+
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
 new_class <- function(class_name, ...) {

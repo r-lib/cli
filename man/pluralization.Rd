@@ -2,9 +2,9 @@
 % Please edit documentation in R/pluralize.R
 \name{pluralization}
 \alias{pluralization}
-\title{CLI pluralization}
+\title{About cli pluralization}
 \description{
-CLI pluralization
+About cli pluralization
 }
 \section{Introduction}{
 cli has tools to create messages that are printed correctly in singular

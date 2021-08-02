@@ -2,7 +2,7 @@
 % Please edit documentation in R/status-bar.R
 \name{cli_status_clear}
 \alias{cli_status_clear}
-\title{Clear the status bar}
+\title{Clear the status bar (superseded)}
 \usage{
 cli_status_clear(
   id = NULL,
@@ -33,9 +33,16 @@ bar was created.}
 also used to auto-clear the status bar if \code{.auto_close} is \code{TRUE}.}
 }
 \description{
+\strong{The \verb{cli_status_*()} functions are superseded by
+the \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}} functions,
+because they have a better default behavior.}
+
 Clear the status bar
 }
 \seealso{
+The \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}}
+functions, for a superior API.
+
 Other status bar: 
 \code{\link{cli_process_start}()},
 \code{\link{cli_status_update}()},

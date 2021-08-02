@@ -23,9 +23,20 @@ spinner's frames.
 \code{cli} contains many different spinners, you choose one according to your
 taste.
 }
-\examples{
-get_spinner()
-get_spinner("shark")
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.spinner = "hearts")
+fun <- function() \{
+  cli_progress_bar("Spinning")
+  for (i in 1:100) \{
+    Sys.sleep(4/100)
+    cli_progress_update()
+  \}
+\}
+fun()
+options(cli.spinner = NULL)
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{get-spinner.svg}}
 }
 \seealso{
 Other spinners: 

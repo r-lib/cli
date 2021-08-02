@@ -26,20 +26,22 @@ These functions let you create error, warning or diagnostic
 messages with cli formatting, including inline styling,
 pluralization and glue substitutions.
 }
-\examples{
-\dontrun{
-n <- "boo"
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{n <- "boo"
 cli_abort(c(
-        "{.var n} must be a numeric vector",
-  "x" = "You've supplied a {.cls {class(n)}} vector."
+        "\{.var n\} must be a numeric vector",
+  "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 ))
+}\if{html}{\out{</div>}}
 
-len <- 26
+\if{html}{\figure{cli-abort.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
 cli_abort(c(
         "Must index an existing element:",
-  "i" = "There {?is/are} {len} element{?s}.",
-  "x" = "You've tried to subset element {idx}."
+  "i" = "There \{?is/are\} \{len\} element\{?s\}.",
+  "x" = "You've tried to subset element \{idx\}."
 ))
-}
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-abort-2.svg}}
 }

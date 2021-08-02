@@ -18,6 +18,9 @@ Character scalar, the formatted string.
 You can use this function to format a line of cli text, without emitting
 it to the screen. It uses \code{\link[=cli_text]{cli_text()}} internally.
 }
+\details{
+\code{format_inline()} performs no width-wrapping.
+}
 \examples{
-format_inline("This is a message for {.emph later}.")
+format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 }

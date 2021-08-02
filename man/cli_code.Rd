@@ -42,6 +42,13 @@ A helper function that creates a \code{div} with class \code{code} and then call
 containers specially. In particular, it adds syntax highlighting to
 valid R code.
 }
-\examples{
-cli_code(format(cli::cli_blockquote))
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{myfun <- function() \{
+  message("Just an example function")
+  graphics::pairs(iris, col = 1:4)
+\}
+cli_code(format(myfun))
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-code.svg}}
 }

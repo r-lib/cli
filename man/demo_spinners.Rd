@@ -12,10 +12,11 @@ demo_spinners(which = NULL)
 \description{
 Each spinner is shown for about 2-3 seconds.
 }
-\examples{
-\dontrun{
-  demo_spinners(sample(list_spinners(), 10))
-}
+\details{
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{demo_spinners("clock")
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{demo-spinners.svg}}
 }
 \seealso{
 Other spinners: 

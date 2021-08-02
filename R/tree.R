@@ -8,21 +8,9 @@
 #' A node might appear multiple times in the tree, or might not appear
 #' at all.
 #'
-#' @param data Data frame that contains the tree structure.
-#'   The first column is an id, and the second column is a list column,
-#'   that contains the ids of the child nodes. The optional third column
-#'   may contain the text to print to annotate the node.
-#' @param root The name of the root node.
-#' @param style Optional box style list.
-#' @param width Maximum width of the output. Defaults to the `width`
-#'   option, see [base::options()].
-#' @param trim Whether to avoid traversing the same nodes multiple times.
-#'   If `TRUE` and `data` has a `trimmed` column, then that is used for
-#'   printing repeated noded.
-#' @return Character vector, the lines of the tree drawing.
+#' @details
 #'
-#' @export
-#' @examples
+#' ```{asciicast, tree}
 #' data <- data.frame(
 #'   stringsAsFactors = FALSE,
 #'   package = c("processx", "backports", "assertthat", "Matrix",
@@ -42,9 +30,15 @@
 #'   ))
 #' )
 #' tree(data)
-#' tree(data, root = "rcmdcheck")
+#' ```
 #'
-#' # Colored nodes
+#' ```{asciicast, tree-root}
+#' tree(data, root = "rcmdcheck")
+#' ```
+#'
+#' ## Colored nodes
+#'
+#' ```{asciicast tree-colored}
 #' data$label <- paste(data$package,
 #'   style_dim(paste0("(", c("2.0.0.1", "1.1.1", "0.2.0", "1.2-11",
 #'     "1.5", "1.2", "1.2.0", "1.0.2", "2.0.0", "1.1.1.9000", "1.1.2",
@@ -53,10 +47,12 @@
 #'   )
 #' roots <- ! data$package %in% unlist(data$dependencies)
 #' data$label[roots] <- col_cyan(style_italic(data$label[roots]))
-#' tree(data)
 #' tree(data, root = "rcmdcheck")
+#' ```
 #'
-#' # Trimming
+#' ## Trimming
+#'
+#' ```{asciicast tree-trimming}
 #' pkgdeps <- list(
 #'   "dplyr@0.8.3" = c("assertthat@0.2.1", "glue@1.3.1", "magrittr@1.5",
 #'     "R6@2.4.0", "Rcpp@1.0.2", "rlang@0.4.0", "tibble@2.1.3",
@@ -94,13 +90,31 @@
 #'   deps = I(unname(pkgdeps))
 #' )
 #'
-#' tree(pkgs)
 #' tree(pkgs, trim = TRUE)
+#' ```
 #'
+#' ```{asciicast tree-trim-mark}
 #' # Mark the trimmed nodes
 #' pkgs$label <- pkgs$name
 #' pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
 #' tree(pkgs, trim = TRUE)
+#' ```
+#'
+#' @param data Data frame that contains the tree structure.
+#'   The first column is an id, and the second column is a list column,
+#'   that contains the ids of the child nodes. The optional third column
+#'   may contain the text to print to annotate the node.
+#' @param root The name of the root node.
+#' @param style Optional box style list.
+#' @param width Maximum width of the output. Defaults to the `width`
+#'   option, see [base::options()].
+#' @param trim Whether to avoid traversing the same nodes multiple times.
+#'   If `TRUE` and `data` has a `trimmed` column, then that is used for
+#'   printing repeated noded.
+#' @return Character vector, the lines of the tree drawing.
+#'
+#' @export
+
 
 tree <- function(data, root = data[[1]][[1]], style = NULL,
                  width = console_width(), trim = FALSE) {
