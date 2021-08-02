@@ -10,7 +10,7 @@ make_line <- function(x, char = symbol$line, col = NULL) {
   if (cw == 1) {
     line <- paste(rep(char, x), collapse = "")
   } else {
-    line <- substr(paste(rep(char, ceiling(x / cw)), collapse = ""), 1, x)
+    line <- ansi_substr(paste(rep(char, ceiling(x / cw)), collapse = ""), 1, x)
   }
 
   apply_style(line, col)
@@ -115,20 +115,20 @@ rule <- function(left = "", center = "", right = "", line = 1,
   options <- as.list(environment())
   options$line <- get_line_char(options$line)
 
-  res <- if (nchar(center)) {
-    if (nchar(left) || nchar(right)) {
+  res <- if (ansi_nchar(center)) {
+    if (ansi_nchar(left) || ansi_nchar(right)) {
       stop(sQuote("center"), " cannot be specified with ", sQuote("left"),
            " or ", sQuote("right"))
     }
     rule_center(options)
 
-  } else if (nchar(left) && nchar(right)) {
+  } else if (ansi_nchar(left) && ansi_nchar(right)) {
     rule_left_right(options)
 
-  } else if (nchar(left)) {
+  } else if (ansi_nchar(left)) {
     rule_left(options)
 
-  } else if (nchar(right)) {
+  } else if (ansi_nchar(right)) {
     rule_right(options)
 
   } else {
