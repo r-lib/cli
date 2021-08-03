@@ -107,9 +107,6 @@ message, without progress units." />
     <li>
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
-    <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -188,6 +185,25 @@ styling. It can be updated via <code><a href='cli_progress_bar.html'>cli_progres
     <p><code>cli_progress_message()</code> always shows the message, even if no
 update is due. When the progress message is terminated, it is removed
 from the screen by default.</p>
+<p>Note that the message can be dynamic: if you update it with
+<code><a href='cli_progress_bar.html'>cli_progress_update()</a></code>, then cli uses the current values in the string
+substitutions.<div class="sourceCode r"></p><pre><span class='va'>fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>cli_progress_message</span><span class='op'>(</span><span class='st'>"Task one is running..."</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+
+  <span class='fu'>cli_progress_message</span><span class='op'>(</span><span class='st'>"Task two is running..."</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span>
+
+  <span class='va'>step</span> <span class='op'>&lt;-</span> <span class='fl'>1L</span>
+  <span class='fu'>cli_progress_message</span><span class='op'>(</span><span class='st'>"Task three is underway: step {step}"</span><span class='op'>)</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>step</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>0.5</span><span class='op'>)</span>
+    <span class='fu'><a href='cli_progress_bar.html'>cli_progress_update</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+<span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-message.svg' alt='' /></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code> for the complete progress bar API.

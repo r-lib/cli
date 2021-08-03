@@ -106,9 +106,6 @@
     <li>
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
-    <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -148,176 +145,251 @@
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These variables can be used in cli progress bar format strings.</p><ul>
-<li><p><code>pb_bar</code> creates a visual progress bar. If the number of total units
-is unknown, then it will return an empty string.</p></li>
-<li><p><code>pb_current</code> is the number of current progress units.</p></li>
-<li><p><code>pb_current_bytes</code> is the number of current progress utils formatted
-as bytes. The output has a constant width of six characters.</p></li>
-<li><p><code>pb_elapsed</code> is the elapsed time since the start of the progress
-bar. The time is measured since the progress bar is created with
-<code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code> or similar.</p></li>
-<li><p><code>pb_elapsed_clock</code> is the elapsed time, in hh::mm::ss format.</p></li>
-<li><p><code>pb_elapsed_raw</code> is the number of seconds since the start of the
-progress bar.</p></li>
-<li><p><code>pb_eta</code> is the estimated time until the end of the progress bar,
-in human readable form.</p></li>
-<li><p><code>pb_eta_raw</code> is the estimated time until the end of the progress
-bar, in seconds.</p></li>
-<li><p><code>pb_eta_str</code> is the estimated time until the end of the progress bar.
+    <p>These variables can be used in cli progress bar format
+strings. They are calculated on demand. To use a variable, e.g. <code>pb_bar</code>
+in a package, you either need to to import <code>pb_bar</code> from cli, or use
+the qualified form in the format string: <code>cli::pb_bar</code>.</p>
+<p>Similarly, in R scripts, you can use <code>pb_bar</code> after <code><a href='https://cli.r-lib.org'>library(cli)</a></code>,
+or <code>cli::pb_bar</code> if you do not attach the cli package.</p>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_bar</code></h3>
+
+
+<p>Creates a visual progress bar. If the number of total units
+is unknown, then it will return an empty string.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"Fitting model {cli::pb_bar} {cli::pb_percent}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-bar.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_current</code></h3>
+
+
+<p>The number of current progress units.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_spin} Reading file {cli::pb_current}/{cli::pb_total}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-current.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_current_bytes</code></h3>
+
+
+<p>The number of current progress units formatted as bytes.
+The output has a constant width of six characters.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  format <span class='op'>=</span> <span class='st'>"Got {cli::pb_current_bytes} in {cli::pb_elapsed}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-current-bytes.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_elapsed</code></h3>
+
+
+<p>The elapsed time since the start of the progress bar. The time is
+measured since the progress bar was created with <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code>
+or similar.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent} [{cli::pb_elapsed}]"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-elapsed.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_elapsed_clock</code></h3>
+
+
+<p>The elapsed time, in hh::mm::ss format.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent} [{cli::pb_elapsed_clock}]"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-elapsed-clock.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_elapsed_raw</code></h3>
+
+
+<p>The number of seconds since the start of the progress bar.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent} [{round(cli::pb_elapsed_raw)}s]"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-elapsed-raw.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_eta</code></h3>
+
+
+<p>The estimated time until the end of the progress bar,
+in human readable form.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent} | ETA: {cli::pb_eta}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-eta.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_eta_raw</code></h3>
+
+
+<p>The estimated time until the end of the progress
+bar, in seconds. This is useful if you want to adjust the default
+<code>pb_eta</code> display.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent} | ETA: {round(cli::pb_eta_raw)}s"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-eta-raw.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_eta_str</code></h3>
+
+
+<p>The estimated time until the end of the progress bar.
 It includes the <code>"ETA:"</code> prefix. It is only shown if the time can be
-estimated, otherwise it is the empty string.</p></li>
-<li><p><code>pb_extra</code> can be used to access extra data, see the <code>extra</code> argument
-of <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code> and <code><a href='cli_progress_bar.html'>cli_progress_update()</a></code>.</p></li>
-<li><p><code>pb_id</code> is the id of the progress bar. The id has the format
+estimated, otherwise it is the empty string.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent} | {cli::pb_eta_str}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-eta-str.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_extra</code></h3>
+
+
+<p><code>pb_extra</code> can be used to access extra data, see the <code>extra</code> argument
+of <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code> and <code><a href='cli_progress_bar.html'>cli_progress_update()</a></code>.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  extra <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>user <span class='op'>=</span> <span class='fu'>whoami</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/whoami/man/username.html'>username</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
+  format <span class='op'>=</span> <span class='st'>"Cleaning cache for user '{cli::pb_extra$user}': {cli::pb_current_bytes}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-extra.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_id</code></h3>
+
+
+<p>The id of the progress bar. The id has the format
 <code>cli-&lt;pid&gt;-&lt;counter&gt;</code> where <code>&lt;pid&gt;</code> is the process id, and
 <code>&lt;counter&gt;</code> is an integer counter that is incremented every time
-cli needs a new unique id.</p></li>
-<li><p><code>pb_name</code> is the name of the progress bar. This is supplied by the
+cli needs a new unique id.</p>
+<p>This is useful for debugging progress bars.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  format <span class='op'>=</span> <span class='st'>"Progress bar '{cli::pb_id}' is at {cli::pb_current}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-id.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_name</code></h3>
+
+
+<p>The name of the progress bar. This is supplied by the
 developer, and it is by default the empty string. A space character
-is added to non-empty names.</p></li>
-<li><p><code>pb_percent</code> is the percentage of the progress bar, always formatted
+is added to non-empty names.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"Loading training data"</span>,
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_name} {cli::pb_bar} {cli::pb_percent}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-name.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_percent</code></h3>
+
+
+<p>The percentage of the progress bar, always formatted
 in three characters plus the percentage sign. If the total number of
-units is unknown, then it is <code>" NA%"</code>.</p></li>
-<li><p><code>pb_pid</code> is the integer process id of the progress bar.</p></li>
-<li><p><code>pb_rate</code> is the progress rate, in number of units per second,
-formatted in a string.</p></li>
-<li><p><code>pb_rate_raw</code> is the raw progress rate, in number of units per second.</p></li>
-<li><p><code>pb_rate_bytes</code> is the progress rate, formatted as bytes per second,
-in human readable form.</p></li>
-<li><p><code>pb_spin</code> is a spinner. The default spinner is selected via a
-<code><a href='get_spinner.html'>get_spinner()</a></code> call.</p></li>
-<li><p><code>pb_status</code> is the status string of the progress bar. By default this
-is an empty string, but it is possible to set it in <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code>
-and `cli_progress_update()].</p></li>
-<li><p><code>pb_timestamp</code> is a time stamp in ISO 8601 format.</p></li>
-<li><p><code>pb_total</code> is the total number of progress units, or <code>NA</code> if the number
-of units is unknown.</p></li>
-<li><p><code>pb_total_bytes</code> is the total number of progress units, formatted as
-bytes, in a human readable format.</p></li>
-</ul>
+units is unknown, then it is <code>" NA%"</code>.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_bar} {cli::pb_percent}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-percent.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_pid</code></h3>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># pb_bar and pb_percent</span>
-<span class='fu'><a href='cli_progress_demo.html'>cli_progress_demo</a></span><span class='op'>(</span>
-  format <span class='op'>=</span> <span class='st'>"Progress bar: {cli::pb_bar} {cli::pb_percent}"</span>,
-  total <span class='op'>=</span> <span class='fl'>100</span>
+<p>The integer process id of the progress bar. This is useful if you are
+aggregating logging output or progress results from multiple processes.</p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_rate</code></h3>
+
+
+<p>The progress rate, in number of units per second, formatted in a string.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>156</span>,
+  format <span class='op'>=</span> <span class='st'>"Reading input files {pb_current}/{pb_total} [{pb_rate}]"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; Progress bar: <span style='color: #00BB00;'>■■■■■■■■■■■■■■■■                </span>  50%</div><div class='input'>
-<span class='co'># pb_current and pb_total</span>
-<span class='fu'><a href='cli_progress_demo.html'>cli_progress_demo</a></span><span class='op'>(</span>
-  format <span class='op'>=</span> <span class='st'>"[{cli::pb_current}/{cli::pb_total}]"</span>,
-  total <span class='op'>=</span> <span class='fl'>248</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-rate.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_rate_raw</code></h3>
+
+
+<p>The raw progress rate, in number of units per second.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>156</span>,
+  format <span class='op'>=</span> <span class='st'>"Reading input files {pb_current}/{pb_total} [{round(pb_rate_raw)}/s]"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; [50/248]</div><div class='input'>
-<span class='co'># pb_current_bytes, pb_total_bytes</span>
-<span class='fu'><a href='cli_progress_demo.html'>cli_progress_demo</a></span><span class='op'>(</span>
-  format <span class='op'>=</span> <span class='st'>"[{cli::pb_current_bytes}/{cli::pb_total_bytes}]"</span>,
-  total <span class='op'>=</span> <span class='fl'>102800</span>,
-  at <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>102800</span>, by <span class='op'>=</span> <span class='fl'>1024</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-rate-raw.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_rate_bytes</code></h3>
+
+
+<p>The progress rate, formatted as bytes per second, in human readable form.<div class="sourceCode r"></p><pre>cli_progress_bar(
+  total = 256 * 1024 * 1014,
+  format = paste0(
+    "Reading data {pb_current_bytes}/{pb_total_bytes} ",
+    "[{ansi_trimws(pb_rate_bytes)}]"
+  )
+</pre><p></div></p>
+<p><img src='figures/progress-var-rate-bytes.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_spin</code></h3>
+
+
+<p>A spinner. The default spinner is selected via a <code><a href='get_spinner.html'>get_spinner()</a></code> call.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_spin} Reading file {cli::pb_current}/{cli::pb_total}"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; [0.0 kB/103 kB]
-#&gt; [1.0 kB/103 kB]
-#&gt; [2.0 kB/103 kB]
-#&gt; [3.1 kB/103 kB]
-#&gt; [4.1 kB/103 kB]
-#&gt; [5.1 kB/103 kB]
-#&gt; [6.1 kB/103 kB]
-#&gt; [7.2 kB/103 kB]
-#&gt; [8.2 kB/103 kB]
-#&gt; [9.2 kB/103 kB]
-#&gt; [ 10 kB/103 kB]
-#&gt; [ 11 kB/103 kB]
-#&gt; [ 12 kB/103 kB]
-#&gt; [ 13 kB/103 kB]
-#&gt; [ 14 kB/103 kB]
-#&gt; [ 15 kB/103 kB]
-#&gt; [ 16 kB/103 kB]
-#&gt; [ 17 kB/103 kB]
-#&gt; [ 18 kB/103 kB]
-#&gt; [ 19 kB/103 kB]
-#&gt; [ 20 kB/103 kB]
-#&gt; [ 22 kB/103 kB]
-#&gt; [ 23 kB/103 kB]
-#&gt; [ 24 kB/103 kB]
-#&gt; [ 25 kB/103 kB]
-#&gt; [ 26 kB/103 kB]
-#&gt; [ 27 kB/103 kB]
-#&gt; [ 28 kB/103 kB]
-#&gt; [ 29 kB/103 kB]
-#&gt; [ 30 kB/103 kB]
-#&gt; [ 31 kB/103 kB]
-#&gt; [ 32 kB/103 kB]
-#&gt; [ 33 kB/103 kB]
-#&gt; [ 34 kB/103 kB]
-#&gt; [ 35 kB/103 kB]
-#&gt; [ 36 kB/103 kB]
-#&gt; [ 37 kB/103 kB]
-#&gt; [ 38 kB/103 kB]
-#&gt; [ 39 kB/103 kB]
-#&gt; [ 40 kB/103 kB]
-#&gt; [ 41 kB/103 kB]
-#&gt; [ 42 kB/103 kB]
-#&gt; [ 43 kB/103 kB]
-#&gt; [ 44 kB/103 kB]
-#&gt; [ 45 kB/103 kB]
-#&gt; [ 46 kB/103 kB]
-#&gt; [ 47 kB/103 kB]
-#&gt; [ 48 kB/103 kB]
-#&gt; [ 49 kB/103 kB]
-#&gt; [ 50 kB/103 kB]
-#&gt; [ 51 kB/103 kB]
-#&gt; [ 52 kB/103 kB]
-#&gt; [ 53 kB/103 kB]
-#&gt; [ 54 kB/103 kB]
-#&gt; [ 55 kB/103 kB]
-#&gt; [ 56 kB/103 kB]
-#&gt; [ 57 kB/103 kB]
-#&gt; [ 58 kB/103 kB]
-#&gt; [ 59 kB/103 kB]
-#&gt; [ 60 kB/103 kB]
-#&gt; [ 61 kB/103 kB]
-#&gt; [ 62 kB/103 kB]
-#&gt; [ 63 kB/103 kB]
-#&gt; [ 65 kB/103 kB]
-#&gt; [ 66 kB/103 kB]
-#&gt; [ 67 kB/103 kB]
-#&gt; [ 68 kB/103 kB]
-#&gt; [ 69 kB/103 kB]
-#&gt; [ 70 kB/103 kB]
-#&gt; [ 71 kB/103 kB]
-#&gt; [ 72 kB/103 kB]
-#&gt; [ 73 kB/103 kB]
-#&gt; [ 74 kB/103 kB]
-#&gt; [ 75 kB/103 kB]
-#&gt; [ 76 kB/103 kB]
-#&gt; [ 77 kB/103 kB]
-#&gt; [ 78 kB/103 kB]
-#&gt; [ 79 kB/103 kB]
-#&gt; [ 80 kB/103 kB]
-#&gt; [ 81 kB/103 kB]
-#&gt; [ 82 kB/103 kB]
-#&gt; [ 83 kB/103 kB]
-#&gt; [ 84 kB/103 kB]
-#&gt; [ 85 kB/103 kB]
-#&gt; [ 86 kB/103 kB]
-#&gt; [ 87 kB/103 kB]
-#&gt; [ 88 kB/103 kB]
-#&gt; [ 89 kB/103 kB]
-#&gt; [ 90 kB/103 kB]
-#&gt; [ 91 kB/103 kB]
-#&gt; [ 92 kB/103 kB]
-#&gt; [ 93 kB/103 kB]
-#&gt; [ 94 kB/103 kB]
-#&gt; [ 95 kB/103 kB]
-#&gt; [ 96 kB/103 kB]
-#&gt; [ 97 kB/103 kB]
-#&gt; [ 98 kB/103 kB]
-#&gt; [ 99 kB/103 kB]
-#&gt; [100 kB/103 kB]
-#&gt; [101 kB/103 kB]
-#&gt; [102 kB/103 kB]</div></pre>
+</pre><p></div></p>
+<p><img src='figures/progress-var-current.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_status</code></h3>
+
+
+<p>The status string of the progress bar. By default this is an empty
+string, but it is possible to set it in <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code>
+and `cli_progress_update()].<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>status <span class='op'>=</span> <span class='st'>"Connecting..."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-status.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_timestamp</code></h3>
+
+
+<p>A time stamp for the current time in ISO 8601 format.<div class="sourceCode r"></p><pre>cli_progress_bar(
+  "Loading training data files",
+  format = "{pb_timestamp} {pb_current} ({pb_rate})"
+</pre><p></div></p>
+<p><img src='figures/progress-var-timestamp.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_total</code></h3>
+
+
+<p>The total number of progress units, or <code>NA</code> if the number of units is
+unknown.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span>
+  total <span class='op'>=</span> <span class='fl'>100</span>,
+  format <span class='op'>=</span> <span class='st'>"{cli::pb_spin} Reading file {cli::pb_current}/{cli::pb_total}"</span>
+<span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-var-current.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>pb_total_bytes</code></h3>
+
+
+<p>The total number of progress units, formatted as
+bytes, in a human readable format.<div class="sourceCode r"></p><pre>cli_progress_bar(
+  total = 256 * 1024 * 1014,
+  format = paste0(
+    "Reading data {pb_current_bytes}/{pb_total_bytes} ",
+    "[{ansi_trimws(pb_rate_bytes)}]"
+  )
+</pre><p></div></p>
+<p><img src='figures/progress-var-rate-bytes.svg' alt='' /></p>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

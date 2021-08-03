@@ -108,9 +108,6 @@ fails.)" />
     <li>
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
-    <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -193,10 +190,7 @@ printing repeated noded.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>A node might appear multiple times in the tree, or might not appear
-at all.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+at all.<div class="sourceCode r"></p><pre><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
   stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span>,
   package <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"processx"</span>, <span class='st'>"backports"</span>, <span class='st'>"assertthat"</span>, <span class='st'>"Matrix"</span>,
     <span class='st'>"magrittr"</span>, <span class='st'>"rprojroot"</span>, <span class='st'>"clisymbols"</span>, <span class='st'>"prettyunits"</span>, <span class='st'>"withr"</span>,
@@ -215,39 +209,11 @@ at all.</p>
   <span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span>
 <span class='fu'>tree</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; processx
-#&gt; ├─assertthat
-#&gt; ├─crayon
-#&gt; ├─debugme
-#&gt; │ └─crayon
-#&gt; └─R6</div><div class='input'><span class='fu'>tree</span><span class='op'>(</span><span class='va'>data</span>, root <span class='op'>=</span> <span class='st'>"rcmdcheck"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; rcmdcheck
-#&gt; ├─callr
-#&gt; │ ├─processx
-#&gt; │ │ ├─assertthat
-#&gt; │ │ ├─crayon
-#&gt; │ │ ├─debugme
-#&gt; │ │ │ └─crayon
-#&gt; │ │ └─R6
-#&gt; │ └─R6
-#&gt; ├─clisymbols
-#&gt; ├─crayon
-#&gt; ├─desc
-#&gt; │ ├─assertthat
-#&gt; │ ├─R6
-#&gt; │ ├─crayon
-#&gt; │ └─rprojroot
-#&gt; │   └─backports
-#&gt; ├─digest
-#&gt; ├─prettyunits
-#&gt; │ ├─magrittr
-#&gt; │ └─assertthat
-#&gt; ├─R6
-#&gt; ├─rprojroot
-#&gt; │ └─backports
-#&gt; └─withr</div><div class='input'>
-<span class='co'># Colored nodes</span>
-<span class='va'>data</span><span class='op'>$</span><span class='va'>label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>package</span>,
+</pre><p></div></p>
+<p><img src='figures/tree.svg' alt='' /><div class="sourceCode r"></p><pre><span class='fu'>tree</span><span class='op'>(</span><span class='va'>data</span>, root <span class='op'>=</span> <span class='st'>"rcmdcheck"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/tree-root.svg' alt='' /></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Colored nodes</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>data</span><span class='op'>$</span><span class='va'>label</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>package</span>,
   <span class='fu'><a href='ansi-styles.html'>style_dim</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"("</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2.0.0.1"</span>, <span class='st'>"1.1.1"</span>, <span class='st'>"0.2.0"</span>, <span class='st'>"1.2-11"</span>,
     <span class='st'>"1.5"</span>, <span class='st'>"1.2"</span>, <span class='st'>"1.2.0"</span>, <span class='st'>"1.0.2"</span>, <span class='st'>"2.0.0"</span>, <span class='st'>"1.1.1.9000"</span>, <span class='st'>"1.1.2"</span>,
     <span class='st'>"2.2.2"</span>, <span class='st'>"1.3.4"</span>, <span class='st'>"1.0.2"</span>, <span class='st'>"0.6.12"</span>, <span class='st'>"2.2.1"</span>, <span class='st'>"1.2.1.9002"</span>,
@@ -255,40 +221,12 @@ at all.</p>
   <span class='op'>)</span>
 <span class='va'>roots</span> <span class='op'>&lt;-</span> <span class='op'>!</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>package</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>dependencies</span><span class='op'>)</span>
 <span class='va'>data</span><span class='op'>$</span><span class='va'>label</span><span class='op'>[</span><span class='va'>roots</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ansi-styles.html'>col_cyan</a></span><span class='op'>(</span><span class='fu'><a href='ansi-styles.html'>style_italic</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>label</span><span class='op'>[</span><span class='va'>roots</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>tree</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; processx <span style='font-weight: 100;'>(2.0.0.1)</span>
-#&gt; ├─assertthat <span style='font-weight: 100;'>(0.2.0)</span>
-#&gt; ├─crayon <span style='font-weight: 100;'>(1.3.4)</span>
-#&gt; ├─debugme <span style='font-weight: 100;'>(1.0.2)</span>
-#&gt; │ └─crayon <span style='font-weight: 100;'>(1.3.4)</span>
-#&gt; └─R6 <span style='font-weight: 100;'>(2.2.2)</span></div><div class='input'><span class='fu'>tree</span><span class='op'>(</span><span class='va'>data</span>, root <span class='op'>=</span> <span class='st'>"rcmdcheck"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BBBB; font-style: italic;'>rcmdcheck </span><span style='color: #00BBBB; font-weight: 100; font-style: italic;'>(1.2.1.9002)</span>
-#&gt; ├─callr <span style='font-weight: 100;'>(1.0.0.9000)</span>
-#&gt; │ ├─processx <span style='font-weight: 100;'>(2.0.0.1)</span>
-#&gt; │ │ ├─assertthat <span style='font-weight: 100;'>(0.2.0)</span>
-#&gt; │ │ ├─crayon <span style='font-weight: 100;'>(1.3.4)</span>
-#&gt; │ │ ├─debugme <span style='font-weight: 100;'>(1.0.2)</span>
-#&gt; │ │ │ └─crayon <span style='font-weight: 100;'>(1.3.4)</span>
-#&gt; │ │ └─R6 <span style='font-weight: 100;'>(2.2.2)</span>
-#&gt; │ └─R6 <span style='font-weight: 100;'>(2.2.2)</span>
-#&gt; ├─clisymbols <span style='font-weight: 100;'>(1.2.0)</span>
-#&gt; ├─crayon <span style='font-weight: 100;'>(1.3.4)</span>
-#&gt; ├─desc <span style='font-weight: 100;'>(1.1.1.9000)</span>
-#&gt; │ ├─assertthat <span style='font-weight: 100;'>(0.2.0)</span>
-#&gt; │ ├─R6 <span style='font-weight: 100;'>(2.2.2)</span>
-#&gt; │ ├─crayon <span style='font-weight: 100;'>(1.3.4)</span>
-#&gt; │ └─rprojroot <span style='font-weight: 100;'>(1.2)</span>
-#&gt; │   └─backports <span style='font-weight: 100;'>(1.1.1)</span>
-#&gt; ├─digest <span style='font-weight: 100;'>(0.6.12)</span>
-#&gt; ├─prettyunits <span style='font-weight: 100;'>(1.0.2)</span>
-#&gt; │ ├─magrittr <span style='font-weight: 100;'>(1.5)</span>
-#&gt; │ └─assertthat <span style='font-weight: 100;'>(0.2.0)</span>
-#&gt; ├─R6 <span style='font-weight: 100;'>(2.2.2)</span>
-#&gt; ├─rprojroot <span style='font-weight: 100;'>(1.2)</span>
-#&gt; │ └─backports <span style='font-weight: 100;'>(1.1.1)</span>
-#&gt; └─withr <span style='font-weight: 100;'>(2.0.0)</span></div><div class='input'>
-<span class='co'># Trimming</span>
-<span class='va'>pkgdeps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+<span class='fu'>tree</span><span class='op'>(</span><span class='va'>data</span>, root <span class='op'>=</span> <span class='st'>"rcmdcheck"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/tree-colored.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Trimming</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>pkgdeps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
   <span class='st'>"dplyr@0.8.3"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"assertthat@0.2.1"</span>, <span class='st'>"glue@1.3.1"</span>, <span class='st'>"magrittr@1.5"</span>,
     <span class='st'>"R6@2.4.0"</span>, <span class='st'>"Rcpp@1.0.2"</span>, <span class='st'>"rlang@0.4.0"</span>, <span class='st'>"tibble@2.1.3"</span>,
     <span class='st'>"tidyselect@0.2.5"</span><span class='op'>)</span>,
@@ -325,112 +263,16 @@ at all.</p>
   deps <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/AsIs.html'>I</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unname.html'>unname</a></span><span class='op'>(</span><span class='va'>pkgdeps</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='fu'>tree</span><span class='op'>(</span><span class='va'>pkgs</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; dplyr@0.8.3
-#&gt; ├─assertthat@0.2.1
-#&gt; ├─glue@1.3.1
-#&gt; ├─magrittr@1.5
-#&gt; ├─R6@2.4.0
-#&gt; ├─Rcpp@1.0.2
-#&gt; ├─rlang@0.4.0
-#&gt; ├─tibble@2.1.3
-#&gt; │ ├─cli@1.1.0
-#&gt; │ │ ├─assertthat@0.2.1
-#&gt; │ │ └─crayon@1.3.4
-#&gt; │ ├─crayon@1.3.4
-#&gt; │ ├─fansi@0.4.0
-#&gt; │ ├─pillar@1.4.2
-#&gt; │ │ ├─cli@1.1.0
-#&gt; │ │ │ ├─assertthat@0.2.1
-#&gt; │ │ │ └─crayon@1.3.4
-#&gt; │ │ ├─crayon@1.3.4
-#&gt; │ │ ├─fansi@0.4.0
-#&gt; │ │ ├─rlang@0.4.0
-#&gt; │ │ ├─utf8@1.1.4
-#&gt; │ │ └─vctrs@0.2.0
-#&gt; │ │   ├─backports@1.1.5
-#&gt; │ │   ├─ellipsis@0.3.0
-#&gt; │ │   │ └─rlang@0.4.0
-#&gt; │ │   ├─digest@0.6.21
-#&gt; │ │   ├─glue@1.3.1
-#&gt; │ │   ├─rlang@0.4.0
-#&gt; │ │   └─zeallot@0.1.0
-#&gt; │ ├─pkgconfig@2.0.3
-#&gt; │ └─rlang@0.4.0
-#&gt; └─tidyselect@0.2.5
-#&gt;   ├─glue@1.3.1
-#&gt;   ├─rlang@0.4.0
-#&gt;   └─Rcpp@1.0.2</div><div class='input'><span class='fu'>tree</span><span class='op'>(</span><span class='va'>pkgs</span>, trim <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; dplyr@0.8.3
-#&gt; ├─assertthat@0.2.1
-#&gt; ├─glue@1.3.1
-#&gt; ├─magrittr@1.5
-#&gt; ├─R6@2.4.0
-#&gt; ├─Rcpp@1.0.2
-#&gt; ├─rlang@0.4.0
-#&gt; ├─tibble@2.1.3
-#&gt; │ ├─cli@1.1.0
-#&gt; │ │ ├─assertthat@0.2.1
-#&gt; │ │ └─crayon@1.3.4
-#&gt; │ ├─crayon@1.3.4
-#&gt; │ ├─fansi@0.4.0
-#&gt; │ ├─pillar@1.4.2
-#&gt; │ │ ├─cli@1.1.0
-#&gt; │ │ ├─crayon@1.3.4
-#&gt; │ │ ├─fansi@0.4.0
-#&gt; │ │ ├─rlang@0.4.0
-#&gt; │ │ ├─utf8@1.1.4
-#&gt; │ │ └─vctrs@0.2.0
-#&gt; │ │   ├─backports@1.1.5
-#&gt; │ │   ├─ellipsis@0.3.0
-#&gt; │ │   │ └─rlang@0.4.0
-#&gt; │ │   ├─digest@0.6.21
-#&gt; │ │   ├─glue@1.3.1
-#&gt; │ │   ├─rlang@0.4.0
-#&gt; │ │   └─zeallot@0.1.0
-#&gt; │ ├─pkgconfig@2.0.3
-#&gt; │ └─rlang@0.4.0
-#&gt; └─tidyselect@0.2.5
-#&gt;   ├─glue@1.3.1
-#&gt;   ├─rlang@0.4.0
-#&gt;   └─Rcpp@1.0.2</div><div class='input'>
-<span class='co'># Mark the trimmed nodes</span>
+<span class='fu'>tree</span><span class='op'>(</span><span class='va'>pkgs</span>, trim <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/tree-trimming.svg' alt='' /><div class="sourceCode r"></p><pre><span class='co'># Mark the trimmed nodes</span>
 <span class='va'>pkgs</span><span class='op'>$</span><span class='va'>label</span> <span class='op'>&lt;-</span> <span class='va'>pkgs</span><span class='op'>$</span><span class='va'>name</span>
 <span class='va'>pkgs</span><span class='op'>$</span><span class='va'>trimmed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>pkgs</span><span class='op'>$</span><span class='va'>name</span>, <span class='st'>" (trimmed)"</span><span class='op'>)</span>
 <span class='fu'>tree</span><span class='op'>(</span><span class='va'>pkgs</span>, trim <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; dplyr@0.8.3
-#&gt; ├─assertthat@0.2.1
-#&gt; ├─glue@1.3.1
-#&gt; ├─magrittr@1.5
-#&gt; ├─R6@2.4.0
-#&gt; ├─Rcpp@1.0.2
-#&gt; ├─rlang@0.4.0
-#&gt; ├─tibble@2.1.3
-#&gt; │ ├─cli@1.1.0
-#&gt; │ │ ├─assertthat@0.2.1  (trimmed)
-#&gt; │ │ └─crayon@1.3.4
-#&gt; │ ├─crayon@1.3.4  (trimmed)
-#&gt; │ ├─fansi@0.4.0
-#&gt; │ ├─pillar@1.4.2
-#&gt; │ │ ├─cli@1.1.0  (trimmed)
-#&gt; │ │ ├─crayon@1.3.4  (trimmed)
-#&gt; │ │ ├─fansi@0.4.0  (trimmed)
-#&gt; │ │ ├─rlang@0.4.0  (trimmed)
-#&gt; │ │ ├─utf8@1.1.4
-#&gt; │ │ └─vctrs@0.2.0
-#&gt; │ │   ├─backports@1.1.5
-#&gt; │ │   ├─ellipsis@0.3.0
-#&gt; │ │   │ └─rlang@0.4.0  (trimmed)
-#&gt; │ │   ├─digest@0.6.21
-#&gt; │ │   ├─glue@1.3.1  (trimmed)
-#&gt; │ │   ├─rlang@0.4.0  (trimmed)
-#&gt; │ │   └─zeallot@0.1.0
-#&gt; │ ├─pkgconfig@2.0.3
-#&gt; │ └─rlang@0.4.0  (trimmed)
-#&gt; └─tidyselect@0.2.5
-#&gt;   ├─glue@1.3.1  (trimmed)
-#&gt;   ├─rlang@0.4.0  (trimmed)
-#&gt;   └─Rcpp@1.0.2  (trimmed)</div></pre>
+</pre><p></div></p>
+<p><img src='figures/tree-trim-mark.svg' alt='' /></p>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="CLI verbatim text — cli_verbatim" />
-<meta property="og:description" content="It is not wrapped, but printed as is." />
+<meta property="og:description" content="It is not wrapped, but printed as is. Long lines will overflow.
+No glue substitution is performed on verbatim text." />
 
 
 <meta name="robots" content="noindex">
@@ -106,9 +107,6 @@
     <li>
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
-    <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -141,7 +139,8 @@
     </div>
 
     <div class="ref-description">
-    <p>It is not wrapped, but printed as is.</p>
+    <p>It is not wrapped, but printed as is. Long lines will overflow.
+No glue substitution is performed on verbatim text.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cli_verbatim</span><span class='op'>(</span><span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
@@ -160,12 +159,25 @@ printed on a new line.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cli_verbatim</span><span class='op'>(</span><span class='st'>"This has\nthree"</span>, <span class='st'>"lines"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  This has</span>
-#&gt; <span class='message'>  three</span>
-#&gt; <span class='message'>  lines</span></div></pre>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Line breaks</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>cli_verbatim</span><span class='op'>(</span><span class='st'>"This has\nthree\nlines,"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-verbatim.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Special characters</h3>
+
+
+<p>No glue substritution happens here.<div class="sourceCode r"></p><pre><span class='fu'>cli_verbatim</span><span class='op'>(</span><span class='st'>"No string {interpolation} or {.emph styling} here"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-verbatim-2.svg' alt='' /></p>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='cli_code.html'>cli_code()</a></code> for printing R or other source code.</p></div>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

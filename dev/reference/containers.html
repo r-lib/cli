@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CLI containers — containers • cli</title>
+<title>About cli containers — containers • cli</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="CLI containers — containers" />
+<meta property="og:title" content="About cli containers — containers" />
 <meta property="og:description" content="Container elements may contain other elements. Currently the following
 commands create container elements: cli_div(), cli_par(), the list
 elements: cli_ul(), cli_ol(), cli_dl(), and list items are
@@ -109,9 +109,6 @@ containers as well: cli_li()." />
     <li>
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
-    <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -138,7 +135,7 @@ containers as well: cli_li()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>CLI containers</h1>
+    <h1>About cli containers</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cliapp-docs.R'><code>R/cliapp-docs.R</code></a></small>
     <div class="hidden name"><code>containers.Rd</code></div>
     </div>
@@ -154,26 +151,47 @@ containers as well: <code><a href='cli_li.html'>cli_li()</a></code>.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Container elements need to be closed with <code><a href='cli_end.html'>cli_end()</a></code>. For convenience,
-they have an <code>.auto_close</code> argument, which instructs the container
-element to be closed automatically when the function that created it
-terminates (either regularly, or with an error).</p>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Themes</h3>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## div with custom theme</span>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>h1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"blue"</span>,
+
+<p>A container can add a new theme, which is removed when the container
+exits.<div class="sourceCode r"></p><pre><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>h1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"blue"</span>,
                                     <span class='st'>"font-weight"</span> <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='cli_h1.html'>cli_h1</a></span><span class='op'>(</span><span class='st'>"Custom title"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>  <span style='color: #00BBBB;'>──</span> <span style='font-weight: bold;'>Custom title</span> <span style='color: #00BBBB;'>────────────────────────────────────────────────────────────────</span></span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cnt-theme.svg' alt='' /></p>
 
-<span class='co'>## Close automatically</span>
-<span class='va'>div</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Auto-closing</h3>
+
+
+<p>Container elements are closed with <code><a href='cli_end.html'>cli_end()</a></code>. For convenience,
+by default they are closed automatically when the function that created
+them terminated (either regularly or with an error). The default
+behavior can be changed with the <code>.auto_close</code> argument.<div class="sourceCode r"></p><pre><span class='va'>div</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>"tmp"</span>, theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>.tmp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"yellow"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is yellow"</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='fu'>div</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  <span style='color: #BBBB00;'>This is yellow</span></span></div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is not yellow any more"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  This is not yellow any more</span></div></pre>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is not yellow any more"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cnt-auto-close.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Debugging</h3>
+
+
+<p>You can use the internal <code>cli:::cli_debug_doc()</code> function to see the
+currently open containers.<div class="sourceCode r"></p><pre><span class='va'>fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"mydiv"</span><span class='op'>)</span>
+  <span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>"myclass"</span><span class='op'>)</span>
+  <span class='fu'>cli</span><span class='fu'>:::</span><span class='fu'><a href='cli_debug_doc.html'>cli_debug_doc</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cnt-debug.svg' alt='' /></p>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
