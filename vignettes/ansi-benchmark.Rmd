@@ -1,0 +1,445 @@
+---
+title: ANSI function benchmarks
+author: "Gábor Csárdi"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_depth: 2
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r, setup, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  cache = TRUE
+)
+```
+
+```{r comment = "", results = 'asis', echo = FALSE}
+fansi::set_knit_hooks(
+   knitr::knit_hooks,
+   which = "output"
+)
+```
+
+# Introduction
+
+Often we can use the corresponding base R function as a baseline.
+We also compare to the fansi package, where it is possible.
+
+# Data
+
+In cli the typical use case is short string scalars, but we run some benchmarks longer strings and string vectors as well.
+
+```{r}
+library(cli)
+library(fansi)
+options(cli.unicode = TRUE)
+options(cli.num_colors = 256)
+```
+
+```{r}
+ansi <- format_inline(
+  "{col_green(symbol$tick)} {.code print(x)} {.emph emphasised}"
+)
+```
+
+```{r}
+plain <- ansi_strip(ansi)
+```
+
+```{r}
+vec_plain <- rep(plain, 100)
+vec_ansi <- rep(ansi, 100)
+vec_plain6 <- rep(plain, 6)
+vec_ansi6 <- rep(plain, 6)
+```
+
+```{r}
+txt_plain <- paste(vec_plain, collapse = " ")
+txt_ansi <- paste(vec_ansi, collapse = " ")
+```
+
+```{r}
+uni <- paste(
+  "\U0001f477\u200d\u2640\ufe0f",
+  "\U0001f477\U0001f3fb",
+  "\U0001f477\u200d\u2640\ufe0f",
+  "\U0001f477\U0001f3fb",
+  "\U0001f477\U0001f3ff\u200d\u2640\ufe0f"
+)
+vec_uni <- rep(uni, 100)
+txt_uni <- paste(vec_uni, collapse = " ")
+```
+
+# ANSI functions
+
+## `ansi_align()`
+
+```{r}
+bench::mark(
+  ansi  = ansi_align(ansi, width = 20),
+  plain = ansi_align(plain, width = 20), 
+  base  = format(plain, width = 20),
+  check = FALSE
+)
+```
+
+```{r}
+bench::mark(
+  ansi  = ansi_align(ansi, width = 20, align = "right"),
+  plain = ansi_align(plain, width = 20, align = "right"), 
+  base  = format(plain, width = 20, justify = "right"),
+  check = FALSE
+)
+```
+
+## `ansi_chartr()`
+
+```{r}
+bench::mark(
+  ansi  = ansi_chartr("abc", "XYZ", ansi),
+  plain = ansi_chartr("abc", "XYZ", plain),
+  base  = chartr("abc", "XYZ", plain),
+  check = FALSE
+)
+```
+
+## `ansi_columns()`
+
+```{r}
+bench::mark(
+  ansi  = ansi_columns(vec_ansi6, width = 120),
+  plain = ansi_columns(vec_plain6, width = 120),
+  check = FALSE
+)
+```
+
+## `ansi_has_any()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_has_any(ansi),
+  fansi_ansi      = has_sgr(ansi),
+  cli_plain       = ansi_has_any(plain),
+  fansi_plain     = has_sgr(plain),
+  cli_vec_ansi    = ansi_has_any(vec_ansi),
+  fansi_vec_ansi  = has_sgr(vec_ansi),
+  cli_vec_plain   = ansi_has_any(vec_plain),
+  fansi_vec_plain = has_sgr(vec_plain),
+  cli_txt_ansi    = ansi_has_any(txt_ansi),
+  fansi_txt_ansi  = has_sgr(txt_ansi),
+  cli_txt_plain   = ansi_has_any(txt_plain),
+  fansi_txt_plain = has_sgr(vec_plain),
+  check = FALSE
+)
+```
+
+## `ansi_html()`
+
+This is typically used with longer text.
+
+```{r}
+bench::mark(
+  cli   = ansi_html(txt_ansi),
+  fansi = sgr_to_html(txt_ansi, classes = TRUE),
+  check = FALSE
+)
+```
+
+## `ansi_nchar()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_nchar(ansi),
+  fansi_ansi      = nchar_sgr(ansi),
+  base_ansi       = nchar(ansi),
+  cli_plain       = ansi_nchar(plain),
+  fansi_plain     = nchar_sgr(plain),
+  base_plain      = nchar(plain),
+  cli_vec_ansi    = ansi_nchar(vec_ansi),
+  fansi_vec_ansi  = nchar_sgr(vec_ansi),
+  base_vec_ansi   = nchar(vec_ansi),
+  cli_vec_plain   = ansi_nchar(vec_plain),
+  fansi_vec_plain = nchar_sgr(vec_plain),
+  base_vec_plain  = nchar(vec_plain),
+  cli_txt_ansi    = ansi_nchar(txt_ansi),
+  fansi_txt_ansi  = nchar_sgr(txt_ansi),
+  base_txt_ansi   = nchar(txt_ansi),
+  cli_txt_plain   = ansi_nchar(txt_plain),
+  fansi_txt_plain = nchar_sgr(txt_plain),
+  base_txt_plain  = nchar(txt_plain),
+  check = FALSE
+)
+```
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_nchar(ansi, type = "width"),
+  fansi_ansi      = nchar_sgr(ansi, type = "width"),
+  base_ansi       = nchar(ansi, "width"),
+  cli_plain       = ansi_nchar(plain, type = "width"),
+  fansi_plain     = nchar_sgr(plain, type = "width"),
+  base_plain      = nchar(plain, "width"),
+  cli_vec_ansi    = ansi_nchar(vec_ansi, type = "width"),
+  fansi_vec_ansi  = nchar_sgr(vec_ansi, type = "width"),
+  base_vec_ansi   = nchar(vec_ansi, "width"),
+  cli_vec_plain   = ansi_nchar(vec_plain, type = "width"),
+  fansi_vec_plain = nchar_sgr(vec_plain, type = "width"),
+  base_vec_plain  = nchar(vec_plain, "width"),
+  cli_txt_ansi    = ansi_nchar(txt_ansi, type = "width"),
+  fansi_txt_ansi  = nchar_sgr(txt_ansi, type = "width"),
+  base_txt_ansi   = nchar(txt_ansi, "width"),
+  cli_txt_plain   = ansi_nchar(txt_plain, type = "width"),
+  fansi_txt_plain = nchar_sgr(txt_plain, type = "width"),
+  base_txt_plain  = nchar(txt_plain, type = "width"),
+  check = FALSE
+)
+```
+
+## `ansi_simplify()`
+
+Nothing to compare here.
+
+```{r}
+bench::mark(
+  cli_ansi      = ansi_simplify(ansi),
+  cli_plain     = ansi_simplify(plain),
+  cli_vec_ansi  = ansi_simplify(vec_ansi),
+  cli_vec_plain = ansi_simplify(vec_plain),
+  cli_txt_ansi  = ansi_simplify(txt_ansi),
+  cli_txt_plain = ansi_simplify(txt_plain),
+  check = FALSE
+)
+```
+
+## `ansi_strip()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_strip(ansi),
+  fansi_ansi      = strip_sgr(ansi),
+  cli_plain       = ansi_strip(plain),
+  fansi_plain     = strip_sgr(plain),
+  cli_vec_ansi    = ansi_strip(vec_ansi),
+  fansi_vec_ansi  = strip_sgr(vec_ansi),
+  cli_vec_plain   = ansi_strip(vec_plain),
+  fansi_vec_plain = strip_sgr(vec_plain),
+  cli_txt_ansi    = ansi_strip(txt_ansi),
+  fansi_txt_ansi  = strip_sgr(txt_ansi),
+  cli_txt_plain   = ansi_strip(txt_plain),
+  fansi_txt_plain = strip_sgr(txt_plain),
+  check = FALSE
+)
+```
+
+## `ansi_strsplit()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_strsplit(ansi, "i"),
+  fansi_ansi      = strsplit_sgr(ansi, "i"),
+  base_ansi       = strsplit(ansi, "i"),
+  cli_plain       = ansi_strsplit(plain, "i"),
+  fansi_plain     = strsplit_sgr(plain, "i"),
+  base_plain      = strsplit(plain, "i"),
+  cli_vec_ansi    = ansi_strsplit(vec_ansi, "i"),
+  fansi_vec_ansi  = strsplit_sgr(vec_ansi, "i"),
+  base_vec_ansi   = strsplit(vec_ansi, "i"),
+  cli_vec_plain   = ansi_strsplit(vec_plain, "i"),
+  fansi_vec_plain = strsplit_sgr(vec_plain, "i"),
+  base_vec_plain  = strsplit(vec_plain, "i"),
+  cli_txt_ansi    = ansi_strsplit(txt_ansi, "i"),
+  fansi_txt_ansi  = strsplit_sgr(txt_ansi, "i"),
+  base_txt_ansi   = strsplit(txt_ansi, "i"),
+  cli_txt_plain   = ansi_strsplit(txt_plain, "i"),
+  fansi_txt_plain = strsplit_sgr(txt_plain, "i"),
+  base_txt_plain  = strsplit(txt_plain, "i"),
+  check = FALSE
+)
+```
+
+## `ansi_strtrim()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_strtrim(ansi, 10),
+  fansi_ansi      = strtrim_sgr(ansi, 10),
+  base_ansi       = strtrim(ansi, 10),
+  cli_plain       = ansi_strtrim(plain, 10),
+  fansi_plain     = strtrim_sgr(plain, 10),
+  base_plain      = strtrim(plain, 10),
+  cli_vec_ansi    = ansi_strtrim(vec_ansi, 10),
+  fansi_vec_ansi  = strtrim_sgr(vec_ansi, 10),
+  base_vec_ansi   = strtrim(vec_ansi, 10),
+  cli_vec_plain   = ansi_strtrim(vec_plain, 10),
+  fansi_vec_plain = strtrim_sgr(vec_plain, 10),
+  base_vec_plain  = strtrim(vec_plain, 10),
+  cli_txt_ansi    = ansi_strtrim(txt_ansi, 10),
+  fansi_txt_ansi  = strtrim_sgr(txt_ansi, 10),
+  base_txt_ansi   = strtrim(txt_ansi, 10),
+  cli_txt_plain   = ansi_strtrim(txt_plain, 10),
+  fansi_txt_plain = strtrim_sgr(txt_plain, 10),
+  base_txt_plain  = strtrim(txt_plain, 10),
+  check = FALSE
+)
+```
+
+## `ansi_strwrap()`
+
+This function is most useful for longer text, but it is often called for short text in cli, so it makes sense to benchmark that as well.
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_strwrap(ansi, 30),
+  fansi_ansi      = strwrap_sgr(ansi, 30),
+  base_ansi       = strwrap(ansi, 30),
+  cli_plain       = ansi_strwrap(plain, 30),
+  fansi_plain     = strwrap_sgr(plain, 30),
+  base_plain      = strwrap(plain, 30),
+  cli_vec_ansi    = ansi_strwrap(vec_ansi, 30),
+  fansi_vec_ansi  = strwrap_sgr(vec_ansi, 30),
+  base_vec_ansi   = strwrap(vec_ansi, 30),
+  cli_vec_plain   = ansi_strwrap(vec_plain, 30),
+  fansi_vec_plain = strwrap_sgr(vec_plain, 30),
+  base_vec_plain  = strwrap(vec_plain, 30),
+  cli_txt_ansi    = ansi_strwrap(txt_ansi, 30),
+  fansi_txt_ansi  = strwrap_sgr(txt_ansi, 30),
+  base_txt_ansi   = strwrap(txt_ansi, 30),
+  cli_txt_plain   = ansi_strwrap(txt_plain, 30),
+  fansi_txt_plain = strwrap_sgr(txt_plain, 30),
+  base_txt_plain  = strwrap(txt_plain, 30),
+  check = FALSE
+)
+```
+
+## `ansi_substr()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_substr(ansi, 2, 10),
+  fansi_ansi      = substr_sgr(ansi, 2, 10),
+  base_ansi       = substr(ansi, 2, 10),
+  cli_plain       = ansi_substr(plain, 2, 10),
+  fansi_plain     = substr_sgr(plain, 2, 10),
+  base_plain      = substr(plain, 2, 10),
+  cli_vec_ansi    = ansi_substr(vec_ansi, 2, 10),
+  fansi_vec_ansi  = substr_sgr(vec_ansi, 2, 10),
+  base_vec_ansi   = substr(vec_ansi, 2, 10),
+  cli_vec_plain   = ansi_substr(vec_plain, 2, 10),
+  fansi_vec_plain = substr_sgr(vec_plain, 2, 10),
+  base_vec_plain  = substr(vec_plain, 2, 10),
+  cli_txt_ansi    = ansi_substr(txt_ansi, 2, 10),
+  fansi_txt_ansi  = substr_sgr(txt_ansi, 2, 10),
+  base_txt_ansi   = substr(txt_ansi, 2, 10),
+  cli_txt_plain   = ansi_substr(txt_plain, 2, 10),
+  fansi_txt_plain = substr_sgr(txt_plain, 2, 10),
+  base_txt_plain  = substr(txt_plain, 2, 10),
+  check = FALSE
+)
+```
+
+## `ansi_tolower()` , `ansi_toupper()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_tolower(ansi),
+  base_ansi       = tolower(ansi),
+  cli_plain       = ansi_tolower(plain),
+  base_plain      = tolower(plain),
+  cli_vec_ansi    = ansi_tolower(vec_ansi),
+  base_vec_ansi   = tolower(vec_ansi),
+  cli_vec_plain   = ansi_tolower(vec_plain),
+  base_vec_plain  = tolower(vec_plain),
+  cli_txt_ansi    = ansi_tolower(txt_ansi),
+  base_txt_ansi   = tolower(txt_ansi),
+  cli_txt_plain   = ansi_tolower(txt_plain),
+  base_txt_plain  = tolower(txt_plain),
+  check = FALSE
+)
+```
+
+## `ansi_trimws()`
+
+```{r}
+bench::mark(
+  cli_ansi        = ansi_trimws(ansi),
+  base_ansi       = trimws(ansi),
+  cli_plain       = ansi_trimws(plain),
+  base_plain      = trimws(plain),
+  cli_vec_ansi    = ansi_trimws(vec_ansi),
+  base_vec_ansi   = trimws(vec_ansi),
+  cli_vec_plain   = ansi_trimws(vec_plain),
+  base_vec_plain  = trimws(vec_plain),
+  cli_txt_ansi    = ansi_trimws(txt_ansi),
+  base_txt_ansi   = trimws(txt_ansi),
+  cli_txt_plain   = ansi_trimws(txt_plain),
+  base_txt_plain  = trimws(txt_plain),
+  check = FALSE
+)
+```
+
+# UTF-8 functions
+
+## `utf8_nchar()`
+
+```{r}
+bench::mark(
+  cli        = utf8_nchar(uni, type = "chars"),
+  base       = nchar(uni, "chars"),
+  cli_vec    = utf8_nchar(vec_uni, type = "chars"),
+  base_vec   = nchar(vec_uni, "chars"),
+  cli_txt    = utf8_nchar(txt_uni, type = "chars"),
+  base_txt   = nchar(txt_uni, "chars"),
+  check = FALSE
+)
+```
+
+```{r}
+bench::mark(
+  cli        = utf8_nchar(uni, type = "width"),
+  base       = nchar(uni, "width"),
+  cli_vec    = utf8_nchar(vec_uni, type = "width"),
+  base_vec   = nchar(vec_uni, "width"),
+  cli_txt    = utf8_nchar(txt_uni, type = "width"),
+  base_txt   = nchar(txt_uni, "width"),
+  check = FALSE
+)
+```
+
+```{r}
+bench::mark(
+  cli        = utf8_nchar(uni, type = "codepoints"),
+  base       = nchar(uni, "chars"),
+  cli_vec    = utf8_nchar(vec_uni, type = "codepoints"),
+  base_vec   = nchar(vec_uni, "chars"),
+  cli_txt    = utf8_nchar(txt_uni, type = "codepoints"),
+  base_txt   = nchar(txt_uni, "chars"),
+  check = FALSE
+)
+```
+
+## `utf8_substr()`
+
+```{r}
+bench::mark(
+  cli        = utf8_substr(uni, 2, 10),
+  base       = substr(uni, 2, 10),
+  cli_vec    = utf8_substr(vec_uni, 2, 10),
+  base_vec   = substr(vec_uni, 2, 10),
+  cli_txt    = utf8_substr(txt_uni, 2, 10),
+  base_txt   = substr(txt_uni, 2, 10),
+  check = FALSE
+)
+```
+
+# Session info
+
+```{r}
+sessioninfo::session_info()
+```
