@@ -156,15 +156,15 @@
         This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
       [32mv[39m This is some text that is longer than the width. This is some text that is
-        [32m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [31mx[39m This is some text that is longer than the width. This is some text that is
-        [31m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [33m![39m This is some text that is longer than the width. This is some text that is
-        [33m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [36mi[39m This is some text that is longer than the width. This is some text that is
-        [36m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [36m*[39m This is some text that is longer than the width. This is some text that is
-        [36m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       > This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
@@ -202,15 +202,15 @@
         This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
       [32m✔[39m This is some text that is longer than the width. This is some text that is
-        [32m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [31m✖[39m This is some text that is longer than the width. This is some text that is
-        [31m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [33m![39m This is some text that is longer than the width. This is some text that is
-        [33m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [36mℹ[39m This is some text that is longer than the width. This is some text that is
-        [36m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       [36m•[39m This is some text that is longer than the width. This is some text that is
-        [36m[39mlonger than the width. This is some text that is longer than the width.
+        longer than the width. This is some text that is longer than the width.
       → This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
