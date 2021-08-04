@@ -20,10 +20,11 @@ Styled \code{ansi_string} for \code{style_hyperlink()}.
 Logical scalar for \code{ansi_has_hyperlink_support()}.
 }
 \description{
-Terminal Hyperlinks
+\code{ansi_hyperlink()} creates an ANSI hyperlink.
 }
 \details{
-\code{ansi_hyperlink()} creates an ANSI hyperlink.
+This function is currently experimental. In particular, many of the
+\verb{ansi_*()} functions do not support it properly.
 
 \code{ansi_has_hyperlink_support()} checks if the current \code{stdout()}
 supports hyperlinks.

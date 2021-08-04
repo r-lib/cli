@@ -1,5 +1,6 @@
 
 test_that_cli("cli_abort", {
+  withr::local_options(cli_theme_dark = FALSE)
   expect_snapshot(error = TRUE, local({
     n <- "boo"
     cli_abort(c(
@@ -20,6 +21,7 @@ test_that_cli("cli_abort", {
 })
 
 test_that_cli("cli_warn", {
+  withr::local_options(cli_theme_dark = FALSE)
   expect_snapshot({
     n <- "boo"
     cli_warn(c(

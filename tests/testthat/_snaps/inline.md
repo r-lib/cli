@@ -23,20 +23,20 @@
     Code
       invisible(lapply(classes, do))
     Message <cliMessage>
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
-      This is [36m[36m<<<it>>>[36m[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
+      This is [36m<<<it>>>[39m really
 
 # {{ and }} can be used for comments
 

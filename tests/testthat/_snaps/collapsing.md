@@ -66,5 +66,5 @@
         cli_text("Packages: {pkgs}.")
       })
     Message <cliMessage>
-      Packages: [34m[34mpkg1[34m[39m & [34m[34mpkg2[34m[39m & [34m[34mpkg3[34m[39m & [34m[34mpkg4[34m[39m & [34m[34mpkg5[34m[39m.
+      Packages: [34mpkg1[39m & [34mpkg2[39m & [34mpkg3[39m & [34mpkg4[39m & [34mpkg5[39m.
 

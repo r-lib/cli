@@ -27,10 +27,10 @@
         cli_text("The name is {.email {x}}.")
       })
     Message <cliMessage>
-      The name is [34m[34mgood-name[34m[39m.
-      The name is '[34m[34mweird-name[34m[39m[44m [49m'.
-      The name is '[34m[34mweird-name[34m[39m[44m [49m'.
-      The name is '[34m[34mweird-name[34m[39m[44m [49m'.
+      The name is [34mgood-name[39m.
+      The name is '[34mweird-name[39m[44m [49m'.
+      The name is '[34mweird-name[39m[44m [49m'.
+      The name is '[34mweird-name[39m[44m [49m'.
 
 # quoting weird names, still [plain]
 
@@ -99,7 +99,7 @@
     Code
       cli_text("Some numbers: {.val {x}}.")
     Message <cliMessage>
-      Some numbers: [34m[34m1[34m[39m, [34m[34m2[34m[39m, [34m[34m3[34m[39m, [34m[34m4[34m[39m, [34m[34m5[34m[39m, ....
+      Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, ....
 
 # custom truncation [unicode]
 
@@ -123,7 +123,7 @@
     Code
       cli_text("Some numbers: {.val {x}}.")
     Message <cliMessage>
-      Some numbers: [34m[34m1[34m[39m, [34m[34m2[34m[39m, [34m[34m3[34m[39m, [34m[34m4[34m[39m, [34m[34m5[34m[39m, ….
+      Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, ….
 
 # collapsing class names [plain]
 
@@ -146,8 +146,8 @@
         cli_text("multiple classes: {.cls {cc}}")
       })
     Message <cliMessage>
-      this is a class: [34m[34m<myclass>[34m[39m
-      multiple classes: [34m[34m<one/two>[34m[39m
+      this is a class: [34m<myclass>[39m
+      multiple classes: [34m<one/two>[39m
 
 # transform [plain]
 
@@ -177,9 +177,9 @@
         cli_text("This is a {.field field} (after)")
       })
     Message <cliMessage>
-      This is a [32m[32mfield[32m[39m (before)
-      This is a [32m[32mFIELD[32m[39m (during)
-      This is a [32m[32mfield[32m[39m (after)
+      This is a [32mfield[39m (before)
+      This is a [32mFIELD[39m (during)
+      This is a [32mfield[39m (after)
 
 # cli_format
 

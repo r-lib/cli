@@ -20,11 +20,11 @@
       cli_par(class = "green")
       cli_text(lorem_ipsum())
     Message <cliMessage>
-      [32m[32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[32m[39m
-      [32m[32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[32m[39m
-      [32m[32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[32m[39m
-      [32m[32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[32m[39m
-      [32m[32mexercitation non ipsum.[32m[39m
+      [32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[39m
+      [32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[39m
+      [32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[39m
+      [32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[39m
+      [32mexercitation non ipsum.[39m
     Code
       cli_end()
     Message <cliMessage>
@@ -52,11 +52,11 @@
       cli_par(class = "green")
       cli_text(lorem_ipsum())
     Message <cliMessage>
-      [32m[32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[32m[39m
-      [32m[32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[32m[39m
-      [32m[32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[32m[39m
-      [32m[32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[32m[39m
-      [32m[32mexercitation non ipsum.[32m[39m
+      [32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[39m
+      [32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[39m
+      [32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[39m
+      [32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[39m
+      [32mexercitation non ipsum.[39m
     Code
       cli_end()
     Message <cliMessage>

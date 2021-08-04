@@ -3,7 +3,7 @@ rule_class <- function(x) {
   structure(x, class = c("rule", "ansi_string", "character"))
 }
 
-capture_messages <- function(expr) {
+capture_msgs <- function(expr) {
   msgs <- character()
   i <- 0
   suppressMessages(withCallingHandlers(
@@ -30,7 +30,7 @@ capt <- function(expr, print_it = TRUE) {
 }
 
 capt0 <- function(expr, strip_style = FALSE) {
-  out <- capture_messages(expr)
+  out <- capture_msgs(expr)
   if  (strip_style) ansi_strip(out) else out
 }
 

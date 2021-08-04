@@ -4,13 +4,18 @@
 \alias{ansi_strip}
 \title{Remove ANSI escape sequences from a string}
 \usage{
-ansi_strip(string)
+ansi_strip(string, sgr = TRUE, csi = TRUE)
 }
 \arguments{
 \item{string}{The input string.}
+
+\item{sgr}{Whether to remove for SGR (styling) control sequences.}
+
+\item{csi}{Whether to remove for non-SGR control sequences.}
 }
 \value{
-The cleaned up string.
+The cleaned up string. Note that \code{ansi_strip()} always drops
+the \code{ansi_string} class, wven if \code{sgr} and sci\code{are}FALSE`.
 }
 \description{
 The input may be of class \code{ansi_string} class, this is also dropped

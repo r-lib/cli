@@ -1,7 +1,8 @@
 
 ansi_string <- function(x) {
   if (!is.character(x)) x <- as.character(x)
-  class(x) <- unique(c("ansi_string", class(x)))
+  x <- enc2utf8(x)
+  class(x) <- unique(c("ansi_string", class(x), "character"))
   x
 }
 
@@ -30,6 +31,8 @@ ansi_regex <- function() {
 #'
 #' @param string The string to check. It can also be a character
 #'   vector.
+#' @param sgr Whether to look for SGR (styling) control sequences.
+#' @param csi Whether to look for non-SGR control sequences.
 #' @return Logical vector, `TRUE` for the strings that have some
 #'   ANSI styling.
 #'
@@ -40,8 +43,14 @@ ansi_regex <- function() {
 #' ansi_has_any("foobar")
 #' ansi_has_any(col_red("foobar"))
 
-ansi_has_any <- function(string) {
-  grepl(ansi_regex(), string, perl = TRUE)
+ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
+  if (!is.character(string)) string <- as.character(string)
+  string <- enc2utf8(string)
+  stopifnot(
+    is_flag(sgr),
+    is_flag(csi)
+  )
+  .Call(clic_ansi_has_any, string, sgr, csi)
 }
 
 #' Remove ANSI escape sequences from a string
@@ -50,63 +59,37 @@ ansi_has_any <- function(string) {
 #' from the result.
 #'
 #' @param string The input string.
-#' @return The cleaned up string.
+#' @param sgr Whether to remove for SGR (styling) control sequences.
+#' @param csi Whether to remove for non-SGR control sequences.
+#' @return The cleaned up string. Note that `ansi_strip()` always drops
+#' the `ansi_string` class, wven if `sgr` and sci` are `FALSE`.
 #'
 #' @family low level ANSI functions
 #' @export
 #' @examples
 #' ansi_strip(col_red("foobar")) == "foobar"
 
-ansi_strip <- function(string) {
-  clean <- gsub(ansi_regex(), "", string, perl = TRUE)
+ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
+  if (!is.character(string)) string <- as.character(string)
+  string <- enc2utf8(string)
+  stopifnot(
+    is_flag(sgr),
+    is_flag(csi)
+  )
+  clean <- .Call(clic_ansi_strip, string, sgr, csi)
   class(clean) <- setdiff(class(clean), "ansi_string")
   clean
 }
 
-
-## Create a mapping between the string and its style-less version.
-## This is useful to work with the colored string.
-
-map_to_ansi <- function(x, text = NULL) {
-
-  if (is.null(text)) {
-    text <- non_matching(re_table(ansi_regex(), x), x, empty=TRUE)
-  }
-
-  map <- lapply(
-    text,
-    function(text) {
-      cbind(
-        pos = cumsum(c(1, text[, "length"], Inf)),
-        offset = c(text[, "start"] - 1, utils::tail(text[, "end"], 1), NA)
-      )
-    })
-
-  function(pos) {
-    pos <- rep(pos, length.out = length(map))
-    mapply(pos, map, FUN = function(pos, table) {
-      if (pos < 1) {
-        pos
-      } else {
-        slot <- which(pos < table[, "pos"])[1] - 1
-        table[slot, "offset"] + pos - table[slot, "pos"] + 1
-      }
-    })
-  }
-}
-
 #' Count number of characters in an ANSI colored string
 #'
-#' This is a color-aware counterpart of [base::nchar()],
-#' which does not do well, since it also counts the ANSI control
-#' characters.
+#' This is a color-aware counterpart of [utf8_nchar()]. By default it
+#' counts Unicode grapheme clusters, instead of code points.
 #'
-#' @param x Character vector, potentially ANSO styled, or a vector to be
-#'   coarced to character.
-#' @param type Whether to count characters, bytes, or calculate the
-#'   display width of the string. Passed to [base::nchar()].
-#' @param ... Additional arguments, passed on to [base::nchar()]
-#'   after removing ANSI escape sequences.
+#' @param x Character vector, potentially ANSI styled, or a vector to be
+#'   coarced to character. If it converted to UTF-8.
+#' @param type Whether to count graphemes (characters), code points,
+#'   bytes, or calculate the display width of the string. 
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
@@ -124,14 +107,15 @@ map_to_ansi <- function(x, text = NULL) {
 #' ansi_nchar(str)
 #' nchar(ansi_strip(str))
 
-ansi_nchar <- function(x, type = c("chars", "bytes", "width"), ...) {
+ansi_nchar <- function(x,
+                       type = c("chars", "bytes", "width", "graphemes",
+                                "codepoints")) {
   type <- match.arg(type)
-  if (type == "width") x <- unicode_pre(x)
-  ansi_nchar_bad(x, type = type, ...)
-}
-
-ansi_nchar_bad <- function(x, ...) {
-  base::nchar(ansi_strip(x), ...)
+  if (type == "chars") type <- "graphemes"
+  type <- match(type, c("graphemes", "bytes", "width", "codepoints"))
+  if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
+  .Call(clic_ansi_nchar, x, type)
 }
 
 #' Substring(s) of an ANSI colored string
@@ -189,26 +173,10 @@ ansi_substr <- function(x, start, stop) {
   if (anyNA(start) || anyNA(stop)) {
     stop("non-numeric substring arguments not supported")
   }
-  ansi <- re_table(ansi_regex(), x)
-  text <- non_matching(ansi, x, empty=TRUE)
-  mapper <- map_to_ansi(x, text = text)
-  ansi_substr_internal(x, mapper, start, stop)
-}
-
-ansi_substr_internal <- function(x, mapper, start, stop) {
-  nstart <- mapper(start)
-  nstop  <- mapper(stop)
-
-  bef <- base::substr(x, 1, nstart - 1)
-  aft <- base::substr(x, nstop + 1, base::nchar(x))
-  ansi_bef <- vapply(regmatches(bef, gregexpr(ansi_regex(), bef)),
-                     paste, collapse = "", FUN.VALUE = "")
-  ansi_aft <- vapply(regmatches(aft, gregexpr(ansi_regex(), aft)),
-                     paste, collapse = "", FUN.VALUE = "")
-
-  ansi_string(
-    paste(sep = "", ansi_bef, base::substr(x, nstart, nstop), ansi_aft)
-  )
+  x <- enc2utf8(x)
+  start <- rep_len(start, length(x))
+  stop <- rep_len(stop, length(x))
+  .Call(clic_ansi_substr, x, start, stop)
 }
 
 #' Substring(s) of an ANSI colored string
@@ -260,7 +228,10 @@ ansi_substring <- function(text, first, last = 1000000L) {
   if (!is.character(text)) text <- as.character(text)
   n <- max(lt <- length(text), length(first), length(last))
   if (lt && lt < n) text <- rep_len(text, length.out = n)
-  ansi_substr(text, as.integer(first), as.integer(last))
+  text <- enc2utf8(text)
+  first <- rep_len(as.integer(first), n)
+  last <- rep_len(as.integer(last), n)
+  .Call(clic_ansi_substr, text, first, last)
 }
 
 
@@ -304,6 +275,8 @@ ansi_strsplit <- function(x, split, ...) {
   split <- try(as.character(split), silent=TRUE)
   if(inherits(split, "try-error") || !is.character(split) || length(split) > 1L)
     stop("`split` must be character of length <= 1, or must coerce to that")
+  if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
   if(!length(split)) split <- ""
   plain <- ansi_strip(x)
   splits <- re_table(split, plain, ...)
@@ -383,6 +356,7 @@ ansi_align <- function(text, width = console_width(),
                       type = "width") {
 
   align <- match.arg(align)
+  text <- enc2utf8(text)
   nc <- ansi_nchar(text, type = type)
 
   if (!length(text)) return(ansi_string(text))
@@ -449,6 +423,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
 
   if (!is.character(x)) x <- as.character(x)
   which <- match.arg(which)
+  x <- enc2utf8(x)
   if (!length(x)) return(ansi_string(x))
 
   sl <- 0L
@@ -468,7 +443,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
   }
 
   if (any(sl > 0L | rl > 0L)) {
-    x <- ansi_substr(x, 1 + sl, ansi_nchar(x) - rl)
+    x <- .Call(clic_ansi_substr, x, 1L + sl, ansi_nchar(x) - rl)
   }
 
   ansi_string(x)
@@ -505,6 +480,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
                          exdent = 0, simplify = TRUE) {
 
   if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
   if (length(x) == 0) {
     return(ansi_string(x))
   }
@@ -589,15 +565,11 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   }
   splits <- c(splits, xsidx)
 
-  ansi <- re_table(ansi_regex(), xx)
-  text <- non_matching(ansi, xx, empty=TRUE)
-  mapper <- map_to_ansi(xx, text = text)
-
   wrp <- vcapply(seq_along(splits[-1]), function(i) {
     from <- splits[i]
     to <- splits[i + 1L] - 1L
     while (from %in% drop) from <- from + 1L
-    ansi_substr_internal(xx, mapper, from, to)
+    .Call(clic_ansi_substr, xx, from, to)
   })
 
   indent <- strrep(" ", indent)
@@ -625,14 +597,17 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 ansi_strtrim <- function(x, width = console_width(),
                          ellipsis = symbol$ellipsis) {
 
+  x <- enc2utf8(x)
+
   # Unicode width notes. We have nothing to fix here, because we'll just
   # use ansi_substr() and ansi_nchar(), which work correctly with wide
   # characters.
 
   # First we cut according to _characters_. This might be too wide if we
   # have wide characters.
-  xt <- ansi_substr(x, 1, width)
-  tw <- ansi_nchar(ellipsis, "width", keepNA = TRUE)
+  lx <- length(x)
+  xt <- .Call(clic_ansi_substr, x, rep(1L, lx), rep(as.integer(width), lx))
+  tw <- ansi_nchar(ellipsis, "width")
 
   # If there was a cut, or xt is too wise (using _width_!), that's bad
   # We keep the initial bad ones, these are the ones that need an ellipsis.
@@ -640,7 +615,12 @@ ansi_strtrim <- function(x, width = console_width(),
   # until they are narrow enough.
   bad0 <- bad <- !is.na(x) & (xt != x | ansi_nchar(xt, "width") > width)
   while (any(bad)) {
-    xt[bad] <- ansi_substr(xt[bad], 1, ansi_nchar(xt[bad]) - 1L)
+    xt[bad] <- .Call(
+      clic_ansi_substr,
+      xt[bad],
+      rep(1L, sum(bad)),
+      ansi_nchar(xt[bad]) - 1L
+    )
     bad <- ansi_nchar(xt, "width") > width - tw
   }
 
@@ -691,6 +671,8 @@ ansi_columns <- function(text, width = console_width(), sep = " ",
 
   fill <- match.arg(fill)
   align <- match.arg(align)
+
+  text <- enc2utf8(text)
 
   if (length(text) == 0) return(ansi_string(text))
 
@@ -762,6 +744,7 @@ ansi_chartr <- function(old, new, x) {
 }
 
 ansi_convert <- function(x, converter, ...) {
+  x <- enc2utf8(x)
   ansi <- re_table(ansi_regex(), x)
   text <- non_matching(ansi, x, empty=TRUE)
   out <- mapply(x, text, USE.NAMES = FALSE, FUN = function(x1, t1) {
@@ -774,4 +757,180 @@ ansi_convert <- function(x, converter, ...) {
   })
 
   ansi_string(out)
+}
+
+#' Simplify ANSI styling tags
+#'
+#' It creates an equivalent, but possibly shorter ANSI styled string, by
+#' removing duplicate and empty tags.
+#'
+#' @param x Input string
+#' @param csi What to do with non-SGR ANSI sequences, either `"keep"`,
+#'   or `"drop"` them.
+#' @return Simplified `ansi_string` vector.
+#'
+#' @export
+
+ansi_simplify <- function(x, csi = c("keep", "drop")) {
+  if (!is.character(x)) x <- as.character(x)
+  csi <- match.arg(csi)
+  x <- enc2utf8(x)
+  .Call(clic_ansi_simplify, x, csi == "keep")
+}
+
+#' Convert ANSI styled text to HTML
+#'
+#' @param x Input character vector.
+#' @param escape_reserved Whether to escape characters that are reserved
+#'   in HTML (`&`, `<` and `>`).
+#' @param csi What to do with non-SGR ANSI sequences, either `"keep"`,
+#'   or `"drop"` them.
+#' @return Character vector of HTML.
+#'
+#' @family ANSI to HTML conversion
+#' @export
+#' @examplesIf cli:::has_packages(c("prettycode", "htmltools", "withr"))
+#' ## Syntax highlight the source code of an R function with ANSI tags,
+#' ## and export it to a HTML file.
+#' code <- withr::with_options(
+#'   list(ansi.num_colors = 256),
+#'   prettycode::highlight(format(ansi_html))
+#' )
+#' hcode <- paste(ansi_html(code), collapse = "\n")
+#' css <- paste(format(ansi_html_style()), collapse=  "\n")
+#' page <- htmltools::tagList(
+#'   htmltools::tags$head(htmltools::tags$style(css)),
+#'   htmltools::tags$pre(htmltools::HTML(hcode))
+#' )
+#'
+#' if (interactive()) htmltools::html_print(page)
+
+ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
+  if (!is.character(x)) x <- as.character(x)
+  csi <- match.arg(csi)
+  x <- enc2utf8(x)
+  if (escape_reserved) {
+    x <- gsub("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
+  }
+  .Call(clic_ansi_html, x, csi == "keep")
+}
+
+ansi_themes <- rbind(
+  read.table(
+    "tools/ansi-themes.txt",
+    comment = ";",
+    stringsAsFactors = FALSE
+  ),
+  read.table(
+    "tools/ansi-iterm-themes.txt",
+    comment = ";",
+    stringsAsFactors = FALSE
+  )
+)
+
+#' CSS styles for the output of `ansi_html()`
+#'
+#'
+#'
+#' @param colors Whether or not to include colors. `FALSE` will not include
+#'   colors, `TRUE` or `8` will include eight colors (plus their bright
+#'   variants), `256` will include 256 colors.
+#' @param theme Character scalar, theme to use for the first eight colors
+#'   plus their bright variants. Terminals define these colors differently,
+#'   and cli includes a couple of examples. Sources of themes:
+#'   * https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
+#'   * iTerm2 builtin themes
+#'   * https://github.com/sindresorhus/iterm2-snazzy
+#' @return Named list of CSS declaration blocks, where the names are
+#'   CSS selectors. It has a `format()` and `print()` methods, which you
+#'   can use to write the output to a CSS or HTML file.
+#'
+#' @family ANSI to HTML conversion
+#' @export
+#' @examples
+#' ansi_html_style(colors = FALSE)
+#' ansi_html_style(colors = 8, theme = "iterm-snazzy")
+
+ansi_html_style <- function(colors = TRUE, theme = NULL) {
+  if (is.character(theme)) {
+    theme <- match.arg(theme)
+    theme <- as.list(ansi_themes[theme, ])
+  }
+
+  stopifnot(
+    isTRUE(colors) || identical(colors, FALSE) ||
+      (is_count(colors) && colors %in% c(8,256)),
+    is_string(theme) || is.list(theme) && length(theme) == 16
+  )
+
+  ret <- list(
+    ".ansi-bold"       = "{ font-weight: bold;             }",
+    # .ansi-faint ???
+    ".ansi-italic"     = "{ font-style: italic;            }",
+    ".ansi-underline"  = "{ text-decoration: underline;    }",
+    ".ansi-blink"      = "{ text-decoration: blink;        }",
+    # .ansi-inverse ???
+    ".ansi-hide"       = "{ visibility: hidden;            }",
+    ".ansi-crossedout" = "{ text-decoration: line-through; }"
+  )
+
+  if (!identical(colors, FALSE)) {
+    fg <- structure(
+      names = paste0(".ansi-color-", 0:15),
+      paste0("{ color: ", theme, " }")
+    )
+    bg <- structure(
+      names = paste0(".ansi-bg-color-", 0:15),
+      paste0("{ background-color: ", theme, " }")
+    )
+    ret <- c(ret, fg, bg)
+  }
+
+  if (isTRUE(colors) || colors == 256) {
+    grid <- expand.grid(r = 0:5, g = 0:5, b = 0:5)
+    num <- 16 + 36 * grid$r + 6 * grid$g + grid$b
+    cols <- grDevices::rgb(grid$r, grid$g, grid$b, maxColorValue = 5)
+    fg256 <- structure(
+      names = paste0(".ansi-color-", num),
+      paste0("{ color: ", tolower(cols), " }")
+    )
+    bg256 <- structure(
+      names = paste0(".ansi-bg-color-", num),
+      paste0("{ background-color: ", tolower(cols), " }")
+    )
+    gr <- seq(1, 24)
+    grcols <- grDevices::rgb(gr, gr, gr, maxColorValue = 25)
+    fggrey <- structure(
+      names = paste0(".ansi-color-", 232:255),
+      paste0("{ color: ", tolower(grcols), " }")
+    )
+    bggrey <- structure(
+      names = paste0(".ansi-bg-color-", 232:255),
+      paste0("{ background-color: ", tolower(grcols), " }")
+    )
+    ret <- c(ret, fg256, fggrey, bg256, bggrey)
+  }
+
+  class(ret) <- "cli_ansi_html_style"
+  ret
+}
+
+# This avoids duplication, but messes up the source ref of the function...
+formals(ansi_html_style)$theme <- c("vscode", setdiff(rownames(ansi_themes), "vscode"))
+attr(body(ansi_html_style), "srcref") <- NULL
+attr(body(ansi_html_style), "wholeSrcref") <- NULL
+attr(body(ansi_html_style), "srcfile") <- NULL
+
+#' @export
+
+format.cli_ansi_html_style <- function(x, ...) {
+  paste0(format(names(x)), " ", x)
+}
+
+#' @export
+
+print.cli_ansi_html_style <- function(x, ...) {
+  cat(format(x, ...), sep = "\n")
 }
