@@ -24,9 +24,8 @@ str <- paste0(
   "\U0001f477\u200d\u2640\ufe0f",
   "\U0001f477\U0001f3fb",
   "\U0001f477\U0001f3ff")
-cat(str)
+cat(str, "\n")
 chrs <- utf8_graphemes(str)
-cat(chrs)
 }
 \seealso{
 Other UTF-8 string manipulation: 
