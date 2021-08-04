@@ -48,7 +48,7 @@ Courier and Inconsolata treats them as wide characters, so cli output
 will not look great with these. Some good, modern fonts that look good
 include Menlo, Fira Code and Source Code Pro.
 
-If you don’t want to change your font, you can also turn off Unicope
+If you don’t want to change your font, you can also turn off Unicode
 output, by setting the \code{cli.unicode} option:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
 }\if{html}{\out{</div>}}
 
