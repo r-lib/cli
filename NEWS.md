@@ -1,5 +1,8 @@
 # cli (development version)
 
+* The new `col_br_*()` and `bg_br_()` functions create bright versions of
+  eight base ANSI colors.
+
 # cli 3.0.1
 
 * `ansi_strtrim()` now correctly keeps `NA` values (#309).

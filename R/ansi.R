@@ -19,6 +19,15 @@ ansi_builtin_styles <- list(
   white = list(37, 39),
   silver = list(90, 39),
 
+  br_black = list(90, 39),
+  br_red = list(91, 39),
+  br_green = list(92, 39),
+  br_yellow = list(93, 39),
+  br_blue = list(94, 39),
+  br_magenta = list(95, 39),
+  br_cyan = list(96, 39),
+  br_white = list(97, 39),
+
   bg_black = list(40, 49),
   bg_red = list(41, 49),
   bg_green = list(42, 49),
@@ -27,6 +36,15 @@ ansi_builtin_styles <- list(
   bg_magenta = list(45, 49),
   bg_cyan = list(46, 49),
   bg_white = list(47, 49),
+
+  bg_br_black = list(100, 39),
+  bg_br_red = list(101, 39),
+  bg_br_green = list(102, 39),
+  bg_br_yellow = list(103, 39),
+  bg_br_blue = list(104, 39),
+  bg_br_magenta = list(105, 39),
+  bg_br_cyan = list(106, 39),
+  bg_br_white = list(107, 39),
 
   # similar to reset, but only for a single property
   no_bold          = list(c(0,     23, 24, 27, 28, 29, 39, 49), 22),
