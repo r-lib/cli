@@ -1,8 +1,11 @@
 
 #' Terminal Hyperlinks
 #'
-#' @details
 #' `ansi_hyperlink()` creates an ANSI hyperlink.
+#'
+#' @details
+#' This function is currently experimental. In particular, many of the
+#' `ansi_*()` functions do not support it properly.
 #'
 #' `ansi_has_hyperlink_support()` checks if the current `stdout()`
 #' supports hyperlinks.
