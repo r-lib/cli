@@ -40,9 +40,8 @@
 
 
 <meta property="og:title" content="Count number of characters in an ANSI colored string — ansi_nchar" />
-<meta property="og:description" content="This is a color-aware counterpart of base::nchar(),
-which does not do well, since it also counts the ANSI control
-characters." />
+<meta property="og:description" content="This is a color-aware counterpart of utf8_nchar(). By default it
+counts Unicode grapheme clusters, instead of code points." />
 
 
 <meta name="robots" content="noindex">
@@ -140,30 +139,24 @@ characters." />
     </div>
 
     <div class="ref-description">
-    <p>This is a color-aware counterpart of <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>,
-which does not do well, since it also counts the ANSI control
-characters.</p>
+    <p>This is a color-aware counterpart of <code><a href='utf8_nchar.html'>utf8_nchar()</a></code>. By default it
+counts Unicode grapheme clusters, instead of code points.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>x</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chars"</span>, <span class='st'>"bytes"</span>, <span class='st'>"width"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>x</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chars"</span>, <span class='st'>"bytes"</span>, <span class='st'>"width"</span>, <span class='st'>"graphemes"</span>, <span class='st'>"codepoints"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Character vector, potentially ANSO styled, or a vector to be
-coarced to character.</p></td>
+      <td><p>Character vector, potentially ANSI styled, or a vector to be
+coarced to character. If it converted to UTF-8.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Whether to count characters, bytes, or calculate the
-display width of the string. Passed to <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments, passed on to <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>
-after removing ANSI escape sequences.</p></td>
+      <td><p>Whether to count graphemes (characters), code points,
+bytes, or calculate the display width of the string.</p></td>
     </tr>
     </table>
 

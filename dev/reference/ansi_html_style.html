@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format and returns a line of text — format_inline • cli</title>
+<title>CSS styles for the output of ansi_html() — ansi_html_style • cli</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Format and returns a line of text — format_inline" />
-<meta property="og:description" content="You can use this function to format a line of cli text, without emitting
-it to the screen. It uses cli_text() internally." />
+<meta property="og:title" content="CSS styles for the output of ansi_html() — ansi_html_style" />
+<meta property="og:description" content="CSS styles for the output of ansi_html()" />
 
 
 <meta name="robots" content="noindex">
@@ -133,41 +132,100 @@ it to the screen. It uses cli_text() internally." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format and returns a line of text</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cli.R'><code>R/cli.R</code></a></small>
-    <div class="hidden name"><code>format_inline.Rd</code></div>
+    <h1>CSS styles for the output of <code>ansi_html()</code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
+    <div class="hidden name"><code>ansi_html_style.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>You can use this function to format a line of cli text, without emitting
-it to the screen. It uses <code><a href='cli_text.html'>cli_text()</a></code> internally.</p>
+    <p>CSS styles for the output of <code><a href='ansi_html.html'>ansi_html()</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_inline</span><span class='op'>(</span><span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_html_style</span><span class='op'>(</span>
+  colors <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vscode"</span>, <span class='st'>"vga"</span>, <span class='st'>"winxp"</span>, <span class='st'>"win10"</span>, <span class='st'>"macos"</span>, <span class='st'>"putty"</span>, <span class='st'>"mirc"</span>, <span class='st'>"xterm"</span>,
+    <span class='st'>"ubuntu"</span>, <span class='st'>"eclipse"</span>, <span class='st'>"iterm-dark"</span>, <span class='st'>"iterm-light"</span>, <span class='st'>"iterm-pastel"</span>, <span class='st'>"iterm-smoooooth"</span>,
+    <span class='st'>"iterm-snazzy"</span>, <span class='st'>"iterm-sol-dark"</span>, <span class='st'>"iterm-sol-light"</span>, <span class='st'>"iterm-tango-dark"</span>,
+    <span class='st'>"iterm-tango-light"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Passed to <code><a href='cli_text.html'>cli_text()</a></code>.</p></td>
+      <th>colors</th>
+      <td><p>Whether or not to include colors. <code>FALSE</code> will not include
+colors, <code>TRUE</code> or <code>8</code> will include eight colors (plus their bright
+variants), <code>256</code> will include 256 colors.</p></td>
     </tr>
     <tr>
-      <th>.envir</th>
-      <td><p>Environment to evaluate the expressions in.</p></td>
+      <th>theme</th>
+      <td><p>Character scalar, theme to use for the first eight colors
+plus their bright variants. Terminals define these colors differently,
+and cli includes a couple of examples. Sources of themes:</p><ul>
+<li><p>https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit</p></li>
+<li><p>iTerm2 builtin themes</p></li>
+<li><p>https://github.com/sindresorhus/iterm2-snazzy</p></li>
+</ul></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character scalar, the formatted string.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>Named list of CSS declaration blocks, where the names are
+CSS selectors. It has a <code><a href='https://rdrr.io/r/base/format.html'>format()</a></code> and <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code> methods, which you
+can use to write the output to a CSS or HTML file.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>format_inline()</code> performs no width-wrapping.</p>
+    <div class='dont-index'><p>Other ANSI to HTML conversion: 
+<code><a href='ansi_html.html'>ansi_html</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_inline</span><span class='op'>(</span><span class='st'>"A message for {.emph later}, thanks {.fn format_inline}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "A message for \033[3mlater\033[23m, thanks \033[38;5;235m\033[48;5;255m`format_inline()\033[49m\033[39m."</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>ansi_html_style</span><span class='op'>(</span>colors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; .ansi-bold       { font-weight: bold;             }
+#&gt; .ansi-italic     { font-style: italic;            }
+#&gt; .ansi-underline  { text-decoration: underline;    }
+#&gt; .ansi-blink      { text-decoration: blink;        }
+#&gt; .ansi-hide       { visibility: hidden;            }
+#&gt; .ansi-crossedout { text-decoration: line-through; }</div><div class='input'><span class='fu'>ansi_html_style</span><span class='op'>(</span>colors <span class='op'>=</span> <span class='fl'>8</span>, theme <span class='op'>=</span> <span class='st'>"iterm-snazzy"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; .ansi-bold        { font-weight: bold;             }
+#&gt; .ansi-italic      { font-style: italic;            }
+#&gt; .ansi-underline   { text-decoration: underline;    }
+#&gt; .ansi-blink       { text-decoration: blink;        }
+#&gt; .ansi-hide        { visibility: hidden;            }
+#&gt; .ansi-crossedout  { text-decoration: line-through; }
+#&gt; .ansi-color-0     { color: #000000 }
+#&gt; .ansi-color-1     { color: #ff5c57 }
+#&gt; .ansi-color-2     { color: #5af78e }
+#&gt; .ansi-color-3     { color: #f3f99d }
+#&gt; .ansi-color-4     { color: #57c7ff }
+#&gt; .ansi-color-5     { color: #ff6ac1 }
+#&gt; .ansi-color-6     { color: #9aedfe }
+#&gt; .ansi-color-7     { color: #f1f1f0 }
+#&gt; .ansi-color-8     { color: #686868 }
+#&gt; .ansi-color-9     { color: #ff5c57 }
+#&gt; .ansi-color-10    { color: #5af78e }
+#&gt; .ansi-color-11    { color: #f3f99d }
+#&gt; .ansi-color-12    { color: #57c7ff }
+#&gt; .ansi-color-13    { color: #ff6ac1 }
+#&gt; .ansi-color-14    { color: #9aedfe }
+#&gt; .ansi-color-15    { color: #f1f1f0 }
+#&gt; .ansi-bg-color-0  { background-color: #000000 }
+#&gt; .ansi-bg-color-1  { background-color: #ff5c57 }
+#&gt; .ansi-bg-color-2  { background-color: #5af78e }
+#&gt; .ansi-bg-color-3  { background-color: #f3f99d }
+#&gt; .ansi-bg-color-4  { background-color: #57c7ff }
+#&gt; .ansi-bg-color-5  { background-color: #ff6ac1 }
+#&gt; .ansi-bg-color-6  { background-color: #9aedfe }
+#&gt; .ansi-bg-color-7  { background-color: #f1f1f0 }
+#&gt; .ansi-bg-color-8  { background-color: #686868 }
+#&gt; .ansi-bg-color-9  { background-color: #ff5c57 }
+#&gt; .ansi-bg-color-10 { background-color: #5af78e }
+#&gt; .ansi-bg-color-11 { background-color: #f3f99d }
+#&gt; .ansi-bg-color-12 { background-color: #57c7ff }
+#&gt; .ansi-bg-color-13 { background-color: #ff6ac1 }
+#&gt; .ansi-bg-color-14 { background-color: #9aedfe }
+#&gt; .ansi-bg-color-15 { background-color: #f1f1f0 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format and returns a line of text — format_inline • cli</title>
+<title>Simplify ANSI styling tags — ansi_simplify • cli</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Format and returns a line of text — format_inline" />
-<meta property="og:description" content="You can use this function to format a line of cli text, without emitting
-it to the screen. It uses cli_text() internally." />
+<meta property="og:title" content="Simplify ANSI styling tags — ansi_simplify" />
+<meta property="og:description" content="It creates an equivalent, but possibly shorter ANSI styled string, by
+removing duplicate and empty tags." />
 
 
 <meta name="robots" content="noindex">
@@ -133,41 +133,36 @@ it to the screen. It uses cli_text() internally." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format and returns a line of text</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cli.R'><code>R/cli.R</code></a></small>
-    <div class="hidden name"><code>format_inline.Rd</code></div>
+    <h1>Simplify ANSI styling tags</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
+    <div class="hidden name"><code>ansi_simplify.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>You can use this function to format a line of cli text, without emitting
-it to the screen. It uses <code><a href='cli_text.html'>cli_text()</a></code> internally.</p>
+    <p>It creates an equivalent, but possibly shorter ANSI styled string, by
+removing duplicate and empty tags.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_inline</span><span class='op'>(</span><span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_simplify</span><span class='op'>(</span><span class='va'>x</span>, csi <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"keep"</span>, <span class='st'>"drop"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Passed to <code><a href='cli_text.html'>cli_text()</a></code>.</p></td>
+      <th>x</th>
+      <td><p>Input string</p></td>
     </tr>
     <tr>
-      <th>.envir</th>
-      <td><p>Environment to evaluate the expressions in.</p></td>
+      <th>csi</th>
+      <td><p>What to do with non-SGR ANSI sequences, either <code>"keep"</code>,
+or <code>"drop"</code> them.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character scalar, the formatted string.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>Simplified <code>ansi_string</code> vector.</p>
 
-    <p><code>format_inline()</code> performs no width-wrapping.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_inline</span><span class='op'>(</span><span class='st'>"A message for {.emph later}, thanks {.fn format_inline}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "A message for \033[3mlater\033[23m, thanks \033[38;5;235m\033[48;5;255m`format_inline()\033[49m\033[39m."</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

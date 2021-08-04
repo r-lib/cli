@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format and returns a line of text — format_inline • cli</title>
+<title>Convert ANSI styled text to HTML — ansi_html • cli</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Format and returns a line of text — format_inline" />
-<meta property="og:description" content="You can use this function to format a line of cli text, without emitting
-it to the screen. It uses cli_text() internally." />
+<meta property="og:title" content="Convert ANSI styled text to HTML — ansi_html" />
+<meta property="og:description" content="Convert ANSI styled text to HTML" />
 
 
 <meta name="robots" content="noindex">
@@ -133,41 +132,60 @@ it to the screen. It uses cli_text() internally." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format and returns a line of text</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cli.R'><code>R/cli.R</code></a></small>
-    <div class="hidden name"><code>format_inline.Rd</code></div>
+    <h1>Convert ANSI styled text to HTML</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
+    <div class="hidden name"><code>ansi_html.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>You can use this function to format a line of cli text, without emitting
-it to the screen. It uses <code><a href='cli_text.html'>cli_text()</a></code> internally.</p>
+    <p>Convert ANSI styled text to HTML</p>
     </div>
 
-    <pre class="usage"><span class='fu'>format_inline</span><span class='op'>(</span><span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_html</span><span class='op'>(</span><span class='va'>x</span>, escape_reserved <span class='op'>=</span> <span class='cn'>TRUE</span>, csi <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"drop"</span>, <span class='st'>"keep"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>...</th>
-      <td><p>Passed to <code><a href='cli_text.html'>cli_text()</a></code>.</p></td>
+      <th>x</th>
+      <td><p>Input character vector.</p></td>
     </tr>
     <tr>
-      <th>.envir</th>
-      <td><p>Environment to evaluate the expressions in.</p></td>
+      <th>escape_reserved</th>
+      <td><p>Whether to escape characters that are reserved
+in HTML (<code>&amp;</code>, <code>&lt;</code> and <code>&gt;</code>).</p></td>
+    </tr>
+    <tr>
+      <th>csi</th>
+      <td><p>What to do with non-SGR ANSI sequences, either <code>"keep"</code>,
+or <code>"drop"</code> them.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character scalar, the formatted string.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>Character vector of HTML.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>format_inline()</code> performs no width-wrapping.</p>
+    <div class='dont-index'><p>Other ANSI to HTML conversion: 
+<code><a href='ansi_html_style.html'>ansi_html_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_inline</span><span class='op'>(</span><span class='st'>"A message for {.emph later}, thanks {.fn format_inline}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "A message for \033[3mlater\033[23m, thanks \033[38;5;235m\033[48;5;255m`format_inline()\033[49m\033[39m."</div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Syntax highlight the source code of an R function with ANSI tags,</span>
+<span class='co'>## and export it to a HTML file.</span>
+<span class='va'>code</span> <span class='op'>&lt;-</span> <span class='fu'>withr</span><span class='fu'>::</span><span class='fu'><a href='https://withr.r-lib.org/reference/with_options.html'>with_options</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ansi.num_colors <span class='op'>=</span> <span class='fl'>256</span><span class='op'>)</span>,
+  <span class='fu'>prettycode</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/prettycode/man/highlight.html'>highlight</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>ansi_html</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>hcode</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'>ansi_html</span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span>, collapse <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
+<span class='va'>css</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='ansi_html_style.html'>ansi_html_style</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, collapse<span class='op'>=</span>  <span class='st'>"\n"</span><span class='op'>)</span>
+<span class='va'>page</span> <span class='op'>&lt;-</span> <span class='fu'>htmltools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/tag.html'>tagList</a></span><span class='op'>(</span>
+  <span class='fu'>htmltools</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>tags</a></span><span class='op'>$</span><span class='fu'>head</span><span class='op'>(</span><span class='fu'>htmltools</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>tags</a></span><span class='op'>$</span><span class='fu'>style</span><span class='op'>(</span><span class='va'>css</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'>htmltools</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>tags</a></span><span class='op'>$</span><span class='fu'>pre</span><span class='op'>(</span><span class='fu'>htmltools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/HTML.html'>HTML</a></span><span class='op'>(</span><span class='va'>hcode</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'>htmltools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/html_print.html'>html_print</a></span><span class='op'>(</span><span class='va'>page</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
