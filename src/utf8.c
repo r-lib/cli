@@ -374,3 +374,37 @@ SEXP clic_utf8_substr(SEXP x, SEXP sstart, SEXP sstop) {
   UNPROTECT(1);
   return res;
 }
+
+SEXP clic_utf8_graphemes(SEXP x) {
+  R_xlen_t i, len = XLENGTH(x);
+  SEXP res = PROTECT(allocVector(VECSXP, len));
+
+  for (i = 0; i < len; i++) {
+    SEXP x1 = STRING_ELT(x, i);
+    if (x1 == NA_STRING) {
+      SET_VECTOR_ELT(res, i, Rf_ScalarString(x1));
+    } else {
+      const uint8_t *str = (const uint8_t*) CHAR(x1);
+      struct grapheme_iterator iter;
+      SEXP pieces = PROTECT(allocVector(STRSXP, strlen((const char*) str)));
+      R_xlen_t idx = 0;
+      uint8_t *start = 0;
+
+      clic_utf8_graphscan_make(&iter, str, /* width = */ 0);
+      while (iter.nxt_prop != -1) {
+        clic_utf8_graphscan_next(&iter, &start, NULL);
+        SET_STRING_ELT(
+          pieces,
+          idx++,
+          Rf_mkCharLenCE((const char*) start, iter.cnd - start, CE_UTF8)
+        );
+      }
+
+      SET_VECTOR_ELT(res, i, PROTECT(Rf_xlengthgets(pieces, idx)));
+      UNPROTECT(2);
+    }
+  }
+
+  UNPROTECT(1);
+  return res;
+}

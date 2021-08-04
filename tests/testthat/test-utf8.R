@@ -63,3 +63,34 @@ test_that("UTF-8 output on Windows", {
   writeBin(charToRaw(out$stdout), tmp)
   expect_snapshot_file(tmp, name = "utf8-output.txt")
 })
+
+test_that("utf8_graphemes", {
+  expect_equal(utf8_graphemes(character()), list())
+  expect_equal(utf8_graphemes(""), list(character()))
+
+  str <- c(
+    NA,
+    "",
+    "alpha",
+    "\U0001f477\U0001f3ff\u200d\u2640\ufe0f",
+    "\U0001f477\U0001f3ff",
+    "\U0001f477\u200d\u2640\ufe0f",
+    "\U0001f477\U0001f3fb",
+    "\U0001f477\U0001f3ff"
+  )
+  exp <- list(
+    NA_character_,
+    character(),
+    c("a", "l", "p", "h", "a"),
+    "\U0001f477\U0001f3ff\u200d\u2640\ufe0f",
+    "\U0001f477\U0001f3ff",
+    "\U0001f477\u200d\u2640\ufe0f",
+    "\U0001f477\U0001f3fb",
+    "\U0001f477\U0001f3ff"
+  )
+  expect_equal(utf8_graphemes(str), exp)
+
+  str2 <- paste0(na.omit(str), collapse = "")
+  exp2 <- list(na.omit(unlist(exp)))
+  expect_equal(utf8_graphemes(str2), exp2)
+})

@@ -1087,11 +1087,6 @@ SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi) {
 
 /* ---------------------------------------------------------------------- */
 
-#define NCHAR_TYPE_GRAPHEMES  1
-#define NCHAR_TYPE_BYTES      2
-#define NCHAR_TYPE_WIDTH      3
-#define NCHAR_TYPE_CODEPOINTS 4
-
 struct nchar_data {
   R_xlen_t done;
   int *resptr;

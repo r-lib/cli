@@ -116,3 +116,29 @@ utf8_substr <- function(x, start, stop) {
   stop <- rep_len(stop, length(x))
   .Call(clic_utf8_substr, x, start, stop)
 }
+
+#' Break an UTF-8 character vector into grapheme clusters
+#'
+#' @param x Character vector.
+#' @return List of characters vectors, the grapheme clusters of the input
+#'   string.
+#'
+#' @family UTF-8 string manipulation
+#' @export
+#' @examples
+#' # Five grapheme clusters
+#' str <- paste0(
+#'   "\U0001f477\U0001f3ff\u200d\u2640\ufe0f",
+#'   "\U0001f477\U0001f3ff",
+#'   "\U0001f477\u200d\u2640\ufe0f",
+#'   "\U0001f477\U0001f3fb",
+#'   "\U0001f477\U0001f3ff")
+#' cat(str)
+#' chrs <- utf8_graphemes(str)
+#' cat(chrs)
+
+utf8_graphemes <- function(x) {
+  if (!is.character(x)) x <- as.character(x)
+  x <- enc2utf8(x)
+  .Call(clic_utf8_graphemes, x)
+}
