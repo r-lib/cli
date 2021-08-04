@@ -11,6 +11,14 @@
 \alias{bg_white}
 \alias{bg_yellow}
 \alias{bg_none}
+\alias{bg_br_black}
+\alias{bg_br_blue}
+\alias{bg_br_cyan}
+\alias{bg_br_green}
+\alias{bg_br_magenta}
+\alias{bg_br_red}
+\alias{bg_br_white}
+\alias{bg_br_yellow}
 \alias{col_black}
 \alias{col_blue}
 \alias{col_cyan}
@@ -22,6 +30,14 @@
 \alias{col_grey}
 \alias{col_silver}
 \alias{col_none}
+\alias{col_br_black}
+\alias{col_br_blue}
+\alias{col_br_cyan}
+\alias{col_br_green}
+\alias{col_br_magenta}
+\alias{col_br_red}
+\alias{col_br_white}
+\alias{col_br_yellow}
 \alias{style_dim}
 \alias{style_blurred}
 \alias{style_bold}
@@ -61,6 +77,22 @@ bg_yellow(...)
 
 bg_none(...)
 
+bg_br_black(...)
+
+bg_br_blue(...)
+
+bg_br_cyan(...)
+
+bg_br_green(...)
+
+bg_br_magenta(...)
+
+bg_br_red(...)
+
+bg_br_white(...)
+
+bg_br_yellow(...)
+
 col_black(...)
 
 col_blue(...)
@@ -82,6 +114,22 @@ col_grey(...)
 col_silver(...)
 
 col_none(...)
+
+col_br_black(...)
+
+col_br_blue(...)
+
+col_br_cyan(...)
+
+col_br_green(...)
+
+col_br_magenta(...)
+
+col_br_red(...)
+
+col_br_white(...)
+
+col_br_yellow(...)
 
 style_dim(...)
 
@@ -141,11 +189,19 @@ they might actually look differently, as terminals have their own
 settings for how to show them. \code{col_none()} is the default color, this
 is useful in a substring of a colored string.
 
+The \verb{col_br_*} functions are bright versions of the eight ANSI colors.
+Note that on some terminal configurations and themes they might be the
+same as the non-bright colors.
+
 The \verb{bg_*} functions change the background color of the text.
 These are the eight original ANSI background colors. These, too, can
 vary in appearence, depending on terminal settings. \code{bg_none()} the
 the default background color, this is useful in a substring of a
 background-colored string.
+
+The \verb{bg_br_*} functions are the bright versions of the eight ANSI
+background colors. Note that on some temrinal configruations and themes
+they might be the same as the non-bright colors.
 
 The \verb{style_*} functions apply other styling to the text. The currently
 supported styling funtions are:

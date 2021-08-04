@@ -10,11 +10,19 @@
 #' settings for how to show them. `col_none()` is the default color, this
 #' is useful in a substring of a colored string.
 #'
+#' The `col_br_*` functions are bright versions of the eight ANSI colors.
+#' Note that on some terminal configurations and themes they might be the
+#' same as the non-bright colors.
+#'
 #' The `bg_*` functions change the background color of the text.
 #' These are the eight original ANSI background colors. These, too, can
 #' vary in appearence, depending on terminal settings. `bg_none()` the
 #' the default background color, this is useful in a substring of a
 #' background-colored string.
+#'
+#' The `bg_br_*` functions are the bright versions of the eight ANSI
+#' background colors. Note that on some temrinal configruations and themes
+#' they might be the same as the non-bright colors.
 #'
 #' The `style_*` functions apply other styling to the text. The currently
 #' supported styling funtions are:
@@ -114,6 +122,31 @@ bg_none <- create_ansi_style("no_bg_color")
 
 #' @export
 #' @name ansi-styles
+bg_br_black    <- create_ansi_style("bg_br_black")
+#' @export
+#' @name ansi-styles
+bg_br_blue     <- create_ansi_style("bg_br_blue")
+#' @export
+#' @name ansi-styles
+bg_br_cyan     <- create_ansi_style("bg_br_cyan")
+#' @export
+#' @name ansi-styles
+bg_br_green    <- create_ansi_style("bg_br_green")
+#' @export
+#' @name ansi-styles
+bg_br_magenta  <- create_ansi_style("bg_br_magenta")
+#' @export
+#' @name ansi-styles
+bg_br_red      <- create_ansi_style("bg_br_red")
+#' @export
+#' @name ansi-styles
+bg_br_white    <- create_ansi_style("bg_br_white")
+#' @export
+#' @name ansi-styles
+bg_br_yellow   <- create_ansi_style("bg_br_yellow")
+
+#' @export
+#' @name ansi-styles
 col_black   <- create_ansi_style("black")
 #' @export
 #' @name ansi-styles
@@ -145,6 +178,31 @@ col_silver  <- create_ansi_style("silver")
 #' @export
 #' @name ansi-styles
 col_none <- create_ansi_style("no_color")
+
+#' @export
+#' @name ansi-styles
+col_br_black   <- create_ansi_style("br_black")
+#' @export
+#' @name ansi-styles
+col_br_blue    <- create_ansi_style("br_blue")
+#' @export
+#' @name ansi-styles
+col_br_cyan    <- create_ansi_style("br_cyan")
+#' @export
+#' @name ansi-styles
+col_br_green   <- create_ansi_style("br_green")
+#' @export
+#' @name ansi-styles
+col_br_magenta <- create_ansi_style("br_magenta")
+#' @export
+#' @name ansi-styles
+col_br_red     <- create_ansi_style("br_red")
+#' @export
+#' @name ansi-styles
+col_br_white   <- create_ansi_style("br_white")
+#' @export
+#' @name ansi-styles
+col_br_yellow  <- create_ansi_style("br_yellow")
 
 #' @export
 #' @name ansi-styles
