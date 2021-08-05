@@ -149,7 +149,9 @@ sequences (ANSI sequences).</p>
 sequences, and if it does how many colors are supported.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>num_ansi_colors</span><span class='op'>(</span>stream <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>num_ansi_colors</span><span class='op'>(</span>stream <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
+
+<span class='fu'>detect_tty_colors</span><span class='op'>(</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,20 +202,33 @@ appropriate number of colors is returned, usually 256L.</p></li>
 enough to support ANSI colors, then 8L is returned. (On Windows,
 Emacs has <code>isatty(stdout()) == FALSE</code>, so we need to check for this
 here before dealing with terminals.)</p></li>
-<li><p>If <code>stream</code> is not a terminal, then 1L is returned.</p></li>
+<li><p>If <code>stream</code> is not stdout or stderr in a terminal, then 1L is
+returned.</p></li>
+<li><p>Otherwise we use and cache the result of the terminal color
+detection (see below).</p></li>
+</ol>
+
+<p>The terminal color detection algorithm:</p><ol>
+<li><p>If the <code>COLORTERM</code> env var is set to <code>truecolor</code> or <code>24bit</code>,
+then we return 16 miliion colors.</p></li>
+<li><p>If the <code>COLORTERM</code> env var is set to anything else, then we
+return 8L.</p></li>
 <li><p>If R is running on Unix, inside an Emacs version that is recent
 enough to support ANSI colors, then 8L is returned.</p></li>
-<li><p>If <code>stream</code> is not the standard output or error, then 1L is returned.</p></li>
+<li><p>If we are on Windows in an RStudio terminal, then apparently
+we only have eight colors.</p></li>
+<li><p>If we are in a recent enough Windows 10 terminal, then there
+is either true color (from build 14931) or 256 color (from
+build 10586) support.</p></li>
 <li><p>If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
 then 8L is returned.</p></li>
 <li><p>Otherwise if we are on Windows, return 1L.</p></li>
 <li><p>Otherwise we are on Unix and try to run <code>tput colors</code> to determine
-the number of colors. If this succeeds, we return its return value,
-except if the <code>TERM</code> environment variable is <code>xterm</code> and <code>tput</code>
+the number of colors. If this succeeds, we return its return value.
+If the <code>TERM</code> environment variable is <code>xterm</code> and <code>tput</code>
 returned 8L, we return 256L, because xterm compatible terminals
-tend to support 256 colors.</p></li>
-<li><p>If <code>tput colors</code> fails, we try to guess. If <code>COLORTERM</code> is set
-to any value, we return 8L.</p></li>
+tend to support 256 colors
+(https://github.com/r-lib/crayon/issues/17)</p></li>
 <li><p>If <code>TERM</code> is set to <code>dumb</code>, we return 1L.</p></li>
 <li><p>If <code>TERM</code> starts with <code>screen</code>, <code>xterm</code>, or <code>vt100</code>, we return 8L.</p></li>
 <li><p>If <code>TERM</code> contains <code>color</code>, <code>ansi</code>, <code>cygwin</code> or <code>linux</code>, we return 8L.</p></li>
@@ -229,7 +244,8 @@ to any value, we return 8L.</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>num_ansi_colors</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 256</div></pre>
+</div><div class='output co'>#&gt; [1] 256</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
