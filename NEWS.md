@@ -1,5 +1,9 @@
 # cli (development version)
 
+* True color support: `num_ansi_colors()` now detects terminals with
+  24 bit color support, and `make_ansi_style()` uses the exact RGB colors
+  on these terminals.
+
 * The new `col_br_*()` and `bg_br_()` functions create bright versions of
   eight base ANSI colors.
 
