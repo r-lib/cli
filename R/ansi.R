@@ -1,4 +1,6 @@
 
+TRUE_COLORS <- as.integer(256^3)
+
 ansi_builtin_styles <- list(
   reset = list(0, c(0, 22, 23, 24, 27, 28, 29, 39, 49)),
   bold = list(1, 22), # 21 isn't widely supported and 22 does the same thing
@@ -261,7 +263,8 @@ ansi_style_8_from_rgb <- function(rgb, bg) {
 
 ansi_style_from_rgb <- function(rgb, bg, num_colors, grey) {
   if (num_colors < 256) { return(ansi_style_8_from_rgb(rgb, bg)) }
-  ansi256(rgb, bg, grey)
+  if (num_colors < TRUE_COLORS || grey) return(ansi256(rgb, bg, grey))
+  return(ansitrue(rgb, bg))
 }
 
 # nocov start
@@ -324,6 +327,20 @@ ansi256_rgb_index <- function(red, green, blue) {
     232 + round((red + green + blue) / 33) + 1
   } else {
     16 + sum(floor(6 * c(red, green, blue) / 256) * c(36, 6, 1)) + 1
+  }
+}
+
+ansitrue <- function(rgb, bg = FALSE) {
+  if (bg) {
+    list(
+      open = paste0("\x1b[48;2;", rgb[1], ";", rgb[2], ";", rgb[3], "m"),
+      close = "\x1b[49m"
+    )
+  } else {
+    list(
+      open = paste0("\x1b[38;2;", rgb[1], ";", rgb[2], ";", rgb[3], "m"),
+      close = "\x1b[39m"
+    )
   }
 }
 

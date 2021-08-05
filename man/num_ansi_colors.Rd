@@ -2,9 +2,12 @@
 % Please edit documentation in R/num-ansi-colors.R
 \name{num_ansi_colors}
 \alias{num_ansi_colors}
+\alias{detect_tty_colors}
 \title{Detect the number of ANSI colors to use}
 \usage{
 num_ansi_colors(stream = "auto")
+
+detect_tty_colors()
 }
 \arguments{
 \item{stream}{The stream that will be used for output, an R connection
@@ -59,20 +62,34 @@ appropriate number of colors is returned, usually 256L.
 enough to support ANSI colors, then 8L is returned. (On Windows,
 Emacs has \code{isatty(stdout()) == FALSE}, so we need to check for this
 here before dealing with terminals.)
-\item If \code{stream} is not a terminal, then 1L is returned.
+\item If \code{stream} is not stdout or stderr in a terminal, then 1L is
+returned.
+\item Otherwise we use and cache the result of the terminal color
+detection (see below).
+}
+
+The terminal color detection algorithm:
+\enumerate{
+\item If the \code{COLORTERM} env var is set to \code{truecolor} or \verb{24bit},
+then we return 16 miliion colors.
+\item If the \code{COLORTERM} env var is set to anything else, then we
+return 8L.
 \item If R is running on Unix, inside an Emacs version that is recent
 enough to support ANSI colors, then 8L is returned.
-\item If \code{stream} is not the standard output or error, then 1L is returned.
+\item If we are on Windows in an RStudio terminal, then apparently
+we only have eight colors.
+\item If we are in a recent enough Windows 10 terminal, then there
+is either true color (from build 14931) or 256 color (from
+build 10586) support.
 \item If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
 then 8L is returned.
 \item Otherwise if we are on Windows, return 1L.
 \item Otherwise we are on Unix and try to run \verb{tput colors} to determine
-the number of colors. If this succeeds, we return its return value,
-except if the \code{TERM} environment variable is \code{xterm} and \code{tput}
+the number of colors. If this succeeds, we return its return value.
+If the \code{TERM} environment variable is \code{xterm} and \code{tput}
 returned 8L, we return 256L, because xterm compatible terminals
-tend to support 256 colors.
-\item If \verb{tput colors} fails, we try to guess. If \code{COLORTERM} is set
-to any value, we return 8L.
+tend to support 256 colors
+(https://github.com/r-lib/crayon/issues/17)
 \item If \code{TERM} is set to \code{dumb}, we return 1L.
 \item If \code{TERM} starts with \code{screen}, \code{xterm}, or \code{vt100}, we return 8L.
 \item If \code{TERM} contains \code{color}, \code{ansi}, \code{cygwin} or \code{linux}, we return 8L.
@@ -81,6 +98,7 @@ to any value, we return 8L.
 }
 \examples{
 num_ansi_colors()
+
 }
 \seealso{
 Other ANSI styling: 
