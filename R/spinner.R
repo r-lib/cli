@@ -34,7 +34,7 @@ usethis::use_data(spinners, internal = TRUE)
 #'   is used, which can be customized via the `cli.spinner_unicode`,
 #'   `cli.spinner_ascii` and `cli.spinner` options. (The latter applies to
 #'   both Unicode and ASCII displays. These options can be set to the name
-#'   of a builting spinner, or to a list that has an entry called `frames`,
+#'   of a built-in spinner, or to a list that has an entry called `frames`,
 #'   a character vector of frames.
 #' @return A list with entries: `name`, `interval`: the suggested update
 #'   interval in milliseconds and `frames`: the character vector of the

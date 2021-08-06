@@ -1,5 +1,8 @@
 # cli (development version)
 
+* Support for palettes, including a colorblind friendly palette.
+  See `?ansi_palettes` for details.
+
 * True color support: `num_ansi_colors()` now detects terminals with
   24 bit color support, and `make_ansi_style()` uses the exact RGB colors
   on these terminals.

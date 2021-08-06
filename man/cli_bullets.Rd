@@ -29,7 +29,7 @@ item is another \code{div} element of class \verb{memo-item-<name>}, where
 a name create a \code{div} element of class \code{memo-item-empty}, and if the
 name is a single space character, the class is \code{memo-item-space}.
 
-The builtin theme defines the following item types:
+The built-in theme defines the following item types:
 \itemize{
 \item No name: Item without a prefix.
 \item \verb{}: Indented item.

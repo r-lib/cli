@@ -81,6 +81,6 @@ test_that("ansi_html_style", {
     ansi_html_style(colors = 8)
   )
   expect_snapshot(
-    ansi_html_style(colors = 256, theme = "ubuntu")
+    ansi_html_style(colors = 256, palette = "ubuntu")
   )
 })

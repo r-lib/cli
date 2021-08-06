@@ -817,19 +817,6 @@ ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
   .Call(clic_ansi_html, x, csi == "keep")
 }
 
-ansi_themes <- rbind(
-  read.table(
-    "tools/ansi-themes.txt",
-    comment = ";",
-    stringsAsFactors = FALSE
-  ),
-  read.table(
-    "tools/ansi-iterm-themes.txt",
-    comment = ";",
-    stringsAsFactors = FALSE
-  )
-)
-
 #' CSS styles for the output of `ansi_html()`
 #'
 #'
@@ -837,11 +824,11 @@ ansi_themes <- rbind(
 #' @param colors Whether or not to include colors. `FALSE` will not include
 #'   colors, `TRUE` or `8` will include eight colors (plus their bright
 #'   variants), `256` will include 256 colors.
-#' @param theme Character scalar, theme to use for the first eight colors
+#' @param palette Character scalar, palette to use for the first eight colors
 #'   plus their bright variants. Terminals define these colors differently,
-#'   and cli includes a couple of examples. Sources of themes:
+#'   and cli includes a couple of examples. Sources of palettes:
 #'   * https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
-#'   * iTerm2 builtin themes
+#'   * iTerm2 builtin palettes
 #'   * https://github.com/sindresorhus/iterm2-snazzy
 #' @return Named list of CSS declaration blocks, where the names are
 #'   CSS selectors. It has a `format()` and `print()` methods, which you
@@ -851,18 +838,18 @@ ansi_themes <- rbind(
 #' @export
 #' @examples
 #' ansi_html_style(colors = FALSE)
-#' ansi_html_style(colors = 8, theme = "iterm-snazzy")
+#' ansi_html_style(colors = 8, palette = "iterm-snazzy")
 
-ansi_html_style <- function(colors = TRUE, theme = NULL) {
-  if (is.character(theme)) {
-    theme <- match.arg(theme)
-    theme <- as.list(ansi_themes[theme, ])
+ansi_html_style <- function(colors = TRUE, palette = NULL) {
+  if (is.character(palette)) {
+    palette <- match.arg(palette)
+    palette <- as.list(ansi_palettes[palette, ])
   }
 
   stopifnot(
     isTRUE(colors) || identical(colors, FALSE) ||
       (is_count(colors) && colors %in% c(8,256)),
-    is_string(theme) || is.list(theme) && length(theme) == 16
+    is_string(palette) || is.list(palette) && length(palette) == 16
   )
 
   ret <- list(
@@ -879,11 +866,11 @@ ansi_html_style <- function(colors = TRUE, theme = NULL) {
   if (!identical(colors, FALSE)) {
     fg <- structure(
       names = paste0(".ansi-color-", 0:15),
-      paste0("{ color: ", theme, " }")
+      paste0("{ color: ", palette, " }")
     )
     bg <- structure(
       names = paste0(".ansi-bg-color-", 0:15),
-      paste0("{ background-color: ", theme, " }")
+      paste0("{ background-color: ", palette, " }")
     )
     ret <- c(ret, fg, bg)
   }
@@ -918,7 +905,7 @@ ansi_html_style <- function(colors = TRUE, theme = NULL) {
 }
 
 # This avoids duplication, but messes up the source ref of the function...
-formals(ansi_html_style)$theme <- c("vscode", setdiff(rownames(ansi_themes), "vscode"))
+formals(ansi_html_style)$palette <- c("vscode", setdiff(rownames(ansi_palettes), "vscode"))
 attr(body(ansi_html_style), "srcref") <- NULL
 attr(body(ansi_html_style), "wholeSrcref") <- NULL
 attr(body(ansi_html_style), "srcfile") <- NULL
