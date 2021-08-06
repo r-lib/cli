@@ -161,7 +161,7 @@ detect_tty_colors <- function() {
   ct <- Sys.getenv("COLORTERM", NA_character_)
   if (!is.na(ct)) {
     if (ct == "truecolor" || ct == "24bit") {
-      return(TRUE_COLORS)
+      return(truecolor)
     } else {
       return(8L)
     }
@@ -191,7 +191,7 @@ detect_tty_colors <- function() {
     # this is rather weird, but echo turns on color support :D
     system2("cmd", c("/c", "echo 1 >NUL"))
     # https://devblogs.microsoft.com/commandline/24-bit-color-in-the-windows-console/
-    if (win10 >= 14931) return(TRUE_COLORS) else return(256L)
+    if (win10 >= 14931) return(truecolor) else return(256L)
   }
 
   if (os_type() == "windows") {

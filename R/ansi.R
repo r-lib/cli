@@ -1,22 +1,16 @@
 
-TRUE_COLORS <- as.integer(256^3)
-
 palette_idx <- function(id) {
   ifelse(
     id < 38,
     id - (30 - 1),
   ifelse(
     id < 48,
-    id - (40 - 9),
+    -(id - (40 - 1)),
   ifelse(
     id < 98,
-    id - (90 - 17),
-    id - (100 - 25)
+    id - (90 - 9),
+    -(id - (100 - 9))
   )))
-}
-
-palette_is_bg_idx <- function(x) {
-  (x >= 9 & x <= 16) | (x >= 25 & x <= 32)
 }
 
 palette_color <- function(x) {
@@ -126,18 +120,6 @@ create_ansi_style_tag <- function(name, open, close, palette = NULL) {
   )
 }
 
-get_palette_color <- function(style, colors = num_ansi_colors()) {
-  opt <- getOption("cli.palette")
-  if (is.null(opt) || colors < 256) return(style)
-  pidx <- style$palette
-  ansi_style_from_r_color(
-    opt[[pidx]],
-    bg = palette_is_bg_idx(pidx),
-    colors,
-    grey = FALSE
-  )
-}
-
 create_ansi_style_fun <- function(styles) {
   fun <- eval(substitute(function(...) {
     txt <- paste0(...)
@@ -155,7 +137,7 @@ create_ansi_style_fun <- function(styles) {
     }
     class(txt) <- c("ansi_string", "character")
     txt
-  }, list(.styles = styles, .palette = palette)))
+  }, list(.styles = styles)))
 
   class(fun) <- "ansi_style"
   attr(fun, "_styles") <- styles
@@ -300,7 +282,7 @@ ansi_style_8_from_rgb <- function(rgb, bg) {
 
 ansi_style_from_rgb <- function(rgb, bg, num_colors, grey) {
   if (num_colors < 256) { return(ansi_style_8_from_rgb(rgb, bg)) }
-  if (num_colors < TRUE_COLORS || grey) return(ansi256(rgb, bg, grey))
+  if (num_colors < truecolor || grey) return(ansi256(rgb, bg, grey))
   return(ansitrue(rgb, bg))
 }
 

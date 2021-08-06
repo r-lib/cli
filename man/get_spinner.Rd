@@ -11,7 +11,7 @@ get_spinner(which = NULL)
 is used, which can be customized via the \code{cli.spinner_unicode},
 \code{cli.spinner_ascii} and \code{cli.spinner} options. (The latter applies to
 both Unicode and ASCII displays. These options can be set to the name
-of a builting spinner, or to a list that has an entry called \code{frames},
+of a built-in spinner, or to a list that has an entry called \code{frames},
 a character vector of frames.}
 }
 \value{

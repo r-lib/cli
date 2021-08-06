@@ -102,7 +102,7 @@
 ---
 
     Code
-      ansi_html_style(colors = 256, theme = "ubuntu")
+      ansi_html_style(colors = 256, palette = "ubuntu")
     Output
       .ansi-bold         { font-weight: bold;             }
       .ansi-italic       { font-style: italic;            }

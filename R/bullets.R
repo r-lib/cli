@@ -14,7 +14,7 @@
 #' a name create a `div` element of class `memo-item-empty`, and if the
 #' name is a single space character, the class is `memo-item-space`.
 #'
-#' The builtin theme defines the following item types:
+#' The built-in theme defines the following item types:
 #' * No name: Item without a prefix.
 #' * ` `: Indented item.
 #' * `*`: Item with a bullet.

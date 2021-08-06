@@ -6,10 +6,9 @@
 \usage{
 ansi_html_style(
   colors = TRUE,
-  theme = c("vscode", "vga", "winxp", "win10", "macos", "putty", "mirc", "xterm",
-    "ubuntu", "eclipse", "iterm-dark", "iterm-light", "iterm-pastel", "iterm-smoooooth",
-    "iterm-snazzy", "iterm-sol-dark", "iterm-sol-light", "iterm-tango-dark",
-    "iterm-tango-light")
+  palette = c("vscode", "dichro", "vga", "winxp", "win10", "macos", "putty", "mirc",
+    "xterm", "ubuntu", "eclipse", "iterm", "iterm-pastel", "iterm-smoooooth",
+    "iterm-snazzy", "iterm-solarized", "iterm-tango")
 )
 }
 \arguments{
@@ -17,12 +16,12 @@ ansi_html_style(
 colors, \code{TRUE} or \code{8} will include eight colors (plus their bright
 variants), \code{256} will include 256 colors.}
 
-\item{theme}{Character scalar, theme to use for the first eight colors
+\item{palette}{Character scalar, palette to use for the first eight colors
 plus their bright variants. Terminals define these colors differently,
-and cli includes a couple of examples. Sources of themes:
+and cli includes a couple of examples. Sources of palettes:
 \itemize{
 \item https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
-\item iTerm2 builtin themes
+\item iTerm2 builtin palettes
 \item https://github.com/sindresorhus/iterm2-snazzy
 }}
 }
@@ -36,7 +35,7 @@ CSS styles for the output of \code{ansi_html()}
 }
 \examples{
 ansi_html_style(colors = FALSE)
-ansi_html_style(colors = 8, theme = "iterm-snazzy")
+ansi_html_style(colors = 8, palette = "iterm-snazzy")
 }
 \seealso{
 Other ANSI to HTML conversion: 
