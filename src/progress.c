@@ -128,7 +128,7 @@ void cli_progress_init_timer(vint **ptr) {
   *ptr = cli_timer_flag;
 }
 
-SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
+SEXP cli_progress_bar(vint **ptr, double total, SEXP config) {
   *ptr = cli_timer_flag;
 
   /* FALSE means no progress bar */
@@ -156,7 +156,7 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   Rf_defineVar(P(Rf_install("name")),           P(Rf_mkString("")),         bar);
   Rf_defineVar(P(Rf_install("status")),         P(Rf_mkString("")),         bar);
   Rf_defineVar(P(Rf_install("type")),           P(Rf_mkString("iterator")), bar);
-  Rf_defineVar(P(Rf_install("total")),          P(Rf_ScalarInteger(total)), bar);
+  Rf_defineVar(P(Rf_install("total")),          P(Rf_ScalarReal(total)),    bar);
   Rf_defineVar(P(Rf_install("show_after")),     P(Rf_ScalarReal(now + sa)), bar);
   Rf_defineVar(P(Rf_install("format")),         R_NilValue,                 bar);
   Rf_defineVar(P(Rf_install("format_done")),    R_NilValue,                 bar);
@@ -164,10 +164,10 @@ SEXP cli_progress_bar(vint **ptr, int total, SEXP config) {
   Rf_defineVar(P(Rf_install("clear")),          P(Rf_ScalarLogical(cl)),    bar);
   Rf_defineVar(P(Rf_install("auto_terminate")), P(Rf_ScalarLogical(1)),     bar);
   Rf_defineVar(P(Rf_install("envkey")),         R_NilValue,                 bar);
-  Rf_defineVar(P(Rf_install("current")),        P(Rf_ScalarInteger(0)),     bar);
+  Rf_defineVar(P(Rf_install("current")),        P(Rf_ScalarReal(0)),        bar);
   Rf_defineVar(P(Rf_install("start")),          P(Rf_ScalarReal(now)),      bar);
   Rf_defineVar(P(Rf_install("statusbar")),      R_NilValue,                 bar);
-  Rf_defineVar(P(Rf_install("tick")),           P(Rf_ScalarInteger(0)),     bar);
+  Rf_defineVar(P(Rf_install("tick")),           P(Rf_ScalarReal(0)),        bar);
   Rf_defineVar(P(Rf_install("extra")),          R_NilValue,                 bar);
 
   UNPROTECT(28);
@@ -256,13 +256,13 @@ void cli_progress_set_clear(SEXP bar, int clear) {
   UNPROTECT(3);
 }
 
-void cli_progress_set(SEXP bar, int set) {
+void cli_progress_set(SEXP bar, double set) {
   PROTECT(bar);
   if (isNull(bar)) {
     UNPROTECT(1);
     return;
   }
-  Rf_defineVar(PROTECT(Rf_install("current")), PROTECT(ScalarInteger(set)), bar);
+  Rf_defineVar(PROTECT(Rf_install("current")), PROTECT(ScalarReal(set)), bar);
   if (*cli_timer_flag) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
@@ -273,15 +273,15 @@ void cli_progress_set(SEXP bar, int set) {
   UNPROTECT(3);
 }
 
-void cli_progress_add(SEXP bar, int inc) {
+void cli_progress_add(SEXP bar, double inc) {
   PROTECT(bar);
   if (isNull(bar)) {
     UNPROTECT(1);
     return;
   }
   SEXP current = PROTECT(Rf_install("current"));
-  int crnt = INTEGER(PROTECT(clic__find_var(bar, current)))[0];
-  Rf_defineVar(current, PROTECT(ScalarInteger(crnt + inc)), bar);
+  double crnt = REAL(PROTECT(clic__find_var(bar, current)))[0];
+  Rf_defineVar(current, PROTECT(ScalarReal(crnt + inc)), bar);
   if (*cli_timer_flag) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
@@ -329,7 +329,7 @@ void cli_progress_sleep(int s, long ns) {
   nanosleep(&ts, NULL);
 }
 
-void cli_progress_update(SEXP bar, int set, int inc, int force) {
+void cli_progress_update(SEXP bar, double set, double inc, int force) {
   PROTECT(bar);
   if (isNull(bar)) {
     UNPROTECT(1);
@@ -337,12 +337,12 @@ void cli_progress_update(SEXP bar, int set, int inc, int force) {
   }
   SEXP current = PROTECT(Rf_install("current"));
   if (set >= 0) {
-    Rf_defineVar(current, PROTECT(ScalarInteger(set)), bar);
+    Rf_defineVar(current, PROTECT(ScalarReal(set)), bar);
     UNPROTECT(1);
   } else {
-    int crnt = INTEGER(PROTECT(clic__find_var(bar, current)))[0];
+    double crnt = REAL(PROTECT(clic__find_var(bar, current)))[0];
     if (inc != 0) {
-      Rf_defineVar(current, PROTECT(ScalarInteger(crnt + inc)), bar);
+      Rf_defineVar(current, PROTECT(ScalarReal(crnt + inc)), bar);
       UNPROTECT(1);
     }
     UNPROTECT(1);

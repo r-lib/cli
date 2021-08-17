@@ -25,7 +25,7 @@ extern "C" {
 //' ### `cli_progress_add()`
 //'
 //' ```c
-//' void cli_progress_add(SEXP bar, int inc);
+//' void cli_progress_add(SEXP bar, double inc);
 //' ```
 //'
 //' Add a number of progress units to the progress bar. It will also
@@ -34,18 +34,18 @@ extern "C" {
 //' * `bar`: progress bar object.
 //' * `inc`: progress increment.
 
-static R_INLINE void cli_progress_add(SEXP bar, int inc);
+static R_INLINE void cli_progress_add(SEXP bar, double inc);
 
 //' ### `cli_progress_bar()`
 //'
 //' ```c
-//' SEXP cli_progress_bar(int total, SEXP config);
+//' SEXP cli_progress_bar(double total, SEXP config);
 //' ```
 //'
 //'  Create a new progress bar object. The returned progress bar object
 //'  must be `PROTECT()`-ed.
 //'
-//' * `total`: Total number of progress units. Use `NA_INTEGER` if it is not
+//' * `total`: Total number of progress units. Use `NA_REAL` if it is not
 //'   known.
 //' * `config`: R named list object of additional parameters. May be `NULL`
 //'   (the C `NULL~) or `R_NilValue` (the R `NULL`) for the defaults.
@@ -83,7 +83,7 @@ static R_INLINE void cli_progress_add(SEXP bar, int inc);
 //' }
 //' ```
 
-static R_INLINE SEXP cli_progress_bar(int total, SEXP config);
+static R_INLINE SEXP cli_progress_bar(double total, SEXP config);
 
 //' ### `cli_progress_done()`
 //'
@@ -120,7 +120,7 @@ static R_INLINE int cli_progress_num();
 //' ### `cli_progress_set()`
 //'
 //' ```c
-//' void cli_progress_set(SEXP bar, int set);
+//' void cli_progress_set(SEXP bar, double set);
 //' ```
 //'
 //' Set the progress bar to the specified number of progress units.
@@ -128,7 +128,7 @@ static R_INLINE int cli_progress_num();
 //' * `bar`: progress bar object.
 //' * `set`: number of current progress progress units.
 
-static R_INLINE void cli_progress_set(SEXP bar, int set);
+static R_INLINE void cli_progress_set(SEXP bar, double set);
 
 //' ### `cli_progress_set_clear()`
 //'
@@ -216,7 +216,7 @@ static R_INLINE void cli_progress_set_type(SEXP bar, const char *type);
 //' ### `cli_progress_update()`
 //'
 //' ```c
-//' void cli_progress_update(SEXP bar, int force, int add, int set);
+//' void cli_progress_update(SEXP bar, double set, double inc, int force);
 //' ```
 //'
 //' Update the progress bar. Unlike the simpler `cli_progress_add()` and
@@ -233,7 +233,7 @@ static R_INLINE void cli_progress_set_type(SEXP bar, const char *type);
 //' To force an update without changing the current number of progress units,
 //' supply `set = -1`, `inc = 0` and `force = 1`.
 
-static R_INLINE void cli_progress_update(SEXP bar, int set, int inc, int force);
+static R_INLINE void cli_progress_update(SEXP bar, double set, double inc, int force);
 
 // ----------------------------------------------------------------------
 // Internals
@@ -287,10 +287,10 @@ static R_INLINE void cli_progress_init_timer() {
   ptr(&cli__should_tick);
 }
 
-static R_INLINE SEXP cli_progress_bar(int total, SEXP config) {
-  static SEXP (*ptr)(vint **, int, SEXP) = NULL;
+static R_INLINE SEXP cli_progress_bar(double total, SEXP config) {
+  static SEXP (*ptr)(vint **, double, SEXP) = NULL;
   if (ptr == NULL) {
-    ptr = (SEXP (*)(vint **, int, SEXP)) R_GetCCallable("cli", "cli_progress_bar");
+    ptr = (SEXP (*)(vint **, double, SEXP)) R_GetCCallable("cli", "cli_progress_bar");
   }
 
   SEXP bar = PROTECT(ptr(&cli__should_tick, total, config));
@@ -345,11 +345,11 @@ static R_INLINE void cli_progress_set_clear(SEXP bar, int clear) {
   ptr(bar, clear);
 }
 
-static R_INLINE void cli_progress_set(SEXP bar, int set) {
+static R_INLINE void cli_progress_set(SEXP bar, double set) {
   if (Rf_isNull(bar)) return;
-  static void (*ptr)(SEXP, int) = NULL;
+  static void (*ptr)(SEXP, double) = NULL;
   if (ptr == NULL) {
-    ptr = (void (*)(SEXP, int)) R_GetCCallable("cli", "cli_progress_set");
+    ptr = (void (*)(SEXP, double)) R_GetCCallable("cli", "cli_progress_set");
   }
   ptr(bar, set);
 }
@@ -370,11 +370,11 @@ static R_INLINE void cli_progress_set_format(SEXP bar, const char *format, ...) 
   ptr(bar, str);
 }
 
-static R_INLINE void cli_progress_add(SEXP bar, int inc) {
+static R_INLINE void cli_progress_add(SEXP bar, double inc) {
   if (Rf_isNull(bar)) return;
-  static void (*ptr)(SEXP, int) = NULL;
+  static void (*ptr)(SEXP, double) = NULL;
   if (ptr == NULL) {
-    ptr = (void (*)(SEXP, int)) R_GetCCallable("cli", "cli_progress_add");
+    ptr = (void (*)(SEXP, double)) R_GetCCallable("cli", "cli_progress_add");
   }
   ptr(bar, inc);
 }
@@ -396,12 +396,12 @@ static R_INLINE void cli_progress_sleep(int s, long ns) {
 }
 
 static R_INLINE void cli_progress_update(SEXP bar,
-                                         int set,
-                                         int inc,
+                                         double set,
+                                         double inc,
                                          int force) {
-  static void (*ptr)(SEXP, int, int, int) = NULL;
+  static void (*ptr)(SEXP, double, double, int) = NULL;
   if (ptr == NULL) {
-    ptr = (void (*)(SEXP, int, int, int)) R_GetCCallable("cli", "cli_progress_update");
+    ptr = (void (*)(SEXP, double, double, int)) R_GetCCallable("cli", "cli_progress_update");
   }
   ptr(bar, set, inc, force);
 }
