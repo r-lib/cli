@@ -609,11 +609,12 @@ ansi_strtrim <- function(x, width = console_width(),
   xt <- .Call(clic_ansi_substr, x, rep(1L, lx), rep(as.integer(width), lx))
   tw <- ansi_nchar(ellipsis, "width")
 
-  # If there was a cut, or xt is too wise (using _width_!), that's bad
+  # If there was a cut, or xt is too wide (using _width_!), that's bad
   # We keep the initial bad ones, these are the ones that need an ellipsis.
   # Then we keep chopping off single characters from the too wide ones,
   # until they are narrow enough.
-  bad0 <- bad <- !is.na(x) & (xt != x | ansi_nchar(xt, "width") > width)
+  bad0 <- bad <- !is.na(x) &
+    (ansi_strip(xt) != ansi_strip(x) | ansi_nchar(xt, "width") > width)
   while (any(bad)) {
     xt[bad] <- .Call(
       clic_ansi_substr,
