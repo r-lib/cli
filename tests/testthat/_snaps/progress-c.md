@@ -38,12 +38,12 @@
     Code
       out
     Output
-       [1] "\rnew name stats 1\033[K\r" "\rnew name stats 2\033[K\r"
-       [3] "\rnew name stats 3\033[K\r" "\rnew name stats 4\033[K\r"
-       [5] "\rnew name stats 5\033[K\r" "\rnew name stats 6\033[K\r"
-       [7] "\rnew name stats 7\033[K\r" "\rnew name stats 8\033[K\r"
-       [9] "\rnew name stats 9\033[K\r" "\r\033[K\r"                
-      [11] "\n"                        
+       [1] "\rnew name stats 1\033[K\r"  "\rnew name stats 2\033[K\r" 
+       [3] "\rnew name stats 3\033[K\r"  "\rnew name stats 4\033[K\r" 
+       [5] "\rnew name stats 5\033[K\r"  "\rnew name stats 6\033[K\r" 
+       [7] "\rnew name stats 7\033[K\r"  "\rnew name stats 8\033[K\r" 
+       [9] "\rnew name stats 9\033[K\r"  "\rnew name stats 10\033[K\r"
+      [11] "\n"                         
 
 ---
 
@@ -93,4 +93,16 @@
        [9] "2021-06-18T00:09:14+00:00 cli-36434-1 8/10 updated"           
       [10] "2021-06-18T00:09:14+00:00 cli-36434-1 9/10 updated"           
       [11] "2021-06-18T00:09:14+00:00 cli-36434-1 10/10 terminated (done)"
+
+---
+
+    Code
+      out
+    Output
+       [1] "\r1/10\033[K\r"               "\r2/10\033[K\r"              
+       [3] "\r3/10\033[K\r"               "\r4/10\033[K\r"              
+       [5] "\r5/10\033[K\r"               "\r6/10\033[K\r"              
+       [7] "\r7/10\033[K\r"               "\r8/10\033[K\r"              
+       [9] "\r9/10\033[K\r"               "\rJust did 10 steps.\033[K\r"
+      [11] "\n"                          
 

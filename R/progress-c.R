@@ -39,6 +39,9 @@ progress_c_done <- function(pb, caller = NULL) {
 
   caller <- caller %||% pb$caller %||% sys.frame(sys.nframe() - 1L)
 
+  opt <- options(cli__pb = pb)
+  on.exit(options(opt), add = TRUE)
+
   handlers <- cli_progress_select_handlers()
   for (h in handlers) {
     if ("complete" %in% names(h)) {

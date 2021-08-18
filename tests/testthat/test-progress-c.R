@@ -95,6 +95,20 @@ test_that("c api #1", {
   .Call(dll$clitest__progress_sleep, 0L, 100L * 1000L * 1000L)
   toc <- .Call(clic_get_time)
   expect_true(toc - tic > 0.05)
+
+  # progress vars in format_done
+  withr::local_options(cli.progress_handlers_only = "cli")
+  out <- capture_cli_messages(cli_with_ticks(
+    ret <- .Call(
+      dll$clitest__progress_crud,
+      list(
+        format = "{cli::pb_current}/{cli::pb_total}",
+        format_done = "Just did {cli::pb_current} step{?s}.",
+        clear = FALSE
+      )
+    )
+  ))
+  expect_snapshot(out)
 })
 
 test_that("c api #2", {
