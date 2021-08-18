@@ -1,5 +1,12 @@
 # cli (development version)
 
+## Breaking changes
+
+* The C progress bar API now uses `double` instead of `int` as the data
+  type of the progress units (#335).
+
+## New features
+
 * Support for palettes, including a colorblind friendly palette.
   See `?ansi_palettes` for details.
 
