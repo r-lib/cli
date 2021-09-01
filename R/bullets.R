@@ -62,3 +62,41 @@ cli_bullets <- function(text, id = NULL, class = NULL,
     )
   )
 }
+
+#' List of verbatim items
+#'
+#' `cli_format_bullets_raw()` is similar to [cli_bullets()], but it does
+#' not perform any inline styling or glue substitutions in the input.
+#'
+#' `format_bullets_raw()` returned the output instead of printing it.
+#'
+#' @param text Character vector of items. See details below on how names
+#' are interpreted.
+#' @param id Optional od of the `div.memo` element, can be used in themes.
+#' @param class Optional additional class(es) for the `div.memo` element.
+#'
+#' @seealso See [cli_bullets()] for examples.
+#' @export
+
+cli_bullets_raw <- function(text, id = NULL, class = NULL) {
+  text <- gsub("{", "{{", text, fixed = TRUE)
+  text <- gsub("}", "}}", text, fixed = TRUE)
+  cli__message(
+    "memo",
+    list(
+      text = structure(
+        lapply(text, glue_no_cmd),
+        names = names(text)
+      ),
+      id = id,
+      class = class
+    )
+  )
+}
+
+#' @rdname cli_bullets_raw
+#' @export
+
+format_bullets_raw <- function(text, id = NULL, class = NULL) {
+  fmt(cli_bullets_raw(text, id, class))
+}

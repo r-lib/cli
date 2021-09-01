@@ -279,6 +279,15 @@ glue_cmd <- function(..., .envir) {
   )
 }
 
+glue_no_cmd <- function(...) {
+  str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
+  values <-new.env(parent = emptyenv())
+  glue_delay(
+    str = str,
+    values = values
+  )
+}
+
 glue_delay <- function(str, values = NULL) {
   structure(
     list(str = str, values = values),
