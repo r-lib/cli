@@ -79,8 +79,7 @@ cli_bullets <- function(text, id = NULL, class = NULL,
 #' @export
 
 cli_bullets_raw <- function(text, id = NULL, class = NULL) {
-  text <- gsub("{", "{{", text, fixed = TRUE)
-  text <- gsub("}", "}}", text, fixed = TRUE)
+  text <- cli_escape(text)
   cli__message(
     "memo",
     list(
