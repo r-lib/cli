@@ -34,20 +34,38 @@
 #' @export
 
 cli_abort <- function(message, ..., .envir = parent.frame()) {
-  rlang::abort(format_error(message, .envir = .envir), ...)
+  message[] <- vcapply(message, format_inline, .envir = .envir)
+  escaped_message <- cli_escape(message)
+  rlang::abort(
+    format_error(escaped_message, .envir = .envir),
+    cli_bullets = message,
+    ...
+  )
 }
 
 #' @rdname cli_abort
 #' @export
 
 cli_warn <- function(message, ..., .envir = parent.frame()) {
-  rlang::warn(format_warning(message, .envir = .envir), ...)
+  message[] <- vcapply(message, format_inline, .envir = .envir)
+  escaped_message <- cli_escape(message)
+  rlang::warn(
+    format_warning(escaped_message, .envir = .envir),
+    cli_bullets = message,
+    ...
+  )
 }
 
 #' @rdname cli_abort
 #' @export
 
 cli_inform <- function(message, ..., .envir = parent.frame()) {
+  message[] <- vcapply(message, format_inline, .envir = .envir)
+  escaped_message <- cli_escape(message)
   cli_status("", "", "")
-  rlang::inform(format_message(message, .envir = .envir), ...)
+  rlang::inform(
+    format_message(message, .envir = .envir),
+    cli_bullets = message,
+    ...
+  )
 }

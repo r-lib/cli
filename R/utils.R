@@ -10,3 +10,9 @@ format_iso_8601 <- function(p) {
 has_packages <- function(pkgs) {
   all(vapply(pkgs, requireNamespace, logical(1), quietly = TRUE))
 }
+
+cli_escape <- function(x) {
+  x <- gsub("{", "{{", x, fixed = TRUE)
+  x <- gsub("}", "}}", x, fixed = TRUE)
+  x
+}
