@@ -4,7 +4,7 @@
 #' @description
 #' This is the reference manual of the three functions that create,
 #' update and terminate progress bars. For a tutorial see the
-#' [cli progress bars](https://cli.r-lib.org/articles/pluralization.html).
+#' [cli progress bars](https://cli.r-lib.org/articles/progress.html).
 #'
 #' `cli_progress_bar()` creates a new progress bar.
 #'
