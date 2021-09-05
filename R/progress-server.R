@@ -31,26 +31,28 @@
 #'
 #' ### `logger`
 #'
-#' Log progress updates to the screeen, with one line for each update, with
+#' Log progress updates to the screen, with one line for each update and with
 #' time stamps. This handler is always able to handle all progress bars.
 #'
 #' ### `progressr`
 #'
-#' Use the progressr package to create progress bars. This handler is
-#' always able to handle all progress bars. (The progressr package needs
-#' to be installed.)
+#' Use the [progressr](https://progressr.futureverse.org/) package to create
+#' progress bars. This handler is always able to handle all progress bars.
+#' (The progressr package needs to be installed.)
 #'
 #' ### `rstudio`
 #'
-#' Use RStudio's job panel to show the progress bars. This handler is
-#' available at the RStudio console, in recent versions of RStudio.
+#' Use [RStudio's job panel](https://blog.rstudio.com/2019/03/14/rstudio-1-2-jobs/)
+#' to show the progress bars. This handler is available at the RStudio console,
+#' in recent versions of RStudio.
 #'
 #' ### `say`
 #'
-#' Use the macOS command line `say` command to announce progress events
-#' in speech. Set the `cli.progress_say_frequency` option to set the
-#' minimum delay between `say` invocations, the default is three seconds.
-#' This handler is available on macOS, if the `say` command is on the path.
+#' Use the macOS command line [`say` command](https://ss64.com/osx/say.html)
+#' to announce progress events in speech. Set the `cli.progress_say_frequency`
+#' option to set the minimum delay between `say` invocations, the default is
+#' three seconds. This handler is available on macOS, if the `say` command is
+#' on the path.
 #'
 #' The external command and its arguments can be configured with options:
 #'
@@ -62,8 +64,9 @@
 #'
 #' ### `shiny`
 #'
-#' Use shiny's progress bars. This handler is available if a shiny app is
-#' running.
+#' Use [shiny's progress
+#' bars](https://shiny.rstudio.com/reference/shiny/latest/Progress.html). This
+#' handler is available if a shiny app is running.
 #'
 #' @return `cli_progress_builtin_handlers()` returns the names of the
 #' currently supported progress handlers.
