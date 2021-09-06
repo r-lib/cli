@@ -176,7 +176,7 @@ detect_tty_colors <- function() {
   #'    we only have eight colors.
 
   win10 <- win10_build()
-  if (os_type() == "windows" && win10_build >= 10586 &&
+  if (os_type() == "windows" && win10 >= 10586 &&
       rstudio$detect()$type == "rstudio_terminal") {
     # this is rather weird, but echo turns on color support :D
     system2("cmd", c("/c", "echo 1 >NUL"))
