@@ -36,7 +36,7 @@
 #'
 #' ### `progressr`
 #'
-#' Use the [progressr](https://progressr.futureverse.org/) package to create
+#' Use the [progressr][progressr::progressr-package] package to create
 #' progress bars. This handler is always able to handle all progress bars.
 #' (The progressr package needs to be installed.)
 #'
@@ -48,8 +48,8 @@
 #'
 #' ### `say`
 #'
-#' Use the macOS command line [`say` command](https://ss64.com/osx/say.html)
-#' to announce progress events in speech. Set the `cli.progress_say_frequency`
+#' Use the macOS `say` command to announce progress events in speech (type
+#' `man say` on a terminal for more info). Set the `cli.progress_say_frequency`
 #' option to set the minimum delay between `say` invocations, the default is
 #' three seconds. This handler is available on macOS, if the `say` command is
 #' on the path.
@@ -64,9 +64,8 @@
 #'
 #' ### `shiny`
 #'
-#' Use [shiny's progress
-#' bars](https://shiny.rstudio.com/reference/shiny/latest/Progress.html). This
-#' handler is available if a shiny app is running.
+#' Use [shiny's progress bars][shiny::Progress]. This handler is available if a
+#' shiny app is running.
 #'
 #' @return `cli_progress_builtin_handlers()` returns the names of the
 #' currently supported progress handlers.
