@@ -228,10 +228,10 @@
 #' @param total Total number of progress units, or `NA` if it is unknown.
 #'   `cli_progress_update()` can update the total number of units. This is
 #'   handy if you don't know the size of a download at the beginning, and
-#'   also in some other casees. If `format` (plus `format_done` and
-#'   `format_done`) will be updated if you change `total` from `NA` to a
-#'   number, if you specify `NULL` for `format`. I.e. default format strings
-#'   will be updated, custom ones won't be.
+#'   also in some other cases. If `format` is set to `NULL`, `format` (plus
+#'   `format_done` and `format_failed`) will be updated when you change
+#'   `total` from `NA` to a number. I.e. default format strings will be
+#'   updated, custom ones won't be.
 #' @param format Format string. It has to be specified for custom progress
 #'   bars, otherwise it is optional, and a default display is selected
 #'   based on the progress bat type and whether the number of total units
