@@ -157,7 +157,6 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       before = function(x) paste0(symbol$arrow_right, " ")
     ),
     ".memo .memo-item-1" = list(
-      "font-weight" = "bold"
     ),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
