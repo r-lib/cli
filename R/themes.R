@@ -317,7 +317,7 @@ format_r_code <- function(dark) {
   function(x) {
     x <- ansi_strip(x)
     lines <- unlist(strsplit(x, "\n", fixed = TRUE))
-    tryCatch(prettycode::highlight(lines), error = function(x) lines)
+    code_highlight(lines)
   }
 }
 

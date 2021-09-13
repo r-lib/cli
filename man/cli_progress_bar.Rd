@@ -132,7 +132,7 @@ invisibly.
 \description{
 This is the reference manual of the three functions that create,
 update and terminate progress bars. For a tutorial see the
-\href{https://cli.r-lib.org/articles/pluralization.html}{cli progress bars}.
+\href{https://cli.r-lib.org/articles/progress.html}{cli progress bars}.
 
 \code{cli_progress_bar()} creates a new progress bar.
 

@@ -790,12 +790,12 @@ ansi_simplify <- function(x, csi = c("keep", "drop")) {
 #'
 #' @family ANSI to HTML conversion
 #' @export
-#' @examplesIf cli:::has_packages(c("prettycode", "htmltools", "withr"))
+#' @examplesIf cli:::has_packages(c("htmltools", "withr"))
 #' ## Syntax highlight the source code of an R function with ANSI tags,
 #' ## and export it to a HTML file.
 #' code <- withr::with_options(
 #'   list(ansi.num_colors = 256),
-#'   prettycode::highlight(format(ansi_html))
+#'   code_highlight(format(ansi_html))
 #' )
 #' hcode <- paste(ansi_html(code), collapse = "\n")
 #' css <- paste(format(ansi_html_style()), collapse=  "\n")
