@@ -167,7 +167,7 @@ simple_theme_r_code <- function(dark) {
   function(x) {
     x <- ansi_strip(x)
     lines <- strsplit(x, "\n", fixed = TRUE)[[1]]
-    fmd <- tryCatch(prettycode::highlight(lines), error = function(x) lines)
+    fmd <- code_highlight(lines)
     style(fmd)
   }
 }
