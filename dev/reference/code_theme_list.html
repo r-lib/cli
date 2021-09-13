@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert ANSI styled text to HTML — ansi_html • cli</title>
+<title>Syntax highlighting themes — code_theme_list • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Convert ANSI styled text to HTML — ansi_html" />
-<meta property="og:description" content="Convert ANSI styled text to HTML" />
+<meta property="og:title" content="Syntax highlighting themes — code_theme_list" />
+<meta property="og:description" content="code_theme_list() lists the built-in code themes." />
 
 
 <meta name="robots" content="noindex">
@@ -135,60 +135,72 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert ANSI styled text to HTML</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/ansiex.R'><code>R/ansiex.R</code></a></small>
-    <div class="hidden name"><code>ansi_html.Rd</code></div>
+    <h1>Syntax highlighting themes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/prettycode.R'><code>R/prettycode.R</code></a></small>
+    <div class="hidden name"><code>code_theme_list.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convert ANSI styled text to HTML</p>
+    <p><code>code_theme_list()</code> lists the built-in code themes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_html</span><span class='op'>(</span><span class='va'>x</span>, escape_reserved <span class='op'>=</span> <span class='cn'>TRUE</span>, csi <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"drop"</span>, <span class='st'>"keep"</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>code_theme_list</span><span class='op'>(</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>Input character vector.</p></td>
-    </tr>
-    <tr>
-      <th>escape_reserved</th>
-      <td><p>Whether to escape characters that are reserved
-in HTML (<code>&amp;</code>, <code>&lt;</code> and <code>&gt;</code>).</p></td>
-    </tr>
-    <tr>
-      <th>csi</th>
-      <td><p>What to do with non-SGR ANSI sequences, either <code>"keep"</code>,
-or <code>"drop"</code> them.</p></td>
-    </tr>
-    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character vector of HTML.</p>
+    <p>Character vector of the built-in code theme names.</p>
+    <h2 class="hasAnchor" id="code-themes"><a class="anchor" href="#code-themes"></a>Code themes</h2>
+
+    <p>A theme is a list of character vectors, except for <code>bracket</code>, see below.
+Each character vector must contain RGB colors (e.g. <code>"#a9a9a9"</code>),
+and cli styles, e.g. <code>"bold"</code>. Entries in the list:</p><ul>
+<li><p><code>reserved</code>: reserved words</p></li>
+<li><p><code>number</code>: numeric literals</p></li>
+<li><p><code>null</code>: the <code>NULL</code> constant</p></li>
+<li><p><code>operator</code>: operators, including assignment</p></li>
+<li><p><code>call</code>: function calls</p></li>
+<li><p><code>string</code>: character literals</p></li>
+<li><p><code>comment</code>: comments</p></li>
+<li><p><code>bracket</code>: brackets: <code>(){}[]</code> This is a list of character vectors,
+to create "rainbow" brackets. It is recycled for deeply nested lists.</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="the-default-code-theme"><a class="anchor" href="#the-default-code-theme"></a>The default code theme</h2>
+
+    <p>In RStudio, it matches the current theme of the IDE.</p>
+<p>You can use three options to customize the code theme:</p><ul>
+<li><p>If <code>cli.code_theme</code> is set, it is used.</p></li>
+<li><p>Otherwise if R is running in RStudio and <code>cli.code_theme_rstudio</code> is
+set, then it is used.</p></li>
+<li><p>Otherwise if T is not running in RStudio and <code>cli.code_theme_terminal</code>
+is set, then it is used.</p></li>
+</ul>
+
+<p>You can set these options to the name of a built-in theme, or to list
+that specifies a custom theme. See <code>code_theme_list()</code> for the list
+of the built-in themes.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other ANSI to HTML conversion: 
-<code><a href='ansi_html_style.html'>ansi_html_style</a>()</code></p></div>
+    <div class='dont-index'><p>Other syntax highlighting: 
+<code><a href='code_highlight.html'>code_highlight</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Syntax highlight the source code of an R function with ANSI tags,</span>
-<span class='co'>## and export it to a HTML file.</span>
-<span class='va'>code</span> <span class='op'>&lt;-</span> <span class='fu'>withr</span><span class='fu'>::</span><span class='fu'><a href='https://withr.r-lib.org/reference/with_options.html'>with_options</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ansi.num_colors <span class='op'>=</span> <span class='fl'>256</span><span class='op'>)</span>,
-  <span class='fu'><a href='code_highlight.html'>code_highlight</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='va'>ansi_html</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='va'>hcode</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'>ansi_html</span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span>, collapse <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
-<span class='va'>css</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='ansi_html_style.html'>ansi_html_style</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>, collapse<span class='op'>=</span>  <span class='st'>"\n"</span><span class='op'>)</span>
-<span class='va'>page</span> <span class='op'>&lt;-</span> <span class='fu'>htmltools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/tagList.html'>tagList</a></span><span class='op'>(</span>
-  <span class='fu'>htmltools</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>tags</a></span><span class='op'>$</span><span class='fu'>head</span><span class='op'>(</span><span class='fu'>htmltools</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>tags</a></span><span class='op'>$</span><span class='fu'>style</span><span class='op'>(</span><span class='va'>css</span><span class='op'>)</span><span class='op'>)</span>,
-  <span class='fu'>htmltools</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/htmltools/man/builder.html'>tags</a></span><span class='op'>$</span><span class='fu'>pre</span><span class='op'>(</span><span class='fu'>htmltools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/HTML.html'>HTML</a></span><span class='op'>(</span><span class='va'>hcode</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'>htmltools</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmltools/man/html_print.html'>html_print</a></span><span class='op'>(</span><span class='va'>page</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>code_theme_list</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "Ambiance"              "Chaos"                 "Chrome"               
+#&gt;  [4] "Clouds"                "Clouds Midnight"       "Cobalt"               
+#&gt;  [7] "Crimson Editor"        "Dawn"                  "Dracula"              
+#&gt; [10] "Dreamweaver"           "Eclipse"               "Idle Fingers"         
+#&gt; [13] "Katzenmilch"           "Kr Theme"              "Material"             
+#&gt; [16] "Merbivore"             "Merbivore Soft"        "Mono Industrial"      
+#&gt; [19] "Monokai"               "Pastel On Dark"        "Solarized Dark"       
+#&gt; [22] "Solarized Light"       "Textmate (default)"    "Tomorrow"             
+#&gt; [25] "Tomorrow Night"        "Tomorrow Night Blue"   "Tomorrow Night Bright"
+#&gt; [28] "Tomorrow Night 80s"    "Twilight"              "Vibrant Ink"          
+#&gt; [31] "Xcode"                </div><div class='input'><span class='fu'><a href='code_highlight.html'>code_highlight</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/deparse.html'>deparse</a></span><span class='op'>(</span><span class='va'>get</span><span class='op'>)</span>, code_theme <span class='op'>=</span> <span class='st'>"Solarized Dark"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "\033[38;5;142mfunction\033[39m \033[38;5;178m(\033[39mx, pos = \033[38;5;178m-\033[39m\033[38;5;169m1L\033[39m, envir = \033[1mas.environment\033[22m\033[33m(\033[39mpos\033[33m)\033[39m, mode = \033[38;5;37m\"any\"\033[39m, "
+#&gt; [2] "    inherits = \033[38;5;169mTRUE\033[39m\033[38;5;178m)\033[39m "                                                                                                                                                                
+#&gt; [3] "\033[1m.Internal\033[22m\033[38;5;178m(\033[39m\033[1mget\033[22m\033[33m(\033[39mx, envir, mode, inherits\033[33m)\033[39m\033[38;5;178m)\033[39m"                                                                               </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
