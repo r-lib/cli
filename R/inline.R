@@ -222,7 +222,7 @@ clii__inline <- function(app, text, .list) {
   paste(out, collapse = "")
 }
 
-inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.+)"
+inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
 make_cmd_transformer <- function(values) {
   values$marker <- random_id()

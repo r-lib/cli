@@ -32,3 +32,7 @@ is_tree_style <- function(x) {
     all(sort(names(x)) == sort(c("h", "v", "l", "j"))) &&
     all(sapply(x, is_string))
 }
+
+is_named <- function(x) {
+  !is.null(names(x))
+}
