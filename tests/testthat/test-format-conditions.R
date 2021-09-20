@@ -122,3 +122,14 @@ test_that("named first element", {
     format_warning(c("*" = "foo", "*" = "bar"))
   )
 })
+
+test_that("no cli conditions are thrown", {
+  cnd <- NULL
+  withCallingHandlers({
+    format_error("error")
+    format_warning("warning")
+    format_message("message")
+  }, cli_message = function(cnd_) cnd <<- cnd_)
+
+  expect_null(cnd)
+})
