@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
       </span>
     </div>
 
@@ -92,14 +92,14 @@
 
       
 
-      </header><script src="progress-advanced_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="progress-advanced_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="progress-advanced_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+      </header><script src="progress-advanced_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="progress-advanced_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="progress-advanced_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
 <script src="progress-advanced_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="progress-advanced_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="progress-advanced_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Advanced cli progress bars</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2021-07-03</h4>
+            <h4 class="date">2021-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/progress-advanced.Rmd"><code>vignettes/progress-advanced.Rmd</code></a></small>
       <div class="hidden name"><code>progress-advanced.Rmd</code></div>
@@ -110,7 +110,6 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span></code></pre></div>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-2.svg" width="100%"></p>
 <div id="overhead" class="section level1">
 <h1 class="hasAnchor">
 <a href="#overhead" class="anchor"></a>Overhead</h1>
@@ -131,8 +130,9 @@
 <div id="non-interactive-r-sessions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#non-interactive-r-sessions" class="anchor"></a>Non-interactive R sessions</h1>
-<p>Non-interactive R sessions typically have two differences to interactive ones. First, by default the cli timer signals every 3000 milliseconds, instead of 200 milliseconds.</p>
-<p>Second, non-interactive sessions often do not have a dynamic terminal, so cli cannot create and update a status bar in the last row of the display. In this case cli simply prints every progress update as a new line to the screen.</p>
+<p>cli output is different if the terminal or platform is not <em>dynamic</em>, i.e. if it does not support the <code>\r</code> character to move the cursor to the beginning of the line without starting a new line. This often happens when R is running non-interactively and the standard error is redirected to a file. cli uses the <code><a href="../reference/is_dynamic_tty.html">cli::is_dynamic_tty()</a></code> function to determine if the output supports <code>\r</code>.</p>
+<p>On a non-dynamic terminal, cli simply prints progress updates as new lines to the screen. Frequently updating the progress in this fashion would produce a lot of output, so on non-dynamic terminals cli falls back to a slower timer update interval.</p>
+<p>By default the cli timer signals every 3000 milliseconds in an R session without a dynamic terminal, instead of 200 milliseconds.</p>
 <!-- TODO: example -->
 </div>
 <div id="progress-bars-in-scripts" class="section level1">
@@ -160,24 +160,24 @@
 <a href="#iterator" class="anchor"></a><code>iterator</code>
 </h3>
 <p>Typically for loops and mapping functions. It shows a bar by default, if the total number of iterations is known.</p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-2.svg" width="100%"></p>
 <p><img src="progress-advanced_files/figure-html/unnamed-chunk-3.svg" width="100%"></p>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-4.svg" width="100%"></p>
 </div>
 <div id="tasks" class="section level3">
 <h3 class="hasAnchor">
 <a href="#tasks" class="anchor"></a><code>tasks</code>
 </h3>
 <p>For a list of tasks, by default it shows a <code>current/total</code> display.</p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-4.svg" width="100%"></p>
 <p><img src="progress-advanced_files/figure-html/unnamed-chunk-5.svg" width="100%"></p>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-6.svg" width="100%"></p>
 </div>
 <div id="download" class="section level3">
 <h3 class="hasAnchor">
 <a href="#download" class="anchor"></a><code>download</code>
 </h3>
 <p>For downloads, progress units are shown as bytes by default here.</p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-6.svg" width="100%"></p>
 <p><img src="progress-advanced_files/figure-html/unnamed-chunk-7.svg" width="100%"></p>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-8.svg" width="100%"></p>
 </div>
 <div id="custom" class="section level3">
 <h3 class="hasAnchor">
@@ -207,7 +207,7 @@
   <span class="op">}</span>
 <span class="op">}</span>
 <span class="fu">f</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-9.svg" width="100%"></p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-8.svg" width="100%"></p>
 <p>For <code>custom</code> progress bars cli always uses the specified format string. For other types, the end user might customize the format string, see below.</p>
 </div>
 </div>
@@ -237,7 +237,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>cli.progress_bar_style <span class="op">=</span> <span class="st">"fillsquares"</span><span class="op">)</span>
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-12.svg" width="100%"></p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-11.svg" width="100%"></p>
 <p>Alternatively, they can be set to a list with entries <code>complete</code>, <code>incomplete</code> and <code>current</code>, to specify the characters (or strings) for the parts of the progress bar:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>cli.progress_bar_style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
@@ -246,7 +246,7 @@
 <span class="op">)</span><span class="op">)</span>
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-14.svg" width="100%"></p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-13.svg" width="100%"></p>
 </div>
 <div id="custom-spinners" class="section level3">
 <h3 class="hasAnchor">
@@ -296,7 +296,7 @@
 <a href="#progress-variables" class="anchor"></a>Progress variables</h2>
 <p>Custom format strings may use progress variables in glue interpolated expressions, to refer to the state of the progress bar. See <code><a href="../reference/progress-variables.html">?"progress-variables"</a></code> in the manual for the list of supported variables.</p>
 <p>If you refer to a progress variable from a package, you need need to import it or qualify the reference with <code>cli::</code>. When you set a custom format string as an end user option, we suggest that you always use the qualified form, in case the cli package is not attached. For example, to set a minimal display for downloads you might write</p>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-17.svg" width="100%"></p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-16.svg" width="100%"></p>
 <p>You can use your own expressions and functions on progress bar tokens. E.g. to show the current number of steps with letters instead of numbers, use <code>letters[pb_current]</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -347,7 +347,7 @@ Imports: cli</code></pre>
 <span id="cb11-9"><a href="#cb11-9"></a>  UNPROTECT(<span class="dv">1</span>);</span>
 <span id="cb11-10"><a href="#cb11-10"></a>  <span class="cf">return</span> Rf_ScalarInteger(i);</span>
 <span id="cb11-11"><a href="#cb11-11"></a>}</span></code></pre></div>
-<p><img src="progress-advanced_files/figure-html/unnamed-chunk-18.svg" width="100%"></p>
+<p><img src="progress-advanced_files/figure-html/unnamed-chunk-17.svg" width="100%"></p>
 <div id="c-api-reference" class="section level2">
 <h2 class="hasAnchor">
 <a href="#c-api-reference" class="anchor"></a>C API reference</h2>
