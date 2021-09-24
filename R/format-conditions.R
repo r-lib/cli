@@ -41,8 +41,12 @@ format_error <- function(message, .envir = parent.frame()) {
   if (rstudio_detect()$type %in% rsconsole) {
     # leave some space for the traceback buttons in RStudio
     oldopt <- options(cli.width = console_width() - 15L)
-    on.exit(options(oldopt), add = TRUE)
+  } else {
+    oldopt <- options(
+      cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
+    )
   }
+  on.exit(options(oldopt), add =TRUE)
 
   # We need to create a frame here, so cli_div() is closed.
   # Cannot use local(), it does not work in snapshot tests, it potentially
@@ -67,6 +71,11 @@ format_warning <- function(message, .envir = parent.frame()) {
     names(message)[1] <- "1"
   }
 
+  oldopt <- options(
+    cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
+  )
+  on.exit(options(oldopt), add = TRUE)
+
   formatted1 <- fmt((function() {
     cli_div(class = "cli_rlang cli_warn")
     cli_bullets(message, .envir = .envir)
@@ -79,6 +88,10 @@ format_warning <- function(message, .envir = parent.frame()) {
 #' @export
 
 format_message <- function(message, .envir = parent.frame()) {
+  oldopt <- options(
+    cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
+  )
+  on.exit(options(oldopt), add = TRUE)
   formatted1 <- fmt((function() {
     cli_div(class = "cli_rlang cli_inform")
     cli_bullets(message, .envir = .envir)
