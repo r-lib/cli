@@ -42,6 +42,14 @@ Set to anything else to assume a non-ANSI terminal.
 See \code{\link[=is_ansi_tty]{is_ansi_tty()}}.
 }
 
+\subsection{\code{cli.condition_width}}{
+
+Integer scalar (or \code{Inf}) to set the console width when cli is formatting
+errors, warnings or messages in \code{format_error()}, \code{format_warning()} and
+\code{format_message()}. When formatting conditions this option takes precedence
+over \code{cli.width}.
+}
+
 \subsection{\code{cli.default_handler}}{
 
 General handler function for all cli conditions.
