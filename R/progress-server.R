@@ -36,7 +36,7 @@
 #'
 #' ### `progressr`
 #'
-#' Use the [progressr][progressr::progressr-package] package to create
+#' Use the progressr package to create
 #' progress bars. This handler is always able to handle all progress bars.
 #' (The progressr package needs to be installed.)
 #'
