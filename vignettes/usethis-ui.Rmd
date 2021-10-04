@@ -26,9 +26,11 @@ asciicast::init_knitr_engine(
   startup = quote({
     library(cli)
     library(usethis)
-    set.seed(1) }),
+    set.seed(1)
+  }),
   echo = TRUE,
-  echo_input = FALSE)
+  echo_input = FALSE
+)
 ```
 
 ```{r setup}
@@ -210,8 +212,18 @@ cli_alert_success("Copied {.file {img}} to {.file {logo_path}}")
     usethis::ui_stop(x, .envir = parent.frame())
 
 `ui_stop()` does glue substitution on the string, and then calls `stop()` to throw an error.
+`cli_abort()` does the same and is formatted using `cli_bullets()`.
 
-cli does not have any tools to throw errors currently.
+```{asciicast}
+ui_stop("Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists")
+```
+
+```{asciicast}
+cli_abort(
+  "Could not copy {.file {img}} to {.file {logo_path}}, file already exists",
+  "i" = "You can set {.arg overwrite = TRUE} to avoid this error"
+  )
+```
 
 ## `usethis::ui_todo()`
 
@@ -248,8 +260,18 @@ cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}
     usethis::ui_warn(x, .envir = parent.frame())
 
 `ui_warn()` does glue substitution on the string, and then calls `warning()` to throw a warning.
+`cli_war()` does the same and is formatted using `cli_bullets()`.
 
-cli does not have any tools to throw warnings currently.
+```{asciicast}
+ui_warn("Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists")
+```
+
+```{asciicast}
+cli_warn(
+  "Could not copy {.file {img}} to {.file {logo_path}}, file already exists",
+  "i" = "You can set {.arg overwrite = TRUE} to avoid this warning"
+  )
+```
 
 ## `usethis::ui_yeah()`
 

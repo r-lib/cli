@@ -323,7 +323,7 @@ NULL
 #' * `start`: Integer number, the first element in an ordered list.
 #' * `string_quote`: Quoting character for inline elements of class `.val`.
 #' * `text-decoration`: If `"underline"`, then underlined text is created.
-#' * `text-exdent`: Amound of indentation from the second line of wrapped
+#' * `text-exdent`: Amount of indentation from the second line of wrapped
 #'    text.
 #' * `transform`: A function to call on glue substitutions, before
 #'   collapsing them. Note that `transform` is applied prior to
