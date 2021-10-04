@@ -22,12 +22,12 @@ Character vector of HTML.
 Convert ANSI styled text to HTML
 }
 \examples{
-\dontshow{if (cli:::has_packages(c("prettycode", "htmltools", "withr"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (cli:::has_packages(c("htmltools", "withr"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 ## Syntax highlight the source code of an R function with ANSI tags,
 ## and export it to a HTML file.
 code <- withr::with_options(
   list(ansi.num_colors = 256),
-  prettycode::highlight(format(ansi_html))
+  code_highlight(format(ansi_html))
 )
 hcode <- paste(ansi_html(code), collapse = "\n")
 css <- paste(format(ansi_html_style()), collapse=  "\n")

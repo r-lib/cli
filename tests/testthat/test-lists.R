@@ -240,3 +240,15 @@ test_that_cli(configs = "ansi", "styling pieces of a dl", {
     cli_dl(c(foo = "bar", bar = "baz"))
   }))
 })
+
+test_that("cli_dl edge cases", {
+  # invalid input
+  expect_error(
+    cli_dl("foo", "must be a named character vector")
+  )
+
+  # empty dd
+  expect_snapshot(
+    cli_dl(c(abc = "foo", empty = "", def = "bar"))
+  )
+})

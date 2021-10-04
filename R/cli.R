@@ -544,6 +544,10 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
 cli_dl <- function(items = NULL, id = NULL, class = NULL,
                    .close = TRUE, .auto_close = TRUE,
                    .envir = parent.frame()) {
+  if (!is.null(items) && !is_named(items)) {
+    stop("`items` must be a named character vector.")
+  }
+
   cli__message(
     "dl",
     list(

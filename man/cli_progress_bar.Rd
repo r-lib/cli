@@ -57,10 +57,10 @@ display if \code{format} is not specified. Currently supported types:
 \item{total}{Total number of progress units, or \code{NA} if it is unknown.
 \code{cli_progress_update()} can update the total number of units. This is
 handy if you don't know the size of a download at the beginning, and
-also in some other casees. If \code{format} (plus \code{format_done} and
-\code{format_done}) will be updated if you change \code{total} from \code{NA} to a
-number, if you specify \code{NULL} for \code{format}. I.e. default format strings
-will be updated, custom ones won't be.}
+also in some other cases. If \code{format} is set to \code{NULL}, \code{format} (plus
+\code{format_done} and \code{format_failed}) will be updated when you change
+\code{total} from \code{NA} to a number. I.e. default format strings will be
+updated, custom ones won't be.}
 
 \item{format}{Format string. It has to be specified for custom progress
 bars, otherwise it is optional, and a default display is selected
@@ -132,7 +132,7 @@ invisibly.
 \description{
 This is the reference manual of the three functions that create,
 update and terminate progress bars. For a tutorial see the
-\href{https://cli.r-lib.org/articles/pluralization.html}{cli progress bars}.
+\href{https://cli.r-lib.org/articles/progress.html}{cli progress bars}.
 
 \code{cli_progress_bar()} creates a new progress bar.
 

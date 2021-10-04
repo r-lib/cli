@@ -122,3 +122,31 @@ test_that("named first element", {
     format_warning(c("*" = "foo", "*" = "bar"))
   )
 })
+
+test_that("no cli conditions are thrown", {
+  cnd <- NULL
+  withCallingHandlers({
+    format_error("error")
+    format_warning("warning")
+    format_message("message")
+  }, cli_message = function(cnd_) cnd <<- cnd_)
+
+  expect_null(cnd)
+})
+
+test_that("cli.condition_width", {
+  withr::local_options(cli.condition_width = 40, cli.num_colors = 1)
+  msg <- strrep("1234567890 ", 8)
+  expect_snapshot({
+    format_error(msg)
+    format_warning(msg)
+    format_message(msg)
+  })
+
+  withr::local_options(cli.condition_width = Inf)
+  expect_snapshot({
+    format_error(msg)
+    format_warning(msg)
+    format_message(msg)
+  })
+})

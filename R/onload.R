@@ -24,6 +24,8 @@ task_callback <- NULL
 
 clienv$unloaded <- FALSE
 
+rstudio_r_fix <- 0
+
 .onLoad <- function(libname, pkgname) {
 
   # Try to restore cursor as much as we can
@@ -34,6 +36,9 @@ clienv$unloaded <- FALSE
       "cli-show-cursor"
     )
   }
+
+  # https://github.com/r-lib/cli/issues/352
+  rstudio_r_fix <<- (Sys.getenv("RSTUDIO") == 1) + 0L
 
   pkgenv <- environment(dummy)
 

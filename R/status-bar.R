@@ -416,6 +416,6 @@ clii__clear_status_bar <- function(app) {
   } else if (is_dynamic_tty(output)) {
     text <- app$status_bar[[1]]$content
     len <- ansi_nchar(text, type = "width")
-    app$cat(paste0("\r", strrep(" ", len), "\r"))
+    app$cat(paste0("\r", strrep(" ", len + rstudio_r_fix), "\r"))
   }
 }

@@ -41,29 +41,31 @@ progress bar. This handler is always able to handle all progress bars.
 
 \subsection{\code{logger}}{
 
-Log progress updates to the screeen, with one line for each update, with
+Log progress updates to the screen, with one line for each update and with
 time stamps. This handler is always able to handle all progress bars.
 }
 
 \subsection{\code{progressr}}{
 
-Use the progressr package to create progress bars. This handler is
-always able to handle all progress bars. (The progressr package needs
-to be installed.)
+Use the \link[progressr:progressr-package]{progressr} package to create
+progress bars. This handler is always able to handle all progress bars.
+(The progressr package needs to be installed.)
 }
 
 \subsection{\code{rstudio}}{
 
-Use RStudio's job panel to show the progress bars. This handler is
-available at the RStudio console, in recent versions of RStudio.
+Use \href{https://blog.rstudio.com/2019/03/14/rstudio-1-2-jobs/}{RStudio's job panel}
+to show the progress bars. This handler is available at the RStudio console,
+in recent versions of RStudio.
 }
 
 \subsection{\code{say}}{
 
-Use the macOS command line \code{say} command to announce progress events
-in speech. Set the \code{cli.progress_say_frequency} option to set the
-minimum delay between \code{say} invocations, the default is three seconds.
-This handler is available on macOS, if the \code{say} command is on the path.
+Use the macOS \code{say} command to announce progress events in speech (type
+\verb{man say} on a terminal for more info). Set the \code{cli.progress_say_frequency}
+option to set the minimum delay between \code{say} invocations, the default is
+three seconds. This handler is available on macOS, if the \code{say} command is
+on the path.
 
 The external command and its arguments can be configured with options:
 \itemize{
@@ -77,8 +79,8 @@ calling the external command.
 
 \subsection{\code{shiny}}{
 
-Use shiny's progress bars. This handler is available if a shiny app is
-running.
+Use \link[shiny:Progress]{shiny's progress bars}. This handler is available if a
+shiny app is running.
 }
 }
 
