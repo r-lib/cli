@@ -2,6 +2,10 @@
 #include "cli.h"
 
 #include <pthread.h>
+#ifdef __TERMUX__
+#include <bthread.h>
+#endif
+
 #include <time.h>
 #ifndef _WIN32
 #include <signal.h>
