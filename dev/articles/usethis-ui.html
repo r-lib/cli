@@ -269,8 +269,16 @@
 <a href="#usethisui_stop" class="anchor"></a><code>usethis::ui_stop()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_stop(x, .envir = parent.frame())</a></code></pre>
-<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_stop()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> to throw an error.</p>
-<p>cli does not have any tools to throw errors currently.</p>
+<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_stop()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> to throw an error. <code><a href="../reference/cli_abort.html">cli_abort()</a></code> does the same and is formatted using <code><a href="../reference/cli_bullets.html">cli_bullets()</a></code>.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_stop</a></span><span class="op">(</span><span class="st">"Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists"</span><span class="op">)</span></code></pre></div>
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-22.svg" width="100%"></p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_abort.html">cli_abort</a></span><span class="op">(</span>
+  <span class="st">"Could not copy {.file {img}} to {.file {logo_path}}, file already exists"</span>,
+  <span class="st">"i"</span> <span class="op">=</span> <span class="st">"You can set {.arg overwrite = TRUE} to avoid this error"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-23.svg" width="100%"></p>
 </div>
 <div id="usethisui_todo" class="section level2">
 <h2 class="hasAnchor">
@@ -278,12 +286,12 @@
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_todo(x, .envir = parent.frame())</a></code></pre>
 <p>This is a bullet, so either <code><a href="../reference/cli_ul.html">cli_ul()</a></code> or <code><a href="../reference/cli_alert.html">cli_alert_info()</a></code> should be appropriate:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
-<p><img src="usethis-ui_files/figure-html/unnamed-chunk-22.svg" width="100%"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-24.svg" width="100%"></p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"Redocument with {.fun devtools::document}"</span><span class="op">)</span></code></pre></div>
-<p><img src="usethis-ui_files/figure-html/unnamed-chunk-23.svg" width="100%"></p>
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-25.svg" width="100%"></p>
 </div>
 <div id="usethisui_value" class="section level2">
 <h2 class="hasAnchor">
@@ -291,22 +299,30 @@
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_value(x)</a></code></pre>
 <p>The <code>"value"</code> inline class is appropriate for this.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
 <span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
-<p><img src="usethis-ui_files/figure-html/unnamed-chunk-24.svg" width="100%"></p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-26.svg" width="100%"></p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span></code></pre></div>
-<p><img src="usethis-ui_files/figure-html/unnamed-chunk-25.svg" width="100%"></p>
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-27.svg" width="100%"></p>
 </div>
 <div id="usethisui_warn" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usethisui_warn" class="anchor"></a><code>usethis::ui_warn()</code>
 </h2>
 <pre><code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_warn(x, .envir = parent.frame())</a></code></pre>
-<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_warn()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/warning.html">warning()</a></code> to throw a warning.</p>
-<p>cli does not have any tools to throw warnings currently.</p>
+<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_warn()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/warning.html">warning()</a></code> to throw a warning. <code>cli_war()</code> does the same and is formatted using <code><a href="../reference/cli_bullets.html">cli_bullets()</a></code>.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_warn</a></span><span class="op">(</span><span class="st">"Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists"</span><span class="op">)</span></code></pre></div>
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-28.svg" width="100%"></p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_abort.html">cli_warn</a></span><span class="op">(</span>
+  <span class="st">"Could not copy {.file {img}} to {.file {logo_path}}, file already exists"</span>,
+  <span class="st">"i"</span> <span class="op">=</span> <span class="st">"You can set {.arg overwrite = TRUE} to avoid this warning"</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="usethis-ui_files/figure-html/unnamed-chunk-29.svg" width="100%"></p>
 </div>
 <div id="usethisui_yeah" class="section level2">
 <h2 class="hasAnchor">
