@@ -8,6 +8,7 @@
 #include <Rinternals.h>
 #include <Rversion.h>
 
+SEXP clic_md5(SEXP strs);
 SEXP clic_tty_size();
 SEXP clic_ansi_simplify(SEXP x, SEXP keep_csi);
 SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
