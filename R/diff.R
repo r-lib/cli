@@ -106,7 +106,7 @@ format.cli_diff_chr <- function(x, context = 3L, ...) {
     context = context
   )
 
-  ret <- unlist(out)
+  ret <- as.character(unlist(out))
   if (nochunks && length(ret) > 0) ret <- ret[-1]
 
   ret
@@ -117,6 +117,10 @@ get_diff_chunks <- function(lcs, context = 3L) {
   # context == 0, but short matching parts do not separate chunks
   runs <- rle(lcs$operation != "match" | lcs$length <= 2 * context)
   nchunks <- sum(runs$values)
+
+  # special case for a single short chunk
+  if (nrow(lcs) == 1 && lcs$operation == "match") nchunks <- 0
+
   chunks <- data.frame(
     op_begin   = integer(nchunks),    # first op in chunk
     op_length  = integer(nchunks),    # number of operations in chunk

@@ -78,20 +78,25 @@ static int _cmp_chr(const void *object1, const void *object2, void *context) {
 SEXP clic_diff_chr(SEXP old, SEXP new) {
   int l_old = Rf_length(old);
   int l_new = Rf_length(new);
-  int snmax = l_old + l_new; // upper bound is sum of lengths
+  int snmax = l_old + l_new + 1; // upper bound is sum of lengths
   int bufsize = snmax;
 
   struct diff_edit *ses =
     (struct diff_edit*) S_alloc(snmax, sizeof(struct diff_edit));
   int *buf = (int*) S_alloc(bufsize, sizeof(int));
   int sn;
+
   int out = _diff(old, 0, l_old, new, 0, l_new, _idx_chr, _cmp_chr, NULL,
                   0, ses, &sn, buf, bufsize);
 
   /* AFAICT we'll never error like this, but it does not hurt... */
-  if (out < 0) {
-    R_THROW_ERROR("Could not calculate diff, internal error: %d, %d", out, errno); // __NO_COVERAGE__
-  }
+  if (out < 0) {                // __NO_COVERAGE__
+    R_THROW_ERROR(                                        // __NO_COVERAGE__
+      "Could not calculate diff, internal error: %d, %d", // __NO_COVERAGE__
+      out,                                                // __NO_COVERAGE__
+      errno                                               // __NO_COVERAGE__
+    );                                                    // __NO_COVERAGE__
+  }                                                       // __NO_COVERAGE__
 
   SEXP result = PROTECT(allocVector(VECSXP, 3));
   SET_VECTOR_ELT(result, 0, allocVector(INTSXP, sn));
@@ -184,17 +189,9 @@ static int _find_middle_snake(const void *a, int aoff, int n,
 
       ms->x = x;
       ms->y = y;
-      if (ctx->cmp) {
-        while (x < n && y < m && ctx->cmp(ctx->idx(a, aoff + x, ctx->context),
-                                          ctx->idx(b, boff + y, ctx->context), ctx->context) == 0) {
-          x++; y++;
-        }
-      } else {
-        const unsigned char *a0 = (const unsigned char *)a + aoff;
-        const unsigned char *b0 = (const unsigned char *)b + boff;
-        while (x < n && y < m && a0[x] == b0[y]) {
-          x++; y++;
-        }
+      while (x < n && y < m && ctx->cmp(ctx->idx(a, aoff + x, ctx->context),
+                                        ctx->idx(b, boff + y, ctx->context), ctx->context) == 0) {
+        x++; y++;
       }
       _setv(ctx, k, 0, x);
 
@@ -218,17 +215,9 @@ static int _find_middle_snake(const void *a, int aoff, int n,
 
       ms->u = x;
       ms->v = y;
-      if (ctx->cmp) {
-        while (x > 0 && y > 0 && ctx->cmp(ctx->idx(a, aoff + (x - 1), ctx->context),
-                                          ctx->idx(b, boff + (y - 1), ctx->context), ctx->context) == 0) {
-          x--; y--;
-        }
-      } else {
-        const unsigned char *a0 = (const unsigned char *)a + aoff;
-        const unsigned char *b0 = (const unsigned char *)b + boff;
-        while (x > 0 && y > 0 && a0[x - 1] == b0[y - 1]) {
-          x--; y--;
-        }
+      while (x > 0 && y > 0 && ctx->cmp(ctx->idx(a, aoff + (x - 1), ctx->context),
+                                        ctx->idx(b, boff + (y - 1), ctx->context), ctx->context) == 0) {
+        x--; y--;
       }
       _setv(ctx, kr, 1, x);
 
@@ -242,9 +231,9 @@ static int _find_middle_snake(const void *a, int aoff, int n,
     }
   }
 
-  errno = EFAULT;
+  errno = EFAULT; // __NO_COVERAGE__
 
-  return -1;
+  return -1;      // __NO_COVERAGE__
 }
 
 static void _edit(struct _ctx *ctx, diff_op op, int off, int len) {
@@ -356,9 +345,9 @@ static int _diff(const void *a, int aoff, int n,
   int d, x, y;
   struct diff_edit *e = NULL;
 
-  if (!idx != !cmp) { /* ensure both NULL or both non-NULL */
-    errno = EINVAL;
-    return -1;
+  if (!idx || !cmp) { /* ensure both non-NULL */
+    errno = EINVAL; // __NO_COVERAGE__
+    return -1;      // __NO_COVERAGE__
   }
 
   ctx.idx = idx;
@@ -372,7 +361,7 @@ static int _diff(const void *a, int aoff, int n,
 
   if (ses && sn) {
     if ((e = ses) == NULL) {
-      return -1;
+      return -1;  // __NO_COVERAGE__
     }
     e->op = 0;
   }
@@ -383,17 +372,9 @@ static int _diff(const void *a, int aoff, int n,
    * that match entirely.
    */
   x = y = 0;
-  if (cmp) {
-    while (x < n && y < m && cmp(idx(a, aoff + x, context),
-                                 idx(b, boff + y, context), context) == 0) {
-      x++; y++;
-    }
-  } else {
-    const unsigned char *a0 = (const unsigned char *)a + aoff;
-    const unsigned char *b0 = (const unsigned char *)b + boff;
-    while (x < n && y < m && a0[x] == b0[y]) {
-      x++; y++;
-    }
+  while (x < n && y < m && cmp(idx(a, aoff + x, context),
+                               idx(b, boff + y, context), context) == 0) {
+    x++; y++;
   }
   _edit(&ctx, DIFF_MATCH, aoff, x);
 
