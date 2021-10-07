@@ -37,6 +37,8 @@ test_that("format.cli_diff_chr context", {
   expect_snapshot(print(d, context = 1))
   expect_snapshot(print(d, context = 0))
   expect_snapshot(print(d, context = Inf))
+  d2 <- ediff_chr(c("foo", "bar"), c("foo", "bar"))
+  expect_snapshot(print(d2, context = Inf))
 })
 
 test_that_cli(config = c("plain", "ansi"), "ediff_str", {

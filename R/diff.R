@@ -94,9 +94,6 @@ format.cli_diff_chr <- function(x, context = 3L, ...) {
     warning("Extra arguments were ignored in `format.cli_diff_chr()`.")
   }
 
-  nochunks <- context == Inf
-  if (nochunks) context <- max(length(x$old), length(x$new))
-
   chunks <- get_diff_chunks(x$lcs, context = context)
   out <- lapply(
     seq_len(nrow(chunks)),
@@ -107,7 +104,7 @@ format.cli_diff_chr <- function(x, context = 3L, ...) {
   )
 
   ret <- as.character(unlist(out))
-  if (nochunks && length(ret) > 0) ret <- ret[-1]
+  if (context == Inf && length(ret) > 0) ret <- ret[-1]
 
   ret
 }
@@ -118,9 +115,11 @@ get_diff_chunks <- function(lcs, context = 3L) {
   runs <- rle(lcs$operation != "match" | lcs$length <= 2 * context)
   nchunks <- sum(runs$values)
 
-  # special case for a single short chunk
-  if (nrow(lcs) == 1 && lcs$operation == "match") nchunks <- 0
-
+  # special case for a single match chunk
+  if (nrow(lcs) == 1 && lcs$operation == "match") {
+    nchunks <- if (context == Inf) 1 else 0
+  }
+  
   chunks <- data.frame(
     op_begin   = integer(nchunks),    # first op in chunk
     op_length  = integer(nchunks),    # number of operations in chunk
@@ -140,6 +139,9 @@ get_diff_chunks <- function(lcs, context = 3L) {
   old_empty <- old_size == 0
   new_empty <- new_size == 0
 
+  # avoid working with Inf
+  if (context == Inf) context <- max(old_size, new_size)
+  
   # chunk starts at operation number sum(length) before it, plus 1, but
   # at the end we change this to include the context chunks are well
   chunks$op_begin  <- c(0, cumsum(runs$length))[which(runs$values)] + 1

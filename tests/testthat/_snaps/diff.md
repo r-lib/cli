@@ -207,6 +207,14 @@
       +7
        5
 
+---
+
+    Code
+      print(d2, context = Inf)
+    Output
+       foo
+       bar
+
 # ediff_str [plain]
 
     Code
