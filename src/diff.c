@@ -54,25 +54,22 @@ struct diff_edit {
   int len;
 };
 
-typedef const void *(*idx_fn)(const void *s, int idx, void *context);
-typedef int (*cmp_fn)(const void *object1, const void *object2, void *context);
+typedef int (*cmp_fn)(int a, int b, void *context);
 
 static int _diff(const void *a, int aoff, int n,
                  const void *b, int boff, int m,
-                 idx_fn idx, cmp_fn cmp, void *context, int dmax,
+                 cmp_fn cmp, void *context, int dmax,
                  struct diff_edit *ses, int *sn,
                  int *buf, int bufsize);
 
-static const void* _idx_chr(const void* s, int idx, void *context) {
-  SEXP chr = (SEXP) s;
-  return (const void*) STRING_ELT(chr, idx);
-}
+struct _chr_data {
+  SEXP* aptr;
+  SEXP* bptr;
+};
 
-static int _cmp_chr(const void *object1, const void *object2, void *context) {
-  SEXP chr1 = (SEXP) object1;
-  SEXP chr2 = (SEXP) object2;
-
-  return CHAR(chr1) != CHAR(chr2);
+static int _cmp_chr(int a, int b, void *context) {
+  struct _chr_data *data = (struct _chr_data*) context;
+  return data->aptr[a] != data->bptr[b];
 }
 
 SEXP clic_diff_chr(SEXP old, SEXP new) {
@@ -86,7 +83,11 @@ SEXP clic_diff_chr(SEXP old, SEXP new) {
   int *buf = (int*) S_alloc(bufsize, sizeof(int));
   int sn;
 
-  int out = _diff(old, 0, l_old, new, 0, l_new, _idx_chr, _cmp_chr, NULL,
+  struct _chr_data data;
+  data.aptr = STRING_PTR(old);
+  data.bptr = STRING_PTR(new);
+
+  int out = _diff(old, 0, l_old, new, 0, l_new, _cmp_chr, &data,
                   0, ses, &sn, buf, bufsize);
 
   /* AFAICT we'll never error like this, but it does not hurt... */
@@ -123,7 +124,6 @@ SEXP clic_diff_chr(SEXP old, SEXP new) {
 #define RV(k) _v(ctx, (k), 1)
 
 struct _ctx {
-  idx_fn idx;
   cmp_fn cmp;
   void *context;
   int *buf;
@@ -141,7 +141,7 @@ static void _setv(struct _ctx *ctx, int k, int r, int val) {
   /* Pack -N to N into 0 to N * 2 */
   int j = k <= 0 ? -k * 4 + r : k * 4 + (r - 2);
 
-  if (j > ctx->bufsize) {
+  if (j >= ctx->bufsize) {
     int newsize = j + 1;
     ctx->buf = (int*) S_realloc((char*) ctx->buf, newsize, ctx->bufsize,
                                 sizeof(int));
@@ -153,6 +153,14 @@ static void _setv(struct _ctx *ctx, int k, int r, int val) {
 
 static int _v(struct _ctx *ctx, int k, int r) {
   int j = k <= 0 ? -k * 4 + r : k * 4 + (r - 2);
+
+  if (j > ctx->bufsize) {
+    int newsize = j + 1;
+    ctx->buf = (int*) S_realloc((char*) ctx->buf, newsize, ctx->bufsize,
+                                sizeof(int));
+    ctx->bufsize = newsize;
+  }
+
   return ctx->buf[j];
 }
 
@@ -189,8 +197,7 @@ static int _find_middle_snake(const void *a, int aoff, int n,
 
       ms->x = x;
       ms->y = y;
-      while (x < n && y < m && ctx->cmp(ctx->idx(a, aoff + x, ctx->context),
-                                        ctx->idx(b, boff + y, ctx->context), ctx->context) == 0) {
+      while (x < n && y < m && ctx->cmp(aoff + x, boff + y, ctx->context) == 0) {
         x++; y++;
       }
       _setv(ctx, k, 0, x);
@@ -215,8 +222,7 @@ static int _find_middle_snake(const void *a, int aoff, int n,
 
       ms->u = x;
       ms->v = y;
-      while (x > 0 && y > 0 && ctx->cmp(ctx->idx(a, aoff + (x - 1), ctx->context),
-                                        ctx->idx(b, boff + (y - 1), ctx->context), ctx->context) == 0) {
+      while (x > 0 && y > 0 && ctx->cmp(aoff + (x - 1), boff + (y - 1), ctx->context) == 0) {
         x--; y--;
       }
       _setv(ctx, kr, 1, x);
@@ -338,19 +344,13 @@ static int _ses(const void *a, int aoff, int n,
 
 static int _diff(const void *a, int aoff, int n,
                  const void *b, int boff, int m,
-                 idx_fn idx, cmp_fn cmp, void *context, int dmax,
+                 cmp_fn cmp, void *context, int dmax,
                  struct diff_edit *ses, int *sn,
                  int *buf, int bufsize) {
   struct _ctx ctx;
   int d, x, y;
   struct diff_edit *e = NULL;
 
-  if (!idx || !cmp) { /* ensure both non-NULL */
-    errno = EINVAL; // __NO_COVERAGE__
-    return -1;      // __NO_COVERAGE__
-  }
-
-  ctx.idx = idx;
   ctx.cmp = cmp;
   ctx.context = context;
   ctx.buf = buf;
@@ -372,8 +372,7 @@ static int _diff(const void *a, int aoff, int n,
    * that match entirely.
    */
   x = y = 0;
-  while (x < n && y < m && cmp(idx(a, aoff + x, context),
-                               idx(b, boff + y, context), context) == 0) {
+  while (x < n && y < m && cmp(aoff + x, boff + y, context) == 0) {
     x++; y++;
   }
   _edit(&ctx, DIFF_MATCH, aoff, x);
