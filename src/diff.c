@@ -72,9 +72,10 @@ static int _cmp_chr(int a, int b, void *context) {
   return data->aptr[a] != data->bptr[b];
 }
 
-SEXP clic_diff_chr(SEXP old, SEXP new) {
+SEXP clic_diff_chr(SEXP old, SEXP new, SEXP max) {
   int l_old = Rf_length(old);
   int l_new = Rf_length(new);
+  int dmax = INTEGER(max)[0];
   int snmax = l_old + l_new + 1; // upper bound is sum of lengths
   int bufsize = snmax;
 
@@ -88,7 +89,7 @@ SEXP clic_diff_chr(SEXP old, SEXP new) {
   data.bptr = STRING_PTR(new);
 
   int out = _diff(old, 0, l_old, new, 0, l_new, _cmp_chr, &data,
-                  0, ses, &sn, buf, bufsize);
+                  dmax, ses, &sn, buf, bufsize);
 
   /* AFAICT we'll never error like this, but it does not hurt... */
   if (out < 0) {                // __NO_COVERAGE__
@@ -99,10 +100,11 @@ SEXP clic_diff_chr(SEXP old, SEXP new) {
     );                                                    // __NO_COVERAGE__
   }                                                       // __NO_COVERAGE__
 
-  SEXP result = PROTECT(allocVector(VECSXP, 3));
+  SEXP result = PROTECT(allocVector(VECSXP, 4));
   SET_VECTOR_ELT(result, 0, allocVector(INTSXP, sn));
   SET_VECTOR_ELT(result, 1, allocVector(INTSXP, sn));
   SET_VECTOR_ELT(result, 2, allocVector(INTSXP, sn));
+  SET_VECTOR_ELT(result, 3, ScalarInteger(out));
 
   int i;
   int *op_ptr  = INTEGER(VECTOR_ELT(result, 0));

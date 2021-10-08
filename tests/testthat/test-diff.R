@@ -63,3 +63,18 @@ test_that("warnings and errors", {
     "Extra arguments"
   )
 })
+
+test_that("max_diff", {
+  err <- tryCatch(
+    ediff_chr("a", c("a", "b"), 0),
+    error = function(e) e
+  )
+  expect_s3_class(err, "cli_diff_max_dist")
+
+  expect_silent(ediff_chr(c("a", "c"), c("a", "b"), 2))
+  err <- tryCatch(
+    ediff_chr(c("a", "c"), c("a", "b"), 1),
+    error = function(e) e
+  )
+  expect_s3_class(err, "cli_diff_max_dist")
+})

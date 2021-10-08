@@ -4,12 +4,18 @@
 \alias{ediff_chr}
 \title{Compare two character vectors elementwise}
 \usage{
-ediff_chr(old, new)
+ediff_chr(old, new, max_dist = Inf)
 }
 \arguments{
 \item{old}{First character vector.}
 
 \item{new}{Second character vector.}
+
+\item{max_dist}{Maximum distance to consider, or \code{Inf} for no limit.
+If the LCS edit distance is larger than this, then the function
+throws an error with class \code{"cli_diff_max_dist"}. (If you specify
+\code{Inf} the real limit is \code{.Machine$integer.max} but to reach this the
+function would have to run a very long time.)}
 }
 \value{
 A list that is a \code{cli_diff_chr} object, with a \code{format()} and a

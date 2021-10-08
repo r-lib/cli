@@ -4,12 +4,23 @@
 \alias{ediff_str}
 \title{Compare two character strings, character by character}
 \usage{
-ediff_str(old, new)
+ediff_str(old, new, max_dist = Inf)
 }
 \arguments{
 \item{old}{First string, must not be \code{NA}.}
 
 \item{new}{Second string, must not be \code{NA}.}
+
+\item{max_dist}{Maximum distance to consider, or \code{Inf} for no limit.
+If the LCS edit distance is larger than this, then the function
+throws an error with class \code{"cli_diff_max_dist"}. (If you specify
+\code{Inf} the real limit is \code{.Machine$integer.max} but to reach this the
+function would have to run a very long time.)}
+}
+\value{
+A list that is a \code{cli_diff_str} object and also a
+\code{cli_diff_chr} object, see \link{ediff_str} for the details about its
+structure.
 }
 \description{
 Characters are defined by UTF-8 graphemes.

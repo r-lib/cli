@@ -6,6 +6,11 @@
 #'
 #' @param old First character vector.
 #' @param new Second character vector.
+#' @param max_dist Maximum distance to consider, or `Inf` for no limit.
+#'   If the LCS edit distance is larger than this, then the function
+#'   throws an error with class `"cli_diff_max_dist"`. (If you specify
+#'   `Inf` the real limit is `.Machine$integer.max` but to reach this the
+#'   function would have to run a very long time.)
 #' @return A list that is a `cli_diff_chr` object, with a `format()` and a
 #' `print()` method. You can also access its members:
 #'  * `old` and `new` are the original inputs,
@@ -29,12 +34,27 @@
 #' letters2[11:16] <- c("M", "I", "D", "D", "L", "E")
 #' ediff_chr(letters, letters2)
 
-ediff_chr <- function(old, new) {
+ediff_chr <- function(old, new, max_dist = Inf) {
   stopifnot(
     is.character(old),
-    is.character(new)
+    is.character(new),
+    max_dist == Inf || is_count(max_dist)
   )
-  lcs <- .Call(clic_diff_chr, old, new)
+  max_dist2 <- as_max_dist(max_dist)
+
+  lcs <- .Call(clic_diff_chr, old, new, max_dist2)
+
+  if (max_dist2 != 0 && lcs[[4]] == max_dist2) {
+    cnd <- structure(
+      list(
+        message = paste0("diff edit distance is larger than ", max_dist),
+        max_dist = max_dist
+      ),
+      class = c("cli_diff_max_dist", "error", "condition")
+    )
+    stop(cnd)
+  }
+
   op <- c("match", "delete", "insert")[lcs[[1]]]
   lcs <- data.frame(
     stringsAsFactors = FALSE,
@@ -59,6 +79,10 @@ ediff_chr <- function(old, new) {
 #'
 #' @param old First string, must not be `NA`.
 #' @param new Second string, must not be `NA`.
+#' @inheritParams ediff_chr
+#' @return A list that is a `cli_diff_str` object and also a
+#'   `cli_diff_chr` object, see [ediff_str] for the details about its
+#'   structure.
 #'
 #' @family diff functions in cli
 #' @seealso The diffobj package for a much more comprehensive set of
@@ -70,16 +94,17 @@ ediff_chr <- function(old, new) {
 #' str2 <- "PREabcdefgMIDDLEnopqrstuvwxyzPOST"
 #' ediff_str(str1, str2)
 
-ediff_str <- function(old, new) {
+ediff_str <- function(old, new, max_dist = Inf) {
   stopifnot(
     is_string(old),
     is_string(new)
+    # max_dist is checked in ediff_chr
   )
 
   old1 <- utf8_graphemes(old)[[1]]
   new1 <- utf8_graphemes(new)[[1]]
 
-  ret <- ediff_chr(old1, new1)
+  ret <- ediff_chr(old1, new1, max_dist)
 
   class(ret) <- c("cli_diff_str", class(ret))
 
@@ -119,7 +144,7 @@ get_diff_chunks <- function(lcs, context = 3L) {
   if (nrow(lcs) == 1 && lcs$operation == "match") {
     nchunks <- if (context == Inf) 1 else 0
   }
-  
+
   chunks <- data.frame(
     op_begin   = integer(nchunks),    # first op in chunk
     op_length  = integer(nchunks),    # number of operations in chunk
@@ -141,7 +166,7 @@ get_diff_chunks <- function(lcs, context = 3L) {
 
   # avoid working with Inf
   if (context == Inf) context <- max(old_size, new_size)
-  
+
   # chunk starts at operation number sum(length) before it, plus 1, but
   # at the end we change this to include the context chunks are well
   chunks$op_begin  <- c(0, cumsum(runs$length))[which(runs$values)] + 1
@@ -271,4 +296,12 @@ format_diff_str_nocolor <- function(x, ...) {
   })
 
   paste(out, collapse = "")
+}
+
+as_max_dist <- function(max_dist) {
+  if (max_dist == Inf) {
+    0L
+  } else {
+    as.integer(max_dist + 1L)
+  }
 }
