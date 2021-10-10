@@ -288,10 +288,10 @@ format_diff_str_nocolor <- function(x, ...) {
       paste0(x$old[off + 1:len], collapse = "")
 
     } else if (op == "delete") {
-      paste0(c("{--", x$old[off + 1:len], "--}"), collapse = "")
+      paste0(c("[-", x$old[off + 1:len], "-]"), collapse = "")
 
     } else if (op == "insert") {
-      paste0(c("{++", x$new[off + 1:len], "++}"), collapse = "")
+      paste0(c("{+", x$new[off + 1:len], "+}"), collapse = "")
     }
   })
 

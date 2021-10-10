@@ -220,7 +220,7 @@
     Code
       d
     Output
-      {++PRE++}abcdefg{--hijklm--}{++MIDDLE++}nopqrstuvwxyz{++POST++}
+      {+PRE+}abcdefg[-hijklm-]{+MIDDLE+}nopqrstuvwxyz{+POST+}
 
 # ediff_str [ansi]
 
