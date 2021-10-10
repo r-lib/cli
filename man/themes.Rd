@@ -104,7 +104,7 @@ as the margins, but this might change later.
 \item \code{start}: Integer number, the first element in an ordered list.
 \item \code{string_quote}: Quoting character for inline elements of class \code{.val}.
 \item \code{text-decoration}: If \code{"underline"}, then underlined text is created.
-\item \code{text-exdent}: Amound of indentation from the second line of wrapped
+\item \code{text-exdent}: Amount of indentation from the second line of wrapped
 text.
 \item \code{transform}: A function to call on glue substitutions, before
 collapsing them. Note that \code{transform} is applied prior to
