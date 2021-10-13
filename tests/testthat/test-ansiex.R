@@ -435,6 +435,7 @@ test_that("ansi_trimws", {
     list("", ansi_string("")),
     list("foo", ansi_string("foo")),
     list("  foo  ", ansi_string("  foo")),
+    list(c("  foo  ", "  bar  "), ansi_string(c("  foo", "  bar"))),
     list(c("foo", "bar"), ansi_string(c("foo", "bar"))),
     list(col_red(c("  colored  ")), ansi_string(col_red("  colored"))),
     list(
@@ -442,8 +443,8 @@ test_that("ansi_trimws", {
       ansi_string(paste0("   ", col_red("  colored"))))
   )
 
-  for (case in cases_left) {
-    expect_equal(ansi_trimws(case[[1]], "left"), case[[2]])
+  for (case in cases_right) {
+    expect_equal(ansi_trimws(case[[1]], "right"), case[[2]])
   }
 })
 

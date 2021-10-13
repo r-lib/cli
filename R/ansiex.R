@@ -443,7 +443,8 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
   }
 
   if (any(sl > 0L | rl > 0L)) {
-    x <- .Call(clic_ansi_substr, x, 1L + sl, ansi_nchar(x) - rl)
+    start <- rep_len(1L + sl, length(x))
+    x <- .Call(clic_ansi_substr, x, start, ansi_nchar(x) - rl)
   }
 
   ansi_string(x)
