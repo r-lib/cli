@@ -496,9 +496,13 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   x <- unicode_pre(x)
 
   # Form feeds are forced line breaks
-  x <- gsub("\f", "\n\n\f\n\n", x, fixed = TRUE, useBytes = TRUE)
+  # R 4.2 removes the \f after https://github.com/wch/r-source/commit/101b142d04dd5456a2039d54de9483240bcc1512
+  # se we need to put in a random marker instead
+  mark <- "yShtnpteEk"
+  smark <- paste0("\n\n", mark, "\n\n")
+  x <- gsub("\f", smark, x, fixed = TRUE, useBytes = TRUE)
   fix_ff <- function(x) {
-    rem <- which(x == "\f")
+    rem <- which(x == mark)
     if (length(rem)) {
       x[-c(rem - 1, rem, rem + 1)]
     } else {
