@@ -402,10 +402,6 @@ typedef int (*clic__tag_callback_t)(const char *param,
                                    const char *intermed,
                                    const char *end,
                                    void *data);
-typedef int (*clic__tag_callback_t)(const char *param,
-                                   const char *intermed,
-                                   const char *end,
-                                   void *data);
 typedef int (*clic__text_callback_t)(const char *str,
                                       const char *end,
                                       void *data);
