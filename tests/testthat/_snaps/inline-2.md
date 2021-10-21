@@ -230,3 +230,195 @@
       [5] fugiat cupidatat laboris officia esse ex aliqua. Ullamco  
       [6] mollit adipisicing anim.                                  
 
+# span.bullets [plain]
+
+    Code
+      cli_text("Some values {.bullets {letters[1:5]}} blah blah")
+    Message <cliMessage>
+      Some values * a
+      * b
+      * c
+      * d
+      * e blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {letters[1:5]}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      * a
+      * b
+      * c
+      * d
+      * e
+      blah blah
+
+---
+
+    Code
+      cli_text("Some values {.bullets {.val {letters[1:5]}}} blah blah")
+    Message <cliMessage>
+      Some values * "a"
+      * "b"
+      * "c"
+      * "d"
+      * "e" blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {.val {letters[1:5]}}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      * "a"
+      * "b"
+      * "c"
+      * "d"
+      * "e"
+      blah blah
+
+# span.bullets [ansi]
+
+    Code
+      cli_text("Some values {.bullets {letters[1:5]}} blah blah")
+    Message <cliMessage>
+      Some values * a
+      * b
+      * c
+      * d
+      * e blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {letters[1:5]}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      * a
+      * b
+      * c
+      * d
+      * e
+      blah blah
+
+---
+
+    Code
+      cli_text("Some values {.bullets {.val {letters[1:5]}}} blah blah")
+    Message <cliMessage>
+      Some values * [34m"a"[39m
+      * [34m"b"[39m
+      * [34m"c"[39m
+      * [34m"d"[39m
+      * [34m"e"[39m blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {.val {letters[1:5]}}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      * [34m"a"[39m
+      * [34m"b"[39m
+      * [34m"c"[39m
+      * [34m"d"[39m
+      * [34m"e"[39m
+      blah blah
+
+# span.bullets [unicode]
+
+    Code
+      cli_text("Some values {.bullets {letters[1:5]}} blah blah")
+    Message <cliMessage>
+      Some values • a
+      • b
+      • c
+      • d
+      • e blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {letters[1:5]}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      • a
+      • b
+      • c
+      • d
+      • e
+      blah blah
+
+---
+
+    Code
+      cli_text("Some values {.bullets {.val {letters[1:5]}}} blah blah")
+    Message <cliMessage>
+      Some values • "a"
+      • "b"
+      • "c"
+      • "d"
+      • "e" blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {.val {letters[1:5]}}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      • "a"
+      • "b"
+      • "c"
+      • "d"
+      • "e"
+      blah blah
+
+# span.bullets [fancy]
+
+    Code
+      cli_text("Some values {.bullets {letters[1:5]}} blah blah")
+    Message <cliMessage>
+      Some values • a
+      • b
+      • c
+      • d
+      • e blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {letters[1:5]}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      • a
+      • b
+      • c
+      • d
+      • e
+      blah blah
+
+---
+
+    Code
+      cli_text("Some values {.bullets {.val {letters[1:5]}}} blah blah")
+    Message <cliMessage>
+      Some values • [34m"a"[39m
+      • [34m"b"[39m
+      • [34m"c"[39m
+      • [34m"d"[39m
+      • [34m"e"[39m blah blah
+
+---
+
+    Code
+      cli_text("Some values\f{.bullets {.val {letters[1:5]}}}\fblah blah")
+    Message <cliMessage>
+      Some values
+      • [34m"a"[39m
+      • [34m"b"[39m
+      • [34m"c"[39m
+      • [34m"d"[39m
+      • [34m"e"[39m
+      blah blah
+

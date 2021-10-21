@@ -105,3 +105,18 @@ test_that("line breaks", {
   txt2 <- paste0(txt, "\f", txt)
   expect_snapshot(ansi_strwrap(txt2, width = 60))
 })
+
+test_that_cli("span.bullets", {
+  expect_snapshot(
+    cli_text("Some values {.bullets {letters[1:5]}} blah blah")
+  )
+  expect_snapshot(
+    cli_text("Some values\f{.bullets {letters[1:5]}}\fblah blah")
+  )
+  expect_snapshot(
+    cli_text("Some values {.bullets {.val {letters[1:5]}}} blah blah")
+  )
+  expect_snapshot(
+    cli_text("Some values\f{.bullets {.val {letters[1:5]}}}\fblah blah")
+  )
+})
