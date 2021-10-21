@@ -519,6 +519,17 @@ test_that("ansi_strwrap newlines", {
   )
 })
 
+test_that("ansi_strwrap and \f edge cases", {
+  expect_equal(
+    ansi_strwrap("\033[32mfoo\fbar\033[39m"),
+    ansi_string(c("\033[32mfoo\033[39m", "\033[32mbar\033[39m"))
+  )
+  expect_equal(
+    ansi_strwrap("\033[32m\ffoo\f\033[39m"),
+    ansi_string(c("", "\033[32mfoo\033[39m"))
+  )
+})
+
 test_that_cli(configs = c("plain", "ansi"), "ansi_strtrim", {
   withr::local_options(c(cli.unicode = FALSE))
   setup_unicode_width_fix()

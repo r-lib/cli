@@ -502,7 +502,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   smark <- paste0("\n\n", mark, "\n\n")
   x <- gsub("\f", smark, x, fixed = TRUE, useBytes = TRUE)
   fix_ff <- function(x) {
-    rem <- which(x == mark)
+    rem <- which(ansi_strip(x) == mark)
     if (length(rem)) {
       x[-c(rem - 1, rem, rem + 1)]
     } else {
@@ -549,7 +549,10 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   while (xsidx <= xslen) {
     xsc <- substr(xs, xsidx, xsidx)
     xwc <- substr(xw[xwidx[1]], xwidx[2], xwidx[2])
-    if (xsc == xwc) {
+    if (is.na(xwc)) {
+      # colored trailing white space in input?
+      xsidx <- xsidx + 1L
+    } else if (xsc == xwc) {
       xsidx <- xsidx + 1L
       xwidx[2] <- xwidx[2] + 1L
     } else if (xsc %in% c(" ", "\n", "\t")) {
