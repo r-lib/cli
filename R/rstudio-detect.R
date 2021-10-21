@@ -15,6 +15,8 @@ rstudio <- local({
       "RSTUDIO",
       "RSTUDIO_TERM",
       "RSTUDIO_CONSOLE_COLOR",
+      "RSTUDIOAPI_IPC_REQUESTS_FILE",
+      "XPC_SERVICE_NAME",
       "ASCIICAST")
 
     d <- list(
@@ -93,6 +95,12 @@ rstudio <- local({
       # modules/build/SessionBuild.cpp#L231-L240
       "rstudio_build_pane"
 
+    } else if (new$envs[["RSTUDIOAPI_IPC_REQUESTS_FILE"]] != "" &&
+               grepl("rstudio", new$envs[["XPC_SERVICE_NAME"]])) {
+      # RStudio job, XPC_SERVICE_NAME=0 in the subprocess of a job
+      # process. Hopefully this is reliable.
+      "rstudio_job"
+
     } else {
       # Otherwise it is a subprocess of the console, terminal or
       # build pane, and it is hard to say which, so we do not try.
@@ -155,6 +163,16 @@ rstudio <- local({
     list(
       type = "rstudio_build_pane",
       dynamic_tty = TRUE,
+      ansi_tty = FALSE,
+      ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
+      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]])
+    )
+  }
+
+  caps$rstudio_job <- function(data) {
+    list(
+      type = "rstudio_job",
+      dynamic_tty = FALSE,
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
       num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]])

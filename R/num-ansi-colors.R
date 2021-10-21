@@ -107,7 +107,8 @@ num_ansi_colors <- function(stream = "auto") {
   rstudio_colors <- c(
     "rstudio_console",
     "rstudio_console_starting",
-    "rstudio_build_pane"
+    "rstudio_build_pane",
+    "rstudio_job"
   )
   if (is.na(rstudio$num_colors)) rstudio$num_colors <- 1L
   if (rstudio$type %in% rstudio_colors && is_std) {
