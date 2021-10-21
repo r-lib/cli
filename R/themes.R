@@ -224,7 +224,14 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       color = "green"
     ),
     span.or = list(vec_sep2 = " or ", vec_last = ", or "),
-    span.timestamp = list(before = "[", after = "]", color = "grey")
+    span.timestamp = list(before = "[", after = "]", color = "grey"),
+
+    # bullet list
+    span.bullets = list(
+      vec_before = function() paste0(symbol$bullet, " "),
+      vec_sep = "\f",
+      vec_last = "\f"
+    )
   )
 }
 

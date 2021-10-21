@@ -109,10 +109,16 @@ text.
 \item \code{transform}: A function to call on glue substitutions, before
 collapsing them. Note that \code{transform} is applied prior to
 implementing color via ANSI sequences.
-\item \code{vec_last}: The last separator when collapsing vectors.
-\item \code{vec_sep}: The separator to use when collapsing vectors.
+\item \code{vec_last}: The last separator when collapsing vectors. It may be a
+function.
+\item \code{vec_after}: Added after vector elements. It may be a function.
+\item \code{vec_before}: Added before vector elements. It may be a function.
+\item \code{vec_sep}: The separator to use when collapsing vectors. It may be
+a function. It may be a function.
+\item \code{vec_sep2}: The separator to use when collapsing a length 2 vector.
+It may be a function.
 \item \code{vec_trunc}: Vectors longer than this will be truncated. Defaults to
-100.
+100. It may be a function that returns the limit.
 }
 
 More properties might be added later. If you think that a property is

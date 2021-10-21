@@ -32,18 +32,24 @@ inline_generic <- function(app, x, style) {
 }
 
 inline_collapse <- function(x, style = list()) {
-  sep <- style[["vec_sep"]] %||% ", "
+  sep <- call_if_fun(style[["vec_sep"]]) %||% ", "
   if (length(x) >= 3) {
-    last <- style$vec_last %||% ", and "
+    last <- call_if_fun(style$vec_last) %||% ", and "
   } else {
-    last <- style$vec_sep2 %||% style$vec_last %||% " and "
+    last <- call_if_fun(style$vec_sep2) %||%
+      call_if_fun(style$vec_last) %||%
+      " and "
   }
-  trunc <- style$vec_trunc %||% 100L
+  trunc <- call_if_fun(style$vec_trunc) %||% 100L
   if (length(x) > trunc) {
     x <- c(x[1:trunc], cli::symbol$ellipsis)
     last <- sep
   }
-  glue::glue_collapse(as.character(x), sep = sep, last = last)
+
+  before <- call_if_fun(style[["vec_before"]]) %||% ""
+  after <- call_if_fun(style[["vec_after"]]) %||% ""
+  ft <- paste0(before, as.character(x), after)
+  glue::glue_collapse(ft, sep = sep, last = last)
 }
 
 #' This glue transformer performs the inline styling of cli
