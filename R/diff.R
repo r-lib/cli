@@ -32,9 +32,9 @@
 #' @examples
 #' letters2 <- c("P", "R", "E", letters, "P", "O", "S", "T")
 #' letters2[11:16] <- c("M", "I", "D", "D", "L", "E")
-#' ediff_chr(letters, letters2)
+#' diff_chr(letters, letters2)
 
-ediff_chr <- function(old, new, max_dist = Inf) {
+diff_chr <- function(old, new, max_dist = Inf) {
   stopifnot(
     is.character(old),
     is.character(new),
@@ -79,9 +79,9 @@ ediff_chr <- function(old, new, max_dist = Inf) {
 #'
 #' @param old First string, must not be `NA`.
 #' @param new Second string, must not be `NA`.
-#' @inheritParams ediff_chr
+#' @inheritParams diff_chr
 #' @return A list that is a `cli_diff_str` object and also a
-#'   `cli_diff_chr` object, see [ediff_str] for the details about its
+#'   `cli_diff_chr` object, see [diff_str] for the details about its
 #'   structure.
 #'
 #' @family diff functions in cli
@@ -92,19 +92,19 @@ ediff_chr <- function(old, new, max_dist = Inf) {
 #' @examples
 #' str1 <- "abcdefghijklmnopqrstuvwxyz"
 #' str2 <- "PREabcdefgMIDDLEnopqrstuvwxyzPOST"
-#' ediff_str(str1, str2)
+#' diff_str(str1, str2)
 
-ediff_str <- function(old, new, max_dist = Inf) {
+diff_str <- function(old, new, max_dist = Inf) {
   stopifnot(
     is_string(old),
     is_string(new)
-    # max_dist is checked in ediff_chr
+    # max_dist is checked in diff_chr
   )
 
   old1 <- utf8_graphemes(old)[[1]]
   new1 <- utf8_graphemes(new)[[1]]
 
-  ret <- ediff_chr(old1, new1, max_dist)
+  ret <- diff_chr(old1, new1, max_dist)
 
   class(ret) <- c("cli_diff_str", class(ret))
 

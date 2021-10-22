@@ -1,4 +1,4 @@
-# ediff_chr
+# diff_chr
 
     Code
       d$lcs
@@ -24,7 +24,7 @@
       5    delete     16      2         18         16
       6     match     18      1         19         17
 
-# ediff_chr [plain]
+# diff_chr [plain]
 
     Code
       d
@@ -59,7 +59,7 @@
       5    insert     16      2         16         18
       6     match     16      1         17         19
 
-# ediff_chr [ansi]
+# diff_chr [ansi]
 
     Code
       d
@@ -94,15 +94,15 @@
       5    insert     16      2         16         18
       6     match     16      1         17         19
 
-# ediff_chr edge cases
+# diff_chr edge cases
 
     Code
-      ediff_chr(character(), character())
+      diff_chr(character(), character())
 
 ---
 
     Code
-      ediff_chr(character(), character())$lcs
+      diff_chr(character(), character())$lcs
     Output
       [1] operation  offset     length     old_offset new_offset
       <0 rows> (or 0-length row.names)
@@ -110,7 +110,7 @@
 ---
 
     Code
-      ediff_chr("a", character())
+      diff_chr("a", character())
     Output
       @@ -1 +0 @@
       -a
@@ -118,7 +118,7 @@
 ---
 
     Code
-      ediff_chr(character(), "b")
+      diff_chr(character(), "b")
     Output
       @@ -0 +1 @@
       +b
@@ -126,17 +126,17 @@
 ---
 
     Code
-      ediff_chr("a", "a")
+      diff_chr("a", "a")
 
 ---
 
     Code
-      ediff_chr(letters, letters)
+      diff_chr(letters, letters)
 
 ---
 
     Code
-      ediff_chr(c("a", NA, "a2"), "b")
+      diff_chr(c("a", NA, "a2"), "b")
     Output
       @@ -1,3 +1 @@
       -a
@@ -147,7 +147,7 @@
 ---
 
     Code
-      ediff_chr(NA_character_, "NA")
+      diff_chr(NA_character_, "NA")
     Output
       @@ -1 +1 @@
       -NA
@@ -215,14 +215,14 @@
        foo
        bar
 
-# ediff_str [plain]
+# diff_str [plain]
 
     Code
       d
     Output
       {+PRE+}abcdefg[-hijklm-]{+MIDDLE+}nopqrstuvwxyz{+POST+}
 
-# ediff_str [ansi]
+# diff_str [ansi]
 
     Code
       d
