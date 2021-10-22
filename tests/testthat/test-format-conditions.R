@@ -150,3 +150,21 @@ test_that("cli.condition_width", {
     format_message(msg)
   })
 })
+
+test_that("prefix", {
+  withr::local_options(cli.condition_width = 40)
+  n <- "boo"
+  expect_snapshot(error = TRUE, local({
+    stop(format_error(c(
+            "{.var n} must be a numeric vector.",
+      "x" = "You've supplied a {.cls {class(n)}} vector."
+    ), prefix = "A bit loger prefix: "))
+  }))
+
+  expect_snapshot(error = TRUE, local({
+    stop(format_error(c(
+            "{.var n} must be a numeric vector, other classes are no good",
+      "x" = "You've supplied a {.cls {class(n)}} vector instead, uh-uh."
+    ), prefix = "This is an error with a very long prefix: "))
+  }))
+})

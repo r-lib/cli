@@ -363,3 +363,29 @@
     Output
       [1] "1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890"
 
+# prefix
+
+    Code
+      local({
+        stop(format_error(c("{.var n} must be a numeric vector.", x = "You've supplied a {.cls {class(n)}} vector."),
+        prefix = "A bit loger prefix: "))
+      })
+    Error <simpleError>
+      `n` must be a
+      numeric vector.
+      x You've supplied a <character> vector.
+
+---
+
+    Code
+      local({
+        stop(format_error(c(
+          "{.var n} must be a numeric vector, other classes are no good", x = "You've supplied a {.cls {class(n)}} vector instead, uh-uh."),
+        prefix = "This is an error with a very long prefix: "))
+      })
+    Error <simpleError>
+      `n` must be a numeric vector,
+      other classes are no good
+      x You've supplied a <character> vector
+        instead, uh-uh.
+

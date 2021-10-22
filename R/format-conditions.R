@@ -26,16 +26,17 @@
 #'
 #' @param message It is formatted via a call to [cli_bullets()].
 #' @param .envir Environment to evaluate the glue expressions in.
+#' @param prefix Prefix of the error, if it is known to be different
+#' than the default.
 #'
 #' @export
 
-format_error <- function(message, .envir = parent.frame()) {
+format_error <- function(message, .envir = parent.frame(),
+                         prefix = "Error: ") {
   if (is.null(names(message)) || names(message)[1] == "") {
     # The default theme will make this bold
     names(message)[1] <- "1"
   }
-
-  message[1] <- paste0("Error: ", message[1])
 
   rsconsole <- c("rstudio_console", "rstudio_console_starting")
   if (rstudio_detect()$type %in% rsconsole) {
@@ -48,6 +49,15 @@ format_error <- function(message, .envir = parent.frame()) {
   }
   on.exit(options(oldopt), add =TRUE)
 
+  # The prefix itself might be longer than the screen width, so let's
+  # wrap that first. We use ansi_strwrap(), because it handles the width
+  # of UTF-8 characters properly.
+  prefix <- enc2utf8(ansi_strip(prefix))
+  if (utf8_nchar(prefix, "width") > console_width()) {
+    prefix <- last(ansi_strwrap(prefix))
+  }
+  message[1] <- paste0(prefix, message[1])
+
   # We need to create a frame here, so cli_div() is closed.
   # Cannot use local(), it does not work in snapshot tests, it potentially
   # has issues elsewhere as well.
@@ -57,7 +67,8 @@ format_error <- function(message, .envir = parent.frame()) {
   })(), collapse = TRUE, strip_newline = TRUE)
 
   # remove "Error: " that was only needed for the wrapping
-  formatted1[1] <- sub("Error: ", "", formatted1[1])
+
+  formatted1[1] <- sub(prefix, "", formatted1[1])
 
   update_rstudio_color(formatted1)
 }

@@ -6,7 +6,7 @@
 \alias{format_message}
 \title{Format an error, warning or diagnostic message}
 \usage{
-format_error(message, .envir = parent.frame())
+format_error(message, .envir = parent.frame(), prefix = "Error: ")
 
 format_warning(message, .envir = parent.frame())
 
@@ -16,6 +16,9 @@ format_message(message, .envir = parent.frame())
 \item{message}{It is formatted via a call to \code{\link[=cli_bullets]{cli_bullets()}}.}
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
+
+\item{prefix}{Prefix of the error, if it is known to be different
+than the default.}
 }
 \description{
 You can then throw this message with \code{\link[=stop]{stop()}} or \code{rlang::abort()}.
