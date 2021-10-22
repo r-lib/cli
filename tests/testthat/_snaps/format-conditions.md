@@ -389,3 +389,15 @@
       x You've supplied a <character> vector
         instead, uh-uh.
 
+# padding
+
+    Code
+      local({
+        stop(format_error(c("{.var n} must be a numeric vector.", x = "You've supplied a {.cls {class(n)}} vector."),
+        padding_left = 2))
+      })
+    Error <simpleError>
+        `n` must be a numeric vector.
+        x You've supplied a <character>
+          vector.
+

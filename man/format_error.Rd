@@ -6,7 +6,12 @@
 \alias{format_message}
 \title{Format an error, warning or diagnostic message}
 \usage{
-format_error(message, .envir = parent.frame(), prefix = "Error: ")
+format_error(
+  message,
+  .envir = parent.frame(),
+  padding_left = 0,
+  prefix = "Error: "
+)
 
 format_warning(message, .envir = parent.frame())
 
@@ -16,6 +21,8 @@ format_message(message, .envir = parent.frame())
 \item{message}{It is formatted via a call to \code{\link[=cli_bullets]{cli_bullets()}}.}
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
+
+\item{padding_left}{Space to leave empty on the left side.}
 
 \item{prefix}{Prefix of the error, if it is known to be different
 than the default.}

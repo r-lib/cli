@@ -26,13 +26,14 @@
 #'
 #' @param message It is formatted via a call to [cli_bullets()].
 #' @param .envir Environment to evaluate the glue expressions in.
+#' @param padding_left Space to leave empty on the left side.
 #' @param prefix Prefix of the error, if it is known to be different
 #' than the default.
 #'
 #' @export
 
 format_error <- function(message, .envir = parent.frame(),
-                         prefix = "Error: ") {
+                         padding_left = 0, prefix = "Error: ") {
   if (is.null(names(message)) || names(message)[1] == "") {
     # The default theme will make this bold
     names(message)[1] <- "1"
@@ -53,8 +54,9 @@ format_error <- function(message, .envir = parent.frame(),
   # wrap that first. We use ansi_strwrap(), because it handles the width
   # of UTF-8 characters properly.
   prefix <- enc2utf8(ansi_strip(prefix))
-  if (utf8_nchar(prefix, "width") > console_width()) {
-    prefix <- last(ansi_strwrap(prefix))
+  effective_width <- console_width() - padding_left
+  if (utf8_nchar(prefix, "width") > effective_width) {
+    prefix <- last(ansi_strwrap(prefix, width = effective_width))
   }
   message[1] <- paste0(prefix, message[1])
 
@@ -62,7 +64,10 @@ format_error <- function(message, .envir = parent.frame(),
   # Cannot use local(), it does not work in snapshot tests, it potentially
   # has issues elsewhere as well.
   formatted1 <- fmt((function() {
-    cli_div(class = "cli_rlang cli_abort")
+    cli_div(
+      class = "cli_rlang cli_abort",
+      theme = list(.cli_abort = list("margin-left" = padding_left))
+    )
     cli_bullets(message, .envir = .envir)
   })(), collapse = TRUE, strip_newline = TRUE)
 
