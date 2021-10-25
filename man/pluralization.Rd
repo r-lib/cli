@@ -48,10 +48,10 @@ singular and plural forms can be given, separated with a forward slash:\if{html}
 }
 }
 
-\subsection{Use “no” instead of zero}{
+\subsection{Use \code{"no"} instead of zero}{
 
 For readability, it is better to use the \code{no()} helper function to
-include a count in a message. \code{no()} prints the word “no” if the count
+include a count in a message. \code{no()} prints the word \code{"no"} if the count
 is zero, and prints the numeric count otherwise:\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 0; cli_text("Found \{no(nfile)\} file\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Found no files.
 }\if{html}{\out{<div class="sourceCode r">}}\preformatted{nfile <- 1; cli_text("Found \{no(nfile)\} file\{?s\}.")
@@ -77,7 +77,7 @@ Note that the length is only used for non-numeric vectors (when
 \code{is.numeric(x)} return \code{FALSE}). If you want to use the length of a
 numeric vector, convert it to character via \code{as.character()}.
 
-You can combine collapsed vectors with “no”, like this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- character()
+You can combine collapsed vectors with \code{"no"}, like this:\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- character()
 cli_text("Will remove \{?no/the/the\} \{.pkg \{pkgs\}\} package\{?s\}.")
 }\if{html}{\out{</div>}}\preformatted{#> Will remove no packages.
 }\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
@@ -116,7 +116,7 @@ pluralization markup, an error is thrown.
 }
 
 \section{Rules}{
-The exact rules of cli’s pluralization. There are two sets of rules. The
+The exact rules of cli pluralization. There are two sets of rules. The
 first set specifies how a quantity is associated with a \verb{\{?\}}
 pluralization markup. The second set describes how the \verb{\{?\}} is parsed
 and interpreted.

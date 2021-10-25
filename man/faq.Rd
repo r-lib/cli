@@ -10,7 +10,7 @@ Frequently Asked Questions
 \subsection{My platform supports ANSI colors, why does cli not use them?}{
 
 It is probably a mistake in the ANSI support detection algorithm. Please
-open an issue at \url{https://github.com/r-lib/cli/issues} and don’t forget
+open an issue at \url{https://github.com/r-lib/cli/issues} and do not forget
 to tell us the details of your platform and terminal or GUI.
 }
 
@@ -37,8 +37,8 @@ it is probably this RStudio bug:
 
 The display width of some Unicode characters ambiguous in the Unicode
 standard. Some software treats them as narrow (one column on the
-screen), other as wide (two columns). In some terminal emulators
-(e.g. iTerm2), you can configure the preferred behavior.
+screen), other as wide (two columns). In some terminal emulators (for
+example iTerm2), you can configure the preferred behavior.
 
 Unfortunately the box drawing characters that cli uses also have
 ambiguous width.
@@ -48,7 +48,7 @@ Courier and Inconsolata treats them as wide characters, so cli output
 will not look great with these. Some good, modern fonts that look good
 include Menlo, Fira Code and Source Code Pro.
 
-If you don’t want to change your font, you can also turn off Unicode
+If you do not want to change your font, you can also turn off Unicode
 output, by setting the \code{cli.unicode} option:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
 }\if{html}{\out{</div>}}
 
