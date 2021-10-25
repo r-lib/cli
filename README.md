@@ -193,8 +193,8 @@ Documentation
 -------------
 
 See at
-[https://cli.r-lib.org/](https://cli.r-lib.org/reference/index.html) and
-also in the installed package: `help(package = "cli")`.
+[`https://cli.r-lib.org/`](https://cli.r-lib.org/reference/index.html)
+and also in the installed package: `help(package = "cli")`.
 
 License
 =======
