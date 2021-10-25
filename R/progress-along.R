@@ -73,7 +73,7 @@
 #' ```
 #'
 #' @param x Sequence to add the progress bar to.
-#' @param name Name of the progtess bar, a label, passed to
+#' @param name Name of the progress bar, a label, passed to
 #'   [cli_progress_bar()].
 #' @param total Passed to [cli_progress_bar()].
 #' @param ... Passed to [cli_progress_bar()].

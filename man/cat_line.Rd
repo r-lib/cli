@@ -26,11 +26,11 @@ cat_rule(..., file = stdout())
 cat_print(x, file = "")
 }
 \arguments{
-\item{...}{For \code{cat_line()} and \code{cat_bullet()}, paste'd together with
+\item{...}{For \code{cat_line()} and \code{cat_bullet()}, pasted together with
 \code{collapse = "\\n"}. For \code{cat_rule()} and \code{cat_boxx()} passed on to
 \code{\link[=rule]{rule()}} and \code{\link[=boxx]{boxx()}} respectively.}
 
-\item{col, background_col, bullet_col}{Colours for text, background, and
+\item{col, background_col, bullet_col}{Colors for text, background, and
 bullets respectively.}
 
 \item{file}{Output destination. Defaults to standard output.}

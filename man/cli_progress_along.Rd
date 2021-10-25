@@ -15,7 +15,7 @@ cli_progress_along(
 \arguments{
 \item{x}{Sequence to add the progress bar to.}
 
-\item{name}{Name of the progtess bar, a label, passed to
+\item{name}{Name of the progress bar, a label, passed to
 \code{\link[=cli_progress_bar]{cli_progress_bar()}}.}
 
 \item{total}{Passed to \code{\link[=cli_progress_bar]{cli_progress_bar()}}.}

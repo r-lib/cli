@@ -25,7 +25,8 @@ boxx(
 \arguments{
 \item{label}{Label to show, a character vector. Each element will be
 in a new line. You can color it using the \verb{col_*}, \verb{bg_*} and
-\verb{style_*} functions, see \link{ansi-styles} and the examples below.}
+\verb{style_*} functions, see \link[=ansi-styles]{ANSI styles} and the examples
+below.}
 
 \item{header}{Text to show on top border of the box. If too long,
 it will be cut.}
@@ -48,16 +49,16 @@ interpreted as \code{c(x, 3*x, x, 3*x)}.}
 the \code{"right"} of the screen.}
 
 \item{col}{Color of text, and default border color. Either a style
-function (see \link{ansi-styles}) or a color name that is passed to
-\code{\link[=make_ansi_style]{make_ansi_style()}}.}
+function (see \link[=ansi-styles]{ANSI styles}) or a color name that is
+passed to \code{\link[=make_ansi_style]{make_ansi_style()}}.}
 
 \item{background_col}{Background color of the inside of the box.
-Either a style function (see \link{ansi-styles}), or a color name which
-will be used in \code{\link[=make_ansi_style]{make_ansi_style()}} to create a \emph{background} style
-(i.e. \code{bg = TRUE} is used).}
+Either a style function (see \link[=ansi-styles]{ANSI styles}), or a color
+name which will be used in \code{\link[=make_ansi_style]{make_ansi_style()}} to create a
+\emph{background} style (i.e. \code{bg = TRUE} is used).}
 
 \item{border_col}{Color of the border. Either a style function
-(see \link{ansi-styles}) or a color name that is passed to
+(see \link[=ansi-styles]{ANSI styles}) or a color name that is passed to
 \code{\link[=make_ansi_style]{make_ansi_style()}}.}
 
 \item{align}{Alignment of the label within the box: \code{"left"},
@@ -107,7 +108,7 @@ boxx("Hello there!", padding = 1, float = "right")
 \if{html}{\figure{box-text-color.svg}}
 }
 
-\subsection{Backgorund color}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{boxx("Hello there!", padding = 1, background_col = "brown")
+\subsection{Background color}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{boxx("Hello there!", padding = 1, background_col = "brown")
 boxx("Hello there!", padding = 1, background_col = bg_red)
 }\if{html}{\out{</div>}}
 

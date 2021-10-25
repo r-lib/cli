@@ -30,7 +30,7 @@ hash_md5 <- function(x) {
 #' It uses the first 13 hexadecimal characters (out of the 32) of the MD5
 #' hash of the input, and converts them into an emoji representation.
 #' It uses a manually selected subset of all emojis, that tend to be
-#' displated correctly.
+#' displayed correctly.
 #'
 #' ## Number of possible hash values
 #'

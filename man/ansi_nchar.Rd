@@ -8,7 +8,7 @@ ansi_nchar(x, type = c("chars", "bytes", "width", "graphemes", "codepoints"))
 }
 \arguments{
 \item{x}{Character vector, potentially ANSI styled, or a vector to be
-coarced to character. If it converted to UTF-8.}
+coerced to character. If it converted to UTF-8.}
 
 \item{type}{Whether to count graphemes (characters), code points,
 bytes, or calculate the display width of the string.}

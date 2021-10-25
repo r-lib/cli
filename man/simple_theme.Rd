@@ -7,7 +7,7 @@
 simple_theme(dark = getOption("cli_theme_dark", "auto"))
 }
 \arguments{
-\item{dark}{Whether the theme should be optiomized for a dark
+\item{dark}{Whether the theme should be optimized for a dark
 background. If \code{"auto"}, then cli will try to detect this.
 Detection usually works in recent RStudio versions, and in iTerm
 on macOS, but not on other platforms.}

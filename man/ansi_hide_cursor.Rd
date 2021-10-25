@@ -33,10 +33,14 @@ does nothing.
 evaluating an expression.
 }
 \seealso{
+Other terminal capabilities: 
+\code{\link{is_ansi_tty}()},
+\code{\link{is_dynamic_tty}()}
+
 Other low level ANSI functions: 
 \code{\link{ansi_has_any}()},
 \code{\link{ansi_regex}()},
 \code{\link{ansi_strip}()}
 }
 \concept{low level ANSI functions}
-\concept{terminal capabiltiies}
+\concept{terminal capabilities}

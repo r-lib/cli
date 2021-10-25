@@ -181,7 +181,7 @@ print.ansi_style <- function(x, ...) {
 #'   This flag is included, because ANSI 256 has a finer color scale
 #'   for greys, then the usual 0:5 scale for red, green and blue components.
 #'   It is only used for RGB color specifications (either numerically
-#'   or via a hexa string), and it is ignored on eigth color ANSI
+#'   or via a hexadecimal string), and it is ignored on eight color ANSI
 #'   terminals.
 #' @param colors Number of colors, detected automatically
 #'   by default.
@@ -192,7 +192,7 @@ print.ansi_style <- function(x, ...) {
 #' * A cli ANSI style function of class `ansi_style`. This is returned
 #'   as is, without looking at the other arguments.
 #' * An R color name, see [grDevices::colors()].
-#' * A 6- or 8-digit hexa color string, e.g. `#ff0000` means
+#' * A 6- or 8-digit hexadecimal color string, e.g. `#ff0000` means
 #'   red. Transparency (alpha channel) values are ignored.
 #' * A one-column matrix with three rows for the red, green
 #'   and blue channels, as returned by [grDevices::col2rgb()].

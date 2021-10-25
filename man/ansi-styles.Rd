@@ -195,16 +195,16 @@ same as the non-bright colors.
 
 The \verb{bg_*} functions change the background color of the text.
 These are the eight original ANSI background colors. These, too, can
-vary in appearence, depending on terminal settings. \code{bg_none()} the
+vary in appearance, depending on terminal settings. \code{bg_none()} the
 the default background color, this is useful in a substring of a
 background-colored string.
 
 The \verb{bg_br_*} functions are the bright versions of the eight ANSI
-background colors. Note that on some temrinal configruations and themes
+background colors. Note that on some terminal configurations and themes
 they might be the same as the non-bright colors.
 
 The \verb{style_*} functions apply other styling to the text. The currently
-supported styling funtions are:
+supported styling functions are:
 \itemize{
 \item \code{style_reset()} to remove any style, including color,
 \item \code{style_bold()} for boldface / strong text, although some terminals

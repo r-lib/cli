@@ -8,7 +8,7 @@ ansi_strsplit(x, split, ...)
 }
 \arguments{
 \item{x}{Character vector, potentially ANSI styled, or a vector to
-coarced to character.}
+coerced to character.}
 
 \item{split}{Character vector of length 1 (or object which can be coerced to
 such) containing regular expression(s) (unless \code{fixed = TRUE}) to use
@@ -18,7 +18,7 @@ zero characters, \code{x} is split into single characters.}
 \item{...}{Extra arguments are passed to \code{base::strsplit()}.}
 }
 \value{
-A list of the same length as \code{x}, the \eqn{i}-th element of
+A list of the same length as \code{x}, the \code{i}-th element of
 which contains the vector of splits of \code{x[i]}. ANSI styles are
 retained.
 }

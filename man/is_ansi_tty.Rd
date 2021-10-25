@@ -32,6 +32,7 @@ is_ansi_tty()
 }
 \seealso{
 Other terminal capabilities: 
+\code{\link{ansi_hide_cursor}()},
 \code{\link{is_dynamic_tty}()}
 }
 \concept{terminal capabilities}

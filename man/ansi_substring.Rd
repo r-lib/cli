@@ -8,7 +8,7 @@ ansi_substring(text, first, last = 1000000L)
 }
 \arguments{
 \item{text}{Character vector, potentially ANSI styled, or a vector to
-coarced to character. It is recycled to the longest of \code{first}
+coerced to character. It is recycled to the longest of \code{first}
 and \code{last}.}
 
 \item{first}{Starting index or indices, recycled to match the length

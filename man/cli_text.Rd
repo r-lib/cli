@@ -34,7 +34,7 @@ cli_text("Second line.")
 \if{html}{\figure{cli-text-newline.svg}}
 }
 
-\subsection{Stlying}{
+\subsection{Styling}{
 
 You can use \link[=inline-markup]{inline markup}, as usual.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("The \{.fn cli_text\} function in the \{.pkg cli\} package.")
 }\if{html}{\out{</div>}}

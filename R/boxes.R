@@ -42,7 +42,7 @@
 #' boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 #' ```
 #'
-#' ## Backgorund color
+#' ## Background color
 #'
 #' ```{asciicast box-bg-color}
 #' boxx("Hello there!", padding = 1, background_col = "brown")
@@ -81,7 +81,8 @@
 #'
 #' @param label Label to show, a character vector. Each element will be
 #'   in a new line. You can color it using the `col_*`, `bg_*` and
-#'   `style_*` functions, see [ansi-styles] and the examples below.
+#'   `style_*` functions, see [ANSI styles][ansi-styles] and the examples
+#'   below.
 #' @param header Text to show on top border of the box. If too long,
 #'   it will be cut.
 #' @param footer Text to show on the bottom border of the box. If too long,
@@ -97,14 +98,14 @@
 #' @param float Whether to display the box on the `"left"`, `"center"`, or
 #'   the `"right"` of the screen.
 #' @param background_col Background color of the inside of the box.
-#'   Either a style function (see [ansi-styles]), or a color name which
-#'   will be used in [make_ansi_style()] to create a *background* style
-#'   (i.e. `bg = TRUE` is used).
+#'   Either a style function (see [ANSI styles][ansi-styles]), or a color
+#'   name which will be used in [make_ansi_style()] to create a
+#'   *background* style (i.e. `bg = TRUE` is used).
 #' @param col Color of text, and default border color. Either a style
-#'   function (see [ansi-styles]) or a color name that is passed to
-#'   [make_ansi_style()].
+#'   function (see [ANSI styles][ansi-styles]) or a color name that is
+#'   passed to [make_ansi_style()].
 #' @param border_col Color of the border. Either a style function
-#'   (see [ansi-styles]) or a color name that is passed to
+#'   (see [ANSI styles][ansi-styles]) or a color name that is passed to
 #'   [make_ansi_style()].
 #' @param align Alignment of the label within the box: `"left"`,
 #'   `"center"`, or `"right"`.

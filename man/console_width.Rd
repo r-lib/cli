@@ -23,7 +23,7 @@ and error is thrown.
 
 Then we try to determine the size of the terminal or console window:
 \itemize{
-\item If we are not in RStudio, or we are in an RStudio temrinal,
+\item If we are not in RStudio, or we are in an RStudio terminal,
 then we try to use the \code{tty_size()} function to query the
 terminal size. This might fail if R is not running in a terminal,
 but failures are ignored.

@@ -8,7 +8,7 @@ ansi_substr(x, start, stop)
 }
 \arguments{
 \item{x}{Character vector, potentially ANSI styled, or a vector to
-coarced to character.}
+coerced to character.}
 
 \item{start}{Starting index or indices, recycled to match the length
 of \code{x}.}

@@ -15,7 +15,7 @@ make_ansi_style(..., bg = FALSE, grey = FALSE, colors = num_ansi_colors())
 This flag is included, because ANSI 256 has a finer color scale
 for greys, then the usual 0:5 scale for red, green and blue components.
 It is only used for RGB color specifications (either numerically
-or via a hexa string), and it is ignored on eigth color ANSI
+or via a hexadecimal string), and it is ignored on eight color ANSI
 terminals.}
 
 \item{colors}{Number of colors, detected automatically
@@ -33,7 +33,7 @@ The \code{...} style argument can be any of the following:
 \item A cli ANSI style function of class \code{ansi_style}. This is returned
 as is, without looking at the other arguments.
 \item An R color name, see \code{\link[grDevices:colors]{grDevices::colors()}}.
-\item A 6- or 8-digit hexa color string, e.g. \verb{#ff0000} means
+\item A 6- or 8-digit hexadecimal color string, e.g. \verb{#ff0000} means
 red. Transparency (alpha channel) values are ignored.
 \item A one-column matrix with three rows for the red, green
 and blue channels, as returned by \code{\link[grDevices:col2rgb]{grDevices::col2rgb()}}.

@@ -53,7 +53,7 @@ static R_INLINE void cli_progress_add(SEXP bar, double inc);
 //' `config` may contain the following entries:
 //'
 //' * `name`: progress bar name.
-//' * `status`: (intiial) progress bar status.
+//' * `status`: (initial) progress bar status.
 //' * `type`: progress bar type.
 //' * `total`: total number of progress units.
 //' * `show_after`: show the progress bar after the specified number of
@@ -226,7 +226,7 @@ static R_INLINE void cli_progress_set_type(SEXP bar, const char *type);
 //' * `bar`: progress bar object.
 //' * `set`: the number of current progress units. It is ignored if
 //'   negative.
-//' * `inc`: increment to add to the current number of progres units.
+//' * `inc`: increment to add to the current number of progress units.
 //'   It is ignored if `set` is not negative.
 //' * `force`: whether to force an update, even if no update is due.
 //'

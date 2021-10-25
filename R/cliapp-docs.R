@@ -15,7 +15,7 @@
 #' cli_text("This is {.emph important}.")
 #' ```
 #'
-#' adds a class to the "important" word, class "emph". Note that in this
+#' adds a class to the "important" word, class `"emph"`. Note that in this
 #' case the string within the braces is usually not a valid R expression.
 #' If you want to mix classes with interpolation, add another pair of
 #' braces:
@@ -249,7 +249,7 @@ NULL
 #'    specify a theme, that is added to theme stack. If no theme is
 #'    specified for [start_app()], the content of the `cli.theme` option
 #'    is used. Removed when the corresponding app stops.
-#' 3. The user may speficy a theme in the `cli.user_theme` option. This
+#' 3. The user may specify a theme in the `cli.user_theme` option. This
 #'    is added to the stack _after_ the app's theme (step 2.), so it can
 #'    override its settings. Removed when the app that added it stops.
 #' 4. Themes specified explicitly in [cli_div()] elements. These are

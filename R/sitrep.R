@@ -1,7 +1,7 @@
 
 #' cli situation report
 #'
-#' Contains currenty:
+#' Contains currently:
 #' * `cli_unicode_option`: whether the `cli.unicode` option is set and its
 #'   value. See [is_utf8_output()].
 #' * `symbol_charset`: the selected character set for [symbol], UTF-8,

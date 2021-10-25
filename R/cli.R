@@ -116,7 +116,7 @@ format_inline <- function(..., .envir = parent.frame()) {
 #' cli_text("Second line.")
 #' ```
 #'
-#' ## Stlying
+#' ## Styling
 #'
 #' You can use [inline markup][inline-markup], as usual.
 #'
@@ -190,7 +190,7 @@ cli_text <- function(..., .envir = parent.frame()) {
 #'
 #' ## Special characters
 #'
-#' No glue substritution happens here.
+#' No glue substitution happens here.
 #'
 #' ```{asciicast cli-verbatim-2}
 #' cli_verbatim("No string {interpolation} or {.emph styling} here")
@@ -330,7 +330,7 @@ cli_par <- function(id = NULL, class = NULL, .auto_close = TRUE,
 #'
 #' Containers aut0-close by default, but sometimes you need to explicitly
 #' close them. Closing a container also closes all of its nested
-#' containeers.
+#' containers.
 #'
 #' @details
 #'
@@ -822,8 +822,8 @@ cli_blockquote <- function(quote, citation = NULL, id = NULL,
 #' cli_code(format(myfun))
 #' ```
 #'
-#' @param lines Chracter vector, each line will be a line of code, and
-#'   newline charactes also create new lines. Note that _no_ glue
+#' @param lines Character vector, each line will be a line of code, and
+#'   newline characters also create new lines. Note that _no_ glue
 #'   substitution is performed on the code.
 #' @param ... More character vectors, they are appended to `lines`.
 #' @param language Programming language. This is also added as a class,

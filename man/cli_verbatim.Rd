@@ -25,7 +25,7 @@ No glue substitution is performed on verbatim text.
 
 \subsection{Special characters}{
 
-No glue substritution happens here.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("No string \{interpolation\} or \{.emph styling\} here")
+No glue substitution happens here.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("No string \{interpolation\} or \{.emph styling\} here")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{cli-verbatim-2.svg}}

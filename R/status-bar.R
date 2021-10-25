@@ -36,7 +36,7 @@
 #'   screen is scrolled up if needed). If `FALSE`, then this status bar
 #'   is deleted.
 #' @param .auto_close Whether to clear the status bar when the calling
-#'   function finishes (or ‘.envir’ is removed from the stack, if
+#'   function finishes (or `.envir` is removed from the stack, if
 #'   specified).
 #' @param .envir Environment to evaluate the glue expressions in. It is
 #'   also used to auto-clear the status bar if `.auto_close` is `TRUE`.

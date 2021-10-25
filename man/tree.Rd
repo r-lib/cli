@@ -27,7 +27,7 @@ option, see \code{\link[base:options]{base::options()}}.}
 
 \item{trim}{Whether to avoid traversing the same nodes multiple times.
 If \code{TRUE} and \code{data} has a \code{trimmed} column, then that is used for
-printing repeated noded.}
+printing repeated nodes.}
 }
 \value{
 Character vector, the lines of the tree drawing.

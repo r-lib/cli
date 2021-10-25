@@ -18,7 +18,7 @@ Selectors:
 \item Type selectors, e.g. \code{input} selects all \verb{<input>} elements.
 \item Class selectors, e.g. \code{.index} selects any element that has a class
 of "index".
-\item ID selector. \verb{#toc} will match the element that has the ID "toc".
+\item ID selector. \verb{#toc} will match the element that has the ID \code{"toc"}.
 }
 
 Combinators:

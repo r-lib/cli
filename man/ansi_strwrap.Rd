@@ -22,7 +22,7 @@ ansi_strwrap(
 \item{exdent}{Indentation of the subsequent lines of each paragraph.}
 
 \item{simplify}{Whether to return all wrapped strings in a single
-charcter vector, or wrap each element of \code{x} independently and return
+character vector, or wrap each element of \code{x} independently and return
 a list.}
 }
 \value{

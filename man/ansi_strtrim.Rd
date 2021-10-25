@@ -15,7 +15,7 @@ ansi_strtrim(x, width = console_width(), ellipsis = symbol$ellipsis)
 empty string if you don't want a marker.}
 }
 \description{
-This function is similar to \code{\link[base:strtrim]{base::strtrim()}}, but works correcntly with
+This function is similar to \code{\link[base:strtrim]{base::strtrim()}}, but works correctly with
 ANSI styled strings. It also adds \code{...} (or the corresponding Unicode
 character if Unicode characters are allowed) to the end of truncated
 strings.

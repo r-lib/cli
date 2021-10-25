@@ -31,12 +31,12 @@ available), or a double line. Some strings are interpreted specially,
 see \emph{Line styles} below.}
 
 \item{col}{Color of text, and default line color. Either an ANSI style
-function (see \link{ansi-styles}), or a color name that is passed
-to \code{\link[=make_ansi_style]{make_ansi_style()}}.}
+function (see \link[=ansi-styles]{ANSI styles}), or a color name that is
+passed to \code{\link[=make_ansi_style]{make_ansi_style()}}.}
 
 \item{line_col, background_col}{Either a color name (used in
-\code{\link[=make_ansi_style]{make_ansi_style()}}), or a style function (see \link{ansi-styles}), to
-color the line and background.}
+\code{\link[=make_ansi_style]{make_ansi_style()}}), or a style function (see
+\link[=ansi-styles]{ANSI styles}), to color the line and background.}
 
 \item{width}{Width of the rule. Defaults to the \code{width} option, see
 \code{\link[base:options]{base::options()}}.}
@@ -49,7 +49,7 @@ The rule can include either a centered text label, or labels on the
 left and right side.
 
 To color the labels, use the functions \verb{col_*}, \verb{bg_*} and \verb{style_*}
-functions, see \link{ansi-styles}, and the examples below.
+functions, see \link[=ansi-styles]{ANSI styles}, and the examples below.
 To color the line, either these functions directly, or the \code{line_col}
 option.
 }

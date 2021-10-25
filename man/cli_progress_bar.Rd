@@ -76,7 +76,7 @@ the same as \code{format}.}
 default the same as \code{format}.}
 
 \item{clear}{Whether to remove the progress bar from the screen after
-it has temrinated. Defaults to the \code{cli.progress_clear} option, or
+it has terminated. Defaults to the \code{cli.progress_clear} option, or
 \code{TRUE} if unset.}
 
 \item{current}{Whether to use this progress bar as the current progress
@@ -317,7 +317,7 @@ which will print the text to the console.
 
 In addition to the builtin types, you can also specify a custom
 format string. In this case \link[=progress-variables]{progress variables}
-are probably useful to avoid calculating some progress bar quantitites
+are probably useful to avoid calculating some progress bar quantities
 like the elapsed time, of the ETA manually. You can also use your own
 variables in the calling function:\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function(urls) \{
   cli_progress_bar(

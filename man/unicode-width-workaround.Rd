@@ -20,8 +20,8 @@ is wrong about (\code{re_bad_char_width}).
 
 Then we use this regex to duplicate all of the problematic characters
 in the input string to the wrapper function, before calling the real
-string manupulation function (char, strwrap) etc. At end we undo the
-duplication before we return the result.
+string manipulation function (\code{nchar()}, \code{strwrap()}) etc. At end we
+undo the duplication before we return the result.
 
 This workaround is fine for \code{nchar()} and \code{strwrap()}, and consequently
 \code{ansi_align()} and \code{ansi_strtrim()} as well.

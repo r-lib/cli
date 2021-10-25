@@ -20,7 +20,7 @@ example\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("This i
 
 \if{html}{\figure{inline-text.svg}}
 
-adds a class to the "important" word, class "emph". Note that in this
+adds a class to the "important" word, class \code{"emph"}. Note that in this
 case the string within the braces is usually not a valid R expression.
 If you want to mix classes with interpolation, add another pair of
 braces:\if{html}{\out{<div class="sourceCode r">}}\preformatted{adjective <- "great"

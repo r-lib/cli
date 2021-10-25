@@ -411,7 +411,7 @@ merge_embedded_styles <- function(old, new) {
 #' * Type selectors, e.g. `input` selects all `<input>` elements.
 #' * Class selectors, e.g. `.index` selects any element that has a class
 #'   of "index".
-#' * ID selector. `#toc` will match the element that has the ID "toc".
+#' * ID selector. `#toc` will match the element that has the ID `"toc"`.
 #'
 #' Combinators:
 #'
@@ -460,7 +460,7 @@ parse_selector_node <- function(x) {
 #' * The id of the container is missing or unique.
 #' * The tag of the container is unique.
 #' * If the selector specifies an id, it matches the id of the container.
-#' * If the selector specifies a tag, it matxhes the tag of the container.
+#' * If the selector specifies a tag, it matches the tag of the container.
 #' * If the selector specifies class names, the container has all these
 #'   classes.
 #'

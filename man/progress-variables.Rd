@@ -108,7 +108,7 @@ or similar.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress
 
 \subsection{\code{pb_elapsed_clock}}{
 
-The elapsed time, in hh::mm::ss format.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The elapsed time, in \verb{hh::mm::ss} format.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} [\{cli::pb_elapsed_clock\}]"
 )

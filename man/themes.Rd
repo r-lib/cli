@@ -21,7 +21,7 @@ See \code{\link[=builtin_theme]{builtin_theme()}}.
 specify a theme, that is added to theme stack. If no theme is
 specified for \code{\link[=start_app]{start_app()}}, the content of the \code{cli.theme} option
 is used. Removed when the corresponding app stops.
-\item The user may speficy a theme in the \code{cli.user_theme} option. This
+\item The user may specify a theme in the \code{cli.user_theme} option. This
 is added to the stack \emph{after} the app's theme (step 2.), so it can
 override its settings. Removed when the app that added it stops.
 \item Themes specified explicitly in \code{\link[=cli_div]{cli_div()}} elements. These are

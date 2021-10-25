@@ -56,7 +56,7 @@
 #' cli_end(show)
 #' ```
 #'
-#' @param dark Whether the theme should be optiomized for a dark
+#' @param dark Whether the theme should be optimized for a dark
 #'   background. If `"auto"`, then cli will try to detect this.
 #'   Detection usually works in recent RStudio versions, and in iTerm
 #'   on macOS, but not on other platforms.

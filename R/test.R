@@ -15,11 +15,11 @@
 #' * `fancy`; ANSI colors, Unicode characters.
 #'
 #' See examples below and in cli's own tests, e.g. in
-#' https://github.com/cran/cli/blob/master/tests/testthat
+#' <https://github.com/cran/cli/blob/master/tests/testthat>
 #' and the corresponding snapshots at
-#' https://github.com/cran/cli/tree/master/tests/testthat/_snaps
+#' <https://github.com/cran/cli/tree/master/tests/testthat/_snaps>
 #'
-#' ## Importtant note regarding Windows
+#' ## Important note regarding Windows
 #'
 #' Because of base R's limitation to record Unicode characters on Windows,
 #' we suggest that you record your snapshots on Unix, or you restrict

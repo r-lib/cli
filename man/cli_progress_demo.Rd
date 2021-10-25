@@ -50,8 +50,8 @@ progress bar that takes longer to run.}
 }
 \value{
 List with class \code{cli_progress_demo}, which has a print and a
-format method for prretty printing. The \code{lines} entry contains the
-output lines, each correcponding to one update.
+format method for pretty printing. The \code{lines} entry contains the
+output lines, each corresponding to one update.
 }
 \description{
 Useful for experimenting with format strings and for documentation.

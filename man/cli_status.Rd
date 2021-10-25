@@ -36,7 +36,7 @@ screen is scrolled up if needed). If \code{FALSE}, then this status bar
 is deleted.}
 
 \item{.auto_close}{Whether to clear the status bar when the calling
-function finishes (or ‘.envir’ is removed from the stack, if
+function finishes (or \code{.envir} is removed from the stack, if
 specified).}
 
 \item{.envir}{Environment to evaluate the glue expressions in. It is

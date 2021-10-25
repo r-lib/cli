@@ -13,7 +13,7 @@ container is closed, if any.}
 \description{
 Containers aut0-close by default, but sometimes you need to explicitly
 close them. Closing a container also closes all of its nested
-containeers.
+containers.
 }
 \details{
 \subsection{Explicit closing}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cnt <- cli_par()

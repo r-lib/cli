@@ -110,7 +110,7 @@
 #'   option, see [base::options()].
 #' @param trim Whether to avoid traversing the same nodes multiple times.
 #'   If `TRUE` and `data` has a `trimmed` column, then that is used for
-#'   printing repeated noded.
+#'   printing repeated nodes.
 #' @return Character vector, the lines of the tree drawing.
 #'
 #' @export

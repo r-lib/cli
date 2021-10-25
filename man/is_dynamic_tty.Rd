@@ -15,7 +15,7 @@ interactive and there are no sinks, otherwise it will select \code{stderr()}.}
 \description{
 In a terminal, \verb{\\\\r} moves the cursor to the first position of the
 same line. It is also supported by most R IDEs. \verb{\\\\r} is typically
-used to achive a more dynamic, less cluttered user interface, e.g.
+used to achieve a more dynamic, less cluttered user interface, e.g.
 to create progress bars.
 }
 \details{
@@ -44,6 +44,7 @@ is_dynamic_tty(stdout())
 }
 \seealso{
 Other terminal capabilities: 
+\code{\link{ansi_hide_cursor}()},
 \code{\link{is_ansi_tty}()}
 }
 \concept{terminal capabilities}

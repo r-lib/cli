@@ -16,16 +16,16 @@
 #'
 #' The `bg_*` functions change the background color of the text.
 #' These are the eight original ANSI background colors. These, too, can
-#' vary in appearence, depending on terminal settings. `bg_none()` the
+#' vary in appearance, depending on terminal settings. `bg_none()` the
 #' the default background color, this is useful in a substring of a
 #' background-colored string.
 #'
 #' The `bg_br_*` functions are the bright versions of the eight ANSI
-#' background colors. Note that on some temrinal configruations and themes
+#' background colors. Note that on some terminal configurations and themes
 #' they might be the same as the non-bright colors.
 #'
 #' The `style_*` functions apply other styling to the text. The currently
-#' supported styling funtions are:
+#' supported styling functions are:
 #' * `style_reset()` to remove any style, including color,
 #' * `style_bold()` for boldface / strong text, although some terminals
 #'   show a bright, high intensity text instead,

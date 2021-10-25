@@ -23,7 +23,7 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #' left and right side.
 #'
 #' To color the labels, use the functions `col_*`, `bg_*` and `style_*`
-#' functions, see [ansi-styles], and the examples below.
+#' functions, see [ANSI styles][ansi-styles], and the examples below.
 #' To color the line, either these functions directly, or the `line_col`
 #' option.
 #'
@@ -107,11 +107,11 @@ make_line <- function(x, char = symbol$line, col = NULL) {
 #'   available), or a double line. Some strings are interpreted specially,
 #'   see *Line styles* below.
 #' @param col Color of text, and default line color. Either an ANSI style
-#'   function (see [ansi-styles]), or a color name that is passed
-#'   to [make_ansi_style()].
+#'   function (see [ANSI styles][ansi-styles]), or a color name that is
+#'   passed to [make_ansi_style()].
 #' @param line_col,background_col Either a color name (used in
-#'   [make_ansi_style()]), or a style function (see [ansi-styles]), to
-#'   color the line and background.
+#'   [make_ansi_style()]), or a style function (see
+#'   [ANSI styles][ansi-styles]), to color the line and background.
 #' @param width Width of the rule. Defaults to the `width` option, see
 #'   [base::options()].
 #' @return Character scalar, the rule.

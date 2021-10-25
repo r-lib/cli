@@ -13,7 +13,7 @@ format_bullets_raw(text, id = NULL, class = NULL)
 \item{text}{Character vector of items. See details below on how names
 are interpreted.}
 
-\item{id}{Optional od of the \code{div.memo} element, can be used in themes.}
+\item{id}{Optional id of the \code{div.memo} element, can be used in themes.}
 
 \item{class}{Optional additional class(es) for the \code{div.memo} element.}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ansiex.R
 \name{ansi_regex}
 \alias{ansi_regex}
-\title{Perl comparible regular expression that matches ANSI escape
+\title{Perl compatible regular expression that matches ANSI escape
 sequences}
 \usage{
 ansi_regex()

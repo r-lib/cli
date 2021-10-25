@@ -36,10 +36,10 @@ Currently available configurations:
 }
 
 See examples below and in cli's own tests, e.g. in
-https://github.com/cran/cli/blob/master/tests/testthat
+\url{https://github.com/cran/cli/blob/master/tests/testthat}
 and the corresponding snapshots at
-https://github.com/cran/cli/tree/master/tests/testthat/_snaps
-\subsection{Importtant note regarding Windows}{
+\url{https://github.com/cran/cli/tree/master/tests/testthat/_snaps}
+\subsection{Important note regarding Windows}{
 
 Because of base R's limitation to record Unicode characters on Windows,
 we suggest that you record your snapshots on Unix, or you restrict

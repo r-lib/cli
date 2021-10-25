@@ -20,7 +20,7 @@ Character vector of the same length as \code{x}, containing
 the requested substrings.
 }
 \description{
-This function uses grapheme clusters instaed of Unicode code points in
+This function uses grapheme clusters instead of Unicode code points in
 UTF-8 strings.
 }
 \examples{

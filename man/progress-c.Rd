@@ -43,7 +43,7 @@ known.
 \code{config} may contain the following entries:
 \itemize{
 \item \code{name}: progress bar name.
-\item \code{status}: (intiial) progress bar status.
+\item \code{status}: (initial) progress bar status.
 \item \code{type}: progress bar type.
 \item \code{total}: total number of progress units.
 \item \code{show_after}: show the progress bar after the specified number of
@@ -180,7 +180,7 @@ set to 1.
 \item \code{bar}: progress bar object.
 \item \code{set}: the number of current progress units. It is ignored if
 negative.
-\item \code{inc}: increment to add to the current number of progres units.
+\item \code{inc}: increment to add to the current number of progress units.
 It is ignored if \code{set} is not negative.
 \item \code{force}: whether to force an update, even if no update is due.
 }

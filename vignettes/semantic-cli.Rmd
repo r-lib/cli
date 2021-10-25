@@ -120,7 +120,7 @@ Use `.auto_close = FALSE` in `cli_par()` to leave the paragraph open after its c
 
 ## Headings
 
-cli suppports three levels of headings.
+cli supports three levels of headings.
 This is how they look in the default theme.
 The default theme adds an empty line before headings, and an empty line after `cli_h1()` and `cli_h2()`.
 
@@ -150,7 +150,7 @@ cli_alert_info(c(
 
 ## Inline text formatting
 
-To define inline markup, you can use the regular glue braces, and after the opening brace, supply the name of the markup formatter with a leading dot, e.g. for emphasised text, you use `.emph`.
+To define inline markup, you can use the regular glue braces, and after the opening brace, supply the name of the markup formatter with a leading dot, e.g. for emphasized text, you use `.emph`.
 Some examples are below, see `?"inline-markup"` for details.
 
 ```{asciicast}
@@ -225,7 +225,7 @@ cli_text(txt)
 
 ## Lists
 
-cli has three types of list: ordered, unordered and definition lists, see `cli_ol()`, `cli_ul()` amd `cli_dl()`:
+cli has three types of list: ordered, unordered and definition lists, see `cli_ol()`, `cli_ul()` and `cli_dl()`:
 
 ```{asciicast}
 cli_ol(c("item 1", "item 2", "item 3"))
@@ -428,7 +428,7 @@ fun()
 
 All `cli_*()` functions are implemented using standard R conditions.
 For example a `cli_alert()` call emits an R condition with class `cli_message`.
-These messages can be caught, muffled, transfered from a subprocess to the main R process.
+These messages can be caught, muffled, transferred from a sub-process to the main R process.
 
 When a cli function is called:
 
@@ -442,15 +442,15 @@ tryCatch(cli_h1("Heading"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))
 ```
 
-# Subprocesses
+# Sub-Processes
 
-If `cli_*()` commands are invoked in a subprocess via `callr::r_session` (see <https://callr.r-lib.org>), and the `cli.message_class` option is set to `"callr_message"`, then cli messages are automatically copied to the main R process:
+If `cli_*()` commands are invoked in a sub-process via `callr::r_session` (see <https://callr.r-lib.org>), and the `cli.message_class` option is set to `"callr_message"`, then cli messages are automatically copied to the main R process:
 
 ```{asciicast}
 rs <- callr::r_session$new()
 rs$run(function() {
   options(cli.message_class = "callr_message")
-  cli::cli_text("This is subprocess {.emph {Sys.getpid()}} from {.pkg callr}")
+  cli::cli_text("This is sub-process {.emph {Sys.getpid()}} from {.pkg callr}")
   Sys.getpid()
 })
 invisible(rs$close())

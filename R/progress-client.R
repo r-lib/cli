@@ -190,7 +190,7 @@
 #'
 #' In addition to the builtin types, you can also specify a custom
 #' format string. In this case [progress variables][progress-variables]
-#' are probably useful to avoid calculating some progress bar quantitites
+#' are probably useful to avoid calculating some progress bar quantities
 #' like the elapsed time, of the ETA manually. You can also use your own
 #' variables in the calling function:
 #'
@@ -243,7 +243,7 @@
 #' @param format_failed Format string for unsuccessful termination. By
 #'   default the same as `format`.
 #' @param clear Whether to remove the progress bar from the screen after
-#'   it has temrinated. Defaults to the `cli.progress_clear` option, or
+#'   it has terminated. Defaults to the `cli.progress_clear` option, or
 #'   `TRUE` if unset.
 #' @param current Whether to use this progress bar as the current progress
 #'   bar of the calling function. See more at 'The current progress bar'

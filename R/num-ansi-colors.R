@@ -51,8 +51,8 @@ num_ansi_colors <- function(stream = "auto") {
   opt <- getOption("cli.num_colors", NULL)
   if (!is.null(opt)) return(as.integer(opt))
 
-  #' 1. If the `R_CLI_NUM_COLORS` env var is set to a non-empty value,
-  #'    then it is used.
+  #' 1. If the `R_CLI_NUM_COLORS` environment variable is set to a
+  #'    non-empty value, then it is used.
 
   if ((env <- Sys.getenv("R_CLI_NUM_COLORS", "")) != "") {
     return(as.integer(env))
@@ -133,8 +133,8 @@ num_ansi_colors <- function(stream = "auto") {
     return(8L)
   }
 
-  #' 1. If `stream` is not stdout or stderr in a terminal, then 1L is
-  #'    returned.
+  #' 1. If `stream` is not the standard output or standard error  in a
+  #'    terminal, then 1L is returned.
 
   if (!isatty(stream)) return(1L)
   if (!is_std) return(1L)
@@ -154,10 +154,10 @@ num_ansi_colors <- function(stream = "auto") {
 
 detect_tty_colors <- function() {
 
-  #' 1. If the `COLORTERM` env var is set to `truecolor` or `24bit`,
-  #'    then we return 16 miliion colors.
-  #' 1. If the `COLORTERM` env var is set to anything else, then we
-  #'    return 8L.
+  #' 1. If the `COLORTERM` environment variable is set to `truecolor` or
+  #'    `24bit`, then we return 16 million colors.
+  #' 1. If the `COLORTERM` environment variable is set to anything else,
+  #'    then we return 8L.
 
   ct <- Sys.getenv("COLORTERM", NA_character_)
   if (!is.na(ct)) {
@@ -197,7 +197,7 @@ detect_tty_colors <- function() {
 
   if (os_type() == "windows") {
 
-    #' 1. If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
+    #' 1. If we are on Windows, under ConEmu or cmder, or ANSICON is loaded,
     #'    then 8L is returned.
 
     if (Sys.getenv("ConEmuANSI") == "ON" ||
@@ -226,7 +226,7 @@ detect_tty_colors <- function() {
   #'    If the `TERM` environment variable is `xterm` and `tput`
   #'    returned 8L, we return 256L, because xterm compatible terminals
   #'    tend to support 256 colors
-  #'    (https://github.com/r-lib/crayon/issues/17)
+  #'    (<https://github.com/r-lib/crayon/issues/17>)
 
   if (cols == 8 && identical(Sys.getenv("TERM"), "xterm")) cols <- 256
 

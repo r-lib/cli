@@ -13,8 +13,8 @@ cli_code(
 )
 }
 \arguments{
-\item{lines}{Chracter vector, each line will be a line of code, and
-newline charactes also create new lines. Note that \emph{no} glue
+\item{lines}{Character vector, each line will be a line of code, and
+newline characters also create new lines. Note that \emph{no} glue
 substitution is performed on the code.}
 
 \item{...}{More character vectors, they are appended to \code{lines}.}

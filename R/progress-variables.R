@@ -130,7 +130,7 @@ cli__pb_elapsed <- function(pb = getOption("cli__pb")) {
 #' @details
 #' ### `pb_elapsed_clock`
 #'
-#' The elapsed time, in hh::mm::ss format.
+#' The elapsed time, in `hh::mm::ss` format.
 #'
 #' ```{asciicast progress-var-elapsed-clock, echo = 2:5}
 #' x <- invisible(quote(
@@ -679,8 +679,8 @@ var_helper2 <- function(expr, clear = TRUE, delay = 0, ...) {
 #'   progress bar that takes longer to run.
 #'
 #' @return List with class `cli_progress_demo`, which has a print and a
-#' format method for prretty printing. The `lines` entry contains the
-#' output lines, each correcponding to one update.
+#' format method for pretty printing. The `lines` entry contains the
+#' output lines, each corresponding to one update.
 #'
 #' @export
 

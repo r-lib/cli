@@ -9,8 +9,8 @@ cli environment variables and options
 \section{User facing configuration}{
 
 
-These are env vars and options that usrs may set, to modify the behavior
-of cli.
+These are environment variables and options that uses may set, to modify
+the behavior of cli.
 \subsection{User facing environment variables}{
 \subsection{\code{NO_COLOR}}{
 
@@ -53,7 +53,7 @@ over \code{cli.width}.
 \subsection{\code{cli.default_handler}}{
 
 General handler function for all cli conditions.
-See https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1
+See \url{https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1}
 }
 
 \subsection{\code{cli.dynamic}}{
@@ -65,7 +65,7 @@ See \code{\link[=is_dynamic_tty]{is_dynamic_tty()}}.
 
 \subsection{\code{cli.hide_cursor}}{
 
-Whether the cli status bar should try to hide the cursor on termianals.
+Whether the cli status bar should try to hide the cursor on terminals.
 Set the \code{FALSE} if the hidden cursor causes issues.
 }
 
@@ -260,12 +260,12 @@ This is used on some platforms, if \code{cli.width} is not set.
 \section{Internal configuration}{
 
 
-These are env vars and options are for cli developers, users should not
-rely of them as they may change between cli releases.
+These are environment variables and options are for cli developers, users
+should not rely on them as they may change between cli releases.
 \subsection{Internal environment variables}{
 \subsection{\code{ASCIICAST}}{
 
-Used to detect an asciicast subprocess in RStudio.
+Used to detect an asciicast sub-process in RStudio.
 }
 
 \subsection{\code{ANSICON}}{
@@ -419,7 +419,7 @@ Used to detect a suitable VTE version for ANSI hyperlinks.
 \subsection{\code{cli__pb}}{
 
 This option is set to the progress bar that is being updated, when
-interpolatinf the format string.
+interpolating the format string.
 }
 
 \subsection{\code{cli.record}}{

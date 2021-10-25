@@ -22,7 +22,7 @@ and cli includes a couple of examples. Sources of palettes:
 \itemize{
 \item https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
 \item iTerm2 builtin palettes
-\item https://github.com/sindresorhus/iterm2-snazzy
+\item \url{https://github.com/sindresorhus/iterm2-snazzy}
 }}
 }
 \value{

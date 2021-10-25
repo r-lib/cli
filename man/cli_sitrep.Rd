@@ -11,7 +11,7 @@ Named list with entries listed above. It has a \code{cli_sitrep}
 class, with a \code{print()} and \code{format()} method.
 }
 \description{
-Contains currenty:
+Contains currently:
 \itemize{
 \item \code{cli_unicode_option}: whether the \code{cli.unicode} option is set and its
 value. See \code{\link[=is_utf8_output]{is_utf8_output()}}.

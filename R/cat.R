@@ -4,11 +4,11 @@
 #' they all set `sep = ""`, and `cat_line()` automatically adds a newline.
 #'
 #' @export
-#' @param ... For `cat_line()` and `cat_bullet()`, paste'd together with
+#' @param ... For `cat_line()` and `cat_bullet()`, pasted together with
 #'   `collapse = "\n"`. For `cat_rule()` and `cat_boxx()` passed on to
 #'   [rule()] and [boxx()] respectively.
 #' @param bullet Name of bullet character. Indexes into [symbol]
-#' @param col,background_col,bullet_col Colours for text, background, and
+#' @param col,background_col,bullet_col Colors for text, background, and
 #'   bullets respectively.
 #' @param x An object to print.
 #' @param file Output destination. Defaults to standard output.

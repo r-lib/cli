@@ -42,7 +42,7 @@
 #'
 #' @param text Character vector of items. See details below on how names
 #' are interpreted.
-#' @param id Optional od of the `div.memo` element, can be used in themes.
+#' @param id Optional id of the `div.memo` element, can be used in themes.
 #' @param class Optional additional class(es) for the `div.memo` element.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
@@ -72,7 +72,7 @@ cli_bullets <- function(text, id = NULL, class = NULL,
 #'
 #' @param text Character vector of items. See details below on how names
 #' are interpreted.
-#' @param id Optional od of the `div.memo` element, can be used in themes.
+#' @param id Optional id of the `div.memo` element, can be used in themes.
 #' @param class Optional additional class(es) for the `div.memo` element.
 #'
 #' @seealso See [cli_bullets()] for examples.

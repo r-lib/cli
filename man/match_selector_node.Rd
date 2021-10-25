@@ -18,7 +18,7 @@ The selector node matches the container, if all these hold:
 \item The id of the container is missing or unique.
 \item The tag of the container is unique.
 \item If the selector specifies an id, it matches the id of the container.
-\item If the selector specifies a tag, it matxhes the tag of the container.
+\item If the selector specifies a tag, it matches the tag of the container.
 \item If the selector specifies class names, the container has all these
 classes.
 }}

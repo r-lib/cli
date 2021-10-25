@@ -9,9 +9,9 @@ Frequently Asked Questions
 \details{
 \subsection{My platform supports ANSI colors, why does cli not use them?}{
 
-It is probably a mistake in cli’s ANSI support detection algorithm.
-Please open an issue at \url{https://github.com/r-lib/cli/issues} and don’t
-forget to tell us the details of your platform and terminal or GUI.
+It is probably a mistake in the ANSI support detection algorithm. Please
+open an issue at \url{https://github.com/r-lib/cli/issues} and don’t forget
+to tell us the details of your platform and terminal or GUI.
 }
 
 \subsection{How do I turn off ANSI colors and styles?}{
@@ -60,15 +60,15 @@ A related issue: \url{https://github.com/r-lib/cli/issues/320}
 In modern terminals, cli output usually looks good.
 
 If you see too wide heading separators in RStudio, then see the previous
-question: ‘Why are heading separators wider than my screen in RStudio?’.
+question: Why are heading separators wider than my screen in RStudio?.
 
-If some output is garbled, then cli probably mis-detected Unicode
-support for your terminal or font. You can try choosing a different
-font. In our experience output looks good with Menlo, Fira Code and
-Source Code Pro. Alternatively you can turn off Unicode output:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
+If some output is garbled, then cli probably misdetected Unicode support
+for your terminal or font. You can try choosing a different font. In our
+experience output looks good with Menlo, Fira Code and Source Code Pro.
+Alternatively you can turn off Unicode output:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
 }\if{html}{\out{</div>}}
 
-If you think this is cli’s fault, then please also file an issue at
+If you think this is our fault, then please also file an issue at
 \url{https://github.com/r-lib/cli/issues}
 }
 }

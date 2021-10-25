@@ -16,8 +16,8 @@
 #'
 #' Then we use this regex to duplicate all of the problematic characters
 #' in the input string to the wrapper function, before calling the real
-#' string manupulation function (char, strwrap) etc. At end we undo the
-#' duplication before we return the result.
+#' string manipulation function (`nchar()`, `strwrap()`) etc. At end we
+#' undo the duplication before we return the result.
 #'
 #' This workaround is fine for `nchar()` and `strwrap()`, and consequently
 #' `ansi_align()` and `ansi_strtrim()` as well.

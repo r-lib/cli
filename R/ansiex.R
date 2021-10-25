@@ -6,7 +6,7 @@ ansi_string <- function(x) {
   x
 }
 
-#' Perl comparible regular expression that matches ANSI escape
+#' Perl compatible regular expression that matches ANSI escape
 #' sequences
 #'
 #' Don't forget to use `perl = TRUE` when using this with [grepl()] and
@@ -62,7 +62,7 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
 #' @param sgr Whether to remove for SGR (styling) control sequences.
 #' @param csi Whether to remove for non-SGR control sequences.
 #' @return The cleaned up string. Note that `ansi_strip()` always drops
-#' the `ansi_string` class, wven if `sgr` and sci` are `FALSE`.
+#' the `ansi_string` class, even if `sgr` and sci` are `FALSE`.
 #'
 #' @family low level ANSI functions
 #' @export
@@ -87,7 +87,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 #' counts Unicode grapheme clusters, instead of code points.
 #'
 #' @param x Character vector, potentially ANSI styled, or a vector to be
-#'   coarced to character. If it converted to UTF-8.
+#'   coerced to character. If it converted to UTF-8.
 #' @param type Whether to count graphemes (characters), code points,
 #'   bytes, or calculate the display width of the string. 
 #' @return Numeric vector, the length of the strings in the character
@@ -126,7 +126,7 @@ ansi_nchar <- function(x,
 #' calculating the positions within the string.
 #'
 #' @param x Character vector, potentially ANSI styled, or a vector to
-#'   coarced to character.
+#'   coerced to character.
 #' @param start Starting index or indices, recycled to match the length
 #'   of `x`.
 #' @param stop Ending index or indices, recycled to match the length
@@ -187,7 +187,7 @@ ansi_substr <- function(x, start, stop) {
 #' calculating the positions within the string.
 #'
 #' @param text Character vector, potentially ANSI styled, or a vector to
-#'   coarced to character. It is recycled to the longest of `first`
+#'   coerced to character. It is recycled to the longest of `first`
 #'   and `last`.
 #' @param first Starting index or indices, recycled to match the length
 #'   of `x`.
@@ -242,13 +242,13 @@ ansi_substring <- function(text, first, last = 1000000L) {
 #' substrings.
 #'
 #' @param x Character vector, potentially ANSI styled, or a vector to
-#'   coarced to character.
+#'   coerced to character.
 #' @param split Character vector of length 1 (or object which can be coerced to
 #'   such) containing regular expression(s) (unless `fixed = TRUE`) to use
 #'   for splitting.  If empty matches occur, in particular if `split` has
 #'   zero characters, `x` is split into single characters.
 #' @param ... Extra arguments are passed to `base::strsplit()`.
-#' @return A list of the same length as `x`, the \eqn{i}-th element of
+#' @return A list of the same length as `x`, the `i`-th element of
 #'   which contains the vector of splits of `x[i]`. ANSI styles are
 #'   retained.
 #'
@@ -460,7 +460,7 @@ ansi_trimws <- function(x, which = c("both", "left", "right")) {
 #' @param indent Indentation of the first line of each paragraph.
 #' @param exdent Indentation of the subsequent lines of each paragraph.
 #' @param simplify Whether to return all wrapped strings in a single
-#'   charcter vector, or wrap each element of `x` independently and return
+#'   character vector, or wrap each element of `x` independently and return
 #'   a list.
 #' @return If `simplify` is `FALSE`, then a list of character vectors,
 #'   each an ANSI string. Otherwise a single ANSI string vector.
@@ -496,7 +496,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   x <- unicode_pre(x)
 
   # Form feeds are forced line breaks
-  # R 4.2 removes the \f after https://github.com/wch/r-source/commit/101b142d04dd5456a2039d54de9483240bcc1512
+  # R 4.2 removes the \f after <https://github.com/wch/r-source/commit/101b142d04dd5456a2039d54de9483240bcc1512>
   # se we need to put in a random marker instead
   mark <- "yShtnpteEk"
   smark <- paste0("\n\n", mark, "\n\n")
@@ -586,7 +586,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
 #' Truncate an ANSI string
 #'
-#' This function is similar to [base::strtrim()], but works correcntly with
+#' This function is similar to [base::strtrim()], but works correctly with
 #' ANSI styled strings. It also adds `...` (or the corresponding Unicode
 #' character if Unicode characters are allowed) to the end of truncated
 #' strings.
@@ -838,7 +838,7 @@ ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
 #'   and cli includes a couple of examples. Sources of palettes:
 #'   * https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit
 #'   * iTerm2 builtin palettes
-#'   * https://github.com/sindresorhus/iterm2-snazzy
+#'   * <https://github.com/sindresorhus/iterm2-snazzy>
 #' @return Named list of CSS declaration blocks, where the names are
 #'   CSS selectors. It has a `format()` and `print()` methods, which you
 #'   can use to write the output to a CSS or HTML file.

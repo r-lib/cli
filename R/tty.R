@@ -21,7 +21,7 @@ is_interactive <- function() {
 #' Note that this only refers to the current R process. If the output
 #' is produced in another process, then it is not relevant.
 #'
-#' In interactive sessions the standard output is chosen, othrwise the
+#' In interactive sessions the standard output is chosen, otherwise the
 #' standard error is used. This is to avoid painting output messages red
 #' in the R GUIs.
 #'
@@ -82,7 +82,7 @@ is_rkward_stdx <- function(stream) {
 #'
 #' In a terminal, `\\r` moves the cursor to the first position of the
 #' same line. It is also supported by most R IDEs. `\\r` is typically
-#' used to achive a more dynamic, less cluttered user interface, e.g.
+#' used to achieve a more dynamic, less cluttered user interface, e.g.
 #' to create progress bars.
 #'
 #' If the output is directed to a file, then `\\r` characters are typically
@@ -198,7 +198,7 @@ is_ansi_tty <- function(stream = "auto") {
 #' @inheritParams is_dynamic_tty
 #' @param expr R expression to evaluate.
 #'
-#' @family terminal capabiltiies
+#' @family terminal capabilities
 #' @family low level ANSI functions
 #' @export
 

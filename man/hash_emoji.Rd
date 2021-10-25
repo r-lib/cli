@@ -30,7 +30,7 @@ Emoji hash
 It uses the first 13 hexadecimal characters (out of the 32) of the MD5
 hash of the input, and converts them into an emoji representation.
 It uses a manually selected subset of all emojis, that tend to be
-displated correctly.
+displayed correctly.
 \subsection{Number of possible hash values}{
 
 cli uses 2280 possible emojis. This is the number of

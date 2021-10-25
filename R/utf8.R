@@ -76,7 +76,7 @@ utf8_nchar <- function(x, type = c("chars", "bytes", "width", "graphemes",
 
 #' Substring of an UTF-8 string
 #'
-#' This function uses grapheme clusters instaed of Unicode code points in
+#' This function uses grapheme clusters instead of Unicode code points in
 #' UTF-8 strings.
 #'
 #' @param x Character vector.
