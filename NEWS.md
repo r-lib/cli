@@ -7,15 +7,62 @@
 
 ## New features
 
+* Several improvements and changes in the `ansi_*()` functions:
+  - most `ansi_*()` functions are now implemented in C and they are
+    much faster (#316).
+  - they handle `NA` values better.
+  - many functions now use UTF-8 graphemes by default instead of code
+    points. E.g. `ansi_nchar()` counts graphemes, etc.
+  - they convert their input to UTF-8 and always return UTF-8
+    encoded strings.
+  - new function `ansi_simplify()` to remove superfluous ANSI tags.
+  - new function `ansi_html()` to convert ANSI-highlighted strings
+    to HTML.
+  - `ansi_has_any()` and `ansi_strip()` now have `sgr` and `csi`
+    arguments to look for SGR tags, CSI tags, or both.
+
+* New functions that handle UTF-8 encoded strings correctly:
+  `utf8_graphemes()`, `utf8_nchar()`, `utf8_substr()`.
+
 * Support for palettes, including a colorblind friendly palette.
   See `?ansi_palettes` for details.
 
 * True color support: `num_ansi_colors()` now detects terminals with
   24 bit color support, and `make_ansi_style()` uses the exact RGB colors
-  on these terminals.
+  on these terminals (#208).
 
 * The new `col_br_*()` and `bg_br_()` functions create bright versions of
-  eight base ANSI colors.
+  eight base ANSI colors (#327).
+
+* New function `code_highlight()` to syntax highlight R code. It supports
+  several themes out of the box, see `code_theme_list()` (#348).
+
+* New functions for hashing: `hash_animal()`, `hash_emoji()` and
+  `hash_md5()`.
+
+* New `diff_chr()` and `diff_str()` functions to calculate the difference
+  of character vectors and letters of strings.
+
+## Smaller improvements
+
+* Progress bars with `clear = FALSE` now print the last, completed, state
+  properly.
+
+* The progress bar for Shiny apps now handles output from
+  `cli_progress_output()`.
+
+* Progress variables in C `format_done` strings work correctly now (#337).
+
+* `cli_dl()` now works with an empty description, and gives a better
+  error for invalid input (#347).
+
+* `rule()` is now works better if the labels have ANSI markup.
+
+* `cli_spark` objects now have `format()` and `print()` methods.
+
+* `cli_process_done()` now does not error without a process (#351).
+
+* ANSI markup is now supported in RStudio jobs (#353).
 
 # cli 3.0.1
 
