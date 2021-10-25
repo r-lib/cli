@@ -36,7 +36,7 @@ Currently available configurations:
 }
 
 See examples below and in cli's own tests, e.g. in
-\url{https://github.com/cran/cli/blob/master/tests/testthat}
+\url{https://github.com/cran/cli/tree/master/tests/testthat}
 and the corresponding snapshots at
 \url{https://github.com/cran/cli/tree/master/tests/testthat/_snaps}
 \subsection{Important note regarding Windows}{
