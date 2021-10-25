@@ -153,9 +153,40 @@
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
+<li>
+<p>Several improvements and changes in the <code>ansi_*()</code> functions:</p>
+<ul>
+<li>most <code>ansi_*()</code> functions are now implemented in C and they are much faster (<a href='https://github.com/r-lib/cli/issues/316'>#316</a>).</li>
+<li>they handle <code>NA</code> values better.</li>
+<li>many functions now use UTF-8 graphemes by default instead of code points. E.g. <code><a href="../reference/ansi_nchar.html">ansi_nchar()</a></code> counts graphemes, etc.</li>
+<li>they convert their input to UTF-8 and always return UTF-8 encoded strings.</li>
+<li>new function <code><a href="../reference/ansi_simplify.html">ansi_simplify()</a></code> to remove superfluous ANSI tags.</li>
+<li>new function <code><a href="../reference/ansi_html.html">ansi_html()</a></code> to convert ANSI-highlighted strings to HTML.</li>
+<li>
+<code><a href="../reference/ansi_has_any.html">ansi_has_any()</a></code> and <code><a href="../reference/ansi_strip.html">ansi_strip()</a></code> now have <code>sgr</code> and <code>csi</code> arguments to look for SGR tags, CSI tags, or both.</li>
+</ul>
+</li>
+<li><p>New functions that handle UTF-8 encoded strings correctly: <code><a href="../reference/utf8_graphemes.html">utf8_graphemes()</a></code>, <code><a href="../reference/utf8_nchar.html">utf8_nchar()</a></code>, <code><a href="../reference/utf8_substr.html">utf8_substr()</a></code>.</p></li>
 <li><p>Support for palettes, including a colorblind friendly palette. See <code><a href="../reference/truecolor.html">?ansi_palettes</a></code> for details.</p></li>
-<li><p>True color support: <code><a href="../reference/num_ansi_colors.html">num_ansi_colors()</a></code> now detects terminals with 24 bit color support, and <code><a href="../reference/make_ansi_style.html">make_ansi_style()</a></code> uses the exact RGB colors on these terminals.</p></li>
-<li><p>The new <code>col_br_*()</code> and <code>bg_br_()</code> functions create bright versions of eight base ANSI colors.</p></li>
+<li><p>True color support: <code><a href="../reference/num_ansi_colors.html">num_ansi_colors()</a></code> now detects terminals with 24 bit color support, and <code><a href="../reference/make_ansi_style.html">make_ansi_style()</a></code> uses the exact RGB colors on these terminals (<a href='https://github.com/r-lib/cli/issues/208'>#208</a>).</p></li>
+<li><p>The new <code>col_br_*()</code> and <code>bg_br_()</code> functions create bright versions of eight base ANSI colors (<a href='https://github.com/r-lib/cli/issues/327'>#327</a>).</p></li>
+<li><p>New function <code><a href="../reference/code_highlight.html">code_highlight()</a></code> to syntax highlight R code. It supports several themes out of the box, see <code><a href="../reference/code_theme_list.html">code_theme_list()</a></code> (<a href='https://github.com/r-lib/cli/issues/348'>#348</a>).</p></li>
+<li><p>New functions for hashing: <code><a href="../reference/hash_animal.html">hash_animal()</a></code>, <code><a href="../reference/hash_emoji.html">hash_emoji()</a></code> and <code><a href="../reference/hash_md5.html">hash_md5()</a></code>.</p></li>
+<li><p>New <code><a href="../reference/diff_chr.html">diff_chr()</a></code> and <code><a href="../reference/diff_str.html">diff_str()</a></code> functions to calculate the difference of character vectors and letters of strings.</p></li>
+</ul>
+</div>
+<div id="smaller-improvements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#smaller-improvements" class="anchor"></a>Smaller improvements</h2>
+<ul>
+<li><p>Progress bars with <code>clear = FALSE</code> now print the last, completed, state properly.</p></li>
+<li><p>The progress bar for Shiny apps now handles output from <code><a href="../reference/cli_progress_output.html">cli_progress_output()</a></code>.</p></li>
+<li><p>Progress variables in C <code>format_done</code> strings work correctly now (<a href='https://github.com/r-lib/cli/issues/337'>#337</a>).</p></li>
+<li><p><code><a href="../reference/cli_dl.html">cli_dl()</a></code> now works with an empty description, and gives a better error for invalid input (<a href='https://github.com/r-lib/cli/issues/347'>#347</a>).</p></li>
+<li><p><code><a href="../reference/rule.html">rule()</a></code> is now works better if the labels have ANSI markup.</p></li>
+<li><p><code>cli_spark</code> objects now have <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> and <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> methods.</p></li>
+<li><p><code><a href="../reference/cli_process_start.html">cli_process_done()</a></code> now does not error without a process (<a href='https://github.com/r-lib/cli/issues/351'>#351</a>).</p></li>
+<li><p>ANSI markup is now supported in RStudio jobs (<a href='https://github.com/r-lib/cli/issues/353'>#353</a>).</p></li>
 </ul>
 </div>
 </div>
@@ -201,7 +232,7 @@
 <li><p>New <code><a href="../reference/cli.html">cli::cli()</a></code> function to create a single cli message from multiple cli calls (<a href='https://github.com/r-lib/cli/issues/170'>#170</a>).</p></li>
 <li><p>cli now highlights weird names, e.g. path names with leading or trailing space (<a href='https://github.com/r-lib/cli/issues/227'>#227</a>).</p></li>
 <li><p>Styling is fixed at several places. In particular, nested lists should be now formatted better (<a href='https://github.com/r-lib/cli/issues/221'>#221</a>).</p></li>
-<li><p>New <code><a href="../reference/spark_bar.html">spark_bar()</a></code> and <code><a href="../reference/spark_line.html">spark_line()</a></code> funcions to draw small bar or line charts.</p></li>
+<li><p>New <code><a href="../reference/spark_bar.html">spark_bar()</a></code> and <code><a href="../reference/spark_line.html">spark_line()</a></code> functions to draw small bar or line charts.</p></li>
 </ul>
 </div>
     <div id="cli-231" class="section level1">
@@ -246,11 +277,11 @@
 <li><p>New <code><a href="../reference/pluralize.html">pluralize()</a></code> function to perform pluralization without generating cli output (<a href='https://github.com/r-lib/cli/issues/155'>#155</a>).</p></li>
 <li><p><code><a href="../reference/console_width.html">console_width()</a></code> works better now in RStudio, and also in terminals.</p></li>
 <li><p>Styling of verbatim text work properly now (<a href='https://github.com/r-lib/cli/issues/147'>#147</a>, <a href='https://github.com/tzakharko'>@tzakharko</a>).</p></li>
-<li><p>Messages (ie. <code>message</code> conditions) coming from cli now have the <code>cliMessage</code> class, so you can easily suppress them without suppressing other messages (<a href='https://github.com/r-lib/cli/issues/156'>#156</a>).</p></li>
+<li><p>Messages (i.e. <code>message</code> conditions) coming from cli now have the <code>cliMessage</code> class, so you can easily suppress them without suppressing other messages (<a href='https://github.com/r-lib/cli/issues/156'>#156</a>).</p></li>
 <li><p>cli prints the output to <code><a href="https://rdrr.io/r/base/showConnections.html">stderr()</a></code> now, if there is an output or message sink. This is to make interactive and non-interactive sessions consistent (<a href='https://github.com/r-lib/cli/issues/153'>#153</a>).</p></li>
-<li><p>Pluralization works corrently now if the last alternative is the empty string (<a href='https://github.com/r-lib/cli/issues/158'>#158</a>).</p></li>
+<li><p>Pluralization works correctly now if the last alternative is the empty string (<a href='https://github.com/r-lib/cli/issues/158'>#158</a>).</p></li>
 <li><p>cli now caches the result of the dark background detection in iTerm on macOS. Reload cli to delete the cache (<a href='https://github.com/r-lib/cli/issues/131'>#131</a>).</p></li>
-<li><p>The <code><a href="../reference/is_dynamic_tty.html">is_dynamic_tty()</a></code>, <code><a href="../reference/is_ansi_tty.html">is_ansi_tty()</a></code> and <code><a href="../reference/ansi_hide_cursor.html">ansi_hide_cursor()</a></code> and releted functions now default to the <code>"auto"</code> stream, which is automatically selected to be either <code><a href="https://rdrr.io/r/base/showConnections.html">stdout()</a></code> or <code><a href="https://rdrr.io/r/base/showConnections.html">stderr()</a></code>. See the manual for details (<a href='https://github.com/r-lib/cli/issues/144'>#144</a>).</p></li>
+<li><p>The <code><a href="../reference/is_dynamic_tty.html">is_dynamic_tty()</a></code>, <code><a href="../reference/is_ansi_tty.html">is_ansi_tty()</a></code> and <code><a href="../reference/ansi_hide_cursor.html">ansi_hide_cursor()</a></code> and related functions now default to the <code>"auto"</code> stream, which is automatically selected to be either <code><a href="https://rdrr.io/r/base/showConnections.html">stdout()</a></code> or <code><a href="https://rdrr.io/r/base/showConnections.html">stderr()</a></code>. See the manual for details (<a href='https://github.com/r-lib/cli/issues/144'>#144</a>).</p></li>
 <li><p>The default theme now quotes file names, paths, email addresses if they don’t start or end with an alphanumeric character or a slash. This is to make it easier to spot names that start or end with a space (<a href='https://github.com/r-lib/cli/issues/167'>#167</a>).</p></li>
 <li><p><code><a href="../reference/make_spinner.html">make_spinner()</a></code> clears the line properly now (<a href='https://github.com/tzakharko'>@tzakharko</a>, <a href='https://github.com/r-lib/cli/issues/164'>#164</a>).</p></li>
 <li><p>Semantic cli functions now automatically replace Unicode non-breaking space characters (<code>\u00a0</code>) with regular space characters, right before output. They are still used to calculate the line breaks, but not outputted (<a href='https://github.com/r-lib/cli/issues/161'>#161</a>).</p></li>

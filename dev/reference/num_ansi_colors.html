@@ -183,8 +183,8 @@ environments, e.g. knitr, that might not have ANSI support.</p>
 variable to a non-empty value.</p>
 <p>The exact detection mechanism is as follows:</p><ol>
 <li><p>If the <code>cli.num_colors</code> options is set, that is returned.</p></li>
-<li><p>If the <code>R_CLI_NUM_COLORS</code> env var is set to a non-empty value,
-then it is used.</p></li>
+<li><p>If the <code>R_CLI_NUM_COLORS</code> environment variable is set to a
+non-empty value, then it is used.</p></li>
 <li><p>If the <code>crayon.enabled</code> option is set to <code>FALSE</code>, 1L is returned.
 (This is for compatibility with code that uses the crayon package.)</p></li>
 <li><p>If the <code>crayon.enabled</code> option is set to <code>TRUE</code> and the
@@ -205,17 +205,17 @@ appropriate number of colors is returned, usually 256L.</p></li>
 enough to support ANSI colors, then 8L is returned. (On Windows,
 Emacs has <code>isatty(stdout()) == FALSE</code>, so we need to check for this
 here before dealing with terminals.)</p></li>
-<li><p>If <code>stream</code> is not stdout or stderr in a terminal, then 1L is
-returned.</p></li>
+<li><p>If <code>stream</code> is not the standard output or standard error  in a
+terminal, then 1L is returned.</p></li>
 <li><p>Otherwise we use and cache the result of the terminal color
 detection (see below).</p></li>
 </ol>
 
 <p>The terminal color detection algorithm:</p><ol>
-<li><p>If the <code>COLORTERM</code> env var is set to <code>truecolor</code> or <code>24bit</code>,
-then we return 16 miliion colors.</p></li>
-<li><p>If the <code>COLORTERM</code> env var is set to anything else, then we
-return 8L.</p></li>
+<li><p>If the <code>COLORTERM</code> environment variable is set to <code>truecolor</code> or
+<code>24bit</code>, then we return 16 million colors.</p></li>
+<li><p>If the <code>COLORTERM</code> environment variable is set to anything else,
+then we return 8L.</p></li>
 <li><p>If R is running on Unix, inside an Emacs version that is recent
 enough to support ANSI colors, then 8L is returned.</p></li>
 <li><p>If we are on Windows in an RStudio terminal, then apparently
@@ -223,7 +223,7 @@ we only have eight colors.</p></li>
 <li><p>If we are in a recent enough Windows 10 terminal, then there
 is either true color (from build 14931) or 256 color (from
 build 10586) support.</p></li>
-<li><p>If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
+<li><p>If we are on Windows, under ConEmu or cmder, or ANSICON is loaded,
 then 8L is returned.</p></li>
 <li><p>Otherwise if we are on Windows, return 1L.</p></li>
 <li><p>Otherwise we are on Unix and try to run <code>tput colors</code> to determine
@@ -231,7 +231,7 @@ the number of colors. If this succeeds, we return its return value.
 If the <code>TERM</code> environment variable is <code>xterm</code> and <code>tput</code>
 returned 8L, we return 256L, because xterm compatible terminals
 tend to support 256 colors
-(https://github.com/r-lib/crayon/issues/17)</p></li>
+(<a href='https://github.com/r-lib/crayon/issues/17'>https://github.com/r-lib/crayon/issues/17</a>)</p></li>
 <li><p>If <code>TERM</code> is set to <code>dumb</code>, we return 1L.</p></li>
 <li><p>If <code>TERM</code> starts with <code>screen</code>, <code>xterm</code>, or <code>vt100</code>, we return 8L.</p></li>
 <li><p>If <code>TERM</code> contains <code>color</code>, <code>ansi</code>, <code>cygwin</code> or <code>linux</code>, we return 8L.</p></li>
