@@ -52,8 +52,14 @@ non-empty value, then it is used.
 \item If the \code{NO_COLOR} environment variable is set, then 1L is returned.
 \item If we are in knitr, then 1L is returned, to turn off colors in
 \code{.Rmd} chunks.
-\item If \code{stream} is \code{stderr()} and there is an active sink for it, then
-1L is returned.
+\item If \code{stream} is \code{"auto"} (the default) and there is an active
+sink (either for \code{"output"} or \code{"message"}), then we return 1L.
+(In theory we would only need to check the stream that will be
+be actually used, but there is no easy way to tell that.)
+\item If \code{stream} is not \code{"auto"}, but it is \code{stderr()} and there is an
+active sink for it, then 1L is returned.
+(If a sink is active for "output", then R changes the \code{stdout()}
+stream, so this check is not needed.)
 \item If R is running inside RGui on Windows, or R.app on macOS, then we
 return 1L.
 \item If R is running inside RStudio, with color support, then the

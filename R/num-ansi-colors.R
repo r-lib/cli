@@ -34,6 +34,7 @@
 #' The exact detection mechanism is as follows:
 
 num_ansi_colors <- function(stream = "auto") {
+  orig_stream <- stream
   stream <- get_real_output(stream)
 
   is_stdout <- is_stderr <- is_std <- FALSE
@@ -85,11 +86,17 @@ num_ansi_colors <- function(stream = "auto") {
 
   if (isTRUE(getOption("knitr.in.progress"))) return(1L)
 
-  #' 1. If `stream` is `stderr()` and there is an active sink for it, then
-  #'    1L is returned.
+  #' 1. If `stream` is `"auto"` (the default) and there is an active
+  #'    sink (either for `"output"` or `"message"`), then we return 1L.
+  #'    (In theory we would only need to check the stream that will be
+  #'    be actually used, but there is no easy way to tell that.)
+  if (orig_stream == "auto" && !no_sink()) return(1L)
 
-  # If a sink is active for "output", then R changes the `stdout()`
-  # stream, so we don't need to do anything here.
+  #' 1. If `stream` is not `"auto"`, but it is `stderr()` and there is an
+  #'    active sink for it, then 1L is returned.
+  #'    (If a sink is active for "output", then R changes the `stdout()`
+  #'    stream, so this check is not needed.)
+
   # If a sink is active for "message" (ie. stderr), then R does not update
   # the `stderr()` stream, so we need to catch this case.
   if (is_stderr && sink.number("message") != 2) return(1L)

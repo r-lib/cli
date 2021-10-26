@@ -64,6 +64,9 @@
 
 * ANSI markup is now supported in RStudio jobs (#353).
 
+* The lack of ANSI support is now again correctly detected if there is an
+  active `sink()` (#366).
+
 # cli 3.0.1
 
 * `ansi_strtrim()` now correctly keeps `NA` values (#309).
