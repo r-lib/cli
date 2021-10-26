@@ -195,8 +195,14 @@ non-empty value, then it is used.</p></li>
 <li><p>If the <code>NO_COLOR</code> environment variable is set, then 1L is returned.</p></li>
 <li><p>If we are in knitr, then 1L is returned, to turn off colors in
 <code>.Rmd</code> chunks.</p></li>
-<li><p>If <code>stream</code> is <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code> and there is an active sink for it, then
-1L is returned.</p></li>
+<li><p>If <code>stream</code> is <code>"auto"</code> (the default) and there is an active
+sink (either for <code>"output"</code> or <code>"message"</code>), then we return 1L.
+(In theory we would only need to check the stream that will be
+be actually used, but there is no easy way to tell that.)</p></li>
+<li><p>If <code>stream</code> is not <code>"auto"</code>, but it is <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code> and there is an
+active sink for it, then 1L is returned.
+(If a sink is active for "output", then R changes the <code><a href='https://rdrr.io/r/base/showConnections.html'>stdout()</a></code>
+stream, so this check is not needed.)</p></li>
 <li><p>If R is running inside RGui on Windows, or R.app on macOS, then we
 return 1L.</p></li>
 <li><p>If R is running inside RStudio, with color support, then the
