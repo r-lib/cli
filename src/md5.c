@@ -14,7 +14,6 @@ static void bin2str(char *to, const unsigned char *p, size_t len) {
     *to++ = hex[p[0] >> 4];
     *to++ = hex[p[0] & 0x0f];
   }
-  *to = '\0';
 }
 
 SEXP clic_md5(SEXP strs) {
