@@ -380,6 +380,76 @@ builtin_handler_shiny <- list(
 
 # ------------------------------------------------------------------------
 
+yes_words <-  c("yes", "true", "on", "1")
+
+rstudio_job_env <- new.env(parent = emptyenv())
+rstudio_job_env$last_count <- 0
+rstudio_job_env$last_statement <- 0
+rstudio_job_env$last_section <- ""
+
+rstudio_job_emit <- function(kind, arg, con) {
+  if (kind == "count") {
+    rstudio_job_env$count <- arg
+    if (cli_progress_num() == 0) {
+      if (rstudio_job_env$count != rstudio_job_env$last_count) {
+        rstudio_job_env$emit(kind, arg, con)
+        rstudio_job_env$last_count <- rstudio_job_env$count
+      }
+    }
+
+  } else if (kind == "statement") {
+    rstudio_job_env$statement <- arg
+    if (cli_progress_num() == 0) {
+      if (rstudio_job_env$count != rstudio_job_env$last_count) {
+        rstudio_job_env$emit(kind, arg, con)
+        rstudio_job_env$last_count <- rstudio_job_env$count
+      }
+      if (rstudio_job_env$count != rstudio_job_env$last_statement) {
+
+      }
+    }
+
+  } else if (kind == "completed") {
+    # not much to do here, this should be the end...
+
+  } else if (kind == "section") {
+    rstudio_job_env$section <- arg
+  }
+}
+
+rstudio_job_init <- function() {
+  if (!is.null(.GlobalEnv$emitProgress2)) return()
+  rstudio_job_env$emit <- .GlobalEnv$emitProgress
+  assign("emitProgress", envir = .GlobalEnv, rstudio_job_emit)
+}
+  
+
+builtin_handler_rstudio_job <- list(
+  able = function(bar, .envir) {
+    tolower(Sys.getenv("CLI_PROGRESS_RSTUDIO_JOB")) %in%yes_words &&
+      exists("emitProgress", envir = .GlobalEnv) && 
+      rstudio_detect()$type == "rstudio-job"
+  },
+
+  add = function(bar, .envir) {
+    rstudio_job_init()
+  },
+
+  set = function(bar, .envir) {
+
+  },
+
+  complete = function(bar, .envir, results) {
+
+  },
+
+  output = function(bar, .envir, output) {
+
+  }
+)
+
+# ------------------------------------------------------------------------
+
 builtin_handlers <- function() {
   list(
     cli = builtin_handler_cli,
@@ -387,6 +457,7 @@ builtin_handlers <- function() {
     progressr = builtin_handler_progressr,
     rstudio = builtin_handler_rstudio,
     say = builtin_handler_say,
-    shiny = builtin_handler_shiny
+    shiny = builtin_handler_shiny,
+    rstudio_job = builtin_handler_rstudio_job
   )
 }
