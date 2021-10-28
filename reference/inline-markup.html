@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CLI inline markup — inline-markup • cli</title>
+<title>About inline markup in the semantic cli — inline-markup • cli</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="CLI inline markup — inline-markup" />
-<meta property="og:description" content="CLI inline markup" />
+<meta property="og:title" content="About inline markup in the semantic cli — inline-markup" />
+<meta property="og:description" content="About inline markup in the semantic cli" />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -135,13 +135,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>CLI inline markup</h1>
+    <h1>About inline markup in the semantic cli</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/cli/blob/master/R/cliapp-docs.R'><code>R/cliapp-docs.R</code></a></small>
     <div class="hidden name"><code>inline-markup.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>CLI inline markup</p>
+    <p>About inline markup in the semantic cli</p>
     </div>
 
 
@@ -156,23 +156,23 @@ enclosed by braces will be evaluated as R code. See <code><a href='https://glue.
 details.</p>
 <p>In addition to regular glue interpolation, cli can also add classes
 to parts of the text, and these classes can be used in themes. For
-example</p><pre><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is {.emph important}."</span><span class='op'>)</span>
-</pre>
-
-<p>adds a class to the "important" word, class "emph". Note that in this
+example<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is {.emph important}."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-text.svg' alt='' /></p>
+<p>adds a class to the "important" word, class <code>"emph"</code>. Note that in this
 case the string within the braces is usually not a valid R expression.
 If you want to mix classes with interpolation, add another pair of
-braces:</p><pre><span class='va'>adjective</span> <span class='op'>&lt;-</span> <span class='st'>"great"</span>
+braces:<div class="sourceCode r"></p><pre><span class='va'>adjective</span> <span class='op'>&lt;-</span> <span class='st'>"great"</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is {.emph {adjective}}."</span><span class='op'>)</span>
-</pre>
-
+</pre><p></div></p>
+<p><img src='figures/inline-text-2.svg' alt='' /></p>
 <p>An inline class will always create a <code>span</code> element internally. So in
 themes, you can use the <code>span.emph</code> CSS selector to change how inline
-text is emphasized:</p><pre><span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>span.emph <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+text is emphasized:<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>span.emph <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>adjective</span> <span class='op'>&lt;-</span> <span class='st'>"nice and red"</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is {.emph {adjective}}."</span><span class='op'>)</span>
-</pre>
-
+</pre><p></div></p>
+<p><img src='figures/inline-text-3.svg' alt='' /></p>
     <h2 class="hasAnchor" id="classes"><a class="anchor" href="#classes"></a>Classes</h2>
 
     
@@ -197,11 +197,29 @@ text is emphasized:</p><pre><span class='fu'><a href='cli_div.html'>cli_div</a><
 <li><p><code>url</code> for a URL.</p></li>
 <li><p><code>var</code> for a variable name.</p></li>
 <li><p><code>val</code> for a generic "value".</p></li>
-</ul>
-
-<p>See examples below.</p>
-<p>You can simply add new classes by defining them in the theme, and then
-using them, see the example below.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Highlighting weird-looking values</h3>
+</ul><p><div class="sourceCode r"></p><pre><span class='va'>ul</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.emph Emphasized} text."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.strong Strong} importance."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A piece of code: {.code sum(a) / length(a)}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A package name: {.pkg cli}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A function name: {.fn cli_text}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A keyboard key: press {.kbd ENTER}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A file name: {.file /usr/bin/env}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An email address: {.email bugs.bunny@acme.com}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A URL: {.url https://acme.com}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An environment variable: {.envvar R_LIBS}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>ul</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-examples.svg' alt='' /></p>
+<p>You can add new classes by defining them in the theme, and then using
+them.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  span.myclass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightgrey"</span><span class='op'>)</span>,
+  <span class='st'>"span.myclass"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='st'>"&lt;&lt;"</span><span class='op'>)</span>,
+  <span class='st'>"span.myclass"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>after <span class='op'>=</span> <span class='st'>"&gt;&gt;"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is {.myclass in angle brackets}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-newclass.svg' alt='' /></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Highlighting weird-looking values</h3>
 
 
 <p>Often it is useful to highlight a weird file or path name, e.g. one
@@ -223,10 +241,20 @@ terminals that support ANSI colors.</p></li>
 
 <p>When cli performs inline text formatting, it automatically collapses
 glue substitutions, after formatting. This is handy to create lists of
-files, packages, etc.</p>
+files, packages, etc.<div class="sourceCode r"></p><pre><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {pkgs}."</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {.pkg {pkgs}}."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-collapse.svg' alt='' /></p>
+<p>Class names are collapsed differently by default<div class="sourceCode r"></p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Hey, {.var x} has class {.cls {class(x)}}."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-collapse-2.svg' alt='' /></p>
 <p>By default cli truncates long vectors. The truncation limit is by default
-one hundred elements, but you can change it with the <code>vec_trunc</code> style.</p>
-<p>See examples below.</p>
+one hundred elements, but you can change it with the <code>vec_trunc</code> style.<div class="sourceCode r"></p><pre><span class='va'>nms</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_vec.html'>cli_vec</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>vec_trunc <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Column names: {nms}."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-collapse-trunc.svg' alt='' /></p>
     <h2 class="hasAnchor" id="formatting-values"><a class="anchor" href="#formatting-values"></a>Formatting values</h2>
 
     
@@ -243,24 +271,26 @@ style as the argument. See <code><a href='cli_format.html'>cli_format()</a></cod
 <p>It might happen that you want to pass a string to <code>cli_*</code> functions,
 and you do <em>not</em> want command substitution in that string, because it
 might contain <code>{</code> and <code>}</code> characters. The simplest solution for this is
-to refer to the string from a template:</p><pre><span class='va'>msg</span> <span class='op'>&lt;-</span> <span class='st'>"Error in if (ncol(dat$y)) {: argument is of length zero"</span>
+to refer to the string from a template:<div class="sourceCode r"></p><pre><span class='va'>msg</span> <span class='op'>&lt;-</span> <span class='st'>"Error in if (ncol(dat$y)) {: argument is of length zero"</span>
 <span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></span><span class='op'>(</span><span class='st'>"{msg}"</span><span class='op'>)</span>
-</pre>
-
+</pre><p></div></p>
+<p><img src='figures/inline-escape.svg' alt='' /></p>
 <p>If you want to explicitly escape <code>{</code> and <code>}</code> characters, just double
-them:</p><pre><span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></span><span class='op'>(</span><span class='st'>"A warning with {{ braces }}"</span><span class='op'>)</span>
-</pre>
-
+them:<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></span><span class='op'>(</span><span class='st'>"A warning with {{ braces }}."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/inline-escape-2.svg' alt='' /></p>
 <p>See also examples below.</p>
     <h2 class="hasAnchor" id="pluralization"><a class="anchor" href="#pluralization"></a>Pluralization</h2>
 
     
 
 
-<p>All cli commands that emit text support pluralization. Some examples:</p><pre><span class='fu'><a href='cli_alert.html'>cli_alert_info</a></span><span class='op'>(</span><span class='st'>"Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}."</span><span class='op'>)</span>
+<p>All cli commands that emit text support pluralization. Some examples:<div class="sourceCode r"></p><pre><span class='va'>ndirs</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='va'>nfiles</span> <span class='op'>&lt;-</span> <span class='fl'>13</span>
+<span class='fu'><a href='cli_alert.html'>cli_alert_info</a></span><span class='op'>(</span><span class='st'>"Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}."</span><span class='op'>)</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}"</span><span class='op'>)</span>
-</pre>
-
+</pre><p></div></p>
+<p><img src='figures/inline-plural.svg' alt='' /></p>
 <p>See <a href='pluralization.html'>pluralization</a> for details.</p>
     <h2 class="hasAnchor" id="wrapping"><a class="anchor" href="#wrapping"></a>Wrapping</h2>
 
@@ -274,48 +304,6 @@ character: <code>\u00a0</code>. cli will not break a line here.</p>
 <p>To force a line break, insert a form feed character: <code>\f</code> or
 <code>\u000c</code>. cli will insert a line break there.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Some inline markup examples</span>
-<span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.emph Emphasized} text"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • <span style='font-style: italic;'>Emphasized</span> text</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"{.strong Strong} importance"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • <span style='font-weight: bold;'>Strong</span> importance</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A piece of code: {.code sum(a) / length(a)}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • A piece of code: <span style='color: #262626; background-color: #DADADA;'>`sum(a) / length(a)`</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A package name: {.pkg cli}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • A package name: <span style='color: #0000BB;'>cli</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A function name: {.fn cli_text}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • A function name: <span style='color: #262626; background-color: #DADADA;'>`cli_text()`</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A keyboard key: press {.kbd ENTER}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • A keyboard key: press <span style='color: #0000BB;'>[ENTER]</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A file name: {.file /usr/bin/env}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • A file name: <span style='color: #0000BB;'>/usr/bin/env</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An email address: {.email bugs.bunny@acme.com}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • An email address: <span style='color: #0000BB;'>bugs.bunny@acme.com</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"A URL: {.url https://acme.com}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • A URL: <span style='color: #0000BB; font-style: italic;'>&lt;https://acme.com&gt;</span></span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"An environment variable: {.envvar R_LIBS}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>    • An environment variable: <span style='color: #262626; background-color: #DADADA;'>`R_LIBS`</span></span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## Adding a new class</span>
-<span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  span.myclass <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"lightgrey"</span><span class='op'>)</span>,
-  <span class='st'>"span.myclass"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>before <span class='op'>=</span> <span class='st'>"["</span><span class='op'>)</span>,
-  <span class='st'>"span.myclass"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>after <span class='op'>=</span> <span class='st'>"]"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"This is {.myclass in brackets}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  This is <span style='color: #C6C6C6;'>[in brackets]</span>.</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## Collapsing</span>
-<span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
-<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {pkgs}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  Packages: pkg1, pkg2, and pkg3.</span></div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Packages: {.pkg {pkgs}}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  Packages: <span style='color: #0000BB;'>pkg1</span>, <span style='color: #0000BB;'>pkg2</span>, and <span style='color: #0000BB;'>pkg3</span></span></div><div class='input'>
-<span class='co'>## Custom truncation, style set via cli_vec</span>
-<span class='va'>nms</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_vec.html'>cli_vec</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>vec_trunc <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Column names: {nms}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  Column names: mpg, cyl, disp, hp, drat, ….</span></div><div class='input'>
-<span class='co'>## Classes are collapsed differently by default</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Hey {.var x} has class {.cls {class(x)}}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  Hey <span style='color: #262626; background-color: #DADADA;'>`x`</span> has class <span style='color: #0000BB;'>&lt;POSIXct/POSIXt&gt;</span></span></div><div class='input'>
-<span class='co'>## Escaping</span>
-<span class='va'>msg</span> <span class='op'>&lt;-</span> <span class='st'>"Error in if (ncol(dat$y)) {: argument is of length zero"</span>
-<span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></span><span class='op'>(</span><span class='st'>"{msg}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  <span style='color: #BBBB00;'>!</span> Error in if (ncol(dat$y)) {: argument is of length zero</span></div><div class='input'>
-<span class='fu'><a href='cli_alert.html'>cli_alert_warning</a></span><span class='op'>(</span><span class='st'>"A warning with {{ braces }}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  <span style='color: #BBBB00;'>!</span> A warning with { braces }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

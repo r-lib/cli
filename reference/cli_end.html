@@ -40,7 +40,9 @@
 
 
 <meta property="og:title" content="Close a CLI container — cli_end" />
-<meta property="og:description" content="Close a CLI container" />
+<meta property="og:description" content="Containers aut0-close by default, but sometimes you need to explicitly
+close them. Closing a container also closes all of its nested
+containers." />
 
 
 
@@ -72,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -107,7 +109,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -141,7 +143,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Close a CLI container</p>
+    <p>Containers aut0-close by default, but sometimes you need to explicitly
+close them. Closing a container also closes all of its nested
+containers.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cli_end</span><span class='op'>(</span>id <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -156,16 +160,56 @@ container is closed, if any.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## If id is omitted</span>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Explicit closing</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>cnt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"First paragraph."</span><span class='op'>)</span>
+<span class='fu'>cli_end</span><span class='op'>(</span><span class='va'>cnt</span><span class='op'>)</span>
+<span class='va'>cnt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Second paragraph."</span><span class='op'>)</span>
+<span class='fu'>cli_end</span><span class='op'>(</span><span class='va'>cnt</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-end.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Closing a stack of containers</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>list</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"Item one:"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"Item two:"</span><span class='op'>)</span>
 <span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"First paragraph"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>First paragraph</span></div><div class='input'><span class='fu'>cli_end</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Still item two."</span><span class='op'>)</span>
+<span class='fu'>cli_end</span><span class='op'>(</span><span class='va'>list</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Not in the list any more"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-end-many.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Omitting <code>id</code></h3>
+
+
+<p>If <code>id</code> is omitted, the container that was opened last will be closed.<div class="sourceCode r"></p><pre><span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"First paragraph"</span><span class='op'>)</span>
+<span class='fu'>cli_end</span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"Second paragraph"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Second paragraph</span></div><div class='input'><span class='fu'>cli_end</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div></pre>
+<span class='fu'>cli_end</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-end-noid.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Debugging containers</h3>
+
+
+<p>You can use the internal <code>cli:::cli_debug_doc()</code> function to see the
+currently open containers.<div class="sourceCode r"></p><pre><span class='va'>fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"mydiv"</span><span class='op'>)</span>
+  <span class='fu'><a href='cli_par.html'>cli_par</a></span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>"myclass"</span><span class='op'>)</span>
+  <span class='fu'>cli</span><span class='fu'>:::</span><span class='fu'><a href='cli_debug_doc.html'>cli_debug_doc</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-end-debug.svg' alt='' /></p>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

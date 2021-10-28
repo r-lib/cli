@@ -73,7 +73,7 @@ used here, including progress variables." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ used here, including progress variables." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -171,7 +171,23 @@ used here, including progress variables.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The text is passed to the progress handler(s), that may or may not be
-able to print it.</p>
+able to print it.<div class="sourceCode r"></p><pre><span class='va'>fun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='cli_alert.html'>cli_alert_info</a></span><span class='op'>(</span><span class='st'>"Before the progress bar"</span><span class='op'>)</span>
+  <span class='fu'><a href='cli_progress_bar.html'>cli_progress_bar</a></span><span class='op'>(</span><span class='st'>"Calculating"</span>, total <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+    <span class='fu'><a href='cli_progress_bar.html'>cli_progress_update</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>}</span>
+  <span class='fu'>cli_progress_output</span><span class='op'>(</span><span class='st'>"Already half way!"</span><span class='op'>)</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+    <span class='fu'><a href='cli_progress_bar.html'>cli_progress_update</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>}</span>
+  <span class='fu'><a href='cli_alert.html'>cli_alert_info</a></span><span class='op'>(</span><span class='st'>"All done"</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'>fun</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-output2.svg' alt='' /></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -74,7 +74,7 @@ of expr, before styling and collapsing it." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ of expr, before styling and collapsing it." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -179,26 +179,38 @@ for the style options they support.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>It is possible to define new S3 methods for <code>cli_format</code> and then
-these will be used automatically for <code>{.val ...}</code> expressions.</p>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Default style</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>months</span> <span class='op'>&lt;-</span> <span class='va'>month.name</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {months}}"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-format-default.svg' alt='' /><div class="sourceCode r"></p><pre><span class='va'>nums</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span> <span class='op'>/</span> <span class='fl'>7</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {nums}}"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-format-num.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Styling with themes</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>nums</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span> <span class='op'>/</span> <span class='fl'>7</span>
+<span class='va'>divid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>.val <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {nums}}"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>divid</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-format-theme.svg' alt='' /></p>
+<p>It is possible to define new S3 methods for <code>cli_format</code> and then
+these will be used automatically for <code>{.val ...}</code> expressions.<div class="sourceCode r"></p><pre><span class='va'>cli_format.month</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>style</span> <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/encodeString.html'>encodeString</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span>, quote <span class='op'>=</span> <span class='st'>"\""</span><span class='op'>)</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/UseMethod.html'>NextMethod</a></span><span class='op'>(</span><span class='st'>"cli_format"</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'><a href='https://rdrr.io/r/base/ns-internal.html'>registerS3method</a></span><span class='op'>(</span><span class='st'>"cli_format"</span>, <span class='st'>"month"</span>, <span class='va'>cli_format.month</span><span class='op'>)</span>
+<span class='va'>months</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span><span class='va'>month.name</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, class <span class='op'>=</span> <span class='st'>"month"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {months}}"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-format-class.svg' alt='' /></p>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='cli_vec.html'>cli_vec()</a></code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>things</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"this"</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='st'>"that"</span><span class='op'>)</span>
-<span class='fu'>cli_format</span><span class='op'>(</span><span class='va'>things</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "\"this\"" "\"this\"" "\"this\"" "\"that\""</div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {things}}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>"this"</span>, <span style='color: #0000BB;'>"this"</span>, <span style='color: #0000BB;'>"this"</span>, and <span style='color: #0000BB;'>"that"</span></span></div><div class='input'>
-<span class='va'>nums</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span> <span class='op'>/</span> <span class='fl'>7</span>
-<span class='fu'>cli_format</span><span class='op'>(</span><span class='va'>nums</span>, style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.14 0.29 0.43 0.57 0.71</div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {nums}}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>0.142857142857143</span>, <span style='color: #0000BB;'>0.285714285714286</span>, <span style='color: #0000BB;'>0.428571428571429</span>, <span style='color: #0000BB;'>0.571428571428571</span>, and</span>
-#&gt; <span class='message'><span style='color: #0000BB;'>0.714285714285714</span></span></div><div class='input'><span class='va'>divid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>.val <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{.val {nums}}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>0.142857142857143</span>, <span style='color: #0000BB;'>0.285714285714286</span>, <span style='color: #0000BB;'>0.428571428571429</span>, <span style='color: #0000BB;'>0.571428571428571</span>, and</span>
-#&gt; <span class='message'><span style='color: #0000BB;'>0.714285714285714</span></span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>divid</span><span class='op'>)</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

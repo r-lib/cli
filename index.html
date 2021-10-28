@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@
       <a href="articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -117,9 +117,11 @@
 <li>Build a CLI using semantic elements: headings, lists, alerts, paragraphs.</li>
 <li>Theming via a CSS-like language.</li>
 <li>Terminal colors and font styles.</li>
-<li>Create cli elements in subprocesses, using the <a href="https://github.com/r-lib/callr">callr</a> package.</li>
 <li>All cli text can contain interpreted string literals, via the <a href="https://github.com/tidyverse/glue">glue</a> package.</li>
+<li>Progress bars from R and C code.</li>
+<li>Error and warning messages with rich text formatting.</li>
 <li>Support for pluralized messages.</li>
+<li>ANSI styled string manipulation.</li>
 </ul>
 </div>
 <div id="installation" class="section level1">
@@ -139,20 +141,20 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span>, <span class="st">"foobar"</span><span class="op">)</span>
 <span class="fu"><a href="reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Downloaded {length(pkgs)} packages."</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-2.svg" width="100%"></p>
+<p><img src="reference/figures/README/alert-success.svg" width="100%"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">db_url</span> <span class="op">&lt;-</span> <span class="st">"example.com:port"</span>
 <span class="fu"><a href="reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"Reopened database {.url {db_url}}."</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-3.svg" width="100%"></p>
+<p><img src="reference/figures/README/alert-info.svg" width="100%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/cli_alert.html">cli_alert_warning</a></span><span class="op">(</span><span class="st">"Cannot reach GitHub, using local database cache."</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-4.svg" width="100%"></p>
+<p><img src="reference/figures/README/alert-warning.svg" width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/cli_alert.html">cli_alert_danger</a></span><span class="op">(</span><span class="st">"Failed to connect to database."</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-5.svg" width="100%"></p>
+<p><img src="reference/figures/README/alert-danger.svg" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"A generic alert"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-6.svg" width="100%"></p>
+<p><img src="reference/figures/README/alert.svg" width="100%"></p>
 </div>
 <div id="headings" class="section level3">
 <h3 class="hasAnchor">
@@ -160,13 +162,13 @@
 <p>Three levels of headings.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading 1"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-7.svg" width="100%"></p>
+<p><img src="reference/figures/README/h1.svg" width="100%"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/cli_h1.html">cli_h2</a></span><span class="op">(</span><span class="st">"Heading 2"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-8.svg" width="100%"></p>
+<p><img src="reference/figures/README/h2.svg" width="100%"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/cli_h1.html">cli_h3</a></span><span class="op">(</span><span class="st">"Heading 3"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-9.svg" width="100%"></p>
+<p><img src="reference/figures/README/h3.svg" width="100%"></p>
 </div>
 <div id="lists" class="section level3">
 <h3 class="hasAnchor">
@@ -184,7 +186,7 @@
   <span class="fu"><a href="reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-10.svg" width="100%"></p>
+<p><img src="reference/figures/README/lists.svg" width="100%"></p>
 </div>
 <div id="themes" class="section level3">
 <h3 class="hasAnchor">
@@ -198,7 +200,7 @@
   <span class="fu"><a href="reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Back to the {.emph previous theme}"</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-11.svg" width="100%"></p>
+<p><img src="reference/figures/README/themes.svg" width="100%"></p>
 </div>
 <div id="command-substitution" class="section level3">
 <h3 class="hasAnchor">
@@ -210,7 +212,7 @@
 <span class="fu"><a href="reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="st">"Downloaded {prettyunits::pretty_bytes(size)} in "</span>,
   <span class="st">"{prettyunits::pretty_sec(dt)}"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-12.svg" width="100%"></p>
+<p><img src="reference/figures/README/glue.svg" width="100%"></p>
 </div>
 <div id="pluralization" class="section level3">
 <h3 class="hasAnchor">
@@ -220,13 +222,27 @@
 <code class="sourceCode R"><span class="va">nfiles</span> <span class="op">&lt;-</span> <span class="fl">3</span>
 <span class="va">ndirs</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="fu"><a href="reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"Found {nfiles} file{?s} and {ndirs} director{?y/ies}."</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README/unnamed-chunk-13.svg" width="100%"></p>
+<p><img src="reference/figures/README/plurals.svg" width="100%"></p>
+</div>
+<div id="progress-bars" class="section level3">
+<h3 class="hasAnchor">
+<a href="#progress-bars" class="anchor"></a>Progress bars</h3>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">clean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Cleaning data"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
+    <span class="fu"><a href="reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="fu">clean</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README/progress.svg" width="100%"></p>
 </div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>See at <a href="https://cli.r-lib.org/" class="uri">https://cli.r-lib.org/</a> and also in the installed package: <code><a href="reference/inline-markup.html">?"inline-markup"</a></code>, <code><a href="reference/containers.html">?containers</a></code>, <code><a href="reference/themes.html">?themes</a></code>, <code><a href="reference/pluralization.html">?pluralization</a></code>.</p>
+<p>See at <a href="https://cli.r-lib.org/reference/index.html"><code>https://cli.r-lib.org/</code></a> and also in the installed package: <code><a href="https://cli.r-lib.org/reference">help(package = "cli")</a></code>.</p>
 </div>
 </div>
 <div id="license" class="section level1">

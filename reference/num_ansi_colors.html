@@ -76,7 +76,7 @@ sequences, and if it does how many colors are supported." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ sequences, and if it does how many colors are supported." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -152,7 +152,9 @@ sequences (ANSI sequences).</p>
 sequences, and if it does how many colors are supported.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>num_ansi_colors</span><span class='op'>(</span>stream <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>num_ansi_colors</span><span class='op'>(</span>stream <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
+
+<span class='fu'>detect_tty_colors</span><span class='op'>(</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,8 +183,8 @@ environments, e.g. knitr, that might not have ANSI support.</p>
 variable to a non-empty value.</p>
 <p>The exact detection mechanism is as follows:</p><ol>
 <li><p>If the <code>cli.num_colors</code> options is set, that is returned.</p></li>
-<li><p>If the <code>R_CLI_NUM_COLORS</code> env var is set to a non-empty value,
-then it is used.</p></li>
+<li><p>If the <code>R_CLI_NUM_COLORS</code> environment variable is set to a
+non-empty value, then it is used.</p></li>
 <li><p>If the <code>crayon.enabled</code> option is set to <code>FALSE</code>, 1L is returned.
 (This is for compatibility with code that uses the crayon package.)</p></li>
 <li><p>If the <code>crayon.enabled</code> option is set to <code>TRUE</code> and the
@@ -193,8 +195,14 @@ then it is used.</p></li>
 <li><p>If the <code>NO_COLOR</code> environment variable is set, then 1L is returned.</p></li>
 <li><p>If we are in knitr, then 1L is returned, to turn off colors in
 <code>.Rmd</code> chunks.</p></li>
-<li><p>If <code>stream</code> is <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code> and there is an active sink for it, then
-1L is returned.</p></li>
+<li><p>If <code>stream</code> is <code>"auto"</code> (the default) and there is an active
+sink (either for <code>"output"</code> or <code>"message"</code>), then we return 1L.
+(In theory we would only need to check the stream that will be
+be actually used, but there is no easy way to tell that.)</p></li>
+<li><p>If <code>stream</code> is not <code>"auto"</code>, but it is <code><a href='https://rdrr.io/r/base/showConnections.html'>stderr()</a></code> and there is an
+active sink for it, then 1L is returned.
+(If a sink is active for "output", then R changes the <code><a href='https://rdrr.io/r/base/showConnections.html'>stdout()</a></code>
+stream, so this check is not needed.)</p></li>
 <li><p>If R is running inside RGui on Windows, or R.app on macOS, then we
 return 1L.</p></li>
 <li><p>If R is running inside RStudio, with color support, then the
@@ -203,20 +211,33 @@ appropriate number of colors is returned, usually 256L.</p></li>
 enough to support ANSI colors, then 8L is returned. (On Windows,
 Emacs has <code>isatty(stdout()) == FALSE</code>, so we need to check for this
 here before dealing with terminals.)</p></li>
-<li><p>If <code>stream</code> is not a terminal, then 1L is returned.</p></li>
+<li><p>If <code>stream</code> is not the standard output or standard error  in a
+terminal, then 1L is returned.</p></li>
+<li><p>Otherwise we use and cache the result of the terminal color
+detection (see below).</p></li>
+</ol>
+
+<p>The terminal color detection algorithm:</p><ol>
+<li><p>If the <code>COLORTERM</code> environment variable is set to <code>truecolor</code> or
+<code>24bit</code>, then we return 16 million colors.</p></li>
+<li><p>If the <code>COLORTERM</code> environment variable is set to anything else,
+then we return 8L.</p></li>
 <li><p>If R is running on Unix, inside an Emacs version that is recent
 enough to support ANSI colors, then 8L is returned.</p></li>
-<li><p>If <code>stream</code> is not the standard output or error, then 1L is returned.</p></li>
-<li><p>If we are on Windows, under ComEmu or cmder, or ANSICON is loaded,
+<li><p>If we are on Windows in an RStudio terminal, then apparently
+we only have eight colors.</p></li>
+<li><p>If we are in a recent enough Windows 10 terminal, then there
+is either true color (from build 14931) or 256 color (from
+build 10586) support.</p></li>
+<li><p>If we are on Windows, under ConEmu or cmder, or ANSICON is loaded,
 then 8L is returned.</p></li>
 <li><p>Otherwise if we are on Windows, return 1L.</p></li>
 <li><p>Otherwise we are on Unix and try to run <code>tput colors</code> to determine
-the number of colors. If this succeeds, we return its return value,
-except if the <code>TERM</code> environment variable is <code>xterm</code> and <code>tput</code>
+the number of colors. If this succeeds, we return its return value.
+If the <code>TERM</code> environment variable is <code>xterm</code> and <code>tput</code>
 returned 8L, we return 256L, because xterm compatible terminals
-tend to support 256 colors.</p></li>
-<li><p>If <code>tput colors</code> fails, we try to guess. If <code>COLORTERM</code> is set
-to any value, we return 8L.</p></li>
+tend to support 256 colors
+(<a href='https://github.com/r-lib/crayon/issues/17'>https://github.com/r-lib/crayon/issues/17</a>)</p></li>
 <li><p>If <code>TERM</code> is set to <code>dumb</code>, we return 1L.</p></li>
 <li><p>If <code>TERM</code> starts with <code>screen</code>, <code>xterm</code>, or <code>vt100</code>, we return 8L.</p></li>
 <li><p>If <code>TERM</code> contains <code>color</code>, <code>ansi</code>, <code>cygwin</code> or <code>linux</code>, we return 8L.</p></li>
@@ -231,8 +252,10 @@ to any value, we return 8L.</p></li>
 <code><a href='make_ansi_style.html'>make_ansi_style</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>num_ansi_colors</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 256</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>num_ansi_colors</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 256</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

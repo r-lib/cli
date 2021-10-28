@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -92,14 +92,14 @@
 
       
 
-      </header><script src="progress-advanced_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="progress-advanced_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="progress-advanced_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+      </header><script src="progress-advanced_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="progress-advanced_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="progress-advanced_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
 <script src="progress-advanced_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="progress-advanced_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="progress-advanced_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Advanced cli progress bars</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2021-09-22</h4>
+            <h4 class="date">2021-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/progress-advanced.Rmd"><code>vignettes/progress-advanced.Rmd</code></a></small>
       <div class="hidden name"><code>progress-advanced.Rmd</code></div>
@@ -361,7 +361,7 @@ Imports: cli</code></pre>
 <h3 class="hasAnchor">
 <a href="#cli_progress_add" class="anchor"></a><code>cli_progress_add()</code>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a><span class="dt">void</span> cli_progress_add(SEXP bar, <span class="dt">int</span> inc);</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a><span class="dt">void</span> cli_progress_add(SEXP bar, <span class="dt">double</span> inc);</span></code></pre></div>
 <p>Add a number of progress units to the progress bar. It will also trigger an update if an update is due.</p>
 <ul>
 <li>
@@ -374,11 +374,11 @@ Imports: cli</code></pre>
 <h3 class="hasAnchor">
 <a href="#cli_progress_bar" class="anchor"></a><code>cli_progress_bar()</code>
 </h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a>SEXP cli_progress_bar(<span class="dt">int</span> total, SEXP config);</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a>SEXP cli_progress_bar(<span class="dt">double</span> total, SEXP config);</span></code></pre></div>
 <p>Create a new progress bar object. The returned progress bar object must be <code>PROTECT()</code>-ed.</p>
 <ul>
 <li>
-<code>total</code>: Total number of progress units. Use <code>NA_INTEGER</code> if it is not known.</li>
+<code>total</code>: Total number of progress units. Use <code>NA_REAL</code> if it is not known.</li>
 <li>
 <code>config</code>: R named list object of additional parameters. May be <code>NULL</code> (the C <code>NULL~) or</code>R_NilValue<code>(the R</code>NULL`) for the defaults.</li>
 </ul>
@@ -387,7 +387,7 @@ Imports: cli</code></pre>
 <li>
 <code>name</code>: progress bar name.</li>
 <li>
-<code>status</code>: (intiial) progress bar status.</li>
+<code>status</code>: (initial) progress bar status.</li>
 <li>
 <code>type</code>: progress bar type.</li>
 <li>
@@ -451,7 +451,7 @@ Imports: cli</code></pre>
 <h3 class="hasAnchor">
 <a href="#cli_progress_set" class="anchor"></a><code>cli_progress_set()</code>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="dt">void</span> cli_progress_set(SEXP bar, <span class="dt">int</span> set);</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="dt">void</span> cli_progress_set(SEXP bar, <span class="dt">double</span> set);</span></code></pre></div>
 <p>Set the progress bar to the specified number of progress units.</p>
 <ul>
 <li>
@@ -533,7 +533,7 @@ Imports: cli</code></pre>
 <h3 class="hasAnchor">
 <a href="#cli_progress_update" class="anchor"></a><code>cli_progress_update()</code>
 </h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a><span class="dt">void</span> cli_progress_update(SEXP bar, <span class="dt">int</span> force, <span class="dt">int</span> add, <span class="dt">int</span> set);</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a><span class="dt">void</span> cli_progress_update(SEXP bar, <span class="dt">double</span> set, <span class="dt">double</span> inc, <span class="dt">int</span> force);</span></code></pre></div>
 <p>Update the progress bar. Unlike the simpler <code>cli_progress_add()</code> and <code>cli_progress_set()</code> function, it can force an update if <code>force</code> is set to 1.</p>
 <ul>
 <li>
@@ -541,7 +541,7 @@ Imports: cli</code></pre>
 <li>
 <code>set</code>: the number of current progress units. It is ignored if negative.</li>
 <li>
-<code>inc</code>: increment to add to the current number of progres units. It is ignored if <code>set</code> is not negative.</li>
+<code>inc</code>: increment to add to the current number of progress units. It is ignored if <code>set</code> is not negative.</li>
 <li>
 <code>force</code>: whether to force an update, even if no update is due.</li>
 </ul>

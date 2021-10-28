@@ -76,7 +76,7 @@ It collapses substituted vectors into a comma separated string.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ It collapses substituted vectors into a comma separated string.
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -177,39 +177,53 @@ It collapses substituted vectors into a comma separated string.
 <code><a href='pluralization.html'>pluralization</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Regular plurals</span>
-<span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 0 files.</div><div class='input'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 1 file.</div><div class='input'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 2 files.</div><div class='input'>
-<span class='co'># Irregular plurals</span>
-<span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 1 directory.</div><div class='input'><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 5 directories.</div><div class='input'>
-<span class='co'># Use 'no' instead of zero</span>
-<span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found no files.</div><div class='input'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 1 file.</div><div class='input'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 2 files.</div><div class='input'>
-<span class='co'># Use the length of character vectors</span>
-<span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='st'>"pkg1"</span>
-<span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove the {pkgs} package{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Will remove the pkg1 package.</div><div class='input'><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
-<span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove the {pkgs} package{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</div><div class='input'>
-<span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove {?no/the/the} {pkgs} package{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </div><div class='input'><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span>
-<span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove {?no/the/the} {pkgs} package{?s}."</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</div><div class='input'>
-<span class='co'># Multiple quantities</span>
-<span class='va'>nfiles</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ndirs</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
-<span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfiles} file{?s} and {ndirs} director{?y/ies}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Found 3 files and 1 directory</div><div class='input'>
-<span class='co'># Explicit quantities</span>
-<span class='va'>nupd</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ntotal</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
-<span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  3/10 files need updates</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Regular plurals</span></span>
+<span class='r-in'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 0 files.</span>
+<span class='r-in'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 1 file.</span>
+<span class='r-in'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfile} file{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 2 files.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Irregular plurals</span></span>
+<span class='r-in'><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 1 directory.</span>
+<span class='r-in'><span class='va'>ndir</span> <span class='op'>&lt;-</span> <span class='fl'>5</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {ndir} director{?y/ies}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 5 directories.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use 'no' instead of zero</span></span>
+<span class='r-in'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found no files.</span>
+<span class='r-in'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 1 file.</span>
+<span class='r-in'><span class='va'>nfile</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>; <span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {no(nfile)} file{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 2 files.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Use the length of character vectors</span></span>
+<span class='r-in'><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='st'>"pkg1"</span></span>
+<span class='r-in'><span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove the {pkgs} package{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Will remove the pkg1 package.</span>
+<span class='r-in'><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove the {pkgs} package{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Will remove the pkg1, pkg2, and pkg3 packages.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove {?no/the/the} {pkgs} package{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='va'>pkgs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pkg1"</span>, <span class='st'>"pkg2"</span>, <span class='st'>"pkg3"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Will remove {?no/the/the} {pkgs} package{?s}."</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Will remove the pkg1, pkg2, and pkg3 packages.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Multiple quantities</span></span>
+<span class='r-in'><span class='va'>nfiles</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ndirs</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span class='r-in'><span class='fu'>pluralize</span><span class='op'>(</span><span class='st'>"Found {nfiles} file{?s} and {ndirs} director{?y/ies}"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Found 3 files and 1 directory</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Explicit quantities</span></span>
+<span class='r-in'><span class='va'>nupd</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>; <span class='va'>ntotal</span> <span class='op'>&lt;-</span> <span class='fl'>10</span></span>
+<span class='r-in'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='st'>"{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 3/10 files need updates</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

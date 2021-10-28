@@ -74,7 +74,7 @@ progress bar. It uses cli_progress_bar() internally." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ progress bar. It uses cli_progress_bar() internally." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -165,7 +165,7 @@ progress bar. It uses <code><a href='cli_progress_bar.html'>cli_progress_bar()</
     </tr>
     <tr>
       <th>name</th>
-      <td><p>Name of the progtess bar, a label, passed to
+      <td><p>Name of the progress bar, a label, passed to
 <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code>.</p></td>
     </tr>
     <tr>
@@ -184,16 +184,53 @@ progress bar. It uses <code><a href='cli_progress_bar.html'>cli_progress_bar()</
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An index vector from 1 to <code><a href='https://rdrr.io/r/base/length.html'>length(x)</a></code> that triggers progress
+    <p>An index vector from 1 to <code>length(x)</code> that triggers progress
 updates as you iterate over it.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Usage:<div class="sourceCode r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span> <span class='va'>...</span><span class='op'>)</span>
-</pre><p></div><div class="sourceCode r"></p><pre><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='va'>seq</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>for</code> loop</h3>
+
+
+<p>A <code>for</code> loop with <code>cli_progress_along()</code> looks like this:<div class="sourceCode r"></p><pre><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='va'>seq</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>...</span>
 <span class='op'>}</span>
 </pre><p></div></p>
-<p>Note that if you use <code>break</code> in the <code>for</code> loop, you probably want to
+<p>A complete example:<div class="sourceCode r"></p><pre><span class='va'>clifun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='st'>"Downloading"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+     <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+<span class='fu'>clifun</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-along-1.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code><a href='https://rdrr.io/r/base/lapply.html'>lapply()</a></code> and other mapping functions</h3>
+
+
+<p>They will look like this:<div class="sourceCode r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span> <span class='va'>...</span><span class='op'>)</span>
+</pre><p></div></p>
+<p>A complete example:<div class="sourceCode r"></p><pre><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='st'>"Downloading"</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-along-2.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Custom format string</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>clifun</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>,
+      format <span class='op'>=</span> <span class='st'>"Downloading data file {cli::pb_current}"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+     <span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>/</span><span class='fl'>100</span><span class='op'>)</span>
+  <span class='op'>}</span>
+<span class='op'>}</span>
+<span class='fu'>clifun</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/progress-along-3.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Breaking out of loops</h3>
+
+
+<p>Note that if you use <code><a href='https://rdrr.io/r/base/Control.html'>break</a></code> in the <code>for</code> loop, you probably want to
 terminate the progress bar explicitly when breaking out of the loop,
 or right after the loop:<div class="sourceCode r"></p><pre><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'>cli_progress_along</span><span class='op'>(</span><span class='va'>seq</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>...</span>
@@ -201,6 +238,7 @@ or right after the loop:<div class="sourceCode r"></p><pre><span class='kw'>for<
   <span class='va'>...</span>
 <span class='op'>}</span>
 </pre><p></div></p>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code> and the traditional progress bar API.</p></div>

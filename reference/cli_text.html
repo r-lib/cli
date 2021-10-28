@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="CLI text — cli_text" />
-<meta property="og:description" content="It is wrapped to the screen width automatically. It may contain inline
-markup. (See inline-markup.)" />
+<meta property="og:description" content="Write some text to the screen. This function is most appropriate for
+longer paragraphs. See cli_alert() for shorter status messages." />
 
 
 
@@ -73,7 +73,7 @@ markup. (See inline-markup.)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ markup. (See inline-markup.)" />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -142,8 +142,8 @@ markup. (See inline-markup.)" />
     </div>
 
     <div class="ref-description">
-    <p>It is wrapped to the screen width automatically. It may contain inline
-markup. (See <a href='inline-markup.html'>inline-markup</a>.)</p>
+    <p>Write some text to the screen. This function is most appropriate for
+longer paragraphs. See <code><a href='cli_alert.html'>cli_alert()</a></code> for shorter status messages.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cli_text</span><span class='op'>(</span><span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
@@ -162,34 +162,69 @@ concatenated into a single string. Newlines are <em>not</em> preserved.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"Hello world!"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Hello world!</span></div><div class='input'><span class='fu'>cli_text</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageDescription</a></span><span class='op'>(</span><span class='st'>"cli"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>Description</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
-#&gt; <span class='message'>semantic elements: headings, lists, alerts, paragraphs, etc. Supports custom</span>
-#&gt; <span class='message'>themes via a 'CSS'-like language. It also contains a number of lower level</span>
-#&gt; <span class='message'>'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII'</span>
-#&gt; <span class='message'>alternatives. It support ANSI colors and text styles as well.</span></div><div class='input'>
-<span class='co'>## Arguments are concatenated</span>
-<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"this"</span>, <span class='st'>"that"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>thisthat</span></div><div class='input'>
-<span class='co'>## Command substitution</span>
-<span class='va'>greeting</span> <span class='op'>&lt;-</span> <span class='st'>"Hello"</span>
-<span class='va'>subject</span> <span class='op'>&lt;-</span> <span class='st'>"world"</span>
-<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"{greeting} {subject}!"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Hello world!</span></div><div class='input'>
-<span class='co'>## Inline theming</span>
-<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"The {.fn cli_text} function in the {.pkg cli} package"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>The <span style='color: #262626; background-color: #DADADA;'>`cli_text()`</span> function in the <span style='color: #0000BB;'>cli</span> package</span></div><div class='input'>
-<span class='co'>## Use within container elements</span>
-<span class='va'>ul</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"{.emph First} item"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  <span style='font-style: italic;'>First</span> item</span></div><div class='input'><span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"{.emph Second} item"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>  <span style='font-style: italic;'>Second</span> item</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>ul</span><span class='op'>)</span>
-</div></pre>
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Text wrapping</h3>
+
+
+<p>Text is wrapped to the console width, see <code><a href='console_width.html'>console_width()</a></code>.<div class="sourceCode r"></p><pre><span class='fu'>cli_text</span><span class='op'>(</span><span class='fu'>cli</span><span class='fu'>:::</span><span class='fu'>lorem_ipsum</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>New lines</h3>
+
+
+<p>A <code>cli_text()</code> call always appends a newline character to the end.<div class="sourceCode r"></p><pre><span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"First line."</span><span class='op'>)</span>
+<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"Second line."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text-newline.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Styling</h3>
+
+
+<p>You can use <a href='inline-markup.html'>inline markup</a>, as usual.<div class="sourceCode r"></p><pre><span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"The {.fn cli_text} function in the {.pkg cli} package."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text-markup.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Interpolation</h3>
+
+
+<p>String interpolation via glue works as usual. Interpolated vectors
+are collapsed.<div class="sourceCode r"></p><pre><span class='va'>pos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>14</span>, <span class='fl'>25</span>, <span class='fl'>26</span><span class='op'>)</span>
+<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"We have {length(pos)} missing measurements: {pos}."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text-glue.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Styling and interpolation</h3>
+
+
+<p>Use double braces to combine styling and string interpolation.<div class="sourceCode r"></p><pre><span class='va'>fun</span> <span class='op'>&lt;-</span> <span class='st'>"cli-text"</span>
+<span class='va'>pkg</span> <span class='op'>&lt;-</span> <span class='st'>"cli"</span>
+<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"The {.fn {fun}} function in the {.pkg {pkg}} package."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text-glue-style.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Multiple arguments</h3>
+
+
+<p>Arguments are concatenated.<div class="sourceCode r"></p><pre><span class='fu'>cli_text</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"This "</span>, <span class='st'>"will "</span>, <span class='st'>"all "</span><span class='op'>)</span>, <span class='st'>"be "</span>, <span class='st'>"one "</span>, <span class='st'>"sentence."</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text-concat.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Containers</h3>
+
+
+<p>You can use <code>cli_text()</code> within cli <a href='containers.html'>containers</a>.<div class="sourceCode r"></p><pre><span class='va'>ul</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_ul.html'>cli_ul</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"First item."</span><span class='op'>)</span>
+<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"Still the {.emph first} item"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_li.html'>cli_li</a></span><span class='op'>(</span><span class='st'>"Second item."</span><span class='op'>)</span>
+<span class='fu'>cli_text</span><span class='op'>(</span><span class='st'>"Still the {.emph second} item"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>ul</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-text-containers.svg' alt='' /></p>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

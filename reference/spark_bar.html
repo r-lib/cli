@@ -42,7 +42,10 @@
 <meta property="og:title" content="Draw a sparkline bar graph with unicode block characters — spark_bar" />
 <meta property="og:description" content="Rendered using block elements.
 In most common fixed width fonts these are rendered wider than regular
-characters which means they are not suitable if you need precise alignment." />
+characters which means they are not suitable if you need precise alignment.
+You might want to avoid sparklines on non-UTF-8 systems, because they
+do not look good. You can use is_utf8_output() to test for support
+for them." />
 
 
 
@@ -74,7 +77,7 @@ characters which means they are not suitable if you need precise alignment." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -109,7 +112,7 @@ characters which means they are not suitable if you need precise alignment." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -146,6 +149,9 @@ characters which means they are not suitable if you need precise alignment." />
     <p>Rendered using <a href='https://en.wikipedia.org/wiki/Block_Elements'>block elements</a>.
 In most common fixed width fonts these are rendered wider than regular
 characters which means they are not suitable if you need precise alignment.</p>
+<p>You might want to avoid sparklines on non-UTF-8 systems, because they
+do not look good. You can use <code><a href='is_utf8_output.html'>is_utf8_output()</a></code> to test for support
+for them.</p>
     </div>
 
     <pre class="usage"><span class='fu'>spark_bar</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
@@ -161,31 +167,22 @@ characters which means they are not suitable if you need precise alignment.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>You might want to avoid sparklines on non-UTF-8 systems, because they
-do not look good. You can use <code><a href='is_utf8_output.html'>is_utf8_output()</a></code> to test for support
-for them.</p>
+    <p><div class="sourceCode r"></p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, length <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='fu'>spark_bar</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/spark-bar-1.svg' alt='' /><div class="sourceCode r"></p><pre><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, length <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='fu'>spark_bar</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/spark-bar-2.svg' alt='' /><div class="sourceCode r"></p><pre><span class='fu'>spark_bar</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, length <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/spark-bar-3.svg' alt='' /></p>
+<p><code>NA</code>s are left out:<div class="sourceCode r"></p><pre><span class='fu'>spark_bar</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='cn'>NA</span>, <span class='fl'>0.5</span>, <span class='cn'>NA</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/spark-bar-na.svg' alt='' /></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='spark_line.html'>spark_line()</a></code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, length <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-<span class='fu'>spark_bar</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "▁▂▄▅▇█"
-#&gt; attr(,"class")
-#&gt; [1] "cli_spark_bar" "cli_spark"    </div><div class='input'><span class='fu'>spark_bar</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "▂▇▅█▁▄"
-#&gt; attr(,"class")
-#&gt; [1] "cli_spark_bar" "cli_spark"    </div><div class='input'>
-<span class='fu'>spark_bar</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, length <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "▁▂▃▄▅▆▇█"
-#&gt; attr(,"class")
-#&gt; [1] "cli_spark_bar" "cli_spark"    </div><div class='input'>
-<span class='co'># NAs are left out</span>
-<span class='fu'>spark_bar</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='cn'>NA</span>, <span class='fl'>0.5</span>, <span class='cn'>NA</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "▁ ▄ █"
-#&gt; attr(,"class")
-#&gt; [1] "cli_spark_bar" "cli_spark"    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

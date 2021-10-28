@@ -40,9 +40,8 @@
 
 
 <meta property="og:title" content="Count number of characters in an ANSI colored string — ansi_nchar" />
-<meta property="og:description" content="This is a color-aware counterpart of base::nchar(),
-which does not do well, since it also counts the ANSI control
-characters." />
+<meta property="og:description" content="This is a color-aware counterpart of utf8_nchar(). By default it
+counts Unicode grapheme clusters, instead of code points." />
 
 
 
@@ -74,7 +73,7 @@ characters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -109,7 +108,7 @@ characters." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -143,30 +142,24 @@ characters." />
     </div>
 
     <div class="ref-description">
-    <p>This is a color-aware counterpart of <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>,
-which does not do well, since it also counts the ANSI control
-characters.</p>
+    <p>This is a color-aware counterpart of <code><a href='utf8_nchar.html'>utf8_nchar()</a></code>. By default it
+counts Unicode grapheme clusters, instead of code points.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>x</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chars"</span>, <span class='st'>"bytes"</span>, <span class='st'>"width"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>x</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chars"</span>, <span class='st'>"bytes"</span>, <span class='st'>"width"</span>, <span class='st'>"graphemes"</span>, <span class='st'>"codepoints"</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Character vector, potentially ANSO styled, or a vector to be
-coarced to character.</p></td>
+      <td><p>Character vector, potentially ANSI styled, or a vector to be
+coerced to character. If it converted to UTF-8.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Whether to count characters, bytes, or calculate the
-display width of the string. Passed to <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments, passed on to <code><a href='https://rdrr.io/r/base/nchar.html'>base::nchar()</a></code>
-after removing ANSI escape sequences.</p></td>
+      <td><p>Whether to count graphemes (characters), code points,
+bytes, or calculate the display width of the string.</p></td>
     </tr>
     </table>
 
@@ -188,17 +181,21 @@ vector.</p>
 <code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>str</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span>
-  <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"red"</span><span class='op'>)</span>,
-  <span class='st'>"default"</span>,
-  <span class='fu'><a href='ansi-styles.html'>col_green</a></span><span class='op'>(</span><span class='st'>"green"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>red</span> default <span style='color: #00BB00;'>green</span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 37</div><div class='input'><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>str</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"red"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='st'>"default"</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='ansi-styles.html'>col_green</a></span><span class='op'>(</span><span class='st'>"green"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"\n"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>red</span> default <span style='color: #00BB00;'>green</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 37</span>
+<span class='r-in'><span class='fu'>ansi_nchar</span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 17</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 17</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

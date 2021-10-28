@@ -73,7 +73,7 @@ line. They provide a mode modern interface than the crayon package." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ line. They provide a mode modern interface than the crayon package." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -164,6 +164,22 @@ line. They provide a mode modern interface than the crayon package.</p>
 
 <span class='fu'>bg_none</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
+<span class='fu'>bg_br_black</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_blue</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_cyan</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_green</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_magenta</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_red</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_white</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bg_br_yellow</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
 <span class='fu'>col_black</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>col_blue</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
@@ -185,6 +201,22 @@ line. They provide a mode modern interface than the crayon package.</p>
 <span class='fu'>col_silver</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>col_none</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_black</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_blue</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_cyan</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_green</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_magenta</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_red</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_white</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>col_br_yellow</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>style_dim</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
@@ -246,13 +278,19 @@ These are the eight original ANSI colors. Note that in some terminals,
 they might actually look differently, as terminals have their own
 settings for how to show them. <code>col_none()</code> is the default color, this
 is useful in a substring of a colored string.</p>
+<p>The <code>col_br_*</code> functions are bright versions of the eight ANSI colors.
+Note that on some terminal configurations and themes they might be the
+same as the non-bright colors.</p>
 <p>The <code>bg_*</code> functions change the background color of the text.
 These are the eight original ANSI background colors. These, too, can
-vary in appearence, depending on terminal settings. <code>bg_none()</code> the
+vary in appearance, depending on terminal settings. <code>bg_none()</code> the
 the default background color, this is useful in a substring of a
 background-colored string.</p>
+<p>The <code>bg_br_*</code> functions are the bright versions of the eight ANSI
+background colors. Note that on some terminal configurations and themes
+they might be the same as the non-bright colors.</p>
 <p>The <code>style_*</code> functions apply other styling to the text. The currently
-supported styling funtions are:</p><ul>
+supported styling functions are:</p><ul>
 <li><p><code>style_reset()</code> to remove any style, including color,</p></li>
 <li><p><code>style_bold()</code> for boldface / strong text, although some terminals
 show a bright, high intensity text instead,</p></li>
@@ -281,46 +319,55 @@ argument from taking on the style. See examples below.</p>
 <code><a href='num_ansi_colors.html'>num_ansi_colors</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>col_blue</span><span class='op'>(</span><span class='st'>"Hello "</span>, <span class='st'>"world!"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1] <span style='color: #0000BB;'>Hello world!</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>col_blue</span><span class='op'>(</span><span class='st'>"Hello "</span>, <span class='st'>"world!"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Hello world!</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"... to highlight the"</span>, <span class='fu'>col_red</span><span class='op'>(</span><span class='st'>"search term"</span><span class='op'>)</span>,
-    <span class='st'>"in a block of text\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ... to highlight the <span style='color: #BB0000;'>search term</span> in a block of text</div><div class='input'>
-<span class='co'>## Style stack properly</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>col_green</span><span class='op'>(</span>
- <span class='st'>"I am a green line "</span>,
- <span class='fu'>col_blue</span><span class='op'>(</span><span class='fu'>style_underline</span><span class='op'>(</span><span class='fu'>style_bold</span><span class='op'>(</span><span class='st'>"with a blue substring"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
- <span class='st'>" that becomes green again!"</span>
-<span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BB00;'>I am a green line </span><span style='color: #0000BB; font-weight: bold; text-decoration: underline;'>with a blue substring</span><span style='color: #00BB00;'> that becomes green again!</span></div><div class='input'>
-<span class='va'>error</span> <span class='op'>&lt;-</span> <span class='fu'><a href='combine_ansi_styles.html'>combine_ansi_styles</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"bold"</span><span class='op'>)</span>
-<span class='va'>warn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='combine_ansi_styles.html'>combine_ansi_styles</a></span><span class='op'>(</span><span class='st'>"magenta"</span>, <span class='st'>"underline"</span><span class='op'>)</span>
-<span class='va'>note</span> <span class='op'>&lt;-</span> <span class='va'>col_cyan</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>error</span><span class='op'>(</span><span class='st'>"Error: subscript out of bounds!\n"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000; font-weight: bold;'>Error: subscript out of bounds!
-#&gt; </span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>warn</span><span class='op'>(</span><span class='st'>"Warning: shorter argument was recycled.\n"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB00BB; text-decoration: underline;'>Warning: shorter argument was recycled.
-#&gt; </span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>note</span><span class='op'>(</span><span class='st'>"Note: no such directory.\n"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #00BBBB;'>Note: no such directory.
-#&gt; </span></div><div class='input'>
-<span class='co'># style_no_* functions, note that the color is not removed</span>
-<span class='fu'>style_italic</span><span class='op'>(</span><span class='fu'>col_green</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
-  <span class='st'>"italic before, "</span>,
-  <span class='fu'>style_no_italic</span><span class='op'>(</span><span class='st'>"normal here, "</span><span class='op'>)</span>,
-  <span class='st'>"italic after"</span>
-<span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1] <span style='color: #00BB00; font-style: italic;'>italic before, </span><span style='color: #00BB00;'>normal here, </span><span style='color: #00BB00; font-style: italic;'>italic after</span></div><div class='input'>
-<span class='co'># avoiding  color for substring</span>
-<span class='fu'>style_italic</span><span class='op'>(</span><span class='fu'>col_red</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span>
-  <span class='st'>"red before"</span>,
-  <span class='fu'>col_none</span><span class='op'>(</span><span class='st'>"not red between"</span><span class='op'>)</span>,
-  <span class='st'>"red after"</span>
-<span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; &lt;ansi_string&gt;
-#&gt; [1] <span style='color: #BB0000; font-style: italic;'>red before </span><span style='font-style: italic;'>not red between</span><span style='color: #BB0000; font-style: italic;'> red after</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>col_blue</span><span class='op'>(</span><span class='st'>"Hello "</span>, <span class='st'>"world!"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;ansi_string&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] <span style='color: #0000BB;'>Hello world!</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>col_blue</span><span class='op'>(</span><span class='st'>"Hello "</span>, <span class='st'>"world!"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Hello world!</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"... to highlight the"</span>, <span class='fu'>col_red</span><span class='op'>(</span><span class='st'>"search term"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='st'>"in a block of text\n"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ... to highlight the <span style='color: #BB0000;'>search term</span> in a block of text</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Style stack properly</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>col_green</span><span class='op'>(</span></span>
+<span class='r-in'> <span class='st'>"I am a green line "</span>,</span>
+<span class='r-in'> <span class='fu'>col_blue</span><span class='op'>(</span><span class='fu'>style_underline</span><span class='op'>(</span><span class='fu'>style_bold</span><span class='op'>(</span><span class='st'>"with a blue substring"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'> <span class='st'>" that becomes green again!"</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>I am a green line </span><span style='color: #0000BB; font-weight: bold; text-decoration: underline;'>with a blue substring</span><span style='color: #00BB00;'> that becomes green again!</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>error</span> <span class='op'>&lt;-</span> <span class='fu'><a href='combine_ansi_styles.html'>combine_ansi_styles</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"bold"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>warn</span> <span class='op'>&lt;-</span> <span class='fu'><a href='combine_ansi_styles.html'>combine_ansi_styles</a></span><span class='op'>(</span><span class='st'>"magenta"</span>, <span class='st'>"underline"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>note</span> <span class='op'>&lt;-</span> <span class='va'>col_cyan</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>error</span><span class='op'>(</span><span class='st'>"Error: subscript out of bounds!\n"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000; font-weight: bold;'>Error: subscript out of bounds!</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>warn</span><span class='op'>(</span><span class='st'>"Warning: shorter argument was recycled.\n"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB00BB; text-decoration: underline;'>Warning: shorter argument was recycled.</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>note</span><span class='op'>(</span><span class='st'>"Note: no such directory.\n"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'>Note: no such directory.</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># style_no_* functions, note that the color is not removed</span></span>
+<span class='r-in'><span class='fu'>style_italic</span><span class='op'>(</span><span class='fu'>col_green</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"italic before, "</span>,</span>
+<span class='r-in'>  <span class='fu'>style_no_italic</span><span class='op'>(</span><span class='st'>"normal here, "</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='st'>"italic after"</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;ansi_string&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] <span style='color: #00BB00; font-style: italic;'>italic before, </span><span style='color: #00BB00;'>normal here, </span><span style='color: #00BB00; font-style: italic;'>italic after</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># avoiding  color for substring</span></span>
+<span class='r-in'><span class='fu'>style_italic</span><span class='op'>(</span><span class='fu'>col_red</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"red before"</span>,</span>
+<span class='r-in'>  <span class='fu'>col_none</span><span class='op'>(</span><span class='st'>"not red between"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='st'>"red after"</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;ansi_string&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] <span style='color: #BB0000; font-style: italic;'>red before </span><span style='font-style: italic;'>not red between</span><span style='color: #BB0000; font-style: italic;'> red after</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

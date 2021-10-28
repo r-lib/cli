@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -92,14 +92,14 @@
 
       
 
-      </header><script src="semantic-cli_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="semantic-cli_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+      </header><script src="semantic-cli_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="semantic-cli_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
 <script src="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="semantic-cli_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="semantic-cli_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Building a Semantic CLI</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2021-09-22</h4>
+            <h4 class="date">2021-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/semantic-cli.Rmd"><code>vignettes/semantic-cli.Rmd</code></a></small>
       <div class="hidden name"><code>semantic-cli.Rmd</code></div>
@@ -111,8 +111,8 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Starting from version 2.0.0, the cli package can build a semantic Command Line Interface (CLI). By <em>semantic</em> we mean that <code>cli_*</code> functions that create console output are focused on the role of the text in the CLI, as opposed to how exactly it is formatted. The formatting of the CLI can be specified separately, and can be also customized by the end user. This is not unlike how HTML and CSS works as well, so it might be already familiar.</p>
-<p>The semantic <code>cli_*</code> functions create semantic elements: headings, lists, alerts, paragraphs, etc. In this introduction we will go over these functions and also some common features of them.</p>
+<p>The cli package helps you build a command line interface (CLI) without getting lost in details (colors, wrapping, spacing, etc.) of how each piece of the output is formatted. Instead, you can build command line output from semantic elements: lists, alerts, quotes code blocks, headers, etc. The formatting of each element is specified separately, in one or more cli <em>themes</em>. cli comes with a builtin theme, and if you are satisfied with that, then you never need to worry about formatting. A semantic cli is similar to how HTML and CSS work together to create a web site.</p>
+<p>In this introduction we will go over the functions that create semantic CLI elements, and also some common features of them.</p>
 </div>
 <div id="building-a-command-line-interface" class="section level1">
 <h1 class="hasAnchor">
@@ -147,6 +147,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_ipsum</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-7.svg" width="100%"></p>
+<p>Text may have ANSI style markup,</p>
 </div>
 <div id="paragraphs" class="section level2">
 <h2 class="hasAnchor">
@@ -174,7 +175,7 @@
 <div id="headings" class="section level2">
 <h2 class="hasAnchor">
 <a href="#headings" class="anchor"></a>Headings</h2>
-<p>cli suppports three levels of headings. This is how they look in the default theme. The default theme adds an empty line before headings, and an empty line after <code><a href="../reference/cli_h1.html">cli_h1()</a></code> and <code><a href="../reference/cli_h1.html">cli_h2()</a></code>.</p>
+<p>cli supports three levels of headings. This is how they look in the default theme. The default theme adds an empty line before headings, and an empty line after <code><a href="../reference/cli_h1.html">cli_h1()</a></code> and <code><a href="../reference/cli_h1.html">cli_h2()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading 1"</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-9.svg" width="100%"></p>
@@ -200,7 +201,7 @@
 <div id="inline-text-formatting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#inline-text-formatting" class="anchor"></a>Inline text formatting</h2>
-<p>To define inline markup, you can use the regular glue braces, and after the opening brace, supply the name of the markup formatter with a leading dot, e.g. for emphasised text, you use <code>.emph</code>. Some examples are below, see <code><a href="../reference/inline-markup.html">?"inline-markup"</a></code> for details.</p>
+<p>To define inline markup, you can use the regular glue braces, and after the opening brace, supply the name of the markup formatter with a leading dot, e.g. for emphasized text, you use <code>.emph</code>. Some examples are below, see <code><a href="../reference/inline-markup.html">?"inline-markup"</a></code> for details.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="op">)</span>
@@ -264,7 +265,7 @@
 <div id="lists" class="section level2">
 <h2 class="hasAnchor">
 <a href="#lists" class="anchor"></a>Lists</h2>
-<p>cli has three types of list: ordered, unordered and definition lists, see <code><a href="../reference/cli_ol.html">cli_ol()</a></code>, <code><a href="../reference/cli_ul.html">cli_ul()</a></code> amd <code><a href="../reference/cli_dl.html">cli_dl()</a></code>:</p>
+<p>cli has three types of list: ordered, unordered and definition lists, see <code><a href="../reference/cli_ol.html">cli_ol()</a></code>, <code><a href="../reference/cli_ul.html">cli_ul()</a></code> and <code><a href="../reference/cli_dl.html">cli_dl()</a></code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_ol.html">cli_ol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item 1"</span>, <span class="st">"item 2"</span>, <span class="st">"item 3"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-20.svg" width="100%"></p>
@@ -327,7 +328,7 @@
 <span class="op">}</span>
 <span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-26.svg" width="100%"></p>
-<p>In <code><a href="../reference/cli_end.html">cli_end(olid)</a></code>, the <code>olid</code> is necessary, otherwise <code><a href="../reference/cli_end.html">cli_end()</a></code> would only close the container of the list item.</p>
+<p>In <code>cli_end(olid)</code>, the <code>olid</code> is necessary, otherwise <code><a href="../reference/cli_end.html">cli_end()</a></code> would only close the container of the list item.</p>
 </div>
 </div>
 <div id="horizontal-rules" class="section level2">
@@ -438,7 +439,7 @@
 <div id="cli-messages" class="section level1">
 <h1 class="hasAnchor">
 <a href="#cli-messages" class="anchor"></a>CLI messages</h1>
-<p>All <code>cli_*()</code> functions are implemented using standard R conditions. For example a <code><a href="../reference/cli_alert.html">cli_alert()</a></code> call emits an R condition with class <code>cli_message</code>. These messages can be caught, muffled, transfered from a subprocess to the main R process.</p>
+<p>All <code>cli_*()</code> functions are implemented using standard R conditions. For example a <code><a href="../reference/cli_alert.html">cli_alert()</a></code> call emits an R condition with class <code>cli_message</code>. These messages can be caught, muffled, transferred from a sub-process to the main R process.</p>
 <p>When a cli function is called:</p>
 <ol style="list-style-type: decimal">
 <li>cli throws a <code>cli_message</code> condition.</li>
@@ -451,15 +452,15 @@
 <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-33.svg" width="100%"></p>
 </div>
-<div id="subprocesses" class="section level1">
+<div id="sub-processes" class="section level1">
 <h1 class="hasAnchor">
-<a href="#subprocesses" class="anchor"></a>Subprocesses</h1>
-<p>If <code>cli_*()</code> commands are invoked in a subprocess via <code><a href="https://callr.r-lib.org/reference/r_session.html">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="uri">https://callr.r-lib.org</a>), and the <code>cli.message_class</code> option is set to <code>"callr_message"</code>, then cli messages are automatically copied to the main R process:</p>
+<a href="#sub-processes" class="anchor"></a>Sub-Processes</h1>
+<p>If <code>cli_*()</code> commands are invoked in a sub-process via <code><a href="https://callr.r-lib.org/reference/r_session.html">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="uri">https://callr.r-lib.org</a>), and the <code>cli.message_class</code> option is set to <code>"callr_message"</code>, then cli messages are automatically copied to the main R process:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="va"><a href="https://callr.r-lib.org/reference/r_session.html">r_session</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va">rs</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>cli.message_class <span class="op">=</span> <span class="st">"callr_message"</span><span class="op">)</span>
-  <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is subprocess {.emph {Sys.getpid()}} from {.pkg callr}"</span><span class="op">)</span>
+  <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is sub-process {.emph {Sys.getpid()}} from {.pkg callr}"</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">rs</span><span class="op">$</span><span class="fu">close</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>

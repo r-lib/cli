@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -98,7 +98,7 @@
       <h1 data-toc-skip>cli pluralization</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2021-09-22</h4>
+            <h4 class="date">2021-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/pluralization.Rmd"><code>vignettes/pluralization.Rmd</code></a></small>
       <div class="hidden name"><code>pluralization.Rmd</code></div>
@@ -119,7 +119,7 @@
 <div id="pluralization-markup" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pluralization-markup" class="anchor"></a>Pluralization markup</h2>
-<p>In the simplest case the message contains a single <code>{}</code> glue substitution, which specifies the quantity that is used to select between the singular and plural forms. Pluralization uses markup that is similar to glue, but uses the <code>{?</code> and <code>}</code> delimiters:</p>
+<p>In the simplest case the message contains a single <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> glue substitution, which specifies the quantity that is used to select between the singular and plural forms. Pluralization uses markup that is similar to glue, but uses the <code>{?</code> and <code>}</code> delimiters:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span>
 <span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></code></pre></div>
@@ -145,8 +145,8 @@
 </div>
 <div id="use-no-instead-of-zero" class="section level2">
 <h2 class="hasAnchor">
-<a href="#use-no-instead-of-zero" class="anchor"></a>Use “no” instead of zero</h2>
-<p>For readability, it is better to use the <code><a href="../reference/no.html">no()</a></code> helper function to include a count in a message. <code><a href="../reference/no.html">no()</a></code> prints the word “no” if the count is zero, and prints the numeric count otherwise:</p>
+<a href="#use-no-instead-of-zero" class="anchor"></a>Use <code>"no"</code> instead of zero</h2>
+<p>For readability, it is better to use the <code><a href="../reference/no.html">no()</a></code> helper function to include a count in a message. <code><a href="../reference/no.html">no()</a></code> prints the word <code>"no"</code> if the count is zero, and prints the numeric count otherwise:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Found no files.</code></pre>
@@ -169,8 +169,8 @@
 <code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove the {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</code></pre>
-<p>Note that the length is only used for non-numeric vectors (when <code><a href="https://rdrr.io/r/base/numeric.html">is.numeric(x)</a></code> return <code>FALSE</code>). If you want to use the length of a numeric vector, convert it to character via <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code>.</p>
-<p>You can combine collapsed vectors with “no”, like this:</p>
+<p>Note that the length is only used for non-numeric vectors (when <code>is.numeric(x)</code> return <code>FALSE</code>). If you want to use the length of a numeric vector, convert it to character via <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code>.</p>
+<p>You can combine collapsed vectors with <code>"no"</code>, like this:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">character</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></code></pre></div>
@@ -184,7 +184,7 @@
 <div id="choosing-the-right-quantity" class="section level2">
 <h2 class="hasAnchor">
 <a href="#choosing-the-right-quantity" class="anchor"></a>Choosing the right quantity</h2>
-<p>When the text contains multiple glue <code>{}</code> substitutions, the one right before the pluralization markup is used. For example:</p>
+<p>When the text contains multiple glue <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions, the one right before the pluralization markup is used. For example:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">nfiles</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">ndirs</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfiles} file{?s} and {ndirs} director{?y/ies}"</span><span class="op">)</span></code></pre></div>
@@ -194,31 +194,31 @@
 <code class="sourceCode R"><span class="va">nupd</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">ntotal</span> <span class="op">&lt;-</span> <span class="fl">10</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates"</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; 3/10 files need updates</code></pre>
-<p>Note that if the message only contains a single <code>{}</code> substitution, then this may appear before or after the pluralization markup. If the message contains multiple <code>{}</code> substitutions <em>after</em> pluralization markup, an error is thrown.</p>
-<p>Similarly, if the message contains no <code>{}</code> substitutions at all, but has pluralization markup, an error is thrown.</p>
+<p>Note that if the message only contains a single <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution, then this may appear before or after the pluralization markup. If the message contains multiple <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions <em>after</em> pluralization markup, an error is thrown.</p>
+<p>Similarly, if the message contains no <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions at all, but has pluralization markup, an error is thrown.</p>
 </div>
 </div>
 <div id="rules" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rules" class="anchor"></a>Rules</h1>
-<p>The exact rules of cli’s pluralization. There are two sets of rules. The first set specifies how a quantity is associated with a <code>{?}</code> pluralization markup. The second set describes how the <code>{?}</code> is parsed and interpreted.</p>
+<p>The exact rules of cli pluralization. There are two sets of rules. The first set specifies how a quantity is associated with a <code>{?}</code> pluralization markup. The second set describes how the <code>{?}</code> is parsed and interpreted.</p>
 <div id="quantities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quantities" class="anchor"></a>Quantities</h2>
 <ol style="list-style-type: decimal">
-<li><p><code>{}</code> substitutions define quantities. If the value of a <code>{}</code> substitution is numeric (when <code><a href="https://rdrr.io/r/base/numeric.html">is.numeric(x)</a></code> holds), then it has to have length one to define a quantity. This is only enforced if the <code>{}</code> substitution is used for pluralization. The quantity is defined as the value of <code>{}</code> then, rounded with <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code>. If the value of <code>{}</code> is not numeric, then its quantity is defined as its length.</p></li>
-<li><p>If a message has <code>{?}</code> markup but no <code>{}</code> substitution, an error is thrown.</p></li>
-<li><p>If a message has exactly one <code>{}</code> substitution, its value is used as the pluralization quantity for all <code>{?}</code> markup in the message.</p></li>
-<li><p>If a message has multiple <code>{}</code> substitutions, then for each <code>{?}</code> markup cli uses the quantity of the <code>{}</code> substitution that precedes it.</p></li>
-<li><p>If a message has multiple <code>{}</code> substitutions and has pluralization markup without a preceding <code>{}</code> substitution, an error is thrown.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions define quantities. If the value of a <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution is numeric (when <code>is.numeric(x)</code> holds), then it has to have length one to define a quantity. This is only enforced if the <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution is used for pluralization. The quantity is defined as the value of <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> then, rounded with <code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code>. If the value of <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> is not numeric, then its quantity is defined as its length.</p></li>
+<li><p>If a message has <code>{?}</code> markup but no <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution, an error is thrown.</p></li>
+<li><p>If a message has exactly one <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution, its value is used as the pluralization quantity for all <code>{?}</code> markup in the message.</p></li>
+<li><p>If a message has multiple <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions, then for each <code>{?}</code> markup cli uses the quantity of the <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution that precedes it.</p></li>
+<li><p>If a message has multiple <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions and has pluralization markup without a preceding <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitution, an error is thrown.</p></li>
 </ol>
 </div>
 <div id="pluralization-markup-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pluralization-markup-1" class="anchor"></a>Pluralization markup</h2>
 <ol style="list-style-type: decimal">
-<li><p>Pluralization markup starts with <code>{?</code> and ends with <code>}</code>. It may not contain <code>{</code> and <code>}</code> characters, so it may not contain <code>{}</code> substitutions either.</p></li>
-<li><p>Alternative words or suffixes are separated by <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>.</p></li>
+<li><p>Pluralization markup starts with <code>{?</code> and ends with <code>}</code>. It may not contain <code>{</code> and <code>}</code> characters, so it may not contain <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> substitutions either.</p></li>
+<li><p>Alternative words or suffixes are separated by <code>/</code>.</p></li>
 <li><p>If there is a single alternative, then <em>nothing</em> is used if <code>quantity == 1</code> and this single alternative is used if <code>quantity != 1</code>.</p></li>
 <li><p>If there are two alternatives, the first one is used for <code>quantity == 1</code>, the second one for <code>quantity != 1</code> (including `<code>quantity == 0</code>).</p></li>
 <li><p>If there are three alternatives, the first one is used for <code>quantity == 0</code>, the second one for <code>quantity == 1</code>, and the third one otherwise.</p></li>

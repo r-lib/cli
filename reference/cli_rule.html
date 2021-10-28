@@ -40,9 +40,7 @@
 
 
 <meta property="og:title" content="CLI horizontal rule — cli_rule" />
-<meta property="og:description" content="It can be used to separate parts of the output. The line style of the
-rule can be changed via the the line-type property. Possible values
-are:" />
+<meta property="og:description" content="It can be used to separate parts of the output." />
 
 
 
@@ -74,7 +72,7 @@ are:" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -109,7 +107,7 @@ are:" />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -143,9 +141,7 @@ are:" />
     </div>
 
     <div class="ref-description">
-    <p>It can be used to separate parts of the output. The line style of the
-rule can be changed via the the <code>line-type</code> property. Possible values
-are:</p>
+    <p>It can be used to separate parts of the output.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cli_rule</span><span class='op'>(</span>
@@ -188,36 +184,31 @@ and returned.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<ul>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Inline styling and interpolation</h3>
+<p><div class="sourceCode r"></p><pre><span class='va'>pkg</span> <span class='op'>&lt;-</span> <span class='st'>"mypackage"</span>
+<span class='fu'>cli_rule</span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"{.pkg {pkg}} results"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-rule.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Theming</h3>
+
+
+<p>The line style of the rule can be changed via the the <code>line-type</code>
+property. Possible values are:</p><ul>
 <li><p><code>"single"</code>: (same as <code>1</code>), a single line,</p></li>
 <li><p><code>"double"</code>: (same as <code>2</code>), a double line,</p></li>
 <li><p><code>"bar1"</code>, <code>"bar2"</code>, <code>"bar3"</code>, etc., <code>"bar8"</code> uses varying height bars.</p></li>
 </ul>
 
-<p>Colors and background colors can similarly changed via a theme, see
-examples below.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>cli_rule</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='input'><span class='fu'><a href='cli_text.html'>cli_text</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageDescription</a></span><span class='op'>(</span><span class='st'>"cli"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>Description</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>A suite of tools to build attractive command line interfaces ('CLIs'), from</span>
-#&gt; <span class='message'>semantic elements: headings, lists, alerts, paragraphs, etc. Supports custom</span>
-#&gt; <span class='message'>themes via a 'CSS'-like language. It also contains a number of lower level</span>
-#&gt; <span class='message'>'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII'</span>
-#&gt; <span class='message'>alternatives. It support ANSI colors and text styles as well.</span></div><div class='input'><span class='fu'>cli_rule</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────────────</span></div><div class='input'>
-<span class='co'># Theming</span>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>rule <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  color <span class='op'>=</span> <span class='st'>"blue"</span>,
-  <span class='st'>"background-color"</span> <span class='op'>=</span> <span class='st'>"darkgrey"</span>,
+<p>Colors and background colors can similarly changed via a theme.<div class="sourceCode r"></p><pre><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cli_div.html'>cli_div</a></span><span class='op'>(</span>theme <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>rule <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  color <span class='op'>=</span> <span class='st'>"cyan"</span>,
   <span class='st'>"line-type"</span> <span class='op'>=</span> <span class='st'>"double"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>cli_rule</span><span class='op'>(</span><span class='st'>"Left"</span>, right <span class='op'>=</span> <span class='st'>"Right"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>── Left ─────────────────────────────────────────────────────────────── Right ──</span></div><div class='input'><span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+<span class='fu'>cli_rule</span><span class='op'>(</span><span class='st'>"Summary"</span>, right <span class='op'>=</span> <span class='st'>"{.pkg mypackage}"</span><span class='op'>)</span>
+<span class='fu'><a href='cli_end.html'>cli_end</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/cli-rule-line-type.svg' alt='' /></p>
 
-<span class='co'># Interpolation</span>
-<span class='fu'>cli_rule</span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"One plus one is {1+1}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>── One plus one is 2 ───────────────────────────────────────────────────────────</span></div><div class='input'><span class='fu'>cli_rule</span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"Package {.pkg mypackage}"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>── Package <span style='color: #0000BB;'>mypackage</span> ───────────────────────────────────────────────────────────</span></div></pre>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

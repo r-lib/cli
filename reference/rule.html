@@ -41,7 +41,11 @@
 
 <meta property="og:title" content="Make a rule with one or two text labels — rule" />
 <meta property="og:description" content="The rule can include either a centered text label, or labels on the
-left and right side." />
+left and right side.
+To color the labels, use the functions col_*, bg_* and style_*
+functions, see ANSI styles, and the examples below.
+To color the line, either these functions directly, or the line_col
+option." />
 
 
 
@@ -73,7 +77,7 @@ left and right side." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -108,7 +112,7 @@ left and right side." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -144,6 +148,10 @@ left and right side." />
     <div class="ref-description">
     <p>The rule can include either a centered text label, or labels on the
 left and right side.</p>
+<p>To color the labels, use the functions <code>col_*</code>, <code>bg_*</code> and <code>style_*</code>
+functions, see <a href='ansi-styles.html'>ANSI styles</a>, and the examples below.
+To color the line, either these functions directly, or the <code>line_col</code>
+option.</p>
     </div>
 
     <pre class="usage"><span class='fu'>rule</span><span class='op'>(</span>
@@ -185,14 +193,14 @@ see <em>Line styles</em> below.</p></td>
     <tr>
       <th>col</th>
       <td><p>Color of text, and default line color. Either an ANSI style
-function (see <a href='ansi-styles.html'>ansi-styles</a>), or a color name that is passed
-to <code><a href='make_ansi_style.html'>make_ansi_style()</a></code>.</p></td>
+function (see <a href='ansi-styles.html'>ANSI styles</a>), or a color name that is
+passed to <code><a href='make_ansi_style.html'>make_ansi_style()</a></code>.</p></td>
     </tr>
     <tr>
       <th>line_col, background_col</th>
       <td><p>Either a color name (used in
-<code><a href='make_ansi_style.html'>make_ansi_style()</a></code>), or a style function (see <a href='ansi-styles.html'>ansi-styles</a>), to
-color the line and background.</p></td>
+<code><a href='make_ansi_style.html'>make_ansi_style()</a></code>), or a style function (see
+<a href='ansi-styles.html'>ANSI styles</a>), to color the line and background.</p></td>
     </tr>
     <tr>
       <th>width</th>
@@ -206,57 +214,66 @@ color the line and background.</p></td>
     <p>Character scalar, the rule.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To color the labels, use the functions <code>col_*</code>, <code>bg_*</code> and <code>style_*</code>
-functions, see <a href='ansi-styles.html'>ansi-styles</a>, and the examples below.
-To color the line, either these functions directly, or the <code>line_col</code>
-option.</p>
-    <h2 class="hasAnchor" id="line-styles"><a class="anchor" href="#line-styles"></a>Line styles</h2>
-
     
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Simple rule</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-simple.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Line styles</h3>
+
 
 <p>Some strings for the <code>line</code> argument are interpreted specially:</p><ul>
 <li><p><code>"single"</code>: (same as <code>1</code>), a single line,</p></li>
 <li><p><code>"double"</code>: (same as <code>2</code>), a double line,</p></li>
 <li><p><code>"bar1"</code>, <code>"bar2"</code>, <code>"bar3"</code>, etc., <code>"bar8"</code> uses varying height bars.</p></li>
 </ul>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Double rule</h4>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>line <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-double.svg' alt='' /></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Bars</h4>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>line <span class='op'>=</span> <span class='st'>"bar2"</span><span class='op'>)</span>
+<span class='fu'>rule</span><span class='op'>(</span>line <span class='op'>=</span> <span class='st'>"bar5"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-bars.svg' alt='' /></p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## Simple rule</span>
-<span class='fu'>rule</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ────────────────────────────────────────────────────────────────────────────────</div><div class='input'>
-<span class='co'>## Double rule</span>
-<span class='fu'>rule</span><span class='op'>(</span>line <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ════════════════════════════════════════════════════════════════════════════════</div><div class='input'>
-<span class='co'>## Bars</span>
-<span class='fu'>rule</span><span class='op'>(</span>line <span class='op'>=</span> <span class='st'>"bar2"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</div><div class='input'><span class='fu'>rule</span><span class='op'>(</span>line <span class='op'>=</span> <span class='st'>"bar5"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅</div><div class='input'>
-<span class='co'>## Left label</span>
-<span class='fu'>rule</span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"Results"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ── Results ─────────────────────────────────────────────────────────────────────</div><div class='input'>
-<span class='co'>## Centered label</span>
-<span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='st'>" * RESULTS * "</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ─────────────────────────────────  * RESULTS *  ────────────────────────────────</div><div class='input'>
-<span class='co'>## Colored labels</span>
-<span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>" * RESULTS * "</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ───────────────────────────────── <span style='color: #BB0000;'> * RESULTS * </span> ────────────────────────────────</div><div class='input'>
-<span class='co'>## Colored line</span>
-<span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>" * RESULTS * "</span><span class='op'>)</span>, line_col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>─────────────────────────────────</span> <span style='color: #BB0000;'> * RESULTS * </span> <span style='color: #BB0000;'>────────────────────────────────</span></div><div class='input'>
-<span class='co'>## Custom line</span>
-<span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='st'>"TITLE"</span>, line <span class='op'>=</span> <span class='st'>"~"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TITLE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</div><div class='input'>
-<span class='co'>## More custom line</span>
-<span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='st'>"TITLE"</span>, line <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>col_blue</a></span><span class='op'>(</span><span class='st'>"~-"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'>~-~-~-</span>TITLE <span style='color: #0000BB;'>~-~-~-</span></div><div class='input'>
-<span class='co'>## Even more custom line</span>
-<span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>bg_red</a></span><span class='op'>(</span><span class='st'>" "</span>, <span class='va'>symbol</span><span class='op'>$</span><span class='va'>star</span>, <span class='st'>"TITLE"</span>,
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Custom lines</h4>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='st'>"TITLE"</span>, line <span class='op'>=</span> <span class='st'>"~"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-custom-line.svg' alt='' /><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='st'>"TITLE"</span>, line <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>col_blue</a></span><span class='op'>(</span><span class='st'>"~-"</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-custom-line-2.svg' alt='' /><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>bg_red</a></span><span class='op'>(</span><span class='st'>" "</span>, <span class='va'>symbol</span><span class='op'>$</span><span class='va'>star</span>, <span class='st'>"TITLE"</span>,
   <span class='va'>symbol</span><span class='op'>$</span><span class='va'>star</span>, <span class='st'>" "</span><span class='op'>)</span>,
   line <span class='op'>=</span> <span class='st'>"\u2582"</span>,
   line_col <span class='op'>=</span> <span class='st'>"orange"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #FFAF00;'>▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</span> <span style='background-color: #BB0000;'> ★TITLE★ </span> <span style='color: #FFAF00;'>▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</span></div></pre>
+</pre><p></div></p>
+<p><img src='figures/rule-custom-line-3.svg' alt='' /></p>
+
+
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Left label</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>left <span class='op'>=</span> <span class='st'>"Results"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-left-label.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Centered label</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='st'>" * RESULTS * "</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-center-label.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Colored labels</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>" * RESULTS * "</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-colored-label.svg' alt='' /></p>
+
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Colored line</h3>
+<p><div class="sourceCode r"></p><pre><span class='fu'>rule</span><span class='op'>(</span>center <span class='op'>=</span> <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>" * RESULTS * "</span><span class='op'>)</span>, line_col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+</pre><p></div></p>
+<p><img src='figures/rule-colored-line.svg' alt='' /></p>
+
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -92,14 +92,14 @@
 
       
 
-      </header><script src="progress_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="progress_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="progress_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+      </header><script src="progress_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="progress_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="progress_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
 <script src="progress_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="progress_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="progress_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to progress bars in cli</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2021-09-22</h4>
+            <h4 class="date">2021-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/progress.Rmd"><code>vignettes/progress.Rmd</code></a></small>
       <div class="hidden name"><code>progress.Rmd</code></div>
@@ -119,7 +119,7 @@
 <p>From version 3.0.0 cli provides a set of functions to create progress bars. The main goals of the progress bar API are:</p>
 <ul>
 <li>Reduce clutter. Try to avoid verbose syntax, unless necessary.</li>
-<li>Flexibility from R and C/C++ code. Support all cli features in proress bars: glue interpolation, theming, pluralization, etc.</li>
+<li>Flexibility from R and C/C++ code. Support all cli features in progress bars: glue interpolation, theming, pluralization, etc.</li>
 <li>Predictably small performance penalty. A very small constant penalty per iteration, and a reasonable penalty per second.</li>
 </ul>
 </div>
@@ -218,7 +218,7 @@
 <div id="for-loops" class="section level2">
 <h2 class="hasAnchor">
 <a href="#for-loops" class="anchor"></a><code>for</code> loops</h2>
-<p>You can also use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> in <code>for</code> loops, with the additional complication that if you use <code>break</code>, then you might need to terminate the progress bar explicitly:</p>
+<p>You can also use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> in <code>for</code> loops, with the additional complication that if you use <code><a href="https://rdrr.io/r/base/Control.html">break</a></code>, then you might need to terminate the progress bar explicitly:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">...</span>
@@ -240,7 +240,7 @@
 <div id="simplified-api" class="section level1">
 <h1 class="hasAnchor">
 <a href="#simplified-api" class="anchor"></a>Simplified API</h1>
-<p>Often you don’t need the full power of the progress bar API, and only want to show a status message. The <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> and <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> functions are taylored for this.</p>
+<p>Often you don’t need the full power of the progress bar API, and only want to show a status message. The <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> and <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> functions are tailored for this.</p>
 <p><code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> shows a (potentially templated) message in the status bar. For convenience, the progress bar rules still apply here by default: * Status messages are removed when their calling function exits. * A status message removes the previous status message or progress bar of the same caller function.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>

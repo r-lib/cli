@@ -74,7 +74,7 @@ substrings." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ substrings." />
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -156,7 +156,7 @@ substrings.</p>
     <tr>
       <th>x</th>
       <td><p>Character vector, potentially ANSI styled, or a vector to
-coarced to character.</p></td>
+coerced to character.</p></td>
     </tr>
     <tr>
       <th>split</th>
@@ -173,7 +173,7 @@ zero characters, <code>x</code> is split into single characters.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of the same length as <code>x</code>, the \(i\)-th element of
+    <p>A list of the same length as <code>x</code>, the <code>i</code>-th element of
 which contains the vector of splits of <code>x[i]</code>. ANSI styles are
 retained.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -190,29 +190,34 @@ retained.</p>
 <code><a href='ansi_trimws.html'>ansi_trimws</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>str</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
-  <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"I am red---"</span><span class='op'>)</span>,
-  <span class='fu'><a href='ansi-styles.html'>col_green</a></span><span class='op'>(</span><span class='st'>"and I am green-"</span><span class='op'>)</span>,
-  <span class='fu'><a href='ansi-styles.html'>style_underline</a></span><span class='op'>(</span><span class='st'>"I underlined"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>I am red---</span><span style='color: #00BB00;'>and I am green-</span><span style='text-decoration: underline;'>I underlined</span> </div><div class='input'>
-<span class='co'># split at dashes, keep color</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_strsplit</span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"[-]+"</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>I am red</span>
-#&gt; <span style='color: #00BB00;'>and I am green</span>
-#&gt; <span style='text-decoration: underline;'>I underlined</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='st'>"[-]+"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] "I am red"       "and I am green" "I underlined"  
-#&gt; </div><div class='input'>
-<span class='co'># split to characters, keep color</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_strsplit</span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='st'>"\n"</span>, sep <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BB0000;'>I</span> <span style='color: #BB0000;'> </span> <span style='color: #BB0000;'>a</span> <span style='color: #BB0000;'>m</span> <span style='color: #BB0000;'> </span> <span style='color: #BB0000;'>r</span> <span style='color: #BB0000;'>e</span> <span style='color: #BB0000;'>d</span> <span style='color: #BB0000;'>-</span> <span style='color: #BB0000;'>-</span> <span style='color: #BB0000;'>-</span> <span style='color: #00BB00;'>a</span> <span style='color: #00BB00;'>n</span> <span style='color: #00BB00;'>d</span> <span style='color: #00BB00;'> </span> <span style='color: #00BB00;'>I</span> <span style='color: #00BB00;'> </span> <span style='color: #00BB00;'>a</span> <span style='color: #00BB00;'>m</span> <span style='color: #00BB00;'> </span> <span style='color: #00BB00;'>g</span> <span style='color: #00BB00;'>r</span> <span style='color: #00BB00;'>e</span> <span style='color: #00BB00;'>e</span> <span style='color: #00BB00;'>n</span> <span style='color: #00BB00;'>-</span> <span style='text-decoration: underline;'>I</span> <span style='text-decoration: underline;'> </span> <span style='text-decoration: underline;'>u</span> <span style='text-decoration: underline;'>n</span> <span style='text-decoration: underline;'>d</span> <span style='text-decoration: underline;'>e</span> <span style='text-decoration: underline;'>r</span> <span style='text-decoration: underline;'>l</span> <span style='text-decoration: underline;'>i</span> <span style='text-decoration: underline;'>n</span> <span style='text-decoration: underline;'>e</span> <span style='text-decoration: underline;'>d</span> </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='st'>""</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt;  [1] "I" " " "a" "m" " " "r" "e" "d" "-" "-" "-" "a" "n" "d" " " "I" " " "a" "m"
-#&gt; [20] " " "g" "r" "e" "e" "n" "-" "I" " " "u" "n" "d" "e" "r" "l" "i" "n" "e" "d"
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>str</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='ansi-styles.html'>col_red</a></span><span class='op'>(</span><span class='st'>"I am red---"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='ansi-styles.html'>col_green</a></span><span class='op'>(</span><span class='st'>"and I am green-"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='ansi-styles.html'>style_underline</a></span><span class='op'>(</span><span class='st'>"I underlined"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"\n"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>I am red---</span><span style='color: #00BB00;'>and I am green-</span><span style='text-decoration: underline;'>I underlined</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># split at dashes, keep color</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_strsplit</span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>"[-]+"</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, sep <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>I am red</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>and I am green</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='text-decoration: underline;'>I underlined</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='st'>"[-]+"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "I am red"       "and I am green" "I underlined"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># split to characters, keep color</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='fu'>ansi_strsplit</span><span class='op'>(</span><span class='va'>str</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='st'>"\n"</span>, sep <span class='op'>=</span> <span class='st'>" "</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>I</span> <span style='color: #BB0000;'> </span> <span style='color: #BB0000;'>a</span> <span style='color: #BB0000;'>m</span> <span style='color: #BB0000;'> </span> <span style='color: #BB0000;'>r</span> <span style='color: #BB0000;'>e</span> <span style='color: #BB0000;'>d</span> <span style='color: #BB0000;'>-</span> <span style='color: #BB0000;'>-</span> <span style='color: #BB0000;'>-</span> <span style='color: #00BB00;'>a</span> <span style='color: #00BB00;'>n</span> <span style='color: #00BB00;'>d</span> <span style='color: #00BB00;'> </span> <span style='color: #00BB00;'>I</span> <span style='color: #00BB00;'> </span> <span style='color: #00BB00;'>a</span> <span style='color: #00BB00;'>m</span> <span style='color: #00BB00;'> </span> <span style='color: #00BB00;'>g</span> <span style='color: #00BB00;'>r</span> <span style='color: #00BB00;'>e</span> <span style='color: #00BB00;'>e</span> <span style='color: #00BB00;'>n</span> <span style='color: #00BB00;'>-</span> <span style='text-decoration: underline;'>I</span> <span style='text-decoration: underline;'> </span> <span style='text-decoration: underline;'>u</span> <span style='text-decoration: underline;'>n</span> <span style='text-decoration: underline;'>d</span> <span style='text-decoration: underline;'>e</span> <span style='text-decoration: underline;'>r</span> <span style='text-decoration: underline;'>l</span> <span style='text-decoration: underline;'>i</span> <span style='text-decoration: underline;'>n</span> <span style='text-decoration: underline;'>e</span> <span style='text-decoration: underline;'>d</span> </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='ansi_strip.html'>ansi_strip</a></span><span class='op'>(</span><span class='va'>str</span><span class='op'>)</span>, <span class='st'>""</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "I" " " "a" "m" " " "r" "e" "d" "-" "-" "-" "a" "n" "d" " " "I" " " "a" "m"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [20] " " "g" "r" "e" "e" "n" "-" "I" " " "u" "n" "d" "e" "r" "l" "i" "n" "e" "d"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

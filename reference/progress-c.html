@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.1.0</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
       <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
     </li>
     <li>
-      <a href="../articles/rules-boxes-trees.html">Rules, Boxes and Trees</a>
+      <a href="../articles/palettes.html">cli color palettes</a>
     </li>
   </ul>
 </li>
@@ -160,7 +160,7 @@ call <code>cli_progress_init_timer()</code> or create a progress bar with
 <code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code>.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>cli_progress_add()</code></h3>
-<p><div class="sourceCode c"></p><pre>void cli_progress_add(SEXP bar, int inc);
+<p><div class="sourceCode c"></p><pre>void cli_progress_add(SEXP bar, double inc);
 </pre><p></div></p>
 <p>Add a number of progress units to the progress bar. It will also
 trigger an update if an update is due.</p><ul>
@@ -170,11 +170,11 @@ trigger an update if an update is due.</p><ul>
 
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code><a href='cli_progress_bar.html'>cli_progress_bar()</a></code></h3>
-<p><div class="sourceCode c"></p><pre>SEXP cli_progress_bar(int total, SEXP config);
+<p><div class="sourceCode c"></p><pre>SEXP cli_progress_bar(double total, SEXP config);
 </pre><p></div></p>
 <p>Create a new progress bar object. The returned progress bar object
 must be <code>PROTECT()</code>-ed.</p><ul>
-<li><p><code>total</code>: Total number of progress units. Use <code>NA_INTEGER</code> if it is not
+<li><p><code>total</code>: Total number of progress units. Use <code>NA_REAL</code> if it is not
 known.</p></li>
 <li><p><code>config</code>: R named list object of additional parameters. May be <code>NULL</code>
 (the C <code>NULL~) or </code>R_NilValue<code>(the R</code>NULL`) for the defaults.</p></li>
@@ -182,7 +182,7 @@ known.</p></li>
 
 <p><code>config</code> may contain the following entries:</p><ul>
 <li><p><code>name</code>: progress bar name.</p></li>
-<li><p><code>status</code>: (intiial) progress bar status.</p></li>
+<li><p><code>status</code>: (initial) progress bar status.</p></li>
 <li><p><code>type</code>: progress bar type.</p></li>
 <li><p><code>total</code>: total number of progress units.</p></li>
 <li><p><code>show_after</code>: show the progress bar after the specified number of
@@ -231,7 +231,7 @@ SEXP progress_test1() {
 <p>Returns the number of currently active progress bars.</p>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code>cli_progress_set()</code></h3>
-<p><div class="sourceCode c"></p><pre>void cli_progress_set(SEXP bar, int set);
+<p><div class="sourceCode c"></p><pre>void cli_progress_set(SEXP bar, double set);
 </pre><p></div></p>
 <p>Set the progress bar to the specified number of progress units.</p><ul>
 <li><p><code>bar</code>: progress bar object.</p></li>
@@ -299,7 +299,7 @@ undefined.</p><ul>
 
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a><code><a href='cli_progress_bar.html'>cli_progress_update()</a></code></h3>
-<p><div class="sourceCode c"></p><pre>void cli_progress_update(SEXP bar, int force, int add, int set);
+<p><div class="sourceCode c"></p><pre>void cli_progress_update(SEXP bar, double set, double inc, int force);
 </pre><p></div></p>
 <p>Update the progress bar. Unlike the simpler <code>cli_progress_add()</code> and
 <code>cli_progress_set()</code> function, it can force an update if <code>force</code> is
@@ -307,7 +307,7 @@ set to 1.</p><ul>
 <li><p><code>bar</code>: progress bar object.</p></li>
 <li><p><code>set</code>: the number of current progress units. It is ignored if
 negative.</p></li>
-<li><p><code>inc</code>: increment to add to the current number of progres units.
+<li><p><code>inc</code>: increment to add to the current number of progress units.
 It is ignored if <code>set</code> is not negative.</p></li>
 <li><p><code>force</code>: whether to force an update, even if no update is due.</p></li>
 </ul>
