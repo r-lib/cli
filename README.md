@@ -13,7 +13,7 @@ status](https://github.com/r-lib/cli/workflows/R-CMD-check/badge.svg)](https://g
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/cli)](https://www.r-pkg.org/pkg/cli)
 [![Coverage
-Status](https://img.shields.io/codecov/c/github/r-lib/cli/master.svg)](https://codecov.io/github/r-lib/cli?branch=master)
+Status](https://img.shields.io/codecov/c/github/r-lib/cli/main.svg)](https://codecov.io/github/r-lib/cli?branch=main)
 <!-- badges: end -->
 
 A suite of tools to build attractive command line interfaces (CLIs),
