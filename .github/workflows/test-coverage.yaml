@@ -3,19 +3,19 @@
 on:
   push:
     branches: [main, master]
-    tags: ['*']
+  pull_request:
+    branches: [main, master]
 
-name: pkgdown
+name: test-coverage
 
 jobs:
-  pkgdown:
+  test-coverage:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-pandoc@v1
 
       - uses: r-lib/actions/setup-r@v1
         with:
@@ -23,14 +23,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@pak2
         with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
+          extra-packages: any::covr
+          needs: coverage
 
-      - name: Deploy package
-        run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
-        env:
-          R_CLI_NUM_COLORS: 256
-  
+      - name: Test coverage
+        run: covr::codecov()
+        shell: Rscript {0}
