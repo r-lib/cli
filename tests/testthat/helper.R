@@ -156,3 +156,11 @@ create_c_function_call <- function(code, args, header = NULL) {
 win2unix <- function (str) {
   gsub("\r\n", "\n", str, fixed = TRUE, useBytes = TRUE)
 }
+
+expect_snapshot <- function(...) {
+  if (packageVersion("testthat") >= "3.1.1" &&
+      packageVersion("testthat") <= "3.1.1.9000") {
+    skip("testthat bug with snapshots")
+  }
+  testthat::expect_snapshot(...)
+}
