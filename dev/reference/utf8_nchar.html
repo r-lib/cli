@@ -171,26 +171,34 @@ vector.</p>
 <code><a href='utf8_substr.html'>utf8_substr</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Grapheme example, emoji with combining characters. This is a single</span>
-<span class='co'># grapheme, consisting of five Unicode code points:</span>
-<span class='co'># * `\U0001f477` is the construction worker emoji</span>
-<span class='co'># * `\U0001f3fb` is emoji modifier that changes the skin color</span>
-<span class='co'># * `\u200d` is the zero width joiner</span>
-<span class='co'># * `\u2640` is the female sign</span>
-<span class='co'># * `\ufe0f` is variation selector 16, requesting an emoji style glyph</span>
-<span class='va'>emo</span> <span class='op'>&lt;-</span> <span class='st'>"\U0001f477\U0001f3fb\u200d\u2640\ufe0f"</span>
-<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>emo</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 👷🏻‍♀️</div><div class='input'>
-<span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"chars"</span><span class='op'>)</span> <span class='co'># = graphemes</span>
-</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"bytes"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div><div class='input'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"width"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"codepoints"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 5</div><div class='input'>
-<span class='co'># For comparision, the output for width depends on the R version used:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"chars"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"bytes"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"width"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 5</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Grapheme example, emoji with combining characters. This is a single</span></span>
+<span class='r-in'><span class='co'># grapheme, consisting of five Unicode code points:</span></span>
+<span class='r-in'><span class='co'># * `\U0001f477` is the construction worker emoji</span></span>
+<span class='r-in'><span class='co'># * `\U0001f3fb` is emoji modifier that changes the skin color</span></span>
+<span class='r-in'><span class='co'># * `\u200d` is the zero width joiner</span></span>
+<span class='r-in'><span class='co'># * `\u2640` is the female sign</span></span>
+<span class='r-in'><span class='co'># * `\ufe0f` is variation selector 16, requesting an emoji style glyph</span></span>
+<span class='r-in'><span class='va'>emo</span> <span class='op'>&lt;-</span> <span class='st'>"\U0001f477\U0001f3fb\u200d\u2640\ufe0f"</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>emo</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 👷🏻‍♀️</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"chars"</span><span class='op'>)</span> <span class='co'># = graphemes</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-in'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"bytes"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 17</span>
+<span class='r-in'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"width"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-in'><span class='fu'>utf8_nchar</span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"codepoints"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># For comparision, the output for width depends on the R version used:</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"chars"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"bytes"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 17</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='va'>emo</span>, <span class='st'>"width"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
