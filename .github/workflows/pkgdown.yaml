@@ -1,9 +1,13 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
     branches: [main, master]
-    tags: ['*']
+  pull_request:
+    branches: [main, master]
+  release:
+    types: [published]
+  workflow_dispatch:
 
 name: pkgdown
 
@@ -12,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_CLI_NUM_COLORS: 256
     steps:
       - uses: actions/checkout@v2
 
@@ -23,14 +28,20 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: r-lib/pkgdown@v1.6.1, local::., local::./tests/testthat/progresstest
+          extra-packages: |
+            r-lib/pkgdown@v1.6.1
+            local::.
+            local::./tests/testthat/progresstest
           needs: website
 
       - name: Deploy package
+        if: github.event_name != 'pull_request'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
           Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
-        env:
-          R_CLI_NUM_COLORS: 256
-  
+
+      - name: Build site without deploying
+        if: github.event_name == 'pull_request'
+        run: |
+          Rscript -e 'pkgdown::build_site(preview = FALSE, install = FALSE)'
