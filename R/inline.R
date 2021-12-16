@@ -216,6 +216,7 @@ clii__inline <- function(app, text, .list) {
       .transformer = inline_transformer,
       .open = paste0("{", t$values$marker),
       .close = paste0(t$values$marker, "}"),
+      .literal = TRUE,
       .trim = TRUE
     )
   })
@@ -272,7 +273,7 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  pstr <- glue::glue(str, .envir = .envir, .transformer = transformer, .trim = TRUE)
+  pstr <- glue::glue(str, .envir = .envir, .transformer = transformer, .literal = TRUE, .trim = TRUE)
   glue_delay(
     str = post_process_plurals(pstr, values),
     values = values
