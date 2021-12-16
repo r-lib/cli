@@ -91,12 +91,12 @@ truecolor <- as.integer(256 ^ 3)
 ansi_palettes <- rbind(
   read.table(
     "tools/ansi-palettes.txt",
-    comment = ";",
+    comment.char = ";",
     stringsAsFactors = FALSE
   ),
   read.table(
     "tools/ansi-iterm-palettes.txt",
-    comment = ";",
+    comment.char = ";",
     stringsAsFactors = FALSE
   )
 )
