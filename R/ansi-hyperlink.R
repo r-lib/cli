@@ -16,6 +16,7 @@
 #' @param text Text to show. `text` and `url` are recycled to match their
 #'   length, via a `paste0()` call.
 #' @param url URL to link to.
+#' @param params Additional parameters for the hyperlink.
 #' @return Styled `ansi_string` for `style_hyperlink()`.
 #'   Logical scalar for `ansi_has_hyperlink_support()`.
 #'
@@ -23,9 +24,9 @@
 #' @examples
 #' cat("This is an", style_hyperlink("R", "https://r-project.org"), "link.\n")
 
-style_hyperlink <- function(text, url) {
+style_hyperlink <- function(text, url, params = NULL) {
   out <- if (ansi_has_hyperlink_support()) {
-    paste0("\u001B]8;;", url, "\u0007", text, "\u001B]8;;\u0007")
+    paste0("\u001B]8;", params, ";", url, "\u0007", text, "\u001B]8;;\u0007")
   } else {
     text
   }
