@@ -46,6 +46,10 @@ ansi_has_hyperlink_support <- function() {
   enabled <- getOption("cli.hyperlink", getOption("crayon.hyperlink"))
   if (!is.null(enabled)) { return(isTRUE(enabled)) }
 
+  ## forced by environment variable
+  enabled <- Sys.getenv("R_CLI_HYPERLINKS", "")
+  if (isTRUE(as.logical(enabled))){ return(TRUE) }
+
   ## Are we in a terminal? No?
   if (!isatty(stdout())) { return(FALSE) }
 
