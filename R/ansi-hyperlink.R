@@ -48,7 +48,7 @@ ansi_has_hyperlink_support <- function() {
 
   ## forced by environment variable
   enabled <- Sys.getenv("R_CLI_HYPERLINKS", "")
-  if (identical(enabled, "true")){ return(TRUE) }
+  if (isTRUE(as.logical(enabled))){ return(TRUE) }
 
   ## Are we in a terminal? No?
   if (!isatty(stdout())) { return(FALSE) }
