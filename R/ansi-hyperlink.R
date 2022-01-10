@@ -25,7 +25,7 @@
 #' cat("This is an", style_hyperlink("R", "https://r-project.org"), "link.\n")
 
 style_hyperlink <- function(text, url, params = NULL) {
-  params <- params %||% glue::glue_collapse(sep = ":",
+  params <- glue::glue_collapse(sep = ":",
     glue::glue("{names(params)}={params}")
   )
 
