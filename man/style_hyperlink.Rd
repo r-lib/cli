@@ -15,7 +15,7 @@ length, via a \code{paste0()} call.}
 
 \item{url}{URL to link to.}
 
-\item{params}{Additional parameters for the hyperlink.}
+\item{params}{A named character vector of additional parameters, or \code{NULL}.}
 }
 \value{
 Styled \code{ansi_string} for \code{style_hyperlink()}.
