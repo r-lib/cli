@@ -159,7 +159,7 @@ win2unix <- function (str) {
 
 expect_snapshot <- function(...) {
   if (packageVersion("testthat") >= "3.1.1" &&
-      packageVersion("testthat") <= "3.1.1.9000") {
+      packageVersion("testthat") < "3.1.1.9000") {
     skip("testthat bug with snapshots")
   }
   testthat::expect_snapshot(...)
