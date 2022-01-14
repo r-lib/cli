@@ -118,5 +118,5 @@ hyperlink_file <- function(text, file, line = NULL, col = NULL) {
 #' @export
 #' @rdname hyperlink
 hyperlink_viewer <- function(text, url) {
-  hyperlink(text, "rstudio:viewer", params = url)
+  hyperlink(text, paste0("rstudio:viewer:", url))
 }
