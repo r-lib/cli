@@ -31,6 +31,14 @@ Set to a positive integer to assume a given number of colors.
 See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
 }
 
+\subsection{\code{R_CLI_HYPERLINKS}}{
+
+Set to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal supports
+ANSI hyperlinks.
+Set to anything else to assume no hyperlink support.
+See \code{\link[=hyperlink]{hyperlink()}}.
+}
+
 }
 
 \subsection{User facing options}{
@@ -74,7 +82,7 @@ Set the \code{FALSE} if the hidden cursor causes issues.
 Set to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal supports
 ANSI hyperlinks.
 Set to anything else to assume no hyperlink support.
-See \code{\link[=style_hyperlink]{style_hyperlink()}}.
+See \code{\link[=hyperlink]{hyperlink()}}.
 }
 
 \subsection{\code{cli.num_colors}}{

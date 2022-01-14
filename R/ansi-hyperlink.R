@@ -100,6 +100,7 @@ hyperlink_vignette <- function(text, topic, package = NULL) {
 }
 
 #' @export
+#' @param file file name.
 #' @param line Line in the file.
 #' @param col Column in the file.
 #' @rdname hyperlink
