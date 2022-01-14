@@ -1,7 +1,7 @@
 
 #' Terminal Hyperlinks
 #'
-#' `ansi_hyperlink()` creates an ANSI hyperlink.
+#' `hyperlink()` creates an ANSI hyperlink.
 #'
 #' @details
 #' This function is currently experimental. In particular, many of the
@@ -17,17 +17,20 @@
 #'   length, via a `paste0()` call.
 #' @param url URL to link to.
 #' @param params A named character vector of additional parameters, or `NULL`.
-#' @return Styled `ansi_string` for `style_hyperlink()`.
+#' @return Styled `ansi_string` for `hyperlink()`.
 #'   Logical scalar for `ansi_has_hyperlink_support()`.
 #'
 #' @export
 #' @examples
-#' cat("This is an", style_hyperlink("R", "https://r-project.org"), "link.\n")
+#' cat("This is an", hyperlink("R", "https://r-project.org"), "link.\n")
 
-style_hyperlink <- function(text, url, params = NULL) {
-  params <- glue::glue_collapse(sep = ":",
-    glue::glue("{names(params)}={params}")
-  )
+hyperlink <- function(text, url, params = NULL) {
+  if (!is.null(params) && !is.null(names(params))) {
+    params <- glue::glue_collapse(
+      sep = ":",
+      glue::glue("{names(params)}={params}")
+    )
+  }
 
   out <- if (ansi_has_hyperlink_support()) {
     paste0("\u001B]8;", params, ";", url, "\u0007", text, "\u001B]8;;\u0007")
@@ -39,8 +42,14 @@ style_hyperlink <- function(text, url, params = NULL) {
   out
 }
 
+# for background compatibility
+
 #' @export
-#' @name style_hyperlink
+#' @rdname
+style_hyperlink <- hyperlink
+
+#' @export
+#' @name hyperlink
 #' @examples
 #' ansi_has_hyperlink_support()
 
@@ -80,4 +89,40 @@ ansi_has_hyperlink_support <- function() {
   }
 
   FALSE
+}
+
+#' @export
+#' @rdname hyperlink
+hyperlink_help <- function(text, topic, package = NULL) {
+  hyperlink(text, "rstudio:help", c(topic = topic, package = package))
+}
+
+#' @param topic topic for help page or vignette.
+#' @param package package for help page or vignette.
+#' @export
+#' @rdname hyperlink
+hyperlink_vignette <- function(text, topic, package = NULL) {
+  hyperlink(text, "rstudio:vignette", c(topic = topic, package = package))
+}
+
+#' @export
+#' @param line Line in the file.
+#' @param col Column in the file.
+#' @rdname hyperlink
+hyperlink_file <- function(text, file, line = NULL, col = NULL) {
+  uri <- paste0("file://", file)
+  if (!is.null(line)) {
+    uri <- paste0(uri, ":", as.numeric(line))
+
+    if (!is.null(col)) {
+      uri <- paste0(uri, ":", as.numeric(col))
+    }
+  }
+  hyperlink(text, uri)
+}
+
+#' @export
+#' @rdname hyperlink
+hyperlink_viewer <- function(text, url) {
+  hyperlink(text, "rstudio:viewer", params = url)
 }

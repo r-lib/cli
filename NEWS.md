@@ -1,7 +1,8 @@
 
 # cli (development version)
 
-* `style_hyperlink()` gains a `params=` argument (#384).
+* `style_hyperlink()` becomes `hyperlink()` and gains a set of variants: 
+  `hyperlink_help()`, `hyperlin_viewer()`, `hyperlink_vignette()` and `hyperlink_file()`. 
 
 # cli 3.1.0
 
