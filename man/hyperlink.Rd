@@ -33,6 +33,8 @@ length, via a \code{paste0()} call.}
 
 \item{package}{package for help page or vignette.}
 
+\item{file}{file name.}
+
 \item{line}{Line in the file.}
 
 \item{col}{Column in the file.}
