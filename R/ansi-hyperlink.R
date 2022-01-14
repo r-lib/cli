@@ -42,12 +42,6 @@ hyperlink <- function(text, url, params = NULL) {
   out
 }
 
-# for background compatibility
-
-#' @export
-#' @rdname
-style_hyperlink <- hyperlink
-
 #' @export
 #' @name hyperlink
 #' @examples

@@ -28,7 +28,7 @@ test_that("ansi_has_any works", {
   expect_false(ansi_has_any("foobar"))
   funcs <- ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")
 
-  for (sym in setdiff(funcs, "style_hyperlink")) {
+  for (sym in funcs) {
     fun <- get(sym, envir = asNamespace("cli"))
     expect_true(ansi_has_any(fun("foo", "bar")), label = sym)
   }
@@ -47,10 +47,9 @@ test_that("ansi_strip works", {
   )
 
   funcs <- ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")
-  for (sym in setdiff(funcs, "style_hyperlink")) {
+  for (sym in funcs) {
     fun <- get(sym, envir = asNamespace("cli"))
-    ans <- if (sym == "style_hyperlink") "foo" else "foobar"
-    expect_equal(ans, ansi_strip(fun("foo", "bar")))
+    expect_equal("foobar", ansi_strip(fun("foo", "bar")))
   }
 })
 
@@ -389,7 +388,7 @@ test_that("ansi_align", {
 test_that("stripping hyperlinks", {
   skip("Temporarily defunct")
   withr::local_options(list(cli.hyperlink = TRUE))
-  x <- unclass(style_hyperlink("foo", "https://r-pkg.org"))
+  x <- unclass(hyperlink("foo", "https://r-pkg.org"))
   expect_equal(
     ansi_strip(paste0("1111-", x, "-2222-", x, "-333")),
     "1111-foo-2222-foo-333"
