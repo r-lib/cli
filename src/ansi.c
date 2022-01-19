@@ -217,6 +217,9 @@ static void clic__ansi_update_state(const char *param,
     } else if (num == 5) {
       state->new.blink = 1;
 
+    } else if (num == 6) {
+      state->new.blink = 1;
+
     } else if (num == 7) {
       state->new.inverse = 1;
 
