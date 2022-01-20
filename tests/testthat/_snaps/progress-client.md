@@ -66,6 +66,6 @@
     Code
       capture_cli_messages(fun())
     Output
-      [1] "\rfirst\r"     "\r      \r"    "just 1 text\n" "first\r"      
-      [5] "\rfirst\r"     "\r      \r"   
+      [1] "\rfirst\r"     "\r     \r"     "just 1 text\n" "first\r"      
+      [5] "\rfirst\r"     "\r     \r"    
 
