@@ -10,7 +10,7 @@ test_that("cat_line", {
   exp <- "This is a line of text."
   expect_equal(readLines(tmp, warn = FALSE), exp)
 
-  local_cli_config(num_colors = 256L)
+  local_reproducible_output(crayon = TRUE)
 
   expect_snapshot({
     cat_line("This is ", "a ", "line of text.", col = "red")
