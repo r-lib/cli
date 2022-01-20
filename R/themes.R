@@ -130,33 +130,33 @@ builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
       before = function() paste0(col_cyan(symbol$info), " ")
     ),
 
-    ".memo .memo-item-empty" = list(),
-    ".memo .memo-item-space" = list("margin-left" = 2),
-    ".memo .memo-item-v" = list(
+    ".bullets .bullet-empty" = list(),
+    ".bullets .bullet-space" = list("margin-left" = 2),
+    ".bullets .bullet-v" = list(
       "text-exdent" = 2,
       before = function(x) paste0(col_green(symbol$tick), " ")
     ),
-    ".memo .memo-item-x" = list(
+    ".bullets .bullet-x" = list(
       "text-exdent" = 2,
       before = function(x) paste0(col_red(symbol$cross), " ")
     ),
-    ".memo .memo-item-!" = list(
+    ".bullets .bullet-!" = list(
       "text-exdent" = 2,
       before = function(x) paste0(col_yellow("!"), " ")
     ),
-    ".memo .memo-item-i" = list(
+    ".bullets .bullet-i" = list(
       "text-exdent" = 2,
       before = function(x) paste0(col_cyan(symbol$info), " ")
     ),
-    ".memo .memo-item-*" = list(
+    ".bullets .bullet-*" = list(
       "text-exdent" = 2,
       before = function(x) paste0(col_cyan(symbol$bullet), " ")
     ),
-    ".memo .memo-item->" = list(
+    ".bullets .bullet->" = list(
       "text-exdent" = 2,
       before = function(x) paste0(symbol$arrow_right, " ")
     ),
-    ".memo .memo-item-1" = list(
+    ".bullets .bullet-1" = list(
     ),
 
     par = list("margin-top" = 0, "margin-bottom" = 1),
@@ -297,11 +297,7 @@ detect_dark_theme <- function(dark) {
 }
 
 theme_code <- function(dark) {
-  if (dark) {
-    list("background-color" = "#232323", color = "#d0d0d0")
-  } else{
-    list("background-color" = "#e8e8e8", color = "#202020")
-  }
+  list()
 }
 
 theme_code_tick <- function(dark) {
