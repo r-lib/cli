@@ -98,7 +98,7 @@
       <h1 data-toc-skip>cli progress bar benchmark</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2022-01-20</h4>
+            <h4 class="date">2022-01-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/progress-benchmark.Rmd"><code>vignettes/progress-benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>progress-benchmark.Rmd</code></div>
@@ -137,12 +137,12 @@
 <span class="op">)</span>
 <span class="va">ben_st</span>
 <span class="co">#&gt; [38;5;246m# A tibble: 4 × 6[39m</span>
-<span class="co">#&gt;   expression                  min   median `itr/sec` mem_alloc `gc/sec`</span>
-<span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m             [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m __cli_update_due              0        0 66[4m1[24m[4m6[24m[4m5[24m667.        0B        0</span>
-<span class="co">#&gt; [38;5;250m2[39m fun()                     100ns    200ns  2[4m7[24m[4m2[24m[4m6[24m657.        0B        0</span>
-<span class="co">#&gt; [38;5;250m3[39m .Call(ccli_tick_reset)   99.9ns    200ns  4[4m8[24m[4m0[24m[4m0[24m552.        0B        0</span>
-<span class="co">#&gt; [38;5;250m4[39m interactive()                 0        0 68[4m1[24m[4m3[24m[4m5[24m662.        0B        0</span></code></pre></div>
+<span class="co">#&gt;   expression                  min   median   `itr/sec` mem_alloc `gc/sec`</span>
+<span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m             [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
+<span class="co">#&gt; [38;5;250m1[39m __cli_update_due              0        0 [4m2[24m604[4m0[24m[4m3[24m[4m0[24m980.        0B        0</span>
+<span class="co">#&gt; [38;5;250m2[39m fun()                    99.9ns    100ns    4[4m2[24m[4m7[24m[4m2[24m354.        0B        0</span>
+<span class="co">#&gt; [38;5;250m3[39m .Call(ccli_tick_reset)   99.9ns    100ns    7[4m6[24m[4m4[24m[4m9[24m848.        0B        0</span>
+<span class="co">#&gt; [38;5;250m4[39m interactive()                 0        0 [4m2[24m882[4m3[24m[4m0[24m[4m9[24m919.        0B        0</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_st2</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
   <span class="kw">if</span> <span class="op">(</span><span class="va">`__cli_update_due`</span><span class="op">)</span> <span class="fu">foobar</span><span class="op">(</span><span class="op">)</span>
@@ -151,7 +151,7 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 1 × 6[39m</span>
 <span class="co">#&gt;   expression                            min  median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m                       [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:t&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m if (`__cli_update_due`) foobar()        0   100ns 13[4m9[24m[4m0[24m[4m4[24m416.        0B        0</span></code></pre></div>
+<span class="co">#&gt; [38;5;250m1[39m if (`__cli_update_due`) foobar()        0       0 37[4m4[24m[4m0[24m[4m1[24m455.        0B        0</span></code></pre></div>
 </div>
 <div id="cli_progress_along" class="section level2">
 <h2 class="hasAnchor">
@@ -164,8 +164,8 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 2 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m seq[[1]]      100ns    200ns  2[4m9[24m[4m3[24m[4m9[24m626.        0B        0</span>
-<span class="co">#&gt; [38;5;250m2[39m ta[[1]]       200ns    300ns  2[4m7[24m[4m4[24m[4m5[24m069.        0B        0</span></code></pre></div>
+<span class="co">#&gt; [38;5;250m1[39m seq[[1]]     99.9ns    100ns  5[4m6[24m[4m0[24m[4m4[24m949.        0B        0</span>
+<span class="co">#&gt; [38;5;250m2[39m ta[[1]]      99.9ns    200ns  5[4m0[24m[4m1[24m[4m1[24m425.        0B        0</span></code></pre></div>
 <div id="for-loop" class="section level3">
 <h3 class="hasAnchor">
 <a href="#for-loop" class="anchor"></a><code>for</code> loop</h3>
@@ -196,10 +196,10 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 2 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0()         21.7ms   22.5ms      44.4    96.9KB     377.</span>
-<span class="co">#&gt; [38;5;250m2[39m fp()         25.8ms   26.2ms      38.1   133.5KB     286.</span>
+<span class="co">#&gt; [38;5;250m1[39m f0()         17.9ms   17.9ms      55.8    96.9KB     614.</span>
+<span class="co">#&gt; [38;5;250m2[39m fp()         20.8ms     22ms      45.5   133.5KB     432.</span>
 <span class="op">(</span><span class="va">ben_taf</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_taf</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 36.9ns</span></code></pre></div>
+<span class="co">#&gt; [1] 40.7ns</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_taf2</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f0</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">fp</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
@@ -207,10 +207,10 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 2 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)     248ms    251ms      3.99        0B     35.9</span>
-<span class="co">#&gt; [38;5;250m2[39m fp(1e+06)     278ms    290ms      3.45    1.12KB     31.1</span>
+<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)     206ms    206ms      4.81        0B     43.3</span>
+<span class="co">#&gt; [38;5;250m2[39m fp(1e+06)     216ms    251ms      3.98    1.12KB     35.8</span>
 <span class="op">(</span><span class="va">ben_taf2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_taf2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 38.7ns</span></code></pre></div>
+<span class="co">#&gt; [1] 45ns</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_taf3</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f0</span><span class="op">(</span><span class="fl">1e7</span><span class="op">)</span>, <span class="fu">fp</span><span class="op">(</span><span class="fl">1e7</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
@@ -218,10 +218,10 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 2 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0(1e+07)      2.6s     2.6s     0.384        0B     34.9</span>
-<span class="co">#&gt; [38;5;250m2[39m fp(1e+07)      2.7s     2.7s     0.370    1.12KB     33.3</span>
+<span class="co">#&gt; [38;5;250m1[39m f0(1e+07)     2.04s    2.04s     0.491        0B     44.6</span>
+<span class="co">#&gt; [38;5;250m2[39m fp(1e+07)     2.22s    2.22s     0.451    1.12KB     41.0</span>
 <span class="op">(</span><span class="va">ben_taf3</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_taf3</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e7</span>
-<span class="co">#&gt; [1] 9.8ns</span></code></pre></div>
+<span class="co">#&gt; [1] 17.9ns</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_taf4</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f0</span><span class="op">(</span><span class="fl">1e8</span><span class="op">)</span>, <span class="fu">fp</span><span class="op">(</span><span class="fl">1e8</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
@@ -229,10 +229,10 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 2 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0(1e+08)     23.9s    23.9s    0.041[4m9[24m        0B     27.6</span>
-<span class="co">#&gt; [38;5;250m2[39m fp(1e+08)     27.6s    27.6s    0.036[4m2[24m    1.12KB     23.1</span>
+<span class="co">#&gt; [38;5;250m1[39m f0(1e+08)       19s      19s    0.052[4m5[24m        0B     20.3</span>
+<span class="co">#&gt; [38;5;250m2[39m fp(1e+08)       21s      21s    0.047[4m5[24m    1.12KB     17.5</span>
 <span class="op">(</span><span class="va">ben_taf4</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_taf4</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e8</span>
-<span class="co">#&gt; [1] 37.6ns</span></code></pre></div>
+<span class="co">#&gt; [1] 20ns</span></code></pre></div>
 </div>
 <div id="mapping-with-lapply" class="section level3">
 <h3 class="hasAnchor">
@@ -273,11 +273,11 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 3 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0()          115ms    130ms      5.42     781KB    18.1 </span>
-<span class="co">#&gt; [38;5;250m2[39m f01()         116ms    125ms      7.89     781KB     9.86</span>
-<span class="co">#&gt; [38;5;250m3[39m fp()          143ms    150ms      5.90     782KB    13.8</span>
+<span class="co">#&gt; [38;5;250m1[39m f0()         95.1ms    105ms      9.51     781KB     11.4</span>
+<span class="co">#&gt; [38;5;250m2[39m f01()       120.5ms    131ms      7.59     781KB     15.2</span>
+<span class="co">#&gt; [38;5;250m3[39m fp()        139.1ms    157ms      6.17     782KB     10.8</span>
 <span class="op">(</span><span class="va">ben_tam</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_tam</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 208ns</span></code></pre></div>
+<span class="co">#&gt; [1] 519ns</span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_tam2</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f0</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">f01</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">fp</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
@@ -285,13 +285,13 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 3 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)     1.11s    1.11s     0.901    7.63MB     2.70</span>
-<span class="co">#&gt; [38;5;250m2[39m f01(1e+06)    1.43s    1.43s     0.700    7.63MB     3.50</span>
-<span class="co">#&gt; [38;5;250m3[39m fp(1e+06)     1.81s    1.81s     0.552    7.63MB     2.76</span>
+<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)  845.16ms 845.16ms     1.18     7.63MB     4.73</span>
+<span class="co">#&gt; [38;5;250m2[39m f01(1e+06)    1.25s    1.25s     0.798    7.63MB     3.99</span>
+<span class="co">#&gt; [38;5;250m3[39m fp(1e+06)     1.32s    1.32s     0.759    7.63MB     4.55</span>
 <span class="op">(</span><span class="va">ben_tam2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_tam2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 701ns</span>
+<span class="co">#&gt; [1] 472ns</span>
 <span class="op">(</span><span class="va">ben_tam2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_tam2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 382ns</span></code></pre></div>
+<span class="co">#&gt; [1] 64.4ns</span></code></pre></div>
 </div>
 <div id="mapping-with-purrr" class="section level3">
 <h3 class="hasAnchor">
@@ -330,13 +330,13 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 3 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0()         93.4ms   95.6ms     10.5     1.05MB     7.00</span>
-<span class="co">#&gt; [38;5;250m2[39m f01()       105.7ms  117.1ms      8.76   781.3KB     5.84</span>
-<span class="co">#&gt; [38;5;250m3[39m fp()        106.7ms  121.2ms      8.59  782.43KB     5.73</span>
+<span class="co">#&gt; [38;5;250m1[39m f0()         68.5ms   68.8ms      14.5    1.05MB    10.9 </span>
+<span class="co">#&gt; [38;5;250m2[39m f01()        75.1ms   76.7ms      13.0   781.3KB     9.75</span>
+<span class="co">#&gt; [38;5;250m3[39m fp()         77.8ms   78.2ms      12.5  782.43KB    12.5</span>
 <span class="op">(</span><span class="va">ben_pur</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_pur</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 256ns</span>
+<span class="co">#&gt; [1] 93.6ns</span>
 <span class="op">(</span><span class="va">ben_pur</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_pur</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 41.1ns</span></code></pre></div>
+<span class="co">#&gt; [1] 15.1ns</span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_pur2</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f0</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">f01</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">fp</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
@@ -344,13 +344,13 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 3 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)     1.21s    1.21s     0.824    7.63MB     1.65</span>
-<span class="co">#&gt; [38;5;250m2[39m f01(1e+06)     1.6s     1.6s     0.625    7.63MB     2.50</span>
-<span class="co">#&gt; [38;5;250m3[39m fp(1e+06)     1.92s    1.92s     0.522    7.63MB     2.09</span>
+<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)  924.66ms 924.66ms     1.08     7.63MB     3.24</span>
+<span class="co">#&gt; [38;5;250m2[39m f01(1e+06)    1.04s    1.04s     0.961    7.63MB     2.88</span>
+<span class="co">#&gt; [38;5;250m3[39m fp(1e+06)     1.58s    1.58s     0.634    7.63MB     3.17</span>
 <span class="op">(</span><span class="va">ben_pur2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_pur2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 701ns</span>
+<span class="co">#&gt; [1] 653ns</span>
 <span class="op">(</span><span class="va">ben_pur2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_pur2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 316ns</span></code></pre></div>
+<span class="co">#&gt; [1] 537ns</span></code></pre></div>
 </div>
 </div>
 <div id="ticking" class="section level2">
@@ -384,10 +384,10 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 2 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0()         26.4ms   33.3ms   29.5       41.3KB     1.97</span>
-<span class="co">#&gt; [38;5;250m2[39m fp()          10.3s    10.3s    0.096[4m7[24m    96.2KB     1.06</span>
+<span class="co">#&gt; [38;5;250m1[39m f0()        18.08ms  22.98ms    41.4      41.3KB     3.94</span>
+<span class="co">#&gt; [38;5;250m2[39m fp()          4.76s    4.76s     0.210    96.2KB     2.52</span>
 <span class="op">(</span><span class="va">ben_tk</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_tk</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 103µs</span></code></pre></div>
+<span class="co">#&gt; [1] 47.4µs</span></code></pre></div>
 </div>
 <div id="traditional-api" class="section level2">
 <h2 class="hasAnchor">
@@ -427,13 +427,13 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 3 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0()        19.43ms  21.41ms    45.1      19.9KB     3.92</span>
-<span class="co">#&gt; [38;5;250m2[39m ff()        27.95ms  31.22ms    31.1      27.9KB     3.89</span>
-<span class="co">#&gt; [38;5;250m3[39m fp()          4.49s    4.49s     0.223    25.3KB     1.11</span>
+<span class="co">#&gt; [38;5;250m1[39m f0()        14.37ms  14.71ms    65.0      19.9KB     7.88</span>
+<span class="co">#&gt; [38;5;250m2[39m ff()         21.3ms  21.42ms    45.9      27.9KB     3.99</span>
+<span class="co">#&gt; [38;5;250m3[39m fp()          2.28s    2.28s     0.439    25.3KB     2.19</span>
 <span class="op">(</span><span class="va">ben_api</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_api</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 44.7µs</span>
+<span class="co">#&gt; [1] 22.6µs</span>
 <span class="op">(</span><span class="va">ben_api</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_api</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e5</span>
-<span class="co">#&gt; [1] 98.1ns</span></code></pre></div>
+<span class="co">#&gt; [1] 67ns</span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ben_api2</span> <span class="op">&lt;-</span> <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu">f0</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">ff</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span>, <span class="fu">fp</span><span class="op">(</span><span class="fl">1e6</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Some expressions had a GC in every iteration; so filtering is disabled.</span>
@@ -441,13 +441,13 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 3 × 6[39m</span>
 <span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)   223.7ms  224.7ms    4.42          0B     4.42</span>
-<span class="co">#&gt; [38;5;250m2[39m ff(1e+06)   312.8ms  315.5ms    3.17      1.13KB     3.17</span>
-<span class="co">#&gt; [38;5;250m3[39m fp(1e+06)     46.5s    46.5s    0.021[4m5[24m    1.13KB     1.16</span>
+<span class="co">#&gt; [38;5;250m1[39m f0(1e+06)   160.7ms  161.1ms    6.14          0B     6.14</span>
+<span class="co">#&gt; [38;5;250m2[39m ff(1e+06)     224ms  224.3ms    4.43      1.13KB     5.91</span>
+<span class="co">#&gt; [38;5;250m3[39m fp(1e+06)     25.7s    25.7s    0.039[4m0[24m    1.13KB     2.10</span>
 <span class="op">(</span><span class="va">ben_api2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_api2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 46.2µs</span>
+<span class="co">#&gt; [1] 25.5µs</span>
 <span class="op">(</span><span class="va">ben_api2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_api2</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span>
-<span class="co">#&gt; [1] 90.8ns</span></code></pre></div>
+<span class="co">#&gt; [1] 63.3ns</span></code></pre></div>
 </div>
 </div>
 <div id="c-benchmarks" class="section level1">
@@ -514,10 +514,10 @@
 <span class="co">#&gt; [38;5;246m# A tibble: 4 × 6[39m</span>
 <span class="co">#&gt;   expression             min   median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m        [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:tm&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m test_baseline()      1.02s    1.02s     0.978    2.08KB        0</span>
-<span class="co">#&gt; [38;5;250m2[39m test_modulo()        1.89s    1.89s     0.529    2.24KB        0</span>
-<span class="co">#&gt; [38;5;250m3[39m test_cli()           1.83s    1.83s     0.548   23.72KB        0</span>
-<span class="co">#&gt; [38;5;250m4[39m test_cli_unroll() 977.15ms 977.15ms     1.02     3.38KB        0</span>
+<span class="co">#&gt; [38;5;250m1[39m test_baseline()   738.19ms 738.19ms     1.35     2.08KB        0</span>
+<span class="co">#&gt; [38;5;250m2[39m test_modulo()        1.77s    1.77s     0.564    2.24KB        0</span>
+<span class="co">#&gt; [38;5;250m3[39m test_cli()           1.33s    1.33s     0.752   23.72KB        0</span>
+<span class="co">#&gt; [38;5;250m4[39m test_cli_unroll() 740.82ms 740.82ms     1.35     3.38KB        0</span>
 <span class="op">(</span><span class="va">ben_c</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">-</span> <span class="va">ben_c</span><span class="op">$</span><span class="va">median</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2000000000</span>
 <span class="co">#&gt; [1] 1ns</span></code></pre></div>
 </div>
@@ -533,58 +533,89 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span>
 <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span>force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, max_iterations <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  6h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  4h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  3h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  2h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  2h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  2h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  2h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA:  1h</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 49m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 48m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 46m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 45m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 44m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 43m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 42m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 41m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 40m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 40m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 39m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 38m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 38m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 37m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 36m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 36m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 35m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 35m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 34m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 34m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 33m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 33m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 33m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 32m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 32m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 32m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 31m</span>
-<span class="co">#&gt; [32m■                               [39m   0% | ETA: 31m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 31m</span>
 <span class="co">#&gt; [32m■                               [39m   0% | ETA: 30m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 29m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 28m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 27m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 27m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 26m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 26m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 25m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 25m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 24m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 24m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 23m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 23m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 23m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 22m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 22m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 22m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 21m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 21m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 21m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 20m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 20m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 20m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 20m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 20m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 19m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 19m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 19m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 19m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 19m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 19m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 18m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 17m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
+<span class="co">#&gt; [32m■                               [39m   0% | ETA: 16m</span>
 <span class="co">#&gt; [38;5;246m# A tibble: 1 × 6[39m</span>
 <span class="co">#&gt;   expression                             min median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m                        [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m cli_progress_update(force = TRUE)   8.63ms 9.85ms      96.9     2.3MB     2.06</span>
+<span class="co">#&gt; [38;5;250m1[39m cli_progress_update(force = TRUE)   6.05ms 6.13ms      160.     2.3MB     2.05</span>
 <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="iterator-without-a-bar" class="section level2">
@@ -593,56 +624,81 @@
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span>total <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
 <span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span>force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, max_iterations <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span>
-<span class="co">#&gt; ⠙ 1 done (286/s) | 4ms</span>
-<span class="co">#&gt; ⠹ 2 done (41/s) | 49ms</span>
-<span class="co">#&gt; ⠸ 3 done (49/s) | 61ms</span>
-<span class="co">#&gt; ⠼ 4 done (56/s) | 73ms</span>
-<span class="co">#&gt; ⠴ 5 done (60/s) | 84ms</span>
-<span class="co">#&gt; ⠦ 6 done (63/s) | 96ms</span>
-<span class="co">#&gt; ⠧ 7 done (65/s) | 108ms</span>
-<span class="co">#&gt; ⠇ 8 done (68/s) | 119ms</span>
-<span class="co">#&gt; ⠏ 9 done (70/s) | 130ms</span>
-<span class="co">#&gt; ⠋ 10 done (71/s) | 141ms</span>
-<span class="co">#&gt; ⠙ 11 done (73/s) | 152ms</span>
-<span class="co">#&gt; ⠹ 12 done (74/s) | 163ms</span>
-<span class="co">#&gt; ⠸ 13 done (75/s) | 174ms</span>
-<span class="co">#&gt; ⠼ 14 done (76/s) | 186ms</span>
-<span class="co">#&gt; ⠴ 15 done (76/s) | 197ms</span>
-<span class="co">#&gt; ⠦ 16 done (77/s) | 209ms</span>
-<span class="co">#&gt; ⠧ 17 done (77/s) | 220ms</span>
-<span class="co">#&gt; ⠇ 18 done (78/s) | 231ms</span>
-<span class="co">#&gt; ⠏ 19 done (79/s) | 242ms</span>
-<span class="co">#&gt; ⠋ 20 done (79/s) | 254ms</span>
-<span class="co">#&gt; ⠙ 21 done (79/s) | 266ms</span>
-<span class="co">#&gt; ⠹ 22 done (80/s) | 276ms</span>
-<span class="co">#&gt; ⠸ 23 done (80/s) | 287ms</span>
-<span class="co">#&gt; ⠼ 24 done (81/s) | 299ms</span>
-<span class="co">#&gt; ⠴ 25 done (81/s) | 309ms</span>
-<span class="co">#&gt; ⠦ 26 done (81/s) | 321ms</span>
-<span class="co">#&gt; ⠧ 27 done (81/s) | 332ms</span>
-<span class="co">#&gt; ⠇ 28 done (82/s) | 343ms</span>
-<span class="co">#&gt; ⠏ 29 done (82/s) | 353ms</span>
-<span class="co">#&gt; ⠋ 30 done (82/s) | 365ms</span>
-<span class="co">#&gt; ⠙ 31 done (83/s) | 376ms</span>
-<span class="co">#&gt; ⠹ 32 done (83/s) | 387ms</span>
-<span class="co">#&gt; ⠸ 33 done (83/s) | 399ms</span>
-<span class="co">#&gt; ⠼ 34 done (83/s) | 410ms</span>
-<span class="co">#&gt; ⠴ 35 done (83/s) | 421ms</span>
-<span class="co">#&gt; ⠦ 36 done (83/s) | 432ms</span>
-<span class="co">#&gt; ⠧ 37 done (83/s) | 445ms</span>
-<span class="co">#&gt; ⠇ 38 done (83/s) | 458ms</span>
-<span class="co">#&gt; ⠏ 39 done (83/s) | 469ms</span>
-<span class="co">#&gt; ⠋ 40 done (83/s) | 480ms</span>
-<span class="co">#&gt; ⠙ 41 done (83/s) | 492ms</span>
-<span class="co">#&gt; ⠹ 42 done (84/s) | 503ms</span>
-<span class="co">#&gt; ⠸ 43 done (84/s) | 515ms</span>
-<span class="co">#&gt; ⠼ 44 done (84/s) | 526ms</span>
-<span class="co">#&gt; ⠴ 45 done (84/s) | 536ms</span>
-<span class="co">#&gt; ⠦ 46 done (84/s) | 548ms</span>
+<span class="co">#&gt; ⠙ 1 done (409/s) | 3ms</span>
+<span class="co">#&gt; ⠹ 2 done (62/s) | 33ms</span>
+<span class="co">#&gt; ⠸ 3 done (75/s) | 40ms</span>
+<span class="co">#&gt; ⠼ 4 done (85/s) | 48ms</span>
+<span class="co">#&gt; ⠴ 5 done (93/s) | 55ms</span>
+<span class="co">#&gt; ⠦ 6 done (98/s) | 62ms</span>
+<span class="co">#&gt; ⠧ 7 done (103/s) | 69ms</span>
+<span class="co">#&gt; ⠇ 8 done (106/s) | 76ms</span>
+<span class="co">#&gt; ⠏ 9 done (109/s) | 83ms</span>
+<span class="co">#&gt; ⠋ 10 done (111/s) | 90ms</span>
+<span class="co">#&gt; ⠙ 11 done (114/s) | 97ms</span>
+<span class="co">#&gt; ⠹ 12 done (115/s) | 105ms</span>
+<span class="co">#&gt; ⠸ 13 done (117/s) | 112ms</span>
+<span class="co">#&gt; ⠼ 14 done (118/s) | 119ms</span>
+<span class="co">#&gt; ⠴ 15 done (120/s) | 126ms</span>
+<span class="co">#&gt; ⠦ 16 done (121/s) | 133ms</span>
+<span class="co">#&gt; ⠧ 17 done (122/s) | 140ms</span>
+<span class="co">#&gt; ⠇ 18 done (123/s) | 147ms</span>
+<span class="co">#&gt; ⠏ 19 done (124/s) | 154ms</span>
+<span class="co">#&gt; ⠋ 20 done (124/s) | 161ms</span>
+<span class="co">#&gt; ⠙ 21 done (125/s) | 169ms</span>
+<span class="co">#&gt; ⠹ 22 done (126/s) | 176ms</span>
+<span class="co">#&gt; ⠸ 23 done (126/s) | 183ms</span>
+<span class="co">#&gt; ⠼ 24 done (127/s) | 190ms</span>
+<span class="co">#&gt; ⠴ 25 done (127/s) | 197ms</span>
+<span class="co">#&gt; ⠦ 26 done (128/s) | 204ms</span>
+<span class="co">#&gt; ⠧ 27 done (128/s) | 211ms</span>
+<span class="co">#&gt; ⠇ 28 done (128/s) | 219ms</span>
+<span class="co">#&gt; ⠏ 29 done (129/s) | 226ms</span>
+<span class="co">#&gt; ⠋ 30 done (129/s) | 233ms</span>
+<span class="co">#&gt; ⠙ 31 done (129/s) | 240ms</span>
+<span class="co">#&gt; ⠹ 32 done (130/s) | 247ms</span>
+<span class="co">#&gt; ⠸ 33 done (130/s) | 254ms</span>
+<span class="co">#&gt; ⠼ 34 done (130/s) | 261ms</span>
+<span class="co">#&gt; ⠴ 35 done (131/s) | 269ms</span>
+<span class="co">#&gt; ⠦ 36 done (131/s) | 276ms</span>
+<span class="co">#&gt; ⠧ 37 done (131/s) | 283ms</span>
+<span class="co">#&gt; ⠇ 38 done (131/s) | 290ms</span>
+<span class="co">#&gt; ⠏ 39 done (132/s) | 297ms</span>
+<span class="co">#&gt; ⠋ 40 done (132/s) | 304ms</span>
+<span class="co">#&gt; ⠙ 41 done (132/s) | 311ms</span>
+<span class="co">#&gt; ⠹ 42 done (132/s) | 319ms</span>
+<span class="co">#&gt; ⠸ 43 done (132/s) | 326ms</span>
+<span class="co">#&gt; ⠼ 44 done (132/s) | 333ms</span>
+<span class="co">#&gt; ⠴ 45 done (133/s) | 340ms</span>
+<span class="co">#&gt; ⠦ 46 done (133/s) | 347ms</span>
+<span class="co">#&gt; ⠧ 47 done (133/s) | 354ms</span>
+<span class="co">#&gt; ⠇ 48 done (133/s) | 362ms</span>
+<span class="co">#&gt; ⠏ 49 done (133/s) | 369ms</span>
+<span class="co">#&gt; ⠋ 50 done (133/s) | 376ms</span>
+<span class="co">#&gt; ⠙ 51 done (133/s) | 383ms</span>
+<span class="co">#&gt; ⠹ 52 done (133/s) | 390ms</span>
+<span class="co">#&gt; ⠸ 53 done (134/s) | 397ms</span>
+<span class="co">#&gt; ⠼ 54 done (134/s) | 405ms</span>
+<span class="co">#&gt; ⠴ 55 done (134/s) | 412ms</span>
+<span class="co">#&gt; ⠦ 56 done (132/s) | 424ms</span>
+<span class="co">#&gt; ⠧ 57 done (132/s) | 431ms</span>
+<span class="co">#&gt; ⠇ 58 done (133/s) | 438ms</span>
+<span class="co">#&gt; ⠏ 59 done (133/s) | 445ms</span>
+<span class="co">#&gt; ⠋ 60 done (133/s) | 452ms</span>
+<span class="co">#&gt; ⠙ 61 done (133/s) | 459ms</span>
+<span class="co">#&gt; ⠹ 62 done (133/s) | 466ms</span>
+<span class="co">#&gt; ⠸ 63 done (133/s) | 473ms</span>
+<span class="co">#&gt; ⠼ 64 done (133/s) | 480ms</span>
+<span class="co">#&gt; ⠴ 65 done (134/s) | 487ms</span>
+<span class="co">#&gt; ⠦ 66 done (134/s) | 494ms</span>
+<span class="co">#&gt; ⠧ 67 done (134/s) | 501ms</span>
+<span class="co">#&gt; ⠇ 68 done (134/s) | 508ms</span>
+<span class="co">#&gt; ⠏ 69 done (134/s) | 516ms</span>
+<span class="co">#&gt; ⠋ 70 done (134/s) | 523ms</span>
+<span class="co">#&gt; ⠙ 71 done (134/s) | 530ms</span>
 <span class="co">#&gt; [38;5;246m# A tibble: 1 × 6[39m</span>
 <span class="co">#&gt;   expression                             min median `itr/sec` mem_alloc `gc/sec`</span>
 <span class="co">#&gt;   [3m[38;5;246m&lt;bch:expr&gt;[39m[23m                        [3m[38;5;246m&lt;bch:tm&gt;[39m[23m [3m[38;5;246m&lt;bch:&gt;[39m[23m     [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;bch:byt&gt;[39m[23m    [3m[38;5;246m&lt;dbl&gt;[39m[23m</span>
-<span class="co">#&gt; [38;5;250m1[39m cli_progress_update(force = TRUE)   10.4ms 11.2ms      88.0     167KB        0</span>
+<span class="co">#&gt; [38;5;250m1[39m cli_progress_update(force = TRUE)   6.97ms 7.12ms      141.     167KB     2.04</span>
 <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 </div>

@@ -98,7 +98,7 @@
       <h1 data-toc-skip>ANSI function benchmarks</h1>
                         <h4 class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2022-01-20</h4>
+            <h4 class="date">2022-01-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/ansi-benchmark.Rmd"><code>vignettes/ansi-benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>ansi-benchmark.Rmd</code></div>
@@ -110,7 +110,7 @@
 <style type="text/css" scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </style>
-<p>$output function (x, options) { hook.t(x, options, options[[paste0(“attr.”, class)]], options[[paste0(“class.”, class)]]) } &lt;bytecode: 0x55aef0584f68&gt; &lt;environment: 0x55aef003a9f0&gt;</p>
+<p>$output function (x, options) { hook.t(x, options, options[[paste0(“attr.”, class)]], options[[paste0(“class.”, class)]]) } &lt;bytecode: 0x564caa37fb48&gt; &lt;environment: 0x564ca9e35a10&gt;</p>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -167,9 +167,9 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> ansi         78.1µs   91.3µs     <span style="text-decoration: underline;">9</span>798.    79.1KB     8.24
-#&gt; <span style="color: #BCBCBC;">2</span> plain        77.6µs   90.1µs     <span style="text-decoration: underline;">9</span>742.        0B    10.4 
-#&gt; <span style="color: #BCBCBC;">3</span> base         21.5µs   25.2µs    <span style="text-decoration: underline;">35</span>525.    48.2KB    10.7
+#&gt; <span style="color: #BCBCBC;">1</span> ansi         49.9µs   53.6µs    <span style="text-decoration: underline;">18</span>548.    79.1KB     16.8
+#&gt; <span style="color: #BCBCBC;">2</span> plain        49.7µs   53.5µs    <span style="text-decoration: underline;">18</span>294.        0B     19.6
+#&gt; <span style="color: #BCBCBC;">3</span> base         15.2µs   16.4µs    <span style="text-decoration: underline;">60</span>445.    48.2KB     18.1
 </code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
@@ -181,9 +181,9 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> ansi         75.6µs   91.7µs     <span style="text-decoration: underline;">9</span>626.        0B    10.4 
-#&gt; <span style="color: #BCBCBC;">2</span> plain        82.1µs   92.8µs     <span style="text-decoration: underline;">9</span>703.        0B    12.6 
-#&gt; <span style="color: #BCBCBC;">3</span> base         26.1µs   29.8µs    <span style="text-decoration: underline;">29</span>709.        0B     8.92
+#&gt; <span style="color: #BCBCBC;">1</span> ansi         52.6µs   56.2µs    <span style="text-decoration: underline;">17</span>589.        0B     21.4
+#&gt; <span style="color: #BCBCBC;">2</span> plain        52.4µs     56µs    <span style="text-decoration: underline;">17</span>013.        0B     19.2
+#&gt; <span style="color: #BCBCBC;">3</span> base         17.6µs     19µs    <span style="text-decoration: underline;">50</span>874.        0B     20.4
 </code></pre>
 </div>
 <div id="ansi_chartr" class="section level2">
@@ -200,9 +200,9 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> ansi        220.5µs  262.6µs     <span style="text-decoration: underline;">3</span>630.    75.4KB     8.30
-#&gt; <span style="color: #BCBCBC;">2</span> plain       144.5µs  175.4µs     <span style="text-decoration: underline;">5</span>202.     8.6KB     8.35
-#&gt; <span style="color: #BCBCBC;">3</span> base          2.8µs    3.3µs   <span style="text-decoration: underline;">265</span>617.        0B     0
+#&gt; <span style="color: #BCBCBC;">1</span> ansi        161.7µs    171µs     <span style="text-decoration: underline;">5</span>783.    75.4KB     12.5
+#&gt; <span style="color: #BCBCBC;">2</span> plain        98.1µs    106µs     <span style="text-decoration: underline;">9</span>274.     8.6KB     14.7
+#&gt; <span style="color: #BCBCBC;">3</span> base          2.6µs    2.7µs   <span style="text-decoration: underline;">355</span>688.        0B      0
 </code></pre>
 </div>
 <div id="ansi_columns" class="section level2">
@@ -218,8 +218,8 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> ansi          614µs    703µs     <span style="text-decoration: underline;">1</span>366.   33.21KB     10.5
-#&gt; <span style="color: #BCBCBC;">2</span> plain         616µs    705µs     <span style="text-decoration: underline;">1</span>370.    1.09KB     10.5
+#&gt; <span style="color: #BCBCBC;">1</span> ansi          407µs    421µs     <span style="text-decoration: underline;">2</span>356.   33.21KB     19.2
+#&gt; <span style="color: #BCBCBC;">2</span> plain         405µs    421µs     <span style="text-decoration: underline;">2</span>333.    1.09KB     17.0
 </code></pre>
 </div>
 <div id="ansi_has_any" class="section level2">
@@ -245,18 +245,18 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 12 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi           5.8µs    7.7µs   <span style="text-decoration: underline;">109</span>172.    7.11KB    21.8 
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        54.2µs   63.8µs    <span style="text-decoration: underline;">13</span>463.    4.18KB    10.5 
-#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain          5.6µs    7.6µs   <span style="text-decoration: underline;">101</span>851.        0B    20.4 
-#&gt; <span style="color: #BCBCBC;"> 4</span> fansi_plain       52.5µs   62.4µs    <span style="text-decoration: underline;">13</span>976.      688B    12.6 
-#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi       7.4µs   10.3µs    <span style="text-decoration: underline;">83</span>824.      448B     8.38
-#&gt; <span style="color: #BCBCBC;"> 6</span> fansi_vec_ansi    69.7µs     80µs    <span style="text-decoration: underline;">11</span>202.    5.02KB    10.6 
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain      8.1µs     11µs    <span style="text-decoration: underline;">78</span>255.      448B     7.83
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_plain   68.3µs   80.3µs    <span style="text-decoration: underline;">11</span>127.    5.02KB    10.5 
-#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi       5.9µs    7.8µs    <span style="text-decoration: underline;">98</span>027.        0B    19.6 
-#&gt; <span style="color: #BCBCBC;">10</span> fansi_txt_ansi    53.9µs   62.7µs    <span style="text-decoration: underline;">13</span>951.      688B    10.5 
-#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain      6.6µs    8.5µs   <span style="text-decoration: underline;">103</span>312.        0B    20.7 
-#&gt; <span style="color: #BCBCBC;">12</span> fansi_txt_plain   67.5µs   79.5µs    <span style="text-decoration: underline;">11</span>260.    5.02KB    10.5
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi             5µs    5.7µs   <span style="text-decoration: underline;">170</span>848.    7.11KB     34.2
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        35.2µs     38µs    <span style="text-decoration: underline;">25</span>912.    4.18KB     20.7
+#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain            5µs    5.7µs   <span style="text-decoration: underline;">171</span>283.        0B     34.3
+#&gt; <span style="color: #BCBCBC;"> 4</span> fansi_plain         35µs   37.9µs    <span style="text-decoration: underline;">25</span>981.      688B     23.4
+#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi       6.9µs    7.6µs   <span style="text-decoration: underline;">128</span>295.      448B     12.8
+#&gt; <span style="color: #BCBCBC;"> 6</span> fansi_vec_ansi    47.4µs     49µs    <span style="text-decoration: underline;">19</span>948.    5.02KB     17.1
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain      7.5µs    7.8µs   <span style="text-decoration: underline;">125</span>770.      448B     25.2
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_plain   45.7µs   47.3µs    <span style="text-decoration: underline;">20</span>896.    5.02KB     17.1
+#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi         5µs    5.3µs   <span style="text-decoration: underline;">184</span>137.        0B     36.8
+#&gt; <span style="color: #BCBCBC;">10</span> fansi_txt_ansi    34.6µs   35.9µs    <span style="text-decoration: underline;">27</span>220.      688B     21.8
+#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain      5.9µs    6.4µs   <span style="text-decoration: underline;">152</span>485.        0B     30.5
+#&gt; <span style="color: #BCBCBC;">12</span> fansi_txt_plain   45.8µs   48.2µs    <span style="text-decoration: underline;">20</span>373.    5.02KB     17.1
 </code></pre>
 </div>
 <div id="ansi_html" class="section level2">
@@ -273,8 +273,8 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> cli           166µs    201µs     <span style="text-decoration: underline;">4</span>669.    27.7KB     2.02
-#&gt; <span style="color: #BCBCBC;">2</span> fansi         268µs    325µs     <span style="text-decoration: underline;">2</span>886.    65.8KB     2.02
+#&gt; <span style="color: #BCBCBC;">1</span> cli           162µs    163µs     <span style="text-decoration: underline;">6</span>105.    27.7KB     2.01
+#&gt; <span style="color: #BCBCBC;">2</span> fansi         243µs    248µs     <span style="text-decoration: underline;">3</span>991.    65.8KB     4.06
 </code></pre>
 </div>
 <div id="ansi_nchar" class="section level2">
@@ -306,24 +306,24 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 18 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi          11.8µs   14.6µs    <span style="text-decoration: underline;">58</span>566.        0B    11.7 
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       344.4µs  415.4µs     <span style="text-decoration: underline;">2</span>257.   31.85KB     8.28
-#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi            1µs    1.3µs   <span style="text-decoration: underline;">669</span>216.        0B     0   
-#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain         10.1µs   12.8µs    <span style="text-decoration: underline;">67</span>474.        0B    13.5 
-#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      324.2µs  394.5µs     <span style="text-decoration: underline;">2</span>394.      688B     8.27
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain         800ns      1µs   <span style="text-decoration: underline;">820</span>213.        0B     0   
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi        44µs     52µs    <span style="text-decoration: underline;">16</span>873.      448B     4.07
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   382.6µs  468.4µs     <span style="text-decoration: underline;">1</span>936.    5.02KB     6.16
-#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi     27.2µs   31.3µs    <span style="text-decoration: underline;">28</span>349.      448B     2.84
-#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     37.4µs     45µs    <span style="text-decoration: underline;">19</span>775.      448B     2.02
-#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain  336.9µs  411.6µs     <span style="text-decoration: underline;">2</span>311.    5.02KB     8.29
-#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain      10µs   11.3µs    <span style="text-decoration: underline;">79</span>335.      448B     7.93
-#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi      44.8µs   53.1µs    <span style="text-decoration: underline;">16</span>703.        0B     2.02
-#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi   366.8µs  445.4µs     <span style="text-decoration: underline;">2</span>152.      688B     8.29
-#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi     23.4µs   27.2µs    <span style="text-decoration: underline;">32</span>373.        0B     0   
-#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     33.6µs   40.5µs    <span style="text-decoration: underline;">21</span>393.        0B     4.28
-#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  322.5µs    401µs     <span style="text-decoration: underline;">2</span>368.      688B     8.24
-#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain     8.5µs    9.9µs    <span style="text-decoration: underline;">87</span>179.        0B     0
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi           8.7µs    9.2µs   <span style="text-decoration: underline;">106</span>217.        0B    21.2 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       266.5µs    278µs     <span style="text-decoration: underline;">3</span>565.   31.85KB    12.5 
+#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi            1µs    1.1µs   <span style="text-decoration: underline;">822</span>629.        0B    82.3 
+#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain          8.5µs      9µs   <span style="text-decoration: underline;">108</span>454.        0B    21.7 
+#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      265.1µs  276.6µs     <span style="text-decoration: underline;">3</span>579.      688B    12.5 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain       899.9ns  999.9ns  1<span style="text-decoration: underline;">016</span>664.        0B     0   
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi      45.7µs     47µs    <span style="text-decoration: underline;">21</span>156.      448B     4.23
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   322.2µs  333.6µs     <span style="text-decoration: underline;">2</span>971.    5.02KB    10.4 
+#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi     29.3µs   29.5µs    <span style="text-decoration: underline;">33</span>753.      448B     0   
+#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     36.2µs   37.2µs    <span style="text-decoration: underline;">26</span>656.      448B     5.33
+#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain  285.8µs  296.9µs     <span style="text-decoration: underline;">3</span>309.    5.02KB    12.6 
+#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain    10.1µs   10.3µs    <span style="text-decoration: underline;">96</span>620.      448B     0   
+#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi        46µs   47.1µs    <span style="text-decoration: underline;">21</span>126.        0B     4.23
+#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi   308.4µs  319.8µs     <span style="text-decoration: underline;">3</span>104.      688B    10.4 
+#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi       28µs   28.3µs    <span style="text-decoration: underline;">35</span>236.        0B     3.52
+#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     35.5µs   36.3µs    <span style="text-decoration: underline;">27</span>383.        0B     5.48
+#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  268.7µs  280.9µs     <span style="text-decoration: underline;">3</span>530.      688B    12.5 
+#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain     9.1µs    9.2µs   <span style="text-decoration: underline;">107</span>584.        0B     0
 </code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
@@ -350,24 +350,24 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 18 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi          12.9µs   15.7µs    <span style="text-decoration: underline;">52</span>742.        0B    10.6 
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       316.4µs  401.8µs     <span style="text-decoration: underline;">2</span>276.      688B     8.25
-#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi         12.8µs   15.5µs    <span style="text-decoration: underline;">54</span>012.        0B     5.40
-#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain         12.4µs   15.1µs    <span style="text-decoration: underline;">54</span>616.        0B    10.9 
-#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      321.9µs    406µs     <span style="text-decoration: underline;">2</span>276.      688B     8.27
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain         4.8µs    5.8µs   <span style="text-decoration: underline;">147</span>301.        0B     0   
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi      50.2µs   61.3µs    <span style="text-decoration: underline;">14</span>200.      448B     4.06
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   403.8µs 507.55µs     <span style="text-decoration: underline;">1</span>853.    5.02KB     6.16
-#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi     1.34ms   1.57ms      609.      448B     0   
-#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     44.2µs   51.6µs    <span style="text-decoration: underline;">16</span>821.      448B     4.07
-#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain  367.5µs  458.6µs     <span style="text-decoration: underline;">2</span>049.    5.02KB     8.31
-#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain   371.5µs 477.05µs     <span style="text-decoration: underline;">1</span>998.      448B     0   
-#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi      50.6µs   59.7µs    <span style="text-decoration: underline;">14</span>615.        0B     4.07
-#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi   379.9µs 490.65µs     <span style="text-decoration: underline;">1</span>956.      688B     6.17
-#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi     1.36ms    1.6ms      603.        0B     0   
-#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     44.8µs   53.2µs    <span style="text-decoration: underline;">16</span>468.        0B     4.06
-#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  357.5µs 449.95µs     <span style="text-decoration: underline;">2</span>109.      688B     8.30
-#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain   398.8µs  500.7µs     <span style="text-decoration: underline;">1</span>921.        0B     0
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi          10.5µs   11.2µs    <span style="text-decoration: underline;">85</span>162.        0B    25.6 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       270.5µs 281.31µs     <span style="text-decoration: underline;">3</span>524.      688B    12.5 
+#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi         17.4µs   17.8µs    <span style="text-decoration: underline;">56</span>077.        0B     0   
+#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain         10.4µs   11.3µs    <span style="text-decoration: underline;">84</span>807.        0B    25.4 
+#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      267.2µs 279.61µs     <span style="text-decoration: underline;">3</span>543.      688B    12.6 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain           6µs    6.2µs   <span style="text-decoration: underline;">160</span>572.        0B     0   
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi      54.8µs     56µs    <span style="text-decoration: underline;">17</span>741.      448B     4.06
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi  357.71µs 369.71µs     <span style="text-decoration: underline;">2</span>679.    5.02KB    10.4 
+#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi     1.65ms   1.68ms      597.      448B     0   
+#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     46.2µs   47.1µs    <span style="text-decoration: underline;">21</span>080.      448B     4.22
+#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain 318.81µs 330.31µs     <span style="text-decoration: underline;">2</span>997.    5.02KB    10.4 
+#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain  512.71µs 520.71µs     <span style="text-decoration: underline;">1</span>920.      448B     0   
+#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi      55.2µs   56.2µs    <span style="text-decoration: underline;">17</span>674.        0B     6.13
+#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi  343.11µs 353.51µs     <span style="text-decoration: underline;">2</span>803.      688B     9.42
+#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi     1.67ms   1.69ms      593.        0B     0   
+#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     45.5µs   46.2µs    <span style="text-decoration: underline;">21</span>528.        0B     4.31
+#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain 302.61µs  311.7µs     <span style="text-decoration: underline;">3</span>148.      688B    12.5 
+#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain  537.41µs 544.01µs     <span style="text-decoration: underline;">1</span>840.        0B     0
 </code></pre>
 </div>
 <div id="ansi_simplify" class="section level2">
@@ -388,12 +388,12 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span>
 #&gt;   expression         min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> cli_ansi        11.3µs   14.4µs    <span style="text-decoration: underline;">59</span>480.    6.45KB     11.9
-#&gt; <span style="color: #BCBCBC;">2</span> cli_plain        9.5µs   11.5µs    <span style="text-decoration: underline;">74</span>414.        0B     14.9
-#&gt; <span style="color: #BCBCBC;">3</span> cli_vec_ansi   126.5µs  157.8µs     <span style="text-decoration: underline;">5</span>832.      848B      0  
-#&gt; <span style="color: #BCBCBC;">4</span> cli_vec_plain   13.4µs   16.7µs    <span style="text-decoration: underline;">51</span>513.      848B     10.3
-#&gt; <span style="color: #BCBCBC;">5</span> cli_txt_ansi     131µs  158.2µs     <span style="text-decoration: underline;">5</span>979.        0B      0  
-#&gt; <span style="color: #BCBCBC;">6</span> cli_txt_plain   10.7µs   12.9µs    <span style="text-decoration: underline;">65</span>769.        0B     13.2
+#&gt; <span style="color: #BCBCBC;">1</span> cli_ansi         9.8µs   10.2µs    <span style="text-decoration: underline;">96</span>783.    6.45KB    19.4 
+#&gt; <span style="color: #BCBCBC;">2</span> cli_plain        7.7µs    8.1µs   <span style="text-decoration: underline;">122</span>716.        0B    12.3 
+#&gt; <span style="color: #BCBCBC;">3</span> cli_vec_ansi   130.3µs  131.4µs     <span style="text-decoration: underline;">7</span>584.      848B     2.01
+#&gt; <span style="color: #BCBCBC;">4</span> cli_vec_plain   12.9µs   13.3µs    <span style="text-decoration: underline;">74</span>266.      848B    14.9 
+#&gt; <span style="color: #BCBCBC;">5</span> cli_txt_ansi   131.3µs  132.1µs     <span style="text-decoration: underline;">7</span>552.        0B     0   
+#&gt; <span style="color: #BCBCBC;">6</span> cli_txt_plain    8.7µs      9µs   <span style="text-decoration: underline;">109</span>227.        0B    21.8
 </code></pre>
 </div>
 <div id="ansi_strip" class="section level2">
@@ -419,18 +419,18 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 12 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi          15.3µs   17.9µs    <span style="text-decoration: underline;">47</span>489.        0B     9.50
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        47.2µs   57.6µs    <span style="text-decoration: underline;">15</span>438.      688B    14.8 
-#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain         14.1µs   17.2µs    <span style="text-decoration: underline;">51</span>534.        0B    10.3 
-#&gt; <span style="color: #BCBCBC;"> 4</span> fansi_plain       43.5µs   54.4µs    <span style="text-decoration: underline;">16</span>518.      688B    14.8 
-#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi      28.8µs     36µs    <span style="text-decoration: underline;">24</span>244.      848B     7.28
-#&gt; <span style="color: #BCBCBC;"> 6</span> fansi_vec_ansi    96.3µs  125.5µs     <span style="text-decoration: underline;">7</span>144.    5.41KB     6.18
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain     17.3µs   21.4µs    <span style="text-decoration: underline;">39</span>595.      848B    11.9 
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_plain   60.5µs   72.8µs    <span style="text-decoration: underline;">11</span>990.    4.59KB     8.47
-#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi      27.9µs   35.8µs    <span style="text-decoration: underline;">24</span>318.        0B     7.30
-#&gt; <span style="color: #BCBCBC;">10</span> fansi_txt_ansi    84.1µs    110µs     <span style="text-decoration: underline;">8</span>486.    8.24KB     8.29
-#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain     15.2µs   18.5µs    <span style="text-decoration: underline;">46</span>001.        0B    13.8 
-#&gt; <span style="color: #BCBCBC;">12</span> fansi_txt_plain   45.4µs   55.7µs    <span style="text-decoration: underline;">15</span>721.      688B    12.6
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi            11µs   11.5µs    <span style="text-decoration: underline;">85</span>924.        0B    17.2 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        32.7µs   34.2µs    <span style="text-decoration: underline;">28</span>558.      688B    25.7 
+#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain         10.9µs   11.5µs    <span style="text-decoration: underline;">84</span>575.        0B    25.4 
+#&gt; <span style="color: #BCBCBC;"> 4</span> fansi_plain       31.9µs   33.5µs    <span style="text-decoration: underline;">29</span>222.      688B    23.4 
+#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi      28.2µs   29.1µs    <span style="text-decoration: underline;">33</span>735.      848B    10.1 
+#&gt; <span style="color: #BCBCBC;"> 6</span> fansi_vec_ansi    91.2µs   93.3µs    <span style="text-decoration: underline;">10</span>609.    5.41KB     8.28
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain     14.4µs   15.1µs    <span style="text-decoration: underline;">64</span>930.      848B    19.5 
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_plain   45.1µs     47µs    <span style="text-decoration: underline;">20</span>948.    4.59KB    17.1 
+#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi      26.6µs   27.5µs    <span style="text-decoration: underline;">35</span>951.        0B    10.8 
+#&gt; <span style="color: #BCBCBC;">10</span> fansi_txt_ansi    76.4µs   78.5µs    <span style="text-decoration: underline;">12</span>552.    8.24KB    10.4 
+#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain     11.9µs   12.5µs    <span style="text-decoration: underline;">77</span>945.        0B    23.4 
+#&gt; <span style="color: #BCBCBC;">12</span> fansi_txt_plain   34.7µs   36.2µs    <span style="text-decoration: underline;">26</span>937.      688B    21.6
 </code></pre>
 </div>
 <div id="ansi_strsplit" class="section level2">
@@ -462,24 +462,24 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 18 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi         266.7µs    336µs    <span style="text-decoration: underline;">2</span>837.   102.26KB     9.71
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       217.5µs  278.1µs    <span style="text-decoration: underline;">3</span>400.   102.16KB     8.26
-#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi          9.3µs   11.1µs   <span style="text-decoration: underline;">78</span>040.       352B     7.80
-#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain        262.5µs  316.1µs    <span style="text-decoration: underline;">2</span>986.     8.09KB     8.27
-#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      201.1µs  256.7µs    <span style="text-decoration: underline;">3</span>663.     9.62KB    10.4 
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain           7µs    8.2µs  <span style="text-decoration: underline;">105</span>264.         0B    10.5 
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi     13.49ms  14.53ms      67.8  823.77KB    15.1 
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi    2.05ms   2.42ms     386.   846.81KB     8.53
-#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi    370.4µs  457.5µs    <span style="text-decoration: underline;">2</span>108.     35.2KB     0   
-#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain    12.61ms  13.83ms      71.6  823.77KB    18.6 
-#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain   1.67ms   1.99ms     484.   845.98KB    10.9 
-#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain   165.7µs 213.55µs    <span style="text-decoration: underline;">4</span>391.       848B     2.02
-#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi     10.64ms  11.87ms      84.2    63.6KB     0   
-#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi    4.37ms   5.04ms     198.    38.17KB     0   
-#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi    366.8µs  454.7µs    <span style="text-decoration: underline;">2</span>069.    30.97KB     0   
-#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     3.61ms   4.11ms     241.     63.6KB     2.03
-#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  794.2µs  961.7µs    <span style="text-decoration: underline;">1</span>001.     30.6KB     2.03
-#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain   145.1µs  183.1µs    <span style="text-decoration: underline;">5</span>051.    11.05KB     0
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi         209.8µs  219.8µs     <span style="text-decoration: underline;">4</span>496.  102.26KB    14.7 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       164.4µs  174.3µs     <span style="text-decoration: underline;">5</span>654.  102.16KB    17.0 
+#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi          8.1µs    8.6µs   <span style="text-decoration: underline;">115</span>668.      352B     0   
+#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain          200µs  210.5µs     <span style="text-decoration: underline;">4</span>673.    8.09KB    14.7 
+#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain        157µs  166.2µs     <span style="text-decoration: underline;">5</span>935.    9.62KB    17.1 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain           6µs    6.3µs   <span style="text-decoration: underline;">157</span>330.        0B    15.7 
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi      8.61ms   8.88ms      113.  823.77KB    26.2 
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi    1.59ms   1.65ms      590.  846.81KB    13.6 
+#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi   372.01µs 378.81µs     <span style="text-decoration: underline;">2</span>614.    35.2KB     0   
+#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     8.31ms    8.4ms      119.  823.77KB    26.3 
+#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain   1.29ms   1.33ms      748.  845.98KB    17.6 
+#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain   169.2µs  174.7µs     <span style="text-decoration: underline;">5</span>702.      848B     2.02
+#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi      9.39ms   9.42ms      106.    63.6KB     0   
+#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi    4.24ms   4.25ms      235.   38.17KB     2.03
+#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi   375.11µs 389.36µs     <span style="text-decoration: underline;">2</span>579.   30.97KB     0   
+#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     3.24ms   3.33ms      300.    63.6KB     2.06
+#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain 717.11µs 731.41µs     <span style="text-decoration: underline;">1</span>363.    30.6KB     4.07
+#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain   143.6µs  145.7µs     <span style="text-decoration: underline;">6</span>843.   11.05KB     0
 </code></pre>
 </div>
 <div id="ansi_strtrim" class="section level2">
@@ -511,24 +511,24 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 18 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi         136.9µs  176.9µs     <span style="text-decoration: underline;">5</span>156.    18.7KB    10.6 
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        86.9µs  105.8µs     <span style="text-decoration: underline;">8</span>517.   31.45KB    10.5 
-#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi          3.8µs    4.3µs   <span style="text-decoration: underline;">197</span>655.     4.2KB    19.8 
-#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain        124.5µs  165.1µs     <span style="text-decoration: underline;">5</span>622.        0B    10.4 
-#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain       83.3µs  101.5µs     <span style="text-decoration: underline;">8</span>807.      872B    12.8 
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain           3µs    3.4µs   <span style="text-decoration: underline;">244</span>193.        0B     0   
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi     492.2µs  624.5µs     <span style="text-decoration: underline;">1</span>480.   16.73KB     4.09
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   208.2µs  271.3µs     <span style="text-decoration: underline;">3</span>448.    5.59KB     4.05
-#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi    274.5µs  343.9µs     <span style="text-decoration: underline;">2</span>713.      848B     0   
-#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain    252.8µs  317.2µs     <span style="text-decoration: underline;">2</span>959.   16.73KB     6.20
-#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain  207.6µs  260.1µs     <span style="text-decoration: underline;">3</span>628.    5.59KB     6.18
-#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain   207.8µs    262µs     <span style="text-decoration: underline;">3</span>587.      848B     0   
-#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi     152.6µs    196µs     <span style="text-decoration: underline;">4</span>684.        0B    10.6 
-#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi    79.4µs  101.7µs     <span style="text-decoration: underline;">8</span>725.      872B    10.4 
-#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi      3.6µs    4.2µs   <span style="text-decoration: underline;">202</span>182.        0B    20.2 
-#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain    131.1µs    168µs     <span style="text-decoration: underline;">5</span>385.        0B    10.4 
-#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain   79.7µs  101.3µs     <span style="text-decoration: underline;">8</span>786.      872B    12.6 
-#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain     2.9µs    3.3µs   <span style="text-decoration: underline;">251</span>356.        0B     0
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi          98.5µs  103.9µs     <span style="text-decoration: underline;">9</span>434.    18.7KB    19.1 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        61.4µs   64.8µs    <span style="text-decoration: underline;">15</span>047.   31.45KB    21.5 
+#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi          4.4µs    4.5µs   <span style="text-decoration: underline;">218</span>957.     4.2KB     0   
+#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain         92.4µs   97.4µs    <span style="text-decoration: underline;">10</span>082.        0B    21.3 
+#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain         61µs   64.6µs    <span style="text-decoration: underline;">15</span>095.      872B    21.4 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain         3.5µs    3.7µs   <span style="text-decoration: underline;">270</span>964.        0B     0   
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi     461.3µs  470.8µs     <span style="text-decoration: underline;">2</span>110.   16.73KB     4.09
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   192.9µs    198µs     <span style="text-decoration: underline;">4</span>925.    5.59KB     8.28
+#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi    360.1µs  362.2µs     <span style="text-decoration: underline;">2</span>753.      848B     0   
+#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain    217.6µs    224µs     <span style="text-decoration: underline;">4</span>407.   16.73KB     8.31
+#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain  186.8µs  191.5µs     <span style="text-decoration: underline;">5</span>154.    5.59KB     8.28
+#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain   279.6µs  281.1µs     <span style="text-decoration: underline;">3</span>551.      848B     0   
+#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi       115µs  120.6µs     <span style="text-decoration: underline;">8</span>153.        0B    16.9 
+#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi    61.4µs   64.7µs    <span style="text-decoration: underline;">15</span>106.      872B    21.4 
+#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi      4.5µs    4.7µs   <span style="text-decoration: underline;">209</span>491.        0B     0   
+#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     94.9µs   99.4µs     <span style="text-decoration: underline;">9</span>880.        0B    19.1 
+#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain   60.9µs   64.6µs    <span style="text-decoration: underline;">15</span>084.      872B    21.5 
+#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain     3.5µs    3.7µs   <span style="text-decoration: underline;">262</span>834.        0B    26.3
 </code></pre>
 </div>
 <div id="ansi_strwrap" class="section level2">
@@ -561,24 +561,24 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 18 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi         534.3µs  670.3µs    <span style="text-decoration: underline;">1</span>432.         0B    10.6 
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       166.1µs 201.75µs    <span style="text-decoration: underline;">4</span>437.     10.3KB    10.4 
-#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi           82µs  103.3µs    <span style="text-decoration: underline;">8</span>856.         0B    10.4 
-#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain        327.5µs  412.8µs    <span style="text-decoration: underline;">2</span>309.         0B     8.26
-#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      155.5µs  194.8µs    <span style="text-decoration: underline;">4</span>708.       872B    12.8 
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain        56.4µs     66µs   <span style="text-decoration: underline;">13</span>334.         0B     9.98
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi     64.39ms  65.44ms      15.3    2.48KB    25.4 
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   450.3µs 543.65µs    <span style="text-decoration: underline;">1</span>771.     7.25KB     6.18
-#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi     6.07ms   6.59ms     148.    48.96KB    11.0 
-#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain    39.36ms  41.61ms      24.1    2.48KB    17.2 
-#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain    313µs  408.8µs    <span style="text-decoration: underline;">2</span>348.     6.42KB     6.16
-#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain     3.1ms   3.57ms     271.     47.4KB    13.3 
-#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi     38.91ms   40.4ms      24.5  507.59KB     8.17
-#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi   461.1µs 609.65µs    <span style="text-decoration: underline;">1</span>575.      9.9KB     4.07
-#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi     7.63ms   8.34ms     117.   820.54KB     4.24
-#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     4.17ms   4.71ms     209.   369.84KB     4.18
-#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  278.2µs 352.55µs    <span style="text-decoration: underline;">2</span>676.     2.51KB     6.18
-#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain    2.92ms    3.4ms     288.   367.31KB     6.35
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi        431.51µs 452.31µs    <span style="text-decoration: underline;">2</span>191.         0B    16.8 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi       113.4µs  117.3µs    <span style="text-decoration: underline;">8</span>411.     10.3KB    19.1 
+#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi         68.1µs   69.6µs   <span style="text-decoration: underline;">14</span>237.         0B    14.6 
+#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain        239.8µs 248.45µs    <span style="text-decoration: underline;">3</span>956.         0B    16.9 
+#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      111.3µs  117.7µs    <span style="text-decoration: underline;">8</span>310.       872B    19.1 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain        41.6µs   43.2µs   <span style="text-decoration: underline;">22</span>475.         0B    15.7 
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi     43.93ms  43.95ms      22.7    2.48KB    60.6 
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi  397.81µs 407.31µs    <span style="text-decoration: underline;">2</span>436.     7.25KB     6.15
+#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi        5ms   5.12ms     195.    48.96KB    15.9 
+#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     24.2ms   24.5ms      40.7    2.48KB    27.1 
+#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain 291.31µs 301.81µs    <span style="text-decoration: underline;">3</span>269.     6.42KB    10.4 
+#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain    2.46ms   2.54ms     391.     47.4KB    17.6 
+#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi     33.12ms  33.28ms      29.9  507.59KB     7.48
+#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi  462.31µs 471.91µs    <span style="text-decoration: underline;">2</span>104.      9.9KB     6.15
+#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi     8.07ms   8.13ms     123.   820.54KB     4.23
+#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain     3.96ms   4.01ms     248.   369.84KB     6.37
+#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  244.6µs  252.6µs    <span style="text-decoration: underline;">3</span>916.     2.51KB    10.4 
+#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain    2.95ms   2.99ms     329.   367.31KB     4.14
 </code></pre>
 </div>
 <div id="ansi_substr" class="section level2">
@@ -610,24 +610,24 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 18 × 6</span>
 #&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi           3.8µs    4.7µs   <span style="text-decoration: underline;">162</span>890.      15KB    16.3 
-#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi         120µs  154.7µs     <span style="text-decoration: underline;">5</span>987.   28.48KB    12.7 
-#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi          1.1µs    1.4µs   <span style="text-decoration: underline;">561</span>186.        0B     0   
-#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain            3µs    3.6µs   <span style="text-decoration: underline;">235</span>069.        0B    23.5 
-#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain      121.5µs  154.9µs     <span style="text-decoration: underline;">5</span>824.    1.98KB    10.5 
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain           1µs    1.4µs   <span style="text-decoration: underline;">634</span>844.        0B     0   
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi      96.1µs  117.2µs     <span style="text-decoration: underline;">7</span>742.     1.7KB     2.03
-#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   186.9µs  238.5µs     <span style="text-decoration: underline;">3</span>820.    8.86KB     6.20
-#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi      7.6µs    9.1µs    <span style="text-decoration: underline;">86</span>765.      848B     8.68
-#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     23.2µs   27.9µs    <span style="text-decoration: underline;">30</span>885.     1.7KB     3.09
-#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain    164µs    211µs     <span style="text-decoration: underline;">4</span>394.    8.86KB     8.42
-#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain     7.6µs    8.8µs    <span style="text-decoration: underline;">97</span>716.      848B     0   
-#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi         4µs    4.9µs   <span style="text-decoration: underline;">178</span>558.        0B    17.9 
-#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi   119.6µs  152.6µs     <span style="text-decoration: underline;">6</span>144.    1.98KB    10.4 
-#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi      8.6µs    9.9µs    <span style="text-decoration: underline;">84</span>187.        0B     8.42
-#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain      3.7µs    4.4µs   <span style="text-decoration: underline;">186</span>233.        0B    18.6 
-#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain  116.2µs  150.9µs     <span style="text-decoration: underline;">6</span>065.    1.98KB    10.5 
-#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain       4µs    4.9µs   <span style="text-decoration: underline;">169</span>882.        0B    17.0
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi             4µs    4.3µs   <span style="text-decoration: underline;">223</span>969.      15KB    22.4 
+#&gt; <span style="color: #BCBCBC;"> 2</span> fansi_ansi        90.1µs   95.4µs    <span style="text-decoration: underline;">10</span>189.   28.48KB    19.3 
+#&gt; <span style="color: #BCBCBC;"> 3</span> base_ansi          1.2µs    1.3µs   <span style="text-decoration: underline;">749</span>619.        0B     0   
+#&gt; <span style="color: #BCBCBC;"> 4</span> cli_plain          2.9µs    3.1µs   <span style="text-decoration: underline;">303</span>428.        0B    30.3 
+#&gt; <span style="color: #BCBCBC;"> 5</span> fansi_plain         90µs   94.5µs    <span style="text-decoration: underline;">10</span>313.    1.98KB    19.2 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_plain         1.1µs    1.2µs   <span style="text-decoration: underline;">761</span>857.        0B    76.2 
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_ansi     106.3µs  107.2µs     <span style="text-decoration: underline;">9</span>223.     1.7KB     0   
+#&gt; <span style="color: #BCBCBC;"> 8</span> fansi_vec_ansi   161.7µs  166.7µs     <span style="text-decoration: underline;">5</span>906.    8.86KB    10.5 
+#&gt; <span style="color: #BCBCBC;"> 9</span> base_vec_ansi      9.2µs    9.5µs   <span style="text-decoration: underline;">103</span>887.      848B    10.4 
+#&gt; <span style="color: #BCBCBC;">10</span> cli_vec_plain     25.5µs   26.2µs    <span style="text-decoration: underline;">37</span>938.     1.7KB     3.79
+#&gt; <span style="color: #BCBCBC;">11</span> fansi_vec_plain  130.8µs  135.7µs     <span style="text-decoration: underline;">7</span>284.    8.86KB    12.7 
+#&gt; <span style="color: #BCBCBC;">12</span> base_vec_plain     8.9µs    9.3µs   <span style="text-decoration: underline;">106</span>600.      848B    10.7 
+#&gt; <span style="color: #BCBCBC;">13</span> cli_txt_ansi         4µs    4.2µs   <span style="text-decoration: underline;">231</span>035.        0B     0   
+#&gt; <span style="color: #BCBCBC;">14</span> fansi_txt_ansi    89.3µs   92.4µs    <span style="text-decoration: underline;">10</span>635.    1.98KB    21.5 
+#&gt; <span style="color: #BCBCBC;">15</span> base_txt_ansi     10.1µs   10.3µs    <span style="text-decoration: underline;">96</span>483.        0B     0   
+#&gt; <span style="color: #BCBCBC;">16</span> cli_txt_plain      3.8µs      4µs   <span style="text-decoration: underline;">246</span>888.        0B    24.7 
+#&gt; <span style="color: #BCBCBC;">17</span> fansi_txt_plain   88.9µs     94µs    <span style="text-decoration: underline;">10</span>194.    1.98KB    19.3 
+#&gt; <span style="color: #BCBCBC;">18</span> base_txt_plain     3.7µs    3.9µs   <span style="text-decoration: underline;">254</span>430.        0B     0
 </code></pre>
 </div>
 <div id="ansi_tolower-ansi_toupper" class="section level2">
@@ -653,18 +653,18 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 12 × 6</span>
 #&gt;    expression          min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi        184.9µs 232.05µs    <span style="text-decoration: underline;">4</span>043.     12.4KB    10.4 
-#&gt; <span style="color: #BCBCBC;"> 2</span> base_ansi         2.2µs    2.6µs  <span style="text-decoration: underline;">301</span>243.         0B     0   
-#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain       132.7µs  163.3µs    <span style="text-decoration: underline;">5</span>676.      8.6KB     8.30
-#&gt; <span style="color: #BCBCBC;"> 4</span> base_plain        1.3µs    1.5µs  <span style="text-decoration: underline;">547</span>786.         0B     0   
-#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi     9.03ms  10.06ms      99.2   923.8KB    20.9 
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_vec_ansi   166.3µs  198.8µs    <span style="text-decoration: underline;">4</span>525.       848B     0   
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain    3.46ms   3.83ms     255.    816.8KB    18.7 
-#&gt; <span style="color: #BCBCBC;"> 8</span> base_vec_plain   61.7µs     73µs   <span style="text-decoration: underline;">12</span>016.       848B     0   
-#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi    42.16ms  44.87ms      22.0   208.8KB     4.89
-#&gt; <span style="color: #BCBCBC;">10</span> base_txt_ansi   163.4µs  193.7µs    <span style="text-decoration: underline;">4</span>898.         0B     0   
-#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain   406.4µs 518.55µs    <span style="text-decoration: underline;">1</span>845.       18KB     2.02
-#&gt; <span style="color: #BCBCBC;">12</span> base_txt_plain   56.3µs   64.6µs   <span style="text-decoration: underline;">13</span>835.         0B     0
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi       145.59µs 155.09µs    <span style="text-decoration: underline;">6</span>342.     12.4KB    14.7 
+#&gt; <span style="color: #BCBCBC;"> 2</span> base_ansi         2.5µs    2.6µs  <span style="text-decoration: underline;">382</span>329.         0B     0   
+#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain       92.39µs  98.19µs    <span style="text-decoration: underline;">9</span>958.      8.6KB    14.7 
+#&gt; <span style="color: #BCBCBC;"> 4</span> base_plain        1.3µs    1.4µs  <span style="text-decoration: underline;">712</span>091.         0B     0   
+#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi     7.07ms   7.25ms     137.    923.8KB    28.4 
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_vec_ansi   176.7µs    183µs    <span style="text-decoration: underline;">5</span>471.       848B     0   
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain    2.79ms   2.88ms     343.    816.8KB    25.7 
+#&gt; <span style="color: #BCBCBC;"> 8</span> base_vec_plain   66.5µs   68.3µs   <span style="text-decoration: underline;">14</span>623.       848B     0   
+#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi    35.37ms  35.55ms      28.1   208.8KB     4.69
+#&gt; <span style="color: #BCBCBC;">10</span> base_txt_ansi   181.2µs  186.6µs    <span style="text-decoration: underline;">5</span>352.         0B     0   
+#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain  383.71µs 393.21µs    <span style="text-decoration: underline;">2</span>529.       18KB     4.06
+#&gt; <span style="color: #BCBCBC;">12</span> base_txt_plain   64.4µs     65µs   <span style="text-decoration: underline;">15</span>321.         0B     0
 </code></pre>
 </div>
 <div id="ansi_trimws" class="section level2">
@@ -690,18 +690,18 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 12 × 6</span>
 #&gt;    expression          min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;    <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi        124.5µs  144.7µs     <span style="text-decoration: underline;">6</span>203.        0B    10.5 
-#&gt; <span style="color: #BCBCBC;"> 2</span> base_ansi          30µs     36µs    <span style="text-decoration: underline;">24</span>816.        0B     9.93
-#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain       127.4µs  146.8µs     <span style="text-decoration: underline;">6</span>320.        0B    12.1 
-#&gt; <span style="color: #BCBCBC;"> 4</span> base_plain       28.2µs   33.9µs    <span style="text-decoration: underline;">25</span>650.        0B    10.3 
-#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi    255.4µs  319.2µs     <span style="text-decoration: underline;">2</span>976.     7.2KB     4.09
-#&gt; <span style="color: #BCBCBC;"> 6</span> base_vec_ansi   110.1µs  143.2µs     <span style="text-decoration: underline;">6</span>496.    1.66KB     2.02
-#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain   229.6µs  296.2µs     <span style="text-decoration: underline;">3</span>202.     7.2KB     6.19
-#&gt; <span style="color: #BCBCBC;"> 8</span> base_vec_plain   86.4µs  110.3µs     <span style="text-decoration: underline;">8</span>272.    1.66KB     4.07
-#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi    206.4µs  263.5µs     <span style="text-decoration: underline;">3</span>559.        0B     6.14
-#&gt; <span style="color: #BCBCBC;">10</span> base_txt_ansi    78.3µs   99.8µs     <span style="text-decoration: underline;">9</span>036.        0B     4.06
-#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain   181.4µs  228.2µs     <span style="text-decoration: underline;">4</span>176.        0B     6.14
-#&gt; <span style="color: #BCBCBC;">12</span> base_txt_plain   58.2µs   70.6µs    <span style="text-decoration: underline;">12</span>718.        0B     6.15
+#&gt; <span style="color: #BCBCBC;"> 1</span> cli_ansi         80.9µs   84.4µs    <span style="text-decoration: underline;">11</span>681.        0B    21.3 
+#&gt; <span style="color: #BCBCBC;"> 2</span> base_ansi        21.9µs   23.1µs    <span style="text-decoration: underline;">41</span>992.        0B    16.8 
+#&gt; <span style="color: #BCBCBC;"> 3</span> cli_plain          80µs   83.8µs    <span style="text-decoration: underline;">11</span>777.        0B    19.0 
+#&gt; <span style="color: #BCBCBC;"> 4</span> base_plain       21.7µs   22.8µs    <span style="text-decoration: underline;">43</span>210.        0B    17.3 
+#&gt; <span style="color: #BCBCBC;"> 5</span> cli_vec_ansi    218.2µs  223.7µs     <span style="text-decoration: underline;">4</span>428.     7.2KB     8.26
+#&gt; <span style="color: #BCBCBC;"> 6</span> base_vec_ansi   112.6µs  117.7µs     <span style="text-decoration: underline;">8</span>406.    1.66KB     4.07
+#&gt; <span style="color: #BCBCBC;"> 7</span> cli_vec_plain   188.9µs  195.6µs     <span style="text-decoration: underline;">5</span>065.     7.2KB     8.33
+#&gt; <span style="color: #BCBCBC;"> 8</span> base_vec_plain   77.7µs   83.6µs    <span style="text-decoration: underline;">11</span>842.    1.66KB     4.07
+#&gt; <span style="color: #BCBCBC;"> 9</span> cli_txt_ansi    177.3µs  181.9µs     <span style="text-decoration: underline;">5</span>426.        0B    10.4 
+#&gt; <span style="color: #BCBCBC;">10</span> base_txt_ansi    85.3µs     87µs    <span style="text-decoration: underline;">11</span>433.        0B     4.06
+#&gt; <span style="color: #BCBCBC;">11</span> cli_txt_plain   147.1µs  151.3µs     <span style="text-decoration: underline;">6</span>546.        0B    12.5 
+#&gt; <span style="color: #BCBCBC;">12</span> base_txt_plain   51.8µs   53.3µs    <span style="text-decoration: underline;">18</span>512.        0B     6.13
 </code></pre>
 </div>
 </div>
@@ -725,12 +725,12 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> cli          13.5µs   16.2µs    <span style="text-decoration: underline;">54</span>846.    12.3KB    11.0 
-#&gt; <span style="color: #BCBCBC;">2</span> base            1µs    1.3µs   <span style="text-decoration: underline;">630</span>775.        0B    63.1 
-#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      38.4µs   46.1µs    <span style="text-decoration: underline;">19</span>554.      448B     4.07
-#&gt; <span style="color: #BCBCBC;">4</span> base_vec       16µs   18.3µs    <span style="text-decoration: underline;">48</span>251.      448B     0   
-#&gt; <span style="color: #BCBCBC;">5</span> cli_txt        38µs   45.2µs    <span style="text-decoration: underline;">19</span>516.        0B     6.11
-#&gt; <span style="color: #BCBCBC;">6</span> base_txt     15.6µs     19µs    <span style="text-decoration: underline;">47</span>641.        0B     0
+#&gt; <span style="color: #BCBCBC;">1</span> cli          10.2µs   10.6µs    <span style="text-decoration: underline;">92</span>207.    12.3KB    18.4 
+#&gt; <span style="color: #BCBCBC;">2</span> base        999.9ns    1.1µs   <span style="text-decoration: underline;">899</span>509.        0B     0   
+#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      38.2µs   39.2µs    <span style="text-decoration: underline;">25</span>337.      448B     7.60
+#&gt; <span style="color: #BCBCBC;">4</span> base_vec     15.9µs   17.1µs    <span style="text-decoration: underline;">58</span>201.      448B     0   
+#&gt; <span style="color: #BCBCBC;">5</span> cli_txt      37.8µs     39µs    <span style="text-decoration: underline;">25</span>473.        0B     7.64
+#&gt; <span style="color: #BCBCBC;">6</span> base_txt     16.6µs   16.8µs    <span style="text-decoration: underline;">59</span>169.        0B     0
 </code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
@@ -745,12 +745,12 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> cli          12.5µs   15.1µs    <span style="text-decoration: underline;">55</span>577.        0B    16.7 
-#&gt; <span style="color: #BCBCBC;">2</span> base          5.6µs    6.5µs   <span style="text-decoration: underline;">134</span>969.        0B     0   
-#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      40.7µs   49.3µs    <span style="text-decoration: underline;">18</span>054.      448B     4.07
-#&gt; <span style="color: #BCBCBC;">4</span> base_vec    425.6µs    532µs     <span style="text-decoration: underline;">1</span>731.      448B     0   
-#&gt; <span style="color: #BCBCBC;">5</span> cli_txt      36.8µs   45.8µs    <span style="text-decoration: underline;">19</span>177.        0B     4.07
-#&gt; <span style="color: #BCBCBC;">6</span> base_txt    528.9µs    641µs     <span style="text-decoration: underline;">1</span>463.        0B     0
+#&gt; <span style="color: #BCBCBC;">1</span> cli            10µs   10.4µs    <span style="text-decoration: underline;">94</span>593.        0B    28.4 
+#&gt; <span style="color: #BCBCBC;">2</span> base          6.4µs    6.5µs   <span style="text-decoration: underline;">152</span>441.        0B     0   
+#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      40.9µs   42.2µs    <span style="text-decoration: underline;">23</span>571.      448B     4.72
+#&gt; <span style="color: #BCBCBC;">4</span> base_vec    544.7µs  548.2µs     <span style="text-decoration: underline;">1</span>821.      448B     0   
+#&gt; <span style="color: #BCBCBC;">5</span> cli_txt      40.9µs   42.3µs    <span style="text-decoration: underline;">23</span>568.        0B     7.07
+#&gt; <span style="color: #BCBCBC;">6</span> base_txt    618.1µs  627.4µs     <span style="text-decoration: underline;">1</span>592.        0B     0
 </code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html">mark</a></span><span class="op">(</span>
@@ -765,12 +765,12 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> cli          14.3µs   17.1µs    <span style="text-decoration: underline;">51</span>092.        0B    10.2 
-#&gt; <span style="color: #BCBCBC;">2</span> base        999.9ns    1.2µs   <span style="text-decoration: underline;">688</span>347.        0B    68.8 
-#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      30.4µs   36.1µs    <span style="text-decoration: underline;">24</span>503.      448B     4.90
-#&gt; <span style="color: #BCBCBC;">4</span> base_vec     16.9µs   18.8µs    <span style="text-decoration: underline;">46</span>653.      448B     4.67
-#&gt; <span style="color: #BCBCBC;">5</span> cli_txt      29.7µs   35.9µs    <span style="text-decoration: underline;">24</span>700.        0B     4.94
-#&gt; <span style="color: #BCBCBC;">6</span> base_txt     16.2µs     19µs    <span style="text-decoration: underline;">47</span>398.        0B     4.74
+#&gt; <span style="color: #BCBCBC;">1</span> cli          11.1µs   11.6µs    <span style="text-decoration: underline;">85</span>483.        0B     25.7
+#&gt; <span style="color: #BCBCBC;">2</span> base        999.9ns    1.1µs   <span style="text-decoration: underline;">912</span>637.        0B      0  
+#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      27.3µs     28µs    <span style="text-decoration: underline;">35</span>367.      448B     10.6
+#&gt; <span style="color: #BCBCBC;">4</span> base_vec     16.2µs   17.1µs    <span style="text-decoration: underline;">58</span>119.      448B      0  
+#&gt; <span style="color: #BCBCBC;">5</span> cli_txt      26.8µs   27.6µs    <span style="text-decoration: underline;">35</span>743.        0B     10.7
+#&gt; <span style="color: #BCBCBC;">6</span> base_txt     15.8µs   16.9µs    <span style="text-decoration: underline;">59</span>023.        0B      0
 </code></pre>
 </div>
 <div id="utf8_substr" class="section level2">
@@ -790,12 +790,12 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <pre class="fansi fansi-output"><code>#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span>
 #&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:tm&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;bch:byt&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>
-#&gt; <span style="color: #BCBCBC;">1</span> cli           2.9µs    3.3µs   <span style="text-decoration: underline;">245</span>177.    13.3KB    24.5 
-#&gt; <span style="color: #BCBCBC;">2</span> base          1.3µs    1.6µs   <span style="text-decoration: underline;">483</span>278.        0B     0   
-#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      34.7µs   40.7µs    <span style="text-decoration: underline;">21</span>809.     1.7KB     2.18
-#&gt; <span style="color: #BCBCBC;">4</span> base_vec     11.8µs   13.1µs    <span style="text-decoration: underline;">70</span>316.      848B     0   
-#&gt; <span style="color: #BCBCBC;">5</span> cli_txt       2.6µs    3.1µs   <span style="text-decoration: underline;">261</span>668.        0B    26.2 
-#&gt; <span style="color: #BCBCBC;">6</span> base_txt      8.3µs     10µs    <span style="text-decoration: underline;">88</span>811.        0B     8.88
+#&gt; <span style="color: #BCBCBC;">1</span> cli           2.6µs    2.8µs   <span style="text-decoration: underline;">342</span>653.    13.3KB    34.3 
+#&gt; <span style="color: #BCBCBC;">2</span> base          1.2µs    1.3µs   <span style="text-decoration: underline;">732</span>532.        0B    73.3 
+#&gt; <span style="color: #BCBCBC;">3</span> cli_vec      37.6µs   38.5µs    <span style="text-decoration: underline;">25</span>866.     1.7KB     0   
+#&gt; <span style="color: #BCBCBC;">4</span> base_vec     11.2µs   11.4µs    <span style="text-decoration: underline;">86</span>827.      848B     8.68
+#&gt; <span style="color: #BCBCBC;">5</span> cli_txt       2.6µs    2.9µs   <span style="text-decoration: underline;">334</span>395.        0B    33.4 
+#&gt; <span style="color: #BCBCBC;">6</span> base_txt      8.5µs    8.7µs   <span style="text-decoration: underline;">114</span>316.        0B     0
 </code></pre>
 </div>
 </div>
@@ -814,7 +814,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt;  collate  C.UTF-8
 #&gt;  ctype    C.UTF-8
 #&gt;  tz       UTC
-#&gt;  date     2022-01-20
+#&gt;  date     2022-01-25
 #&gt;  pandoc   2.14.2 @ /usr/bin/ (via rmarkdown)
 #&gt; 
 #&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span>
@@ -822,7 +822,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt;  bench         1.1.2      <span style="color: #555555;">2021-11-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span>
 #&gt;  bslib         0.3.1      <span style="color: #555555;">2021-10-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span>
 #&gt;  cachem        1.0.6      <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span>
-#&gt;  cli         * <span style="color: #BB00BB; font-weight: bold;">3.1.1.9000</span> <span style="color: #555555;">2022-01-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span>
+#&gt;  cli         * <span style="color: #BB00BB; font-weight: bold;">3.1.1.9000</span> <span style="color: #555555;">2022-01-25</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span>
 #&gt;  codetools     0.2-18     <span style="color: #555555;">2020-11-04</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">CRAN (R 4.1.2)</span>
 #&gt;  crayon        1.4.2      <span style="color: #555555;">2021-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span>
 #&gt;  desc          1.4.0      <span style="color: #555555;">2021-09-28</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span>
