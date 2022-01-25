@@ -34,19 +34,6 @@
 #' The exact detection mechanism is as follows:
 
 num_ansi_colors <- function(stream = "auto") {
-  orig_stream <- stream
-  stream <- get_real_output(stream)
-
-  is_stdout <- is_stderr <- is_std <- FALSE
-  std <- "nope"
-  if (identical(stream, stdout())) {
-    is_stdout <- is_std <- TRUE
-    std <- "stdout"
-  } else if (identical(stream, stderr())) {
-    is_stderr <- is_std <- TRUE
-    std <- "stderr"
-  }
-
   #' 1. If the `cli.num_colors` options is set, that is returned.
 
   opt <- getOption("cli.num_colors", NULL)
@@ -90,7 +77,22 @@ num_ansi_colors <- function(stream = "auto") {
   #'    sink (either for `"output"` or `"message"`), then we return 1L.
   #'    (In theory we would only need to check the stream that will be
   #'    be actually used, but there is no easy way to tell that.)
-  if (orig_stream == "auto" && !no_sink()) return(1L)
+  if (stream == "auto" && !no_sink()) return(1L)
+
+  # Defer computation on streams to speed up common case
+  # when environment variables are set
+  orig_stream <- stream
+  stream <- get_real_output(stream)
+
+  is_stdout <- is_stderr <- is_std <- FALSE
+  std <- "nope"
+  if (identical(stream, stdout())) {
+    is_stdout <- is_std <- TRUE
+    std <- "stdout"
+  } else if (identical(stream, stderr())) {
+    is_stderr <- is_std <- TRUE
+    std <- "stderr"
+  }
 
   #' 1. If `stream` is not `"auto"`, but it is `stderr()` and there is an
   #'    active sink for it, then 1L is returned.
