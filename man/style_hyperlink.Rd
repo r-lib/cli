@@ -18,7 +18,7 @@ length, via a \code{paste0()} call.}
 \item{params}{A named character vector of additional parameters, or \code{NULL}.}
 }
 \value{
-Styled \code{ansi_string} for \code{style_hyperlink()}.
+Styled \code{cli_ansi_string} for \code{style_hyperlink()}.
 Logical scalar for \code{ansi_has_hyperlink_support()}.
 }
 \description{

@@ -150,7 +150,7 @@
 * New `ansi_columns()` function to format ANSI strings in multiple columns.
 
 * `ansi_substr()`, `ansi_substring()`, `ansi_strsplit()`, `ansi_align()`
-  now always return `ansi_string` objects.
+  now always return `cli_ansi_string` objects.
 
 * `ansi_nchar()`, `ansi_align()`, `ansi_strtrim()` and the new
   `ansi_strwrap()` as well handle wide Unicode correctly, according to

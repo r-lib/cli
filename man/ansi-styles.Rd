@@ -174,7 +174,7 @@ style_no_bg_color(...)
 \code{paste0()}, before applying the style function.}
 }
 \value{
-An ANSI string (class \code{ansi_string}), that contains ANSI
+An ANSI string (class \code{cli_ansi_string}), that contains ANSI
 sequences, if the current platform supports them. You can simply
 use \code{cat()} to print them to the terminal.
 }

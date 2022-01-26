@@ -222,7 +222,7 @@
     Code
       ansi_strwrap(txt2, width = 60)
     Output
-      <ansi_string>
+      <cli_ansi_string>
       [1] Cupidatat deserunt culpa enim deserunt minim aliqua tempor
       [2] fugiat cupidatat laboris officia esse ex aliqua. Ullamco  
       [3] mollit adipisicing anim.                                  

@@ -135,7 +135,7 @@ create_ansi_style_fun <- function(styles) {
         )
       }
     }
-    class(txt) <- c("ansi_string", "character")
+    class(txt) <- c("cli_ansi_string", "character")
     txt
   }, list(.styles = styles)))
 
@@ -154,8 +154,8 @@ create_ansi_style <- function(name, open = NULL, close = NULL) {
 
 #' @export
 
-print.ansi_string <- function(x, ...) {
-  cat("<ansi_string>\n")
+print.cli_ansi_string <- function(x, ...) {
+  cat("<cli_ansi_string>\n")
   if (length(x)) {
     cat(format(paste0("[", seq_along(x), "] ", format(x))), sep = "\n")
   }

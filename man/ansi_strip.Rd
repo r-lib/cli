@@ -15,10 +15,10 @@ ansi_strip(string, sgr = TRUE, csi = TRUE)
 }
 \value{
 The cleaned up string. Note that \code{ansi_strip()} always drops
-the \code{ansi_string} class, even if \code{sgr} and sci\code{are}FALSE`.
+the \code{cli_ansi_string} class, even if \code{sgr} and sci\code{are}FALSE`.
 }
 \description{
-The input may be of class \code{ansi_string} class, this is also dropped
+The input may be of class \code{cli_ansi_string} class, this is also dropped
 from the result.
 }
 \examples{
