@@ -1,7 +1,7 @@
 
 test_that("make_style without name", {
   pink <- make_ansi_style("pink")
-  expect_true(inherits(pink, "ansi_style"))
+  expect_true(inherits(pink, "cli_ansi_style"))
 })
 
 test_that("hexa color regex works", {

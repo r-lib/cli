@@ -30,7 +30,7 @@ Create a function that can be used to add ANSI styles to text.
 \details{
 The \code{...} style argument can be any of the following:
 \itemize{
-\item A cli ANSI style function of class \code{ansi_style}. This is returned
+\item A cli ANSI style function of class \code{cli_ansi_style}. This is returned
 as is, without looking at the other arguments.
 \item An R color name, see \code{\link[grDevices:colors]{grDevices::colors()}}.
 \item A 6- or 8-digit hexadecimal color string, e.g. \verb{#ff0000} means

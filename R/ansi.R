@@ -139,7 +139,7 @@ create_ansi_style_fun <- function(styles) {
     txt
   }, list(.styles = styles)))
 
-  class(fun) <- "ansi_style"
+  class(fun) <- "cli_ansi_style"
   attr(fun, "_styles") <- styles
   fun
 }
@@ -164,8 +164,8 @@ print.cli_ansi_string <- function(x, ...) {
 
 #' @export
 
-print.ansi_style <- function(x, ...) {
-  cat("<ansi_style>\n")
+print.cli_ansi_style <- function(x, ...) {
+  cat("<cli_ansi_style>\n")
   cat(x("Example output"))
   cat("\n")
   invisible(x)
@@ -189,7 +189,7 @@ print.ansi_style <- function(x, ...) {
 #'
 #' @details
 #' The `...` style argument can be any of the following:
-#' * A cli ANSI style function of class `ansi_style`. This is returned
+#' * A cli ANSI style function of class `cli_ansi_style`. This is returned
 #'   as is, without looking at the other arguments.
 #' * An R color name, see [grDevices::colors()].
 #' * A 6- or 8-digit hexadecimal color string, e.g. `#ff0000` means
@@ -219,7 +219,7 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
                             colors = num_ansi_colors()) {
 
   style <- list(...)[[1]]
-  if (inherits(style, "ansi_style")) return(style)
+  if (inherits(style, "cli_ansi_style")) return(style)
   if (inherits(style, "crayon")) {
     return(create_ansi_style_fun(attr(style, "_styles")))
   }
