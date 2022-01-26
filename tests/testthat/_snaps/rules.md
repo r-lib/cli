@@ -1,4 +1,4 @@
-# print.rule
+# print.cli_rule
 
     Code
       rule("foo")
