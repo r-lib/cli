@@ -26,9 +26,9 @@ test_that("output while status bar is active", {
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1\r",
-    "\r       \rout2\nstatus1\r",
+    "\r        \rout2\nstatus1\r",
     "\rstatus2\r",
-    "\r       \r"))
+    "\r        \r"))
 })
 
 test_that("interpolation", {
@@ -41,7 +41,7 @@ test_that("interpolation", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "\rYou see 1+1=2, this is {cli}\r",
-    "\r                            \r"))
+    "\r                             \r"))
 })
 
 test_that("update", {
@@ -56,7 +56,7 @@ test_that("update", {
     "out1\n",
     "\rstatus1\r",
     "\rstatus2\r",
-    "\r       \r"))
+    "\r        \r"))
 })
 
 test_that("keep", {
@@ -82,12 +82,12 @@ test_that("multiple status bars", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "\rstatus1\r",
-    "\r       \rtext1\nstatus1\r",      # emit text1, restore status1
+    "\r        \rtext1\nstatus1\r",      # emit text1, restore status1
     "\rstatus2\r",                      # show status2
-    "\r       \rtext2\nstatus2\r",      # emit text2, restore status2
-    "\r       \rstatus1\r",             # clear status2, restore status1
-    "\r       \rtext3\nstatus1\r",      # emit text3, restore status1
-    "\r       \r"))                     # (auto)clear status1
+    "\r        \rtext2\nstatus2\r",      # emit text2, restore status2
+    "\r        \rstatus1\r",             # clear status2, restore status1
+    "\r        \rtext3\nstatus1\r",      # emit text3, restore status1
+    "\r        \r"))                     # (auto)clear status1
 })
 
 test_that("truncating", {
@@ -104,7 +104,7 @@ test_that("truncating", {
   out <- ansi_strip(capt0(f()))
   expect_equal(out, paste0(
     "\rEiusmod enim mollit aute aliquip Lore...\r",
-    "\r                                        \r"))
+    "\r                                         \r"))
 })
 
 test_that("ansi colors and clearing", {
@@ -120,7 +120,7 @@ test_that("ansi colors and clearing", {
   }
   out <- capt0(f())
   expect_match(out, "\033[31m", fixed = TRUE)
-  expect_match(out, "\r           \r", fixed = TRUE)
+  expect_match(out, "\r            \r", fixed = TRUE)
 })
 
 test_that("theming status bar", {
@@ -147,7 +147,7 @@ test_that("successful termination", {
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1\r",
-    "\r       \rout2\nstatus1\r",
+    "\r        \rout2\nstatus1\r",
     "\rstatus1 ... done\r\n"
   ))
 })
@@ -164,7 +164,7 @@ test_that("terminate with failed", {
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1\r",
-    "\r       \rout2\nstatus1\r",
+    "\r        \rout2\nstatus1\r",
     "\rstatus1 ... failed\r\n"
   ))
 })
@@ -180,7 +180,7 @@ test_that("auto close with success", {
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1\r",
-    "\r       \rout2\nstatus1\r",
+    "\r        \rout2\nstatus1\r",
     "\rstatus1 ... done\r\n"
   ))
 })
@@ -198,7 +198,7 @@ test_that("auto close wtih failure", {
   expect_equal(out, paste0(
     "out1\n",
     "\rstatus1\r",
-    "\r       \rout2\nstatus1\r",
+    "\r        \rout2\nstatus1\r",
     "\rstatus1 ... failed\r\n"
   ))
 })
@@ -282,15 +282,15 @@ test_that("Emojis are cleaned up properly", {
     paste0(
       "out1\n",
       "\r\U0001F477\r",
-      "\r  \rout2\n\U0001F477\r",
+      "\r   \rout2\n\U0001F477\r",
       "\r\u2728\r",
-      "\r  \r"),
+      "\r   \r"),
     paste0(
       "out1\n",
       "\r<U+0001F477>\r",
-      "\r  \rout2\n<U+0001F477>\r",
+      "\r   \rout2\n<U+0001F477>\r",
       "\r<U+2728>\r",
-      "\r  \r")
+      "\r   \r")
   )
   expect_true(out %in% exps)
 })
@@ -326,7 +326,7 @@ test_that("auto-close with done or failure", {
   expect_match(out2, fixed = TRUE, paste0(
     "out1\n",
     "\ri status1\r",
-    "\r         \r",
+    "\r          \r",
     "out2\n",
     "i status1\r",
     "\rx status1 ... failed\r\n"
