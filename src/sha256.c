@@ -202,6 +202,8 @@ static void bin2str(char *to, const unsigned char *p, size_t len) {
 
 #include "errors.h"
 
+#include <stdint.h>
+
 #include <Rinternals.h>
 
 SEXP clic_sha256(SEXP strs) {
