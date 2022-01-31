@@ -10,8 +10,8 @@
 ## Other changes
 
 * New `hash_sha256()` function to calculate SHA-256 hashes. New
-  `hash_raw_*()` and `hash_obj_*()` functions to calculate various hashes
-  of raw vectors and arbitrary R objects.
+  `hash_raw_*()`, `hash_obj_*()` and `hash_file_*()` functions to calculate
+  various hashes of raw vectors, R objects and files.
 
 # cli 3.1.1
 

@@ -4,6 +4,7 @@
 \alias{hash_sha256}
 \alias{hash_raw_sha256}
 \alias{hash_obj_sha256}
+\alias{hash_file_sha256}
 \title{SHA-256 hash}
 \usage{
 hash_sha256(x)
@@ -11,6 +12,8 @@ hash_sha256(x)
 hash_raw_sha256(x)
 
 hash_obj_sha256(x, serialize_version = 2)
+
+hash_file_sha256(paths)
 }
 \arguments{
 \item{x}{Character vector. If not a character vector, then
@@ -27,6 +30,9 @@ SHA-256 hashes.
 \code{hash_raw_sha256()} returns a character scalar.
 
 \code{hash_obj_sha256()} returns a character scalar.
+
+\code{hash_file_sha256()} returns a character vector of SHA-256
+hashes.
 }
 \description{
 Calculate the SHA-256 hash of each element of a character vector.
@@ -37,6 +43,9 @@ of a raw vector.
 
 \code{hash_obj_sha256()} calculates the SHA-256 hash of an R
 object. The object is serialized into a binary vector first.
+
+\code{hash_file_sha256()} calculates the SHA-256 hash of one or
+more files.
 }
 \examples{
 hash_sha256(c("foo", NA, "bar", ""))

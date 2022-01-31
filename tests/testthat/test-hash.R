@@ -54,6 +54,20 @@ test_that("hash_obj_sha256", {
   }
 })
 
+test_that("hash_file_sha256", {
+  dig <- function(x) {
+    digest::digest(file = x, algo = "sha256")
+  }
+
+  f <- test_path("test-hash.R")
+  expect_equal(
+    hash_file_sha256(character()),
+    character()
+  )
+
+  expect_equal(hash_file_sha256(f), dig(f))
+})
+
 test_that("hash_md5", {
   dig <- function(x) {
     digest::digest(x, serialize = FALSE, algo = "md5")

@@ -257,3 +257,55 @@ SEXP clic_sha256_raw(SEXP r) {
     CE_UTF8
   ));
 }
+
+#include "winfiles.h"
+
+#include <fcntl.h>
+#include <unistd.h>
+
+SEXP clic_sha256_file(SEXP paths) {
+  BYTE hash[32];
+  char hex[64];
+  SHA256_CTX ctx;
+  R_xlen_t i, len = XLENGTH(paths);
+#define BUFSIZE (1 * 1024*1024)
+  char *buffer = R_alloc(1, BUFSIZE);
+  SEXP result = PROTECT(Rf_allocVector(STRSXP, len));
+
+  for (i = 0; i < len; i++) {
+    const char *cpath = CHAR(STRING_ELT(paths, i));
+    int fd = open_file(cpath, O_RDONLY);
+    if (fd == -1) {
+      R_THROW_SYSTEM_ERROR("Cannot open file `%s`", cpath);
+    }
+    sha256_init(&ctx);
+
+    ssize_t got = read(fd, buffer, BUFSIZE);
+    if (got == -1) {
+      close(fd);
+      R_THROW_SYSTEM_ERROR("Cannot read from file `%s`", cpath);
+    }
+
+    while (got > 0) {
+      sha256_update(&ctx, (const BYTE*) buffer, got);
+      got = read(fd, buffer, BUFSIZE);
+      if (got == -1) {
+        close(fd);
+        R_THROW_SYSTEM_ERROR("Cannot read from file `%s`", cpath);
+      }
+    }
+
+    close(fd);
+
+    sha256_final(&ctx, hash);
+    bin2str(hex, hash, sizeof(hash));
+    SET_STRING_ELT(
+      result,
+      i,
+      Rf_mkCharLenCE((const char*) hex, sizeof(hex), CE_UTF8)
+    );
+  }
+
+  UNPROTECT(1);
+  return result;
+}

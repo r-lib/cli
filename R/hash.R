@@ -49,6 +49,26 @@ hash_obj_sha256 <- function(x, serialize_version = 2) {
   hash_raw_sha256(sr)
 }
 
+#' @export
+#' @rdname hash_sha256
+#' @param path
+#' @details `hash_file_sha256()` calculates the SHA-256 hash of one or
+#' more files.
+#'
+#' @return `hash_file_sha256()` returns a character vector of SHA-256
+#' hashes.
+
+hash_file_sha256 <- function(paths) {
+  if (!is.character(paths)) paths <- as.character(paths)
+  paths <- normalizePath(paths, mustWork = FALSE)
+  if (is_windows()) {
+    paths <- enc2utf8(paths)
+  } else {
+    paths <- enc2native(paths)
+  }
+  .Call(clic_sha256_file, paths)
+}
+
 #' MD5 hash
 #'
 #' Calculate the MD5 hash of each element of a character vector.

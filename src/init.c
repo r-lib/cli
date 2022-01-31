@@ -37,6 +37,7 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_md5_raw",        (DL_FUNC) clic_md5_raw,        1 },
   { "clic_sha256",         (DL_FUNC) clic_sha256,         1 },
   { "clic_sha256_raw",     (DL_FUNC) clic_sha256_raw,     1 },
+  { "clic_sha256_file",    (DL_FUNC) clic_sha256_file,    1 },
   { "clic_tty_size",       (DL_FUNC) clic_tty_size,       0 },
   { "clic_ansi_simplify",  (DL_FUNC) clic_ansi_simplify,  2 },
   { "clic_ansi_substr",    (DL_FUNC) clic_ansi_substr,    3 },
