@@ -31,6 +31,8 @@ test_that_cli("cli_abort", {
 })
 
 test_that_cli("cli_warn", {
+  skip_if_not_installed("rlang", "1.0.0")
+
   withr::local_options(cli_theme_dark = FALSE)
   expect_snapshot({
     n <- "boo"
@@ -64,6 +66,8 @@ test_that_cli("cli_warn", {
 })
 
 test_that_cli("cli_inform", {
+  skip_if_not_installed("rlang", "1.0.0")
+
   withr::local_options(cli.ansi = FALSE)
   expect_snapshot({
     n <- "boo"

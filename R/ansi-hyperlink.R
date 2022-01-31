@@ -17,7 +17,7 @@
 #'   length, via a `paste0()` call.
 #' @param url URL to link to.
 #' @param params A named character vector of additional parameters, or `NULL`.
-#' @return Styled `ansi_string` for `style_hyperlink()`.
+#' @return Styled `cli_ansi_string` for `style_hyperlink()`.
 #'   Logical scalar for `ansi_has_hyperlink_support()`.
 #'
 #' @export
@@ -35,7 +35,7 @@ style_hyperlink <- function(text, url, params = NULL) {
     text
   }
 
-  class(out) <- c("ansi_string", "character")
+  class(out) <- c("cli_ansi_string", "character")
   out
 }
 

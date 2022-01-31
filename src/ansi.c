@@ -564,11 +564,11 @@ SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
 
   SEXP ocls = PROTECT(getAttrib(sx, R_ClassSymbol));
   int oclslen = isNull(ocls) ? 0 : LENGTH(ocls);
-  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "ansi_string");
+  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "cli_ansi_string");
   int has_ch = oclslen == 0 ? 0 : Rf_inherits(sx, "character");
   int i, j = 0, clslen = oclslen + !has_as + !has_ch;
   SEXP cls = PROTECT(allocVector(STRSXP, clslen));
-  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
+  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("cli_ansi_string"));
   for (i = 0; i < oclslen; i++) {
     SET_STRING_ELT(cls, j++, STRING_ELT(ocls, i));
   }
@@ -702,11 +702,11 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
 
   SEXP ocls = PROTECT(getAttrib(sx, R_ClassSymbol));
   int oclslen = isNull(ocls) ? 0 : LENGTH(ocls);
-  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "ansi_string");
+  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "cli_ansi_string");
   int has_ch = oclslen == 0 ? 0 : Rf_inherits(sx, "character");
   int i, j = 0, clslen = oclslen + !has_as + !has_ch;
   SEXP cls = PROTECT(allocVector(STRSXP, clslen));
-  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
+  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("cli_ansi_string"));
   for (i = 0; i < oclslen; i++) {
     SET_STRING_ELT(cls, j++, STRING_ELT(ocls, i));
   }

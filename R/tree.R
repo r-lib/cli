@@ -175,7 +175,7 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
 
   res <- ansi_substr(res, 1, width)
 
-  class(res) <- unique(c("tree", class(res), "character"))
+  class(res) <- unique(c("cli_tree", class(res), "character"))
   res
 }
 
@@ -197,11 +197,11 @@ box_chars <- function() {
   }
 }
 
-methods::setOldClass(c("tree", "character"))
+methods::setOldClass(c("cli_tree", "character"))
 
 #' @export
 
-print.tree <- function(x, ..., sep = "\n") {
+print.cli_tree <- function(x, ..., sep = "\n") {
   cat(x, ..., sep = sep)
   invisible(x)
 }

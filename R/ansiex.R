@@ -2,7 +2,7 @@
 ansi_string <- function(x) {
   if (!is.character(x)) x <- as.character(x)
   x <- enc2utf8(x)
-  class(x) <- unique(c("ansi_string", class(x), "character"))
+  class(x) <- unique(c("cli_ansi_string", class(x), "character"))
   x
 }
 
@@ -55,14 +55,14 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
 
 #' Remove ANSI escape sequences from a string
 #'
-#' The input may be of class `ansi_string` class, this is also dropped
+#' The input may be of class `cli_ansi_string` class, this is also dropped
 #' from the result.
 #'
 #' @param string The input string.
 #' @param sgr Whether to remove for SGR (styling) control sequences.
 #' @param csi Whether to remove for non-SGR control sequences.
 #' @return The cleaned up string. Note that `ansi_strip()` always drops
-#' the `ansi_string` class, even if `sgr` and sci` are `FALSE`.
+#' the `cli_ansi_string` class, even if `sgr` and sci` are `FALSE`.
 #'
 #' @family low level ANSI functions
 #' @export
@@ -77,7 +77,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
     is_flag(csi)
   )
   clean <- .Call(clic_ansi_strip, string, sgr, csi)
-  class(clean) <- setdiff(class(clean), "ansi_string")
+  class(clean) <- setdiff(class(clean), "cli_ansi_string")
   clean
 }
 
@@ -776,7 +776,7 @@ ansi_convert <- function(x, converter, ...) {
 #' @param x Input string
 #' @param csi What to do with non-SGR ANSI sequences, either `"keep"`,
 #'   or `"drop"` them.
-#' @return Simplified `ansi_string` vector.
+#' @return Simplified `cli_ansi_string` vector.
 #'
 #' @export
 
