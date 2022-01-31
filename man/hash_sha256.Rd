@@ -22,6 +22,8 @@ will have an \code{NA} hash.}
 
 \item{serialize_version}{Workspace format version to use, see
 \code{\link[base:serialize]{base::serialize()}}.}
+
+\item{paths}{Character vector of file names.}
 }
 \value{
 \code{hash_sha256()} returns aharacter vector of hexadecimal

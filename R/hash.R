@@ -51,7 +51,7 @@ hash_obj_sha256 <- function(x, serialize_version = 2) {
 
 #' @export
 #' @rdname hash_sha256
-#' @param path
+#' @param paths Character vector of file names.
 #' @details `hash_file_sha256()` calculates the SHA-256 hash of one or
 #' more files.
 #'
