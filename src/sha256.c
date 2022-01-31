@@ -211,7 +211,7 @@ SEXP clic_sha256(SEXP strs) {
     R_THROW_ERROR("`strs` must be a character vector");
   }
 
-  BYTE hash[64];
+  BYTE hash[32];
   char hex[64];
   SHA256_CTX ctx;
   R_xlen_t i, len = XLENGTH(strs);
@@ -240,7 +240,7 @@ SEXP clic_sha256_raw(SEXP r) {
   size_t step = SIZE_MAX < 0x40000000 ? SIZE_MAX & ~63 : 0x40000000;
 
   SHA256_CTX ctx;
-  BYTE hash[64];
+  BYTE hash[32];
   char hex[64];
 
   sha256_init(&ctx);
