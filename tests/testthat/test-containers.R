@@ -73,6 +73,8 @@ test_that("div with special style", {
 })
 
 test_that("margin is squashed", {
+  skip_if_not_installed("testthat", "3.1.2")
+
   # expect_snapshot cuts off the trailing newline from the message it
   # seems, so instead of 4 empty lines, there will be only three
   expect_snapshot(local({
