@@ -1,6 +1,12 @@
 
 # cli development version
 
+## Breaking changes
+
+* The S3 clases `ansi_string`, `ansi_style`, `boxx`, `rule` and `tree` have
+  been renamed to have a `cli_` prefix: `cli_ansi_string`, etc. This helps
+  avoiding name conflicts with other packages.
+
 # cli 3.1.1
 
 * `style_hyperlink()` gains a `params=` argument (#384).
