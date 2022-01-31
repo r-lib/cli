@@ -147,10 +147,14 @@ contain \verb{\{} and \verb{\}} characters, so it may not contain \code{{}}
 substitutions either.
 \item Alternative words or suffixes are separated by \code{/}.
 \item If there is a single alternative, then \emph{nothing} is used if
-\code{quantity == 1} and this single alternative is used if \code{quantity != 1}.
-\item If there are two alternatives, the first one is used for \code{quantity == 1}, the second one for \code{quantity != 1} (including `\code{quantity == 0}).
-\item If there are three alternatives, the first one is used for \code{quantity == 0}, the second one for \code{quantity == 1}, and the third one
-otherwise.
+\code{quantity == 1} and this single alternative is used if
+\code{quantity != 1}.
+\item If there are two alternatives, the first one is used for
+\code{quantity == 1}, the second one for \code{quantity != 1} (including
+`\code{quantity == 0}).
+\item If there are three alternatives, the first one is used for
+\code{quantity == 0}, the second one for \code{quantity == 1}, and the third
+one otherwise.
 }
 }
 }

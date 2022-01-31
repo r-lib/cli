@@ -1,4 +1,54 @@
 
+#' SHA-256 hash
+#'
+#' Calculate the SHA-256 hash of each element of a character vector.
+#'
+#' @param x Character vector. If not a character vector, then
+#' [as.character()] is used to try to coerce it into one. `NA` entries
+#' will have an `NA` hash.
+#' @return `hash_sha256()` returns aharacter vector of hexadecimal
+#' SHA-256 hashes.
+
+#' @family hash functions
+#'
+#' @export
+#' @examples
+#' hash_sha256(c("foo", NA, "bar", ""))
+
+hash_sha256 <- function(x) {
+  if (!is.character(x)) x <- as.character(x)
+  na <- is.na(x)
+  x[na] <- NA_character_
+  x[!na] <- .Call(clic_sha256, x[!na])
+  x
+}
+
+#' @export
+#' @rdname hash_sha256
+#' @details `hash_raw_sha256()` calculates the SHA-256 hash of the bytes
+#' of a raw vector.
+#'
+#' @return `hash_raw_sha256()` returns a character scalar.
+
+hash_raw_sha256 <- function(x) {
+  stopifnot(is.raw(x))
+  .Call(clic_sha256_raw, x)
+}
+
+#' @export
+#' @rdname hash_sha256
+#' @param serialize_version Workspace format version to use, see
+#' [base::serialize()].
+#' @details `hash_obj_sha256()` calculates the SHA-256 hash of an R
+#' object. The object is serialized into a binary vector first.
+#'
+#' @return `hash_obj_sha256()` returns a character scalar.
+
+hash_obj_sha256 <- function(x, serialize_version = 2) {
+  sr <- serialize(x, NULL, version = serialize_version)[-(1:14)]
+  hash_raw_sha256(sr)
+}
+
 #' MD5 hash
 #'
 #' Calculate the MD5 hash of each element of a character vector.
@@ -6,7 +56,8 @@
 #' @param x Character vector. If not a character vector, then
 #' [as.character()] is used to try to coerce it into one. `NA` entries
 #' will have an `NA` hash.
-#' @return Character vector of hexadecimal MD5 hashes.
+#' @return `hash_md5()` returns a character vector of hexadecimal MD5
+#' hashes.
 #'
 #' @family hash functions
 #' @seealso [tools::md5sum()] for a base R MD5 function that works on
@@ -22,6 +73,32 @@ hash_md5 <- function(x) {
   x[na] <- NA_character_
   x[!na] <- .Call(clic_md5, x[!na])
   x
+}
+
+#' @export
+#' @rdname hash_md5
+#' @details `hash_raw_md5()` calculates the MD5 hash of the bytes
+#' of a raw vector.
+#'
+#' @return `hash_raw_md5()` returns a character scalar.
+
+hash_raw_md5 <- function(x) {
+  stopifnot(is.raw(x))
+  .Call(clic_md5_raw, x)
+}
+
+#' @export
+#' @rdname hash_md5
+#' @param serialize_version Workspace format version to use, see
+#' [base::serialize()].
+#' @details `hash_obj_md5()` calculates the MD5 hash of an R
+#' object. The object is serialized into a binary vector first.
+#'
+#' @return `hash_obj_md5()` returns a character scalar.
+
+hash_obj_md5 <- function(x, serialize_version = 2) {
+  sr <- serialize(x, NULL, version = serialize_version)[-(1:14)]
+  hash_raw_md5(sr)
 }
 
 #' Emoji hash
@@ -53,7 +130,7 @@ hash_md5 <- function(x) {
 #' @param x Character vector. `NA` entries will have an `NA` hash.
 #' @param size Number of emojis to use in a hash. Currently it has to
 #'   be between 1 and 4.
-#' @return A data frame with columns
+#' @return `hash_emoji()` returns a data frame with columns
 #'   * `hash`: the emoji hash, a string of the requested size.
 #'   * `emojis`: list column with the emoji characters in character
 #'     vectors. Note that an emoji might have multiple code points.
@@ -111,7 +188,10 @@ hash_emoji1 <- function(x, size = 3) {
   }
 
   md5 <- hash_md5(x)
+  hash_emoji1_transform(md5, size)
+}
 
+hash_emoji1_transform <- function(md5, size) {
   md513 <- substr(md5, 1, 13)
   mdint <- as.integer(as.hexmode(strsplit(md513, "")[[1]]))
   hash <- sum(mdint * 16^(0:12))
@@ -132,6 +212,43 @@ hash_emoji1 <- function(x, size = 3) {
     emoji = emo,
     names = nms
   )
+}
+
+#' @export
+#' @rdname hash_emoji
+#' @details `hash_raw_emoji()` calculates the emoji hash of the bytes
+#' of a raw vector.
+#'
+#' @return `hash_raw_emoji()` and `hash_obj_emoji()` return a list with
+#' entries:
+#' * `hash`: the emoji hash, a string of requested size,
+#' * `emojis`: the individual emoji characters in a character vector,
+#' * `text`: text representation of `hash`, comma separated,
+#' * `names`: names of the emojis, in a character vector.
+
+hash_raw_emoji <- function(x, size = 3) {
+  stopifnot(is.raw(x))
+  md5 <- hash_raw_md5(x)
+  emo <- hash_emoji1_transform(md5, size)
+
+  list(
+    hash = collapse(emo$emoji),
+    emojis = emo$emoji,
+    text = collapse(emo$emoji, sep = ", "),
+    names = emo$names
+  )
+}
+
+#' @export
+#' @rdname hash_emoji
+#' @param serialize_version Workspace format version to use, see
+#' [base::serialize()].
+#' @details `hash_obj_emoji()` calculates the emoji hash of an R
+#' object. The object is serialized into a binary vector first.
+
+hash_obj_emoji <- function(x, size = 3, serialize_version = 2) {
+  sr <- serialize(x, NULL, version = serialize_version)[-(1:14)]
+  hash_raw_emoji(sr, size = size)
 }
 
 #' Adjective-animal hash
@@ -213,7 +330,10 @@ hash_animal1 <- function(x, n_adj = 2) {
   }
 
   md5 <- hash_md5(x)
+  hash_animal1_transform(md5, n_adj)
+}
 
+hash_animal1_transform <- function(md5, n_adj) {
   md513 <- substr(md5, 1, 13)
   mdint <- as.integer(as.hexmode(strsplit(md513, "")[[1]]))
   hash <- sum(mdint * 16^(0:12))
@@ -235,4 +355,37 @@ hash_animal1 <- function(x, n_adj = 2) {
     gfycat_adjectives[digits[-length(digits)] + 1],
     gfycat_animals[digits[length(digits)] + 1]
   )
+}
+
+#' @export
+#' @rdname hash_animal
+#' @details `hash_raw_anima()` calculates the adjective-animal hash of
+#' the bytes of a raw vector.
+#'
+#' @return `hash_raw_animal()` and `hash_obj_animal()` return a list
+#' with entries:
+#' * `hash`: the hash value, a string,
+#' * `words: the adjectives and the animal name in a character vector.
+
+hash_raw_animal <- function(x, n_adj = 2) {
+  stopifnot(is.raw(x))
+  md5 <- hash_raw_md5(x)
+  hash <- hash_animal1_transform(md5, n_adj)
+
+  list(
+    hash = collapse(hash, sep = ", "),
+    words = hash
+  )
+}
+
+#' @export
+#' @rdname hash_animal
+#' @param serialize_version Workspace format version to use, see
+#' [base::serialize()].
+#' @details `hash_obj_animal()` calculates the adjective-animal hash of
+#' an R object. The object is serialized into a binary vector first.
+
+hash_obj_animal <- function(x, n_adj = 2, serialize_version = 2) {
+  sr <- serialize(x, NULL, version = serialize_version)[-(1:14)]
+  hash_raw_animal(sr, n_adj = n_adj)
 }

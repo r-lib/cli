@@ -7,6 +7,12 @@
   been renamed to have a `cli_` prefix: `cli_ansi_string`, etc. This helps
   avoiding name conflicts with other packages.
 
+## Other changes
+
+* New `hash_sha256()` function to calculate SHA-256 hashes. New
+  `hash_raw_*()` and `hash_obj_*()` functions to calculate various hashes
+  of raw vectors and arbitrary R objects.
+
 # cli 3.1.1
 
 * `style_hyperlink()` gains a `params=` argument (#384).

@@ -2,18 +2,27 @@
 % Please edit documentation in R/hash.R
 \name{hash_emoji}
 \alias{hash_emoji}
+\alias{hash_raw_emoji}
+\alias{hash_obj_emoji}
 \title{Emoji hash}
 \usage{
 hash_emoji(x, size = 3)
+
+hash_raw_emoji(x, size = 3)
+
+hash_obj_emoji(x, size = 3, serialize_version = 2)
 }
 \arguments{
 \item{x}{Character vector. \code{NA} entries will have an \code{NA} hash.}
 
 \item{size}{Number of emojis to use in a hash. Currently it has to
 be between 1 and 4.}
+
+\item{serialize_version}{Workspace format version to use, see
+\code{\link[base:serialize]{base::serialize()}}.}
 }
 \value{
-A data frame with columns
+\code{hash_emoji()} returns a data frame with columns
 \itemize{
 \item \code{hash}: the emoji hash, a string of the requested size.
 \item \code{emojis}: list column with the emoji characters in character
@@ -21,6 +30,15 @@ vectors. Note that an emoji might have multiple code points.
 \item \code{text}: text representation of \code{hash}, comma separated.
 \item \code{names}: list column with the text representations of \code{emojis}, in
 character vectors.
+}
+
+\code{hash_raw_emoji()} and \code{hash_obj_emoji()} return a list with
+entries:
+\itemize{
+\item \code{hash}: the emoji hash, a string of requested size,
+\item \code{emojis}: the individual emoji characters in a character vector,
+\item \code{text}: text representation of \code{hash}, comma separated,
+\item \code{names}: names of the emojis, in a character vector.
 }
 }
 \description{
@@ -43,6 +61,12 @@ different hashes you can get for different values of \code{size}:\tabular{rr}{
 }
 
 }
+
+\code{hash_raw_emoji()} calculates the emoji hash of the bytes
+of a raw vector.
+
+\code{hash_obj_emoji()} calculates the emoji hash of an R
+object. The object is serialized into a binary vector first.
 }
 \examples{
 hash_emoji(c("foo", NA, "bar", ""))$text
@@ -58,6 +82,7 @@ the emoji package for a comprehensive list of emojis
 
 Other hash functions: 
 \code{\link{hash_animal}()},
-\code{\link{hash_md5}()}
+\code{\link{hash_md5}()},
+\code{\link{hash_sha256}()}
 }
 \concept{hash functions}
