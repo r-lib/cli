@@ -152,6 +152,7 @@ hash_obj_md5 <- function(x, serialize_version = 2) {
 
 hash_emoji <- function(x, size = 3) {
   # our integer arithmetic does not work if size > 4
+  if (!is.character(x)) x <- as.character(x)
   stopifnot(
     is.character(x),
     is_count(size),
@@ -309,6 +310,7 @@ hash_obj_emoji <- function(x, size = 3, serialize_version = 2) {
 #' hash_animal("cli package", 3)$hash
 
 hash_animal <- function(x, n_adj = 2) {
+  if (!is.character(x)) x <- as.character(x)
   stopifnot(
     is.character(x),
     is_count(n_adj),

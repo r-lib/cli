@@ -18,10 +18,6 @@ static void bin2str(char *to, const unsigned char *p, size_t len) {
 }
 
 SEXP clic_md5(SEXP strs) {
-  if (!Rf_isString(strs)) {
-    R_THROW_ERROR("`strs` must be a character vector");
-  }
-
   md5_byte_t hash[16];
   char hexhash[32];
   md5_state_t ctx;

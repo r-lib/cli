@@ -207,10 +207,6 @@ static void bin2str(char *to, const unsigned char *p, size_t len) {
 #include <Rinternals.h>
 
 SEXP clic_sha256(SEXP strs) {
-  if (!Rf_isString(strs)) {
-    R_THROW_ERROR("`strs` must be a character vector");
-  }
-
   BYTE hash[32];
   char hex[64];
   SHA256_CTX ctx;
