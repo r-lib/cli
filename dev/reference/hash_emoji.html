@@ -144,7 +144,11 @@
     <p>Emoji hash</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hash_emoji</span><span class='op'>(</span><span class='va'>x</span>, size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>hash_emoji</span><span class='op'>(</span><span class='va'>x</span>, size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+
+<span class='fu'>hash_raw_emoji</span><span class='op'>(</span><span class='va'>x</span>, size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+
+<span class='fu'>hash_obj_emoji</span><span class='op'>(</span><span class='va'>x</span>, size <span class='op'>=</span> <span class='fl'>3</span>, serialize_version <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,17 +162,30 @@
       <td><p>Number of emojis to use in a hash. Currently it has to
 be between 1 and 4.</p></td>
     </tr>
+    <tr>
+      <th>serialize_version</th>
+      <td><p>Workspace format version to use, see
+<code><a href='https://rdrr.io/r/base/serialize.html'>base::serialize()</a></code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with columns</p><ul>
+    <p><code>hash_emoji()</code> returns a data frame with columns</p><ul>
 <li><p><code>hash</code>: the emoji hash, a string of the requested size.</p></li>
 <li><p><code>emojis</code>: list column with the emoji characters in character
 vectors. Note that an emoji might have multiple code points.</p></li>
 <li><p><code>text</code>: text representation of <code>hash</code>, comma separated.</p></li>
 <li><p><code>names</code>: list column with the text representations of <code>emojis</code>, in
 character vectors.</p></li>
+</ul>
+
+<p><code>hash_raw_emoji()</code> and <code>hash_obj_emoji()</code> return a list with
+entries:</p><ul>
+<li><p><code>hash</code>: the emoji hash, a string of requested size,</p></li>
+<li><p><code>emojis</code>: the individual emoji characters in a character vector,</p></li>
+<li><p><code>text</code>: text representation of <code>hash</code>, comma separated,</p></li>
+<li><p><code>names</code>: names of the emojis, in a character vector.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -191,12 +208,17 @@ different hashes you can get for different values of <code>size</code>:</p><tabl
 
 
 
+<p><code>hash_raw_emoji()</code> calculates the emoji hash of the bytes
+of a raw vector.</p>
+<p><code>hash_obj_emoji()</code> calculates the emoji hash of an R
+object. The object is serialized into a binary vector first.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>the emoji package for a comprehensive list of emojis</p>
 <p>Other hash functions: 
 <code><a href='hash_animal.html'>hash_animal</a>()</code>,
-<code><a href='hash_md5.html'>hash_md5</a>()</code></p></div>
+<code><a href='hash_md5.html'>hash_md5</a>()</code>,
+<code><a href='hash_sha256.html'>hash_sha256</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='fu'>hash_emoji</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"foo"</span>, <span class='cn'>NA</span>, <span class='st'>"bar"</span>, <span class='st'>""</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>text</span></span>
