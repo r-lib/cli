@@ -26,7 +26,7 @@
 ---
 
     Code
-      err$cli_bullets
+      c(err$message, err$body)
     Output
                                                                                     x 
                "`n` must be a numeric vector" "You've supplied a <character> vector." 
@@ -59,7 +59,7 @@
 ---
 
     Code
-      err$cli_bullets
+      c(err$message, err$body)
     Output
                                                                      
       "\033[30m\033[47m`n`\033[49m\033[39m must be a numeric vector" 
@@ -94,7 +94,7 @@
 ---
 
     Code
-      err$cli_bullets
+      c(err$message, err$body)
     Output
                                                                                     x 
                "`n` must be a numeric vector" "You've supplied a <character> vector." 
@@ -127,7 +127,7 @@
 ---
 
     Code
-      err$cli_bullets
+      c(err$message, err$body)
     Output
                                                                      
       "\033[30m\033[47m`n`\033[49m\033[39m must be a numeric vector" 
@@ -447,4 +447,32 @@
       cat(update_rstudio_color("color me interested"))
     Output
       [32mcolor me interested[39m
+
+# cli_abort() captures correct call and backtrace
+
+    Code
+      print(expect_error(f()))
+    Output
+      <error/rlang_error>
+      Error in `h()`:
+      ! foo
+      Backtrace:
+        1. base::print(expect_error(f()))
+        8. cli f()
+        9. cli g()
+       10. cli h()
+
+---
+
+    Code
+      print(expect_error(f(list())))
+    Output
+      <error/cli_my_class>
+      Error in `h()`:
+      ! `x` can't be empty.
+      Backtrace:
+        1. base::print(expect_error(f(list())))
+        8. cli f(list())
+        9. cli g(x)
+       10. cli h(x)
 

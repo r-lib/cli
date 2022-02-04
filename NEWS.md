@@ -9,6 +9,15 @@
 
 ## Other changes
 
+* `cli_abort()` has been updated to work nicely with rlang 1.0. The
+  default `call` and backtrace soft-truncation are set to `.envir`
+  (which itself is set to the immediate caller of `cli_abort()` by
+  default).
+
+  Line formatting now happens lazily at display time via
+  `rlang::cnd_message()` (which is called by the `conditionMessage()`
+  method for rlang errors).
+
 * New `hash_sha256()` function to calculate SHA-256 hashes. New
   `hash_raw_*()`, `hash_obj_*()` and `hash_file_*()` functions to calculate
   various hashes of raw vectors, R objects and files.

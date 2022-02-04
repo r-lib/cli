@@ -7,7 +7,7 @@
 \title{Signal an error, warning or message with a cli formatted
 message}
 \usage{
-cli_abort(message, ..., .envir = parent.frame())
+cli_abort(message, ..., .envir = parent.frame(), call = .envir)
 
 cli_warn(message, ..., .envir = parent.frame())
 
@@ -20,6 +20,18 @@ cli_inform(message, ..., .envir = parent.frame())
 \code{\link[rlang:abort]{rlang::inform()}}.}
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
+
+\item{call}{The execution environment of a currently running
+function, e.g. \code{call = caller_env()}. The corresponding function
+call is retrieved and mentioned in error messages as the source
+of the error.
+
+You only need to supply \code{call} when throwing a condition from a
+helper function which wouldn't be relevant to mention in the
+message.
+
+Can also be \code{NULL} or a \link[rlang:topic-defuse]{defused function call} to
+respectively not display any call or hard-code a code to display.}
 }
 \description{
 These functions let you create error, warning or diagnostic
@@ -27,14 +39,12 @@ messages with cli formatting, including inline styling,
 pluralization and glue substitutions.
 }
 \details{
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{n <- "boo"
+\if{html}{\out{<div class="sourceCode {asciicast cli-abort}">}}\preformatted{n <- "boo"
 cli_abort(c(
         "\{.var n\} must be a numeric vector",
   "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 ))
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{cli-abort.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
+}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode {asciicast cli-abort-2}">}}\preformatted{len <- 26
 idx <- 100
 cli_abort(c(
         "Must index an existing element:",
@@ -42,6 +52,4 @@ cli_abort(c(
   "x" = "You've tried to subset element \{idx\}."
 ))
 }\if{html}{\out{</div>}}
-
-\if{html}{\figure{cli-abort-2.svg}}
 }

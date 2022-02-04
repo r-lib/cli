@@ -30,16 +30,20 @@
 #' @param ... Passed to [rlang::abort()], [rlang::warn()] or
 #'   [rlang::inform()].
 #' @param .envir Environment to evaluate the glue expressions in.
+#' @inheritParams rlang::abort
 #'
 #' @export
 
-cli_abort <- function(message, ..., .envir = parent.frame()) {
+cli_abort <- function(message,
+                      ...,
+                      .envir = parent.frame(),
+                      call = .envir) {
   message[] <- vcapply(message, format_inline, .envir = .envir)
-  escaped_message <- cli_escape(message)
   rlang::abort(
-    format_error(escaped_message, .envir = .envir),
-    cli_bullets = message,
-    ...
+    message,
+    ...,
+    call = call,
+    use_cli_format = TRUE
   )
 }
 
