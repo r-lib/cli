@@ -151,7 +151,7 @@ messages with cli formatting, including inline styling,
 pluralization and glue substitutions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cli_abort</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>cli_abort</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>, call <span class='op'>=</span> <span class='va'>.envir</span><span class='op'>)</span>
 
 <span class='fu'>cli_warn</span><span class='op'>(</span><span class='va'>message</span>, <span class='va'>...</span>, .envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -173,17 +173,28 @@ pluralization and glue substitutions.</p>
       <th>.envir</th>
       <td><p>Environment to evaluate the glue expressions in.</p></td>
     </tr>
+    <tr>
+      <th>call</th>
+      <td><p>The execution environment of a currently running
+function, e.g. <code>call = caller_env()</code>. The corresponding function
+call is retrieved and mentioned in error messages as the source
+of the error.</p>
+<p>You only need to supply <code>call</code> when throwing a condition from a
+helper function which wouldn't be relevant to mention in the
+message.</p>
+<p>Can also be <code>NULL</code> or a <a href='https://rlang.r-lib.org/reference/topic-defuse.html'>defused function call</a> to
+respectively not display any call or hard-code a code to display.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><div class="sourceCode r"></p><pre><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='st'>"boo"</span>
+    <p><div class="sourceCode {asciicast cli-abort}"></p><pre><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='st'>"boo"</span>
 <span class='fu'>cli_abort</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
         <span class='st'>"{.var n} must be a numeric vector"</span>,
   <span class='st'>"x"</span> <span class='op'>=</span> <span class='st'>"You've supplied a {.cls {class(n)}} vector."</span>
 <span class='op'>)</span><span class='op'>)</span>
-</pre><p></div></p>
-<p><img src='figures/cli-abort.svg' alt='' /><div class="sourceCode r"></p><pre><span class='va'>len</span> <span class='op'>&lt;-</span> <span class='fl'>26</span>
+</pre><p></div><div class="sourceCode {asciicast cli-abort-2}"></p><pre><span class='va'>len</span> <span class='op'>&lt;-</span> <span class='fl'>26</span>
 <span class='va'>idx</span> <span class='op'>&lt;-</span> <span class='fl'>100</span>
 <span class='fu'>cli_abort</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
         <span class='st'>"Must index an existing element:"</span>,
@@ -191,7 +202,6 @@ pluralization and glue substitutions.</p>
   <span class='st'>"x"</span> <span class='op'>=</span> <span class='st'>"You've tried to subset element {idx}."</span>
 <span class='op'>)</span><span class='op'>)</span>
 </pre><p></div></p>
-<p><img src='figures/cli-abort-2.svg' alt='' /></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
