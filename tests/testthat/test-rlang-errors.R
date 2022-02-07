@@ -27,7 +27,7 @@ test_that_cli("cli_abort", {
     )),
     error = function(e) e
   )
-  expect_snapshot(err$cli_bullets)
+  expect_snapshot(c(err$message, err$body))
 })
 
 test_that_cli("cli_warn", {
@@ -160,4 +160,39 @@ test_that_cli(config = "ansi", "update_rstudio_color", {
     function() make_ansi_style("#008800")
   )
   expect_snapshot(cat(update_rstudio_color("color me interested")))
+})
+
+test_that("cli_abort() captures correct call and backtrace", {
+  rlang::local_options(
+    rlang_trace_top_env = environment(),
+    rlang_trace_format_srcrefs = FALSE
+  )
+
+  f <- function() g()
+  g <- function() h()
+  h <- function() cli::cli_abort("foo")
+
+  expect_snapshot({
+    print(expect_error(f()))
+  })
+
+  classed_stop <- function(message, env = parent.frame()) {
+    cli::cli_abort(
+      message,
+      .envir = env,
+      class = "cli_my_class"
+    )
+  }
+  h <- function(x) {
+    if (!length(x)) {
+      classed_stop("{.arg x} can't be empty.")
+    }
+  }
+
+  f <- function(x) g(x)
+  g <- function(x) h(x)
+
+  expect_snapshot({
+    print(expect_error(f(list())))
+  })
 })
