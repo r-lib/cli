@@ -1,4 +1,4 @@
-# memo [plain]
+# bullets [plain]
 
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
@@ -13,7 +13,7 @@
       * bullet
       > arrow
 
-# memo [ansi]
+# bullets [ansi]
 
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
@@ -28,7 +28,7 @@
       [36m*[39m bullet
       > arrow
 
-# memo [unicode]
+# bullets [unicode]
 
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
@@ -43,7 +43,7 @@
       • bullet
       → arrow
 
-# memo [fancy]
+# bullets [fancy]
 
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
@@ -58,7 +58,7 @@
       [36m•[39m bullet
       → arrow
 
-# memo glue [plain]
+# bullets glue [plain]
 
     Code
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
@@ -74,7 +74,7 @@
       * bullet [1], [2], and [3]
       > arrow [1], [2], and [3]
 
-# memo glue [ansi]
+# bullets glue [ansi]
 
     Code
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
@@ -90,7 +90,7 @@
       [36m*[39m bullet [34m[1][39m, [34m[2][39m, and [34m[3][39m
       > arrow [34m[1][39m, [34m[2][39m, and [34m[3][39m
 
-# memo glue [unicode]
+# bullets glue [unicode]
 
     Code
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
@@ -106,7 +106,7 @@
       • bullet [1], [2], and [3]
       → arrow [1], [2], and [3]
 
-# memo glue [fancy]
+# bullets glue [fancy]
 
     Code
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
@@ -122,7 +122,7 @@
       [36m•[39m bullet [34m[1][39m, [34m[2][39m, and [34m[3][39m
       → arrow [34m[1][39m, [34m[2][39m, and [34m[3][39m
 
-# memo wrapping [plain]
+# bullets wrapping [plain]
 
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
@@ -145,7 +145,7 @@
       > This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
-# memo wrapping [ansi]
+# bullets wrapping [ansi]
 
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
@@ -168,7 +168,7 @@
       > This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
-# memo wrapping [unicode]
+# bullets wrapping [unicode]
 
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
@@ -191,7 +191,7 @@
       → This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
-# memo wrapping [fancy]
+# bullets wrapping [fancy]
 
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
