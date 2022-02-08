@@ -150,3 +150,18 @@ test_that("cli.condition_width", {
     format_message(msg)
   })
 })
+
+test_that_cli("suppressing Unicode bullets", {
+  withr::local_options(cli.condition_unicode_bullets = FALSE)
+  expect_snapshot(error = TRUE, local({
+    n <- "boo"
+    stop(format_error(c(
+            "{.var n} must be a numeric vector",
+      "x" = "You've supplied a {.cls {class(n)}} vector.",
+      "v" = "Success.",
+      "i" = "Info.",
+      "*" = "Bullet",
+      ">" = "Arrow"
+    )))
+  }))
+})
