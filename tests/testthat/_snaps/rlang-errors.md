@@ -39,7 +39,7 @@
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
     Error <rlang_error>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -61,10 +61,10 @@
     Code
       c(err$message, err$body)
     Output
-                                                                     
-      "\033[30m\033[47m`n`\033[49m\033[39m must be a numeric vector" 
-                                                                   x 
-             "You've supplied a \033[34m<character>\033[39m vector." 
+                                                              
+                               "`n` must be a numeric vector" 
+                                                            x 
+      "You've supplied a \033[34m<character>\033[39m vector." 
 
 # cli_abort [unicode]
 
@@ -107,7 +107,7 @@
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
     Error <rlang_error>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -129,10 +129,10 @@
     Code
       c(err$message, err$body)
     Output
-                                                                     
-      "\033[30m\033[47m`n`\033[49m\033[39m must be a numeric vector" 
-                                                                   x 
-             "You've supplied a \033[34m<character>\033[39m vector." 
+                                                              
+                               "`n` must be a numeric vector" 
+                                                            x 
+      "You've supplied a \033[34m<character>\033[39m vector." 
 
 # cli_warn [plain]
 
@@ -173,7 +173,7 @@
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
     Warning <rlang_warning>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -239,7 +239,7 @@
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
     Warning <rlang_warning>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -311,7 +311,7 @@
     Message <cliMessage>
       
     Message <rlang_message>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -385,7 +385,7 @@
     Message <cliMessage>
       
     Message <rlang_message>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+      [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---

@@ -13,9 +13,9 @@ format_bullets_raw(text, id = NULL, class = NULL)
 \item{text}{Character vector of items. See details below on how names
 are interpreted.}
 
-\item{id}{Optional id of the \code{div.memo} element, can be used in themes.}
+\item{id}{Optional id of the \code{div.bullets} element, can be used in themes.}
 
-\item{class}{Optional additional class(es) for the \code{div.memo} element.}
+\item{class}{Optional additional class(es) for the \code{div.bullets} element.}
 }
 \description{
 \code{cli_format_bullets_raw()} is similar to \code{\link[=cli_bullets]{cli_bullets()}}, but it does

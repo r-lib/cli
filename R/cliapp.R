@@ -85,9 +85,9 @@ cliapp <- function(theme = getOption("cli.theme"),
     alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
       clii_alert(app, "alert-info", text, id, class, wrap),
 
-    ## Memo
-    memo = function(text, id = NULL, class = NULL)
-      clii_memo(app, text, id, class),
+    ## Bullets
+    bullets = function(text, id = NULL, class = NULL)
+      clii_bullets(app, text, id, class),
 
     ## Horizontal rule
     rule = function(left, center, right, id = NULL)
@@ -258,10 +258,10 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   }
 }
 
-## Memo -------------------------------------------------------------
+## Bullets -------------------------------------------------------------
 
-clii_memo <- function(app, text, id, class) {
-  clii__container_start(app, "div", id = id, class = paste("memo", class))
+clii_bullets <- function(app, text, id, class) {
+  clii__container_start(app, "div", id = id, class = paste("memo bullets", class))
   on.exit(clii__container_end(app, id), add = TRUE)
 
   # Normalize names a bit, so we can use them as class names
@@ -270,7 +270,8 @@ clii_memo <- function(app, text, id, class) {
   nms[is.na(nms) | nms == ""] <- "empty"
   nms[nms == " "] <- "space"
   nms <- gsub(" ", "-", nms)
-  cls <- paste0("memo-item memo-item-", nms)
+  # cls is vectorized here (!)
+  cls <- paste0("bullet memo-item bullet-", nms, " memo-item=", nms)
 
   lapply(seq_along(text), function(i) {
     iid <- new_uuid()

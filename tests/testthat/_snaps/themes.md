@@ -130,8 +130,8 @@
         cli_alert("{.emph {.code this does not}}")
       })
     Message <cliMessage>
-      > [38;5;235m[48;5;253m[3m[30m[47m`this has bg color`[48;5;253m[38;5;235m[23m[49m[39m
-      > [0m[22m[23m[24m[27m[28m[29m[39m[3m[30m[0m[22m[3m[24m[27m[28m[29m[30m`this does not`[0m[22m[23m[24m[27m[28m[29m[39m[39m[23m[49m
+      > [3m`this has bg color`[23m
+      > [0m[22m[23m[24m[27m[28m[29m[39m[3m[0m[22m[3m[24m[27m[28m[29m[39m`this does not`[0m[22m[23m[24m[27m[28m[29m[39m[23m[49m
 
 ---
 
@@ -142,6 +142,6 @@
         cli_alert("{.emph {.code this does not}}")
       })
     Message <cliMessage>
-      > [38;5;235m[48;5;253m[3m[30m[47m`this has bg color`[48;5;253m[38;5;235m[23m[49m[39m
-      > [0m[22m[23m[24m[27m[28m[29m[39m[3m[30m[0m[22m[3m[24m[27m[28m[29m[30m`this does not`[0m[22m[23m[24m[27m[28m[29m[39m[39m[23m[49m
+      > [3m`this has bg color`[23m
+      > [0m[22m[23m[24m[27m[28m[29m[39m[3m[0m[22m[3m[24m[27m[28m[29m[39m`this does not`[0m[22m[23m[24m[27m[28m[29m[39m[23m[49m
 
