@@ -110,7 +110,7 @@ test_that_cli(configs = "ansi", "NULL will undo color", {
 })
 
 withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
-withr::local_options(cli_theme_dark = FALSE, cli.num_colors = 256)
+withr::local_options(cli.theme_dark = FALSE, cli.num_colors = 256)
 start_app()
 on.exit(stop_app(), add = TRUE)
 

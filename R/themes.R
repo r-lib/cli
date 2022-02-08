@@ -81,13 +81,13 @@ clii_remove_theme <- function(app, id) {
 #' @seealso [themes], [simple_theme()].
 #' @return A named list, a CLI theme.
 #'
-#' @param dark Whether to use a dark theme. The `cli_theme_dark` option
+#' @param dark Whether to use a dark theme. The `cli.theme_dark` option
 #'   can be used to request a dark theme explicitly. If this is not set,
 #'   or set to `"auto"`, then cli tries to detect a dark theme, this
 #'   works in recent RStudio versions and in iTerm on macOS.
 #' @export
 
-builtin_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
+builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
 
   dark <- detect_dark_theme(dark)
 

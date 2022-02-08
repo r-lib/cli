@@ -4,7 +4,7 @@
 \alias{simple_theme}
 \title{A simple CLI theme}
 \usage{
-simple_theme(dark = getOption("cli_theme_dark", "auto"))
+simple_theme(dark = getOption("cli.theme_dark", "auto"))
 }
 \arguments{
 \item{dark}{Whether the theme should be optimized for a dark

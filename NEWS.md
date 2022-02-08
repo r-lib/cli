@@ -7,6 +7,9 @@
   been renamed to have a `cli_` prefix: `cli_ansi_string`, etc. This helps
   avoiding name conflicts with other packages.
 
+* The `cli_theme_dark` option is know known as `cli.theme_dark`, to be
+  consistent with all other cli option names (#380).
+
 ## Other changes
 
 * `cli_abort()` has been updated to work nicely with rlang 1.0. The

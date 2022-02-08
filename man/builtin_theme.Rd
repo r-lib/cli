@@ -4,10 +4,10 @@
 \alias{builtin_theme}
 \title{The built-in CLI theme}
 \usage{
-builtin_theme(dark = getOption("cli_theme_dark", "auto"))
+builtin_theme(dark = getOption("cli.theme_dark", "auto"))
 }
 \arguments{
-\item{dark}{Whether to use a dark theme. The \code{cli_theme_dark} option
+\item{dark}{Whether to use a dark theme. The \code{cli.theme_dark} option
 can be used to request a dark theme explicitly. If this is not set,
 or set to \code{"auto"}, then cli tries to detect a dark theme, this
 works in recent RStudio versions and in iTerm on macOS.}

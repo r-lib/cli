@@ -230,7 +230,7 @@ This option in intended for the package developers.
 See \link{themes} and \code{\link[=start_app]{start_app()}}.
 }
 
-\subsection{\code{cli_theme_dark}}{
+\subsection{\code{cli.theme_dark}}{
 
 Whether cli should assume a dark theme for the builtin theme.
 See \code{\link[=builtin_theme]{builtin_theme()}}.

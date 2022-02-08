@@ -64,7 +64,7 @@
 #' @seealso [themes], [builtin_theme()].
 #' @export
 
-simple_theme <- function(dark = getOption("cli_theme_dark", "auto")) {
+simple_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
 
   dark <- detect_dark_theme(dark)
 
