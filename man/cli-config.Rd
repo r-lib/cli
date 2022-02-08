@@ -50,6 +50,13 @@ Set to anything else to assume a non-ANSI terminal.
 See \code{\link[=is_ansi_tty]{is_ansi_tty()}}.
 }
 
+\subsection{\code{cli.condition_unicode_bullets}}{
+
+\code{TRUE} or \code{FALSE} to force turn on or off the Unicode symbols when printing
+conditions. E.g. in \code{format_error()}, \code{format_warning()}, \code{format_message()} and
+also in \code{cli_abort()}, \code{cli_warn()} and \code{cli_inform()}.
+}
+
 \subsection{\code{cli.condition_width}}{
 
 Integer scalar (or \code{Inf}) to set the console width when cli is formatting

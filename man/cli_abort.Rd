@@ -39,12 +39,14 @@ messages with cli formatting, including inline styling,
 pluralization and glue substitutions.
 }
 \details{
-\if{html}{\out{<div class="sourceCode {asciicast cli-abort}">}}\preformatted{n <- "boo"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{n <- "boo"
 cli_abort(c(
         "\{.var n\} must be a numeric vector",
   "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 ))
-}\if{html}{\out{</div>}}\if{html}{\out{<div class="sourceCode {asciicast cli-abort-2}">}}\preformatted{len <- 26
+}\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-abort.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
 cli_abort(c(
         "Must index an existing element:",
@@ -52,4 +54,6 @@ cli_abort(c(
   "x" = "You've tried to subset element \{idx\}."
 ))
 }\if{html}{\out{</div>}}
+
+\if{html}{\figure{cli-abort-2.svg}}
 }
