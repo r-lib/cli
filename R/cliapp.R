@@ -270,8 +270,8 @@ clii_bullets <- function(app, text, id, class) {
   nms[is.na(nms) | nms == ""] <- "empty"
   nms[nms == " "] <- "space"
   nms <- gsub(" ", "-", nms)
-  cls <- c("bullet", "memo-item", paste0(c("bullet-", "memo-item-"), nms))
-  cls <- paste(cls, collapse = " ")
+  # cls is vectorized here (!)
+  cls <- paste0("bullet memo-item bullet-", nms, " memo-item=", nms)
 
   lapply(seq_along(text), function(i) {
     iid <- new_uuid()
