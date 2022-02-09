@@ -165,3 +165,7 @@ test_that_cli("suppressing Unicode bullets", {
     )))
   }))
 })
+
+test_that("edge cases", {
+  expect_equal(cli::format_error(""), "")
+})

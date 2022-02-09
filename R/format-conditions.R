@@ -57,7 +57,7 @@ format_error <- function(message, .envir = parent.frame()) {
   })(), collapse = TRUE, strip_newline = TRUE)
 
   # remove "Error: " that was only needed for the wrapping
-  formatted1[1] <- sub("Error: ", "", formatted1[1])
+  formatted1[1] <- sub("Error:[ ]?", "", formatted1[1])
 
   update_rstudio_color(formatted1)
 }
