@@ -183,6 +183,6 @@ pluralize <- function(..., .envir = parent.frame(),
     }
   }
 
-  raw <- glue::glue(..., .envir = .envir, .transformer = tf)
+  raw <- glue::glue(..., .envir = .envir, .transformer = tf, .literal = TRUE)
   post_process_plurals(raw, values)
 }

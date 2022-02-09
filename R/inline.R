@@ -136,7 +136,8 @@ inline_transformer <- function(code, envir) {
       .transformer = inline_transformer,
       .open = paste0("{", envir$marker),
       .close = paste0(envir$marker, "}"),
-      .trim = TRUE
+      .trim = TRUE,
+      .literal = TRUE
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -216,7 +217,8 @@ clii__inline <- function(app, text, .list) {
       .transformer = inline_transformer,
       .open = paste0("{", t$values$marker),
       .close = paste0(t$values$marker, "}"),
-      .trim = TRUE
+      .trim = TRUE,
+      .literal = TRUE
     )
   })
   paste(out, collapse = "")
@@ -262,7 +264,13 @@ make_cmd_transformer <- function(values) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      out <- glue::glue(text, .envir = envir, .transformer = sys.function(), .trim = TRUE)
+      out <- glue::glue(
+        text,
+        .envir = envir,
+        .transformer = sys.function(),
+        .trim = TRUE,
+        .literal = TRUE
+      )
       paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
     }
   }
@@ -272,7 +280,13 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  pstr <- glue::glue(str, .envir = .envir, .transformer = transformer, .trim = TRUE)
+  pstr <- glue::glue(
+    str,
+    .envir = .envir,
+    .transformer = transformer,
+    .trim = TRUE,
+    .literal = TRUE
+  )
   glue_delay(
     str = post_process_plurals(pstr, values),
     values = values

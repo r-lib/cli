@@ -32,6 +32,9 @@
 * You can set the new `ESS_BACKGROUND_MODE` environment variable to
   `dark` to indicate dark mode.
 
+* cli now handles quotes and comment characters better in the semantion
+  `cli_*()` functions that perform glue string interpolation (#383).
+
 # cli 3.1.1
 
 * `style_hyperlink()` gains a `params=` argument (#384).
