@@ -101,6 +101,12 @@ rstudio <- local({
       # process. Hopefully this is reliable.
       "rstudio_job"
 
+    } else if (new$envs[["RSTUDIOAPI_IPC_REQUESTS_FILE"]] != "" &&
+               any(grepl("SourceWithProgress.R", new$args))) {
+      # Or we can check SourceWithProgress.R in the command line, see
+      # https://github.com/r-lib/cli/issues/367
+      "rstudio_job"
+
     } else {
       # Otherwise it is a subprocess of the console, terminal or
       # build pane, and it is hard to say which, so we do not try.
