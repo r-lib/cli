@@ -105,3 +105,13 @@ test_that("line breaks", {
   txt2 <- paste0(txt, "\f", txt)
   expect_snapshot(ansi_strwrap(txt2, width = 60))
 })
+
+test_that_cli(config = "ansi", "double ticks", {
+  x <- c("a", "`x`", "b")
+  cli_div(theme = list(
+    .code = list(color = "red"),
+    .fun = list(color = "red")
+  ))
+  expect_snapshot(format_inline("{.code {x}}"))
+  expect_snapshot(format_inline("{.fun {x}}"))
+})

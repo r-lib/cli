@@ -302,12 +302,32 @@ theme_code <- function(dark) {
   list()
 }
 
+tick_formatter <- function(x) {
+  tt <- grepl("`", x, fixed = TRUE) + 1L
+  t1 <- c("`", "`` ")[tt]
+  t2 <- c("`", " ``")[tt]
+  paste0(t1, x, t2)
+}
+
+tick_formatter_fun <- function(x) {
+  tt <- grepl("`", x, fixed = TRUE) + 1L
+  t1 <- c("`", "`` ")[tt]
+  t2 <- c("()`", " ()``")[tt]
+  paste0(t1, x, t2)
+}
+
 theme_code_tick <- function(dark) {
-  utils::modifyList(theme_code(dark), list(before = "`", after = "`"))
+  utils::modifyList(
+    theme_code(dark),
+    list(transform = tick_formatter)
+  )
 }
 
 theme_function <- function(dark) {
-  utils::modifyList(theme_code(dark), list(before = "`", after = "()`"))
+  utils::modifyList(
+    theme_code(dark),
+    list(transform = tick_formatter_fun)
+  )
 }
 
 format_r_code <- function(dark) {

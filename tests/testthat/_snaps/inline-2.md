@@ -230,3 +230,17 @@
       [5] fugiat cupidatat laboris officia esse ex aliqua. Ullamco  
       [6] mollit adipisicing anim.                                  
 
+# double ticks [ansi]
+
+    Code
+      format_inline("{.code {x}}")
+    Output
+      [1] "\033[31m`a`\033[39m, \033[31m`` `x` ``\033[39m, and \033[31m`b`\033[39m"
+
+---
+
+    Code
+      format_inline("{.fun {x}}")
+    Output
+      [1] "\033[31m`a()`\033[39m, \033[31m`` `x` ()``\033[39m, and \033[31m`b()`\033[39m"
+
