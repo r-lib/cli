@@ -71,6 +71,14 @@ General handler function for all cli conditions.
 See \url{https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1}
 }
 
+\subsection{\code{cli.default_num_colors}}{
+
+Default number of ANSI colors. This value is only used if ANSI color support
+is detected. You can set this value to keep relying on auto-detection,
+but to adjust the number of colors when cli detects color support.
+See \code{\link[=num_ansi_colors]{num_ansi_colors()}}. See also the \code{cli.num_colors} option.
+}
+
 \subsection{\code{cli.dynamic}}{
 
 Set to \code{TRUE} to assume a dynamic terminal, that supports \verb{\\r}.
@@ -94,7 +102,8 @@ See \code{\link[=style_hyperlink]{style_hyperlink()}}.
 
 \subsection{\code{cli.num_colors}}{
 
-Number of ANSI colors. See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
+Number of ANSI colors. See \code{\link[=num_ansi_colors]{num_ansi_colors()}}. See also the
+\code{cli.default_num_colors} option.
 }
 
 \subsection{\code{cli.message_class}}{

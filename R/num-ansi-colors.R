@@ -49,7 +49,9 @@ num_ansi_colors <- function(stream = "auto") {
   #' 1. If the `crayon.enabled` option is set to `FALSE`, 1L is returned.
   #'    (This is for compatibility with code that uses the crayon package.)
   #' 1. If the `crayon.enabled` option is set to `TRUE` and the
-  #'    `crayon.colors` option is not set, then 8L is returned.
+  #'    `crayon.colors` option is not set, then the value of the
+  #'    `cli.default_num_colors` option, or if it is unset, then 8L is
+  #'    returned.
   #' 1. If the `crayon.enabled` option is set to `TRUE` and the
   #'    `crayon.colors` option is also set, then the latter is returned.
   #'    (This is for compatibility with code that uses the crayon package.)
@@ -61,7 +63,8 @@ num_ansi_colors <- function(stream = "auto") {
     return(as.integer(cray_opt_num))
   }
   if (isTRUE(cray_opt_has) && is.null(cray_opt_num)) {
-    return(8L)
+    default <- get_default_number_of_colors()
+    return(default %||% 8L)
   }
 
   #' 1. If the `NO_COLOR` environment variable is set, then 1L is returned.
@@ -129,9 +132,10 @@ num_ansi_colors <- function(stream = "auto") {
   if (.Platform$GUI == "Rgui") return(1L)
 
   #' 1. If R is running on Windows, inside an Emacs version that is recent
-  #'    enough to support ANSI colors, then 8L is returned. (On Windows,
-  #'    Emacs has `isatty(stdout()) == FALSE`, so we need to check for this
-  #'    here before dealing with terminals.)
+  #'    enough to support ANSI colors, then the value of the
+  #'    `cli.default_num_colors` option, or if unset 8L is returned.
+  #'    (On Windows, Emacs has `isatty(stdout()) == FALSE`, so we need to
+  #'    check for this here before dealing with terminals.)
 
   # Windows Emacs? The top R process will have `--ess` in ESS, but the
   # subprocesses won't. (Without ESS subprocesses will also report 8L
@@ -139,7 +143,8 @@ num_ansi_colors <- function(stream = "auto") {
   if (os_type() == "windows" &&
       "--ess" %in% commandArgs() &&
       is_emacs_with_color()) {
-    return(8L)
+    default <- get_default_number_of_colors()
+    return(default %||% 8L)
   }
 
   #' 1. If `stream` is not the standard output or standard error  in a
@@ -163,57 +168,68 @@ num_ansi_colors <- function(stream = "auto") {
 
 detect_tty_colors <- function() {
 
+  default <- get_default_number_of_colors()
+
   #' 1. If the `COLORTERM` environment variable is set to `truecolor` or
   #'    `24bit`, then we return 16 million colors.
   #' 1. If the `COLORTERM` environment variable is set to anything else,
-  #'    then we return 8L.
+  #'    then we return the value of the `cli.num_default_colors` option,
+  #'    8L if unset.
 
   ct <- Sys.getenv("COLORTERM", NA_character_)
   if (!is.na(ct)) {
     if (ct == "truecolor" || ct == "24bit") {
       return(truecolor)
     } else {
-      return(8L)
+      return(default %||% 8L)
     }
   }
 
   #' 1. If R is running on Unix, inside an Emacs version that is recent
-  #'    enough to support ANSI colors, then 8L is returned.
+  #'    enough to support ANSI colors, then the value of the
+  #'    `cli.default_num_colors` option is returned, or 8L if unset.
 
-  if (os_type() == "unix" && is_emacs_with_color()) return(8L)
+  if (os_type() == "unix" && is_emacs_with_color()) return(default %||% 8L)
 
   #' 1. If we are on Windows in an RStudio terminal, then apparently
-  #'    we only have eight colors.
+  #'    we only have eight colors, but the `cli.default_num_colors` option
+  #'    can be used to override this.
 
   win10 <- win10_build()
   if (os_type() == "windows" && win10 >= 10586 &&
-      rstudio$detect()$type == "rstudio_terminal") {
+      rstudio_detect()$type == "rstudio_terminal") {
     # this is rather weird, but echo turns on color support :D
     system2("cmd", c("/c", "echo 1 >NUL"))
-    return(8L)
+    return(default %||% 8L)
   }
 
   #' 1. If we are in a recent enough Windows 10 terminal, then there
   #'    is either true color (from build 14931) or 256 color (from
-  #'    build 10586) support.
+  #'    build 10586) support. You can also use the `cli.default_num_colors`
+  #'    option to override these.
 
   if (os_type() == "windows" && win10 >= 10586) {
     # this is rather weird, but echo turns on color support :D
     system2("cmd", c("/c", "echo 1 >NUL"))
     # https://devblogs.microsoft.com/commandline/24-bit-color-in-the-windows-console/
-    if (win10 >= 14931) return(truecolor) else return(256L)
+    if (win10 >= 14931) {
+      return(default %||% truecolor)
+    } else {
+      return(default %||% 256L)
+    }
   }
 
   if (os_type() == "windows") {
 
     #' 1. If we are on Windows, under ConEmu or cmder, or ANSICON is loaded,
-    #'    then 8L is returned.
+    #'    then the value of `cli.default_num_colors`, or 8L if unset, is
+    #'    returned.
 
     if (Sys.getenv("ConEmuANSI") == "ON" ||
         Sys.getenv("CMDER_ROOT") != "") {
-      return(8L)
+      return(default %||% 8L)
     }
-    if (Sys.getenv("ANSICON") != "") return(8L)
+    if (Sys.getenv("ANSICON") != "") return(default %||% 8L)
 
     #' 1. Otherwise if we are on Windows, return 1L.
 
@@ -236,8 +252,11 @@ detect_tty_colors <- function() {
   #'    returned 8L, we return 256L, because xterm compatible terminals
   #'    tend to support 256 colors
   #'    (<https://github.com/r-lib/crayon/issues/17>)
+  #'    You can override this with the `cli.default_num_colors` option.
 
-  if (cols == 8 && identical(Sys.getenv("TERM"), "xterm")) cols <- 256
+  if (cols == 8 && identical(Sys.getenv("TERM"), "xterm")) {
+    cols <- default %||% 256
+  }
 
   #' 1. If `TERM` is set to `dumb`, we return 1L.
   #' 1. If `TERM` starts with `screen`, `xterm`, or `vt100`, we return 8L.
@@ -245,6 +264,19 @@ detect_tty_colors <- function() {
   #' 1. Otherwise we return 1L.
 
   cols
+}
+
+get_default_number_of_colors <- function() {
+  dft <- getOption("cli.default_num_colors")
+  if (!is.null(dft)) {
+    if (!is_count(dft)) {
+      warning(
+        "The `cli.default_num_colors` option must be an integer scalar"
+      )
+      dft <- NULL
+    }
+  }
+  dft
 }
 
 guess_tty_colors <- function() {
