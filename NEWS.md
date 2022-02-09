@@ -33,7 +33,7 @@
   `dark` to indicate dark mode.
 
 * cli now handles quotes and comment characters better in the semantion
-  `cli_*()` functions that perform glue string interpolation (#383).
+  `cli_*()` functions that perform glue string interpolation (#370).
 
 # cli 3.1.1
 
