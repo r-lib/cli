@@ -29,6 +29,9 @@
   number of ANSI colors, only if ANSI support is otherwise detected.
   See the details in the manual of `num_ansi_colors()`.
 
+* You can set the new `ESS_BACKGROUND_MODE` environment variable to
+  `dark` to indicate dark mode.
+
 # cli 3.1.1
 
 * `style_hyperlink()` gains a `params=` argument (#384).

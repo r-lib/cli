@@ -287,6 +287,8 @@ detect_dark_theme <- function(dark) {
         rstudioapi::getThemeInfo()$dark
       } else if (is_iterm()) {
         is_iterm_dark()
+      } else if (is_emacs()) {
+        Sys.getenv("ESS_BACKGROUND_MODE", "light") == "dark"
       } else {
         FALSE
       }

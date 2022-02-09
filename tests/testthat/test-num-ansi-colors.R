@@ -165,3 +165,18 @@ test_that("cli.default_num_colors #8", {
   withr::local_options(cli.default_num_colors = 123L)
   expect_equal(detect_tty_colors(), 123L)
 })
+
+test_that("ESS_BACKGROUND_MODE", {
+  withr::local_envvar(
+    RSTUDIO = NA_character_,
+    ESS_BACKGROUND_MODE = NA_character_
+  )
+
+  mockery::stub(detect_dark_theme, "is_iterm", FALSE)
+  mockery::stub(detect_dark_theme, "is_emacs", TRUE)
+
+  expect_false(detect_dark_theme("auto"))
+
+  withr::local_envvar(ESS_BACKGROUND_MODE = "dark")
+  expect_true(detect_dark_theme("auto"))
+})

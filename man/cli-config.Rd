@@ -18,6 +18,13 @@ Set to a nonempty value to turn off ANSI colors.
 See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
 }
 
+\subsection{\code{ESS_BACKGROUND_MODE}}{
+
+Set this environment variable to \code{light} or \code{dark} to indicate dark mode
+in Emacs. Once https://github.com/emacs-ess/ESS/pull/1178 is merged, ESS
+will set this automatically.
+}
+
 \subsection{\code{R_CLI_DYNAMIC}}{
 
 Set to \code{true}, \code{TRUE} or \code{True} to assume a dynamic terminal, that supports \verb{\\r}.
