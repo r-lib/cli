@@ -120,7 +120,7 @@ rstudio <- local({
   }
 
   is_build_pane_command <- function(args) {
-    cmd <- gsub("[\"']", "", args[[length(args)]])
+    cmd <- gsub("[\"']", "", args[[length(args)]], useBytes = TRUE)
     rcmd <- sub("[(].*$", "", cmd)
     rcmd %in% c("devtools::build", "devtools::test", "devtools::check")
   }
