@@ -135,11 +135,11 @@ create_ansi_style_fun <- function(styles) {
         )
       }
     }
-    class(txt) <- c("cli_ansi_string", "character")
+    class(txt) <- c("cli_ansi_string", "ansi_string", "character")
     txt
   }, list(.styles = styles)))
 
-  class(fun) <- "cli_ansi_style"
+  class(fun) <- c("cli_ansi_style", "ansi_style")
   attr(fun, "_styles") <- styles
   fun
 }

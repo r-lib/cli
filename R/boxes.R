@@ -195,7 +195,7 @@ boxx <- function(label, header = "", footer = "",
 
   box <- paste0(top, "\n", paste0(middle, collapse = "\n"), "\n", bottom)
 
-  class(box) <- unique(c("cli_boxx", class(box), "character"))
+  class(box) <- unique(c("cli_boxx", "boxx", class(box), "character"))
   box
 }
 

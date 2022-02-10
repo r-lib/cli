@@ -3,14 +3,15 @@
 
 ## Breaking changes
 
-* The S3 clases `ansi_string`, `ansi_style`, `boxx`, `rule` and `tree` have
-  been renamed to have a `cli_` prefix: `cli_ansi_string`, etc. This helps
-  avoiding name conflicts with other packages.
-
 * The `cli_theme_dark` option is know known as `cli.theme_dark`, to be
   consistent with all other cli option names (#380).
 
 ## Other changes
+
+* The preferred names of the S3 clases `ansi_string`, `ansi_style`, `boxx`,
+  `rule` and `tree` now have `cli_` prefix: `cli_ansi_string`, etc. This will
+  help avoiding name conflicts with other packages eventually, but for now
+  the old names are kept as well, for compatibility.
 
 * `cli_abort()` has been updated to work nicely with rlang 1.0. The
   default `call` and backtrace soft-truncation are set to `.envir`

@@ -166,7 +166,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
   res <- ansi_substr(res, 1, width)
   res <- apply_style(res, background_col, bg = TRUE)
 
-  class(res) <- unique(c("cli_rule", class(res), "character"))
+  class(res) <- unique(c("cli_rule", "rule", class(res), "character"))
   res
 }
 

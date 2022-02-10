@@ -2,7 +2,7 @@
 ansi_string <- function(x) {
   if (!is.character(x)) x <- as.character(x)
   x <- enc2utf8(x)
-  class(x) <- unique(c("cli_ansi_string", class(x), "character"))
+  class(x) <- unique(c("cli_ansi_string", "ansi_string", class(x), "character"))
   x
 }
 
@@ -77,7 +77,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
     is_flag(csi)
   )
   clean <- .Call(clic_ansi_strip, string, sgr, csi)
-  class(clean) <- setdiff(class(clean), "cli_ansi_string")
+  class(clean) <- setdiff(class(clean), c("cli_ansi_string", "ansi_string"))
   clean
 }
 

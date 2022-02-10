@@ -35,7 +35,7 @@ style_hyperlink <- function(text, url, params = NULL) {
     text
   }
 
-  class(out) <- c("cli_ansi_string", "character")
+  class(out) <- c("cli_ansi_string", "ansi_string", "character")
   out
 }
 
