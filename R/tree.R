@@ -175,7 +175,7 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
 
   res <- ansi_substr(res, 1, width)
 
-  class(res) <- unique(c("cli_tree", class(res), "character"))
+  class(res) <- unique(c("cli_tree", "tree", class(res), "character"))
   res
 }
 
