@@ -1,6 +1,6 @@
 
 test_that("Classes", {
-  expect_equal(class(style_underline("foo")), c("cli_ansi_string", "character"))
+  expect_equal(class(style_underline("foo")), c("cli_ansi_string", "ansi_string", "character"))
 })
 
 test_that("Coloring and highlighting works", {

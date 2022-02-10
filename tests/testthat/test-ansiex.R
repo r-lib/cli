@@ -1,6 +1,6 @@
 
 test_that("cli_ansi_string", {
-  right <- c("cli_ansi_string", "character")
+  right <- c("cli_ansi_string", "ansi_string", "character")
   expect_equal(class(ansi_string("foobar")), right)
   expect_equal(class(ansi_string(133)), right)
   expect_equal(class(ansi_string(ansi_string(134))), right)
