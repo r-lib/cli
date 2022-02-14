@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">3.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">3.2.0.9000</span>
       </span>
     </div>
 
@@ -138,6 +138,33 @@
       <small>Source: <a href='https://github.com/r-lib/cli/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="cli-320" class="section level1">
+<h1 class="page-header" data-toc-text="3.2.0">
+<a href="#cli-320" class="anchor"></a>cli 3.2.0<small> 2022-02-14 </small>
+</h1>
+<div id="breaking-change" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-change" class="anchor"></a>Breaking change</h2>
+<ul>
+<li>The <code>cli_theme_dark</code> option is know known as <code>cli.theme_dark</code>, to be consistent with all other cli option names (<a href='https://github.com/r-lib/cli/issues/380'>#380</a>).</li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other changes</h2>
+<ul>
+<li><p>The preferred names of the S3 clases <code>ansi_string</code>, <code>ansi_style</code>, <code>boxx</code>, <code>rule</code> and <code>tree</code> now have <code>cli_</code> prefix: <code>cli_ansi_string</code>, etc. This will help avoiding name conflicts with other packages eventually, but for now the old names are kept as well, for compatibility.</p></li>
+<li>
+<p><code><a href="../reference/cli_abort.html">cli_abort()</a></code> has been updated to work nicely with rlang 1.0. The default <code>call</code> and backtrace soft-truncation are set to <code>.envir</code> (which itself is set to the immediate caller of <code><a href="../reference/cli_abort.html">cli_abort()</a></code> by default).</p>
+<p>Line formatting now happens lazily at display time via <code><a href="https://rlang.r-lib.org/reference/cnd_message.html">rlang::cnd_message()</a></code> (which is called by the <code><a href="https://rdrr.io/r/base/conditions.html">conditionMessage()</a></code> method for rlang errors).</p>
+</li>
+<li><p>New <code><a href="../reference/hash_sha256.html">hash_sha256()</a></code> function to calculate SHA-256 hashes. New <code>hash_raw_*()</code>, <code>hash_obj_*()</code> and <code>hash_file_*()</code> functions to calculate various hashes of raw vectors, R objects and files.</p></li>
+<li><p>You can use the new <code>cli.default_num_colors</code> option to set the default number of ANSI colors, only if ANSI support is otherwise detected. See the details in the manual of <code><a href="../reference/num_ansi_colors.html">num_ansi_colors()</a></code>.</p></li>
+<li><p>You can set the new <code>ESS_BACKGROUND_MODE</code> environment variable to <code>dark</code> to indicate dark mode.</p></li>
+<li><p>cli now handles quotes and comment characters better in the semantion <code>cli_*()</code> functions that perform glue string interpolation (<a href='https://github.com/r-lib/cli/issues/370'>#370</a>).</p></li>
+</ul>
+</div>
+</div>
     <div id="cli-311" class="section level1">
 <h1 class="page-header" data-toc-text="3.1.1">
 <a href="#cli-311" class="anchor"></a>cli 3.1.1<small> 2022-01-20 </small>
@@ -151,9 +178,9 @@
 <h1 class="page-header" data-toc-text="3.1.0">
 <a href="#cli-310" class="anchor"></a>cli 3.1.0<small> 2021-10-27 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>The C progress bar API now uses <code>double</code> instead of <code>int</code> as the data type of the progress units (<a href='https://github.com/r-lib/cli/issues/335'>#335</a>).</li>
 </ul>
