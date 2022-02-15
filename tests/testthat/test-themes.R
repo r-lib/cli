@@ -115,7 +115,7 @@ start_app()
 on.exit(stop_app(), add = TRUE)
 
 test_that_cli(configs = "ansi", "NULL will undo background color", {
-  if (packageVersion("testthat") <= "3.1.1") skip("needs newer testthat")
+  skip_if_not_installed("testthat", "3.1.1")
   expect_snapshot(local({
     cli_alert("{.emph {.code this has bg color}}")
     cli_div(theme = list(span = list("background-color" = NULL)))
