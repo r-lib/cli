@@ -152,7 +152,7 @@ test_that("done does nothing if no progress bar", {
 })
 
 test_that("cli_progress_output", {
-  if (packageVersion("testthat") <= "3.1.1") skip("needs newer testthat")
+  skip_if_not_installed("testthat", "3.1.1")
   withr::local_options(cli.dynamic = TRUE, cli.ansi = TRUE)
   fun <- function() {
     bar <- cli_progress_bar(total = 10, format = "first")
