@@ -5,7 +5,7 @@
 
 ## Breaking change
 
-* The `cli_theme_dark` option is know known as `cli.theme_dark`, to be
+* The `cli_theme_dark` option is now known as `cli.theme_dark`, to be
   consistent with all other cli option names (#380).
 
 ## Other changes
