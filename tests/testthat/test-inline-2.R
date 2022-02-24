@@ -73,7 +73,7 @@ test_that("cli_format", {
 
 test_that("cli_format() is used for .val", {
   withr::local_options(cli.width = 60)
-  local_rng_version("3.3.0")
+  withr::local_rng_version("3.3.0")
   set.seed(42)
   expect_snapshot({
     cli_div(theme = list(.val = list(digits = 2)))
