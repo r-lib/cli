@@ -24,7 +24,7 @@ Other contributors:
 \itemize{
   \item Hadley Wickham [contributor]
   \item Kirill Müller [contributor]
-  \item RStudio [copyright holder]
+  \item RStudio [copyright holder, funder]
 }
 
 }
