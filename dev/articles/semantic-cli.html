@@ -4,126 +4,112 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Build a command line interface from predefined elements. Focus on the content, and do not worry about the exact formatting.
+">
 <title>Building a Semantic CLI • cli</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet">
+<link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Building a Semantic CLI">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Building a Semantic CLI">
 <meta property="og:description" content="Build a command line interface from predefined elements. Focus on the content, and do not worry about the exact formatting.
 ">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><script defer data-domain="{YOUR DOMAIN},all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">3.2.0.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#container" class="visually-hidden-focusable">Skip to content</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../reference/faq.html">FAQ</a>
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-none"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">cli</a>
+
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">3.2.0.9000</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/faq.html">FAQ</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
-    </li>
-    <li>
-      <a href="../articles/usethis-ui.html">From usethis::ui Functions to cli</a>
-    </li>
-    <li>
-      <a href="../articles/pluralization.html">cli Pluralization</a>
-    </li>
-    <li>
-      <a href="../articles/progress.html">Introduction to Progress Bars in cli</a>
-    </li>
-    <li>
-      <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
-    </li>
-    <li>
-      <a href="../articles/palettes.html">cli color palettes</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/r-lib/cli/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    <a class="dropdown-item" href="../articles/usethis-ui.html">From usethis::ui Functions to cli</a>
+    <a class="dropdown-item" href="../articles/pluralization.html">cli Pluralization</a>
+    <a class="dropdown-item" href="../articles/progress.html">Introduction to Progress Bars in cli</a>
+    <a class="dropdown-item" href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
+    <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">News</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/r-lib/cli/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
+    
+  </div>
+</nav><div class="container template-article" id="container">
 
-      </header><script src="semantic-cli_files/header-attrs-2.11/header-attrs.js"></script><script src="semantic-cli_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
-<script src="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="semantic-cli_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="semantic-cli_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Building a Semantic CLI</h1>
-                        <h4 class="author">Gábor Csárdi</h4>
+
+
+<script src="semantic-cli_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+<script src="semantic-cli_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="semantic-cli_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
+  <main id="main"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Building a Semantic CLI</h1>
+                        <h4 data-toc-skip class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2022-02-24</h4>
+            <h4 data-toc-skip class="date">2022-03-04</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/semantic-cli.Rmd"><code>vignettes/semantic-cli.Rmd</code></a></small>
-      <div class="hidden name"><code>semantic-cli.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/HEAD/vignettes/semantic-cli.Rmd" class="external-link"><code>vignettes/semantic-cli.Rmd</code></a></small>
+      <div class="d-none name"><code>semantic-cli.Rmd</code></div>
     </div>
 
     
     
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>The cli package helps you build a command line interface (CLI) without getting lost in details (colors, wrapping, spacing, etc.) of how each piece of the output is formatted. Instead, you can build command line output from semantic elements: lists, alerts, quotes code blocks, headers, etc. The formatting of each element is specified separately, in one or more cli <em>themes</em>. cli comes with a builtin theme, and if you are satisfied with that, then you never need to worry about formatting. A semantic cli is similar to how HTML and CSS work together to create a web site.</p>
 <p>In this introduction we will go over the functions that create semantic CLI elements, and also some common features of them.</p>
 </div>
-<div id="building-a-command-line-interface" class="section level1">
-<h1 class="hasAnchor">
-<a href="#building-a-command-line-interface" class="anchor"></a>Building a command line interface</h1>
+<div class="section level2">
+<h2 id="building-a-command-line-interface">Building a command line interface<a class="anchor" aria-label="anchor" href="#building-a-command-line-interface"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span></code></pre></div>
 <p>To build a CLI, you can simply start using the <code>cli_*</code> functions to create various CLI elements. Their exact formatting depends on the current theme, see ‘Theming’ below.</p>
-<div id="alerts" class="section level2">
-<h2 class="hasAnchor">
-<a href="#alerts" class="anchor"></a>Alerts</h2>
+<div class="section level3">
+<h3 id="alerts">Alerts<a class="anchor" aria-label="anchor" href="#alerts"></a>
+</h3>
 <p>Alerts are typically short messages. cli has four types of alerts (success, info, warning, danger) and also a generic alert type:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Updated database."</span><span class="op">)</span></code></pre></div>
@@ -141,18 +127,18 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"A generic alert"</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-6.svg" width="100%"></p>
 </div>
-<div id="text" class="section level2">
-<h2 class="hasAnchor">
-<a href="#text" class="anchor"></a>Text</h2>
+<div class="section level3">
+<h3 id="text">Text<a class="anchor" aria-label="anchor" href="#text"></a>
+</h3>
 <p>Text is automatically wrapped to the terminal width.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_ipsum</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-7.svg" width="100%"></p>
 <p>Text may have ANSI style markup,</p>
 </div>
-<div id="paragraphs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#paragraphs" class="anchor"></a>Paragraphs</h2>
+<div class="section level3">
+<h3 id="paragraphs">Paragraphs<a class="anchor" aria-label="anchor" href="#paragraphs"></a>
+</h3>
 <p>Paragraphs break the output. The default theme inserts an empty line before and after paragraphs, but only a single empty line is added between two paragraphs.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -168,14 +154,14 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-8.svg" width="100%"></p>
 <p><code><a href="../reference/cli_end.html">cli_end()</a></code> closes the latest open paragraph (or other open container).</p>
 </div>
-<div id="auto-closing-containers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#auto-closing-containers" class="anchor"></a>Auto-closing containers</h2>
+<div class="section level3">
+<h3 id="auto-closing-containers">Auto-closing containers<a class="anchor" aria-label="anchor" href="#auto-closing-containers"></a>
+</h3>
 <p>If a paragraph (or other container, see ‘Generic containers’ later), is opened within a function, cli automatically closes it at the end of the function, by default. So in the previous example the last <code><a href="../reference/cli_end.html">cli_end()</a></code> call is not needed. Use <code>.auto_close = FALSE</code> in <code><a href="../reference/cli_par.html">cli_par()</a></code> to leave the paragraph open after its calling function returns.</p>
 </div>
-<div id="headings" class="section level2">
-<h2 class="hasAnchor">
-<a href="#headings" class="anchor"></a>Headings</h2>
+<div class="section level3">
+<h3 id="headings">Headings<a class="anchor" aria-label="anchor" href="#headings"></a>
+</h3>
 <p>cli supports three levels of headings. This is how they look in the default theme. The default theme adds an empty line before headings, and an empty line after <code><a href="../reference/cli_h1.html">cli_h1()</a></code> and <code><a href="../reference/cli_h1.html">cli_h2()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading 1"</span><span class="op">)</span></code></pre></div>
@@ -187,21 +173,21 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_h1.html">cli_h3</a></span><span class="op">(</span><span class="st">"Heading 3"</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-11.svg" width="100%"></p>
 </div>
-<div id="interpolation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interpolation" class="anchor"></a>Interpolation</h2>
+<div class="section level3">
+<h3 id="interpolation">Interpolation<a class="anchor" aria-label="anchor" href="#interpolation"></a>
+</h3>
 <p>All cli text is treated as a glue template, with special formatters available (see the ‘Inline text formatting’ Section):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">123143123</span>
 <span class="va">dt</span> <span class="op">&lt;-</span> <span class="fl">1.3454</span>
-<span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="st">"Downloaded {prettyunits::pretty_bytes(size)} in "</span>,
   <span class="st">"{prettyunits::pretty_sec(dt)}"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-12.svg" width="100%"></p>
 </div>
-<div id="inline-text-formatting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inline-text-formatting" class="anchor"></a>Inline text formatting</h2>
+<div class="section level3">
+<h3 id="inline-text-formatting">Inline text formatting<a class="anchor" aria-label="anchor" href="#inline-text-formatting"></a>
+</h3>
 <p>To define inline markup, you can use the regular glue braces, and after the opening brace, supply the name of the markup formatter with a leading dot, e.g. for emphasized text, you use <code>.emph</code>. Some examples are below, see <code><a href="../reference/inline-markup.html">?"inline-markup"</a></code> for details.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -227,64 +213,64 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-14.svg" width="100%"></p>
 <p><code>"val"</code> is a special inline style, that in the default theme calls <code><a href="../reference/cli_format.html">cli_format()</a></code> to tailor the conversion of values to strings. The conversion can be themed, see “Theming” below.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>.val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>.val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Some random numbers: {.val {runif(4)}}."</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-15.svg" width="100%"></p>
 </div>
-<div id="inline-lists-of-items" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inline-lists-of-items" class="anchor"></a>Inline lists of items</h2>
+<div class="section level3">
+<h3 id="inline-lists-of-items">Inline lists of items<a class="anchor" aria-label="anchor" href="#inline-lists-of-items"></a>
+</h3>
 <p>When cli performs inline text formatting, it automatically collapses glue substitutions, after formatting. This is handy to create lists of files, packages, etc.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Packages: {pkgs}."</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-16.svg" width="100%"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Packages: {.pkg {pkgs}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-17.svg" width="100%"></p>
 <p>By default class names are collapsed differently:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Hey {.var x} has class {.cls {class(x)}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-18.svg" width="100%"></p>
 </div>
-<div id="non-breaking-spaces" class="section level2">
-<h2 class="hasAnchor">
-<a href="#non-breaking-spaces" class="anchor"></a>Non-breaking spaces</h2>
+<div class="section level3">
+<h3 id="non-breaking-spaces">Non-breaking spaces<a class="anchor" aria-label="anchor" href="#non-breaking-spaces"></a>
+</h3>
 <p>Use <code>\u00a0</code> to create a non-breaking space. E.g. in here we insert some non-breaking spaces, and mark them with an <code>X</code>, so it is easy to see that there are no line breaks at a non-breaking space:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make some spaces non-breaking, and mark them with X</span>
 <span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_ipsum</span><span class="op">(</span><span class="op">)</span>
-<span class="va">mch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gregexpr</a></span><span class="op">(</span><span class="va">txt</span>, pattern <span class="op">=</span> <span class="st">" "</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">nbs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">mch</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">0.5</span>
-<span class="fu"><a href="https://rdrr.io/r/base/regmatches.html">regmatches</a></span><span class="op">(</span><span class="va">txt</span>, <span class="va">mch</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">nbs</span>, <span class="st">"X\u00a0"</span>, <span class="st">" "</span><span class="op">)</span>
+<span class="va">mch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gregexpr</a></span><span class="op">(</span><span class="va">txt</span>, pattern <span class="op">=</span> <span class="st">" "</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">nbs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mch</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">0.5</span>
+<span class="fu"><a href="https://rdrr.io/r/base/regmatches.html" class="external-link">regmatches</a></span><span class="op">(</span><span class="va">txt</span>, <span class="va">mch</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">nbs</span>, <span class="st">"X\u00a0"</span>, <span class="st">" "</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="va">txt</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-19.svg" width="100%"></p>
 </div>
-<div id="lists" class="section level2">
-<h2 class="hasAnchor">
-<a href="#lists" class="anchor"></a>Lists</h2>
+<div class="section level3">
+<h3 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
+</h3>
 <p>cli has three types of list: ordered, unordered and definition lists, see <code><a href="../reference/cli_ol.html">cli_ol()</a></code>, <code><a href="../reference/cli_ul.html">cli_ul()</a></code> and <code><a href="../reference/cli_dl.html">cli_dl()</a></code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ol.html">cli_ol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item 1"</span>, <span class="st">"item 2"</span>, <span class="st">"item 3"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ol.html">cli_ol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item 1"</span>, <span class="st">"item 2"</span>, <span class="st">"item 3"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-20.svg" width="100%"></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item 1"</span>, <span class="st">"item 2"</span>, <span class="st">"item 3"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item 1"</span>, <span class="st">"item 2"</span>, <span class="st">"item 3"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-21.svg" width="100%"></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_dl.html">cli_dl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item 1"</span> <span class="op">=</span> <span class="st">"description 1"</span>, <span class="st">"item 2"</span> <span class="op">=</span> <span class="st">"description 2"</span>,
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_dl.html">cli_dl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item 1"</span> <span class="op">=</span> <span class="st">"description 1"</span>, <span class="st">"item 2"</span> <span class="op">=</span> <span class="st">"description 2"</span>,
          <span class="st">"item 3"</span> <span class="op">=</span> <span class="st">"description 3"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-22.svg" width="100%"></p>
 <p>Item text is wrapped to the terminal width:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"item 1"</span> <span class="op">=</span> <span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_paragraph</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span><span class="op">)</span>,
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item 1"</span> <span class="op">=</span> <span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_paragraph</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span><span class="op">)</span>,
          <span class="st">"item 2"</span> <span class="op">=</span> <span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_paragraph</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-23.svg" width="100%"></p>
-<div id="adding-list-items-iteratively" class="section level3">
-<h3 class="hasAnchor">
-<a href="#adding-list-items-iteratively" class="anchor"></a>Adding list items iteratively</h3>
+<div class="section level4">
+<h4 id="adding-list-items-iteratively">Adding list items iteratively<a class="anchor" aria-label="anchor" href="#adding-list-items-iteratively"></a>
+</h4>
 <p>Items can be added one by one:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -298,9 +284,9 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-24.svg" width="100%"></p>
 <p>The <code><a href="../reference/cli_ul.html">cli_ul()</a></code> call creates a list container, and because its items are not specified, it leaves the container open. Then items can be added one by one. (The last <code><a href="../reference/cli_end.html">cli_end()</a></code> is not necessary, because by default containers auto-close when their calling function exits.)</p>
 </div>
-<div id="adding-text-to-an-item-iteratively" class="section level3">
-<h3 class="hasAnchor">
-<a href="#adding-text-to-an-item-iteratively" class="anchor"></a>Adding text to an item iteratively</h3>
+<div class="section level4">
+<h4 id="adding-text-to-an-item-iteratively">Adding text to an item iteratively<a class="anchor" aria-label="anchor" href="#adding-text-to-an-item-iteratively"></a>
+</h4>
 <p><code><a href="../reference/cli_li.html">cli_li()</a></code> creates a new container for the list item, within the list container. You can keep adding text to the item, until the container is closed via <code><a href="../reference/cli_end.html">cli_end()</a></code> or a new <code><a href="../reference/cli_li.html">cli_li()</a></code>, which closes the current item container, and creates another one for the new item:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -312,9 +298,9 @@
 <span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-25.svg" width="100%"></p>
 </div>
-<div id="nested-lists" class="section level3">
-<h3 class="hasAnchor">
-<a href="#nested-lists" class="anchor"></a>Nested lists</h3>
+<div class="section level4">
+<h4 id="nested-lists">Nested lists<a class="anchor" aria-label="anchor" href="#nested-lists"></a>
+</h4>
 <p>To create nested lists, open nested containers:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -332,9 +318,9 @@
 <p>In <code>cli_end(olid)</code>, the <code>olid</code> is necessary, otherwise <code><a href="../reference/cli_end.html">cli_end()</a></code> would only close the container of the list item.</p>
 </div>
 </div>
-<div id="horizontal-rules" class="section level2">
-<h2 class="hasAnchor">
-<a href="#horizontal-rules" class="anchor"></a>Horizontal rules</h2>
+<div class="section level3">
+<h3 id="horizontal-rules">Horizontal rules<a class="anchor" aria-label="anchor" href="#horizontal-rules"></a>
+</h3>
 <p><code><a href="../reference/cli_rule.html">cli_rule()</a></code> creates a horizontal rule.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_rule.html">cli_rule</a></span><span class="op">(</span>left <span class="op">=</span> <span class="st">"Compiling {.pkg mypackage}"</span><span class="op">)</span></code></pre></div>
@@ -355,9 +341,9 @@
 <code>line-type</code> specifies the line type of the rule. See <code><a href="../reference/cli_rule.html">?cli_rule</a></code> for line types.</li>
 </ul>
 </div>
-<div id="the-status-bar" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-status-bar" class="anchor"></a>The status bar</h2>
+<div class="section level3">
+<h3 id="the-status-bar">The status bar<a class="anchor" aria-label="anchor" href="#the-status-bar"></a>
+</h3>
 <p>cli supports creating a status bar in the last line of the console, if the terminal supports the carriage return control character to move the cursor to the beginning of the line. This is supported in all terminals, in RStudio, Emacs, RGui, R.app, etc. It is not supported if the output is a file, e.g. typically on CI systems.</p>
 <p><code><a href="../reference/cli_status.html">cli_status()</a></code> creates a new status bar, <code><a href="../reference/cli_status_update.html">cli_status_update()</a></code> updates a status bar, and <code><a href="../reference/cli_status_clear.html">cli_status_clear()</a></code> clears it. <code><a href="../reference/cli_status.html">cli_status()</a></code> returns an id, that can be used in <code><a href="../reference/cli_status_update.html">cli_status_update()</a></code> and <code><a href="../reference/cli_status_clear.html">cli_status_clear()</a></code> to refer to the right status bar.</p>
 <p>While it is possible to create multiple status bars, on a typical terminal only one of them can be shown at any time. cli by default shows the one that was last created or updated.</p>
@@ -367,7 +353,7 @@
   <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"About to start downloads."</span><span class="op">)</span>
   <span class="va">sb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cli_status.html">cli_status</a></span><span class="op">(</span><span class="st">"{symbol$arrow_right} Downloading 10 files."</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">9</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
     <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span> <span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Already half-way!"</span><span class="op">)</span>
     <span class="fu"><a href="../reference/cli_status_update.html">cli_status_update</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">sb</span>,
       <span class="st">"{symbol$arrow_right} Got {10-i} file{?s}, downloading {i}"</span><span class="op">)</span>
@@ -379,13 +365,13 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-28.svg" width="100%"></p>
 </div>
 </div>
-<div id="theming" class="section level1">
-<h1 class="hasAnchor">
-<a href="#theming" class="anchor"></a>Theming</h1>
+<div class="section level2">
+<h2 id="theming">Theming<a class="anchor" aria-label="anchor" href="#theming"></a>
+</h2>
 <p>The looks of the various CLI elements can be changed via themes. The cli package comes with a simple built-in theme, and new themes can be added as well.</p>
-<div id="tags-ids-and-classes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tags-ids-and-classes" class="anchor"></a>Tags, ids and classes</h2>
+<div class="section level3">
+<h3 id="tags-ids-and-classes">Tags, ids and classes<a class="anchor" aria-label="anchor" href="#tags-ids-and-classes"></a>
+</h3>
 <p>Similarly to HTML document, the elements of a CLI form a tree of nodes. Each node has exactly one tag, at most one id, and optionally a set of classes. E.g. <code><a href="../reference/cli_par.html">cli_par()</a></code> creates a node with a <code>&lt;p&gt;</code> tag, <code><a href="../reference/cli_ol.html">cli_ol()</a></code> creates a node with an <code>&lt;ol&gt;</code> tag, etc. Here is an example CLI tree. It always starts with a <code>&lt;body&gt;</code> tag with id <code>"body"</code>, this is created automatically.</p>
 <pre><code>&lt;body id="body"&gt;
   &lt;par&gt;
@@ -398,13 +384,13 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-29.svg" width="100%"></p>
 <p>See also <code><a href="../reference/themes.html">?cli::themes</a></code> for the reference and <code><a href="../reference/simple_theme.html">?cli::simple_theme</a></code> for an example theme.</p>
 </div>
-<div id="generic-containers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#generic-containers" class="anchor"></a>Generic containers</h2>
+<div class="section level3">
+<h3 id="generic-containers">Generic containers<a class="anchor" aria-label="anchor" href="#generic-containers"></a>
+</h3>
 <p><code><a href="../reference/cli_div.html">cli_div()</a></code> is a generic container, that does not produce any output, but it can add a new theme. This theme is removed when the <code>&lt;div&gt;</code> node is closed. (Like other containers, <code><a href="../reference/cli_div.html">cli_div()</a></code> auto-closes when the calling function exits.)</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span>.alert <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span> <span class="op">(</span>.alert <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"This will be red"</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"Back to normal color"</span><span class="op">)</span>
@@ -412,24 +398,24 @@
 <span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-30.svg" width="100%"></p>
 </div>
-<div id="theming-inline-markup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#theming-inline-markup" class="anchor"></a>Theming inline markup</h2>
+<div class="section level3">
+<h3 id="theming-inline-markup">Theming inline markup<a class="anchor" aria-label="anchor" href="#theming-inline-markup"></a>
+</h3>
 <p>The inline markup formatters always use a <code>&lt;span&gt;</code> tag, and add the name of the formatter as a class.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>span.emph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>span.emph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is very {.emph important}"</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Back to the {.emph previous theme}"</span><span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-31.svg" width="100%"></p>
-<p>In addition to adding inline markup explicitly, like <code>.emph</code> here, cli can use the class(es) of the substituted expression to style it automatically. This can be configured as part of the theme, in the form of a mapping from the <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> of the expression, to the name of the markup formatter. For example, if we have a <code>filename</code> S3 class, we can make sure that it is always shown as a <code>.file</code> in the cli output:</p>
+<p>In addition to adding inline markup explicitly, like <code>.emph</code> here, cli can use the class(es) of the substituted expression to style it automatically. This can be configured as part of the theme, in the form of a mapping from the <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code> of the expression, to the name of the markup formatter. For example, if we have a <code>filename</code> S3 class, we can make sure that it is always shown as a <code>.file</code> in the cli output:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>body <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"class-map"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"filename"</span> <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">fns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"file1"</span>, <span class="st">"file2"</span>, <span class="st">"file3"</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"filename"</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>body <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"class-map"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"filename"</span> <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">fns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file1"</span>, <span class="st">"file2"</span>, <span class="st">"file3"</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"filename"</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found some files: {fns}."</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span>
@@ -437,50 +423,50 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-32.svg" width="100%"></p>
 </div>
 </div>
-<div id="cli-messages" class="section level1">
-<h1 class="hasAnchor">
-<a href="#cli-messages" class="anchor"></a>CLI messages</h1>
+<div class="section level2">
+<h2 id="cli-messages">CLI messages<a class="anchor" aria-label="anchor" href="#cli-messages"></a>
+</h2>
 <p>All <code>cli_*()</code> functions are implemented using standard R conditions. For example a <code><a href="../reference/cli_alert.html">cli_alert()</a></code> call emits an R condition with class <code>cli_message</code>. These messages can be caught, muffled, transferred from a sub-process to the main R process.</p>
 <p>When a cli function is called:</p>
 <ol style="list-style-type: decimal">
 <li>cli throws a <code>cli_message</code> condition.</li>
 <li>If this condition is caught and muffled (via the <code>cli_message_handled</code> restart), then nothing else happens.</li>
 <li>Otherwise the <code>cli.default_handler</code> option is checked and if this is a function, then it is called with the message.</li>
-<li>If the <code>cli.default_handler</code> option is not set, or it is not a function, the default cli handler is called, which shows the text, alert, heading, etc. on the screen, using the standard R <code><a href="https://rdrr.io/r/base/message.html">message()</a></code> function.</li>
+<li>If the <code>cli.default_handler</code> option is not set, or it is not a function, the default cli handler is called, which shows the text, alert, heading, etc. on the screen, using the standard R <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function.</li>
 </ol>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading"</span><span class="op">)</span>, cli_message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading"</span><span class="op">)</span>, cli_message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-33.svg" width="100%"></p>
 </div>
-<div id="sub-processes" class="section level1">
-<h1 class="hasAnchor">
-<a href="#sub-processes" class="anchor"></a>Sub-Processes</h1>
-<p>If <code>cli_*()</code> commands are invoked in a sub-process via <code><a href="https://callr.r-lib.org/reference/r_session.html">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="uri">https://callr.r-lib.org</a>), and the <code>cli.message_class</code> option is set to <code>"callr_message"</code>, then cli messages are automatically copied to the main R process:</p>
+<div class="section level2">
+<h2 id="sub-processes">Sub-Processes<a class="anchor" aria-label="anchor" href="#sub-processes"></a>
+</h2>
+<p>If <code>cli_*()</code> commands are invoked in a sub-process via <code><a href="https://callr.r-lib.org/reference/r_session.html" class="external-link">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="external-link uri">https://callr.r-lib.org</a>), and the <code>cli.message_class</code> option is set to <code>"callr_message"</code>, then cli messages are automatically copied to the main R process:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="va"><a href="https://callr.r-lib.org/reference/r_session.html">r_session</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="va"><a href="https://callr.r-lib.org/reference/r_session.html" class="external-link">r_session</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
 <span class="va">rs</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>cli.message_class <span class="op">=</span> <span class="st">"callr_message"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>cli.message_class <span class="op">=</span> <span class="st">"callr_message"</span><span class="op">)</span>
   <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is sub-process {.emph {Sys.getpid()}} from {.pkg callr}"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Sys.getpid.html" class="external-link">Sys.getpid</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="va">rs</span><span class="op">$</span><span class="fu">close</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">rs</span><span class="op">$</span><span class="fu">close</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-34.svg" width="100%"></p>
 </div>
-<div id="utility-functions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#utility-functions" class="anchor"></a>Utility functions</h1>
-<div id="ansi-colors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ansi-colors" class="anchor"></a>ANSI colors</h2>
+<div class="section level2">
+<h2 id="utility-functions">Utility functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a>
+</h2>
+<div class="section level3">
+<h3 id="ansi-colors">ANSI colors<a class="anchor" aria-label="anchor" href="#ansi-colors"></a>
+</h3>
 <p>cli has functions to create ANSI colored or styled output in the console. <code>col_*</code> functions change the foreground color, <code>bg_*</code> functions change the background color, and <code>style_*</code> functions change the style of the text in some way.</p>
-<p>These functions concatenate their arguments using <code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code>, and add the <code>cli_ansi_string</code> class to their result:</p>
+<p>These functions concatenate their arguments using <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code>, and add the <code>cli_ansi_string</code> class to their result:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"This "</span>, <span class="st">"is "</span>, <span class="st">"red."</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"This "</span>, <span class="st">"is "</span>, <span class="st">"red."</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-35.svg" width="100%"></p>
 <p>Foreground colors:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/ansi-styles.html">col_black</a></span><span class="op">(</span><span class="st">"black"</span><span class="op">)</span>,
   <span class="fu"><a href="../reference/ansi-styles.html">col_blue</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>,
   <span class="fu"><a href="../reference/ansi-styles.html">col_cyan</a></span><span class="op">(</span><span class="st">"cyan"</span><span class="op">)</span>,
@@ -494,7 +480,7 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-36.svg" width="100%"></p>
 <p>Note that these might actually look different depending on your terminal theme. Background colors:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/ansi-styles.html">bg_black</a></span><span class="op">(</span><span class="st">"black background"</span><span class="op">)</span>,
   <span class="fu"><a href="../reference/ansi-styles.html">bg_blue</a></span><span class="op">(</span><span class="st">"blue background"</span><span class="op">)</span>,
   <span class="fu"><a href="../reference/ansi-styles.html">bg_cyan</a></span><span class="op">(</span><span class="st">"cyan background"</span><span class="op">)</span>,
@@ -507,7 +493,7 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-37.svg" width="100%"></p>
 <p>Text styles:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/ansi-styles.html">style_dim</a></span><span class="op">(</span><span class="st">"dim style"</span><span class="op">)</span>,
   <span class="fu"><a href="../reference/ansi-styles.html">style_blurred</a></span><span class="op">(</span><span class="st">"blurred style"</span><span class="op">)</span>,
   <span class="fu"><a href="../reference/ansi-styles.html">style_bold</a></span><span class="op">(</span><span class="st">"bold style"</span><span class="op">)</span>,
@@ -528,12 +514,12 @@
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">col_warn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_ansi_styles.html">combine_ansi_styles</a></span><span class="op">(</span><span class="fu"><a href="../reference/make_ansi_style.html">make_ansi_style</a></span><span class="op">(</span><span class="st">"pink"</span><span class="op">)</span>, <span class="va">style_bold</span><span class="op">)</span>
 <span class="fu">col_warn</span><span class="op">(</span><span class="st">"This is a warning in pink!"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu">col_warn</span><span class="op">(</span><span class="st">"This is a warning in pink!"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">col_warn</span><span class="op">(</span><span class="st">"This is a warning in pink!"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-40.svg" width="100%"></p>
 </div>
-<div id="console-capabilities" class="section level2">
-<h2 class="hasAnchor">
-<a href="#console-capabilities" class="anchor"></a>Console capabilities</h2>
+<div class="section level3">
+<h3 id="console-capabilities">Console capabilities<a class="anchor" aria-label="anchor" href="#console-capabilities"></a>
+</h3>
 <p>Query the console width:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/console_width.html">console_width</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -556,9 +542,9 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/is_utf8_output.html">is_utf8_output</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-45.svg" width="100%"></p>
 </div>
-<div id="unicode-characters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#unicode-characters" class="anchor"></a>Unicode characters</h2>
+<div class="section level3">
+<h3 id="unicode-characters">Unicode characters<a class="anchor" aria-label="anchor" href="#unicode-characters"></a>
+</h3>
 <p>The <code>symbol</code> variable includes some Unicode characters that are often useful in CLI messages. They automatically fall back to ASCII symbols if the platform does not support them. You can use these symbols both with the semantic <code>cli_*()</code> functions and directly.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{symbol$tick} no errors  |  {symbol$cross} 2 warnings"</span><span class="op">)</span></code></pre></div>
@@ -567,12 +553,12 @@
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/symbol.html">list_symbols</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-47.svg" width="100%"></p>
-<p>Most symbols were inspired by (and copied from) the awesome <a href="https://github.com/sindresorhus/figures">figures</a> JavaScript project.</p>
+<p>Most symbols were inspired by (and copied from) the awesome <a href="https://github.com/sindresorhus/figures" class="external-link">figures</a> JavaScript project.</p>
 </div>
-<div id="spinners" class="section level2">
-<h2 class="hasAnchor">
-<a href="#spinners" class="anchor"></a>Spinners</h2>
-<p>See <code><a href="../reference/list_spinners.html">list_spinners()</a></code> and <code><a href="../reference/get_spinner.html">get_spinner()</a></code>. From the awesome <a href="https://github.com/sindresorhus/cli-spinners#readme">cli-spinners</a> project.</p>
+<div class="section level3">
+<h3 id="spinners">Spinners<a class="anchor" aria-label="anchor" href="#spinners"></a>
+</h3>
+<p>See <code><a href="../reference/list_spinners.html">list_spinners()</a></code> and <code><a href="../reference/get_spinner.html">get_spinner()</a></code>. From the awesome <a href="https://github.com/sindresorhus/cli-spinners#readme" class="external-link">cli-spinners</a> project.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/list_spinners.html">list_spinners</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-48.svg" width="100%"></p>
@@ -587,31 +573,24 @@
 <p><img src="semantic-cli_files/figure-html/unnamed-chunk-51.svg" width="100%"></p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Gábor Csárdi.</p>
+   </div>
+  <footer><div class="container">
+  <div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://github.com/gaborcsardi" class="external-link">Gábor Csárdi</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
-      </footer>
-</div>
-
-  
-
-
-  </body>
+  </div></footer>
+</body>
 </html>

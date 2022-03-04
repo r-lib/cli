@@ -4,129 +4,115 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Transition from usethis to cli.
+">
 <title>From usethis::ui functions to cli • cli</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Source%20Sans%20Pro-0.4.0/font.css" rel="stylesheet">
+<link href="../deps/_Source%20Code%20Pro-0.4.0/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="From usethis::ui functions to cli">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="From usethis::ui functions to cli">
 <meta property="og:description" content="Transition from usethis to cli.
 ">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><script defer data-domain="{YOUR DOMAIN},all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">cli</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">3.2.0.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#container" class="visually-hidden-focusable">Skip to content</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../reference/faq.html">FAQ</a>
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-none"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">cli</a>
+
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">3.2.0.9000</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../reference/faq.html">FAQ</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/semantic-cli.html">Building a Semantic CLI</a>
-    </li>
-    <li>
-      <a href="../articles/usethis-ui.html">From usethis::ui Functions to cli</a>
-    </li>
-    <li>
-      <a href="../articles/pluralization.html">cli Pluralization</a>
-    </li>
-    <li>
-      <a href="../articles/progress.html">Introduction to Progress Bars in cli</a>
-    </li>
-    <li>
-      <a href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
-    </li>
-    <li>
-      <a href="../articles/palettes.html">cli color palettes</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/r-lib/cli/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/semantic-cli.html">Building a Semantic CLI</a>
+    <a class="dropdown-item" href="../articles/usethis-ui.html">From usethis::ui Functions to cli</a>
+    <a class="dropdown-item" href="../articles/pluralization.html">cli Pluralization</a>
+    <a class="dropdown-item" href="../articles/progress.html">Introduction to Progress Bars in cli</a>
+    <a class="dropdown-item" href="../articles/progress-advanced.html">Advanced cli Progress Bars</a>
+    <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">News</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/r-lib/cli/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
+    
+  </div>
+</nav><div class="container template-article" id="container">
 
-      </header><script src="usethis-ui_files/header-attrs-2.11/header-attrs.js"></script><script src="usethis-ui_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="usethis-ui_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
-<script src="usethis-ui_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="usethis-ui_files/jquery-3.2.1/jquery-3.2.1.min.js"></script><script src="usethis-ui_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>From usethis::ui functions to cli</h1>
-                        <h4 class="author">Gábor Csárdi</h4>
+
+
+<script src="usethis-ui_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="usethis-ui_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
+<script src="usethis-ui_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="usethis-ui_files/asciinema_player-binding-1.0.0.9000/asciinema_player.js"></script><div class="row">
+  <main id="main"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>From usethis::ui functions to cli</h1>
+                        <h4 data-toc-skip class="author">Gábor Csárdi</h4>
             
-            <h4 class="date">2022-02-24</h4>
+            <h4 data-toc-skip class="date">2022-03-04</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/master/vignettes/usethis-ui.Rmd"><code>vignettes/usethis-ui.Rmd</code></a></small>
-      <div class="hidden name"><code>usethis-ui.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/HEAD/vignettes/usethis-ui.Rmd" class="external-link"><code>vignettes/usethis-ui.Rmd</code></a></small>
+      <div class="d-none name"><code>usethis-ui.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org">usethis</a></span><span class="op">)</span></code></pre></div>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://usethis.r-lib.org" class="external-link">usethis</a></span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>We’ll show how to transition from the <code>usethis::ui_*</code> functions to cli 2.0.0.</p>
 </div>
-<div id="how-to" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-to" class="anchor"></a>How to</h1>
-<div id="usethisui_code" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_code" class="anchor"></a><code>usethis::ui_code()</code>
+<div class="section level2">
+<h2 id="how-to">How to<a class="anchor" aria-label="anchor" href="#how-to"></a>
 </h2>
-<pre><code>usethis::ui_code(x)</code></pre>
+<div class="section level3">
+<h3 id="usethisui_code">
+<code>usethis::ui_code()</code><a class="anchor" aria-label="anchor" href="#usethisui_code"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_code</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-2.svg" width="100%"></p>
 <p>In general inline code formatting can be done with inline styles in cli. The default theme has a <code>"code"</code> class, but it also one for functions, so this can be either of:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -136,30 +122,30 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"Redocument with {.fun devtools::document}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-4.svg" width="100%"></p>
 </div>
-<div id="usethisui_code_block" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_code_block" class="anchor"></a><code>usethis::ui_code_block()</code>
-</h2>
-<pre><code>usethis::ui_code_block(x, copy = interactive(), .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_code_block">
+<code>usethis::ui_code_block()</code><a class="anchor" aria-label="anchor" href="#usethisui_code_block"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_code_block</a></span><span class="op">(</span><span class="va">x</span>, copy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_code_block</a></span><span class="op">(</span><span class="st">"{format(cli_code)}"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_code_block</a></span><span class="op">(</span><span class="st">"{format(cli_code)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-5.svg" width="100%"></p>
 <p><code><a href="../reference/cli_code.html">cli_code()</a></code> produces similar output and it also syntax highlight R code:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cli_code.html">cli_code</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">cli_code</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/cli_code.html">cli_code</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">cli_code</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-6.svg" width="100%"></p>
 <p>However, cli does not copy stuff to the clipboard, so this has to be done separately.</p>
 <p>Another difference is that it also does not run glue substitutions on the code text, so if you want that to happen you’ll need to do that before the cli call.</p>
 </div>
-<div id="usethisui_done" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_done" class="anchor"></a><code>usethis::ui_done()</code>
-</h2>
-<pre><code>usethis::ui_done(x, .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_done">
+<code>usethis::ui_done()</code><a class="anchor" aria-label="anchor" href="#usethisui_done"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_done</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
-<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-7.svg" width="100%"></p>
 <p>This is probably closest to <code><a href="../reference/cli_alert.html">cli_alert_success()</a></code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -167,9 +153,9 @@
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-8.svg" width="100%"></p>
 <p>If you want to handle success and failure, then maybe the <code>cli_process_*()</code> functions are a better fit:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="op">{</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="op">{</span>
     <span class="fu"><a href="../reference/cli_process_start.html">cli_process_start</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># &lt;- do the task here, we just sleep</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># &lt;- do the task here, we just sleep</span>
     <span class="fu"><a href="../reference/cli_process_start.html">cli_process_done</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>,
   error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">err</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="../reference/cli_process_start.html">cli_process_failed</a></span><span class="op">(</span><span class="op">)</span>
@@ -178,24 +164,24 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-9.svg" width="100%"></p>
 </div>
-<div id="usethisui_field" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_field" class="anchor"></a><code>usethis::ui_field()</code>
-</h2>
-<pre><code>usethis::ui_field(x)</code></pre>
+<div class="section level3">
+<h3 id="usethisui_field">
+<code>usethis::ui_field()</code><a class="anchor" aria-label="anchor" href="#usethisui_field"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_field</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
-<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-10.svg" width="100%"></p>
 <p>cli has a <code>"field"</code> class for inline styling:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-11.svg" width="100%"></p>
-<p>Just like <code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_field()</a></code> and similar usethis functions, cli collapses inline vectors, before styling:</p>
+<p>Just like <code><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">usethis::ui_field()</a></code> and similar usethis functions, cli collapses inline vectors, before styling:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span><span class="op">)</span>
-<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting the {ui_field(name)} field(s) in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Depends"</span>, <span class="st">"Imports"</span>, <span class="st">"Suggests"</span><span class="op">)</span>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_done</a></span><span class="op">(</span><span class="st">"Setting the {ui_field(name)} field(s) in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-12.svg" width="100%"></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting the {.field {name}} field{?s} in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
@@ -206,72 +192,72 @@
 <span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting the {.field {name}} field{?s} in DESCRIPTION"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-14.svg" width="100%"></p>
 </div>
-<div id="usethisui_info" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_info" class="anchor"></a><code>usethis::ui_info()</code>
-</h2>
+<div class="section level3">
+<h3 id="usethisui_info">
+<code>usethis::ui_info()</code><a class="anchor" aria-label="anchor" href="#usethisui_info"></a>
+</h3>
 <pre><code>usethis::ui_info((x, .envir = parent.frame())</code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_info</a></span><span class="op">(</span><span class="st">"No labels need renaming"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_info</a></span><span class="op">(</span><span class="st">"No labels need renaming"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-15.svg" width="100%"></p>
 <p>This is simply <code><a href="../reference/cli_alert.html">cli_alert_info()</a></code>:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"No labels need renaming"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-16.svg" width="100%"></p>
 </div>
-<div id="usethisui_line" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_line" class="anchor"></a><code>usethis::ui_line()</code>
-</h2>
-<pre><code>usethis::ui_line(x, .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_line">
+<code>usethis::ui_line()</code><a class="anchor" aria-label="anchor" href="#usethisui_line"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_line</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_line</a></span><span class="op">(</span><span class="st">"No matching issues/PRs found."</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_line</a></span><span class="op">(</span><span class="st">"No matching issues/PRs found."</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-17.svg" width="100%"></p>
 <p>This is just a line of text, so <code><a href="../reference/cli_text.html">cli_text()</a></code> is fine for this. One difference is that <code><a href="../reference/cli_text.html">cli_text()</a></code> will automatically wrap the long lines.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"No matching issues/PRs found."</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-18.svg" width="100%"></p>
 </div>
-<div id="usethisui_nope" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_nope" class="anchor"></a><code>usethis::ui_nope()</code>
-</h2>
-<pre><code>ui_nope(x, .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_nope">
+<code>usethis::ui_nope()</code><a class="anchor" aria-label="anchor" href="#usethisui_nope"></a>
+</h3>
+<pre><code><span class="fu"><a href="https://usethis.r-lib.org/reference/ui-questions.html" class="external-link">ui_nope</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <p>cli does not support user input currently, so this has to stay in usethis.</p>
 </div>
-<div id="usethisui_oops" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_oops" class="anchor"></a><code>usethis::ui_oops()</code>
-</h2>
-<pre><code>usethis::ui_oops(x, .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_oops">
+<code>usethis::ui_oops()</code><a class="anchor" aria-label="anchor" href="#usethisui_oops"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_oops</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_oops</a></span><span class="op">(</span><span class="st">"Can't validate token. Is the network reachable?"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_oops</a></span><span class="op">(</span><span class="st">"Can't validate token. Is the network reachable?"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-19.svg" width="100%"></p>
-<p>This is mostly just <code><a href="../reference/cli_alert.html">cli_alert_danger()</a></code>, but for see also the <code>cli_process_*()</code> alternatives at <code><a href="https://usethis.r-lib.org/reference/ui.html">usethis::ui_done()</a></code>.</p>
+<p>This is mostly just <code><a href="../reference/cli_alert.html">cli_alert_danger()</a></code>, but for see also the <code>cli_process_*()</code> alternatives at <code><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">usethis::ui_done()</a></code>.</p>
 </div>
-<div id="usethisui_path" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_path" class="anchor"></a><code>usethis::ui_path()</code>
-</h2>
-<pre><code>usethis::ui_path(x, base = NULL)</code></pre>
-<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_path()</a></code> formats paths as relative to the project or the supplied base directory, and also appends a <code>/</code> to directories. cli does not do any of these, but it does have inline markup for files and paths:</p>
+<div class="section level3">
+<h3 id="usethisui_path">
+<code>usethis::ui_path()</code><a class="anchor" aria-label="anchor" href="#usethisui_path"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_path</a></span><span class="op">(</span><span class="va">x</span>, base <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre>
+<p><code><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_path()</a></code> formats paths as relative to the project or the supplied base directory, and also appends a <code>/</code> to directories. cli does not do any of these, but it does have inline markup for files and paths:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">logo_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"man"</span>, <span class="st">"figures"</span>, <span class="st">"logo.svg"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">logo_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"man"</span>, <span class="st">"figures"</span>, <span class="st">"logo.svg"</span><span class="op">)</span>
 <span class="va">img</span> <span class="op">&lt;-</span> <span class="st">"/tmp/some-image.svg"</span>
-<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Copied {ui_path(img)} to {ui_path(logo_path)}"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_done</a></span><span class="op">(</span><span class="st">"Copied {ui_path(img)} to {ui_path(logo_path)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-20.svg" width="100%"></p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Copied {.file {img}} to {.file {logo_path}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-21.svg" width="100%"></p>
 </div>
-<div id="usethisui_stop" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_stop" class="anchor"></a><code>usethis::ui_stop()</code>
-</h2>
-<pre><code>usethis::ui_stop(x, .envir = parent.frame())</code></pre>
-<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_stop()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> to throw an error. <code><a href="../reference/cli_abort.html">cli_abort()</a></code> does the same and is formatted using <code><a href="../reference/cli_bullets.html">cli_bullets()</a></code>.</p>
+<div class="section level3">
+<h3 id="usethisui_stop">
+<code>usethis::ui_stop()</code><a class="anchor" aria-label="anchor" href="#usethisui_stop"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_stop</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
+<p><code><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_stop()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> to throw an error. <code><a href="../reference/cli_abort.html">cli_abort()</a></code> does the same and is formatted using <code><a href="../reference/cli_bullets.html">cli_bullets()</a></code>.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_stop</a></span><span class="op">(</span><span class="st">"Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_stop</a></span><span class="op">(</span><span class="st">"Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-22.svg" width="100%"></p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_abort.html">cli_abort</a></span><span class="op">(</span>
@@ -280,42 +266,42 @@
   <span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-23.svg" width="100%"></p>
 </div>
-<div id="usethisui_todo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_todo" class="anchor"></a><code>usethis::ui_todo()</code>
-</h2>
-<pre><code>usethis::ui_todo(x, .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_todo">
+<code>usethis::ui_todo()</code><a class="anchor" aria-label="anchor" href="#usethisui_todo"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_todo</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <p>This is a bullet, so either <code><a href="../reference/cli_ul.html">cli_ul()</a></code> or <code><a href="../reference/cli_alert.html">cli_alert_info()</a></code> should be appropriate:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_todo</a></span><span class="op">(</span><span class="st">"Redocument with {ui_code('devtools::document()')}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-24.svg" width="100%"></p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="st">"Redocument with {.fun devtools::document}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-25.svg" width="100%"></p>
 </div>
-<div id="usethisui_value" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_value" class="anchor"></a><code>usethis::ui_value()</code>
-</h2>
-<pre><code>usethis::ui_value(x)</code></pre>
+<div class="section level3">
+<h3 id="usethisui_value">
+<code>usethis::ui_value()</code><a class="anchor" aria-label="anchor" href="#usethisui_value"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_value</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre>
 <p>The <code>"value"</code> inline class is appropriate for this.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="st">"VignetteBuilder"</span>
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="st">"knitr, rmarkdown"</span>
-<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_done</a></span><span class="op">(</span><span class="st">"Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-26.svg" width="100%"></p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Setting {.field {name}} field in DESCRIPTION to {.val {value}}"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-27.svg" width="100%"></p>
 </div>
-<div id="usethisui_warn" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_warn" class="anchor"></a><code>usethis::ui_warn()</code>
-</h2>
-<pre><code>usethis::ui_warn(x, .envir = parent.frame())</code></pre>
-<p><code><a href="https://usethis.r-lib.org/reference/ui.html">ui_warn()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/warning.html">warning()</a></code> to throw a warning. <code>cli_war()</code> does the same and is formatted using <code><a href="../reference/cli_bullets.html">cli_bullets()</a></code>.</p>
+<div class="section level3">
+<h3 id="usethisui_warn">
+<code>usethis::ui_warn()</code><a class="anchor" aria-label="anchor" href="#usethisui_warn"></a>
+</h3>
+<pre><code><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_warn</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
+<p><code><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_warn()</a></code> does glue substitution on the string, and then calls <code><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning()</a></code> to throw a warning. <code>cli_war()</code> does the same and is formatted using <code><a href="../reference/cli_bullets.html">cli_bullets()</a></code>.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html">ui_warn</a></span><span class="op">(</span><span class="st">"Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://usethis.r-lib.org/reference/ui.html" class="external-link">ui_warn</a></span><span class="op">(</span><span class="st">"Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists"</span><span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-28.svg" width="100%"></p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/cli_abort.html">cli_warn</a></span><span class="op">(</span>
@@ -324,39 +310,32 @@
   <span class="op">)</span></code></pre></div>
 <p><img src="usethis-ui_files/figure-html/unnamed-chunk-29.svg" width="100%"></p>
 </div>
-<div id="usethisui_yeah" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usethisui_yeah" class="anchor"></a><code>usethis::ui_yeah()</code>
-</h2>
-<pre><code>ui_yeah(x, .envir = parent.frame())</code></pre>
+<div class="section level3">
+<h3 id="usethisui_yeah">
+<code>usethis::ui_yeah()</code><a class="anchor" aria-label="anchor" href="#usethisui_yeah"></a>
+</h3>
+<pre><code><span class="fu"><a href="https://usethis.r-lib.org/reference/ui-questions.html" class="external-link">ui_yeah</a></span><span class="op">(</span><span class="va">x</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre>
 <p>cli does not support user input currently, so this has to stay in usethis.</p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by Gábor Csárdi.</p>
+   </div>
+  <footer><div class="container">
+  <div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://github.com/gaborcsardi" class="external-link">Gábor Csárdi</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
-      </footer>
-</div>
-
-  
-
-
-  </body>
+  </div></footer>
+</body>
 </html>
