@@ -1,19 +1,17 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-cli
-===
+# cli
 
 > Helpers for Developing Command Line Interfaces
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/r-lib/cli/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/cli/actions)
+[![R-CMD-check](https://github.com/r-lib/cli/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/cli/actions/workflows/R-CMD-check.yaml)
 [![](https://www.r-pkg.org/badges/version/cli)](https://www.r-pkg.org/pkg/cli)
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/cli)](https://www.r-pkg.org/pkg/cli)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/r-lib/cli/main.svg)](https://codecov.io/github/r-lib/cli?branch=main)
+[![Codecov test
+coverage](https://codecov.io/gh/r-lib/cli/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/cli?branch=main)
 <!-- badges: end -->
 
 A suite of tools to build attractive command line interfaces (CLIs),
@@ -25,8 +23,7 @@ styles.
 
 ------------------------------------------------------------------------
 
-Features
-========
+# Features
 
 -   Build a CLI using semantic elements: headings, lists, alerts,
     paragraphs.
@@ -39,8 +36,7 @@ Features
 -   Support for pluralized messages.
 -   ANSI styled string manipulation.
 
-Installation
-============
+# Installation
 
 Install the stable version from CRAN:
 
@@ -48,8 +44,7 @@ Install the stable version from CRAN:
 install.packages("cli")
 ```
 
-Short tour
-----------
+## Short tour
 
 Some of the more commonly used cli elements, and features.
 
@@ -189,14 +184,18 @@ clean()
 
 <img src="man/figures/README/progress.svg" width="100%" />
 
-Documentation
--------------
+## Documentation
 
 See at
 [`https://cli.r-lib.org/`](https://cli.r-lib.org/reference/index.html)
 and also in the installed package: `help(package = "cli")`.
 
-License
-=======
+## Code of Conduct
+
+Please note that the cli project is released with a [Contributor Code of
+Conduct](https://cli.r-lib.org/CODE_OF_CONDUCT.html). By contributing to
+this project, you agree to abide by its terms.
+
+# License
 
 MIT © RStudio
