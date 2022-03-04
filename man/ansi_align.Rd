@@ -27,7 +27,7 @@ The aligned character vector.
 Align an ANSI colored string
 }
 \details{
-\if{html}{\out{<div class="sourceCode asciicast">}}\preformatted{str <- c(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{str <- c(
   col_red("This is red"),
   style_bold("This is bold")
 )
