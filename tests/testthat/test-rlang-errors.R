@@ -109,7 +109,7 @@ test_that("cli_abort width in RStudio", {
   # this is to fix breakage with new testthat
   withr::local_options(cli.condition_width = getOption("cli.width"))
   mockery::stub(cli_abort, "rstudio_detect", list(type = "rstudio_console"))
-  local_rng_version("3.5.0")
+  withr::local_rng_version("3.5.0")
   set.seed(42)
   expect_snapshot(error = TRUE, local({
     len <- 26

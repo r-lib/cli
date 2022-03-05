@@ -3,18 +3,18 @@ start_app()
 on.exit(stop_app(), add = TRUE)
 
 test_that_cli("add/remove/list themes", {
-  local_rng_version("3.3.0")
+  withr::local_rng_version("3.3.0")
   set.seed(24)
 
   id <- default_app()$add_theme(list(".green" = list(color = "green")))
   on.exit(default_app()$remove_theme(id), add = TRUE)
   expect_true(id %in% names(default_app()$list_themes()))
 
-  expect_snapshot({
+  expect_snapshot(local({
     cli_par(class = "green")
     cli_text(lorem_ipsum())
     cli_end()
-  })
+  }))
 
   default_app()$remove_theme(id)
   expect_false(id %in% names(default_app()$list_themes()))

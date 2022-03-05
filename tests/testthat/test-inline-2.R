@@ -73,12 +73,12 @@ test_that("cli_format", {
 
 test_that("cli_format() is used for .val", {
   withr::local_options(cli.width = 60)
-  local_rng_version("3.3.0")
+  withr::local_rng_version("3.3.0")
   set.seed(42)
-  expect_snapshot({
+  expect_snapshot(local({
     cli_div(theme = list(.val = list(digits = 2)))
     cli_text("Some random numbers: {.val {runif(4)}}.")
-  })
+  }))
 })
 
 test_that(".q always double quotes", {

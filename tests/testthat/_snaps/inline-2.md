@@ -191,8 +191,10 @@
 # cli_format() is used for .val
 
     Code
-      cli_div(theme = list(.val = list(digits = 2)))
-      cli_text("Some random numbers: {.val {runif(4)}}.")
+      local({
+        cli_div(theme = list(.val = list(digits = 2)))
+        cli_text("Some random numbers: {.val {runif(4)}}.")
+      })
     Message <cliMessage>
       Some random numbers: 0.91, 0.94, 0.29, and 0.83.
 

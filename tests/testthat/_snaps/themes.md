@@ -1,65 +1,65 @@
 # add/remove/list themes [plain]
 
     Code
-      cli_par(class = "green")
-      cli_text(lorem_ipsum())
+      local({
+        cli_par(class = "green")
+        cli_text(lorem_ipsum())
+        cli_end()
+      })
     Message <cliMessage>
       Non incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit
       eiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet
       laborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat
       est dolore deserunt aliqua amet et esse dolore elit exercitation sint
       exercitation non ipsum.
-    Code
-      cli_end()
-    Message <cliMessage>
       
 
 # add/remove/list themes [ansi]
 
     Code
-      cli_par(class = "green")
-      cli_text(lorem_ipsum())
+      local({
+        cli_par(class = "green")
+        cli_text(lorem_ipsum())
+        cli_end()
+      })
     Message <cliMessage>
       [32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[39m
       [32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[39m
       [32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[39m
       [32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[39m
       [32mexercitation non ipsum.[39m
-    Code
-      cli_end()
-    Message <cliMessage>
       
 
 # add/remove/list themes [unicode]
 
     Code
-      cli_par(class = "green")
-      cli_text(lorem_ipsum())
+      local({
+        cli_par(class = "green")
+        cli_text(lorem_ipsum())
+        cli_end()
+      })
     Message <cliMessage>
       Non incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit
       eiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet
       laborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat
       est dolore deserunt aliqua amet et esse dolore elit exercitation sint
       exercitation non ipsum.
-    Code
-      cli_end()
-    Message <cliMessage>
       
 
 # add/remove/list themes [fancy]
 
     Code
-      cli_par(class = "green")
-      cli_text(lorem_ipsum())
+      local({
+        cli_par(class = "green")
+        cli_text(lorem_ipsum())
+        cli_end()
+      })
     Message <cliMessage>
       [32mNon incididunt mollit ullamco duis officia proident. Laborum esse mollit mollit[39m
       [32meiusmod tempor cupidatat. In commodo anim irure nostrud. Deserunt nisi amet[39m
       [32mlaborum magna aliqua. Do esse consectetur ut deserunt nulla Lorem non. Fugiat[39m
       [32mest dolore deserunt aliqua amet et esse dolore elit exercitation sint[39m
       [32mexercitation non ipsum.[39m
-    Code
-      cli_end()
-    Message <cliMessage>
       
 
 # explicit formatter is used, and combined
