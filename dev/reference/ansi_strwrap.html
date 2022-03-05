@@ -4,7 +4,7 @@ styled strings, and leaves the styling intact."><title>Wrap an ANSI styled strin
 styled strings, and leaves the styling intact."><meta name="robots" content="noindex"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><script defer data-domain="{YOUR DOMAIN},all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
+<![endif]--><script defer data-domain="cli.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
     
 
@@ -118,27 +118,19 @@ each an ANSI string. Otherwise a single ANSI string vector.</p>
 <span class="r-in"><span class="va">rexp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gregexpr</a></span><span class="op">(</span><span class="st">"\\b([sS][a-zA-Z]+)\\b"</span>, <span class="va">text</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/regmatches.html" class="external-link">regmatches</a></span><span class="op">(</span><span class="va">text</span>, <span class="va">rexp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/regmatches.html" class="external-link">regmatches</a></span><span class="op">(</span><span class="va">text</span>, <span class="va">rexp</span><span class="op">)</span>, <span class="va">col_red</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pariatur officia laboris amet cupidatat officia proident do nisi do id pariatur. Nisi culpa proident nisi Lorem amet ut eu pariatur ut <span style="color: #BB0000;">sint</span> officia ut. Officia quis dolore eiusmod ipsum anim est excepteur. Occaecat laboris commodo aliqua <span style="color: #BB0000;">sit</span> do <span style="color: #BB0000;">sunt</span> ex <span style="color: #BB0000;">sint</span> non culpa minim labore id. Elit tempor culpa duis quis incididunt mollit dolore elit officia minim consectetur aliqua quis nisi. Magna et officia aute mollit <span style="color: #BB0000;">sint</span>. Cillum <span style="color: #BB0000;">sint</span> pariatur irure id. Lorem cillum reprehenderit veniam nisi laborum pariatur amet magna. Laboris anim non non eu. Laboris tempor non aliqua aliquip nostrud.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Id eiusmod tempor esse cillum magna dolor adipisicing. Adipisicing culpa voluptate mollit exercitation nisi officia elit. Dolore incididunt ex nostrud dolor ea ipsum ullamco do tempor deserunt. Proident elit fugiat in incididunt do do eiusmod <span style="color: #BB0000;">sunt</span>. Veniam consectetur labore dolor ea adipisicing veniam.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">wrp</span> <span class="op">&lt;-</span> <span class="fu">ansi_strwrap</span><span class="op">(</span><span class="va">text</span>, width <span class="op">=</span> <span class="fl">40</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">wrp</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Pariatur officia laboris amet cupidatat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> officia proident do nisi do id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pariatur. Nisi culpa proident nisi</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lorem amet ut eu pariatur ut <span style="color: #BB0000;">sint</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> officia ut. Officia quis dolore eiusmod</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ipsum anim est excepteur. Occaecat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> laboris commodo aliqua <span style="color: #BB0000;">sit</span> do <span style="color: #BB0000;">sunt</span> ex</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">sint</span> non culpa minim labore id. Elit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> tempor culpa duis quis incididunt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mollit dolore elit officia minim</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> consectetur aliqua quis nisi. Magna et</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> officia aute mollit <span style="color: #BB0000;">sint</span>. Cillum <span style="color: #BB0000;">sint</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pariatur irure id. Lorem cillum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> reprehenderit veniam nisi laborum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pariatur amet magna. Laboris anim non</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> non eu. Laboris tempor non aliqua</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> aliquip nostrud.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Id eiusmod tempor esse cillum magna</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dolor adipisicing. Adipisicing culpa</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> voluptate mollit exercitation nisi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> officia elit. Dolore incididunt ex</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> nostrud dolor ea ipsum ullamco do</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tempor deserunt. Proident elit fugiat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> in incididunt do do eiusmod <span style="color: #BB0000;">sunt</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Veniam consectetur labore dolor ea</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> adipisicing veniam.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
