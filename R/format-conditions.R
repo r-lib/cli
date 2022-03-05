@@ -38,14 +38,9 @@ format_error <- function(message, .envir = parent.frame()) {
   message[1] <- paste0("Error: ", message[1])
 
   rsconsole <- c("rstudio_console", "rstudio_console_starting")
-  if (rstudio_detect()$type %in% rsconsole) {
-    # leave some space for the traceback buttons in RStudio
-    oldopt <- options(cli.width = console_width() - 15L)
-  } else {
-    oldopt <- options(
-      cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
-    )
-  }
+  oldopt <- options(
+    cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
+  )
   on.exit(options(oldopt), add =TRUE)
 
   # We need to create a frame here, so cli_div() is closed.

@@ -282,28 +282,6 @@
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
 
-# format_error width in RStudio
-
-    Code
-      local({
-        len <- 26
-        idx <- 100
-        stop(format_error(c(lorem_ipsum(1, 3), i = lorem_ipsum(1, 3), x = lorem_ipsum(
-          1, 3))))
-      })
-    Error <simpleError>
-      Duis quis magna incididunt nulla commodo minim non
-      exercitation nostrud ullamco dolor exercitation ut veniam.
-      Fugiat irure tempor commodo voluptate ut. In et tempor excepteur
-      quis.
-      i Et nisi ad quis ad cupidatat tempor laborum est excepteur
-        aliqua veniam ex. Sunt magna veniam Lorem elit enim et
-        pariatur aliqua occaecat mollit consequat dolore in mollit.
-        Officia labore reprehenderit culpa dolore quis nisi do aliqua
-        commodo deserunt fugiat cupidatat nostrud ad.
-      x Ad laboris consectetur esse minim pariatur irure do anim anim.
-        Mollit ad cupidatat ullamco ullamco nulla elit in.
-
 # color in RStudio [ansi]
 
     Code

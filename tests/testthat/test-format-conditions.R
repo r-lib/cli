@@ -59,21 +59,6 @@ test_that_cli("format_message", {
   }))
 })
 
-test_that("format_error width in RStudio", {
-  mockery::stub(format_error, "rstudio_detect", list(type = "rstudio_console"))
-  local_rng_version("3.3.0")
-  set.seed(42)
-  expect_snapshot(error = TRUE, local({
-    len <- 26
-    idx <- 100
-    stop(format_error(c(
-            lorem_ipsum(1, 3),
-      "i" = lorem_ipsum(1, 3),
-      "x" = lorem_ipsum(1, 3)
-    )))
-  }))
-})
-
 test_that_cli(config = "ansi", "color in RStudio", {
   mockery::stub(
     get_rstudio_fg_color0,
