@@ -456,6 +456,7 @@
       <error/rlang_error>
       Error in `h()`:
       ! foo
+      ---
       Backtrace:
         1. base::print(expect_error(f()))
         8. cli f()
@@ -470,6 +471,7 @@
       <error/cli_my_class>
       Error in `h()`:
       ! `x` can't be empty.
+      ---
       Backtrace:
         1. base::print(expect_error(f(list())))
         8. cli f(list())
