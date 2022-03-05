@@ -1,4 +1,6 @@
 
+if (packageVersion("rlang") != "1.0.2") return()
+
 test_that_cli("cli_abort", {
   withr::local_options(cli.theme_dark = FALSE)
   expect_snapshot(error = TRUE, local({
