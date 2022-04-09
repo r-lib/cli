@@ -66,7 +66,6 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
 cli_inform <- function(message, ..., .envir = parent.frame()) {
   message[] <- vcapply(message, format_inline, .envir = .envir)
   escaped_message <- cli_escape(message)
-  cli_status("", "", "")
   rlang::inform(
     format_message(message, .envir = .envir),
     cli_bullets = message,
