@@ -413,6 +413,7 @@ void clic__ansi_iterator(SEXP sx,
                          clic__start_callback_t start_cb,
                          clic__tag_callback_t sgr_cb,
                          clic__tag_callback_t csi_cb,
+                         clic__tag_callback_t link_cb,
                          clic__text_callback_t text_cb,
                          clic__end_callback_t end_cb,
                          void *data) {
@@ -427,12 +428,14 @@ void clic__ansi_iterator(SEXP sx,
     const char *s_param;
     const char *s_intermed;
     const char *s_end;
+    const char *s_uri;
 
     if (start_cb) if (start_cb(str, ox, data)) goto end;
     if (str == NA_STRING) goto end;
 
     while (*x != 0) {
       if (*x == '\033' && *(x + 1) == '[') {
+        // CSI
         s_start = x;
         s_param = s_intermed = x + 2;
         while (*s_intermed >= 0x30 && *s_intermed <= 0x3f) s_intermed++;
@@ -452,6 +455,26 @@ void clic__ansi_iterator(SEXP sx,
         }
         shaft = s_end + 1;
         x = *s_end ? s_end + 1 : s_end;
+
+      } else if (*x == '\033' && *(x + 1) == ']' && *(x + 2) == '8' &&
+                 *(x + 3) == ';') {
+        // OSC
+        s_start = x;
+        s_param = s_uri = x + 4;
+        while (*s_uri != ';' && *s_uri != '\0') s_uri++;
+        s_uri++;
+        s_end = s_uri;
+        while (*s_end != '\0' && *s_end != '\\' &&
+               *(s_end - 1) != '\033') s_end++;
+        if (s_start > shaft && text_cb) {
+          if (text_cb(shaft, s_start, data)) goto end;
+        }
+        if (link_cb) {
+          if (link_cb(s_param, s_uri, s_end, data)) goto end;
+        }
+        shaft = s_end + 1;
+        x = *s_end ? s_end + 1 : s_end;
+
       } else {
         x++;
       }
@@ -555,6 +578,7 @@ SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
     simplify_cb_start,
     simplify_cb_sgr,
     simplify_cb_csi,
+    NULL, // simplify_cb_link,
     simplify_cb_text,
     simplify_cb_end,
     &data
@@ -695,6 +719,7 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
     substr_cb_start,
     substr_cb_sgr,
     NULL,
+    NULL, // substr_cb_link,
     substr_cb_text,
     substr_cb_end,
     &data
@@ -897,6 +922,7 @@ SEXP clic_ansi_html(SEXP sx, SEXP keep_csi) {
     html_cb_start,
     html_cb_sgr,
     html_cb_csi,
+    NULL, // html_cb_link,
     html_cb_text,
     html_cb_end,
     &data
@@ -972,6 +998,7 @@ SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi) {
     /* cb_start = */ 0,
     has_any_cb_sgr,
     has_any_cb_csi,
+    0, // has_any_cb_link,
     /* cb_text = */ 0,
     has_any_cb_end,
     &data
@@ -1074,6 +1101,7 @@ SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi) {
     strip_cb_start,
     strip_cb_sgr,
     strip_cb_csi,
+    NULL, // strip_cb_link,
     strip_cb_text,
     strip_cb_end,
     &data
@@ -1199,6 +1227,7 @@ SEXP clic_ansi_nchar(SEXP sx, SEXP type) {
     nchar_cb_start,
     /* sgr   = */ NULL,
     /* csi   = */ NULL,
+    /* link  = */ NULL,
     nchar_text_cbs[ctype],
     nchar_cb_end,
     &data
