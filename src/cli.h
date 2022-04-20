@@ -19,7 +19,7 @@ SEXP clic_tty_size();
 SEXP clic_ansi_simplify(SEXP x, SEXP keep_csi);
 SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
 SEXP clic_ansi_html(SEXP x, SEXP keep_csi);
-SEXP clic_ansi_has_any(SEXP x, SEXP sgr, SEXP csi);
+SEXP clic_ansi_has_any(SEXP x, SEXP sgr, SEXP csi, SEXP link);
 SEXP clic_ansi_strip(SEXP x, SEXP sgr, SEXP csi);
 SEXP clic_ansi_nchar(SEXP x, SEXP type);
 

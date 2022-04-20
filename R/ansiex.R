@@ -33,6 +33,7 @@ ansi_regex <- function() {
 #'   vector.
 #' @param sgr Whether to look for SGR (styling) control sequences.
 #' @param csi Whether to look for non-SGR control sequences.
+#' @param link Whether to look for ANSI hyperlinks.
 #' @return Logical vector, `TRUE` for the strings that have some
 #'   ANSI styling.
 #'
@@ -43,14 +44,15 @@ ansi_regex <- function() {
 #' ansi_has_any("foobar")
 #' ansi_has_any(col_red("foobar"))
 
-ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
+ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
   if (!is.character(string)) string <- as.character(string)
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
-    is_flag(csi)
+    is_flag(csi),
+    is_flag(link)
   )
-  .Call(clic_ansi_has_any, string, sgr, csi)
+  .Call(clic_ansi_has_any, string, sgr, csi, link)
 }
 
 #' Remove ANSI escape sequences from a string

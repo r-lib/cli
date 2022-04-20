@@ -941,6 +941,7 @@ struct has_any_data {
   SEXP result;
   char sgr;
   char csi;
+  char link;
   char has;
 };
 
@@ -970,6 +971,18 @@ static int has_any_cb_csi(const char *param,
   }
 }
 
+static int has_any_cb_link(const char *param,
+                           const char *uri,
+                           const char *end,
+                           void *vdata) {
+  struct has_any_data *data = vdata;
+  if (data->link) {
+    data->has = 1;
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
 static int has_any_cb_end(SEXP rstr,
                           const char *str,
@@ -985,20 +998,21 @@ static int has_any_cb_end(SEXP rstr,
   return 0;
 }
 
-SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi) {
+SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi, SEXP link) {
   struct has_any_data data;
   data.done = 0;
   data.has = 0;
   data.result = PROTECT(allocVector(LGLSXP, XLENGTH(sx)));
   data.sgr = LOGICAL(sgr)[0];
   data.csi = LOGICAL(csi)[0];
+  data.link = LOGICAL(link)[0];
 
   clic__ansi_iterator(
     sx,
     /* cb_start = */ 0,
     has_any_cb_sgr,
     has_any_cb_csi,
-    0, // has_any_cb_link,
+    has_any_cb_link,
     /* cb_text = */ 0,
     has_any_cb_end,
     &data
