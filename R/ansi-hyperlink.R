@@ -80,7 +80,18 @@ ansi_has_hyperlink_support <- function() {
   }
 
   if (nzchar(VTE_VERSION <- Sys.getenv("VTE_VERSION"))) {
-    if (package_version(VTE_VERSION) >= "0.50.1")  return(TRUE)
+    # See #441 -- some apparent heterogeneity in how the version gets
+    #   encoded to this env variable. Accept either form.
+    if (grepl("^\\d{4}$", VTE_VERSION)) {
+      VTE_VERSION <- as.numeric(VTE_VERSION) / 100
+      VTE_VERSION <- package_version(list(major = 0, minor = VTE_VERSION))
+    } else {
+      VTE_VERSION <- package_version(VTE_VERSION, strict = FALSE)
+      if (is.na(VTE_VERSION)) {
+        VTE_VERSION <- package_version("0.1.0")
+      }
+    }
+    if (VTE_VERSION >= "0.50.1") return(TRUE)
   }
 
   FALSE
