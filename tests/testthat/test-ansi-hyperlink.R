@@ -28,7 +28,7 @@ test_that("ansi_nchar", {
     list("\033]8;;https://ex.com\033\\text\033]8;;\033\\", 4),
     list("\033]8;x=1:y=2;https://ex.com\033\\text\033]8;;\033\\", 4),
     list("\033]8;;https://ex.com\033\\text\033]8;;\033\\", 4),
-    list("\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[21m", 4)    
+    list("\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[22m", 4)    
   )
 
   for (c in cases) {
@@ -41,7 +41,7 @@ test_that("ansi_regex", {
     "1\033]8;;https://ex.com\033\\text\033]8;;\033\\2",
     "1\033]8;x=1:y=2;https://ex.com\033\\text\033]8;;\033\\2",
     "1\033]8;;https://ex.com\033\\text\033]8;;\033\\2",
-    "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[21m2"
+    "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[22m2"
   )
 
   for (case in cases) {
@@ -58,21 +58,21 @@ test_that("ansi_strip", {
     "1\033]8;;https://ex.com\033\\text\033]8;;\033\\2",
     "1\033]8;x=1:y=2;https://ex.com\033\\text\033]8;;\033\\2",
     "1\033]8;;https://ex.com\033\\text\033]8;;\033\\2",
-    "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[21m2"
+    "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[22m2"
   )
 
   for (case in cases) {
     expect_equal(ansi_strip(case), "1text2")
   }
 
-  txt <- "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[21m2"
+  txt <- "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[22m2"
   expect_equal(
     ansi_strip(txt, link = FALSE),
     "1\033]8;;https://ex.com\033\\text\033]8;;\033\\2"
   )
   expect_equal(
     ansi_strip(txt, sgr = FALSE),
-    "1\033[1mtext\033[21m2"
+    "1\033[1mtext\033[22m2"
   )
 })
 
