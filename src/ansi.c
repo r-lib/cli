@@ -675,6 +675,15 @@ static int substr_cb_sgr(const char *param,
   return 0;
 }
 
+static int substr_cb_link(const char *param,
+                          const char *uri,
+                          const char *end,
+                          void *vdata) {
+  struct substr_data *data = vdata;
+  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
+  return 0;
+}
+
 static int substr_cb_text(const char *str,
                           const char *end,
                           void *vdata) {
@@ -762,7 +771,7 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
     substr_cb_start,
     substr_cb_sgr,
     NULL,
-    NULL, // substr_cb_link,
+    substr_cb_link,
     substr_cb_text,
     substr_cb_end,
     &data
