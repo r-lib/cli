@@ -40,7 +40,9 @@ The id of the new container element, invisibly.
 An unordered list is a container, see \link{containers}.
 }
 \details{
-\subsection{Adding all items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Adding all items at once}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_ul(c("one", "two", "three"))
 \}
 fun()
@@ -49,7 +51,9 @@ fun()
 \if{html}{\figure{cli-ul.svg}}
 }
 
-\subsection{Adding items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Adding items one by one}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_ul()
   cli_li("\{.emph one\}")
   cli_li("\{.emph two\}")

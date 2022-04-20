@@ -57,7 +57,9 @@ cli_alert_info(
 Alerts are typically short status messages.
 }
 \details{
-\subsection{Success}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{nbld <- 11
+\subsection{Success}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{nbld <- 11
 tbld <- prettyunits::pretty_sec(5.6)
 cli_alert_success("Built \{.emph \{nbld\}\} status report\{?s\} in \{tbld\}.")
 }\if{html}{\out{</div>}}
@@ -65,21 +67,27 @@ cli_alert_success("Built \{.emph \{nbld\}\} status report\{?s\} in \{tbld\}.")
 \if{html}{\figure{alert-success.svg}}
 }
 
-\subsection{Info}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.cache/files/latest.cache"
+\subsection{Info}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.cache/files/latest.cache"
 cli_alert_info("Updating cache file \{.path \{cfl\}\}.")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{alert-info.svg}}
 }
 
-\subsection{Warning}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.cache/files/latest.cache"
+\subsection{Warning}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.cache/files/latest.cache"
 cli_alert_warning("Failed to update cache file \{.path \{cfl\}\}.")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{alert-warning.svg}}
 }
 
-\subsection{Danger}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.config/report.yaml"
+\subsection{Danger}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.config/report.yaml"
 cli_alert_danger("Cannot validate config file at \{.path \{cfl\}\}.")
 }\if{html}{\out{</div>}}
 
@@ -88,7 +96,9 @@ cli_alert_danger("Cannot validate config file at \{.path \{cfl\}\}.")
 
 \subsection{Text wrapping}{
 
-Alerts are printed without wrapping, unless you set \code{wrap = TRUE}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_alert_info("Data columns: \{.val \{names(mtcars)\}\}.")
+Alerts are printed without wrapping, unless you set \code{wrap = TRUE}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_alert_info("Data columns: \{.val \{names(mtcars)\}\}.")
 cli_alert_info("Data columns: \{.val \{names(mtcars)\}\}.", wrap = TRUE)
 }\if{html}{\out{</div>}}
 

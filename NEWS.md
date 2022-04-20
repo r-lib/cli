@@ -1,6 +1,8 @@
 
 # cli development version
 
+* `ansi_*()` functions support ANSI hyperlinks again (#444).
+
 # cli 3.2.0
 
 ## Breaking change

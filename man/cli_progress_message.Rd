@@ -38,7 +38,9 @@ from the screen by default.
 
 Note that the message can be dynamic: if you update it with
 \code{\link[=cli_progress_update]{cli_progress_update()}}, then cli uses the current values in the string
-substitutions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+substitutions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_progress_message("Task one is running...")
   Sys.sleep(2)
 

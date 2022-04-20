@@ -123,17 +123,21 @@ the cli issue tracker.
 \section{Examples}{
 
 Color of headings, that are only active in paragraphs with an
-'output' class:\preformatted{list(
+'output' class:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{list(
   "par.output h1" = list("background-color" = "red", color = "#e0e0e0"),
   "par.output h2" = list("background-color" = "orange", color = "#e0e0e0"),
   "par.output h3" = list("background-color" = "blue", color = "#e0e0e0")
 )
-}
+}\if{html}{\out{</div>}}
 
-Create a custom alert type:\preformatted{list(
+Create a custom alert type:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{list(
   ".alert-start" = list(before = symbol$play),
   ".alert-stop"  = list(before = symbol$stop)
 )
-}
+}\if{html}{\out{</div>}}
 }
 

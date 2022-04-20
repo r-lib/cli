@@ -22,14 +22,18 @@ You can then throw this message with \code{\link[=stop]{stop()}} or \code{rlang:
 }
 \details{
 The messages can use inline styling, pluralization and glue
-substitutions.\if{html}{\out{<div class="sourceCode r">}}\preformatted{n <- "boo"
+substitutions.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{n <- "boo"
 stop(format_error(c(
         "\{.var n\} must be a numeric vector",
   "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 )))
 }\if{html}{\out{</div>}}
 
-\if{html}{\figure{format-error.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
+\if{html}{\figure{format-error.svg}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
 stop(format_error(c(
         "Must index an existing element:",
