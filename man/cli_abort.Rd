@@ -31,7 +31,9 @@ helper function which wouldn't be relevant to mention in the
 message.
 
 Can also be \code{NULL} or a \link[rlang:topic-defuse]{defused function call} to
-respectively not display any call or hard-code a code to display.}
+respectively not display any call or hard-code a code to display.
+
+For more information about error calls, see \ifelse{html}{\link[rlang:topic-error-call]{Including function calls in error messages}}{\link[rlang:topic-error-call]{Including function calls in error messages}}.}
 }
 \description{
 These functions let you create error, warning or diagnostic
@@ -46,7 +48,9 @@ cli_abort(c(
 ))
 }\if{html}{\out{</div>}}
 
-\if{html}{\figure{cli-abort.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
+\if{html}{\figure{cli-abort.svg}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
 cli_abort(c(
         "Must index an existing element:",

@@ -17,7 +17,9 @@ call \code{cli_progress_init_timer()} or create a progress bar with
 \code{cli_progress_bar()}.
 }
 
-\subsection{\code{cli_progress_add()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_add(SEXP bar, double inc);
+\subsection{\code{cli_progress_add()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_add(SEXP bar, double inc);
 }\if{html}{\out{</div>}}
 
 Add a number of progress units to the progress bar. It will also
@@ -28,7 +30,9 @@ trigger an update if an update is due.
 }
 }
 
-\subsection{\code{cli_progress_bar()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{SEXP cli_progress_bar(double total, SEXP config);
+\subsection{\code{cli_progress_bar()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{SEXP cli_progress_bar(double total, SEXP config);
 }\if{html}{\out{</div>}}
 
 Create a new progress bar object. The returned progress bar object
@@ -56,7 +60,9 @@ termination.
 \item \code{auto_terminate}: whether to terminate the progress bar when the
 number of current units equals the number of total progress units.
 }
-\subsection{Example}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{#include <cli/progress.h>
+\subsection{Example}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{#include <cli/progress.h>
 SEXP progress_test1() \{
   int i;
   SEXP bar = PROTECT(cli_progress_bar(1000, NULL));
@@ -73,7 +79,9 @@ SEXP progress_test1() \{
 
 }
 
-\subsection{\code{cli_progress_done()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_done(SEXP bar);
+\subsection{\code{cli_progress_done()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_done(SEXP bar);
 }\if{html}{\out{</div>}}
 
 Terminate the progress bar.
@@ -82,19 +90,25 @@ Terminate the progress bar.
 }
 }
 
-\subsection{\code{cli_progress_init_timer()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_init_timer();
+\subsection{\code{cli_progress_init_timer()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_init_timer();
 }\if{html}{\out{</div>}}
 
 Initialize the cli timer without creating a progress bar.
 }
 
-\subsection{\code{cli_progress_num()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{int cli_progress_num();
+\subsection{\code{cli_progress_num()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{int cli_progress_num();
 }\if{html}{\out{</div>}}
 
 Returns the number of currently active progress bars.
 }
 
-\subsection{\code{cli_progress_set()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set(SEXP bar, double set);
+\subsection{\code{cli_progress_set()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set(SEXP bar, double set);
 }\if{html}{\out{</div>}}
 
 Set the progress bar to the specified number of progress units.
@@ -104,7 +118,9 @@ Set the progress bar to the specified number of progress units.
 }
 }
 
-\subsection{\code{cli_progress_set_clear()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_clear(SEXP bar, int clear);
+\subsection{\code{cli_progress_set_clear()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_clear(SEXP bar, int clear);
 }\if{html}{\out{</div>}}
 
 Set whether to remove the progress bar from the screen. You can call
@@ -116,7 +132,9 @@ one.
 }
 }
 
-\subsection{\code{cli_progress_set_format()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_format(SEXP bar, const char *format, ...);
+\subsection{\code{cli_progress_set_format()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_format(SEXP bar, const char *format, ...);
 }\if{html}{\out{</div>}}
 
 Set a custom format string for the progress bar. This call does not
@@ -137,7 +155,9 @@ Format strings may contain glue substitutions, referring to
 styling.
 }
 
-\subsection{\code{cli_progress_set_name()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_name(SEXP bar, const char *name);
+\subsection{\code{cli_progress_set_name()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_name(SEXP bar, const char *name);
 }\if{html}{\out{</div>}}
 
 Set the name of the progress bar.
@@ -147,7 +167,9 @@ Set the name of the progress bar.
 }
 }
 
-\subsection{\code{cli_progress_set_status()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_status(SEXP bar, const char *status);
+\subsection{\code{cli_progress_set_status()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_status(SEXP bar, const char *status);
 }\if{html}{\out{</div>}}
 
 Set the status of the progress bar.
@@ -157,7 +179,9 @@ Set the status of the progress bar.
 }
 }
 
-\subsection{\code{cli_progress_set_type()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_type(SEXP bar, const char *type);
+\subsection{\code{cli_progress_set_type()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_set_type(SEXP bar, const char *type);
 }\if{html}{\out{</div>}}
 
 Set the progress bar type. Call this function right after creating
@@ -170,7 +194,9 @@ undefined.
 }
 }
 
-\subsection{\code{cli_progress_update()}}{\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_update(SEXP bar, double set, double inc, int force);
+\subsection{\code{cli_progress_update()}}{
+
+\if{html}{\out{<div class="sourceCode c">}}\preformatted{void cli_progress_update(SEXP bar, double set, double inc, int force);
 }\if{html}{\out{</div>}}
 
 Update the progress bar. Unlike the simpler \code{cli_progress_add()} and

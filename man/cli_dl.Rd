@@ -39,7 +39,9 @@ The id of the new container element, invisibly.
 A definition list is a container, see \link{containers}.
 }
 \details{
-\subsection{All items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{All items at once}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_dl(c(foo = "one", bar = "two", baz = "three"))
 \}
 fun()
@@ -48,7 +50,9 @@ fun()
 \if{html}{\figure{cli-dl.svg}}
 }
 
-\subsection{Items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Items one by one}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_dl()
   cli_li(c(foo = "\{.emph one\}"))
   cli_li(c(bar = "two"))

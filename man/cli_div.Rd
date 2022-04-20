@@ -34,7 +34,9 @@ See \link{containers}. A \code{cli_div} container is special, because it may
 add new themes, that are valid within the container.
 }
 \details{
-\subsection{Custom themes}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(h1 = list(color = "cyan",
+\subsection{Custom themes}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(h1 = list(color = "cyan",
                                     "font-weight" = "bold")))
 cli_h1("Custom title")
 cli_end(d)
@@ -46,7 +48,9 @@ cli_end(d)
 \subsection{Auto-closing}{
 
 By default a \code{cli_div()} is closed automatically when the calling
-frame exits.\if{html}{\out{<div class="sourceCode r">}}\preformatted{div <- function() \{
+frame exits.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div <- function() \{
   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
   cli_text("This is yellow")
 \}

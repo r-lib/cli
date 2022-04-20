@@ -19,7 +19,9 @@ longer paragraphs. See \code{\link[=cli_alert]{cli_alert()}} for shorter status 
 \details{
 \subsection{Text wrapping}{
 
-Text is wrapped to the console width, see \code{\link[=console_width]{console_width()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(cli:::lorem_ipsum())
+Text is wrapped to the console width, see \code{\link[=console_width]{console_width()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(cli:::lorem_ipsum())
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{cli-text.svg}}
@@ -27,7 +29,9 @@ Text is wrapped to the console width, see \code{\link[=console_width]{console_wi
 
 \subsection{New lines}{
 
-A \code{cli_text()} call always appends a newline character to the end.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("First line.")
+A \code{cli_text()} call always appends a newline character to the end.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("First line.")
 cli_text("Second line.")
 }\if{html}{\out{</div>}}
 
@@ -36,7 +40,9 @@ cli_text("Second line.")
 
 \subsection{Styling}{
 
-You can use \link[=inline-markup]{inline markup}, as usual.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("The \{.fn cli_text\} function in the \{.pkg cli\} package.")
+You can use \link[=inline-markup]{inline markup}, as usual.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("The \{.fn cli_text\} function in the \{.pkg cli\} package.")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{cli-text-markup.svg}}
@@ -45,7 +51,9 @@ You can use \link[=inline-markup]{inline markup}, as usual.\if{html}{\out{<div c
 \subsection{Interpolation}{
 
 String interpolation via glue works as usual. Interpolated vectors
-are collapsed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{pos <- c(5, 14, 25, 26)
+are collapsed.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pos <- c(5, 14, 25, 26)
 cli_text("We have \{length(pos)\} missing measurements: \{pos\}.")
 }\if{html}{\out{</div>}}
 
@@ -54,7 +62,9 @@ cli_text("We have \{length(pos)\} missing measurements: \{pos\}.")
 
 \subsection{Styling and interpolation}{
 
-Use double braces to combine styling and string interpolation.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- "cli-text"
+Use double braces to combine styling and string interpolation.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- "cli-text"
 pkg <- "cli"
 cli_text("The \{.fn \{fun\}\} function in the \{.pkg \{pkg\}\} package.")
 }\if{html}{\out{</div>}}
@@ -64,7 +74,9 @@ cli_text("The \{.fn \{fun\}\} function in the \{.pkg \{pkg\}\} package.")
 
 \subsection{Multiple arguments}{
 
-Arguments are concatenated.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(c("This ", "will ", "all "), "be ", "one ", "sentence.")
+Arguments are concatenated.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(c("This ", "will ", "all "), "be ", "one ", "sentence.")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{cli-text-concat.svg}}
@@ -72,7 +84,9 @@ Arguments are concatenated.\if{html}{\out{<div class="sourceCode r">}}\preformat
 
 \subsection{Containers}{
 
-You can use \code{cli_text()} within cli \link{containers}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{ul <- cli_ul()
+You can use \code{cli_text()} within cli \link{containers}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{ul <- cli_ul()
 cli_li("First item.")
 cli_text("Still the \{.emph first\} item")
 cli_li("Second item.")

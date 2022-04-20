@@ -31,7 +31,9 @@ and returned.}
 It can be used to separate parts of the output.
 }
 \details{
-\subsection{Inline styling and interpolation}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkg <- "mypackage"
+\subsection{Inline styling and interpolation}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pkg <- "mypackage"
 cli_rule(left = "\{.pkg \{pkg\}\} results")
 }\if{html}{\out{</div>}}
 
@@ -48,7 +50,9 @@ property. Possible values are:
 \item \code{"bar1"}, \code{"bar2"}, \code{"bar3"}, etc., \code{"bar8"} uses varying height bars.
 }
 
-Colors and background colors can similarly changed via a theme.\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(rule = list(
+Colors and background colors can similarly changed via a theme.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(rule = list(
   color = "cyan",
   "line-type" = "double")))
 cli_rule("Summary", right = "\{.pkg mypackage\}")

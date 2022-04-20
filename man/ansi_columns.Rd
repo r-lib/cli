@@ -45,7 +45,9 @@ It works well together with \code{\link[=boxx]{boxx()}}, see the example below.
 }
 \details{
 If a string does not fit into the specified \code{width}, it will be
-truncated using \code{\link[=ansi_strtrim]{ansi_strtrim()}}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fmt <- ansi_columns(
+truncated using \code{\link[=ansi_strtrim]{ansi_strtrim()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fmt <- ansi_columns(
   paste(col_red("foo"), 1:10),
   width = 50,
   fill = "rows",

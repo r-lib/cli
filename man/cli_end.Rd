@@ -16,7 +16,9 @@ close them. Closing a container also closes all of its nested
 containers.
 }
 \details{
-\subsection{Explicit closing}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cnt <- cli_par()
+\subsection{Explicit closing}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cnt <- cli_par()
 cli_text("First paragraph.")
 cli_end(cnt)
 cnt <- cli_par()
@@ -27,7 +29,9 @@ cli_end(cnt)
 \if{html}{\figure{cli-end.svg}}
 }
 
-\subsection{Closing a stack of containers}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{list <- cli_ul()
+\subsection{Closing a stack of containers}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{list <- cli_ul()
 cli_li("Item one:")
 cli_li("Item two:")
 cli_par()
@@ -41,7 +45,9 @@ cli_text("Not in the list any more")
 
 \subsection{Omitting \code{id}}{
 
-If \code{id} is omitted, the container that was opened last will be closed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_par()
+If \code{id} is omitted, the container that was opened last will be closed.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_par()
 cli_text("First paragraph")
 cli_end()
 cli_par()
@@ -55,7 +61,9 @@ cli_end()
 \subsection{Debugging containers}{
 
 You can use the internal \code{cli:::cli_debug_doc()} function to see the
-currently open containers.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+currently open containers.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_div(id = "mydiv")
   cli_par(class = "myclass")
   cli:::cli_debug_doc()

@@ -50,7 +50,9 @@ name of a built-in palette (see \code{ansi_palettes()}), or the list of
 16 colors. Colors can be specified with RGB colors strings:
 \verb{#rrggbb} or R color names (see the output of \code{\link[grDevices:colors]{grDevices::colors()}}).
 
-For example, you can put this in your R profile:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.palette = "vscode")
+For example, you can put this in your R profile:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.palette = "vscode")
 }\if{html}{\out{</div>}}
 
 It is currently not possible to configure the background colors

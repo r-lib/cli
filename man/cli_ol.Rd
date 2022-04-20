@@ -40,7 +40,9 @@ The id of the new container element, invisibly.
 An ordered list is a container, see \link{containers}.
 }
 \details{
-\subsection{Adding all items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Adding all items at once}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_ol(c("one", "two", "three"))
 \}
 fun()
@@ -49,7 +51,9 @@ fun()
 \if{html}{\figure{cli-ol.svg}}
 }
 
-\subsection{Adding items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{## Adding items one by one
+\subsection{Adding items one by one}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{## Adding items one by one
 fun <- function() \{
   cli_ol()
   cli_li("\{.emph one\}")
@@ -63,7 +67,9 @@ fun()
 \if{html}{\figure{cli-ol-2.svg}}
 }
 
-\subsection{Nested lists}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Nested lists}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_div(theme = list(ol = list("margin-left" = 2)))
   cli_ul()
   cli_li("one")

@@ -32,7 +32,7 @@ name is a single space character, the class is \code{bullet-space}.
 The built-in theme defines the following item types:
 \itemize{
 \item No name: Item without a prefix.
-\item \verb{}: Indented item.
+\item \verb{ }: Indented item.
 \item \code{*}: Item with a bullet.
 \item \code{>}: Item with an arrow or pointer.
 \item \code{v}: Item with a green "tick" symbol, like \code{\link[=cli_alert_success]{cli_alert_success()}}.
@@ -42,7 +42,9 @@ The built-in theme defines the following item types:
 }
 
 You can define new item type by simply defining theming for the
-corresponding \verb{bullet-<name>} classes.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_bullets(c(
+corresponding \verb{bullet-<name>} classes.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_bullets(c(
         "noindent",
   " " = "indent",
   "*" = "bullet",

@@ -49,7 +49,9 @@ will not look great with these. Some good, modern fonts that look good
 include Menlo, Fira Code and Source Code Pro.
 
 If you do not want to change your font, you can also turn off Unicode
-output, by setting the \code{cli.unicode} option:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
+output, by setting the \code{cli.unicode} option:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
 }\if{html}{\out{</div>}}
 
 A related issue: \url{https://github.com/r-lib/cli/issues/320}
@@ -65,7 +67,9 @@ question: Why are heading separators wider than my screen in RStudio?.
 If some output is garbled, then cli probably misdetected Unicode support
 for your terminal or font. You can try choosing a different font. In our
 experience output looks good with Menlo, Fira Code and Source Code Pro.
-Alternatively you can turn off Unicode output:\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
+Alternatively you can turn off Unicode output:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{options(cli.unicode = FALSE)
 }\if{html}{\out{</div>}}
 
 If you think this is our fault, then please also file an issue at
