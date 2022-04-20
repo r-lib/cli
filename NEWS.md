@@ -4,6 +4,8 @@
 * `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
+* `ansi_*()` functions support ANSI hyperlinks again (#444).
+
 # cli 3.2.0
 
 ## Breaking change

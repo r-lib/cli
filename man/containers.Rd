@@ -13,7 +13,9 @@ containers as well: \code{\link[=cli_li]{cli_li()}}.
 \subsection{Themes}{
 
 A container can add a new theme, which is removed when the container
-exits.\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(h1 = list(color = "blue",
+exits.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{d <- cli_div(theme = list(h1 = list(color = "blue",
                                     "font-weight" = "bold")))
 cli_h1("Custom title")
 cli_end(d)
@@ -27,7 +29,9 @@ cli_end(d)
 Container elements are closed with \code{\link[=cli_end]{cli_end()}}. For convenience,
 by default they are closed automatically when the function that created
 them terminated (either regularly or with an error). The default
-behavior can be changed with the \code{.auto_close} argument.\if{html}{\out{<div class="sourceCode r">}}\preformatted{div <- function() \{
+behavior can be changed with the \code{.auto_close} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div <- function() \{
   cli_div(class = "tmp", theme = list(.tmp = list(color = "yellow")))
   cli_text("This is yellow")
 \}
@@ -41,7 +45,9 @@ cli_text("This is not yellow any more")
 \subsection{Debugging}{
 
 You can use the internal \code{cli:::cli_debug_doc()} function to see the
-currently open containers.\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+currently open containers.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_div(id = "mydiv")
   cli_par(class = "myclass")
   cli:::cli_debug_doc()

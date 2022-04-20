@@ -26,7 +26,9 @@ themes.}
 cli has three levels of headings.
 }
 \details{
-This is how the headings look with the default builtin theme.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_h1("Header \{.emph 1\}")
+This is how the headings look with the default builtin theme.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_h1("Header \{.emph 1\}")
 cli_h2("Header \{.emph 2\}")
 cli_h3("Header \{.emph 3\}")
 }\if{html}{\out{</div>}}

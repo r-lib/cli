@@ -59,7 +59,9 @@ Create a spinner
 }
 \section{Examples}{
 
-\subsection{Default spinner}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp1 <- make_spinner()
+\subsection{Default spinner}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp1 <- make_spinner()
 fun_with_spinner <- function() \{
   lapply(1:100, function(x) \{ sp1$spin(); Sys.sleep(0.05) \})
   sp1$finish()
@@ -70,7 +72,9 @@ ansi_with_hidden_cursor(fun_with_spinner())
 \if{html}{\figure{make-spinner-default.svg}}
 }
 
-\subsection{Spinner with a template}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp2 <- make_spinner(template = "Computing \{spin\}")
+\subsection{Spinner with a template}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp2 <- make_spinner(template = "Computing \{spin\}")
 fun_with_spinner2 <- function() \{
   lapply(1:100, function(x) \{ sp2$spin(); Sys.sleep(0.05) \})
   sp2$finish()
@@ -81,7 +85,9 @@ ansi_with_hidden_cursor(fun_with_spinner2())
 \if{html}{\figure{make-spinner-template.svg}}
 }
 
-\subsection{Custom spinner}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading \{spin\}")
+\subsection{Custom spinner}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading \{spin\}")
 fun_with_spinner3 <- function() \{
   lapply(1:100, function(x) \{ sp3$spin(); Sys.sleep(0.05) \})
   sp3$finish()

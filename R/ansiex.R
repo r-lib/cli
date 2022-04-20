@@ -23,7 +23,7 @@ ansi_regex <- function() {
     "(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])",
     "|\\x{001b}[A-M]",
     # this is for hyperlinks, we must be non-greedy
-    "|\\x{001b}\\]8;;.*?\\x{0007}"
+    "|\\x{001b}\\]8;.*?;.*?\\x{001b}\\\\"
   )
 }
 
@@ -33,6 +33,7 @@ ansi_regex <- function() {
 #'   vector.
 #' @param sgr Whether to look for SGR (styling) control sequences.
 #' @param csi Whether to look for non-SGR control sequences.
+#' @param link Whether to look for ANSI hyperlinks.
 #' @return Logical vector, `TRUE` for the strings that have some
 #'   ANSI styling.
 #'
@@ -43,14 +44,15 @@ ansi_regex <- function() {
 #' ansi_has_any("foobar")
 #' ansi_has_any(col_red("foobar"))
 
-ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
+ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
   if (!is.character(string)) string <- as.character(string)
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
-    is_flag(csi)
+    is_flag(csi),
+    is_flag(link)
   )
-  .Call(clic_ansi_has_any, string, sgr, csi)
+  .Call(clic_ansi_has_any, string, sgr, csi, link)
 }
 
 #' Remove ANSI escape sequences from a string
@@ -61,6 +63,7 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
 #' @param string The input string.
 #' @param sgr Whether to remove for SGR (styling) control sequences.
 #' @param csi Whether to remove for non-SGR control sequences.
+#' @param link Whether to remove ANSI hyperlinks.
 #' @return The cleaned up string. Note that `ansi_strip()` always drops
 #' the `cli_ansi_string` class, even if `sgr` and sci` are `FALSE`.
 #'
@@ -69,14 +72,15 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
 #' @examples
 #' ansi_strip(col_red("foobar")) == "foobar"
 
-ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
+ansi_strip <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
   if (!is.character(string)) string <- as.character(string)
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
-    is_flag(csi)
+    is_flag(csi),
+    is_flag(link)
   )
-  clean <- .Call(clic_ansi_strip, string, sgr, csi)
+  clean <- .Call(clic_ansi_strip, string, sgr, csi, link)
   class(clean) <- setdiff(class(clean), c("cli_ansi_string", "ansi_string"))
   clean
 }
@@ -89,7 +93,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 #' @param x Character vector, potentially ANSI styled, or a vector to be
 #'   coerced to character. If it converted to UTF-8.
 #' @param type Whether to count graphemes (characters), code points,
-#'   bytes, or calculate the display width of the string. 
+#'   bytes, or calculate the display width of the string.
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
@@ -869,7 +873,8 @@ ansi_html_style <- function(colors = TRUE, palette = NULL) {
     ".ansi-blink"      = "{ text-decoration: blink;        }",
     # .ansi-inverse ???
     ".ansi-hide"       = "{ visibility: hidden;            }",
-    ".ansi-crossedout" = "{ text-decoration: line-through; }"
+    ".ansi-crossedout" = "{ text-decoration: line-through; }",
+    ".ansi-link:hover" = "{ text-decoration: underline;    }"
   )
 
   if (!identical(colors, FALSE)) {

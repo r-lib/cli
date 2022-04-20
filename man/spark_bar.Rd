@@ -23,16 +23,22 @@ for them.
 spark_bar(x)
 }\if{html}{\out{</div>}}
 
-\if{html}{\figure{spark-bar-1.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- seq(0, 1, length = 6)
+\if{html}{\figure{spark-bar-1.svg}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- seq(0, 1, length = 6)
 spark_bar(sample(x))
 }\if{html}{\out{</div>}}
 
-\if{html}{\figure{spark-bar-2.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{spark_bar(seq(0, 1, length = 8))
+\if{html}{\figure{spark-bar-2.svg}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{spark_bar(seq(0, 1, length = 8))
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{spark-bar-3.svg}}
 
-\code{NA}s are left out:\if{html}{\out{<div class="sourceCode r">}}\preformatted{spark_bar(c(0, NA, 0.5, NA, 1))
+\code{NA}s are left out:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{spark_bar(c(0, NA, 0.5, NA, 1))
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{spark-bar-na.svg}}

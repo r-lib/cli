@@ -17,7 +17,9 @@ It is not wrapped, but printed as is. Long lines will overflow.
 No glue substitution is performed on verbatim text.
 }
 \details{
-\subsection{Line breaks}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("This has\\nthree\\nlines,")
+\subsection{Line breaks}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("This has\\nthree\\nlines,")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{cli-verbatim.svg}}
@@ -25,7 +27,9 @@ No glue substitution is performed on verbatim text.
 
 \subsection{Special characters}{
 
-No glue substitution happens here.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("No string \{interpolation\} or \{.emph styling\} here")
+No glue substitution happens here.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("No string \{interpolation\} or \{.emph styling\} here")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{cli-verbatim-2.svg}}

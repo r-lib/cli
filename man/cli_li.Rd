@@ -34,7 +34,9 @@ The id of the new container element, invisibly.
 A list item is a container, see \link{containers}.
 }
 \details{
-\subsection{Nested lists}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Nested lists}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   ul <- cli_ul()
   cli_li("one:")
   cli_ol(letters[1:3])

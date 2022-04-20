@@ -23,7 +23,9 @@ You can use this function to change the default parameters of
 
 The style is added as an attribute, so operations that remove
 attributes will remove the style as well.
-\subsection{Custom collapsing separator}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{v <- cli_vec(
+\subsection{Custom collapsing separator}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{v <- cli_vec(
   c("foo", "bar", "foobar"),
   style = list(vec_sep = " & ", vec_last = " & ")
 )
@@ -33,7 +35,9 @@ cli_text("My list: \{v\}.")
 \if{html}{\figure{cli-vec.svg}}
 }
 
-\subsection{Custom truncation}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- cli_vec(names(mtcars), list(vec_trunc = 3))
+\subsection{Custom truncation}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- cli_vec(names(mtcars), list(vec_trunc = 3))
 cli_text("Column names: \{x\}.")
 }\if{html}{\out{</div>}}
 
