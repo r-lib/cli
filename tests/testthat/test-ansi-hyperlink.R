@@ -16,11 +16,27 @@ test_that("ansi_has_any", {
 })
 
 test_that("ansi_html", {
+  txt <- paste0(
+    "1",
+    "\033[1m\033]8;;https://ex.com\033\\",
+    "text",
+    "\033]8;;\033\\",
+    "\033[22m",
+    "2"
+  )
 
-})
-
-test_that("ansi_html_style", {
-
+  expect_equal(
+    ansi_html(txt),
+    paste0(
+      "1",
+      "<a class=\"ansi-link\" href=\"https://ex.com\">",
+      "<span class=\"ansi ansi-bold\">",
+      "text",
+      "</span>",
+      "</a>",
+      "2"
+    )
+  )
 })
 
 test_that("ansi_nchar", {
@@ -50,7 +66,13 @@ test_that("ansi_regex", {
 })
 
 test_that("ansi_simplify", {
-
+  txt <- "1\033[1m\033]8;;https://ex.com\033\\text\033]8;;\033\\\033[22m2"
+  expect_equal(
+    ansi_simplify(txt),
+    ansi_string(
+      "1\033]8;;https://ex.com\033\\\033[1mtext\033[22m\033]8;;\033\\2"
+    )
+  )
 })
 
 test_that("ansi_strip", {

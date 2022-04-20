@@ -93,7 +93,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
 #' @param x Character vector, potentially ANSI styled, or a vector to be
 #'   coerced to character. If it converted to UTF-8.
 #' @param type Whether to count graphemes (characters), code points,
-#'   bytes, or calculate the display width of the string. 
+#'   bytes, or calculate the display width of the string.
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
@@ -873,7 +873,8 @@ ansi_html_style <- function(colors = TRUE, palette = NULL) {
     ".ansi-blink"      = "{ text-decoration: blink;        }",
     # .ansi-inverse ???
     ".ansi-hide"       = "{ visibility: hidden;            }",
-    ".ansi-crossedout" = "{ text-decoration: line-through; }"
+    ".ansi-crossedout" = "{ text-decoration: line-through; }",
+    ".ansi-link:hover" = "{ text-decoration: underline;    }"
   )
 
   if (!identical(colors, FALSE)) {

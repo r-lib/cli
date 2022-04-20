@@ -133,6 +133,9 @@ struct cli_sgr_state {
   char inverse;
   char hide;
   char crossedout;
+  const char* link_param;
+  const char* link_uri;
+  const char* link_end;
 };
 
 struct cli_ansi_state {
@@ -276,8 +279,29 @@ static void clic__ansi_update_state(const char *param,
   } while (endptr < intermed && *endptr == ';');
 }
 
+static void clic__ansi_update_state_link(const char *param,
+                                         const char *uri,
+                                         const char *end,
+                                         struct cli_buffer *buffer,
+                                         struct cli_ansi_state *state) {
+
+  if (*uri == '\033' && *(uri + 1) == '\\') {
+    // turn off links
+    state->new.link_param = NULL;
+    state->new.link_uri = NULL;
+    state->new.link_end = NULL;
+
+  } else {
+    // start of a link
+    state->new.link_param = param;
+    state->new.link_uri = uri;
+    state->new.link_end = end;
+  }
+}
+
 #define EMIT(s) clic__buffer_push_str(buffer, "\033[" s "m")
 #define EMITS(s) clic__buffer_push_str(buffer, (s))
+#define EMITP(s,e) clic__buffer_push_piece(buffer, (s), (e))
 
 static void clic__state_update_buffer(struct cli_buffer *buffer,
                                       struct cli_ansi_state *state) {
@@ -332,7 +356,16 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMIT("22");
   }
 
+  if (state->old.link_uri && state->new.link_uri != state->old.link_uri) {
+    EMITS("\033]8;;\033\\");
+  }
+
   /* Opening tags in reverse order ------------------------------------- */
+
+  if (state->new.link_uri && state->new.link_uri != state->old.link_uri) {
+    EMITS("\033]8;");
+    EMITP(state->new.link_param, state->new.link_end + 1);
+  }
 
   if (state->new.bold > state->old.bold) {
     EMIT("1");
@@ -531,6 +564,16 @@ static int simplify_cb_csi(const char *param,
   return 0;
 }
 
+static int simplify_cb_link(const char *param,
+                            const char *uri,
+                            const char *end,
+                            void *vdata) {
+  struct simplify_data *data = vdata;
+  data->num_tags ++;
+  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
+  return 0;
+}
+
 static int simplify_cb_text(const char *str,
                             const char *end,
                             void *vdata) {
@@ -578,7 +621,7 @@ SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
     simplify_cb_start,
     simplify_cb_sgr,
     simplify_cb_csi,
-    NULL, // simplify_cb_link,
+    simplify_cb_link,
     simplify_cb_text,
     simplify_cb_end,
     &data
@@ -754,6 +797,7 @@ struct html_data {
   R_xlen_t done;
   SEXP result;
   char had_tags;
+  char is_link;
   char keep_csi;
 };
 
@@ -773,7 +817,15 @@ static void clic__html_start(struct html_data *data) {
   char col[64];
 
   int first = 1;
+  data->is_link = 0;
  /* Opening tags ------------------------------------------------------ */
+
+  if (state->new.link_uri && state->new.link_uri != state->old.link_uri) {
+    EMITS("<a class=\"ansi-link\" href=\"");
+    EMITP(state->new.link_uri, state->new.link_end - 1);
+    EMITS("\">");
+    data->is_link = 1;
+  }
 
   if (state->new.bold > state->old.bold) {
     EMITS1(" ansi-bold");
@@ -848,6 +900,7 @@ static void clic__html_end(struct html_data *data) {
 
   struct cli_buffer *buffer = &data->buffer;
   if (data->had_tags) EMITS("</span>");
+  if (data->is_link) EMITS("</a>");
 }
 
 static int html_cb_start(SEXP rstr, const char *str, void *vdata) {
@@ -873,6 +926,15 @@ static int html_cb_csi(const char *param,
   if (data->keep_csi) {
     clic__buffer_push_piece(&data->buffer, param - 2, end + 1);
   }
+  return 0;
+}
+
+static int html_cb_link(const char *param,
+                        const char *uri,
+                        const char *end,
+                        void *vdata) {
+  struct html_data *data = vdata;
+  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
   return 0;
 }
 
@@ -922,7 +984,7 @@ SEXP clic_ansi_html(SEXP sx, SEXP keep_csi) {
     html_cb_start,
     html_cb_sgr,
     html_cb_csi,
-    NULL, // html_cb_link,
+    html_cb_link,
     html_cb_text,
     html_cb_end,
     &data
