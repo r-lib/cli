@@ -86,7 +86,10 @@ ansi_has_hyperlink_support <- function() {
       VTE_VERSION <- as.numeric(VTE_VERSION) / 100
       VTE_VERSION <- package_version(list(major = 0, minor = VTE_VERSION))
     } else {
-      VTE_VERSION <- package_version(VTE_VERSION)
+      VTE_VERSION <- package_version(VTE_VERSION, strict = FALSE)
+      if (is.na(VTE_VERSION)) {
+        VTE_VERSION <- package_version("0.1.0")
+      }
     }
     if (VTE_VERSION >= "0.50.1") return(TRUE)
   }
