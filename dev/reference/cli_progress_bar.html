@@ -213,7 +213,8 @@ invisibly.
 updates an existing progress bar, and <code>cli_progress_done()</code> terminates
 it.</p>
 <p>It is good practice to always set the <code>name</code> argument, to make the
-progress bar more informative.</p><div class="sourceCode r"><pre><code><span class="va">clean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+progress bar more informative.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">clean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Cleaning data"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
@@ -229,7 +230,8 @@ progress bar more informative.</p><div class="sourceCode r"><pre><code><span cla
 <h3 id="progress-bar-types">Progress bar types<a class="anchor" aria-label="anchor" href="#progress-bar-types"></a></h3>
 
 
-<p>There are three builtin types of progress bars, and a custom type.</p><div class="sourceCode r"><pre><code><span class="va">tasks</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+<p>There are three builtin types of progress bars, and a custom type.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">tasks</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Tasks"</span>, total <span class="op">=</span> <span class="fl">3</span>, type <span class="op">=</span> <span class="st">"tasks"</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
@@ -247,7 +249,8 @@ progress bar more informative.</p><div class="sourceCode r"><pre><code><span cla
 
 <p>If <code>total</code> is not known, then cli shows a different progress bar.
 Note that you can also set <code>total</code> in <code>cli_progress_update()</code>, if it
-not known when the progress bar is created, but you learn it later.</p><div class="sourceCode r"><pre><code><span class="va">nototal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+not known when the progress bar is created, but you learn it later.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">nototal</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Parameter tuning"</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
@@ -269,7 +272,8 @@ the terminal supports this. If you want to change this, use the
 global option (see <a href="cli-config.html">cli-config</a>) to change this.</p>
 <p>(In the cli documentation we usually set <code>cli.progress_clear</code> to <code>FALSE</code>,
 so users can see how finished progress bars look.)</p>
-<p>In this example the first progress bar is cleared, the second is not.</p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+<p>In this example the first progress bar is cleared, the second is not.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Data cleaning"</span>, total <span class="op">=</span> <span class="fl">100</span>, clear <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
@@ -295,7 +299,8 @@ seconds. You can change this default with the <code>cli.progress_show_after</cod
 global option (see <a href="cli-config.html">cli-config</a>).</p>
 <p>(In the cli documentation we usually set <code>cli.progress_show_after</code> to
 <code>0</code> (zero seconds), so progress bars are shown immediately.)</p>
-<p>In this example we only show the progress bar after two seconds.</p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+<p>In this example we only show the progress bar after two seconds.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"Starting now, at {Sys.time()}"</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span>
     total <span class="op">=</span> <span class="fl">100</span>,
@@ -324,7 +329,8 @@ new one is created, then the previous one (if any) is automatically
 terminated. The current progress bar is also terminated when the function
 that created it exits. Thanks to these rules, most often you don't need
 to explicitly deal with progress bar ids, and you don't need to
-explicitly call <code>cli_progress_done()</code>:</p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+explicitly call <code>cli_progress_done()</code>:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"First step "</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
@@ -347,7 +353,8 @@ explicitly call <code>cli_progress_done()</code>:</p><div class="sourceCode r"><
 <p>cli allows emitting regular cli output (alerts, headers, lists, etc.)
 while a progress bar is active. On terminals that support this, cli
 will remove the progress bar temporarily, emit the output, and then
-restores the progress bar.</p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+restores the progress bar.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"Before the progress bar"</span><span class="op">)</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Calculating"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span> <span class="op">{</span>
@@ -377,7 +384,8 @@ which will print the text to the console.</p>
 format string. In this case <a href="progress-variables.html">progress variables</a>
 are probably useful to avoid calculating some progress bar quantities
 like the elapsed time, of the ETA manually. You can also use your own
-variables in the calling function:</p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">urls</span><span class="op">)</span> <span class="op">{</span>
+variables in the calling function:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">urls</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span>
     format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span>
       <span class="st">"{pb_spin} Downloading {.path {basename(url)}} "</span>,

@@ -74,17 +74,20 @@ enclosed by braces will be evaluated as R code. See <code><a href="https://glue.
 details.</p>
 <p>In addition to regular glue interpolation, cli can also add classes
 to parts of the text, and these classes can be used in themes. For
-example</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is {.emph important}."</span><span class="op">)</span></code></pre><p></p></div>
+example</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is {.emph important}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-text.svg" alt=""></p>
 <p>adds a class to the "important" word, class <code>"emph"</code>. Note that in this
 case the string within the braces is usually not a valid R expression.
 If you want to mix classes with interpolation, add another pair of
-braces:</p><div class="sourceCode r"><pre><code><span class="va">adjective</span> <span class="op">&lt;-</span> <span class="st">"great"</span>
+braces:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">adjective</span> <span class="op">&lt;-</span> <span class="st">"great"</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is {.emph {adjective}}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-text-2.svg" alt=""></p>
 <p>An inline class will always create a <code>span</code> element internally. So in
 themes, you can use the <code>span.emph</code> CSS selector to change how inline
-text is emphasized:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>span.emph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+text is emphasized:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>span.emph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">adjective</span> <span class="op">&lt;-</span> <span class="st">"nice and red"</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"This is {.emph {adjective}}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-text-3.svg" alt=""></p>
@@ -126,7 +129,8 @@ text is emphasized:</p><div class="sourceCode r"><pre><code><span class="fu"><a 
 <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="va">ul</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-examples.svg" alt=""></p>
 <p>You can add new classes by defining them in the theme, and then using
-them.</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+them.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   span.myclass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span>,
   <span class="st">"span.myclass"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>before <span class="op">=</span> <span class="st">"&lt;&lt;"</span><span class="op">)</span>,
   <span class="st">"span.myclass"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>after <span class="op">=</span> <span class="st">"&gt;&gt;"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -154,15 +158,18 @@ terminals that support ANSI colors.</p></li>
 
 <p>When cli performs inline text formatting, it automatically collapses
 glue substitutions, after formatting. This is handy to create lists of
-files, packages, etc.</p><div class="sourceCode r"><pre><code><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
+files, packages, etc.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Packages: {pkgs}."</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Packages: {.pkg {pkgs}}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-collapse.svg" alt=""></p>
-<p>Class names are collapsed differently by default</p><div class="sourceCode r"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
+<p>Class names are collapsed differently by default</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Hey, {.var x} has class {.cls {class(x)}}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-collapse-2.svg" alt=""></p>
 <p>By default cli truncates long vectors. The truncation limit is by default
-one hundred elements, but you can change it with the <code>vec_trunc</code> style.</p><div class="sourceCode r"><pre><code><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cli_vec.html">cli_vec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>vec_trunc <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+one hundred elements, but you can change it with the <code>vec_trunc</code> style.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cli_vec.html">cli_vec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>vec_trunc <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Column names: {nms}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-collapse-trunc.svg" alt=""></p>
     </div>
@@ -183,11 +190,13 @@ style as the argument. See <code><a href="cli_format.html">cli_format()</a></cod
 <p>It might happen that you want to pass a string to <code>cli_*</code> functions,
 and you do <em>not</em> want command substitution in that string, because it
 might contain <code>{</code> and <code>}</code> characters. The simplest solution for this is
-to refer to the string from a template:</p><div class="sourceCode r"><pre><code><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"Error in if (ncol(dat$y)) {: argument is of length zero"</span>
+to refer to the string from a template:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">msg</span> <span class="op">&lt;-</span> <span class="st">"Error in if (ncol(dat$y)) {: argument is of length zero"</span>
 <span class="fu"><a href="../reference/cli_alert.html">cli_alert_warning</a></span><span class="op">(</span><span class="st">"{msg}"</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-escape.svg" alt=""></p>
 <p>If you want to explicitly escape <code>{</code> and <code>}</code> characters, just double
-them:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_alert.html">cli_alert_warning</a></span><span class="op">(</span><span class="st">"A warning with {{ braces }}."</span><span class="op">)</span></code></pre><p></p></div>
+them:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="../reference/cli_alert.html">cli_alert_warning</a></span><span class="op">(</span><span class="st">"A warning with {{ braces }}."</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/inline-escape-2.svg" alt=""></p>
 <p>See also examples below.</p>
     </div>
@@ -196,7 +205,8 @@ them:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="../refer
     
 
 
-<p>All cli commands that emit text support pluralization. Some examples:</p><div class="sourceCode r"><pre><code><span class="va">ndirs</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<p>All cli commands that emit text support pluralization. Some examples:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">ndirs</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 <span class="va">nfiles</span> <span class="op">&lt;-</span> <span class="fl">13</span>
 <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}."</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}"</span><span class="op">)</span></code></pre><p></p></div>

@@ -98,22 +98,28 @@ for the style options they support.</p></dd>
     
 <div class="section">
 <h3 id="default-style">Default style<a class="anchor" aria-label="anchor" href="#default-style"></a></h3>
+
+
 <p></p><div class="sourceCode r"><pre><code><span class="va">months</span> <span class="op">&lt;-</span> <span class="va">month.name</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {months}}"</span><span class="op">)</span></code></pre><p></p></div>
-<p><img src="figures/cli-format-default.svg" alt=""></p><div class="sourceCode r"><pre><code><span class="va">nums</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span> <span class="op">/</span> <span class="fl">7</span>
+<p><img src="figures/cli-format-default.svg" alt=""></p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">nums</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span> <span class="op">/</span> <span class="fl">7</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {nums}}"</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/cli-format-num.svg" alt=""></p>
 </div>
 
 <div class="section">
 <h3 id="styling-with-themes">Styling with themes<a class="anchor" aria-label="anchor" href="#styling-with-themes"></a></h3>
+
+
 <p></p><div class="sourceCode r"><pre><code><span class="va">nums</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span> <span class="op">/</span> <span class="fl">7</span>
 <span class="va">divid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>.val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {nums}}"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="va">divid</span><span class="op">)</span></code></pre><p></p></div>
 <p><img src="figures/cli-format-theme.svg" alt=""></p>
 <p>It is possible to define new S3 methods for <code>cli_format</code> and then
-these will be used automatically for <code>{.val ...}</code> expressions.</p><div class="sourceCode r"><pre><code><span class="va">cli_format.month</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">style</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+these will be used automatically for <code>{.val ...}</code> expressions.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">cli_format.month</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">style</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/encodeString.html" class="external-link">encodeString</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, quote <span class="op">=</span> <span class="st">"\""</span><span class="op">)</span>
   <span class="kw"><a href="https://rdrr.io/r/base/UseMethod.html" class="external-link">NextMethod</a></span><span class="op">(</span><span class="st">"cli_format"</span><span class="op">)</span>
 <span class="op">}</span>
