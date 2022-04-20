@@ -63,6 +63,7 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
 #' @param string The input string.
 #' @param sgr Whether to remove for SGR (styling) control sequences.
 #' @param csi Whether to remove for non-SGR control sequences.
+#' @param link Whether to remove ANSI hyperlinks.
 #' @return The cleaned up string. Note that `ansi_strip()` always drops
 #' the `cli_ansi_string` class, even if `sgr` and sci` are `FALSE`.
 #'
@@ -71,14 +72,15 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
 #' @examples
 #' ansi_strip(col_red("foobar")) == "foobar"
 
-ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
+ansi_strip <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
   if (!is.character(string)) string <- as.character(string)
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
-    is_flag(csi)
+    is_flag(csi),
+    is_flag(link)
   )
-  clean <- .Call(clic_ansi_strip, string, sgr, csi)
+  clean <- .Call(clic_ansi_strip, string, sgr, csi, link)
   class(clean) <- setdiff(class(clean), c("cli_ansi_string", "ansi_string"))
   clean
 }

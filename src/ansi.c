@@ -1031,6 +1031,7 @@ struct strip_data {
   SEXP result;
   char sgr;
   char csi;
+  char link;
 };
 
 static int strip_cb_start(SEXP rstr, const char *str, void *vdata) {
@@ -1066,6 +1067,19 @@ static int strip_cb_csi(const char *param,
   return 0;
 }
 
+static int strip_cb_link(const char *param,
+                         const char *uri,
+                         const char *end,
+                         void *vdata) {
+  struct strip_data *data = vdata;
+  if (data->link) {
+    data->num_tags ++;
+  } else {
+    clic__buffer_push_piece(&data->buffer, param - 4, end + 1);
+  }
+  return 0;
+}
+
 static int strip_cb_text(const char *str,
                         const char *end,
                         void *vdata) {
@@ -1075,8 +1089,8 @@ static int strip_cb_text(const char *str,
 }
 
 static int strip_cb_end(SEXP rstr,
-                          const char *str,
-                          void *vdata) {
+                        const char *str,
+                        void *vdata) {
   struct strip_data *data = vdata;
   if (data->num_tags == 0) {
     SET_STRING_ELT(data->result, data->done, rstr);
@@ -1102,20 +1116,21 @@ static int strip_cb_end(SEXP rstr,
 
 /* TODO: strip hyperlinks */
 
-SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi) {
+SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi, SEXP link) {
   struct strip_data data;
   clic__buffer_init(&data.buffer);
   data.done = 0;
   data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
   data.sgr = LOGICAL(sgr)[0];
   data.csi = LOGICAL(csi)[0];
+  data.link = LOGICAL(link)[0];
 
   clic__ansi_iterator(
     sx,
     strip_cb_start,
     strip_cb_sgr,
     strip_cb_csi,
-    NULL, // strip_cb_link,
+    strip_cb_link,
     strip_cb_text,
     strip_cb_end,
     &data

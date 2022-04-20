@@ -4,7 +4,7 @@
 \alias{ansi_strip}
 \title{Remove ANSI escape sequences from a string}
 \usage{
-ansi_strip(string, sgr = TRUE, csi = TRUE)
+ansi_strip(string, sgr = TRUE, csi = TRUE, link = TRUE)
 }
 \arguments{
 \item{string}{The input string.}
@@ -12,6 +12,8 @@ ansi_strip(string, sgr = TRUE, csi = TRUE)
 \item{sgr}{Whether to remove for SGR (styling) control sequences.}
 
 \item{csi}{Whether to remove for non-SGR control sequences.}
+
+\item{link}{Whether to remove ANSI hyperlinks.}
 }
 \value{
 The cleaned up string. Note that \code{ansi_strip()} always drops
