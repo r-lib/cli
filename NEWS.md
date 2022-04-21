@@ -10,6 +10,9 @@
   `R_CLI_NUM_COLORS` or the `NO_COLOR` environment variable now also turns off
   ANSI hyperlinks (#447).
 
+* `symbol` now only has two variants: UTF-8 and ASCII. There are no special
+  variants for RStudio and Windows RGui any more (#424).
+
 # cli 3.2.0
 
 ## Breaking change
