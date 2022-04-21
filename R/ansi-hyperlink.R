@@ -29,8 +29,10 @@ style_hyperlink <- function(text, url, params = NULL) {
     glue::glue("{names(params)}={params}")
   )
 
+  ST <- "\u0007"
+
   out <- if (ansi_has_hyperlink_support()) {
-    paste0("\u001B]8;", params, ";", url, "\u0007", text, "\u001B]8;;\u0007")
+    paste0("\u001B]8;", params, ";", url, ST, text, "\u001B]8;;", ST)
   } else {
     text
   }
