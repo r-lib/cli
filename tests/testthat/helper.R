@@ -158,3 +158,11 @@ expect_snapshot <- function(...) {
   }
   testthat::expect_snapshot(...)
 }
+
+st_from_bel <- function(x) {
+  gsub("\007", "\033\\", x, fixed = TRUE)
+}
+
+st_to_bel <- function(x) {
+  gsub("\033\\", "\007", x, fixed = TRUE)
+}

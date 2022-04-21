@@ -285,7 +285,7 @@ static void clic__ansi_update_state_link(const char *param,
                                          struct cli_buffer *buffer,
                                          struct cli_ansi_state *state) {
 
-  if (*uri == '\033' && *(uri + 1) == '\\') {
+  if ((*uri == '\033' && *(uri + 1) == '\\') || *uri == '\007') {
     // turn off links
     state->new.link_param = NULL;
     state->new.link_uri = NULL;
@@ -357,14 +357,22 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
   }
 
   if (state->old.link_uri && state->new.link_uri != state->old.link_uri) {
-    EMITS("\033]8;;\033\\");
+    EMITS("\033]8;;\007");
+    // EMITS("\033]8;;\033\\");
   }
 
   /* Opening tags in reverse order ------------------------------------- */
 
   if (state->new.link_uri && state->new.link_uri != state->old.link_uri) {
     EMITS("\033]8;");
-    EMITP(state->new.link_param, state->new.link_end + 1);
+    // EMITP(state->new.link_param, state->new.link_end + 1);
+    EMITP(state->new.link_param, state->new.link_uri);
+    if (*(state->new.link_end) == '\007') {
+      EMITP(state->new.link_uri, state->new.link_end);
+    } else {
+      EMITP(state->new.link_uri, state->new.link_end - 1);
+    }
+    EMITS("\007");
   }
 
   if (state->new.bold > state->old.bold) {
@@ -497,8 +505,12 @@ void clic__ansi_iterator(SEXP sx,
         while (*s_uri != ';' && *s_uri != '\0') s_uri++;
         s_uri++;
         s_end = s_uri;
-        while (*s_end != '\0' && *s_end != '\\' &&
-               *(s_end - 1) != '\033') s_end++;
+        for (;;) {
+          if (*s_end == '\0') break;
+          if (*s_end == '\007') break;
+          if (*s_end == '\\' && *(s_end - 1) == '\033') break;
+          s_end++;
+        }
         if (s_start > shaft && text_cb) {
           if (text_cb(shaft, s_start, data)) goto end;
         }
@@ -831,7 +843,11 @@ static void clic__html_start(struct html_data *data) {
 
   if (state->new.link_uri && state->new.link_uri != state->old.link_uri) {
     EMITS("<a class=\"ansi-link\" href=\"");
-    EMITP(state->new.link_uri, state->new.link_end - 1);
+    if (*(state->new.link_end) == '\007') {
+      EMITP(state->new.link_uri, state->new.link_end);
+    } else {
+      EMITP(state->new.link_uri, state->new.link_end - 1);
+    }
     EMITS("\">");
     data->is_link = 1;
   }

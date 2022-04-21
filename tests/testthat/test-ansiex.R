@@ -387,7 +387,6 @@ test_that("ansi_align", {
 })
 
 test_that("stripping hyperlinks", {
-  skip("Temporarily defunct")
   withr::local_options(list(cli.hyperlink = TRUE))
   x <- unclass(style_hyperlink("foo", "https://r-pkg.org"))
   expect_equal(
