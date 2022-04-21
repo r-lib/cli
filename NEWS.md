@@ -6,6 +6,10 @@
 
 * `ansi_*()` functions support ANSI hyperlinks again (#444).
 
+* Turning off ANSI colors via the `cli.num_colors` option or the
+  `R_CLI_NUM_COLORS` or the `NO_COLOR` environment variable now also turns off
+  ANSI hyperlinks (#447).
+
 # cli 3.2.0
 
 ## Breaking change
