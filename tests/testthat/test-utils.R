@@ -146,3 +146,10 @@ test_that("tail_na", {
     expect_identical(tail_na(c[[1]], c[[2]]), c[[3]], info = i)
   }
 })
+
+test_that("get_ppid", {
+  expect_equal(
+    ps::ps_ppid(),
+    get_ppid()
+  )
+})
