@@ -64,8 +64,8 @@
 #'
 #' ### `shiny`
 #'
-#' Use [shiny's progress bars][shiny::Progress]. This handler is available if a
-#' shiny app is running.
+#' Use [shiny's progress bars](https://shiny.rstudio.com/articles/progress.html).
+#' This handler is available if a shiny app is running.
 #'
 #' @return `cli_progress_builtin_handlers()` returns the names of the
 #' currently supported progress handlers.
@@ -335,12 +335,12 @@ last_lines <- function(txt, keep = 5) {
 
 builtin_handler_shiny <- list(
   able = function(bar, .envir) {
-    "shiny" %in% loadedNamespaces() && shiny::isRunning()
+    "shiny" %in% loadedNamespaces() && asNamespace("shiny")$isRunning()
   },
 
   add = function(bar, .envir) {
-    bar$shiny_progress <- shiny::Progress$new(
-      shiny::getDefaultReactiveDomain(),
+    bar$shiny_progress <- asNamespace("shiny")$Progress$new(
+      asNamespace("shiny")$getDefaultReactiveDomain(),
       min = 0,
       max = bar$total
     )
