@@ -25,6 +25,8 @@ reserved_words <- function() {
 #'
 #' @param code Character vector, each element is one line of code.
 #' @param code_theme Theme see [code_theme_list()].
+#' @param env Environment to find function names from. If `NULL`, then
+#'   we use the search path.
 #' @return Character vector, the highlighted code.
 #'
 #' @family syntax highlighting
@@ -34,7 +36,7 @@ reserved_words <- function() {
 #' code_highlight(deparse(ls))
 #' cat(code_highlight(deparse(ls)), sep = "\n")
 
-code_highlight <- function(code, code_theme = NULL) {
+code_highlight <- function(code, code_theme = NULL, env = NULL) {
 
   code_theme <- code_theme %||% code_theme_default()
 
@@ -90,7 +92,7 @@ code_highlight <- function(code, code_theme = NULL) {
   ## Function calls
   if (!is.null(theme$call)) {
     fun_call <- data$token == "SYMBOL_FUNCTION_CALL"
-    hitext[fun_call] <- theme$call(data$text[fun_call])
+    hitext[fun_call] <- theme$call(autolink_calls(data$text[fun_call], env))
   }
 
   ## Strings
@@ -118,6 +120,16 @@ code_highlight <- function(code, code_theme = NULL) {
   }
 
   do_subst(code, data, hitext)
+}
+
+#' @export
+
+function_highlight <- function(fun, code_theme = NULL, env = environment(fun)) {
+  code_highlight(
+    format(fun),
+    code_theme = code_theme,
+    env = env
+  )
 }
 
 do_subst <- function(code, pdata, hitext) {
