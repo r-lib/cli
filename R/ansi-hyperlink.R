@@ -94,7 +94,7 @@ ansi_has_hyperlink_support <- function() {
     # See #441 -- some apparent heterogeneity in how the version gets
     #   encoded to this env variable. Accept either form.
     if (grepl("^\\d{4}$", VTE_VERSION)) {
-      VTE_VERSION <- as.numeric(VTE_VERSION) / 100
+      VTE_VERSION <- sprintf("%2.02f", as.numeric(VTE_VERSION) / 100)
       VTE_VERSION <- package_version(list(major = 0, minor = VTE_VERSION))
     } else {
       VTE_VERSION <- package_version(VTE_VERSION, strict = FALSE)
