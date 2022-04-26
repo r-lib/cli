@@ -1,5 +1,7 @@
+# cli (development version)
 
-# cli development version
+
+# cli 3.3.0
 
 * `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)

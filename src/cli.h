@@ -10,6 +10,7 @@
 
 SEXP clic_diff_chr(SEXP a, SEXP b, SEXP max);
 
+SEXP clic_getppid();
 SEXP clic_md5(SEXP strs);
 SEXP clic_md5_raw(SEXP r);
 SEXP clic_sha256(SEXP strs);

@@ -22,3 +22,7 @@ cli_escape <- function(x) {
 isFALSE <- function (x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
+
+get_ppid <- function() {
+  .Call(clic_getppid)
+}
