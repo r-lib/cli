@@ -362,3 +362,25 @@ test_that("ansi_grepl", {
     logical()
   )
 })
+
+test_that("ansi_nzchar", {
+  withr::local_options(cli.num_colors = 256, cli.hyperlink = TRUE)
+
+  expect_equal(ansi_nzchar(""), FALSE)
+  expect_equal(ansi_nzchar(c("", "")), c(FALSE, FALSE))
+  expect_equal(ansi_nzchar(c("", "yes")), c(FALSE, TRUE))
+  expect_equal(ansi_nzchar(c("yes", "")), c(TRUE, FALSE))
+  expect_equal(ansi_nzchar(c("yes", "yes")), c(TRUE, TRUE))
+
+  expect_equal(ansi_nzchar(col_red("")), FALSE)
+  expect_equal(ansi_nzchar(col_red(c("", ""))), c(FALSE, FALSE))
+  expect_equal(ansi_nzchar(col_red(c("", "yes"))), c(FALSE, TRUE))
+  expect_equal(ansi_nzchar(col_red(c("yes", ""))), c(TRUE, FALSE))
+  expect_equal(ansi_nzchar(col_red(c("yes", "yes"))), c(TRUE, TRUE))
+
+  expect_equal(ansi_nzchar(style_hyperlink("text", "https://x.xom")), TRUE)
+  expect_equal(ansi_nzchar(style_hyperlink("", "https://x.xom")), FALSE)
+
+  expect_equal(ansi_nzchar(NA), nzchar(NA))
+  expect_equal(ansi_nzchar(NA, keepNA = TRUE), nzchar(NA, keepNA = TRUE))
+})

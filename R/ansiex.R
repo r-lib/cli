@@ -993,3 +993,18 @@ ansi_grep_internal <- function(fun, pattern, x, ...) {
   x <- ansi_strip(x)
   fun(pattern, x, ...)
 }
+
+#' Like [base::nzchar()], but for ANSI strings
+#'
+#' @param x Charcater vector. Other objects are coarced using
+#'   [base::as.character()].
+#' @param ... Passed to [base::nzchar()].
+#' @export
+#' @examples
+#' ansi_nzchar("")
+#' ansi_nzchar(col_red(""))
+
+ansi_nzchar <- function(x, ...) {
+  x <- ansi_strip(x)
+  nzchar(x, ...)
+}
