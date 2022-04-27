@@ -79,8 +79,8 @@ calling the external command.
 
 \subsection{\code{shiny}}{
 
-Use \link[shiny:Progress]{shiny's progress bars}. This handler is available if a
-shiny app is running.
+Use \href{https://shiny.rstudio.com/articles/progress.html}{shiny's progress bars}.
+This handler is available if a shiny app is running.
 }
 }
 
