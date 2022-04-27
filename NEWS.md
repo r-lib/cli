@@ -1,5 +1,9 @@
 # cli (development version)
 
+* New functions for ANSI strings: `ansi_grep()`, `ansi_grepl()`,
+  `ansi_nzchar()`. They work like the corresponding base R functions, but
+  handle ANSI markup.
+
 * `style_hyperlink()` (really) no longer breaks if the env varible `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
