@@ -580,7 +580,7 @@
 
     Code
       local({
-        cli_div(theme = list(.dt = list(after = " -> "), .dd = list(color = "blue")))
+        cli_div(theme = list(.dt = list(postfix = " -> "), .dd = list(color = "blue")))
         cli_dl(c(foo = "bar", bar = "baz"))
       })
     Message <cliMessage>
@@ -595,4 +595,14 @@
       abc: foo
       empty:
       def: bar
+
+# cli_dl label style
+
+    Code
+      local({
+        cli_dl(c(`{.code code}` = "{.code this is code too}", `{.str strin}` = "{.url https://x.com}"))
+      })
+    Message <cliMessage>
+      `code`: `this is code too`
+      "strin": <https://x.com>
 

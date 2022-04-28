@@ -6,6 +6,7 @@
 \usage{
 cli_li(
   items = NULL,
+  labels = names(items),
   id = NULL,
   class = NULL,
   .auto_close = TRUE,
@@ -14,6 +15,8 @@ cli_li(
 }
 \arguments{
 \item{items}{Character vector of items, or \code{NULL}.}
+
+\item{labels}{For definition lists the item labels.}
 
 \item{id}{Id of the new container. Can be used for closing it with
 \code{\link[=cli_end]{cli_end()}} or in themes. If \code{NULL}, then an id is generated and

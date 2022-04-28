@@ -7,6 +7,8 @@
 * `style_hyperlink()` (really) no longer breaks if the env varible `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
+* `cli_dl()` and its corresponding `cli_li()` can now style the labels.
+
 # cli 3.3.0
 
 * `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`

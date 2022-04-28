@@ -536,13 +536,14 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' @param items Named character vector, or `NULL`. If not `NULL`, they
 #'   are used as list items.
+#' @param labels Item labels. Defaults the names in `items`.
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
 #'
 #' @export
 
-cli_dl <- function(items = NULL, id = NULL, class = NULL,
-                   .close = TRUE, .auto_close = TRUE,
+cli_dl <- function(items = NULL, labels = names(items), id = NULL,
+                   class = NULL, .close = TRUE, .auto_close = TRUE,
                    .envir = parent.frame()) {
   if (!is.null(items) && !is_named(items)) {
     stop("`items` must be a named character vector.")
@@ -551,7 +552,9 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "dl",
     list(
-      items = lapply(items, glue_cmd, .envir = .envir), id = id,
+      items = lapply(items, glue_cmd, .envir = .envir),
+      labels = if (!is.null(labels)) lapply(labels, glue_cmd, .envir = .envir),
+      id = id,
       class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
 }
@@ -577,6 +580,7 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #' ```
 #'
 #' @param items Character vector of items, or `NULL`.
+#' @param labels For definition lists the item labels.
 #' @param id Id of the new container. Can be used for closing it with
 #'   [cli_end()] or in themes. If `NULL`, then an id is generated and
 #'   returned invisibly.
@@ -586,12 +590,15 @@ cli_dl <- function(items = NULL, id = NULL, class = NULL,
 #'
 #' @export
 
-cli_li <- function(items = NULL, id = NULL, class = NULL,
-                   .auto_close = TRUE, .envir = parent.frame()) {
+cli_li <- function(items = NULL, labels = names(items), id = NULL,
+                   class = NULL, .auto_close = TRUE,
+                   .envir = parent.frame()) {
   cli__message(
     "li",
     list(
-      items = lapply(items, glue_cmd, .envir = .envir), id = id,
+      items = lapply(items, glue_cmd, .envir = .envir),
+      labels = if (!is.null(labels)) lapply(labels, glue_cmd, .envir = .envir),
+      id = id,
       class = class),
     .auto_close = .auto_close, .envir = .envir)
 }

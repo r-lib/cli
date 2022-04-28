@@ -165,7 +165,7 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     ),
 
     # these are tags in HTML, but in cli they are inline
-    span.dt = list(after = ": "),
+    span.dt = list(postfix = ": "),
     span.dd = list(),
 
     # This means that list elements have a margin, if they are nested
@@ -400,7 +400,7 @@ create_formatter <- function(x) {
 merge_embedded_styles <- function(old, new) {
   # before and after is not inherited, fmt is not inherited, either
   # side margins are additive, class mappings are merged
-  # rest is updated, counter is reset
+  # rest is updated, counter is reset, prefix and postfix are merged
   old$before <- old$after <- old$fmt <- NULL
 
   top <- new$`margin-top` %||% 0L
@@ -408,13 +408,17 @@ merge_embedded_styles <- function(old, new) {
   left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)
   right <- (old$`margin-right` %||% 0L) + (new$`margin-right` %||% 0L)
 
+  prefix <- paste0(old$prefix, new$prefix)
+  postfix <- paste0(new$postfix, old$postfix)
+
   map <- utils::modifyList(old$`class-map` %||% list(), new$`class-map` %||% list())
 
   start <- new$start %||% 1L
 
   mrg <- utils::modifyList(old, new)
   mrg[c("margin-top", "margin-bottom", "margin-left", "margin-right",
-        "start", "class-map")] <- list(top, bottom, left, right, start, map)
+        "start", "class-map", "prefix", "postfix")] <-
+    list(top, bottom, left, right, start, map, prefix, postfix)
 
   ## Formatter needs to be re-generated
   create_formatter(mrg)

@@ -28,7 +28,10 @@ inline_generic <- function(app, x, style) {
       xx <- vcapply(xx, fmt, app = app, style = style)
     }
   }
-  xx
+  prefix <- call_if_fun(style$prefix)
+  postfix <- call_if_fun(style$postfix)
+
+  paste0(prefix, xx, postfix)
 }
 
 inline_collapse <- function(x, style = list()) {
