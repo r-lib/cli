@@ -238,6 +238,7 @@ make_cmd_transformer <- function(values) {
 
   function(code, envir) {
     res <- tryCatch({
+      if (substr(code, 1, 1) == ".") stop("style")
       expr <- parse(text = code, keep.source = FALSE)
       eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
     }, error = function(e) e)

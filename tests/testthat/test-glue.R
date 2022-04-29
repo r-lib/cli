@@ -23,3 +23,11 @@ test_that("quotes, etc. within expressions are still OK", {
     cli::cli_text("{.url URL} {1 + 1 # + 1} {1 + 1}")
   })
 })
+
+test_that("{. } is always a style", {
+  cmd <- paste0("{.", basename(tempfile()), " }")
+  expect_silent(glue_cmd(cmd, .envir = environment()))
+  .foo <- 100
+  vals <- glue_cmd("{.foo }", .envir = environment())$values
+  expect_false(any(grepl("^v[0-9]+$", names(vals))))
+})

@@ -9,6 +9,12 @@
 
 * `cli_dl()` and its corresponding `cli_li()` can now style the labels.
 
+* The behavior cli's inline styling expressions is now more predictable.
+  cli does not try to evaluate a styled string as an R expression any more.
+  E.g. the meaning of `"{.emph +1}"` is now always the "+1", with style
+  `.emph`, even if an `.emph` variable is available and the `.emph + 1`
+  expresion can be evaluated.
+
 # cli 3.3.0
 
 * `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
