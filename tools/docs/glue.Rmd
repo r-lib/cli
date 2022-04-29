@@ -1,0 +1,84 @@
+---
+title: "About glue in cli"
+author: "Gábor Csárdi"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+## Motivation
+
+-   It is difficult to do the two (or more) rounds of glue parsing currently, and we have some issues that are hard to fix, e.g. <https://github.com/r-lib/cli/issues/370> The main problem is that glue expects that the expression in delimiters is a valid R expressions, whereas in cli it can be any text.
+
+-   It would be simpler to have our own parser, which is essentially equivalent to glue for the real `{ ... }` expressions, but different for `{. ... }` and `{? ... }`.
+
+-   Then we could parse out the `{. ... }` and `{? ... }` expressions up front, with ease, instead of having to parse with glue with the regular `{` and `}` delimiters, and then try to special case the styles in a transformer.
+
+## Current use
+
+These are the glue calls in cli currently:
+
+``` r
+# inline.R
+glue::glue_collapse(as.character(x), sep = sep, last = last)
+
+out <- glue::glue(
+  text,
+  .envir = envir,
+  .transformer = inline_transformer,
+  .open = paste0("{", envir$marker),
+  .close = paste0(envir$marker, "}"),
+  .trim = TRUE,
+  .comment = ""
+)
+
+glue::glue(
+  t$str,
+  .envir = t$values,
+  .transformer = inline_transformer,
+  .open = paste0("{", t$values$marker),
+  .close = paste0(t$values$marker, "}"),
+  .trim = TRUE,
+  .comment = ""
+)
+
+out <- glue::glue(
+  text,
+  .envir = envir,
+  .transformer = sys.function(),
+  .trim = TRUE,
+  .comment = ""
+)
+
+pstr <- glue::glue(
+  str,
+  .envir = .envir,
+  .transformer = transformer,
+  .trim = TRUE,
+  .comment = ""
+)
+
+# pluralize.R
+raw <- glue::glue(..., .envir = .envir, .transformer = tf, .comment = "")
+
+# ansi-hyperlink.R
+params <- glue::glue_collapse(sep = ":",
+  glue::glue("{names(params)}={params}")
+)
+```
+
+The `ansi-hyperlink.R` usage does not matter, that can be replaced by base R code easily, but we can also keep it as long as we depend on glue.
+
+We can keep the calls to `glue::glue()` in `pluralize.R` and also the `glue_collapse()` call.
+We can rewrite these later, if we want to avoid depending on glue.
+
+## Ideas
+
+First try to do this with glue, and parse `{. ... }` and `{? ... }` expressions with `.literal = TRUE` and replace them with special delimiters.
+Ideally we would allow doubling the braces here for escaping, but glue currently does not allow that (<https://github.com/tidyverse/glue/issues/259>).
+Then we parse with `{ ... }` and save the evaluated values.
+
+The other option is writing our own parser.

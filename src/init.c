@@ -72,6 +72,8 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_get_embedded_utf8", (DL_FUNC) clic_get_embedded_utf8, 0 },
   { "clic_set_embedded_utf8", (DL_FUNC) clic_set_embedded_utf8, 1 },
 
+  { "glue_",               (DL_FUNC) glue_,               4 },
+
   { NULL, NULL, 0 }
 };
 
