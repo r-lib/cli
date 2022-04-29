@@ -3,7 +3,6 @@
 # - .sep = ""
 # - .trim = TRUE
 # - .null = character()
-# - .literal = TRUE
 # - .comment = ""
 #
 # we also don't allow passing in data as arguments, and `text` is
@@ -11,7 +10,7 @@
 
 glue <- function(text, .envir = parent.frame(),
                  .transformer = identity_transformer,
-                 .open = "{", .close = "}") {
+                 .open = "{", .close = "}", .literal = NA) {
 
   text <- paste0(text, collapse = "")
 
@@ -29,7 +28,7 @@ glue <- function(text, .envir = parent.frame(),
     eval_func <- as.character(.transformer(expr, .envir) %||% character())
   }
 
-  res <- .Call(glue_, text, f, .open, .close)
+  res <- .Call(glue_, text, f, .open, .close, .literal)
 
   res <- drop_null(res)
   if (any(lengths(res) == 0)) {
