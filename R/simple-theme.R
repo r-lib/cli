@@ -188,7 +188,12 @@ is_iterm_dark <- function() {
               end tell
             end tell
           '
-          out <- system2("osascript", c("-e", shQuote(osa)), stdout = TRUE)
+          out <- suppressWarnings(system2(
+            "osascript",
+            c("-e", shQuote(osa)),
+            stdout = TRUE,
+            stderr = TRUE
+          ))
           nums <- scan(text = gsub(",", "", out), quiet = TRUE)
           mean(nums) < 20000
         })
