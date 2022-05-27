@@ -10,7 +10,7 @@
 
 glue <- function(text, .envir = parent.frame(),
                  .transformer = identity_transformer,
-                 .open = "{", .close = "}", .literal = NA) {
+                 .open = "{", .close = "}", .round) {
 
   text <- paste0(text, collapse = "")
 
@@ -28,7 +28,7 @@ glue <- function(text, .envir = parent.frame(),
     eval_func <- as.character(.transformer(expr, .envir) %||% character())
   }
 
-  res <- .Call(glue_, text, f, .open, .close, .literal)
+  res <- .Call(glue_, text, f, .open, .close, as.integer(.round))
 
   res <- drop_null(res)
   if (any(lengths(res) == 0)) {
