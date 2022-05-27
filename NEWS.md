@@ -1,5 +1,9 @@
 # cli (development version)
 
+* cli now does a better job at detecting the RStudio build pane, job pane
+  and render pane, and their capabilities w.r.t. ANSI colors and hyperlinks.
+  Note that this requires a daily build of RStudio (#465).
+
 * New functions for ANSI strings: `ansi_grep()`, `ansi_grepl()`,
   `ansi_nzchar()`. They work like the corresponding base R functions, but
   handle ANSI markup.

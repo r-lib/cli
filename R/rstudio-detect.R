@@ -14,6 +14,7 @@ rstudio <- local({
       "R_PDFVIEWER",
       "RSTUDIO",
       "RSTUDIO_TERM",
+      "RSTUDIO_CLI_HYPERLINKS",
       "RSTUDIO_CONSOLE_COLOR",
       "RSTUDIOAPI_IPC_REQUESTS_FILE",
       "XPC_SERVICE_NAME",
@@ -54,11 +55,69 @@ rstudio <- local({
     if (clear_cache) data <<- NULL
     if (!is.null(data)) return(get_caps(data))
 
-    # Otherwise get data
+    if ((rspid <- Sys.getenv("RSTUDIO_SESSION_PID")) != "") {
+      detect_new(rspid, clear_cache)
+    } else {
+      detect_old(clear_cache)
+    }
+  }
+
+  detect_new <- function(rspid, clear_cache) {
+    mypid <- Sys.getpid()
+
+    if (mypid == rspid) {
+      return(get_caps(type = "rstudio_console"))
+    }
+
+    # need explicit namespace reference because we mess up the environment
+    parentpid <- asNamespace("cli")$get_ppid()
+    pane <- Sys.getenv("RSTUDIO_CHILD_PROCESS_PANE")
+
+    # this should not happen, but be defensive and fall back
+    if (pane == "") return(detect_old(clear_cache))
+
     new <- get_data()
+
+    # direct subprocess
+    new$type <- if (rspid == parentpid) {
+
+      if (pane == "job") {
+        "rstudio_job"
+
+      } else if (pane == "build") {
+        "rstudio_build_pane"
+
+      } else if (pane == "render") {
+        "rstudio_render_pane"
+
+      } else if (pane == "terminal" && new$tty &&
+                 new$envs["ASCIICAST"] != "true") {
+        # not possible, because there is a shell in between, just in case
+        "rstudio_terminal"
+
+      } else {
+        # don't know what kind of direct subprocess
+        "rstudio_subprocess"
+      }
+
+    } else if (pane == "terminal" && new$tty &&
+               new$envs[["ASCIICAST"]] != "true") {
+      # not a direct subproces, so check other criteria as well
+      "rstudio_terminal"
+
+    } else {
+      # don't know what kind of subprocess
+      "rstudio_subprocess"
+    }
+
+    get_caps(new)
+  }
+
+  detect_old <- function(clear_cache = FALSE) {
 
     # Cache unless told otherwise
     cache <- TRUE
+    new <- get_data()
 
     new$type <- if (new$envs[["RSTUDIO"]] != "1") {
       # 1. Not RStudio at all
@@ -121,8 +180,13 @@ rstudio <- local({
 
   is_build_pane_command <- function(args) {
     cmd <- gsub("[\"']", "", args[[length(args)]], useBytes = TRUE)
-    rcmd <- sub("[(].*$", "", cmd)
-    rcmd %in% c("devtools::build", "devtools::test", "devtools::check")
+    calls <- c(
+      "devtools::build",
+      "devtools::test",
+      "devtools::check",
+      "testthat::test_file"
+    )
+    any(vapply(calls, grepl, logical(1), cmd))
   }
 
   # -- Capabilities ------------------------------------------------------
@@ -135,7 +199,8 @@ rstudio <- local({
       dynamic_tty = FALSE,
       ansi_tty = FALSE,
       ansi_color = FALSE,
-      num_colors = 1L
+      num_colors = 1L,
+      hyperlink = FALSE
     )
   }
 
@@ -145,7 +210,8 @@ rstudio <- local({
       dynamic_tty = TRUE,
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
-      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]])
+      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
     )
   }
 
@@ -161,7 +227,8 @@ rstudio <- local({
       dynamic_tty = TRUE,
       ansi_tty = FALSE,
       ansi_color = FALSE,
-      num_colors = 1L
+      num_colors = 1L,
+      hyperlink = FALSE
     )
   }
 
@@ -171,7 +238,8 @@ rstudio <- local({
       dynamic_tty = TRUE,
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
-      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]])
+      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
     )
   }
 
@@ -181,7 +249,19 @@ rstudio <- local({
       dynamic_tty = FALSE,
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
-      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]])
+      num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
+    )
+  }
+
+  caps$rstudio_render_pane <- function(data) {
+    list(
+      type = "rstudio_render_pane",
+      dynamic_tty = TRUE,
+      ansi_tty = FALSE,
+      ansi_color = FALSE,
+      num_colors = 1L,
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
     )
   }
 
@@ -191,7 +271,8 @@ rstudio <- local({
       dynamic_tty = FALSE,
       ansi_tty = FALSE,
       ansi_color = FALSE,
-      num_colors = 1L
+      num_colors = 1L,
+      hyperlink = FALSE
     )
   }
 
