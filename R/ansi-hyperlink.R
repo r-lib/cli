@@ -69,6 +69,10 @@ ansi_has_hyperlink_support <- function() {
   enabled <- Sys.getenv("RSTUDIO_CLI_HYPERLINKS", "")
   if (isTRUE(as.logical(enabled))){ return(TRUE) }
 
+  ## Are we in RStudio?
+  rstudio <- rstudio$detect()
+  if (rstudio$type != "not_rstudio") { return(rstudio$hyperlink) }
+
   ## Are we in a terminal? No?
   if (!isatty(stdout())) { return(FALSE) }
 
