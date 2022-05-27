@@ -30,11 +30,22 @@ is_interactive <- function() {
 #' @export
 
 cli_output_connection <- function() {
-  if (is_interactive() && no_sink()) stdout() else stderr()
+  if ((is_interactive() || rstudio_stdout()) && no_sink()) stdout() else stderr()
 }
 
 no_sink <- function() {
   sink.number() == 0 && sink.number("message") == 2
+}
+
+rstudio_stdout <- function() {
+  rstudio <- rstudio_detect()
+  rstudio$type %in% c(
+    "rstudio_console",
+    "rstudio_console_starting",
+    "rstudio_build_pane",
+    "rstudio_job",
+    "rstudio_render_pane"
+  )
 }
 
 is_stdout <- function(stream) {
