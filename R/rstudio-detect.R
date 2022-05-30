@@ -48,7 +48,7 @@ rstudio <- local({
     # Check this up front, in case we are in a testthat 3e test block.
     # We cannot cache this, because we might be in RStudio in reality.
     if (!is_rstudio()) {
-      return(get_caps(NULL, type = "not_rstudio"))
+      return(get_caps(type = "not_rstudio"))
     }
 
     # Cached?
