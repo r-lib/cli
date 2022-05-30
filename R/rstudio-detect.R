@@ -48,7 +48,7 @@ rstudio <- local({
     # Check this up front, in case we are in a testthat 3e test block.
     # We cannot cache this, because we might be in RStudio in reality.
     if (!is_rstudio()) {
-      return(get_caps(type = "not_rstudio"))
+      return(get_caps(NULL, type = "not_rstudio"))
     }
 
     # Cached?
@@ -65,8 +65,10 @@ rstudio <- local({
   detect_new <- function(rspid, clear_cache) {
     mypid <- Sys.getpid()
 
+    new <- get_data()
+
     if (mypid == rspid) {
-      return(get_caps(type = "rstudio_console"))
+      return(get_caps(new, type = "rstudio_console"))
     }
 
     # need explicit namespace reference because we mess up the environment
@@ -75,8 +77,6 @@ rstudio <- local({
 
     # this should not happen, but be defensive and fall back
     if (pane == "") return(detect_old(clear_cache))
-
-    new <- get_data()
 
     # direct subprocess
     new$type <- if (rspid == parentpid) {
