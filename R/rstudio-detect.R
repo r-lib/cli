@@ -55,10 +55,19 @@ rstudio <- local({
     if (clear_cache) data <<- NULL
     if (!is.null(data)) return(get_caps(data))
 
-    if ((rspid <- Sys.getenv("RSTUDIO_SESSION_PID")) != "") {
+    if ((rspid <- Sys.getenv("RSTUDIO_SESSION_PID")) != "" &&
+        any(c("ps", "cli") %in% loadedNamespaces())) {
       detect_new(rspid, clear_cache)
     } else {
       detect_old(clear_cache)
+    }
+  }
+
+  get_parentpid <- function() {
+    if ("cli" %in% loadedNamespaces()) {
+      asNamespace("cli")$get_ppid()
+    } else {
+      ps::ps_ppid()
     }
   }
 
@@ -72,7 +81,7 @@ rstudio <- local({
     }
 
     # need explicit namespace reference because we mess up the environment
-    parentpid <- asNamespace("cli")$get_ppid()
+    parentpid <- get_parentpid()
     pane <- Sys.getenv("RSTUDIO_CHILD_PROCESS_PANE")
 
     # this should not happen, but be defensive and fall back
