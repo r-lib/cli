@@ -78,7 +78,13 @@ pluralization and glue substitutions.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cli_abort</span><span class="op">(</span><span class="va">message</span>, <span class="va">...</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>, call <span class="op">=</span> <span class="va">.envir</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cli_abort</span><span class="op">(</span>
+  <span class="va">message</span>,
+  <span class="va">...</span>,
+  call <span class="op">=</span> <span class="va">.envir</span>,
+  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
+  .frame <span class="op">=</span> <span class="va">.envir</span>
+<span class="op">)</span>
 
 <span class="fu">cli_warn</span><span class="op">(</span><span class="va">message</span>, <span class="va">...</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
@@ -92,8 +98,6 @@ pluralization and glue substitutions.</p>
 <dt>...</dt>
 <dd><p>Passed to <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code>, <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::warn()</a></code> or
 <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::inform()</a></code>.</p></dd>
-<dt>.envir</dt>
-<dd><p>Environment to evaluate the glue expressions in.</p></dd>
 <dt>call</dt>
 <dd><p>The execution environment of a currently running
 function, e.g. <code>call = caller_env()</code>. The corresponding function
@@ -105,6 +109,12 @@ message.</p>
 <p>Can also be <code>NULL</code> or a <a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">defused function call</a> to
 respectively not display any call or hard-code a code to display.</p>
 <p>For more information about error calls, see <a href="https://rlang.r-lib.org/reference/topic-error-call.html" class="external-link">Including function calls in error messages</a>.</p></dd>
+<dt>.envir</dt>
+<dd><p>Environment to evaluate the glue expressions in.</p></dd>
+<dt>.frame</dt>
+<dd><p>The throwing context. Used as default for
+<code>.trace_bottom</code>, and to determine the internal package to mention
+in internal errors when <code>.internal</code> is <code>TRUE</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
