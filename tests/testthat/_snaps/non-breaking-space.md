@@ -6,7 +6,7 @@
         str30 <- "123456789 123456789 1234567890"
         cli_text(c(str30, "this is not breaking"))
       })
-    Message <cliMessage>
+    Message
       123456789 123456789
       1234567890this is not breaking
 

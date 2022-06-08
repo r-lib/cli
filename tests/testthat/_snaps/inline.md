@@ -2,7 +2,7 @@
 
     Code
       invisible(lapply(classes, do))
-    Message <cliMessage>
+    Message
       This is <<<it>>> really
       This is <<<it>>> really
       This is <<<it>>> really
@@ -22,7 +22,7 @@
 
     Code
       invisible(lapply(classes, do))
-    Message <cliMessage>
+    Message
       This is [36m<<<it>>>[39m really
       This is [36m<<<it>>>[39m really
       This is [36m<<<it>>>[39m really
@@ -51,7 +51,7 @@
         cli_text("Escaping {{{{ and }}}} works")
         cli_text("Escaping {{ and }}}} works")
       })
-    Message <cliMessage>
+    Message
       Escaping { works
       Escaping } works
       Escaping { and } works
@@ -69,7 +69,7 @@
         cli_text("{msg}")
         cli_text("{.emph {msg}}")
       })
-    Message <cliMessage>
+    Message
       Message with special characters like } { }} {{
       Message with special characters like } { }} {{
 
@@ -82,6 +82,6 @@
         obj <- structure("yep", class = "foo")
         cli_text("This is {obj}.")
       })
-    Message <cliMessage>
+    Message
       This is ::yep.
 

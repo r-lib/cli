@@ -5,7 +5,7 @@
         cli_div(theme = list(.alert = list(before = "GENERIC! ")))
         cli_alert("wow")
       })
-    Message <cliMessage>
+    Message
       GENERIC! wow
 
 # success [plain]
@@ -14,7 +14,7 @@
       local({
         cli_alert_success("wow")
       })
-    Message <cliMessage>
+    Message
       v wow
 
 # success [ansi]
@@ -23,7 +23,7 @@
       local({
         cli_alert_success("wow")
       })
-    Message <cliMessage>
+    Message
       [32mv[39m wow
 
 # success [unicode]
@@ -32,7 +32,7 @@
       local({
         cli_alert_success("wow")
       })
-    Message <cliMessage>
+    Message
       ✔ wow
 
 # success [fancy]
@@ -41,7 +41,7 @@
       local({
         cli_alert_success("wow")
       })
-    Message <cliMessage>
+    Message
       [32m✔[39m wow
 
 # danger [plain]
@@ -50,7 +50,7 @@
       local({
         cli_alert_danger("wow")
       })
-    Message <cliMessage>
+    Message
       x wow
 
 # danger [ansi]
@@ -59,7 +59,7 @@
       local({
         cli_alert_danger("wow")
       })
-    Message <cliMessage>
+    Message
       [31mx[39m wow
 
 # danger [unicode]
@@ -68,7 +68,7 @@
       local({
         cli_alert_danger("wow")
       })
-    Message <cliMessage>
+    Message
       ✖ wow
 
 # danger [fancy]
@@ -77,7 +77,7 @@
       local({
         cli_alert_danger("wow")
       })
-    Message <cliMessage>
+    Message
       [31m✖[39m wow
 
 # warning [plain]
@@ -86,7 +86,7 @@
       local({
         cli_alert_warning("wow")
       })
-    Message <cliMessage>
+    Message
       ! wow
 
 # warning [ansi]
@@ -95,7 +95,7 @@
       local({
         cli_alert_warning("wow")
       })
-    Message <cliMessage>
+    Message
       [33m![39m wow
 
 # warning [unicode]
@@ -104,7 +104,7 @@
       local({
         cli_alert_warning("wow")
       })
-    Message <cliMessage>
+    Message
       ! wow
 
 # warning [fancy]
@@ -113,7 +113,7 @@
       local({
         cli_alert_warning("wow")
       })
-    Message <cliMessage>
+    Message
       [33m![39m wow
 
 # info [plain]
@@ -122,7 +122,7 @@
       local({
         cli_alert_info("wow")
       })
-    Message <cliMessage>
+    Message
       i wow
 
 # info [ansi]
@@ -131,7 +131,7 @@
       local({
         cli_alert_info("wow")
       })
-    Message <cliMessage>
+    Message
       [36mi[39m wow
 
 # info [unicode]
@@ -140,7 +140,7 @@
       local({
         cli_alert_info("wow")
       })
-    Message <cliMessage>
+    Message
       ℹ wow
 
 # info [fancy]
@@ -149,7 +149,7 @@
       local({
         cli_alert_info("wow")
       })
-    Message <cliMessage>
+    Message
       [36mℹ[39m wow
 
 # before and after can have spaces
@@ -159,6 +159,6 @@
         cli_div(theme = list(.alert = list(before = "x  ", after = "  x")))
         cli_alert("continuing that first alert", wrap = TRUE)
       })
-    Message <cliMessage>
+    Message
       x  continuing that first alert  x
 

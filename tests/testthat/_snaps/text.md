@@ -6,7 +6,7 @@
         cli_h1("Header")
         cli_text(lorem_ipsum())
       })
-    Message <cliMessage>
+    Message
       
       Header
       

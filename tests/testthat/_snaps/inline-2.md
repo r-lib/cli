@@ -9,7 +9,7 @@
         cli_text("The name is {.path {x}}.")
         cli_text("The name is {.email {x}}.")
       })
-    Message <cliMessage>
+    Message
       The name is 'good-name'.
       The name is 'weird-name '.
       The name is 'weird-name '.
@@ -26,7 +26,7 @@
         cli_text("The name is {.path {x}}.")
         cli_text("The name is {.email {x}}.")
       })
-    Message <cliMessage>
+    Message
       The name is [34mgood-name[39m.
       The name is '[34mweird-name[39m[44m [49m'.
       The name is '[34mweird-name[39m[44m [49m'.
@@ -82,11 +82,11 @@
     Code
       x <- cli_vec(1:100, list(vec_trunc = 5))
       cli_text("Some numbers: {x}.")
-    Message <cliMessage>
+    Message
       Some numbers: 1, 2, 3, 4, 5, ....
     Code
       cli_text("Some numbers: {.val {x}}.")
-    Message <cliMessage>
+    Message
       Some numbers: 1, 2, 3, 4, 5, ....
 
 # custom truncation [ansi]
@@ -94,11 +94,11 @@
     Code
       x <- cli_vec(1:100, list(vec_trunc = 5))
       cli_text("Some numbers: {x}.")
-    Message <cliMessage>
+    Message
       Some numbers: 1, 2, 3, 4, 5, ....
     Code
       cli_text("Some numbers: {.val {x}}.")
-    Message <cliMessage>
+    Message
       Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, ....
 
 # custom truncation [unicode]
@@ -106,11 +106,11 @@
     Code
       x <- cli_vec(1:100, list(vec_trunc = 5))
       cli_text("Some numbers: {x}.")
-    Message <cliMessage>
+    Message
       Some numbers: 1, 2, 3, 4, 5, ….
     Code
       cli_text("Some numbers: {.val {x}}.")
-    Message <cliMessage>
+    Message
       Some numbers: 1, 2, 3, 4, 5, ….
 
 # custom truncation [fancy]
@@ -118,11 +118,11 @@
     Code
       x <- cli_vec(1:100, list(vec_trunc = 5))
       cli_text("Some numbers: {x}.")
-    Message <cliMessage>
+    Message
       Some numbers: 1, 2, 3, 4, 5, ….
     Code
       cli_text("Some numbers: {.val {x}}.")
-    Message <cliMessage>
+    Message
       Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, ….
 
 # collapsing class names [plain]
@@ -133,7 +133,7 @@
         cli_text("this is a class: {.cls myclass}")
         cli_text("multiple classes: {.cls {cc}}")
       })
-    Message <cliMessage>
+    Message
       this is a class: <myclass>
       multiple classes: <one/two>
 
@@ -145,7 +145,7 @@
         cli_text("this is a class: {.cls myclass}")
         cli_text("multiple classes: {.cls {cc}}")
       })
-    Message <cliMessage>
+    Message
       this is a class: [34m<myclass>[39m
       multiple classes: [34m<one/two>[39m
 
@@ -160,7 +160,7 @@
         cli_end()
         cli_text("This is a {.field field} (after)")
       })
-    Message <cliMessage>
+    Message
       This is a field (before)
       This is a FIELD (during)
       This is a field (after)
@@ -176,7 +176,7 @@
         cli_end()
         cli_text("This is a {.field field} (after)")
       })
-    Message <cliMessage>
+    Message
       This is a [32mfield[39m (before)
       This is a [32mFIELD[39m (during)
       This is a [32mfield[39m (after)
@@ -195,28 +195,28 @@
         cli_div(theme = list(.val = list(digits = 2)))
         cli_text("Some random numbers: {.val {runif(4)}}.")
       })
-    Message <cliMessage>
+    Message
       Some random numbers: 0.91, 0.94, 0.29, and 0.83.
 
 # .q always double quotes
 
     Code
       cli_text("just a {.q string}, nothing more")
-    Message <cliMessage>
+    Message
       just a "string", nothing more
 
 # .or
 
     Code
       cli_text("{.or {letters[1:5]}}")
-    Message <cliMessage>
+    Message
       a, b, c, d, or e
 
 ---
 
     Code
       cli_text("{.or {letters[1:2]}}")
-    Message <cliMessage>
+    Message
       a or b
 
 # line breaks
