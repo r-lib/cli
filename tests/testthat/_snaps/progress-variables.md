@@ -51,14 +51,14 @@
 
     Code
       cli_text("-{cli::pb_bar}-")
-    Message <cliMessage>
+    Message
       --
 
 ---
 
     Code
       cli_text("-{cli::pb_bar}-")
-    Message <cliMessage>
+    Message
       -===============>--------------- -
 
 # pb_current_bytes
@@ -325,21 +325,21 @@
 
     Code
       cli_text("-{cli::pb_spin}-{cli::pb_spin}-")
-    Message <cliMessage>
+    Message
       -\-\-
 
 ---
 
     Code
       cli_text("-{cli::pb_spin}-{cli::pb_spin}-")
-    Message <cliMessage>
+    Message
       -|-|-
 
 ---
 
     Code
       cli_text("-{cli::pb_spin}-{cli::pb_spin}-")
-    Message <cliMessage>
+    Message
       -|-|-
 
 # pb_timestamp

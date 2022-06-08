@@ -3,7 +3,7 @@
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
-    Message <cliMessage>
+    Message
       noindent
         space
       v success
@@ -18,7 +18,7 @@
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
-    Message <cliMessage>
+    Message
       noindent
         space
       [32mv[39m success
@@ -33,7 +33,7 @@
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
-    Message <cliMessage>
+    Message
       noindent
         space
       ✔ success
@@ -48,7 +48,7 @@
     Code
       cli_bullets(c("noindent", ` ` = "space", v = "success", x = "danger", `!` = "warning",
         i = "info", `*` = "bullet", `>` = "arrow"))
-    Message <cliMessage>
+    Message
       noindent
         space
       [32m✔[39m success
@@ -64,7 +64,7 @@
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
-    Message <cliMessage>
+    Message
       noindent [1], [2], and [3]
         space [1], [2], and [3]
       v success [1], [2], and [3]
@@ -80,7 +80,7 @@
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
-    Message <cliMessage>
+    Message
       noindent [34m[1][39m, [34m[2][39m, and [34m[3][39m
         space [34m[1][39m, [34m[2][39m, and [34m[3][39m
       [32mv[39m success [34m[1][39m, [34m[2][39m, and [34m[3][39m
@@ -96,7 +96,7 @@
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
-    Message <cliMessage>
+    Message
       noindent [1], [2], and [3]
         space [1], [2], and [3]
       ✔ success [1], [2], and [3]
@@ -112,7 +112,7 @@
       cli_bullets(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
         x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
         `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
-    Message <cliMessage>
+    Message
       noindent [34m[1][39m, [34m[2][39m, and [34m[3][39m
         space [34m[1][39m, [34m[2][39m, and [34m[3][39m
       [32m✔[39m success [34m[1][39m, [34m[2][39m, and [34m[3][39m
@@ -127,7 +127,7 @@
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
-    Message <cliMessage>
+    Message
       This is some text that is longer than the width. This is some text that is
       longer than the width. This is some text that is longer than the width.
         This is some text that is longer than the width. This is some text that is
@@ -150,7 +150,7 @@
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
-    Message <cliMessage>
+    Message
       This is some text that is longer than the width. This is some text that is
       longer than the width. This is some text that is longer than the width.
         This is some text that is longer than the width. This is some text that is
@@ -173,7 +173,7 @@
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
-    Message <cliMessage>
+    Message
       This is some text that is longer than the width. This is some text that is
       longer than the width. This is some text that is longer than the width.
         This is some text that is longer than the width. This is some text that is
@@ -196,7 +196,7 @@
     Code
       cli_bullets(c(txt, ` ` = txt, v = txt, x = txt, `!` = txt, i = txt, `*` = txt,
         `>` = txt))
-    Message <cliMessage>
+    Message
       This is some text that is longer than the width. This is some text that is
       longer than the width. This is some text that is longer than the width.
         This is some text that is longer than the width. This is some text that is

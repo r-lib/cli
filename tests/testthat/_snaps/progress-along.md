@@ -43,7 +43,8 @@
 
     Code
       cli_with_ticks(fun())
-    Warning <simpleWarning>
+    Condition
+      Warning in `value[[3L]]()`:
       cli progress bar update failed: non-numeric argument to binary operator
     Output
       [1] 1 2 3 4 5

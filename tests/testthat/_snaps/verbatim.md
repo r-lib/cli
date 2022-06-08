@@ -8,7 +8,7 @@
         cli_verbatim(lines)
         cli_verbatim(paste0(lines, collapse = "\n"))
       })
-    Message <cliMessage>
+    Message
           first
           second
           third
