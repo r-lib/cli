@@ -1,5 +1,8 @@
 # cli (development version)
 
+* `cli_abort()` now supplies `.frame` to `abort()`. This fixes an
+  issue with the `.internal = TRUE` argument (r-lib/rlang#1386).
+
 * cli now does a better job at detecting the RStudio build pane, job pane
   and render pane, and their capabilities w.r.t. ANSI colors and hyperlinks.
   Note that this requires a daily build of RStudio (#465).

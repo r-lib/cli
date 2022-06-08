@@ -36,14 +36,16 @@
 
 cli_abort <- function(message,
                       ...,
+                      call = .envir,
                       .envir = parent.frame(),
-                      call = .envir) {
+                      .frame = .envir) {
   message[] <- vcapply(message, format_inline, .envir = .envir)
   rlang::abort(
     message,
     ...,
     call = call,
-    use_cli_format = TRUE
+    use_cli_format = TRUE,
+    .frame = .frame
   )
 }
 

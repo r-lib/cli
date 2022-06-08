@@ -195,3 +195,15 @@ test_that("cli_abort() captures correct call and backtrace", {
     print(expect_error(f(list())))
   })
 })
+
+test_that("cli_abort(.internal = TRUE) reports the correct function (r-lib/rlang#1386)", {
+  fn <- function() {
+    cli::cli_abort("Message.", .internal = TRUE)
+  }
+  environment(fn) <- rlang::ns_env("base")
+
+  # Should mention an internal error in the `base` package
+  expect_snapshot({
+    (expect_error(fn()))
+  })
+})
