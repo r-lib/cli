@@ -5,8 +5,9 @@
         n <- "boo"
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
-    Error <rlang_error>
-      `n` must be a numeric vector
+    Condition
+      Error:
+      ! `n` must be a numeric vector
       x You've supplied a <character> vector.
 
 ---
@@ -18,8 +19,9 @@
         cli_abort(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Error <rlang_error>
-      Must index an existing element:
+    Condition
+      Error:
+      ! Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
 
@@ -38,8 +40,9 @@
         n <- "boo"
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
-    Error <rlang_error>
-      [1m[22m`n` must be a numeric vector
+    Condition
+      [1m[33mError[39m:[22m
+      [1m[22m[33m![39m `n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -51,8 +54,9 @@
         cli_abort(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Error <rlang_error>
-      [1m[22mMust index an existing element:
+    Condition
+      [1m[33mError[39m:[22m
+      [1m[22m[33m![39m Must index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
 
@@ -73,8 +77,9 @@
         n <- "boo"
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
-    Error <rlang_error>
-      `n` must be a numeric vector
+    Condition
+      Error:
+      ! `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
 
 ---
@@ -86,8 +91,9 @@
         cli_abort(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Error <rlang_error>
-      Must index an existing element:
+    Condition
+      Error:
+      ! Must index an existing element:
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
 
@@ -106,8 +112,9 @@
         n <- "boo"
         cli_abort(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
       })
-    Error <rlang_error>
-      [1m[22m`n` must be a numeric vector
+    Condition
+      [1m[33mError[39m:[22m
+      [1m[22m[33m![39m `n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -119,8 +126,9 @@
         cli_abort(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Error <rlang_error>
-      [1m[22mMust index an existing element:
+    Condition
+      [1m[33mError[39m:[22m
+      [1m[22m[33m![39m Must index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
 
@@ -139,7 +147,8 @@
     Code
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Warning <rlang_warning>
+    Condition
+      Warning:
       `n` must be a numeric vector
       x You've supplied a <character> vector.
 
@@ -152,7 +161,8 @@
         cli_warn(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Warning <rlang_warning>
+    Condition
+      Warning:
       Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
@@ -172,7 +182,8 @@
     Code
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Warning <rlang_warning>
+    Condition
+      [1m[33mWarning[39m:[22m
       [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
@@ -185,7 +196,8 @@
         cli_warn(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Warning <rlang_warning>
+    Condition
+      [1m[33mWarning[39m:[22m
       [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
@@ -205,7 +217,8 @@
     Code
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Warning <rlang_warning>
+    Condition
+      Warning:
       `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
 
@@ -218,7 +231,8 @@
         cli_warn(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Warning <rlang_warning>
+    Condition
+      Warning:
       Must index an existing element:
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
@@ -238,7 +252,8 @@
     Code
       n <- "boo"
       cli_warn(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Warning <rlang_warning>
+    Condition
+      [1m[33mWarning[39m:[22m
       [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
@@ -251,7 +266,8 @@
         cli_warn(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Warning <rlang_warning>
+    Condition
+      [1m[33mWarning[39m:[22m
       [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
@@ -271,7 +287,7 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Message <rlang_message>
+    Message
       `n` must be a numeric vector
       x You've supplied a <character> vector.
 
@@ -284,7 +300,7 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Message <rlang_message>
+    Message
       Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
@@ -304,7 +320,7 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Message <rlang_message>
+    Message
       [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
@@ -317,7 +333,7 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Message <rlang_message>
+    Message
       [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
@@ -337,7 +353,7 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Message <rlang_message>
+    Message
       `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
 
@@ -350,7 +366,7 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Message <rlang_message>
+    Message
       Must index an existing element:
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
@@ -370,7 +386,7 @@
     Code
       n <- "boo"
       cli_inform(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector."))
-    Message <rlang_message>
+    Message
       [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
@@ -383,7 +399,7 @@
         cli_inform(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}."))
       })
-    Message <rlang_message>
+    Message
       [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
@@ -406,10 +422,11 @@
         idx <- 100
         cli_abort(c(lorem_ipsum(1, 3), i = lorem_ipsum(1, 3), x = lorem_ipsum(1, 3)))
       })
-    Error <rlang_error>
-      Duis quis magna incididunt nulla commodo minim non exercitation nostrud
-      ullamco dolor exercitation ut veniam. Fugiat irure tempor commodo voluptate ut.
-      In et tempor excepteur quis.
+    Condition
+      Error:
+      ! Duis quis magna incididunt nulla commodo minim non exercitation
+        nostrud ullamco dolor exercitation ut veniam. Fugiat irure tempor commodo
+        voluptate ut. In et tempor excepteur quis.
       i Et nisi ad quis ad cupidatat tempor laborum est excepteur aliqua veniam ex.
         Sunt magna veniam Lorem elit enim et pariatur aliqua occaecat mollit
         consequat dolore in mollit. Officia labore reprehenderit culpa dolore quis
@@ -443,9 +460,9 @@
       ---
       Backtrace:
         1. base::print(expect_error(f()))
-        8. cli f()
-        9. cli g()
-       10. cli h()
+        8. cli (local) f()
+        9. cli (local) g()
+       10. cli (local) h()
 
 ---
 
@@ -458,7 +475,7 @@
       ---
       Backtrace:
         1. base::print(expect_error(f(list())))
-        8. cli f(list())
-        9. cli g(x)
-       10. cli h(x)
+        8. cli (local) f(list())
+        9. cli (local) g(x)
+       10. cli (local) h(x)
 
