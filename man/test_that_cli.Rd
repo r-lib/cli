@@ -36,9 +36,9 @@ Currently available configurations:
 }
 
 See examples below and in cli's own tests, e.g. in
-\url{https://github.com/cran/cli/tree/main/tests/testthat}
+\url{https://github.com/r-lib/cli/tree/main/tests/testthat}
 and the corresponding snapshots at
-\url{https://github.com/cran/cli/tree/main/tests/testthat/_snaps}
+\url{https://github.com/r-lib/cli/tree/main/tests/testthat/_snaps}
 \subsection{Important note regarding Windows}{
 
 Because of base R's limitation to record Unicode characters on Windows,
