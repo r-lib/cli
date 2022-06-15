@@ -215,7 +215,7 @@ test_that("code_theme_default_rstudio", {
     cth <- code_theme_default_rstudio(),
     "cli does not know this RStudio theme"
   )
-  expect_equal(cth, list())
+  expect_equal(cth, code_theme_default_term())
 })
 
 test_that("code_theme_list", {
