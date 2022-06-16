@@ -15,9 +15,9 @@
 #' * `fancy`; ANSI colors, Unicode characters.
 #'
 #' See examples below and in cli's own tests, e.g. in
-#' <https://github.com/cran/cli/tree/master/tests/testthat>
+#' <https://github.com/r-lib/cli/tree/main/tests/testthat>
 #' and the corresponding snapshots at
-#' <https://github.com/cran/cli/tree/master/tests/testthat/_snaps>
+#' <https://github.com/r-lib/cli/tree/main/tests/testthat/_snaps>
 #'
 #' ## Important note regarding Windows
 #'
