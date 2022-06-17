@@ -21,6 +21,10 @@
   E.g. the meaning of `"{.emph +1}"` is now always the "+1", with style
   `.emph`, even if an `.emph` variable is available and the `.emph + 1`
   expresion can be evaluated.
+  
+* Functions that apply bright background colors (e.g. `bg_br_yellow()`) now 
+  close themselves. They no longer format text after the end of the function
+  (#484, @rossellhayes).
 
 # cli 3.3.0
 
