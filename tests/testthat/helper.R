@@ -1,6 +1,6 @@
 
 rule_class <- function(x) {
-  structure(x, class = c("rule", "ansi_string", "character"))
+  structure(x, class = c("cli_rule", "rule", "cli_ansi_string", "ansi_string", "character"))
 }
 
 capture_msgs <- function(expr) {
@@ -67,12 +67,6 @@ test_style <- function() {
       "text-decoration" = "underline",
       "margin-top" = 1)
   )
-}
-
-# to work around https://github.com/r-lib/withr/issues/167
-local_rng_version <- function(version, .local_envir = parent.frame()) {
-  withr::defer(RNGversion(as.character(getRversion())), envir = .local_envir)
-  suppressWarnings(RNGversion(version))
 }
 
 fix_times <- function(out) {
@@ -155,4 +149,20 @@ create_c_function_call <- function(code, args, header = NULL) {
 
 win2unix <- function (str) {
   gsub("\r\n", "\n", str, fixed = TRUE, useBytes = TRUE)
+}
+
+expect_snapshot <- function(...) {
+  if (packageVersion("testthat") >= "3.1.1" &&
+      packageVersion("testthat") < "3.1.1.9000") {
+    skip("testthat bug with snapshots")
+  }
+  testthat::expect_snapshot(...)
+}
+
+st_from_bel <- function(x) {
+  gsub("\007", "\033\\", x, fixed = TRUE)
+}
+
+st_to_bel <- function(x) {
+  gsub("\033\\", "\007", x, fixed = TRUE)
 }

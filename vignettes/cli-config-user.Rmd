@@ -18,6 +18,12 @@ the behavior of cli.
 Set to a nonempty value to turn off ANSI colors.
 See [num_ansi_colors()].
 
+### `ESS_BACKGROUND_MODE`
+
+Set this environment variable to `light` or `dark` to indicate dark mode
+in Emacs. Once https://github.com/emacs-ess/ESS/pull/1178 is merged, ESS
+will set this automatically.
+
 ### `R_CLI_DYNAMIC`
 
 Set to `true`, `TRUE` or `True` to assume a dynamic terminal, that supports `\r`.
@@ -29,6 +35,13 @@ See [is_dynamic_tty()].
 Set to a positive integer to assume a given number of colors.
 See [num_ansi_colors()].
 
+### `R_CLI_HYPERLINKS`
+
+Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
+ANSI hyperlinks.
+Set to anything else to assume no hyperlink support.
+See [style_hyperlink()].
+
 ## User facing options
 
 ### `cli.ansi`
@@ -37,6 +50,12 @@ Set to `true`, `TRUE` or `True` to assume a terminal that supports ANSI
 control sequences.
 Set to anything else to assume a non-ANSI terminal.
 See [is_ansi_tty()].
+
+### `cli.condition_unicode_bullets`
+
+`TRUE` or `FALSE` to force turn on or off the Unicode symbols when printing
+conditions. E.g. in `format_error()`, `format_warning()`, `format_message()` and
+also in `cli_abort()`, `cli_warn()` and `cli_inform()`.
 
 ### `cli.condition_width`
 
@@ -49,6 +68,13 @@ over `cli.width`.
 
 General handler function for all cli conditions.
 See <https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1>
+
+### `cli.default_num_colors`
+
+Default number of ANSI colors. This value is only used if ANSI color support
+is detected. You can set this value to keep relying on auto-detection,
+but to adjust the number of colors when cli detects color support.
+See [num_ansi_colors()]. See also the `cli.num_colors` option.
 
 ### `cli.dynamic`
 
@@ -70,7 +96,8 @@ See [style_hyperlink()].
 
 ### `cli.num_colors`
 
-Number of ANSI colors. See [num_ansi_colors()].
+Number of ANSI colors. See [num_ansi_colors()]. See also the
+`cli.default_num_colors` option.
 
 ### `cli.message_class`
 
@@ -183,7 +210,7 @@ Default cli theme, in addition to the built-in theme.
 This option in intended for the package developers.
 See [themes] and [start_app()].
 
-### `cli_theme_dark`
+### `cli.theme_dark`
 
 Whether cli should assume a dark theme for the builtin theme.
 See [builtin_theme()].

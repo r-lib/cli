@@ -152,7 +152,7 @@ test_that_cli("get_line_char", {
   expect_equal(get_line_char(c("x", "y", "z")), "xyz")
 })
 
-test_that("print.rule", {
+test_that("print.cli_rule", {
   withr::local_options(cli.width = 20)
   expect_snapshot(rule("foo"))
 })

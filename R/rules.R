@@ -166,7 +166,7 @@ rule <- function(left = "", center = "", right = "", line = 1,
   res <- ansi_substr(res, 1, width)
   res <- apply_style(res, background_col, bg = TRUE)
 
-  class(res) <- unique(c("rule", class(res), "character"))
+  class(res) <- unique(c("cli_rule", "rule", class(res), "character"))
   res
 }
 
@@ -245,11 +245,11 @@ rule_left_right <- function(o) {
   )
 }
 
-methods::setOldClass(c("rule", "character"))
+methods::setOldClass(c("cli_rule", "character"))
 
 #' @export
 
-print.rule <- function(x, ..., sep = "\n") {
+print.cli_rule <- function(x, ..., sep = "\n") {
   cat(x, ..., sep = sep)
   invisible(x)
 }

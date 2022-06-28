@@ -2,14 +2,23 @@
 % Please edit documentation in R/hash.R
 \name{hash_animal}
 \alias{hash_animal}
+\alias{hash_raw_animal}
+\alias{hash_obj_animal}
 \title{Adjective-animal hash}
 \usage{
 hash_animal(x, n_adj = 2)
+
+hash_raw_animal(x, n_adj = 2)
+
+hash_obj_animal(x, n_adj = 2, serialize_version = 2)
 }
 \arguments{
 \item{x}{Character vector. \code{NA} entries will have an \code{NA} hash.}
 
 \item{n_adj}{Number of adjectives to use. It must be between 0 and 3.}
+
+\item{serialize_version}{Workspace format version to use, see
+\code{\link[base:serialize]{base::serialize()}}.}
 }
 \value{
 A data frame with columns
@@ -17,6 +26,13 @@ A data frame with columns
 \item \code{hash}: the hash value, a string.
 \item \code{words}: list column with the adjectives and the animal name in a
 character vector.
+}
+
+\code{hash_raw_animal()} and \code{hash_obj_animal()} return a list
+with entries:
+\itemize{
+\item \code{hash}: the hash value, a string,
+\item `words: the adjectives and the animal name in a character vector.
 }
 }
 \description{
@@ -47,6 +63,12 @@ and in turn from
 \url{https://github.com/a-type/adjective-adjective-animal}, and
 from \url{https://gfycat.com}.
 }
+
+\code{hash_raw_anima()} calculates the adjective-animal hash of
+the bytes of a raw vector.
+
+\code{hash_obj_animal()} calculates the adjective-animal hash of
+an R object. The object is serialized into a binary vector first.
 }
 \examples{
 hash_animal(c("foo", "bar"))
@@ -62,6 +84,7 @@ the ids package for generating random adjective-animal ids
 
 Other hash functions: 
 \code{\link{hash_emoji}()},
-\code{\link{hash_md5}()}
+\code{\link{hash_md5}()},
+\code{\link{hash_sha256}()}
 }
 \concept{hash functions}

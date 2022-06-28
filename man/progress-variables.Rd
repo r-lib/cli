@@ -62,7 +62,9 @@ or \code{cli::pb_bar} if you do not attach the cli package.
 \subsection{\code{pb_bar}}{
 
 Creates a visual progress bar. If the number of total units
-is unknown, then it will return an empty string.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+is unknown, then it will return an empty string.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "Fitting model \{cli::pb_bar\} \{cli::pb_percent\}"
 )
@@ -73,7 +75,9 @@ is unknown, then it will return an empty string.\if{html}{\out{<div class="sourc
 
 \subsection{\code{pb_current}}{
 
-The number of current progress units.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The number of current progress units.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_spin\} Reading file \{cli::pb_current\}/\{cli::pb_total\}"
 )
@@ -85,7 +89,9 @@ The number of current progress units.\if{html}{\out{<div class="sourceCode r">}}
 \subsection{\code{pb_current_bytes}}{
 
 The number of current progress units formatted as bytes.
-The output has a constant width of six characters.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The output has a constant width of six characters.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   format = "Got \{cli::pb_current_bytes\} in \{cli::pb_elapsed\}"
 )
 }\if{html}{\out{</div>}}
@@ -97,7 +103,9 @@ The output has a constant width of six characters.\if{html}{\out{<div class="sou
 
 The elapsed time since the start of the progress bar. The time is
 measured since the progress bar was created with \code{\link[=cli_progress_bar]{cli_progress_bar()}}
-or similar.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+or similar.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} [\{cli::pb_elapsed\}]"
 )
@@ -108,7 +116,9 @@ or similar.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress
 
 \subsection{\code{pb_elapsed_clock}}{
 
-The elapsed time, in \verb{hh::mm::ss} format.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The elapsed time, in \verb{hh::mm::ss} format.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} [\{cli::pb_elapsed_clock\}]"
 )
@@ -119,7 +129,9 @@ The elapsed time, in \verb{hh::mm::ss} format.\if{html}{\out{<div class="sourceC
 
 \subsection{\code{pb_elapsed_raw}}{
 
-The number of seconds since the start of the progress bar.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The number of seconds since the start of the progress bar.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} [\{round(cli::pb_elapsed_raw)\}s]"
 )
@@ -131,7 +143,9 @@ The number of seconds since the start of the progress bar.\if{html}{\out{<div cl
 \subsection{\code{pb_eta}}{
 
 The estimated time until the end of the progress bar,
-in human readable form.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+in human readable form.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} | ETA: \{cli::pb_eta\}"
 )
@@ -144,7 +158,9 @@ in human readable form.\if{html}{\out{<div class="sourceCode r">}}\preformatted{
 
 The estimated time until the end of the progress
 bar, in seconds. This is useful if you want to adjust the default
-\code{pb_eta} display.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+\code{pb_eta} display.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} | ETA: \{round(cli::pb_eta_raw)\}s"
 )
@@ -157,7 +173,9 @@ bar, in seconds. This is useful if you want to adjust the default
 
 The estimated time until the end of the progress bar.
 It includes the \code{"ETA:"} prefix. It is only shown if the time can be
-estimated, otherwise it is the empty string.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+estimated, otherwise it is the empty string.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\} | \{cli::pb_eta_str\}"
 )
@@ -169,7 +187,9 @@ estimated, otherwise it is the empty string.\if{html}{\out{<div class="sourceCod
 \subsection{\code{pb_extra}}{
 
 \code{pb_extra} can be used to access extra data, see the \code{extra} argument
-of \code{cli_progress_bar()} and \code{cli_progress_update()}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+of \code{cli_progress_bar()} and \code{cli_progress_update()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   extra = list(user = whoami::username()),
   format = "Cleaning cache for user '\{cli::pb_extra$user\}': \{cli::pb_current_bytes\}"
@@ -186,7 +206,9 @@ The id of the progress bar. The id has the format
 \verb{<counter>} is an integer counter that is incremented every time
 cli needs a new unique id.
 
-This is useful for debugging progress bars.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+This is useful for debugging progress bars.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   format = "Progress bar '\{cli::pb_id\}' is at \{cli::pb_current\}"
 )
 }\if{html}{\out{</div>}}
@@ -198,7 +220,9 @@ This is useful for debugging progress bars.\if{html}{\out{<div class="sourceCode
 
 The name of the progress bar. This is supplied by the
 developer, and it is by default the empty string. A space character
-is added to non-empty names.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+is added to non-empty names.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   name = "Loading training data",
   total = 100,
   format = "\{cli::pb_name\} \{cli::pb_bar\} \{cli::pb_percent\}"
@@ -212,7 +236,9 @@ is added to non-empty names.\if{html}{\out{<div class="sourceCode r">}}\preforma
 
 The percentage of the progress bar, always formatted
 in three characters plus the percentage sign. If the total number of
-units is unknown, then it is \code{" NA\%"}.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+units is unknown, then it is \code{" NA\%"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_bar\} \{cli::pb_percent\}"
 )
@@ -229,7 +255,9 @@ aggregating logging output or progress results from multiple processes.
 
 \subsection{\code{pb_rate}}{
 
-The progress rate, in number of units per second, formatted in a string.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The progress rate, in number of units per second, formatted in a string.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 156,
   format = "Reading input files \{pb_current\}/\{pb_total\} [\{pb_rate\}]"
 )
@@ -240,7 +268,9 @@ The progress rate, in number of units per second, formatted in a string.\if{html
 
 \subsection{\code{pb_rate_raw}}{
 
-The raw progress rate, in number of units per second.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The raw progress rate, in number of units per second.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 156,
   format = "Reading input files \{pb_current\}/\{pb_total\} [\{round(pb_rate_raw)\}/s]"
 )
@@ -251,7 +281,9 @@ The raw progress rate, in number of units per second.\if{html}{\out{<div class="
 
 \subsection{\code{pb_rate_bytes}}{
 
-The progress rate, formatted as bytes per second, in human readable form.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+The progress rate, formatted as bytes per second, in human readable form.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 256 * 1024 * 1014,
   format = paste0(
     "Reading data \{pb_current_bytes\}/\{pb_total_bytes\} ",
@@ -264,7 +296,9 @@ The progress rate, formatted as bytes per second, in human readable form.\if{htm
 
 \subsection{\code{pb_spin}}{
 
-A spinner. The default spinner is selected via a \code{\link[=get_spinner]{get_spinner()}} call.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+A spinner. The default spinner is selected via a \code{\link[=get_spinner]{get_spinner()}} call.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_spin\} Reading file \{cli::pb_current\}/\{cli::pb_total\}"
 )
@@ -277,7 +311,9 @@ A spinner. The default spinner is selected via a \code{\link[=get_spinner]{get_s
 
 The status string of the progress bar. By default this is an empty
 string, but it is possible to set it in \code{\link[=cli_progress_bar]{cli_progress_bar()}}
-and `cli_progress_update()].\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(status = "Connecting...")
+and `cli_progress_update()].
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(status = "Connecting...")
 }\if{html}{\out{</div>}}
 
 \if{html}{\figure{progress-var-status.svg}}
@@ -285,7 +321,9 @@ and `cli_progress_update()].\if{html}{\out{<div class="sourceCode r">}}\preforma
 
 \subsection{\code{pb_timestamp}}{
 
-A time stamp for the current time in ISO 8601 format.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+A time stamp for the current time in ISO 8601 format.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   "Loading training data files",
   format = "\{pb_timestamp\} \{pb_current\} (\{pb_rate\})"
 }\if{html}{\out{</div>}}
@@ -296,7 +334,9 @@ A time stamp for the current time in ISO 8601 format.\if{html}{\out{<div class="
 \subsection{\code{pb_total}}{
 
 The total number of progress units, or \code{NA} if the number of units is
-unknown.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+unknown.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 100,
   format = "\{cli::pb_spin\} Reading file \{cli::pb_current\}/\{cli::pb_total\}"
 )
@@ -308,7 +348,9 @@ unknown.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_ba
 \subsection{\code{pb_total_bytes}}{
 
 The total number of progress units, formatted as
-bytes, in a human readable format.\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
+bytes, in a human readable format.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_progress_bar(
   total = 256 * 1024 * 1014,
   format = paste0(
     "Reading data \{pb_current_bytes\}/\{pb_total_bytes\} ",

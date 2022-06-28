@@ -13,8 +13,8 @@ test_that("cli_progress_message error", {
   # option.
   withr::local_envvar(R_CLI_DYNAMIC = "false")
   fun <- function() {
-    withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
     suppressWarnings(testthat::local_reproducible_output())
+    options(cli.dynamic = FALSE, cli.ansi = FALSE)
     cli::cli_progress_message("Simplest progress 'bar', {.fun fn} {2} two{?s}")
     stop("oopsie")
   }
@@ -29,8 +29,8 @@ test_that("cli_progress_message error", {
   # option.
   withr::local_envvar(R_CLI_DYNAMIC = "true")
   fun2 <- function() {
-    withr::local_options(cli.dynamic = TRUE, cli.ansi = TRUE)
     suppressWarnings(testthat::local_reproducible_output())
+    options(cli.dynamic = TRUE, cli.ansi = TRUE)
     cli::cli_progress_message("Simplest progress 'bar', {.fun fn} {2} two{?s}")
     stop("oopsie")
   }
@@ -59,8 +59,14 @@ test_that("cli_progress_step", {
 test_that("cli_progress_step error", {
   if (getRversion() < "3.5.0") skip("Needs R 3.5.0")
   fun <- function() {
-    withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
-    suppressWarnings(testthat::local_reproducible_output())
+    options(
+      cli.dynamic = FALSE,
+      cli.ansi = FALSE,
+      cli.unicode = FALSE,
+      cli.width = 80,
+      width = 80,
+      cli.num_colors = 1
+    )
     cli::cli_progress_step("First step")
     cli::cli_progress_step("Second step")
     stop("oopsie")

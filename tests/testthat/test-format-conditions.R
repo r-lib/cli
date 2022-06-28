@@ -59,21 +59,6 @@ test_that_cli("format_message", {
   }))
 })
 
-test_that("format_error width in RStudio", {
-  mockery::stub(format_error, "rstudio_detect", list(type = "rstudio_console"))
-  local_rng_version("3.3.0")
-  set.seed(42)
-  expect_snapshot(error = TRUE, local({
-    len <- 26
-    idx <- 100
-    stop(format_error(c(
-            lorem_ipsum(1, 3),
-      "i" = lorem_ipsum(1, 3),
-      "x" = lorem_ipsum(1, 3)
-    )))
-  }))
-})
-
 test_that_cli(config = "ansi", "color in RStudio", {
   mockery::stub(
     get_rstudio_fg_color0,
@@ -149,4 +134,23 @@ test_that("cli.condition_width", {
     format_warning(msg)
     format_message(msg)
   })
+})
+
+test_that_cli("suppressing Unicode bullets", {
+  withr::local_options(cli.condition_unicode_bullets = FALSE)
+  expect_snapshot(error = TRUE, local({
+    n <- "boo"
+    stop(format_error(c(
+            "{.var n} must be a numeric vector",
+      "x" = "You've supplied a {.cls {class(n)}} vector.",
+      "v" = "Success.",
+      "i" = "Info.",
+      "*" = "Bullet",
+      ">" = "Arrow"
+    )))
+  }))
+})
+
+test_that("edge cases", {
+  expect_equal(cli::format_error(""), "")
 })

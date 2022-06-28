@@ -2,7 +2,7 @@
 ansi_string <- function(x) {
   if (!is.character(x)) x <- as.character(x)
   x <- enc2utf8(x)
-  class(x) <- unique(c("ansi_string", class(x), "character"))
+  class(x) <- unique(c("cli_ansi_string", "ansi_string", class(x), "character"))
   x
 }
 
@@ -23,7 +23,8 @@ ansi_regex <- function() {
     "(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])",
     "|\\x{001b}[A-M]",
     # this is for hyperlinks, we must be non-greedy
-    "|\\x{001b}\\]8;;.*?\\x{0007}"
+    "|\\x{001b}\\]8;.*?;.*?\\x{001b}\\\\",
+    "|\\x{001b}\\]8;.*?;.*?\\x{0007}"
   )
 }
 
@@ -33,6 +34,7 @@ ansi_regex <- function() {
 #'   vector.
 #' @param sgr Whether to look for SGR (styling) control sequences.
 #' @param csi Whether to look for non-SGR control sequences.
+#' @param link Whether to look for ANSI hyperlinks.
 #' @return Logical vector, `TRUE` for the strings that have some
 #'   ANSI styling.
 #'
@@ -43,41 +45,44 @@ ansi_regex <- function() {
 #' ansi_has_any("foobar")
 #' ansi_has_any(col_red("foobar"))
 
-ansi_has_any <- function(string, sgr = TRUE, csi = TRUE) {
+ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
   if (!is.character(string)) string <- as.character(string)
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
-    is_flag(csi)
+    is_flag(csi),
+    is_flag(link)
   )
-  .Call(clic_ansi_has_any, string, sgr, csi)
+  .Call(clic_ansi_has_any, string, sgr, csi, link)
 }
 
 #' Remove ANSI escape sequences from a string
 #'
-#' The input may be of class `ansi_string` class, this is also dropped
+#' The input may be of class `cli_ansi_string` class, this is also dropped
 #' from the result.
 #'
 #' @param string The input string.
 #' @param sgr Whether to remove for SGR (styling) control sequences.
 #' @param csi Whether to remove for non-SGR control sequences.
+#' @param link Whether to remove ANSI hyperlinks.
 #' @return The cleaned up string. Note that `ansi_strip()` always drops
-#' the `ansi_string` class, even if `sgr` and sci` are `FALSE`.
+#' the `cli_ansi_string` class, even if `sgr` and sci` are `FALSE`.
 #'
 #' @family low level ANSI functions
 #' @export
 #' @examples
 #' ansi_strip(col_red("foobar")) == "foobar"
 
-ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
+ansi_strip <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
   if (!is.character(string)) string <- as.character(string)
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
-    is_flag(csi)
+    is_flag(csi),
+    is_flag(link)
   )
-  clean <- .Call(clic_ansi_strip, string, sgr, csi)
-  class(clean) <- setdiff(class(clean), "ansi_string")
+  clean <- .Call(clic_ansi_strip, string, sgr, csi, link)
+  class(clean) <- setdiff(class(clean), c("cli_ansi_string", "ansi_string"))
   clean
 }
 
@@ -89,7 +94,7 @@ ansi_strip <- function(string, sgr = TRUE, csi = TRUE) {
 #' @param x Character vector, potentially ANSI styled, or a vector to be
 #'   coerced to character. If it converted to UTF-8.
 #' @param type Whether to count graphemes (characters), code points,
-#'   bytes, or calculate the display width of the string. 
+#'   bytes, or calculate the display width of the string.
 #' @return Numeric vector, the length of the strings in the character
 #'   vector.
 #'
@@ -776,7 +781,7 @@ ansi_convert <- function(x, converter, ...) {
 #' @param x Input string
 #' @param csi What to do with non-SGR ANSI sequences, either `"keep"`,
 #'   or `"drop"` them.
-#' @return Simplified `ansi_string` vector.
+#' @return Simplified `cli_ansi_string` vector.
 #'
 #' @export
 
@@ -869,7 +874,8 @@ ansi_html_style <- function(colors = TRUE, palette = NULL) {
     ".ansi-blink"      = "{ text-decoration: blink;        }",
     # .ansi-inverse ???
     ".ansi-hide"       = "{ visibility: hidden;            }",
-    ".ansi-crossedout" = "{ text-decoration: line-through; }"
+    ".ansi-crossedout" = "{ text-decoration: line-through; }",
+    ".ansi-link:hover" = "{ text-decoration: underline;    }"
   )
 
   if (!identical(colors, FALSE)) {
@@ -929,4 +935,76 @@ format.cli_ansi_html_style <- function(x, ...) {
 
 print.cli_ansi_html_style <- function(x, ...) {
   cat(format(x, ...), sep = "\n")
+}
+
+#' Like [base::grep()] and [base::grepl()], but for ANSI strings
+#'
+#' First ANSI sequences will be stripped with [ansi_strip()], both
+#'
+#' Note that these functions work on code points (or bytes if
+#' `useBytes = TRUE`), and not graphemes.
+#'
+#' Unlike [base::grep()] and [base::grepl()] these functions do not special
+#' case factors.
+#'
+#' Both `pattern` and `x` are converted to UTF-8.
+#'
+#' @param pattern Character scalar, regular expression or fixed string
+#'   (if `fixed = TRUE`), the pattern to search for. Other objects will be
+#'   coerced using [as.character()].
+#' @param x Character vector to search in. Other objects will be coerced
+#'   using [as.character()].
+#' @param ignore.case,perl,value Passed to [base::grep()].
+#' @param ... Extra arguments are passed to [base::grep()] or [base::grepl()].
+#' @return The same as [base::grep()] and [base::grepl()], respectively.
+#'
+#' @export
+#' @examples
+#' red_needle <- col_red("needle")
+#' haystack <- c("foo", "needle", "foo")
+#' green_haystack <- col_green(haystack)
+#' ansi_grepl(red_needle, haystack)
+#' ansi_grepl(red_needle, green_haystack)
+
+ansi_grep <- function(pattern, x, ignore.case = FALSE, perl = FALSE,
+                      value = FALSE, ...) {
+
+  # if value = FALSE, then we want to return the original values as
+  # ansi strings, so we need to special case that
+  if (value) {
+    idx <- ansi_grep(pattern, x, ignore.case = ignore.case, perl = perl,
+                     value = FALSE, ...)
+    ansi_string(x[idx])
+  } else {
+    ansi_grep_internal(grep, pattern, x, ignore.case = ignore.case,
+                       perl = perl, value = value, ...)
+  }
+}
+
+#' @rdname ansi_grep
+#' @export
+
+ansi_grepl <- function(pattern, x, ...) {
+  ansi_grep_internal(grepl, pattern, x, ...)
+}
+
+ansi_grep_internal <- function(fun, pattern, x, ...) {
+  pattern <- ansi_strip(pattern)
+  x <- ansi_strip(x)
+  fun(pattern, x, ...)
+}
+
+#' Like [base::nzchar()], but for ANSI strings
+#'
+#' @param x Charcater vector. Other objects are coarced using
+#'   [base::as.character()].
+#' @param ... Passed to [base::nzchar()].
+#' @export
+#' @examples
+#' ansi_nzchar("")
+#' ansi_nzchar(col_red(""))
+
+ansi_nzchar <- function(x, ...) {
+  x <- ansi_strip(x)
+  nzchar(x, ...)
 }

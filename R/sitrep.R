@@ -42,10 +42,6 @@ print.cli_sitrep <- function(x, ...) {
 get_active_symbol_set <- function() {
   if (identical(symbol, symbol_utf8)) {
     "UTF-8"
-  } else if (identical(symbol, symbol_rstudio)) {
-    "RStudio (UTF-8)"
-  } else if (identical(symbol, symbol_win)) {
-    "Windows (non UTF-8)"
   } else {
     "ASCII (non UTF-8)"
   }

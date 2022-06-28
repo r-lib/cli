@@ -55,14 +55,14 @@ ansi_builtin_styles <- list(
   bg_cyan = palette_color(list(46, 49)),
   bg_white = palette_color(list(47, 49)),
 
-  bg_br_black = palette_color(list(100, 39)),
-  bg_br_red = palette_color(list(101, 39)),
-  bg_br_green = palette_color(list(102, 39)),
-  bg_br_yellow = palette_color(list(103, 39)),
-  bg_br_blue = palette_color(list(104, 39)),
-  bg_br_magenta = palette_color(list(105, 39)),
-  bg_br_cyan = palette_color(list(106, 39)),
-  bg_br_white = palette_color(list(107, 39)),
+  bg_br_black = palette_color(list(100, 49)),
+  bg_br_red = palette_color(list(101, 49)),
+  bg_br_green = palette_color(list(102, 49)),
+  bg_br_yellow = palette_color(list(103, 49)),
+  bg_br_blue = palette_color(list(104, 49)),
+  bg_br_magenta = palette_color(list(105, 49)),
+  bg_br_cyan = palette_color(list(106, 49)),
+  bg_br_white = palette_color(list(107, 49)),
 
   # similar to reset, but only for a single property
   no_bold          = list(c(0,     23, 24, 27, 28, 29, 39, 49), 22),
@@ -135,11 +135,11 @@ create_ansi_style_fun <- function(styles) {
         )
       }
     }
-    class(txt) <- c("ansi_string", "character")
+    class(txt) <- c("cli_ansi_string", "ansi_string", "character")
     txt
   }, list(.styles = styles)))
 
-  class(fun) <- "ansi_style"
+  class(fun) <- c("cli_ansi_style", "ansi_style")
   attr(fun, "_styles") <- styles
   fun
 }
@@ -154,8 +154,8 @@ create_ansi_style <- function(name, open = NULL, close = NULL) {
 
 #' @export
 
-print.ansi_string <- function(x, ...) {
-  cat("<ansi_string>\n")
+print.cli_ansi_string <- function(x, ...) {
+  cat("<cli_ansi_string>\n")
   if (length(x)) {
     cat(format(paste0("[", seq_along(x), "] ", format(x))), sep = "\n")
   }
@@ -164,8 +164,8 @@ print.ansi_string <- function(x, ...) {
 
 #' @export
 
-print.ansi_style <- function(x, ...) {
-  cat("<ansi_style>\n")
+print.cli_ansi_style <- function(x, ...) {
+  cat("<cli_ansi_style>\n")
   cat(x("Example output"))
   cat("\n")
   invisible(x)
@@ -189,7 +189,7 @@ print.ansi_style <- function(x, ...) {
 #'
 #' @details
 #' The `...` style argument can be any of the following:
-#' * A cli ANSI style function of class `ansi_style`. This is returned
+#' * A cli ANSI style function of class `cli_ansi_style`. This is returned
 #'   as is, without looking at the other arguments.
 #' * An R color name, see [grDevices::colors()].
 #' * A 6- or 8-digit hexadecimal color string, e.g. `#ff0000` means
@@ -219,7 +219,7 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
                             colors = num_ansi_colors()) {
 
   style <- list(...)[[1]]
-  if (inherits(style, "ansi_style")) return(style)
+  if (inherits(style, "cli_ansi_style")) return(style)
   if (inherits(style, "crayon")) {
     return(create_ansi_style_fun(attr(style, "_styles")))
   }

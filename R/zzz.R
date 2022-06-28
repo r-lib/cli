@@ -50,7 +50,7 @@
 #'
 #' @param ... Character strings, they will be pasted together with
 #'   `paste0()`, before applying the style function.
-#' @return An ANSI string (class `ansi_string`), that contains ANSI
+#' @return An ANSI string (class `cli_ansi_string`), that contains ANSI
 #'   sequences, if the current platform supports them. You can simply
 #'   use `cat()` to print them to the terminal.
 #'

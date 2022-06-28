@@ -1,5 +1,85 @@
-
 # cli (development version)
+
+* `cli_abort()` now supplies `.frame` to `abort()`. This fixes an
+  issue with the `.internal = TRUE` argument (r-lib/rlang#1386).
+
+* cli now does a better job at detecting the RStudio build pane, job pane
+  and render pane, and their capabilities w.r.t. ANSI colors and hyperlinks.
+  Note that this requires a daily build of RStudio (#465).
+
+* New functions for ANSI strings: `ansi_grep()`, `ansi_grepl()`,
+  `ansi_nzchar()`. They work like the corresponding base R functions, but
+  handle ANSI markup.
+
+* `style_hyperlink()` (really) no longer breaks if the env varible `VTE_VERSION`
+  is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
+
+* `cli_dl()` and its corresponding `cli_li()` can now style the labels.
+
+* The behavior cli's inline styling expressions is now more predictable.
+  cli does not try to evaluate a styled string as an R expression any more.
+  E.g. the meaning of `"{.emph +1}"` is now always the "+1", with style
+  `.emph`, even if an `.emph` variable is available and the `.emph + 1`
+  expresion can be evaluated.
+  
+* Functions that apply bright background colors (e.g. `bg_br_yellow()`) now 
+  close themselves. They no longer format text after the end of the function
+  (#484, @rossellhayes).
+
+# cli 3.3.0
+
+* `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
+  is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
+
+* `ansi_*()` functions support ANSI hyperlinks again (#444).
+
+* Turning off ANSI colors via the `cli.num_colors` option or the
+  `R_CLI_NUM_COLORS` or the `NO_COLOR` environment variable now also turns off
+  ANSI hyperlinks (#447).
+
+* `symbol` now only has two variants: UTF-8 and ASCII. There are no special
+  variants for RStudio and Windows RGui any more (#424).
+
+# cli 3.2.0
+
+## Breaking change
+
+* The `cli_theme_dark` option is now known as `cli.theme_dark`, to be
+  consistent with all other cli option names (#380).
+
+## Other changes
+
+* The preferred names of the S3 clases `ansi_string`, `ansi_style`, `boxx`,
+  `rule` and `tree` now have `cli_` prefix: `cli_ansi_string`, etc. This will
+  help avoiding name conflicts with other packages eventually, but for now
+  the old names are kept as well, for compatibility.
+
+* `cli_abort()` has been updated to work nicely with rlang 1.0. The
+  default `call` and backtrace soft-truncation are set to `.envir`
+  (which itself is set to the immediate caller of `cli_abort()` by
+  default).
+
+  Line formatting now happens lazily at display time via
+  `rlang::cnd_message()` (which is called by the `conditionMessage()`
+  method for rlang errors).
+
+* New `hash_sha256()` function to calculate SHA-256 hashes. New
+  `hash_raw_*()`, `hash_obj_*()` and `hash_file_*()` functions to calculate
+  various hashes of raw vectors, R objects and files.
+
+* You can use the new `cli.default_num_colors` option to set the default
+  number of ANSI colors, only if ANSI support is otherwise detected.
+  See the details in the manual of `num_ansi_colors()`.
+
+* You can set the new `ESS_BACKGROUND_MODE` environment variable to
+  `dark` to indicate dark mode.
+
+* cli now handles quotes and comment characters better in the semantion
+  `cli_*()` functions that perform glue string interpolation (#370).
+
+# cli 3.1.1
+
+* `style_hyperlink()` gains a `params=` argument (#384).
 
 # cli 3.1.0
 
@@ -146,7 +226,7 @@
 * New `ansi_columns()` function to format ANSI strings in multiple columns.
 
 * `ansi_substr()`, `ansi_substring()`, `ansi_strsplit()`, `ansi_align()`
-  now always return `ansi_string` objects.
+  now always return `cli_ansi_string` objects.
 
 * `ansi_nchar()`, `ansi_align()`, `ansi_strtrim()` and the new
   `ansi_strwrap()` as well handle wide Unicode correctly, according to

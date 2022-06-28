@@ -1,45 +1,40 @@
 url: https://cli.r-lib.org
 
+template:
+  package: tidytemplate
+  bootstrap: 5
+
+  includes:
+    in_header: |
+      <script defer data-domain="cli.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
+
 destination: docs
 
 development:
   mode: auto
 
 navbar:
-  type: default
-  left:
-  - text: FAQ
-    href: reference/faq.html
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-    - text: Building a Semantic CLI
-      href: articles/semantic-cli.html
-    - text: From usethis::ui Functions to cli
-      href: articles/usethis-ui.html
-    - text: cli Pluralization
-      href: articles/pluralization.html
-    - text: Introduction to Progress Bars in cli
-      href: articles/progress.html
-    - text: Advanced cli Progress Bars
-      href: articles/progress-advanced.html
-    - text: cli color palettes
-      href: articles/palettes.html
-  - text: News
-    href: news/index.html
+  structure:
+    left: [FAQ, reference, articles, news]
+  components:
+    FAQ:
+      text: FAQ
+      href: reference/faq.html
 
 articles:
 - title: Semantic CLI
+  navbar: ~
   contents:
   - semantic-cli
   - usethis-ui
   - pluralization
 - title: Progress Bars
+  navbar: Progress bars
   contents:
   - progress
   - progress-advanced
 - title: Customization
+  navbar: Customization
   contents:
   - palettes
 
@@ -127,7 +122,7 @@ reference:
   - cli_progress_demo
   - cli_progress_styles
   - cli_progress_num
-  
+
 - title: Terminal Colors and Styles
   contents:
   - ansi_palettes
@@ -142,10 +137,13 @@ reference:
   contents:
   - ansi_align
   - ansi_columns
+  - ansi_grep
+  - ansi_grepl
   - ansi_has_any
   - ansi_html
   - ansi_html_style
   - ansi_nchar
+  - ansi_nzchar
   - ansi_regex
   - ansi_simplify
   - ansi_strip
@@ -201,6 +199,13 @@ reference:
   - ansi_show_cursor
   - ansi_with_hidden_cursor
 
+- title: Hashing
+  contents:
+  - hash_animal
+  - hash_emoji
+  - hash_md5
+  - hash_sha256
+
 - title: Utilities and Configuration
   contents:
   - cat_boxx
@@ -217,11 +222,9 @@ reference:
   - default_app
   - diff_chr
   - diff_str
-  - hash_animal
-  - hash_emoji
-  - hash_md5
   - is_dynamic_tty
   - is_utf8_output
+  - ruler
   - start_app
   - stop_app
   - test_that_cli
@@ -232,3 +235,7 @@ reference:
   - cli_status
   - cli_status_clear
   - cli_status_update
+
+- title: internal
+  contents:
+  - faq

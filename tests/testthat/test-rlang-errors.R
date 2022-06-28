@@ -1,6 +1,5 @@
-
 test_that_cli("cli_abort", {
-  withr::local_options(cli_theme_dark = FALSE)
+  withr::local_options(cli.theme_dark = FALSE)
   expect_snapshot(error = TRUE, local({
     n <- "boo"
     cli_abort(c(
@@ -27,11 +26,13 @@ test_that_cli("cli_abort", {
     )),
     error = function(e) e
   )
-  expect_snapshot(err$cli_bullets)
+  expect_snapshot(c(err$message, err$body))
 })
 
 test_that_cli("cli_warn", {
-  withr::local_options(cli_theme_dark = FALSE)
+  skip_if_not_installed("rlang", "1.0.0")
+
+  withr::local_options(cli.theme_dark = FALSE)
   expect_snapshot({
     n <- "boo"
     cli_warn(c(
@@ -64,6 +65,8 @@ test_that_cli("cli_warn", {
 })
 
 test_that_cli("cli_inform", {
+  skip_if_not_installed("rlang", "1.0.0")
+
   withr::local_options(cli.ansi = FALSE)
   expect_snapshot({
     n <- "boo"
@@ -105,7 +108,7 @@ test_that("cli_abort width in RStudio", {
   # this is to fix breakage with new testthat
   withr::local_options(cli.condition_width = getOption("cli.width"))
   mockery::stub(cli_abort, "rstudio_detect", list(type = "rstudio_console"))
-  local_rng_version("3.5.0")
+  withr::local_rng_version("3.5.0")
   set.seed(42)
   expect_snapshot(error = TRUE, local({
     len <- 26
@@ -156,4 +159,51 @@ test_that_cli(config = "ansi", "update_rstudio_color", {
     function() make_ansi_style("#008800")
   )
   expect_snapshot(cat(update_rstudio_color("color me interested")))
+})
+
+test_that("cli_abort() captures correct call and backtrace", {
+  rlang::local_options(
+    rlang_trace_top_env = environment(),
+    rlang_trace_format_srcrefs = FALSE
+  )
+
+  f <- function() g()
+  g <- function() h()
+  h <- function() cli::cli_abort("foo")
+
+  expect_snapshot({
+    print(expect_error(f()))
+  })
+
+  classed_stop <- function(message, env = parent.frame()) {
+    cli::cli_abort(
+      message,
+      .envir = env,
+      class = "cli_my_class"
+    )
+  }
+  h <- function(x) {
+    if (!length(x)) {
+      classed_stop("{.arg x} can't be empty.")
+    }
+  }
+
+  f <- function(x) g(x)
+  g <- function(x) h(x)
+
+  expect_snapshot({
+    print(expect_error(f(list())))
+  })
+})
+
+test_that("cli_abort(.internal = TRUE) reports the correct function (r-lib/rlang#1386)", {
+  fn <- function() {
+    cli::cli_abort("Message.", .internal = TRUE)
+  }
+  environment(fn) <- rlang::ns_env("base")
+
+  # Should mention an internal error in the `base` package
+  expect_snapshot({
+    (expect_error(fn()))
+  })
 })

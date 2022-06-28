@@ -28,7 +28,10 @@ inline_generic <- function(app, x, style) {
       xx <- vcapply(xx, fmt, app = app, style = style)
     }
   }
-  xx
+  prefix <- call_if_fun(style$prefix)
+  postfix <- call_if_fun(style$postfix)
+
+  paste0(prefix, xx, postfix)
 }
 
 inline_collapse <- function(x, style = list()) {
@@ -136,7 +139,8 @@ inline_transformer <- function(code, envir) {
       .transformer = inline_transformer,
       .open = paste0("{", envir$marker),
       .close = paste0(envir$marker, "}"),
-      .trim = TRUE
+      .trim = TRUE,
+      .comment = ""
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -216,7 +220,8 @@ clii__inline <- function(app, text, .list) {
       .transformer = inline_transformer,
       .open = paste0("{", t$values$marker),
       .close = paste0(t$values$marker, "}"),
-      .trim = TRUE
+      .trim = TRUE,
+      .comment = ""
     )
   })
   paste(out, collapse = "")
@@ -233,6 +238,7 @@ make_cmd_transformer <- function(values) {
 
   function(code, envir) {
     res <- tryCatch({
+      if (substr(code, 1, 1) == ".") stop("style")
       expr <- parse(text = code, keep.source = FALSE)
       eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
     }, error = function(e) e)
@@ -262,7 +268,13 @@ make_cmd_transformer <- function(values) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      out <- glue::glue(text, .envir = envir, .transformer = sys.function(), .trim = TRUE)
+      out <- glue::glue(
+        text,
+        .envir = envir,
+        .transformer = sys.function(),
+        .trim = TRUE,
+        .comment = ""
+      )
       paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
     }
   }
@@ -272,7 +284,13 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  pstr <- glue::glue(str, .envir = .envir, .transformer = transformer, .trim = TRUE)
+  pstr <- glue::glue(
+    str,
+    .envir = .envir,
+    .transformer = transformer,
+    .trim = TRUE,
+    .comment = ""
+  )
   glue_delay(
     str = post_process_plurals(pstr, values),
     values = values

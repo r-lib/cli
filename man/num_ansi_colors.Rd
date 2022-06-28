@@ -45,7 +45,9 @@ non-empty value, then it is used.
 \item If the \code{crayon.enabled} option is set to \code{FALSE}, 1L is returned.
 (This is for compatibility with code that uses the crayon package.)
 \item If the \code{crayon.enabled} option is set to \code{TRUE} and the
-\code{crayon.colors} option is not set, then 8L is returned.
+\code{crayon.colors} option is not set, then the value of the
+\code{cli.default_num_colors} option, or if it is unset, then 8L is
+returned.
 \item If the \code{crayon.enabled} option is set to \code{TRUE} and the
 \code{crayon.colors} option is also set, then the latter is returned.
 (This is for compatibility with code that uses the crayon package.)
@@ -65,9 +67,10 @@ return 1L.
 \item If R is running inside RStudio, with color support, then the
 appropriate number of colors is returned, usually 256L.
 \item If R is running on Windows, inside an Emacs version that is recent
-enough to support ANSI colors, then 8L is returned. (On Windows,
-Emacs has \code{isatty(stdout()) == FALSE}, so we need to check for this
-here before dealing with terminals.)
+enough to support ANSI colors, then the value of the
+\code{cli.default_num_colors} option, or if unset 8L is returned.
+(On Windows, Emacs has \code{isatty(stdout()) == FALSE}, so we need to
+check for this here before dealing with terminals.)
 \item If \code{stream} is not the standard output or standard error  in a
 terminal, then 1L is returned.
 \item Otherwise we use and cache the result of the terminal color
@@ -79,16 +82,21 @@ The terminal color detection algorithm:
 \item If the \code{COLORTERM} environment variable is set to \code{truecolor} or
 \verb{24bit}, then we return 16 million colors.
 \item If the \code{COLORTERM} environment variable is set to anything else,
-then we return 8L.
+then we return the value of the \code{cli.num_default_colors} option,
+8L if unset.
 \item If R is running on Unix, inside an Emacs version that is recent
-enough to support ANSI colors, then 8L is returned.
+enough to support ANSI colors, then the value of the
+\code{cli.default_num_colors} option is returned, or 8L if unset.
 \item If we are on Windows in an RStudio terminal, then apparently
-we only have eight colors.
+we only have eight colors, but the \code{cli.default_num_colors} option
+can be used to override this.
 \item If we are in a recent enough Windows 10 terminal, then there
 is either true color (from build 14931) or 256 color (from
-build 10586) support.
+build 10586) support. You can also use the \code{cli.default_num_colors}
+option to override these.
 \item If we are on Windows, under ConEmu or cmder, or ANSICON is loaded,
-then 8L is returned.
+then the value of \code{cli.default_num_colors}, or 8L if unset, is
+returned.
 \item Otherwise if we are on Windows, return 1L.
 \item Otherwise we are on Unix and try to run \verb{tput colors} to determine
 the number of colors. If this succeeds, we return its return value.
@@ -96,6 +104,7 @@ If the \code{TERM} environment variable is \code{xterm} and \code{tput}
 returned 8L, we return 256L, because xterm compatible terminals
 tend to support 256 colors
 (\url{https://github.com/r-lib/crayon/issues/17})
+You can override this with the \code{cli.default_num_colors} option.
 \item If \code{TERM} is set to \code{dumb}, we return 1L.
 \item If \code{TERM} starts with \code{screen}, \code{xterm}, or \code{vt100}, we return 8L.
 \item If \code{TERM} contains \code{color}, \code{ansi}, \code{cygwin} or \code{linux}, we return 8L.

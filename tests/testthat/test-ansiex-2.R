@@ -304,3 +304,83 @@ test_that("ansi_substr with graphemes", {
     ))
   )
 })
+
+test_that("ansi_grep", {
+  withr::local_options(cli.num_colors = 256, cli.hyperlink = TRUE)
+  red_needle <- col_red("needle")
+  haystack <- c("foo", "needle", "foo")
+  green_haystack <- col_green(haystack)
+  expect_equal(
+    ansi_grep(red_needle, green_haystack),
+    2L
+  )
+  expect_equal(
+    ansi_grep(red_needle, haystack),
+    2L
+  )
+  expect_equal(
+    ansi_grep(red_needle, green_haystack, value = TRUE),
+    ansi_string(green_haystack[2])
+  )
+  expect_equal(
+    ansi_grep("nope", haystack),
+    integer()
+  )
+  expect_equal(
+    ansi_grep("nope", haystack, value = TRUE),
+    ansi_string(character())
+  )
+  expect_equal(
+    ansi_grep("nope", character()),
+    integer()
+  )
+  expect_equal(
+    ansi_grep("nope", character(), value = TRUE),
+    ansi_string(character())
+  )
+})
+
+test_that("ansi_grepl", {
+  withr::local_options(cli.num_colors = 256, cli.hyperlink = TRUE)
+  red_needle <- col_red("needle")
+  haystack <- c("foo", "needle", "foo")
+  green_haystack <- col_green(haystack)
+  expect_equal(
+    ansi_grepl(red_needle, green_haystack),
+    c(FALSE, TRUE, FALSE)
+  )
+  expect_equal(
+    ansi_grepl(red_needle, haystack),
+    c(FALSE, TRUE, FALSE)
+  )
+  expect_equal(
+    ansi_grepl("nope", haystack),
+    c(FALSE, FALSE, FALSE)
+  )
+  expect_equal(
+    ansi_grepl("nope", character()),
+    logical()
+  )
+})
+
+test_that("ansi_nzchar", {
+  withr::local_options(cli.num_colors = 256, cli.hyperlink = TRUE)
+
+  expect_equal(ansi_nzchar(""), FALSE)
+  expect_equal(ansi_nzchar(c("", "")), c(FALSE, FALSE))
+  expect_equal(ansi_nzchar(c("", "yes")), c(FALSE, TRUE))
+  expect_equal(ansi_nzchar(c("yes", "")), c(TRUE, FALSE))
+  expect_equal(ansi_nzchar(c("yes", "yes")), c(TRUE, TRUE))
+
+  expect_equal(ansi_nzchar(col_red("")), FALSE)
+  expect_equal(ansi_nzchar(col_red(c("", ""))), c(FALSE, FALSE))
+  expect_equal(ansi_nzchar(col_red(c("", "yes"))), c(FALSE, TRUE))
+  expect_equal(ansi_nzchar(col_red(c("yes", ""))), c(TRUE, FALSE))
+  expect_equal(ansi_nzchar(col_red(c("yes", "yes"))), c(TRUE, TRUE))
+
+  expect_equal(ansi_nzchar(style_hyperlink("text", "https://x.xom")), TRUE)
+  expect_equal(ansi_nzchar(style_hyperlink("", "https://x.xom")), FALSE)
+
+  expect_equal(ansi_nzchar(NA), nzchar(NA))
+  expect_equal(ansi_nzchar(NA, keepNA = TRUE), nzchar(NA, keepNA = TRUE))
+})

@@ -4,7 +4,7 @@
 \alias{ansi_has_any}
 \title{Check if a string has some ANSI styling}
 \usage{
-ansi_has_any(string, sgr = TRUE, csi = TRUE)
+ansi_has_any(string, sgr = TRUE, csi = TRUE, link = TRUE)
 }
 \arguments{
 \item{string}{The string to check. It can also be a character
@@ -13,6 +13,8 @@ vector.}
 \item{sgr}{Whether to look for SGR (styling) control sequences.}
 
 \item{csi}{Whether to look for non-SGR control sequences.}
+
+\item{link}{Whether to look for ANSI hyperlinks.}
 }
 \value{
 Logical vector, \code{TRUE} for the strings that have some

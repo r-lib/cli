@@ -6,6 +6,7 @@
 \usage{
 cli_dl(
   items = NULL,
+  labels = names(items),
   id = NULL,
   class = NULL,
   .close = TRUE,
@@ -16,6 +17,8 @@ cli_dl(
 \arguments{
 \item{items}{Named character vector, or \code{NULL}. If not \code{NULL}, they
 are used as list items.}
+
+\item{labels}{Item labels. Defaults the names in \code{items}.}
 
 \item{id}{Id of the list container. Can be used for closing it with
 \code{\link[=cli_end]{cli_end()}} or in themes. If \code{NULL}, then an id is generated and
@@ -39,7 +42,9 @@ The id of the new container element, invisibly.
 A definition list is a container, see \link{containers}.
 }
 \details{
-\subsection{All items at once}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{All items at once}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_dl(c(foo = "one", bar = "two", baz = "three"))
 \}
 fun()
@@ -48,7 +53,9 @@ fun()
 \if{html}{\figure{cli-dl.svg}}
 }
 
-\subsection{Items one by one}{\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
+\subsection{Items one by one}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_dl()
   cli_li(c(foo = "\{.emph one\}"))
   cli_li(c(bar = "two"))

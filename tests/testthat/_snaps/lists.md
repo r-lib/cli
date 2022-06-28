@@ -7,7 +7,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       * foo
       * bar
       * foobar
@@ -21,7 +21,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       • foo
       • bar
       • foobar
@@ -36,7 +36,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       1. foo
       2. bar
       3. foobar
@@ -51,7 +51,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       1. foo
       2. bar
       3. foobar
@@ -70,7 +70,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       * 1
           - 1 1
           - 1 2
@@ -91,7 +91,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       • 1
           - 1 1
           - 1 2
@@ -112,7 +112,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         * 1
           1. 1 1
           2. 1 2
@@ -133,7 +133,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         • 1
           1. 1 1
           2. 1 2
@@ -155,7 +155,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         1. 1
           1. 1 1
           2. 1 2
@@ -177,7 +177,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         1. 1
           1. 1 1
           2. 1 2
@@ -198,7 +198,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       1. 1
           * 1 1
           * 1 2
@@ -219,7 +219,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       1. 1
           • 1 1
           • 1 2
@@ -235,7 +235,7 @@
         cli_end()
         cli_end()
       })
-    Message <cliMessage>
+    Message
       * foo
       * bar
       * foobar
@@ -249,7 +249,7 @@
         cli_end()
         cli_end()
       })
-    Message <cliMessage>
+    Message
       • foo
       • bar
       • foobar
@@ -263,7 +263,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       1. foo
       2. bar
       3. foobar
@@ -277,7 +277,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       1. foo
       2. bar
       3. foobar
@@ -290,7 +290,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       * foo
       * bar
       * foobar
@@ -303,7 +303,7 @@
         cli_li(c("bar", "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       • foo
       • bar
       • foobar
@@ -318,7 +318,7 @@
         cli_li(c(that = "bar", other = "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       this: foo
       that: bar
       other: foobar
@@ -333,7 +333,7 @@
         cli_li(c(that = "bar", other = "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       this: foo
       that: bar
       other: foobar
@@ -352,7 +352,7 @@
         cli_li(c(b = "2"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         a: 1
           a-a: 1 1
           a-b: 1 2
@@ -373,7 +373,7 @@
         cli_li(c(b = "2"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         a: 1
           a-a: 1 1
           a-b: 1 2
@@ -394,7 +394,7 @@
         cli_li(c(b = "2"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         a: 1
           1. 1 1
           2. 1 2
@@ -415,7 +415,7 @@
         cli_li(c(b = "2"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         a: 1
           1. 1 1
           2. 1 2
@@ -436,7 +436,7 @@
         cli_li(c(b = "2"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         a: 1
           * 1 1
           * 1 2
@@ -457,7 +457,7 @@
         cli_li(c(b = "2"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         a: 1
           • 1 1
           • 1 2
@@ -478,7 +478,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         1. 1
           a-a: 1 1
           a-b: 1 2
@@ -499,7 +499,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         1. 1
           a-a: 1 1
           a-b: 1 2
@@ -520,7 +520,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         * 1
           a-a: 1 1
           a-b: 1 2
@@ -541,7 +541,7 @@
         cli_li("2")
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
         • 1
           a-a: 1 1
           a-b: 1 2
@@ -557,7 +557,7 @@
         cli_li(c(that = "bar", other = "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       this: foo
       that: bar
       other: foobar
@@ -571,7 +571,7 @@
         cli_li(c(that = "bar", other = "foobar"))
         cli_end(lid)
       })
-    Message <cliMessage>
+    Message
       this: foo
       that: bar
       other: foobar
@@ -580,10 +580,10 @@
 
     Code
       local({
-        cli_div(theme = list(.dt = list(after = " -> "), .dd = list(color = "blue")))
+        cli_div(theme = list(.dt = list(postfix = " -> "), .dd = list(color = "blue")))
         cli_dl(c(foo = "bar", bar = "baz"))
       })
-    Message <cliMessage>
+    Message
       foo -> [34mbar[39m
       bar -> [34mbaz[39m
 
@@ -591,8 +591,18 @@
 
     Code
       cli_dl(c(abc = "foo", empty = "", def = "bar"))
-    Message <cliMessage>
+    Message
       abc: foo
       empty:
       def: bar
+
+# cli_dl label style
+
+    Code
+      local({
+        cli_dl(c(`{.code code}` = "{.code this is code too}", `{.str strin}` = "{.url https://x.com}"))
+      })
+    Message
+      `code`: `this is code too`
+      "strin": <https://x.com>
 

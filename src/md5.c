@@ -1,5 +1,6 @@
 
 #include <string.h>
+#include <stdint.h>
 
 #define MD5_STATIC static
 #include "md5.h"
@@ -17,10 +18,6 @@ static void bin2str(char *to, const unsigned char *p, size_t len) {
 }
 
 SEXP clic_md5(SEXP strs) {
-  if (!Rf_isString(strs)) {
-    R_THROW_ERROR("`strs` must be a character vector");
-  }
-
   md5_byte_t hash[16];
   char hexhash[32];
   md5_state_t ctx;
@@ -42,4 +39,32 @@ SEXP clic_md5(SEXP strs) {
 
   UNPROTECT(1);
   return result;
+}
+
+SEXP clic_md5_raw(SEXP r) {
+  Rbyte *ptr = RAW(r);
+  Rbyte *end = ptr + XLENGTH(r);
+  size_t step = SIZE_MAX < 0x40000000 ? SIZE_MAX & ~63 : 0x40000000;
+
+  md5_state_t ctx;
+  md5_byte_t hash[16];
+  char hexhash[32];
+
+  md5_init(&ctx);
+
+  while (ptr < end) {
+    Rbyte *nxt = ptr + step;
+    if (nxt > end) nxt = end;
+    md5_append(&ctx, (const md5_byte_t*) ptr, nxt - ptr);
+    ptr = nxt;
+  }
+
+  md5_finish(&ctx, hash);
+  bin2str(hexhash, hash, sizeof(hash));
+
+  return Rf_ScalarString(Rf_mkCharLenCE(
+    (const char*) hexhash,
+    sizeof(hexhash),
+    CE_UTF8
+  ));
 }

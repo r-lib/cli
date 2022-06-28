@@ -5,7 +5,7 @@
 \alias{ansi_has_hyperlink_support}
 \title{Terminal Hyperlinks}
 \usage{
-style_hyperlink(text, url)
+style_hyperlink(text, url, params = NULL)
 
 ansi_has_hyperlink_support()
 }
@@ -14,9 +14,11 @@ ansi_has_hyperlink_support()
 length, via a \code{paste0()} call.}
 
 \item{url}{URL to link to.}
+
+\item{params}{A named character vector of additional parameters, or \code{NULL}.}
 }
 \value{
-Styled \code{ansi_string} for \code{style_hyperlink()}.
+Styled \code{cli_ansi_string} for \code{style_hyperlink()}.
 Logical scalar for \code{ansi_has_hyperlink_support()}.
 }
 \description{

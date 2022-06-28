@@ -16,21 +16,28 @@
 #' @param text Text to show. `text` and `url` are recycled to match their
 #'   length, via a `paste0()` call.
 #' @param url URL to link to.
-#' @return Styled `ansi_string` for `style_hyperlink()`.
+#' @param params A named character vector of additional parameters, or `NULL`.
+#' @return Styled `cli_ansi_string` for `style_hyperlink()`.
 #'   Logical scalar for `ansi_has_hyperlink_support()`.
 #'
 #' @export
 #' @examples
 #' cat("This is an", style_hyperlink("R", "https://r-project.org"), "link.\n")
 
-style_hyperlink <- function(text, url) {
+style_hyperlink <- function(text, url, params = NULL) {
+  params <- glue::glue_collapse(sep = ":",
+    glue::glue("{names(params)}={params}")
+  )
+
+  ST <- "\u0007"
+
   out <- if (ansi_has_hyperlink_support()) {
-    paste0("\u001B]8;;", url, "\u0007", text, "\u001B]8;;\u0007")
+    paste0("\u001B]8;", params, ";", url, ST, text, "\u001B]8;;", ST)
   } else {
     text
   }
 
-  class(out) <- c("ansi_string", "character")
+  class(out) <- c("cli_ansi_string", "ansi_string", "character")
   out
 }
 
@@ -44,6 +51,27 @@ ansi_has_hyperlink_support <- function() {
   ## Hyperlinks forced?
   enabled <- getOption("cli.hyperlink", getOption("crayon.hyperlink"))
   if (!is.null(enabled)) { return(isTRUE(enabled)) }
+
+  ## forced by environment variable
+  enabled <- Sys.getenv("R_CLI_HYPERLINKS", "")
+  if (isTRUE(as.logical(enabled))){ return(TRUE) }
+
+  ## If ANSI support is off, then this is off as well
+  opt <- as.integer(getOption("cli.num_colors", NULL))[1]
+  if (!is.na(opt) && opt == 1) return(FALSE)
+  env <- as.integer(Sys.getenv("R_CLI_NUM_COLORS", ""))[1]
+  if (!is.na(env) && env == 1) return(FALSE)
+  cray_opt <- as.logical(getOption("crayon.enabled", NULL))[1]
+  if (!is.na(cray_opt) && !cray_opt) return(FALSE)
+  if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) return(FALSE)
+
+  ## environment variable used by RStudio
+  enabled <- Sys.getenv("RSTUDIO_CLI_HYPERLINKS", "")
+  if (isTRUE(as.logical(enabled))){ return(TRUE) }
+
+  ## Are we in RStudio?
+  rstudio <- rstudio$detect()
+  if (rstudio$type != "not_rstudio") { return(rstudio$hyperlink) }
 
   ## Are we in a terminal? No?
   if (!isatty(stdout())) { return(FALSE) }
@@ -67,7 +95,18 @@ ansi_has_hyperlink_support <- function() {
   }
 
   if (nzchar(VTE_VERSION <- Sys.getenv("VTE_VERSION"))) {
-    if (package_version(VTE_VERSION) >= "0.50.1")  return(TRUE)
+    # See #441 -- some apparent heterogeneity in how the version gets
+    #   encoded to this env variable. Accept either form.
+    if (grepl("^\\d{4}$", VTE_VERSION)) {
+      VTE_VERSION <- sprintf("%2.02f", as.numeric(VTE_VERSION) / 100)
+      VTE_VERSION <- package_version(list(major = 0, minor = VTE_VERSION))
+    } else {
+      VTE_VERSION <- package_version(VTE_VERSION, strict = FALSE)
+      if (is.na(VTE_VERSION)) {
+        VTE_VERSION <- package_version("0.1.0")
+      }
+    }
+    if (VTE_VERSION >= "0.50.1") return(TRUE)
   }
 
   FALSE

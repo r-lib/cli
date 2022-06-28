@@ -1,6 +1,6 @@
 
-test_that("ansi_string", {
-  right <- c("ansi_string", "character")
+test_that("cli_ansi_string", {
+  right <- c("cli_ansi_string", "ansi_string", "character")
   expect_equal(class(ansi_string("foobar")), right)
   expect_equal(class(ansi_string(133)), right)
   expect_equal(class(ansi_string(ansi_string(134))), right)
@@ -387,7 +387,6 @@ test_that("ansi_align", {
 })
 
 test_that("stripping hyperlinks", {
-  skip("Temporarily defunct")
   withr::local_options(list(cli.hyperlink = TRUE))
   x <- unclass(style_hyperlink("foo", "https://r-pkg.org"))
   expect_equal(

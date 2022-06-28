@@ -2,7 +2,7 @@
 
     Code
       cli_code("a\nb\nc")
-    Message <cliMessage>
+    Message
       a
       b
       c
@@ -11,7 +11,7 @@
 
     Code
       cli_code("a\nb\nc")
-    Message <cliMessage>
+    Message
       a
       b
       c
@@ -20,7 +20,7 @@
 
     Code
       cli_code("a\nb\nc")
-    Message <cliMessage>
+    Message
       a
       b
       c
@@ -29,7 +29,7 @@
 
     Code
       cli_code("a\nb\nc")
-    Message <cliMessage>
+    Message
       a
       b
       c

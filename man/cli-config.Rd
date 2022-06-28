@@ -18,6 +18,13 @@ Set to a nonempty value to turn off ANSI colors.
 See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
 }
 
+\subsection{\code{ESS_BACKGROUND_MODE}}{
+
+Set this environment variable to \code{light} or \code{dark} to indicate dark mode
+in Emacs. Once https://github.com/emacs-ess/ESS/pull/1178 is merged, ESS
+will set this automatically.
+}
+
 \subsection{\code{R_CLI_DYNAMIC}}{
 
 Set to \code{true}, \code{TRUE} or \code{True} to assume a dynamic terminal, that supports \verb{\\r}.
@@ -31,6 +38,14 @@ Set to a positive integer to assume a given number of colors.
 See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
 }
 
+\subsection{\code{R_CLI_HYPERLINKS}}{
+
+Set to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal supports
+ANSI hyperlinks.
+Set to anything else to assume no hyperlink support.
+See \code{\link[=style_hyperlink]{style_hyperlink()}}.
+}
+
 }
 
 \subsection{User facing options}{
@@ -40,6 +55,13 @@ Set to \code{true}, \code{TRUE} or \code{True} to assume a terminal that support
 control sequences.
 Set to anything else to assume a non-ANSI terminal.
 See \code{\link[=is_ansi_tty]{is_ansi_tty()}}.
+}
+
+\subsection{\code{cli.condition_unicode_bullets}}{
+
+\code{TRUE} or \code{FALSE} to force turn on or off the Unicode symbols when printing
+conditions. E.g. in \code{format_error()}, \code{format_warning()}, \code{format_message()} and
+also in \code{cli_abort()}, \code{cli_warn()} and \code{cli_inform()}.
 }
 
 \subsection{\code{cli.condition_width}}{
@@ -54,6 +76,14 @@ over \code{cli.width}.
 
 General handler function for all cli conditions.
 See \url{https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1}
+}
+
+\subsection{\code{cli.default_num_colors}}{
+
+Default number of ANSI colors. This value is only used if ANSI color support
+is detected. You can set this value to keep relying on auto-detection,
+but to adjust the number of colors when cli detects color support.
+See \code{\link[=num_ansi_colors]{num_ansi_colors()}}. See also the \code{cli.num_colors} option.
 }
 
 \subsection{\code{cli.dynamic}}{
@@ -79,7 +109,8 @@ See \code{\link[=style_hyperlink]{style_hyperlink()}}.
 
 \subsection{\code{cli.num_colors}}{
 
-Number of ANSI colors. See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
+Number of ANSI colors. See \code{\link[=num_ansi_colors]{num_ansi_colors()}}. See also the
+\code{cli.default_num_colors} option.
 }
 
 \subsection{\code{cli.message_class}}{
@@ -215,7 +246,7 @@ This option in intended for the package developers.
 See \link{themes} and \code{\link[=start_app]{start_app()}}.
 }
 
-\subsection{\code{cli_theme_dark}}{
+\subsection{\code{cli.theme_dark}}{
 
 Whether cli should assume a dark theme for the builtin theme.
 See \code{\link[=builtin_theme]{builtin_theme()}}.

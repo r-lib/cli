@@ -89,14 +89,14 @@ truecolor <- as.integer(256 ^ 3)
 #' ansi_palette_show("dichro", colors = truecolor)
 
 ansi_palettes <- rbind(
-  read.table(
+  utils::read.table(
     "tools/ansi-palettes.txt",
-    comment = ";",
+    comment.char = ";",
     stringsAsFactors = FALSE
   ),
-  read.table(
+  utils::read.table(
     "tools/ansi-iterm-palettes.txt",
-    comment = ";",
+    comment.char = ";",
     stringsAsFactors = FALSE
   )
 )

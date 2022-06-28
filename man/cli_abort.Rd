@@ -7,7 +7,13 @@
 \title{Signal an error, warning or message with a cli formatted
 message}
 \usage{
-cli_abort(message, ..., .envir = parent.frame())
+cli_abort(
+  message,
+  ...,
+  call = .envir,
+  .envir = parent.frame(),
+  .frame = .envir
+)
 
 cli_warn(message, ..., .envir = parent.frame())
 
@@ -19,7 +25,25 @@ cli_inform(message, ..., .envir = parent.frame())
 \item{...}{Passed to \code{\link[rlang:abort]{rlang::abort()}}, \code{\link[rlang:abort]{rlang::warn()}} or
 \code{\link[rlang:abort]{rlang::inform()}}.}
 
+\item{call}{The execution environment of a currently running
+function, e.g. \code{call = caller_env()}. The corresponding function
+call is retrieved and mentioned in error messages as the source
+of the error.
+
+You only need to supply \code{call} when throwing a condition from a
+helper function which wouldn't be relevant to mention in the
+message.
+
+Can also be \code{NULL} or a \link[rlang:topic-defuse]{defused function call} to
+respectively not display any call or hard-code a code to display.
+
+For more information about error calls, see \ifelse{html}{\link[rlang:topic-error-call]{Including function calls in error messages}}{\link[rlang:topic-error-call]{Including function calls in error messages}}.}
+
 \item{.envir}{Environment to evaluate the glue expressions in.}
+
+\item{.frame}{The throwing context. Used as default for
+\code{.trace_bottom}, and to determine the internal package to mention
+in internal errors when \code{.internal} is \code{TRUE}.}
 }
 \description{
 These functions let you create error, warning or diagnostic
@@ -34,7 +58,9 @@ cli_abort(c(
 ))
 }\if{html}{\out{</div>}}
 
-\if{html}{\figure{cli-abort.svg}}\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
+\if{html}{\figure{cli-abort.svg}}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
 cli_abort(c(
         "Must index an existing element:",

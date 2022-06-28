@@ -10,13 +10,18 @@
 
 SEXP clic_diff_chr(SEXP a, SEXP b, SEXP max);
 
+SEXP clic_getppid();
 SEXP clic_md5(SEXP strs);
+SEXP clic_md5_raw(SEXP r);
+SEXP clic_sha256(SEXP strs);
+SEXP clic_sha256_raw(SEXP r);
+SEXP clic_sha256_file(SEXP paths);
 SEXP clic_tty_size();
 SEXP clic_ansi_simplify(SEXP x, SEXP keep_csi);
 SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
 SEXP clic_ansi_html(SEXP x, SEXP keep_csi);
-SEXP clic_ansi_has_any(SEXP x, SEXP sgr, SEXP csi);
-SEXP clic_ansi_strip(SEXP x, SEXP sgr, SEXP csi);
+SEXP clic_ansi_has_any(SEXP x, SEXP sgr, SEXP csi, SEXP link);
+SEXP clic_ansi_strip(SEXP x, SEXP sgr, SEXP csi, SEXP link);
 SEXP clic_ansi_nchar(SEXP x, SEXP type);
 
 SEXP clic_utf8_nchar_graphemes(SEXP x);

@@ -66,6 +66,7 @@
       .ansi-blink       { text-decoration: blink;        }
       .ansi-hide        { visibility: hidden;            }
       .ansi-crossedout  { text-decoration: line-through; }
+      .ansi-link:hover  { text-decoration: underline;    }
       .ansi-color-0     { color: #000000 }
       .ansi-color-1     { color: #cd3131 }
       .ansi-color-2     { color: #0dbc79 }
@@ -110,6 +111,7 @@
       .ansi-blink        { text-decoration: blink;        }
       .ansi-hide         { visibility: hidden;            }
       .ansi-crossedout   { text-decoration: line-through; }
+      .ansi-link:hover   { text-decoration: underline;    }
       .ansi-color-0      { color: #010101 }
       .ansi-color-1      { color: #de382b }
       .ansi-color-2      { color: #39b54a }

@@ -10,7 +10,7 @@
         f()
         cli_text("foo {.emph blah} bar")
       })
-    Message <cliMessage>
+    Message
       foo itsu:blah bar
       
       foo blah bar
@@ -31,7 +31,7 @@
         cli_end(id)
         cli_text("foo {.emph blah} bar")
       })
-    Message <cliMessage>
+    Message
       foo itsu:blah bar
       foo itsu:blah bar
       
@@ -53,7 +53,7 @@
         f()
         cli_text("foo {.emph blah} bar")
       })
-    Message <cliMessage>
+    Message
       foo itsu:blah bar
       foo itsu:blah bar
       
@@ -68,12 +68,12 @@
         cli_text("foo {.emph blah} bar")
       })
       f()
-    Message <cliMessage>
+    Message
       foo itsu:blah bar
       
     Code
       cli_text("foo {.emph blah} bar")
-    Message <cliMessage>
+    Message
       foo blah bar
 
 # margin is squashed
@@ -98,8 +98,9 @@
         cli_end()
         cli_text("three lines again")
       })
-    Message <cliMessage>
+    Message
       three lines
+      
       
       
       
@@ -107,7 +108,9 @@
       
       
       
+      
       no space, still
+      
       
       
       
@@ -120,6 +123,6 @@
         cli_div(theme = list(`div.alert-success` = list(before = "!!!")))
         cli_alert_success("{.pkg foobar} is good")
       })
-    Message <cliMessage>
+    Message
       !!!foobar is good
 

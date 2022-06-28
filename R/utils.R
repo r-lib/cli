@@ -16,3 +16,13 @@ cli_escape <- function(x) {
   x <- gsub("}", "}}", x, fixed = TRUE)
   x
 }
+
+# missing from older R
+
+isFALSE <- function (x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && !x
+}
+
+get_ppid <- function() {
+  .Call(clic_getppid)
+}

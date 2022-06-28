@@ -233,7 +233,7 @@ test_that_cli(configs = "ansi", "styling pieces of a dl", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        .dt = list(after = " -> "),
+        .dt = list(postfix = " -> "),
         .dd = list(color = "blue")
       )
     )
@@ -251,4 +251,13 @@ test_that("cli_dl edge cases", {
   expect_snapshot(
     cli_dl(c(abc = "foo", empty = "", def = "bar"))
   )
+})
+
+test_that("cli_dl label style", {
+  expect_snapshot(local({
+    cli_dl(c(
+      "{.code code}" = "{.code this is code too}",
+      "{.str strin}" = "{.url https://x.com}"
+    ))
+  }))
 })

@@ -38,26 +38,21 @@ format_error <- function(message, .envir = parent.frame()) {
   message[1] <- paste0("Error: ", message[1])
 
   rsconsole <- c("rstudio_console", "rstudio_console_starting")
-  if (rstudio_detect()$type %in% rsconsole) {
-    # leave some space for the traceback buttons in RStudio
-    oldopt <- options(cli.width = console_width() - 15L)
-  } else {
-    oldopt <- options(
-      cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
-    )
-  }
+  oldopt <- options(
+    cli.width = getOption("cli.condition_width") %||% getOption("cli.width")
+  )
   on.exit(options(oldopt), add =TRUE)
 
   # We need to create a frame here, so cli_div() is closed.
   # Cannot use local(), it does not work in snapshot tests, it potentially
   # has issues elsewhere as well.
   formatted1 <- fmt((function() {
-    cli_div(class = "cli_rlang cli_abort")
+    cli_div(class = "cli_rlang cli_abort", theme = cnd_theme())
     cli_bullets(message, .envir = .envir)
   })(), collapse = TRUE, strip_newline = TRUE)
 
   # remove "Error: " that was only needed for the wrapping
-  formatted1[1] <- sub("Error: ", "", formatted1[1])
+  formatted1[1] <- sub("Error:[ ]?", "", formatted1[1])
 
   update_rstudio_color(formatted1)
 }
@@ -77,7 +72,7 @@ format_warning <- function(message, .envir = parent.frame()) {
   on.exit(options(oldopt), add = TRUE)
 
   formatted1 <- fmt((function() {
-    cli_div(class = "cli_rlang cli_warn")
+    cli_div(class = "cli_rlang cli_warn", theme = cnd_theme())
     cli_bullets(message, .envir = .envir)
   })(), collapse = TRUE, strip_newline = TRUE)
 
@@ -93,7 +88,7 @@ format_message <- function(message, .envir = parent.frame()) {
   )
   on.exit(options(oldopt), add = TRUE)
   formatted1 <- fmt((function() {
-    cli_div(class = "cli_rlang cli_inform")
+    cli_div(class = "cli_rlang cli_inform", theme = cnd_theme())
     cli_bullets(message, .envir = .envir)
   })(), collapse = TRUE, strip_newline = TRUE)
   update_rstudio_color(formatted1)
@@ -133,4 +128,35 @@ get_rstudio_fg_color0 <- function() {
 
 rstudio_detect <- function() {
   rstudio$detect()
+}
+
+cnd_theme <- function() {
+  list(
+    ".cli_rlang .bullets .bullet-v" = list(
+      before = function(x) paste0(col_green(cnd_symb("tick")), " ")
+    ),
+    ".bullets .bullet-x" = list(
+      before = function(x) paste0(col_red(cnd_symb("cross")), " ")
+    ),
+    ".bullets .bullet-i" = list(
+      before = function(x) paste0(col_cyan(cnd_symb("info")), " ")
+    ),
+    ".bullets .bullet-*" = list(
+      before = function(x) paste0(col_cyan(cnd_symb("bullet")), " ")
+    ),
+    ".bullets .bullet->" = list(
+      before = function(x) paste0(cnd_symb("arrow_right"), " ")
+    )
+  )
+}
+
+cnd_symb <- function(name) {
+  opt <- getOption("cli.condition_unicode_bullets", NULL)
+  if (isTRUE(opt)) {
+    symbol_utf8[[name]]
+  } else if (isFALSE(opt)) {
+    symbol_ascii[[name]]
+  } else {
+    symbol[[name]]
+  }
 }

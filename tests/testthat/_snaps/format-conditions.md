@@ -5,8 +5,9 @@
         n <- "boo"
         stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
       })
-    Error <simpleError>
-      `n` must be a numeric vector
+    Condition
+      Error:
+      ! `n` must be a numeric vector
       x You've supplied a <character> vector.
 
 ---
@@ -18,8 +19,9 @@
         stop(format_error(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Error <simpleError>
-      Must index an existing element:
+    Condition
+      Error:
+      ! Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
 
@@ -30,8 +32,9 @@
         n <- "boo"
         stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
       })
-    Error <simpleError>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -43,8 +46,9 @@
         stop(format_error(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Error <simpleError>
-      [1m[22mMust index an existing element:
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
 
@@ -55,8 +59,9 @@
         n <- "boo"
         stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
       })
-    Error <simpleError>
-      `n` must be a numeric vector
+    Condition
+      Error:
+      ! `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
 
 ---
@@ -68,8 +73,9 @@
         stop(format_error(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Error <simpleError>
-      Must index an existing element:
+    Condition
+      Error:
+      ! Must index an existing element:
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
 
@@ -80,8 +86,9 @@
         n <- "boo"
         stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
       })
-    Error <simpleError>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -93,8 +100,9 @@
         stop(format_error(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Error <simpleError>
-      [1m[22mMust index an existing element:
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
 
@@ -103,7 +111,8 @@
     Code
       n <- "boo"
       warning(format_warning(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Warning <simpleWarning>
+    Condition
+      Warning:
       `n` must be a numeric vector
       x You've supplied a <character> vector.
 
@@ -116,7 +125,8 @@
         warning(format_warning(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Warning <simpleWarning>
+    Condition
+      Warning:
       Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
@@ -126,8 +136,9 @@
     Code
       n <- "boo"
       warning(format_warning(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Warning <simpleWarning>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+    Condition
+      [1m[33mWarning[39m:[22m
+      [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -139,7 +150,8 @@
         warning(format_warning(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Warning <simpleWarning>
+    Condition
+      [1m[33mWarning[39m:[22m
       [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
@@ -149,7 +161,8 @@
     Code
       n <- "boo"
       warning(format_warning(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Warning <simpleWarning>
+    Condition
+      Warning:
       `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
 
@@ -162,7 +175,8 @@
         warning(format_warning(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Warning <simpleWarning>
+    Condition
+      Warning:
       Must index an existing element:
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
@@ -172,8 +186,9 @@
     Code
       n <- "boo"
       warning(format_warning(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Warning <simpleWarning>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+    Condition
+      [1m[33mWarning[39m:[22m
+      [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -185,7 +200,8 @@
         warning(format_warning(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Warning <simpleWarning>
+    Condition
+      [1m[33mWarning[39m:[22m
       [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
@@ -195,7 +211,7 @@
     Code
       n <- "boo"
       message(format_message(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Message <simpleMessage>
+    Message
       `n` must be a numeric vector
       x You've supplied a <character> vector.
 
@@ -208,7 +224,7 @@
         message(format_message(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Message <simpleMessage>
+    Message
       Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
@@ -218,8 +234,8 @@
     Code
       n <- "boo"
       message(format_message(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Message <simpleMessage>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+    Message
+      [1m[22m`n` must be a numeric vector
       [31mx[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -231,7 +247,7 @@
         message(format_message(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Message <simpleMessage>
+    Message
       [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
@@ -241,7 +257,7 @@
     Code
       n <- "boo"
       message(format_message(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Message <simpleMessage>
+    Message
       `n` must be a numeric vector
       ✖ You've supplied a <character> vector.
 
@@ -254,7 +270,7 @@
         message(format_message(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Message <simpleMessage>
+    Message
       Must index an existing element:
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
@@ -264,8 +280,8 @@
     Code
       n <- "boo"
       message(format_message(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.")))
-    Message <simpleMessage>
-      [1m[22m[30m[47m`n`[49m[39m must be a numeric vector
+    Message
+      [1m[22m`n` must be a numeric vector
       [31m✖[39m You've supplied a [34m<character>[39m vector.
 
 ---
@@ -277,32 +293,10 @@
         message(format_message(c("Must index an existing element:", i = "There {?is/are} {len} element{?s}.",
           x = "You've tried to subset element {idx}.")))
       })
-    Message <simpleMessage>
+    Message
       [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
-
-# format_error width in RStudio
-
-    Code
-      local({
-        len <- 26
-        idx <- 100
-        stop(format_error(c(lorem_ipsum(1, 3), i = lorem_ipsum(1, 3), x = lorem_ipsum(
-          1, 3))))
-      })
-    Error <simpleError>
-      Duis quis magna incididunt nulla commodo minim non
-      exercitation nostrud ullamco dolor exercitation ut veniam.
-      Fugiat irure tempor commodo voluptate ut. In et tempor excepteur
-      quis.
-      i Et nisi ad quis ad cupidatat tempor laborum est excepteur
-        aliqua veniam ex. Sunt magna veniam Lorem elit enim et
-        pariatur aliqua occaecat mollit consequat dolore in mollit.
-        Officia labore reprehenderit culpa dolore quis nisi do aliqua
-        commodo deserunt fugiat cupidatat nostrud ad.
-      x Ad laboris consectetur esse minim pariatur irure do anim anim.
-        Mollit ad cupidatat ullamco ullamco nulla elit in.
 
 # color in RStudio [ansi]
 
@@ -362,4 +356,72 @@
       format_message(msg)
     Output
       [1] "1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890"
+
+# suppressing Unicode bullets [plain]
+
+    Code
+      local({
+        n <- "boo"
+        stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.",
+          v = "Success.", i = "Info.", `*` = "Bullet", `>` = "Arrow")))
+      })
+    Condition
+      Error:
+      ! `n` must be a numeric vector
+      x You've supplied a <character> vector.
+      v Success.
+      i Info.
+      * Bullet
+      > Arrow
+
+# suppressing Unicode bullets [ansi]
+
+    Code
+      local({
+        n <- "boo"
+        stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.",
+          v = "Success.", i = "Info.", `*` = "Bullet", `>` = "Arrow")))
+      })
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22m`n` must be a numeric vector
+      [31mx[39m You've supplied a [34m<character>[39m vector.
+      [32mv[39m Success.
+      [36mi[39m Info.
+      [36m*[39m Bullet
+      > Arrow
+
+# suppressing Unicode bullets [unicode]
+
+    Code
+      local({
+        n <- "boo"
+        stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.",
+          v = "Success.", i = "Info.", `*` = "Bullet", `>` = "Arrow")))
+      })
+    Condition
+      Error:
+      ! `n` must be a numeric vector
+      x You've supplied a <character> vector.
+      v Success.
+      i Info.
+      * Bullet
+      > Arrow
+
+# suppressing Unicode bullets [fancy]
+
+    Code
+      local({
+        n <- "boo"
+        stop(format_error(c("{.var n} must be a numeric vector", x = "You've supplied a {.cls {class(n)}} vector.",
+          v = "Success.", i = "Info.", `*` = "Bullet", `>` = "Arrow")))
+      })
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22m`n` must be a numeric vector
+      [31mx[39m You've supplied a [34m<character>[39m vector.
+      [32mv[39m Success.
+      [36mi[39m Info.
+      [36m*[39m Bullet
+      > Arrow
 

@@ -133,6 +133,9 @@ struct cli_sgr_state {
   char inverse;
   char hide;
   char crossedout;
+  const char* link_param;
+  const char* link_uri;
+  const char* link_end;
 };
 
 struct cli_ansi_state {
@@ -276,8 +279,29 @@ static void clic__ansi_update_state(const char *param,
   } while (endptr < intermed && *endptr == ';');
 }
 
+static void clic__ansi_update_state_link(const char *param,
+                                         const char *uri,
+                                         const char *end,
+                                         struct cli_buffer *buffer,
+                                         struct cli_ansi_state *state) {
+
+  if ((*uri == '\033' && *(uri + 1) == '\\') || *uri == '\007') {
+    // turn off links
+    state->new.link_param = NULL;
+    state->new.link_uri = NULL;
+    state->new.link_end = NULL;
+
+  } else {
+    // start of a link
+    state->new.link_param = param;
+    state->new.link_uri = uri;
+    state->new.link_end = end;
+  }
+}
+
 #define EMIT(s) clic__buffer_push_str(buffer, "\033[" s "m")
 #define EMITS(s) clic__buffer_push_str(buffer, (s))
+#define EMITP(s,e) clic__buffer_push_piece(buffer, (s), (e))
 
 static void clic__state_update_buffer(struct cli_buffer *buffer,
                                       struct cli_ansi_state *state) {
@@ -332,7 +356,24 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMIT("22");
   }
 
+  if (state->old.link_uri && state->new.link_uri != state->old.link_uri) {
+    EMITS("\033]8;;\007");
+    // EMITS("\033]8;;\033\\");
+  }
+
   /* Opening tags in reverse order ------------------------------------- */
+
+  if (state->new.link_uri && state->new.link_uri != state->old.link_uri) {
+    EMITS("\033]8;");
+    // EMITP(state->new.link_param, state->new.link_end + 1);
+    EMITP(state->new.link_param, state->new.link_uri);
+    if (*(state->new.link_end) == '\007') {
+      EMITP(state->new.link_uri, state->new.link_end);
+    } else {
+      EMITP(state->new.link_uri, state->new.link_end - 1);
+    }
+    EMITS("\007");
+  }
 
   if (state->new.bold > state->old.bold) {
     EMIT("1");
@@ -413,6 +454,7 @@ void clic__ansi_iterator(SEXP sx,
                          clic__start_callback_t start_cb,
                          clic__tag_callback_t sgr_cb,
                          clic__tag_callback_t csi_cb,
+                         clic__tag_callback_t link_cb,
                          clic__text_callback_t text_cb,
                          clic__end_callback_t end_cb,
                          void *data) {
@@ -427,12 +469,14 @@ void clic__ansi_iterator(SEXP sx,
     const char *s_param;
     const char *s_intermed;
     const char *s_end;
+    const char *s_uri;
 
     if (start_cb) if (start_cb(str, ox, data)) goto end;
     if (str == NA_STRING) goto end;
 
     while (*x != 0) {
       if (*x == '\033' && *(x + 1) == '[') {
+        // CSI
         s_start = x;
         s_param = s_intermed = x + 2;
         while (*s_intermed >= 0x30 && *s_intermed <= 0x3f) s_intermed++;
@@ -452,6 +496,30 @@ void clic__ansi_iterator(SEXP sx,
         }
         shaft = s_end + 1;
         x = *s_end ? s_end + 1 : s_end;
+
+      } else if (*x == '\033' && *(x + 1) == ']' && *(x + 2) == '8' &&
+                 *(x + 3) == ';') {
+        // OSC
+        s_start = x;
+        s_param = s_uri = x + 4;
+        while (*s_uri != ';' && *s_uri != '\0') s_uri++;
+        s_uri++;
+        s_end = s_uri;
+        for (;;) {
+          if (*s_end == '\0') break;
+          if (*s_end == '\007') break;
+          if (*s_end == '\\' && *(s_end - 1) == '\033') break;
+          s_end++;
+        }
+        if (s_start > shaft && text_cb) {
+          if (text_cb(shaft, s_start, data)) goto end;
+        }
+        if (link_cb) {
+          if (link_cb(s_param, s_uri, s_end, data)) goto end;
+        }
+        shaft = s_end + 1;
+        x = *s_end ? s_end + 1 : s_end;
+
       } else {
         x++;
       }
@@ -508,6 +576,16 @@ static int simplify_cb_csi(const char *param,
   return 0;
 }
 
+static int simplify_cb_link(const char *param,
+                            const char *uri,
+                            const char *end,
+                            void *vdata) {
+  struct simplify_data *data = vdata;
+  data->num_tags ++;
+  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
+  return 0;
+}
+
 static int simplify_cb_text(const char *str,
                             const char *end,
                             void *vdata) {
@@ -555,6 +633,7 @@ SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
     simplify_cb_start,
     simplify_cb_sgr,
     simplify_cb_csi,
+    simplify_cb_link,
     simplify_cb_text,
     simplify_cb_end,
     &data
@@ -564,11 +643,13 @@ SEXP clic_ansi_simplify(SEXP sx, SEXP keep_csi) {
 
   SEXP ocls = PROTECT(getAttrib(sx, R_ClassSymbol));
   int oclslen = isNull(ocls) ? 0 : LENGTH(ocls);
-  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "ansi_string");
+  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "cli_ansi_string");
+  int has_as2 = oclslen == 0 ? 0 : Rf_inherits(sx, "ansi_string");
   int has_ch = oclslen == 0 ? 0 : Rf_inherits(sx, "character");
-  int i, j = 0, clslen = oclslen + !has_as + !has_ch;
+  int i, j = 0, clslen = oclslen + !has_as + !has_as2 + !has_ch;
   SEXP cls = PROTECT(allocVector(STRSXP, clslen));
-  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
+  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("cli_ansi_string"));
+  if (!has_as2) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
   for (i = 0; i < oclslen; i++) {
     SET_STRING_ELT(cls, j++, STRING_ELT(ocls, i));
   }
@@ -603,6 +684,15 @@ static int substr_cb_sgr(const char *param,
                          void *vdata) {
   struct substr_data *data = vdata;
   clic__ansi_update_state(param, intermed, end, &data->buffer, &data->state);
+  return 0;
+}
+
+static int substr_cb_link(const char *param,
+                          const char *uri,
+                          const char *end,
+                          void *vdata) {
+  struct substr_data *data = vdata;
+  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
   return 0;
 }
 
@@ -693,6 +783,7 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
     substr_cb_start,
     substr_cb_sgr,
     NULL,
+    substr_cb_link,
     substr_cb_text,
     substr_cb_end,
     &data
@@ -702,11 +793,13 @@ SEXP clic_ansi_substr(SEXP sx, SEXP start, SEXP stop) {
 
   SEXP ocls = PROTECT(getAttrib(sx, R_ClassSymbol));
   int oclslen = isNull(ocls) ? 0 : LENGTH(ocls);
-  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "ansi_string");
+  int has_as = oclslen == 0 ? 0 : Rf_inherits(sx, "cli_ansi_string");
+  int has_as2 = oclslen == 0 ? 0 : Rf_inherits(sx, "ansi_string");
   int has_ch = oclslen == 0 ? 0 : Rf_inherits(sx, "character");
-  int i, j = 0, clslen = oclslen + !has_as + !has_ch;
+  int i, j = 0, clslen = oclslen + !has_as + !has_as2 + !has_ch;
   SEXP cls = PROTECT(allocVector(STRSXP, clslen));
-  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
+  if (!has_as) SET_STRING_ELT(cls, j++, mkChar("cli_ansi_string"));
+  if (!has_as2) SET_STRING_ELT(cls, j++, mkChar("ansi_string"));
   for (i = 0; i < oclslen; i++) {
     SET_STRING_ELT(cls, j++, STRING_ELT(ocls, i));
   }
@@ -725,6 +818,7 @@ struct html_data {
   R_xlen_t done;
   SEXP result;
   char had_tags;
+  char is_link;
   char keep_csi;
 };
 
@@ -744,7 +838,19 @@ static void clic__html_start(struct html_data *data) {
   char col[64];
 
   int first = 1;
+  data->is_link = 0;
  /* Opening tags ------------------------------------------------------ */
+
+  if (state->new.link_uri && state->new.link_uri != state->old.link_uri) {
+    EMITS("<a class=\"ansi-link\" href=\"");
+    if (*(state->new.link_end) == '\007') {
+      EMITP(state->new.link_uri, state->new.link_end);
+    } else {
+      EMITP(state->new.link_uri, state->new.link_end - 1);
+    }
+    EMITS("\">");
+    data->is_link = 1;
+  }
 
   if (state->new.bold > state->old.bold) {
     EMITS1(" ansi-bold");
@@ -819,6 +925,7 @@ static void clic__html_end(struct html_data *data) {
 
   struct cli_buffer *buffer = &data->buffer;
   if (data->had_tags) EMITS("</span>");
+  if (data->is_link) EMITS("</a>");
 }
 
 static int html_cb_start(SEXP rstr, const char *str, void *vdata) {
@@ -844,6 +951,15 @@ static int html_cb_csi(const char *param,
   if (data->keep_csi) {
     clic__buffer_push_piece(&data->buffer, param - 2, end + 1);
   }
+  return 0;
+}
+
+static int html_cb_link(const char *param,
+                        const char *uri,
+                        const char *end,
+                        void *vdata) {
+  struct html_data *data = vdata;
+  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
   return 0;
 }
 
@@ -893,6 +1009,7 @@ SEXP clic_ansi_html(SEXP sx, SEXP keep_csi) {
     html_cb_start,
     html_cb_sgr,
     html_cb_csi,
+    html_cb_link,
     html_cb_text,
     html_cb_end,
     &data
@@ -911,6 +1028,7 @@ struct has_any_data {
   SEXP result;
   char sgr;
   char csi;
+  char link;
   char has;
 };
 
@@ -940,6 +1058,18 @@ static int has_any_cb_csi(const char *param,
   }
 }
 
+static int has_any_cb_link(const char *param,
+                           const char *uri,
+                           const char *end,
+                           void *vdata) {
+  struct has_any_data *data = vdata;
+  if (data->link) {
+    data->has = 1;
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
 static int has_any_cb_end(SEXP rstr,
                           const char *str,
@@ -955,19 +1085,21 @@ static int has_any_cb_end(SEXP rstr,
   return 0;
 }
 
-SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi) {
+SEXP clic_ansi_has_any(SEXP sx, SEXP sgr, SEXP csi, SEXP link) {
   struct has_any_data data;
   data.done = 0;
   data.has = 0;
   data.result = PROTECT(allocVector(LGLSXP, XLENGTH(sx)));
   data.sgr = LOGICAL(sgr)[0];
   data.csi = LOGICAL(csi)[0];
+  data.link = LOGICAL(link)[0];
 
   clic__ansi_iterator(
     sx,
     /* cb_start = */ 0,
     has_any_cb_sgr,
     has_any_cb_csi,
+    has_any_cb_link,
     /* cb_text = */ 0,
     has_any_cb_end,
     &data
@@ -986,6 +1118,7 @@ struct strip_data {
   SEXP result;
   char sgr;
   char csi;
+  char link;
 };
 
 static int strip_cb_start(SEXP rstr, const char *str, void *vdata) {
@@ -1021,6 +1154,19 @@ static int strip_cb_csi(const char *param,
   return 0;
 }
 
+static int strip_cb_link(const char *param,
+                         const char *uri,
+                         const char *end,
+                         void *vdata) {
+  struct strip_data *data = vdata;
+  if (data->link) {
+    data->num_tags ++;
+  } else {
+    clic__buffer_push_piece(&data->buffer, param - 4, end + 1);
+  }
+  return 0;
+}
+
 static int strip_cb_text(const char *str,
                         const char *end,
                         void *vdata) {
@@ -1030,8 +1176,8 @@ static int strip_cb_text(const char *str,
 }
 
 static int strip_cb_end(SEXP rstr,
-                          const char *str,
-                          void *vdata) {
+                        const char *str,
+                        void *vdata) {
   struct strip_data *data = vdata;
   if (data->num_tags == 0) {
     SET_STRING_ELT(data->result, data->done, rstr);
@@ -1057,19 +1203,21 @@ static int strip_cb_end(SEXP rstr,
 
 /* TODO: strip hyperlinks */
 
-SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi) {
+SEXP clic_ansi_strip(SEXP sx, SEXP sgr, SEXP csi, SEXP link) {
   struct strip_data data;
   clic__buffer_init(&data.buffer);
   data.done = 0;
   data.result = PROTECT(allocVector(STRSXP, XLENGTH(sx)));
   data.sgr = LOGICAL(sgr)[0];
   data.csi = LOGICAL(csi)[0];
+  data.link = LOGICAL(link)[0];
 
   clic__ansi_iterator(
     sx,
     strip_cb_start,
     strip_cb_sgr,
     strip_cb_csi,
+    strip_cb_link,
     strip_cb_text,
     strip_cb_end,
     &data
@@ -1195,6 +1343,7 @@ SEXP clic_ansi_nchar(SEXP sx, SEXP type) {
     nchar_cb_start,
     /* sgr   = */ NULL,
     /* csi   = */ NULL,
+    /* link  = */ NULL,
     nchar_text_cbs[ctype],
     nchar_cb_end,
     &data

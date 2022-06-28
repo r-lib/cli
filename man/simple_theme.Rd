@@ -4,7 +4,7 @@
 \alias{simple_theme}
 \title{A simple CLI theme}
 \usage{
-simple_theme(dark = getOption("cli_theme_dark", "auto"))
+simple_theme(dark = getOption("cli.theme_dark", "auto"))
 }
 \arguments{
 \item{dark}{Whether the theme should be optimized for a dark
@@ -22,7 +22,9 @@ effect.
 }\if{html}{\out{</div>}}
 
 and then CLI apps started after this will use it as the default theme.
-You can also use it temporarily, in a div element:\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_div(theme = cli::simple_theme())
+You can also use it temporarily, in a div element:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_div(theme = cli::simple_theme())
 }\if{html}{\out{</div>}}
 }
 \section{Showcase}{

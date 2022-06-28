@@ -195,15 +195,15 @@ boxx <- function(label, header = "", footer = "",
 
   box <- paste0(top, "\n", paste0(middle, collapse = "\n"), "\n", bottom)
 
-  class(box) <- unique(c("boxx", class(box), "character"))
+  class(box) <- unique(c("cli_boxx", "boxx", class(box), "character"))
   box
 }
 
-methods::setOldClass(c("boxx", "character"))
+methods::setOldClass(c("cli_boxx", "character"))
 
 #' @export
 
-print.boxx <- function(x, ..., sep = "\n") {
+print.cli_boxx <- function(x, ..., sep = "\n") {
   cat(x, ..., sep = sep)
   invisible(x)
 }

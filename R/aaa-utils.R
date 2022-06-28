@@ -102,17 +102,6 @@ vlapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
   vapply(X, FUN, FUN.VALUE = logical(1), ..., USE.NAMES = USE.NAMES)
 }
 
-ruler <- function(width = console_width()) {
-  x <- seq_len(width)
-  y <- rep("-", length(x))
-
-  y[x %% 5 == 0] <- "+"
-  y[x %% 10 == 0] <- style_bold(as.character((x[x %% 10 == 0] %/% 10) %% 10))
-
-  cat(y, "\n", sep = "")
-  cat(x %% 10, "\n", sep = "")
-}
-
 rpad <- function(x, width = NULL) {
   if (!length(x)) return(x)
   w <- nchar(x, type = "width")

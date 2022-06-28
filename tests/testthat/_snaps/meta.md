@@ -7,10 +7,9 @@
         message("This as well")
         cli_alert_success("Success!")
       })
-    Message <simpleMessage>
+    Message
       This is before
       This as well
-    Message <cliMessage>
       i First message
       v Success!
 
@@ -23,10 +22,9 @@
         message("This as well")
         cli_alert_success("Success!")
       })
-    Message <simpleMessage>
+    Message
       This is before
       This as well
-    Message <cliMessage>
       [36mi[39m First message
       [32mv[39m Success!
 
@@ -39,10 +37,9 @@
         message("This as well")
         cli_alert_success("Success!")
       })
-    Message <simpleMessage>
+    Message
       This is before
       This as well
-    Message <cliMessage>
       ℹ First message
       ✔ Success!
 
@@ -55,10 +52,9 @@
         message("This as well")
         cli_alert_success("Success!")
       })
-    Message <simpleMessage>
+    Message
       This is before
       This as well
-    Message <cliMessage>
       [36mℹ[39m First message
       [32m✔[39m Success!
 
@@ -66,7 +62,7 @@
 
     Code
       cli_server_default(msgs[[1]])
-    Message <cliMessage>
+    Message
       i First message
       v Success!
     Output
@@ -76,7 +72,7 @@
 
     Code
       cli_server_default(msgs[[1]])
-    Message <cliMessage>
+    Message
       [36mi[39m First message
       [32mv[39m Success!
     Output
@@ -86,7 +82,7 @@
 
     Code
       cli_server_default(msgs[[1]])
-    Message <cliMessage>
+    Message
       ℹ First message
       ✔ Success!
     Output
@@ -96,7 +92,7 @@
 
     Code
       cli_server_default(msgs[[1]])
-    Message <cliMessage>
+    Message
       [36mℹ[39m First message
       [32m✔[39m Success!
     Output
@@ -111,7 +107,7 @@
       }), cliMessage = function(msg) {
         msgs <<- c(msgs, list(msg))
       })
-    Message <cliMessage>
+    Message
       i First message
       v Success!
 
@@ -124,7 +120,7 @@
       }), cliMessage = function(msg) {
         msgs <<- c(msgs, list(msg))
       })
-    Message <cliMessage>
+    Message
       [36mi[39m First message
       [32mv[39m Success!
 
@@ -137,7 +133,7 @@
       }), cliMessage = function(msg) {
         msgs <<- c(msgs, list(msg))
       })
-    Message <cliMessage>
+    Message
       ℹ First message
       ✔ Success!
 
@@ -150,7 +146,7 @@
       }), cliMessage = function(msg) {
         msgs <<- c(msgs, list(msg))
       })
-    Message <cliMessage>
+    Message
       [36mℹ[39m First message
       [32m✔[39m Success!
 
@@ -165,7 +161,7 @@
           cli_text("And {.emph some} more: {.val {x}}")
         })
       })
-    Message <cliMessage>
+    Message
       
       -- Title: My title -------------------------------------------------------------
       And some more: 1, 2, and 3
@@ -181,7 +177,7 @@
           cli_text("And {.emph some} more: {.val {x}}")
         })
       })
-    Message <cliMessage>
+    Message
       
       [36m--[39m [1mTitle: [3mMy title[23m[22m [36m-------------------------------------------------------------[39m
       And [3msome[23m more: [34m1[39m, [34m2[39m, and [34m3[39m
@@ -197,7 +193,7 @@
           cli_text("And {.emph some} more: {.val {x}}")
         })
       })
-    Message <cliMessage>
+    Message
       
       ── Title: My title ─────────────────────────────────────────────────────────────
       And some more: 1, 2, and 3
@@ -213,7 +209,7 @@
           cli_text("And {.emph some} more: {.val {x}}")
         })
       })
-    Message <cliMessage>
+    Message
       
       [36m──[39m [1mTitle: [3mMy title[23m[22m [36m─────────────────────────────────────────────────────────────[39m
       And [3msome[23m more: [34m1[39m, [34m2[39m, and [34m3[39m

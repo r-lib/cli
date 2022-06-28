@@ -113,13 +113,13 @@ clii_ol <- function(app, items, id, class, .close) {
   invisible(id)
 }
 
-clii_dl <- function(app, items, id, class, .close) {
+clii_dl <- function(app, items, labels, id, class, .close) {
   id <- clii__container_start(app, "dl", id = id, class = class)
-  if (length(items)) { app$li(items); if (.close) app$end(id) }
+  if (length(items)) { app$li(items, labels); if (.close) app$end(id) }
   invisible(id)
 }
 
-clii_li <- function(app, items, id, class) {
+clii_li <- function(app, items, labels, id, class) {
   id <- id %||% new_uuid()
 
   ## check the last active list container
@@ -146,7 +146,7 @@ clii_li <- function(app, items, id, class) {
   if (length(items) > 0) {
     for (i in seq_along(items)) {
       id <- clii__container_start(app, "li", id = id, class = class)
-      app$item_text(type, names(items)[i], cnt_id, items[[i]])
+      app$item_text(type, labels[[i]], cnt_id, items[[i]])
       if (i < length(items)) app$end(id)
     }
   } else {
@@ -162,7 +162,9 @@ clii__item_text <- function(app, type, name, cnt_id, text, .list) {
   style <- app$get_current_style()
   cnt_style <- app$styles[[cnt_id]]
 
-  head <- if (type == "ul") {
+  head <- if (type == "dl") name else glue_delay(name)
+
+  head$str <- if (type == "ul") {
     paste0(call_if_fun(style$`list-style-type`) %||% "*", " ")
   } else if (type == "ol") {
     res <- paste0(cnt_style$start %||% 1L, ". ")
@@ -171,11 +173,12 @@ clii__item_text <- function(app, type, name, cnt_id, text, .list) {
   } else if (type == "dl") {
     mrk <- text$values$marker
     text$str <- paste0("{", mrk, ".dd ", text$str, mrk, "}")
-    paste0("{.dt ", name, "}")
+    mrk2 <- head$values$marker
+    paste0("{", mrk2, ".dt ", head$str, mrk2, "}")
   }
 
   app$xtext(
-    .list = c(list(glue_delay(head)), list(text), .list),
+    .list = c(list(head), list(text), .list),
     indent = - (style$`padding-left` %||% 0),
     padding = (cnt_style$`padding-left` %||% 0)
   )

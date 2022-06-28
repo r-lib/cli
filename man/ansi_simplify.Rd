@@ -13,7 +13,7 @@ ansi_simplify(x, csi = c("keep", "drop"))
 or \code{"drop"} them.}
 }
 \value{
-Simplified \code{ansi_string} vector.
+Simplified \code{cli_ansi_string} vector.
 }
 \description{
 It creates an equivalent, but possibly shorter ANSI styled string, by
