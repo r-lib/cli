@@ -11,7 +11,7 @@
   `ansi_nzchar()`. They work like the corresponding base R functions, but
   handle ANSI markup.
 
-* `style_hyperlink()` (really) no longer breaks if the env varible `VTE_VERSION`
+* `style_hyperlink()` (really) no longer breaks if the env variable `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
 * `cli_dl()` and its corresponding `cli_li()` can now style the labels.
@@ -20,7 +20,7 @@
   cli does not try to evaluate a styled string as an R expression any more.
   E.g. the meaning of `"{.emph +1}"` is now always the "+1", with style
   `.emph`, even if an `.emph` variable is available and the `.emph + 1`
-  expresion can be evaluated.
+  expression can be evaluated.
   
 * Functions that apply bright background colors (e.g. `bg_br_yellow()`) now 
   close themselves. They no longer format text after the end of the function
@@ -28,7 +28,7 @@
 
 # cli 3.3.0
 
-* `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
+* `style_hyperlink()` no longer breaks if the env variable `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
 * `ansi_*()` functions support ANSI hyperlinks again (#444).
@@ -49,7 +49,7 @@
 
 ## Other changes
 
-* The preferred names of the S3 clases `ansi_string`, `ansi_style`, `boxx`,
+* The preferred names of the S3 classes `ansi_string`, `ansi_style`, `boxx`,
   `rule` and `tree` now have `cli_` prefix: `cli_ansi_string`, etc. This will
   help avoiding name conflicts with other packages eventually, but for now
   the old names are kept as well, for compatibility.
