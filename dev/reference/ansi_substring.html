@@ -43,6 +43,8 @@ calculating the positions within the string."><meta name="robots" content="noind
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -78,7 +80,7 @@ calculating the positions within the string.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">text</span>, <span class="va">first</span>, last <span class="op">=</span> <span class="fl">1000000L</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">text</span>, <span class="va">first</span>, last <span class="op">=</span> <span class="fl">1000000L</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,16 +89,23 @@ calculating the positions within the string.</p>
 <dd><p>Character vector, potentially ANSI styled, or a vector to
 coerced to character. It is recycled to the longest of <code>first</code>
 and <code>last</code>.</p></dd>
+
+
 <dt>first</dt>
 <dd><p>Starting index or indices, recycled to match the length
 of <code>x</code>.</p></dd>
+
+
 <dt>last</dt>
 <dd><p>Ending index or indices, recycled to match the length
 of <code>x</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Character vector of the same length as <code>x</code>, containing
+    
+
+<p>Character vector of the same length as <code>x</code>, containing
 the requested substrings. ANSI styles are retained.</p>
     </div>
     <div class="section level2">
@@ -115,40 +124,40 @@ the requested substrings. ANSI styles are retained.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">str</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="st">"default"</span>,</span>
-<span class="r-in">  <span class="fu"><a href="ansi-styles.html">col_green</a></span><span class="op">(</span><span class="st">"green"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">str</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">str</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"default"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ansi-styles.html">col_green</a></span><span class="op">(</span><span class="st">"green"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">str</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span> default <span style="color: #00BB00;">green</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span> d </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str</span>, <span class="fl">1</span>, <span class="fl">15</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str</span>, <span class="fl">1</span>, <span class="fl">15</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">red</span> default <span style="color: #00BB00;">gre</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">d</span> def </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "red d"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">15</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">15</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "red default gre"</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d def"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">str2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">"another"</span>,</span>
-<span class="r-in">  <span class="fu"><a href="ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"multi-"</span>, <span class="fu"><a href="ansi-styles.html">style_underline</a></span><span class="op">(</span><span class="st">"style"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="st">"text"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">str2</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">str2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"another"</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"multi-"</span>, <span class="fu"><a href="ansi-styles.html">style_underline</a></span><span class="op">(</span><span class="st">"style"</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"text"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">str2</span>, <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> another <span style="color: #BB0000;">multi-</span><span style="color: #BB0000; text-decoration: underline;">style</span> text </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">ansi_substring</span><span class="op">(</span><span class="va">str2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> other</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> her <span style="color: #BB0000;">multi-</span><span style="color: #BB0000; text-decoration: underline;">styl</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substring</a></span><span class="op">(</span><span class="fu"><a href="ansi_strip.html">ansi_strip</a></span><span class="op">(</span><span class="va">str2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">18</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "other"          "her multi-styl"</span>
 </code></pre></div>
     </div>
@@ -163,7 +172,7 @@ the requested substrings. ANSI styles are retained.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

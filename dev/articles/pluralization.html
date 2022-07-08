@@ -59,6 +59,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -87,11 +89,11 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>cli pluralization</h1>
                         <h4 data-toc-skip class="author">Gábor Csárdi</h4>
             
-            <h4 data-toc-skip class="date">2022-06-08</h4>
+            <h4 data-toc-skip class="date">2022-07-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/HEAD/vignettes/pluralization.Rmd" class="external-link"><code>vignettes/pluralization.Rmd</code></a></small>
       <div class="d-none name"><code>pluralization.Rmd</code></div>
@@ -113,15 +115,15 @@
 </h3>
 <p>In the simplest case the message contains a single <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code> glue substitution, which specifies the quantity that is used to select between the singular and plural forms. Pluralization uses markup that is similar to glue, but uses the <code>{?</code> and <code>}</code> delimiters:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span>
-<span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 0 files.</span></code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span></span>
+<span><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 0 files.</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 1 file.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 1 file.</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 2 files.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfile} file{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 2 files.</span></span></code></pre>
 <p>Here the value of <code>nfile</code> is used to decide whether the singular or plural form of <code>file</code> is used. This is the most common case for English messages.</p>
 </div>
 <div class="section level3">
@@ -129,48 +131,48 @@
 </h3>
 <p>If the plural form is more difficult than a simple <code>s</code> suffix, then the singular and plural forms can be given, separated with a forward slash:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ndir</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {ndir} director{?y/ies}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 1 directory.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">ndir</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {ndir} director{?y/ies}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 1 directory.</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ndir</span> <span class="op">&lt;-</span> <span class="fl">5</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {ndir} director{?y/ies}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 5 directories.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">ndir</span> <span class="op">&lt;-</span> <span class="fl">5</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {ndir} director{?y/ies}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 5 directories.</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="use-no-instead-of-zero">Use <code>"no"</code> instead of zero<a class="anchor" aria-label="anchor" href="#use-no-instead-of-zero"></a>
 </h3>
 <p>For readability, it is better to use the <code><a href="../reference/pluralization-helpers.html">no()</a></code> helper function to include a count in a message. <code><a href="../reference/pluralization-helpers.html">no()</a></code> prints the word <code>"no"</code> if the count is zero, and prints the numeric count otherwise:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found no files.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">0</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found no files.</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 1 file.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 1 file.</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 2 files.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nfile</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {no(nfile)} file{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 2 files.</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="use-the-length-of-character-vectors">Use the length of character vectors<a class="anchor" aria-label="anchor" href="#use-the-length-of-character-vectors"></a>
 </h3>
 <p>With the auto-collapsing feature of cli it is easy to include a list of objects in a message. When cli interprets a character vector as a pluralization quantity, it takes the length of the vector:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="st">"pkg1"</span>
-<span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove the {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Will remove the pkg1 package.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="st">"pkg1"</span></span>
+<span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove the {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Will remove the pkg1 package.</span></span></code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove the {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove the {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</span></span></code></pre>
 <p>Note that the length is only used for non-numeric vectors (when <code>is.numeric(x)</code> return <code>FALSE</code>). If you want to use the length of a numeric vector, convert it to character via <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code>.</p>
 <p>You can combine collapsed vectors with <code>"no"</code>, like this:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Will remove no packages.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Will remove no packages.</span></span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</span></code></pre>
+<code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Will remove {?no/the/the} {.pkg {pkgs}} package{?s}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Will remove the pkg1, pkg2, and pkg3 packages.</span></span></code></pre>
 <p>When the pluralization markup contains three alternatives, like above, the first one is used for zero, the second for one, and the third one for larger quantities.</p>
 </div>
 <div class="section level3">
@@ -178,14 +180,14 @@
 </h3>
 <p>When the text contains multiple glue <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code> substitutions, the one right before the pluralization markup is used. For example:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nfiles</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">ndirs</span> <span class="op">&lt;-</span> <span class="fl">1</span>
-<span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfiles} file{?s} and {ndirs} director{?y/ies}"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; Found 3 files and 1 directory</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nfiles</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">ndirs</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Found {nfiles} file{?s} and {ndirs} director{?y/ies}"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; Found 3 files and 1 directory</span></span></code></pre>
 <p>This is sometimes not the the correct one. You can explicitly specify the correct quantity using the <code><a href="../reference/pluralization-helpers.html">qty()</a></code> function. This sets that quantity without printing anything:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nupd</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">ntotal</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-<span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">#&gt; 3/10 files need updates</span></code></pre>
+<code class="sourceCode R"><span><span class="va">nupd</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">ntotal</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; 3/10 files need updates</span></span></code></pre>
 <p>Note that if the message only contains a single <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code> substitution, then this may appear before or after the pluralization markup. If the message contains multiple <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code> substitutions <em>after</em> pluralization markup, an error is thrown.</p>
 <p>Similarly, if the message contains no <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code> substitutions at all, but has pluralization markup, an error is thrown.</p>
 </div>
@@ -232,7 +234,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer>

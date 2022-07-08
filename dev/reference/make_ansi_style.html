@@ -37,6 +37,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -69,15 +71,19 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">make_ansi_style</span><span class="op">(</span><span class="va">...</span>, bg <span class="op">=</span> <span class="cn">FALSE</span>, grey <span class="op">=</span> <span class="cn">FALSE</span>, colors <span class="op">=</span> <span class="fu"><a href="num_ansi_colors.html">num_ansi_colors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_ansi_style</span><span class="op">(</span><span class="va">...</span>, bg <span class="op">=</span> <span class="cn">FALSE</span>, grey <span class="op">=</span> <span class="cn">FALSE</span>, colors <span class="op">=</span> <span class="fu"><a href="num_ansi_colors.html">num_ansi_colors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>...</dt>
 <dd><p>The style to create. See details and examples below.</p></dd>
+
+
 <dt>bg</dt>
 <dd><p>Whether the color applies to the background.</p></dd>
+
+
 <dt>grey</dt>
 <dd><p>Whether to specifically create a grey color.
 This flag is included, because ANSI 256 has a finer color scale
@@ -85,13 +91,18 @@ for greys, then the usual 0:5 scale for red, green and blue components.
 It is only used for RGB color specifications (either numerically
 or via a hexadecimal string), and it is ignored on eight color ANSI
 terminals.</p></dd>
+
+
 <dt>colors</dt>
 <dd><p>Number of colors, detected automatically
 by default.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A function that can be used to color (style) strings.</p>
+    
+
+<p>A function that can be used to color (style) strings.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -118,21 +129,21 @@ is closest to the specified (RGB or R) color.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;cli_ansi_style&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #FFAF00;">Example output</span></span>
-<span class="r-in"><span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"#123456"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"#123456"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;cli_ansi_style&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #005F87;">Example output</span></span>
-<span class="r-in"><span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"orange"</span>, bg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"orange"</span>, bg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;cli_ansi_style&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="background-color: #FFAF00;">Example output</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">orange</span> <span class="op">&lt;-</span> <span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">orange</span><span class="op">(</span><span class="st">"foobar"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">orange</span> <span class="op">&lt;-</span> <span class="fu">make_ansi_style</span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">orange</span><span class="op">(</span><span class="st">"foobar"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;cli_ansi_string&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] <span style="color: #FFAF00;">foobar</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">orange</span><span class="op">(</span><span class="st">"foobar"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu">orange</span><span class="op">(</span><span class="st">"foobar"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #FFAF00;">foobar</span></span>
 </code></pre></div>
     </div>
@@ -147,7 +158,7 @@ is closest to the specified (RGB or R) color.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

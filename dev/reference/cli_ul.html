@@ -37,6 +37,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -69,14 +71,14 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cli_ul</span><span class="op">(</span>
-  items <span class="op">=</span> <span class="cn">NULL</span>,
-  id <span class="op">=</span> <span class="cn">NULL</span>,
-  class <span class="op">=</span> <span class="cn">NULL</span>,
-  .close <span class="op">=</span> <span class="cn">TRUE</span>,
-  .auto_close <span class="op">=</span> <span class="cn">TRUE</span>,
-  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cli_ul</span><span class="op">(</span></span>
+<span>  items <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  .close <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .auto_close <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -85,25 +87,38 @@
 <dd><p>If not <code>NULL</code>, then a character vector. Each element of
 the vector will be one list item, and the list container will be
 closed by default (see the <code>.close</code> argument).</p></dd>
+
+
 <dt>id</dt>
 <dd><p>Id of the list container. Can be used for closing it with
 <code><a href="cli_end.html">cli_end()</a></code> or in themes. If <code>NULL</code>, then an id is generated and
 returned invisibly.</p></dd>
+
+
 <dt>class</dt>
 <dd><p>Class of the list container. Can be used in themes.</p></dd>
+
+
 <dt>.close</dt>
 <dd><p>Whether to close the list container if the <code>items</code> were
 specified. If <code>FALSE</code> then new items can be added to the list.</p></dd>
+
+
 <dt>.auto_close</dt>
 <dd><p>Whether to close the container, when the calling
 function finishes (or <code>.envir</code> is removed, if specified).</p></dd>
+
+
 <dt>.envir</dt>
 <dd><p>Environment to evaluate the glue expressions in. It is
 also used to auto-close the container if <code>.auto_close</code> is <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The id of the new container element, invisibly.</p>
+    
+
+<p>The id of the new container element, invisibly.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -112,10 +127,10 @@ also used to auto-close the container if <code>.auto_close</code> is <code>TRUE<
 <h3 id="adding-all-items-at-once">Adding all items at once<a class="anchor" aria-label="anchor" href="#adding-all-items-at-once"></a></h3>
 
 
-<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">fun</span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/cli-ul.svg" alt=""></p>
 </div>
 
@@ -123,14 +138,14 @@ also used to auto-close the container if <code>.auto_close</code> is <code>TRUE<
 <h3 id="adding-items-one-by-one">Adding items one by one<a class="anchor" aria-label="anchor" href="#adding-items-one-by-one"></a></h3>
 
 
-<p></p><div class="sourceCode r"><pre><code><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph one}"</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph two}"</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph three}"</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu">fun</span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph one}"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph two}"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph three}"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">fun</span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/cli-ul-2.svg" alt=""></p>
 </div>
 
@@ -147,7 +162,7 @@ also used to auto-close the container if <code>.auto_close</code> is <code>TRUE<
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

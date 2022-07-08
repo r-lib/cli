@@ -37,6 +37,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -69,26 +71,33 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">hash_animal</span><span class="op">(</span><span class="va">x</span>, n_adj <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="fu">hash_raw_animal</span><span class="op">(</span><span class="va">x</span>, n_adj <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="fu">hash_obj_animal</span><span class="op">(</span><span class="va">x</span>, n_adj <span class="op">=</span> <span class="fl">2</span>, serialize_version <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hash_animal</span><span class="op">(</span><span class="va">x</span>, n_adj <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">hash_raw_animal</span><span class="op">(</span><span class="va">x</span>, n_adj <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">hash_obj_animal</span><span class="op">(</span><span class="va">x</span>, n_adj <span class="op">=</span> <span class="fl">2</span>, serialize_version <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>Character vector. <code>NA</code> entries will have an <code>NA</code> hash.</p></dd>
+
+
 <dt>n_adj</dt>
 <dd><p>Number of adjectives to use. It must be between 0 and 3.</p></dd>
+
+
 <dt>serialize_version</dt>
 <dd><p>Workspace format version to use, see
 <code><a href="https://rdrr.io/r/base/serialize.html" class="external-link">base::serialize()</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame with columns</p><ul><li><p><code>hash</code>: the hash value, a string.</p></li>
+    
+
+<p>A data frame with columns</p><ul><li><p><code>hash</code>: the hash value, a string.</p></li>
 <li><p><code>words</code>: list column with the adjectives and the animal name in a
 character vector.</p></li>
 </ul><p><code>hash_raw_animal()</code> and <code>hash_obj_animal()</code> return a list
@@ -133,19 +142,19 @@ an R object. The object is serialized into a binary vector first.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">hash_animal</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">hash_animal</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                       hash        words</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                   sacrilegious diet lion sacrileg....</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 uncitizenly agricultural amethystgemclam uncitize....</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># if you increase `n_adj`, the shorter hash is a suffix of the longer:</span></span>
-<span class="r-in"><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># if you increase `n_adj`, the shorter hash is a suffix of the longer:</span></span></span>
+<span class="r-in"><span><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">0</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pullet"</span>
-<span class="r-in"><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span>
+<span class="r-in"><span><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pastyfaced pullet"</span>
-<span class="r-in"><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span>
+<span class="r-in"><span><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "pregnant pastyfaced pullet"</span>
-<span class="r-in"><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span>
+<span class="r-in"><span><span class="fu">hash_animal</span><span class="op">(</span><span class="st">"cli package"</span>, <span class="fl">3</span><span class="op">)</span><span class="op">$</span><span class="va">hash</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "unwelcome pregnant pastyfaced pullet"</span>
 </code></pre></div>
     </div>
@@ -160,7 +169,7 @@ an R object. The object is serialized into a binary vector first.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

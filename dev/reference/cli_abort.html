@@ -43,6 +43,8 @@ pluralization and glue substitutions."><meta name="robots" content="noindex"><!-
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -78,26 +80,30 @@ pluralization and glue substitutions.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cli_abort</span><span class="op">(</span>
-  <span class="va">message</span>,
-  <span class="va">...</span>,
-  call <span class="op">=</span> <span class="va">.envir</span>,
-  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  .frame <span class="op">=</span> <span class="va">.envir</span>
-<span class="op">)</span>
-
-<span class="fu">cli_warn</span><span class="op">(</span><span class="va">message</span>, <span class="va">...</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">cli_inform</span><span class="op">(</span><span class="va">message</span>, <span class="va">...</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cli_abort</span><span class="op">(</span></span>
+<span>  <span class="va">message</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  call <span class="op">=</span> <span class="va">.envir</span>,</span>
+<span>  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  .frame <span class="op">=</span> <span class="va">.envir</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">cli_warn</span><span class="op">(</span><span class="va">message</span>, <span class="va">...</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">cli_inform</span><span class="op">(</span><span class="va">message</span>, <span class="va">...</span>, .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>message</dt>
 <dd><p>It is formatted via a call to <code><a href="cli_bullets.html">cli_bullets()</a></code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Passed to <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::abort()</a></code>, <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::warn()</a></code> or
 <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">rlang::inform()</a></code>.</p></dd>
+
+
 <dt>call</dt>
 <dd><p>The execution environment of a currently running
 function, e.g. <code>call = caller_env()</code>. The corresponding function
@@ -109,28 +115,36 @@ message.</p>
 <p>Can also be <code>NULL</code> or a <a href="https://rlang.r-lib.org/reference/topic-defuse.html" class="external-link">defused function call</a> to
 respectively not display any call or hard-code a code to display.</p>
 <p>For more information about error calls, see <a href="https://rlang.r-lib.org/reference/topic-error-call.html" class="external-link">Including function calls in error messages</a>.</p></dd>
+
+
 <dt>.envir</dt>
 <dd><p>Environment to evaluate the glue expressions in.</p></dd>
+
+
 <dt>.frame</dt>
-<dd><p>The throwing context. Used as default for
-<code>.trace_bottom</code>, and to determine the internal package to mention
-in internal errors when <code>.internal</code> is <code>TRUE</code>.</p></dd>
+<dd><p>The throwing context. Defaults to <code>call</code> if it is an
+environment, <code><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env()</a></code> otherwise. This is used in the
+display of simplified backtraces as the last relevant call frame
+to show. This way, the irrelevant parts of backtraces
+corresponding to condition handling (<code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>, <code><a href="https://rlang.r-lib.org/reference/try_fetch.html" class="external-link">try_fetch()</a></code>,
+<code>abort()</code>, etc.) are hidden by default.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p></p><div class="sourceCode r"><pre><code><span class="va">n</span> <span class="op">&lt;-</span> <span class="st">"boo"</span>
-<span class="fu"><a href="../reference/cli_abort.html">cli_abort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        <span class="st">"{.var n} must be a numeric vector"</span>,
-  <span class="st">"x"</span> <span class="op">=</span> <span class="st">"You've supplied a {.cls {class(n)}} vector."</span>
-<span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+    <p></p><div class="sourceCode r"><pre><code><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="st">"boo"</span></span>
+<span><span class="fu"><a href="../reference/cli_abort.html">cli_abort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"{.var n} must be a numeric vector"</span>,</span>
+<span>  <span class="st">"x"</span> <span class="op">=</span> <span class="st">"You've supplied a {.cls {class(n)}} vector."</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/cli-abort.svg" alt=""></p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">len</span> <span class="op">&lt;-</span> <span class="fl">26</span>
-<span class="va">idx</span> <span class="op">&lt;-</span> <span class="fl">100</span>
-<span class="fu"><a href="../reference/cli_abort.html">cli_abort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-        <span class="st">"Must index an existing element:"</span>,
-  <span class="st">"i"</span> <span class="op">=</span> <span class="st">"There {?is/are} {len} element{?s}."</span>,
-  <span class="st">"x"</span> <span class="op">=</span> <span class="st">"You've tried to subset element {idx}."</span>
-<span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">len</span> <span class="op">&lt;-</span> <span class="fl">26</span></span>
+<span><span class="va">idx</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="fu"><a href="../reference/cli_abort.html">cli_abort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Must index an existing element:"</span>,</span>
+<span>  <span class="st">"i"</span> <span class="op">=</span> <span class="st">"There {?is/are} {len} element{?s}."</span>,</span>
+<span>  <span class="st">"x"</span> <span class="op">=</span> <span class="st">"You've tried to subset element {idx}."</span></span>
+<span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/cli-abort-2.svg" alt=""></p>
     </div>
 
@@ -145,7 +159,7 @@ in internal errors when <code>.internal</code> is <code>TRUE</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

@@ -43,6 +43,8 @@ col_br_red(), etc."><meta name="robots" content="noindex"><!-- mathjax --><scrip
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -78,11 +80,11 @@ the colors that cli uses for the eight base and the eight bright colors.
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="va">truecolor</span>
-
-<span class="va">ansi_palettes</span>
-
-<span class="fu">ansi_palette_show</span><span class="op">(</span>palette <span class="op">=</span> <span class="cn">NULL</span>, colors <span class="op">=</span> <span class="fu"><a href="num_ansi_colors.html">num_ansi_colors</a></span><span class="op">(</span><span class="op">)</span>, rows <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">truecolor</span></span>
+<span></span>
+<span><span class="va">ansi_palettes</span></span>
+<span></span>
+<span><span class="fu">ansi_palette_show</span><span class="op">(</span>palette <span class="op">=</span> <span class="cn">NULL</span>, colors <span class="op">=</span> <span class="fu"><a href="num_ansi_colors.html">num_ansi_colors</a></span><span class="op">(</span><span class="op">)</span>, rows <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -98,17 +100,24 @@ contains a list with information about each palette.</p>
 <dd><p>The palette to show, in the same format as for the
 <code>cli.palette</code> option, so it can be the name of a built-in palette,
 of a list of 16 colors.</p></dd>
+
+
 <dt>colors</dt>
 <dd><p>Number of ANSI colors to use the show the palette. If the
 platform does not have sufficient support, the output might have
 a lower color resolution. Without color support it will have no color
 at all.</p></dd>
+
+
 <dt>rows</dt>
 <dd><p>The number of colored rows to print.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>ansi_palette_show</code> returns a character vector, the rows that
+    
+
+<p><code>ansi_palette_show</code> returns a character vector, the rows that
 are printed to the screen, invisibly.</p>
     </div>
     <div class="section level2">
@@ -119,7 +128,7 @@ name of a built-in palette (see <code>ansi_palettes()</code>), or the list of
 16 colors. Colors can be specified with RGB colors strings:
 <code>#rrggbb</code> or R color names (see the output of <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">grDevices::colors()</a></code>).</p>
 <p>For example, you can put this in your R profile:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>cli.palette <span class="op">=</span> <span class="st">"vscode"</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>cli.palette <span class="op">=</span> <span class="st">"vscode"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>It is currently not possible to configure the background colors
 separately, these will be always the same as the foreground colors.</p>
 <p>If your platform only has 256 colors, then the colors specified in the
@@ -132,7 +141,7 @@ is one palette.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ansi_palettes</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ansi_palettes</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   black     red   green  yellow    blue magenta    cyan</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dichro          #000000 #882255 #117733 #ddcc77 #332288 #aa4499 #88ccee</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vga             #000000 #aa0000 #00aa00 #aa5500 #0000aa #aa00aa #00aaaa</span>
@@ -187,7 +196,7 @@ is one palette.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iterm-snazzy       #ff6ac1 #9aedfe  #f1f1f0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iterm-solarized    #6c71c4 #93a1a1  #fdf6e3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iterm-tango        #bc94b7 #37e6e8  #f1f1f0</span>
-<span class="r-in"><span class="fu">ansi_palette_show</span><span class="op">(</span><span class="st">"dichro"</span>, colors <span class="op">=</span> <span class="va">truecolor</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">ansi_palette_show</span><span class="op">(</span><span class="st">"dichro"</span>, colors <span class="op">=</span> <span class="va">truecolor</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      bright variants</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -208,7 +217,7 @@ is one palette.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

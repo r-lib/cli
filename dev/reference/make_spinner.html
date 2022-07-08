@@ -37,6 +37,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -69,12 +71,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">make_spinner</span><span class="op">(</span>
-  which <span class="op">=</span> <span class="cn">NULL</span>,
-  stream <span class="op">=</span> <span class="st">"auto"</span>,
-  template <span class="op">=</span> <span class="st">"{spin}"</span>,
-  static <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dots"</span>, <span class="st">"print"</span>, <span class="st">"print_line"</span>, <span class="st">"silent"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_spinner</span><span class="op">(</span></span>
+<span>  which <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stream <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  template <span class="op">=</span> <span class="st">"{spin}"</span>,</span>
+<span>  static <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dots"</span>, <span class="st">"print"</span>, <span class="st">"print_line"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -86,6 +88,8 @@ is used, which can be customized via the <code>cli.spinner_unicode</code>,
 both Unicode and ASCII displays. These options can be set to the name
 of a built-in spinner, or to a list that has an entry called <code>frames</code>,
 a character vector of frames.</p></dd>
+
+
 <dt>stream</dt>
 <dd><p>The stream to use for the spinner. Typically this is
 standard error, or maybe the standard output stream.
@@ -93,9 +97,13 @@ It can also be a string, one of <code>"auto"</code>, <code>"message"</code>, <co
 <code>"stderr"</code>. <code>"auto"</code> will select <code><a href="https://rdrr.io/r/base/showConnections.html" class="external-link">stdout()</a></code> if the session is
 interactive and there are no sinks, otherwise it will select
 <code><a href="https://rdrr.io/r/base/showConnections.html" class="external-link">stderr()</a></code>.</p></dd>
+
+
 <dt>template</dt>
 <dd><p>A template string, that will contain the spinner. The
 spinner itself will be substituted for <code>{spin}</code>. See example below.</p></dd>
+
+
 <dt>static</dt>
 <dd><p>What to do if the terminal does not support dynamic
 displays:</p><ul><li><p><code>"dots"</code>: show a dot for each <code>$spin()</code> call.</p></li>
@@ -103,17 +111,24 @@ displays:</p><ul><li><p><code>"dots"</code>: show a dot for each <code>$spin()</
 <li><p><code>"print_line"</code>: print the frames of the spinner, each on its own line.</p></li>
 <li><p><code>"silent"</code> do not print anything, just the <code>template</code>.</p></li>
 </ul></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>cli_spinner</code> object, which is a list of functions. See
-its methods below.
-<code>cli_spinner</code> methods:</p><ul><li><p><code>$spin()</code>: output the next frame of the spinner.</p></li>
+    
+
+<p>A <code>cli_spinner</code> object, which is a list of functions. See
+its methods below.</p>
+
+
+<p><code>cli_spinner</code> methods:</p><ul><li><p><code>$spin()</code>: output the next frame of the spinner.</p></li>
 <li><p><code>$finish()</code>: terminate the spinner. Depending on terminal capabilities
 this removes the spinner from the screen. Spinners can be reused,
 you can start calling the <code>$spin()</code> method again.</p></li>
-</ul><p>All methods return the spinner object itself, invisibly.
-The spinner is automatically throttled to its ideal update frequency.</p>
+</ul><p>All methods return the spinner object itself, invisibly.</p>
+
+
+<p>The spinner is automatically throttled to its ideal update frequency.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -123,12 +138,12 @@ The spinner is automatically throttled to its ideal update frequency.</p>
 <h3 id="default-spinner">Default spinner<a class="anchor" aria-label="anchor" href="#default-spinner"></a></h3>
 
 
-<p></p><div class="sourceCode r"><pre><code><span class="va">sp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_spinner.html">make_spinner</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">fun_with_spinner</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">sp1</span><span class="op">$</span><span class="fu">spin</span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>
-  <span class="va">sp1</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu"><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor</a></span><span class="op">(</span><span class="fu">fun_with_spinner</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">sp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_spinner.html">make_spinner</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">fun_with_spinner</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">sp1</span><span class="op">$</span><span class="fu">spin</span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="va">sp1</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor</a></span><span class="op">(</span><span class="fu">fun_with_spinner</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/make-spinner-default.svg" alt=""></p>
 </div>
 
@@ -136,12 +151,12 @@ The spinner is automatically throttled to its ideal update frequency.</p>
 <h3 id="spinner-with-a-template">Spinner with a template<a class="anchor" aria-label="anchor" href="#spinner-with-a-template"></a></h3>
 
 
-<p></p><div class="sourceCode r"><pre><code><span class="va">sp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_spinner.html">make_spinner</a></span><span class="op">(</span>template <span class="op">=</span> <span class="st">"Computing {spin}"</span><span class="op">)</span>
-<span class="va">fun_with_spinner2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">sp2</span><span class="op">$</span><span class="fu">spin</span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>
-  <span class="va">sp2</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu"><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor</a></span><span class="op">(</span><span class="fu">fun_with_spinner2</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">sp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_spinner.html">make_spinner</a></span><span class="op">(</span>template <span class="op">=</span> <span class="st">"Computing {spin}"</span><span class="op">)</span></span>
+<span><span class="va">fun_with_spinner2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">sp2</span><span class="op">$</span><span class="fu">spin</span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="va">sp2</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor</a></span><span class="op">(</span><span class="fu">fun_with_spinner2</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/make-spinner-template.svg" alt=""></p>
 </div>
 
@@ -149,12 +164,12 @@ The spinner is automatically throttled to its ideal update frequency.</p>
 <h3 id="custom-spinner">Custom spinner<a class="anchor" aria-label="anchor" href="#custom-spinner"></a></h3>
 
 
-<p></p><div class="sourceCode r"><pre><code><span class="va">sp3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_spinner.html">make_spinner</a></span><span class="op">(</span><span class="st">"simpleDotsScrolling"</span>, template <span class="op">=</span> <span class="st">"Downloading {spin}"</span><span class="op">)</span>
-<span class="va">fun_with_spinner3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">sp3</span><span class="op">$</span><span class="fu">spin</span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>
-  <span class="va">sp3</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu"><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor</a></span><span class="op">(</span><span class="fu">fun_with_spinner3</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">sp3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_spinner.html">make_spinner</a></span><span class="op">(</span><span class="st">"simpleDotsScrolling"</span>, template <span class="op">=</span> <span class="st">"Downloading {spin}"</span><span class="op">)</span></span>
+<span><span class="va">fun_with_spinner3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">sp3</span><span class="op">$</span><span class="fu">spin</span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="va">sp3</span><span class="op">$</span><span class="fu">finish</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="../reference/ansi_hide_cursor.html">ansi_with_hidden_cursor</a></span><span class="op">(</span><span class="fu">fun_with_spinner3</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/make-spinner-custom.svg" alt=""></p>
 </div>
 
@@ -178,7 +193,7 @@ The spinner is automatically throttled to its ideal update frequency.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

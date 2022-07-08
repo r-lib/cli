@@ -37,6 +37,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -69,20 +71,25 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chars"</span>, <span class="st">"bytes"</span>, <span class="st">"width"</span>, <span class="st">"graphemes"</span>, <span class="st">"codepoints"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chars"</span>, <span class="st">"bytes"</span>, <span class="st">"width"</span>, <span class="st">"graphemes"</span>, <span class="st">"codepoints"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>Character vector, it is converted to UTF-8.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Whether to count graphemes (characters), code points,
 bytes, or calculate the display width of the string.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Numeric vector, the length of the strings in the character
+    
+
+<p>Numeric vector, the length of the strings in the character
 vector.</p>
     </div>
     <div class="section level2">
@@ -94,32 +101,32 @@ vector.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Grapheme example, emoji with combining characters. This is a single</span></span>
-<span class="r-in"><span class="co"># grapheme, consisting of five Unicode code points:</span></span>
-<span class="r-in"><span class="co"># * `\U0001f477` is the construction worker emoji</span></span>
-<span class="r-in"><span class="co"># * `\U0001f3fb` is emoji modifier that changes the skin color</span></span>
-<span class="r-in"><span class="co"># * `\u200d` is the zero width joiner</span></span>
-<span class="r-in"><span class="co"># * `\u2640` is the female sign</span></span>
-<span class="r-in"><span class="co"># * `\ufe0f` is variation selector 16, requesting an emoji style glyph</span></span>
-<span class="r-in"><span class="va">emo</span> <span class="op">&lt;-</span> <span class="st">"\U0001f477\U0001f3fb\u200d\u2640\ufe0f"</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">emo</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Grapheme example, emoji with combining characters. This is a single</span></span></span>
+<span class="r-in"><span><span class="co"># grapheme, consisting of five Unicode code points:</span></span></span>
+<span class="r-in"><span><span class="co"># * `\U0001f477` is the construction worker emoji</span></span></span>
+<span class="r-in"><span><span class="co"># * `\U0001f3fb` is emoji modifier that changes the skin color</span></span></span>
+<span class="r-in"><span><span class="co"># * `\u200d` is the zero width joiner</span></span></span>
+<span class="r-in"><span><span class="co"># * `\u2640` is the female sign</span></span></span>
+<span class="r-in"><span><span class="co"># * `\ufe0f` is variation selector 16, requesting an emoji style glyph</span></span></span>
+<span class="r-in"><span><span class="va">emo</span> <span class="op">&lt;-</span> <span class="st">"\U0001f477\U0001f3fb\u200d\u2640\ufe0f"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">emo</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 👷🏻‍♀️</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"chars"</span><span class="op">)</span> <span class="co"># = graphemes</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"chars"</span><span class="op">)</span> <span class="co"># = graphemes</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
-<span class="r-in"><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"bytes"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"bytes"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 17</span>
-<span class="r-in"><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"width"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"width"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
-<span class="r-in"><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"codepoints"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">utf8_nchar</span><span class="op">(</span><span class="va">emo</span>, <span class="st">"codepoints"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># For comparision, the output for width depends on the R version used:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">emo</span>, <span class="st">"chars"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># For comparision, the output for width depends on the R version used:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">emo</span>, <span class="st">"chars"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">emo</span>, <span class="st">"bytes"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">emo</span>, <span class="st">"bytes"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 17</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">emo</span>, <span class="st">"width"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">emo</span>, <span class="st">"width"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5</span>
 </code></pre></div>
     </div>
@@ -134,7 +141,7 @@ vector.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

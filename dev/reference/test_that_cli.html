@@ -39,6 +39,8 @@ It requires testthat edition 3, and works best with snapshot tests."><meta name=
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -72,7 +74,7 @@ It requires testthat edition 3, and works best with snapshot tests.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">test_that_cli</span><span class="op">(</span><span class="va">desc</span>, <span class="va">code</span>, configs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">test_that_cli</span><span class="op">(</span><span class="va">desc</span>, <span class="va">code</span>, configs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,14 +82,19 @@ It requires testthat edition 3, and works best with snapshot tests.</p>
     <dl><dt>desc</dt>
 <dd><p>Test description, passed to <code><a href="https://testthat.r-lib.org/reference/test_that.html" class="external-link">testthat::test_that()</a></code>, after
 appending the name of the cli configuration to it.</p></dd>
+
+
 <dt>code</dt>
 <dd><p>Test code, it is modified to set up the cli config, and
 then passed to <code><a href="https://testthat.r-lib.org/reference/test_that.html" class="external-link">testthat::test_that()</a></code></p></dd>
+
+
 <dt>configs</dt>
 <dd><p>cli configurations to test <code>code</code> with. The default is
 <code>NULL</code>, which includes all possible configurations. It can also be a
 character vector, to restrict the tests to some configurations only.
 See available configurations below.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -99,9 +106,9 @@ with and without ANSI colors, with and without Unicode characters.</p>
 <li><p><code>unicode</code>: no ANSI colors, Unicode characters.</p></li>
 <li><p><code>fancy</code>; ANSI colors, Unicode characters.</p></li>
 </ul><p>See examples below and in cli's own tests, e.g. in
-<a href="https://github.com/cran/cli/tree/master/tests/testthat" class="external-link">https://github.com/cran/cli/tree/master/tests/testthat</a>
+<a href="https://github.com/r-lib/cli/tree/main/tests/testthat" class="external-link">https://github.com/r-lib/cli/tree/main/tests/testthat</a>
 and the corresponding snapshots at
-<a href="https://github.com/cran/cli/tree/master/tests/testthat/_snaps" class="external-link">https://github.com/cran/cli/tree/master/tests/testthat/_snaps</a></p><div class="section">
+<a href="https://github.com/r-lib/cli/tree/main/tests/testthat/_snaps" class="external-link">https://github.com/r-lib/cli/tree/main/tests/testthat/_snaps</a></p><div class="section">
 <h3 id="important-note-regarding-windows">Important note regarding Windows<a class="anchor" aria-label="anchor" href="#important-note-regarding-windows"></a></h3>
 
 
@@ -116,17 +123,17 @@ currently.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># testthat cannot record or compare snapshots when you run these</span></span>
-<span class="r-in"><span class="co"># examples interactively, so you might want to copy them into a test</span></span>
-<span class="r-in"><span class="co"># file</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Default configurations</span></span>
-<span class="r-in"><span class="fu">cli</span><span class="fu">::</span><span class="fu">test_that_cli</span><span class="op">(</span><span class="st">"success"</span>, <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/local_edition.html" class="external-link">local_edition</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_snapshot.html" class="external-link">expect_snapshot</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"wow"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># testthat cannot record or compare snapshots when you run these</span></span></span>
+<span class="r-in"><span><span class="co"># examples interactively, so you might want to copy them into a test</span></span></span>
+<span class="r-in"><span><span class="co"># file</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Default configurations</span></span></span>
+<span class="r-in"><span><span class="fu">cli</span><span class="fu">::</span><span class="fu">test_that_cli</span><span class="op">(</span><span class="st">"success"</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/local_edition.html" class="external-link">local_edition</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_snapshot.html" class="external-link">expect_snapshot</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"wow"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Can't compare snapshot to reference when testing interactively</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> i Run `devtools::test()` or `testthat::test_file()` to see changes</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> i Current value:</span>
@@ -179,14 +186,14 @@ currently.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Only use two configurations, because this output does not have colors</span></span>
-<span class="r-in"><span class="fu">cli</span><span class="fu">::</span><span class="fu">test_that_cli</span><span class="op">(</span>configs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"unicode"</span><span class="op">)</span>, <span class="st">"cat_bullet"</span>, <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/local_edition.html" class="external-link">local_edition</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_snapshot.html" class="external-link">expect_snapshot</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cat_line.html">cat_bullet</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Only use two configurations, because this output does not have colors</span></span></span>
+<span class="r-in"><span><span class="fu">cli</span><span class="fu">::</span><span class="fu">test_that_cli</span><span class="op">(</span>configs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"unicode"</span><span class="op">)</span>, <span class="st">"cat_bullet"</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/local_edition.html" class="external-link">local_edition</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_snapshot.html" class="external-link">expect_snapshot</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cat_line.html">cat_bullet</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Can't compare snapshot to reference when testing interactively</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> i Run `devtools::test()` or `testthat::test_file()` to see changes</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> i Current value:</span>
@@ -227,16 +234,16 @@ currently.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[4]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># You often need to evaluate all cli calls of a test case in the same</span></span>
-<span class="r-in"><span class="co"># environment. Use `local()` to do that:</span></span>
-<span class="r-in"><span class="fu">cli</span><span class="fu">::</span><span class="fu">test_that_cli</span><span class="op">(</span><span class="st">"theming"</span>, <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/local_edition.html" class="external-link">local_edition</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_snapshot.html" class="external-link">expect_snapshot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">local</a></span><span class="op">(</span><span class="op">{</span></span>
-<span class="r-in">    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">".alert"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>before <span class="op">=</span> <span class="st">"!!! "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"wow"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># You often need to evaluate all cli calls of a test case in the same</span></span></span>
+<span class="r-in"><span><span class="co"># environment. Use `local()` to do that:</span></span></span>
+<span class="r-in"><span><span class="fu">cli</span><span class="fu">::</span><span class="fu">test_that_cli</span><span class="op">(</span><span class="st">"theming"</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/local_edition.html" class="external-link">local_edition</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">testthat</span><span class="fu">::</span><span class="fu"><a href="https://testthat.r-lib.org/reference/expect_snapshot.html" class="external-link">expect_snapshot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">local</a></span><span class="op">(</span><span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">".alert"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>before <span class="op">=</span> <span class="st">"!!! "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu">cli</span><span class="fu">::</span><span class="fu"><a href="cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"wow"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Can't compare snapshot to reference when testing interactively</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> i Run `devtools::test()` or `testthat::test_file()` to see changes</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> i Current value:</span>
@@ -314,7 +321,7 @@ currently.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

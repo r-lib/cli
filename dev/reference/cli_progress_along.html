@@ -41,6 +41,8 @@ progress bar. It uses cli_progress_bar() internally."><meta name="robots" conten
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Customization</h6>
     <a class="dropdown-item" href="../articles/palettes.html">cli color palettes</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../articles/index.html">More articles...</a>
   </div>
 </li>
 <li class="nav-item">
@@ -75,32 +77,43 @@ progress bar. It uses <code><a href="cli_progress_bar.html">cli_progress_bar()</
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cli_progress_along</span><span class="op">(</span>
-  <span class="va">x</span>,
-  name <span class="op">=</span> <span class="cn">NULL</span>,
-  total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
-  <span class="va">...</span>,
-  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cli_progress_along</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  .envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>Sequence to add the progress bar to.</p></dd>
+
+
 <dt>name</dt>
 <dd><p>Name of the progress bar, a label, passed to
 <code><a href="cli_progress_bar.html">cli_progress_bar()</a></code>.</p></dd>
+
+
 <dt>total</dt>
 <dd><p>Passed to <code><a href="cli_progress_bar.html">cli_progress_bar()</a></code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Passed to <code><a href="cli_progress_bar.html">cli_progress_bar()</a></code>.</p></dd>
+
+
 <dt>.envir</dt>
 <dd><p>Passed to <code><a href="cli_progress_bar.html">cli_progress_bar()</a></code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An index vector from 1 to <code>length(x)</code> that triggers progress
+    
+
+<p>An index vector from 1 to <code>length(x)</code> that triggers progress
 updates as you iterate over it.</p>
     </div>
     <div class="section level2">
@@ -111,16 +124,16 @@ updates as you iterate over it.</p>
 
 
 <p>A <code>for</code> loop with <code>cli_progress_along()</code> looks like this:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">...</span>
-<span class="op">}</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">}</span></span></code></pre><p></p></div>
 <p>A complete example:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">clifun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="st">"Downloading"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
-  <span class="op">}</span>
-<span class="op">}</span>
-<span class="fu">clifun</span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">clifun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="st">"Downloading"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">clifun</span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/progress-along-1.svg" alt=""></p>
 </div>
 
@@ -129,11 +142,11 @@ updates as you iterate over it.</p>
 
 
 <p>They will look like this:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="va">...</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="va">...</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>A complete example:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="st">"Downloading"</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="st">"Downloading"</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/progress-along-2.svg" alt=""></p>
 </div>
 
@@ -141,13 +154,13 @@ updates as you iterate over it.</p>
 <h3 id="custom-format-string">Custom format string<a class="anchor" aria-label="anchor" href="#custom-format-string"></a></h3>
 
 
-<p></p><div class="sourceCode r"><pre><code><span class="va">clifun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,
-      format <span class="op">=</span> <span class="st">"Downloading data file {cli::pb_current}"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
-  <span class="op">}</span>
-<span class="op">}</span>
-<span class="fu">clifun</span><span class="op">(</span><span class="op">)</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">clifun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,</span>
+<span>      format <span class="op">=</span> <span class="st">"Downloading data file {cli::pb_current}"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">clifun</span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="figures/progress-along-3.svg" alt=""></p>
 </div>
 
@@ -158,11 +171,11 @@ updates as you iterate over it.</p>
 <p>Note that if you use <code><a href="https://rdrr.io/r/base/Control.html" class="external-link">break</a></code> in the <code>for</code> loop, you probably want to
 terminate the progress bar explicitly when breaking out of the loop,
 or right after the loop:</p>
-<p></p><div class="sourceCode r"><pre><code><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">...</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw">break</span>
-  <span class="va">...</span>
-<span class="op">}</span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">...</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw">break</span></span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">}</span></span></code></pre><p></p></div>
 </div>
 
     </div>
@@ -182,7 +195,7 @@ or right after the loop:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>
