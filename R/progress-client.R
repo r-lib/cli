@@ -121,7 +121,7 @@
 #' fun()
 #' ```
 #'
-#' ```{asciicast, include = FALSE, dependson = -1}
+#' ```{asciicast, include = FALSE, cache = FALSE}
 #' # reset to our default
 #' options(cli.progress_show_after = 0)
 #' ```

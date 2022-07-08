@@ -11,10 +11,13 @@ init_knitr_for_roxygen <- function() {
   # Make progress bars a bit smoother
   Sys.setenv(CLI_TICK_TIME = "100")
 
-  # Turn on ANSI colors
+  do.call(options, asciicast::asciicast_knitr_options())
   options(
-    cli.num_colors = 256L,
-    asciicast_cols = 70
+    asciicast_cols = 70,
+    asciicast_knitr_svg = TRUE,
+    asciicast_theme = "github-light",
+    asciicast_rows = "auto",
+    asciicast_omit_last_line = TRUE
   )
 
   proc <- .GlobalEnv$.knitr_asciicast_process

@@ -41,9 +41,12 @@ For more information about error calls, see \ifelse{html}{\link[rlang:topic-erro
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
 
-\item{.frame}{The throwing context. Used as default for
-\code{.trace_bottom}, and to determine the internal package to mention
-in internal errors when \code{.internal} is \code{TRUE}.}
+\item{.frame}{The throwing context. Defaults to \code{call} if it is an
+environment, \code{\link[rlang:caller_env]{caller_env()}} otherwise. This is used in the
+display of simplified backtraces as the last relevant call frame
+to show. This way, the irrelevant parts of backtraces
+corresponding to condition handling (\code{\link[=tryCatch]{tryCatch()}}, \code{\link[rlang:try_fetch]{try_fetch()}},
+\code{abort()}, etc.) are hidden by default.}
 }
 \description{
 These functions let you create error, warning or diagnostic

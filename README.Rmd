@@ -1,8 +1,7 @@
 ---
 title: cli
 output:
-  md_document:
-    variant: markdown_github
+  github_document:
 always_allow_html: yes
 ---
 
@@ -17,21 +16,24 @@ knitr::opts_chunk$set(
   cache = TRUE
 )
 Sys.setenv(CLI_TICK_TIME = "100")
-# Turn on ANSI colors
-options(cli.num_colors = 256L)
+.cast_opts <- modifyList(
+  keep.null = TRUE,
+  asciicast::asciicast_knitr_options(),
+  list(
+    asciicast_theme = "github-light",
+    asciicast_omit_last_line = TRUE,
+    asciicast_end_wait = 3
+  )
+)
 asciicast::init_knitr_engine(
   startup = quote({
     library(cli)
     set.seed(1) }),
   echo = TRUE,
   echo_input = FALSE,
-  options = list(
-    asciicast_end_wait = 3
-  )
+  options = .cast_opts
 )
 ```
-
-# cli
 
 > Helpers for Developing Command Line Interfaces
 
@@ -71,11 +73,11 @@ Install the stable version from CRAN:
 install.packages("cli")
 ```
 
-## Short tour
+# Short tour
 
 Some of the more commonly used cli elements, and features.
 
-### Short alert messages
+## Short alert messages
 
 One liner messages to inform or warn.
 
@@ -101,7 +103,7 @@ cli_alert_danger("Failed to connect to database.")
 cli_alert("A generic alert")
 ```
 
-### Headings
+## Headings
 
 Three levels of headings.
 
@@ -117,7 +119,7 @@ cli_h2("Heading 2")
 cli_h3("Heading 3")
 ```
 
-### Lists
+## Lists
 
 Ordered, unordered and description lists, that can be nested.
 
@@ -135,7 +137,7 @@ fun <- function() {
 fun()
 ```
 
-### Themes
+## Themes
 
 Theming via a CSS-like language.
 
@@ -149,7 +151,7 @@ fun <- function() {
 fun()
 ```
 
-### Command substitution
+## Command substitution
 
 Automatic command substitution via the
 [glue](https://github.com/tidyverse/glue) package.
@@ -162,7 +164,7 @@ cli_alert_info(c(
   "{prettyunits::pretty_sec(dt)}"))
 ```
 
-### Pluralization
+## Pluralization
 
 Pluralization support.
 
@@ -172,14 +174,15 @@ ndirs <- 1
 cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
 ```
 
-### Progress bars
+## Progress bars
 
 ```{asciicast progress-setup, include = FALSE, cache = FALSE}
 options(cli.progress_show_after = 0)
 options(cli.progress_clear = FALSE)
 ```
 
-```{asciicast progress, R.options = list(asciicast_at = NULL)}
+```{asciicast progress}
+#| R.options = modifyList(keep.null = TRUE, .cast_opts, list(asciicast_at = NULL))
 clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {
@@ -190,12 +193,12 @@ clean <- function() {
 clean()
 ```
 
-## Documentation
+# Documentation
 
 See at [`https://cli.r-lib.org/`](https://cli.r-lib.org/reference/index.html)
 and also in the installed package: `help(package = "cli")`.
 
-## Code of Conduct
+# Code of Conduct
 
 Please note that the cli project is released with a
 [Contributor Code of Conduct](https://cli.r-lib.org/dev/CODE_OF_CONDUCT.html).
