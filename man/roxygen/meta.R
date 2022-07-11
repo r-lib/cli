@@ -2,10 +2,10 @@ list(
   markdown = TRUE,
   knitr_chunk_options = list(
     cache = TRUE,
-    error = TRUE,
+    cache_lazy = FALSE,
     cache.path = "man/_cache/",
-    cache.lazy = FALSE,
-    fig.path = "man/figures/",
+    error = TRUE,
     fig.process = base::basename
-  )
+  ),
+  restrict_image_formats = TRUE
 )
