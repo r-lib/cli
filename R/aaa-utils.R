@@ -11,7 +11,7 @@ init_knitr_for_roxygen <- function() {
   # Make progress bars a bit smoother
   Sys.setenv(CLI_TICK_TIME = "100")
 
-  do.call(options, asciicast::asciicast_knitr_options())
+  do.call(options, asNamespace("asciicast")$asciicast_knitr_options())
   options(
     asciicast_cols = 70,
     asciicast_knitr_svg = TRUE,
@@ -22,7 +22,7 @@ init_knitr_for_roxygen <- function() {
 
   proc <- .GlobalEnv$.knitr_asciicast_process
   if (is.null(proc) || !proc$is_alive()) {
-    asciicast::init_knitr_engine(
+    asNamespace("asciicast")$init_knitr_engine(
       startup = quote({
         options(cli.width = 70)
         options(cli.progress_show_after = 0)
@@ -171,13 +171,6 @@ random_marker <- "ImzV8dciA4cn4POI"
 
 str_trim <- function(x) {
   sub("^\\s+", "", sub("\\s+$", "", x))
-}
-
-has_asciicast_support <- function() {
- tryCatch({
-   asNamespace("asciicast")$is_recording_supported() &&
-     asNamespace("asciicast")$is_svg_supported()
- }, error = function(e) FALSE)
 }
 
 last_character <- function(x) {
