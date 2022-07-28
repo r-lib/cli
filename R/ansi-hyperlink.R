@@ -99,7 +99,7 @@ ansi_has_hyperlink_support <- function() {
     #   encoded to this env variable. Accept either form.
     if (grepl("^\\d{4}$", VTE_VERSION)) {
       VTE_VERSION <- sprintf("%2.02f", as.numeric(VTE_VERSION) / 100)
-      VTE_VERSION <- package_version(list(major = 0, minor = VTE_VERSION))
+      VTE_VERSION <- package_version(list(major = "0", minor = VTE_VERSION))
     } else {
       VTE_VERSION <- package_version(VTE_VERSION, strict = FALSE)
       if (is.na(VTE_VERSION)) {
