@@ -46,7 +46,7 @@ inline_collapse <- function(x, style = list()) {
     x <- c(x[1:trunc], cli::symbol$ellipsis)
     last <- sep
   }
-  glue::glue_collapse(as.character(x), sep = sep, last = last)
+  glue_collapse(as.character(x), sep = sep, last = last)
 }
 
 #' This glue transformer performs the inline styling of cli
@@ -128,19 +128,17 @@ inline_transformer <- function(code, envir) {
     # but only to the whole non-brace expression. We don't need to end this
     # container, because the one above (`id`) will end this one as well.
 
-    braceexp <- grepl("^[{][^.][^}]*[}]$", text)
+    braceexp <- grepl("^[<][^.][^}]*[>]$", text)
     if (!braceexp) {
       id2 <- clii__container_start(app, "span", class = NULL)
     }
 
-    out <- glue::glue(
+    out <- glue(
       text,
       .envir = envir,
       .transformer = inline_transformer,
-      .open = paste0("{", envir$marker),
-      .close = paste0(envir$marker, "}"),
-      .trim = TRUE,
-      .comment = ""
+      .open = paste0("<", envir$marker),
+      .close = paste0(envir$marker, ">")
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -214,14 +212,12 @@ clii__inline <- function(app, text, .list) {
   texts <- c(if (!is.null(text)) list(text), .list)
   out <- lapply(texts, function(t) {
     t$values$app <- app
-    glue::glue(
+    glue(
       t$str,
       .envir = t$values,
       .transformer = inline_transformer,
-      .open = paste0("{", t$values$marker),
-      .close = paste0(t$values$marker, "}"),
-      .trim = TRUE,
-      .comment = ""
+      .open = paste0("<", t$values$marker),
+      .close = paste0(t$values$marker, ">")
     )
   })
   paste(out, collapse = "")
@@ -249,7 +245,7 @@ make_cmd_transformer <- function(values) {
       values[[id]] <- res
       values$qty <- res
       values$num_subst <- values$num_subst + 1L
-      return(paste0("{", values$marker, id, values$marker, "}"))
+      return(paste0("<", values$marker, id, values$marker, ">"))
     }
 
     # plurals
@@ -268,14 +264,13 @@ make_cmd_transformer <- function(values) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      out <- glue::glue(
+      out <- glue(
         text,
         .envir = envir,
         .transformer = sys.function(),
-        .trim = TRUE,
-        .comment = ""
+        .cli = TRUE
       )
-      paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
+      paste0("<", values$marker, ".", funname, " ", out, values$marker, ">")
     }
   }
 }
@@ -284,12 +279,11 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-  pstr <- glue::glue(
+  pstr <- glue(
     str,
     .envir = .envir,
     .transformer = transformer,
-    .trim = TRUE,
-    .comment = ""
+    .cli = TRUE
   )
   glue_delay(
     str = post_process_plurals(pstr, values),
