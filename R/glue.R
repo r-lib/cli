@@ -48,3 +48,16 @@ identity_transformer <- function (text, envir) {
 drop_null <- function(x) {
   x[!vapply(x, is.null, logical(1))]
 }
+
+glue_collapse <- function(x, sep = "", last = "") {
+  if (length(x) == 0) {
+    character()
+  } else if (any(is.na(x))) {
+    NA_character_
+  } else if (nzchar(last) && length(x) > 1) {
+    res <- glue_collapse(x[seq(1, length(x) - 1)], sep = sep)
+    glue_collapse(paste0(res, last, x[length(x)]))
+  } else {
+    paste0(x, collapse = sep)
+  }
+}

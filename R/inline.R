@@ -46,7 +46,7 @@ inline_collapse <- function(x, style = list()) {
     x <- c(x[1:trunc], cli::symbol$ellipsis)
     last <- sep
   }
-  glue::glue_collapse(as.character(x), sep = sep, last = last)
+  glue_collapse(as.character(x), sep = sep, last = last)
 }
 
 #' This glue transformer performs the inline styling of cli

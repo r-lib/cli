@@ -11,15 +11,14 @@ cli_vec(x, style = list())
 
 \item{style}{Style to apply to the vector. It is used as a theme on
 a \code{span} element that is created for the vector. You can set \code{vec_sep}
-and \code{vec_last} to modify the \code{sep} and \code{last} arguments of
-\code{\link[glue:glue_collapse]{glue::glue_collapse()}}. See an example below.}
+and \code{vec_last} to modify the separator and the last separator.}
 }
 \description{
 Add custom cli style to a vector
 }
 \details{
 You can use this function to change the default parameters of
-\code{\link[glue:glue_collapse]{glue::glue_collapse()}}, see an example below.
+collapsing the vector into a string, see an example below.
 
 The style is added as an attribute, so operations that remove
 attributes will remove the style as well.
