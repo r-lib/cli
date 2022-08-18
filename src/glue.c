@@ -22,7 +22,7 @@ SEXP resize(SEXP out, R_xlen_t n) {
   return Rf_xlengthgets(out, n);
 }
 
-SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP lit_arg) {
+SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg) {
 
   typedef enum {
     text,
@@ -47,8 +47,7 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP lit_arg) {
 
   char comment_char = '\0';
 
-  Rboolean litorig = LOGICAL(lit_arg)[0];
-  Rboolean literal = litorig;
+  Rboolean literal = 1;
 
   int delim_equal = strncmp(open, close, open_len) == 0;
 
@@ -71,11 +70,6 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP lit_arg) {
         if (strncmp(&xx[i + open_len], open, open_len) == 0) {
           i += open_len;
         } else {
-          // If .literal was NA then We parse {. } and {? }
-          // expressions with literal = TRUE
-          if (litorig == NA_LOGICAL) {
-            literal = xx[i+1] == '.' || xx[i+1] == '?';
-          }
           state = delim;
           delim_level = 1;
           start = i + open_len;

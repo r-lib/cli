@@ -138,8 +138,7 @@ inline_transformer <- function(code, envir) {
       .envir = envir,
       .transformer = inline_transformer,
       .open = paste0("{", envir$marker),
-      .close = paste0(envir$marker, "}"),
-      .literal = TRUE
+      .close = paste0(envir$marker, "}")
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -218,8 +217,7 @@ clii__inline <- function(app, text, .list) {
       .envir = t$values,
       .transformer = inline_transformer,
       .open = paste0("{", t$values$marker),
-      .close = paste0(t$values$marker, "}"),
-      .literal = TRUE
+      .close = paste0(t$values$marker, "}")
     )
   })
   paste(out, collapse = "")
@@ -235,13 +233,30 @@ make_cmd_transformer <- function(values) {
   values$pmarkers <- list()
 
   function(code, envir) {
+    res <- tryCatch({
+      if (substr(code, 1, 1) == ".") stop("style")
+      expr <- parse(text = code, keep.source = FALSE)
+      eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
+    }, error = function(e) e)
 
-    first <- substr(code, 1, 1)
-    if (first == ".") {
-      # style
+    if (!inherits(res, "error")) {
+      id <- paste0("v", length(values))
+      if (length(res) == 0) res <- qty(0)
+      values[[id]] <- res
+      values$qty <- res
+      values$num_subst <- values$num_subst + 1L
+      return(paste0("{", values$marker, id, values$marker, "}"))
+    }
+
+    # plurals
+    if (substr(code, 1, 1) == "?") {
+      return(parse_plural(code, values))
+
+    } else {
+      # inline styles
       m <- regexpr(inline_regex(), code, perl = TRUE)
       has_match <- m != -1
-      if (!has_match) stop("Invalid cli style string: `", code, "`")
+      if (!has_match) stop(res)
 
       starts <- attr(m, "capture.start")
       ends <- starts + attr(m, "capture.length") - 1L
@@ -255,21 +270,6 @@ make_cmd_transformer <- function(values) {
         .transformer = sys.function()
       )
       paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
-
-    } else if (first == "?") {
-      # plural
-      parse_plural(code, values)
-
-    } else {
-      # plain glue
-      expr <- parse(text = code, keep.source = FALSE)
-      res <- eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
-      id <- paste0("v", length(values))
-      if (length(res) == 0) res <- qty(0)
-      values[[id]] <- res
-      values$qty <- res
-      values$num_subst <- values$num_subst + 1L
-      paste0("{", values$marker, id, values$marker, "}")
     }
   }
 }
@@ -278,17 +278,11 @@ glue_cmd <- function(..., .envir) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
-
-  # first we parse the {. ... } expressions, these can be nested, so we
-  # get all of them.
   pstr <- glue(
     str,
     .envir = .envir,
     .transformer = transformer
   )
-
-  # then we do the {? ... } expressions for pluralization
-
   glue_delay(
     str = post_process_plurals(pstr, values),
     values = values
