@@ -128,7 +128,7 @@ inline_transformer <- function(code, envir) {
     # but only to the whole non-brace expression. We don't need to end this
     # container, because the one above (`id`) will end this one as well.
 
-    braceexp <- grepl("^[<][^.][^>]*[>]$", text)
+    braceexp <- grepl("^[{][^.][^}]*[}]$", text)
     if (!braceexp) {
       id2 <- clii__container_start(app, "span", class = NULL)
     }
@@ -137,9 +137,9 @@ inline_transformer <- function(code, envir) {
       text,
       .envir = envir,
       .transformer = inline_transformer,
-      .open = paste0("<", envir$marker),
-      .close = paste0(envir$marker, ">"),
-      .round = 3L
+      .open = paste0("{", envir$marker),
+      .close = paste0(envir$marker, "}"),
+      .literal = TRUE
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -217,9 +217,9 @@ clii__inline <- function(app, text, .list) {
       t$str,
       .envir = t$values,
       .transformer = inline_transformer,
-      .open = paste0("<", t$values$marker),
-      .close = paste0(t$values$marker, ">"),
-      .round = 3L
+      .open = paste0("{", t$values$marker),
+      .close = paste0(t$values$marker, "}"),
+      .literal = TRUE
     )
   })
   paste(out, collapse = "")
@@ -252,11 +252,9 @@ make_cmd_transformer <- function(values) {
       out <- glue(
         text,
         .envir = envir,
-        .transformer = sys.function(),
-        # nesting can only happen in round 2
-        .round = 2L
+        .transformer = sys.function()
       )
-      paste0("<", values$marker, ".", funname, " ", out, values$marker, ">")
+      paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
 
     } else if (first == "?") {
       # plural
@@ -271,7 +269,7 @@ make_cmd_transformer <- function(values) {
       values[[id]] <- res
       values$qty <- res
       values$num_subst <- values$num_subst + 1L
-      paste0("<", values$marker, id, values$marker, ">")
+      paste0("{", values$marker, id, values$marker, "}")
     }
   }
 }
@@ -281,24 +279,18 @@ glue_cmd <- function(..., .envir) {
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values)
 
-  # first we parse the {} and {?} expressions, these cannot be nested
+  # first we parse the {. ... } expressions, these can be nested, so we
+  # get all of them.
   pstr <- glue(
     str,
     .envir = .envir,
-    .transformer = transformer,
-    .round = 1L,
+    .transformer = transformer
   )
 
-  # then we parse the {.} style expressions
-  pstr2 <- glue(
-    pstr,
-    .envir = .envir,
-    .transformer = transformer,
-    .round = 2L,
-  )
+  # then we do the {? ... } expressions for pluralization
 
   glue_delay(
-    str = post_process_plurals(pstr2, values),
+    str = post_process_plurals(pstr, values),
     values = values
   )
 }

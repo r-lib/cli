@@ -172,9 +172,9 @@ clii__item_text <- function(app, type, name, cnt_id, text, .list) {
     res
   } else if (type == "dl") {
     mrk <- text$values$marker
-    text$str <- paste0("<", mrk, ".dd ", text$str, mrk, ">")
+    text$str <- paste0("{", mrk, ".dd ", text$str, mrk, "}")
     mrk2 <- head$values$marker
-    paste0("<", mrk2, ".dt ", head$str, mrk2, ">")
+    paste0("{", mrk2, ".dt ", head$str, mrk2, "}")
   }
 
   app$xtext(

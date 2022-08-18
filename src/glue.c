@@ -22,7 +22,7 @@ SEXP resize(SEXP out, R_xlen_t n) {
   return Rf_xlengthgets(out, n);
 }
 
-SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP round_arg) {
+SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP lit_arg) {
 
   typedef enum {
     text,
@@ -31,8 +31,7 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP round_arg) {
     double_quote,
     backtick,
     delim,
-    comment,
-    ignored_delim
+    comment
   } states;
 
   const char* xx = Rf_translateCharUTF8(STRING_ELT(x, 0));
@@ -48,8 +47,8 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP round_arg) {
 
   char comment_char = '\0';
 
-  int round = INTEGER(round_arg)[0];
-  Rboolean literal = 1;
+  Rboolean litorig = LOGICAL(lit_arg)[0];
+  Rboolean literal = litorig;
 
   int delim_equal = strncmp(open, close, open_len) == 0;
 
@@ -67,18 +66,16 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP round_arg) {
   for (i = 0; i < str_len; ++i) {
     switch (state) {
     case text: {
-      if (strncmp(&xx[i], open, open_len) == 0 &&
-          ((round == 1 && xx[i+1] != '.') ||
-           (round == 2 && xx[i+1] == '.') ||
-           (round == 3))) {
+      if (strncmp(&xx[i], open, open_len) == 0) {
         /* check for open delim doubled */
         if (strncmp(&xx[i + open_len], open, open_len) == 0) {
           i += open_len;
         } else {
-          // In round 1 we parse {} with literal = FALSE and {?} with
-          // literal = TRUE.
-          // In round 2 we parse {.} with literal = TRUE
-          literal = round == 2 || round == 3 || xx[i+1] == '?';
+          // If .literal was NA then We parse {. } and {? }
+          // expressions with literal = TRUE
+          if (litorig == NA_LOGICAL) {
+            literal = xx[i+1] == '.' || xx[i+1] == '?';
+          }
           state = delim;
           delim_level = 1;
           start = i + open_len;
