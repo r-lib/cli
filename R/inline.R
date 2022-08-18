@@ -128,7 +128,7 @@ inline_transformer <- function(code, envir) {
     # but only to the whole non-brace expression. We don't need to end this
     # container, because the one above (`id`) will end this one as well.
 
-    braceexp <- grepl("^[{][^.][^}]*[}]$", text)
+    braceexp <- grepl("^[<][^.][^}]*[>]$", text)
     if (!braceexp) {
       id2 <- clii__container_start(app, "span", class = NULL)
     }
@@ -137,8 +137,8 @@ inline_transformer <- function(code, envir) {
       text,
       .envir = envir,
       .transformer = inline_transformer,
-      .open = paste0("{", envir$marker),
-      .close = paste0(envir$marker, "}")
+      .open = paste0("<", envir$marker),
+      .close = paste0(envir$marker, ">")
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -216,8 +216,8 @@ clii__inline <- function(app, text, .list) {
       t$str,
       .envir = t$values,
       .transformer = inline_transformer,
-      .open = paste0("{", t$values$marker),
-      .close = paste0(t$values$marker, "}")
+      .open = paste0("<", t$values$marker),
+      .close = paste0(t$values$marker, ">")
     )
   })
   paste(out, collapse = "")
@@ -245,7 +245,7 @@ make_cmd_transformer <- function(values) {
       values[[id]] <- res
       values$qty <- res
       values$num_subst <- values$num_subst + 1L
-      return(paste0("{", values$marker, id, values$marker, "}"))
+      return(paste0("<", values$marker, id, values$marker, ">"))
     }
 
     # plurals
@@ -269,7 +269,7 @@ make_cmd_transformer <- function(values) {
         .envir = envir,
         .transformer = sys.function()
       )
-      paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
+      paste0("<", values$marker, ".", funname, " ", out, values$marker, ">")
     }
   }
 }
