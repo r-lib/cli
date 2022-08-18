@@ -31,3 +31,10 @@ test_that("{. } is always a style", {
   vals <- glue_cmd("{.foo }", .envir = environment())$values
   expect_false(any(grepl("^v[0-9]+$", names(vals))))
 })
+
+test_that("We can use doubling to escape { and }", {
+  txt <- "{.emph {'{{foo {{}}'}}"
+  expect_snapshot(
+    format_message(txt)
+  )
+})
