@@ -267,7 +267,8 @@ make_cmd_transformer <- function(values) {
       out <- glue(
         text,
         .envir = envir,
-        .transformer = sys.function()
+        .transformer = sys.function(),
+        .cli = TRUE
       )
       paste0("<", values$marker, ".", funname, " ", out, values$marker, ">")
     }
@@ -281,7 +282,8 @@ glue_cmd <- function(..., .envir) {
   pstr <- glue(
     str,
     .envir = .envir,
-    .transformer = transformer
+    .transformer = transformer,
+    .cli = TRUE
   )
   glue_delay(
     str = post_process_plurals(pstr, values),

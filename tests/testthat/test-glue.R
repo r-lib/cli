@@ -32,9 +32,8 @@ test_that("{. } is always a style", {
   expect_false(any(grepl("^v[0-9]+$", names(vals))))
 })
 
-test_that("We can use doubling to escape { and }", {
-  txt <- "{.emph {'{{foo {{}}'}}"
+test_that("{ } is parsed with literal = FALSE", {
   expect_snapshot(
-    format_message(txt)
+    format_message("{.emph {'{foo {}'}}")
   )
 })

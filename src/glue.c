@@ -22,7 +22,15 @@ SEXP resize(SEXP out, R_xlen_t n) {
   return Rf_xlengthgets(out, n);
 }
 
-SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg) {
+// This is almost like the original glue parser, except that
+// - no comment_arg (always empty string)
+// - no literal_arg
+// - If cli_arg is FALSE, then literal = 1, always
+// - If cli_arg is TRUE, then we use literal = 1, except in {}
+//   evaluations (as opposed to {.} for cli styles), where literal = 0 is
+//   used.
+
+SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP cli_arg) {
 
   typedef enum {
     text,
@@ -46,6 +54,8 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg) {
   size_t close_len = strlen(close);
 
   char comment_char = '\0';
+
+  Rboolean cli = LOGICAL(cli_arg)[0];
 
   Rboolean literal = 1;
 
@@ -73,6 +83,8 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg) {
           state = delim;
           delim_level = 1;
           start = i + open_len;
+          // In cli mode we switch to literal = FALSE for a {} block
+          if (cli && xx[i + open_len] != '.') literal = 0;
           break;
         }
       }
@@ -124,8 +136,13 @@ SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg) {
     case delim: {
       if (!delim_equal && strncmp(&xx[i], open, open_len) == 0) {
         ++delim_level;
+        // In cli mode we switch to literal = FALSE for a {} block
+        if (cli && xx[i + open_len] != '.') literal = 0;
         i += open_len - 1;
       } else if (strncmp(&xx[i], close, close_len) == 0) {
+        // in non-{} blocks (i.e. {.}) we need literal = 1. We can always
+        // switch to literal = 1 here, because {} blocks cannot be nested.
+        literal = 1;
         --delim_level;
         i += close_len - 1;
       } else {

@@ -37,3 +37,10 @@
     Message
       <URL> 2 2
 
+# { } is parsed with literal = FALSE
+
+    Code
+      format_message("{.emph {'{foo {}'}}")
+    Output
+      [1] "{foo {}"
+
