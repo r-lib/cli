@@ -116,11 +116,13 @@ post_process_plurals <- function(str, values) {
 #'
 #' See [pluralization] and some examples below.
 #'
+#' You need to install the glue package to use this function.
+#'
 #' @param ...,.envir,.transformer All arguments are passed to [glue::glue()].
 #'
 #' @export
 #' @family pluralization
-#' @examples
+#' @examplesIf requireNamespace("glue", quietly = TRUE)
 #' # Regular plurals
 #' nfile <- 0; pluralize("Found {nfile} file{?s}.")
 #' nfile <- 1; pluralize("Found {nfile} file{?s}.")
