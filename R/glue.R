@@ -23,7 +23,7 @@ glue <- function(text, .envir = parent.frame(),
     return(text)
   }
 
-  text <- glue::trim(text)
+  text <- trim(text)
 
   f <- function(expr) {
     eval_func <- as.character(.transformer(expr, .envir) %||% character())
@@ -60,4 +60,12 @@ glue_collapse <- function(x, sep = "", last = "") {
   } else {
     paste0(x, collapse = sep)
   }
+}
+
+trim <- function (x) {
+  has_newline <- function(x) any(grepl("\\n", x))
+  if (length(x) == 0 || !has_newline(x)) {
+    return(x)
+  }
+  .Call(trim_, x)
 }
