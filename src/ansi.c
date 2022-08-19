@@ -282,7 +282,6 @@ static void clic__ansi_update_state(const char *param,
 static void clic__ansi_update_state_link(const char *param,
                                          const char *uri,
                                          const char *end,
-                                         struct cli_buffer *buffer,
                                          struct cli_ansi_state *state) {
 
   if ((*uri == '\033' && *(uri + 1) == '\\') || *uri == '\007') {
@@ -582,7 +581,7 @@ static int simplify_cb_link(const char *param,
                             void *vdata) {
   struct simplify_data *data = vdata;
   data->num_tags ++;
-  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
+  clic__ansi_update_state_link(param, uri, end, &data->state);
   return 0;
 }
 
@@ -692,7 +691,7 @@ static int substr_cb_link(const char *param,
                           const char *end,
                           void *vdata) {
   struct substr_data *data = vdata;
-  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
+  clic__ansi_update_state_link(param, uri, end, &data->state);
   return 0;
 }
 
@@ -959,7 +958,7 @@ static int html_cb_link(const char *param,
                         const char *end,
                         void *vdata) {
   struct html_data *data = vdata;
-  clic__ansi_update_state_link(param, uri, end, &data->buffer, &data->state);
+  clic__ansi_update_state_link(param, uri, end, &data->state);
   return 0;
 }
 
