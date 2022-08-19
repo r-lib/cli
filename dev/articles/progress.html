@@ -87,13 +87,13 @@
 
 
 
-<script src="progress_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="progress_files/asciinema_player-2.6.1/asciinema-player.css" rel="stylesheet">
-<script src="progress_files/asciinema_player-2.6.1/asciinema-player.js"></script><script src="progress_files/asciinema_player-binding-2.0.0.9000/asciinema_player.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Introduction to progress bars in cli</h1>
                         <h4 data-toc-skip class="author">Gábor Csárdi</h4>
             
-            <h4 data-toc-skip class="date">2022-07-28</h4>
+            <h4 data-toc-skip class="date">2022-08-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/HEAD/vignettes/progress.Rmd" class="external-link"><code>vignettes/progress.Rmd</code></a></small>
       <div class="d-none name"><code>progress.Rmd</code></div>
@@ -234,7 +234,11 @@
 <h2 id="simplified-api">Simplified API<a class="anchor" aria-label="anchor" href="#simplified-api"></a>
 </h2>
 <p>Often you don’t need the full power of the progress bar API, and only want to show a status message. The <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> and <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> functions are tailored for this.</p>
-<p><code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> shows a (potentially templated) message in the status bar. For convenience, the progress bar rules still apply here by default: * Status messages are removed when their calling function exits. * A status message removes the previous status message or progress bar of the same caller function.</p>
+<p><code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> shows a (potentially templated) message in the status bar. For convenience, the progress bar rules still apply here by default:</p>
+<ul>
+<li>Status messages are removed when their calling function exits.</li>
+<li>A status message removes the previous status message or progress bar of the same caller function.</li>
+</ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_message.html">cli_progress_message</a></span><span class="op">(</span><span class="st">"Task one is running..."</span><span class="op">)</span></span>
