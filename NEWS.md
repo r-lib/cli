@@ -1,5 +1,8 @@
 # cli (development version)
 
+* `code_highlight` now falls to the default theme (instead of no theme) for
+  unknown RStudio themes (#482, @rossellhayes).
+
 * `cli_abort()` now supplies `.frame` to `abort()`. This fixes an
   issue with the `.internal = TRUE` argument (r-lib/rlang#1386).
 
