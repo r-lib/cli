@@ -40,9 +40,13 @@ add new themes, that are valid within the container.
                                     "font-weight" = "bold")))
 cli_h1("Custom title")
 cli_end(d)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#>                                                                                 
+#> <span style="font-weight: bold;;color: #2AA198">Custom title</span>                                                                    
+</pre></div>
+}}
 
-\if{html}{\figure{cli-div.svg}}
 }
 
 \subsection{Auto-closing}{
@@ -56,8 +60,12 @@ frame exits.
 \}
 div()
 cli_text("This is not yellow any more")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #B58900">This is yellow</span>                                                                  
+#> This is not yellow any more                                                     
+</pre></div>
+}}
 
-\if{html}{\figure{cli-div-close.svg}}
 }
 }

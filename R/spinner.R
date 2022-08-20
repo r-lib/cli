@@ -17,7 +17,10 @@ usethis::use_data(spinners, internal = TRUE)
 #' `cli` contains many different spinners, you choose one according to your
 #' taste.
 #'
-#' ```{asciicast get-spinner, R.options = list(asciicast_at = NULL)}
+#' ```{asciicast get-spinner}
+#' #| asciicast_at = "all",
+#' #| asciicast_knitr_output = "svg",
+#' #| asciicast_cursor = FALSE
 #' options(cli.spinner = "hearts")
 #' fun <- function() {
 #'   cli_progress_bar("Spinning")
@@ -126,7 +129,12 @@ list_spinners <- function() {
 #'
 #' ## Default spinner
 #'
-#' ```{asciicast make-spinner-default, R.options = list(asciicast_at = NULL)}
+
+#' ```{asciicast make-spinner-default}
+#' #| asciicast_at = "all",
+#' #| asciicast_knitr_output = "svg",
+#' #| asciicast_cursor = FALSE,
+#' #| asciicast_end_wait = 0
 #' sp1 <- make_spinner()
 #' fun_with_spinner <- function() {
 #'   lapply(1:100, function(x) { sp1$spin(); Sys.sleep(0.05) })
@@ -137,7 +145,11 @@ list_spinners <- function() {
 #'
 #' ## Spinner with a template
 #'
-#' ```{asciicast make-spinner-template, R.options = list(asciicast_at = NULL)}
+#' ```{asciicast make-spinner-template}
+#' #| asciicast_at = "all",
+#' #| asciicast_knitr_output = "svg",
+#' #| asciicast_cursor = FALSE,
+#' #| asciicast_end_wait = 0
 #' sp2 <- make_spinner(template = "Computing {spin}")
 #' fun_with_spinner2 <- function() {
 #'   lapply(1:100, function(x) { sp2$spin(); Sys.sleep(0.05) })
@@ -148,7 +160,10 @@ list_spinners <- function() {
 #'
 #' ## Custom spinner
 #'
-#' ```{asciicast make-spinner-custom, R.options = list(asciicast_at = NULL)}
+#' ```{asciicast make-spinner-custom}
+#' #| asciicast_at = "all",
+#' #| asciicast_knitr_output = "svg",
+#' #| asciicast_cursor = FALSE
 #' sp3 <- make_spinner("simpleDotsScrolling", template = "Downloading {spin}")
 #' fun_with_spinner3 <- function() {
 #'   lapply(1:100, function(x) { sp3$spin(); Sys.sleep(0.05) })
@@ -287,7 +302,11 @@ print.cli_spinner <- function(x, ...) {
 #'
 #' @details
 #'
-#' ```{asciicast demo-spinners, R.options =list(asciicast_at = NULL)}
+#' ```{asciicast demo-spinners}
+#' #| asciicast_at = "all",
+#' #| asciicast_knitr_output = "svg",
+#' #| asciicast_cursor = FALSE,
+#' #| asciicast_end_wait = 0
 #' demo_spinners("clock")
 #' ```
 #'

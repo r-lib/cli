@@ -18,9 +18,12 @@ to parts of the text, and these classes can be used in themes. For
 example
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("This is \{.emph important\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> This is <span style="font-style: italic;">important</span>.                                                              
+</pre></div>
+}}
 
-\if{html}{\figure{inline-text.svg}}
 
 adds a class to the "important" word, class \code{"emph"}. Note that in this
 case the string within the braces is usually not a valid R expression.
@@ -29,9 +32,12 @@ braces:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{adjective <- "great"
 cli_text("This is \{.emph \{adjective\}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> This is <span style="font-style: italic;">great</span>.                                                                  
+</pre></div>
+}}
 
-\if{html}{\figure{inline-text-2.svg}}
 
 An inline class will always create a \code{span} element internally. So in
 themes, you can use the \code{span.emph} CSS selector to change how inline
@@ -40,9 +46,11 @@ text is emphasized:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_div(theme = list(span.emph = list(color = "red")))
 adjective <- "nice and red"
 cli_text("This is \{.emph \{adjective\}\}.")
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{inline-text-3.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> This is <span style="font-style: italic;;color: #DC322F">nice and red</span>.                                                           
+</pre></div>
+}}
 }
 
 \section{Classes}{
@@ -82,9 +90,21 @@ cli_li("An email address: \{.email bugs.bunny@acme.com\}.")
 cli_li("A URL: \{.url https://acme.com\}.")
 cli_li("An environment variable: \{.envvar R_LIBS\}.")
 cli_end(ul)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> • <span style="font-style: italic;;color: #DC322F">Emphasized</span> text.                                                              
+#> • <span style="font-weight: bold;">Strong</span> importance.                                                            
+#> • A piece of code: `sum(a) / length(a)`.                                        
+#> • A package name: <span style="color: #268BD2">cli</span>.                                                          
+#> • A function name: `cli_text()`.                                                
+#> • A keyboard key: press <span style="color: #268BD2">[ENTER]</span>.                                                
+#> • A file name: <span style="color: #268BD2">/usr/bin/env</span>.                                                    
+#> • An email address: <span style="color: #268BD2">bugs.bunny@acme.com</span>.                                        
+#> • A URL: <span style="font-style: italic;;color: #268BD2">&lt;https://acme.com&gt;</span>.                                                    
+#> • An environment variable: `R_LIBS`.                                            
+</pre></div>
+}}
 
-\if{html}{\figure{inline-examples.svg}}
 
 You can add new classes by defining them in the theme, and then using
 them.
@@ -95,9 +115,12 @@ them.
   "span.myclass" = list(after = ">>")))
 cli_text("This is \{.myclass in angle brackets\}.")
 cli_end()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> This is <span style="color: #cccccc">&lt;&lt;in angle brackets&gt;&gt;</span>.                                                  
+</pre></div>
+}}
 
-\if{html}{\figure{inline-newclass.svg}}
 \subsection{Highlighting weird-looking values}{
 
 Often it is useful to highlight a weird file or path name, e.g. one
@@ -125,26 +148,35 @@ files, packages, etc.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: \{pkgs\}.")
 cli_text("Packages: \{.pkg \{pkgs\}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Packages: pkg1, pkg2, and pkg3.                                                 
+#> Packages: <span style="color: #268BD2">pkg1</span>, <span style="color: #268BD2">pkg2</span>, and <span style="color: #268BD2">pkg3</span>.                                                 
+</pre></div>
+}}
 
-\if{html}{\figure{inline-collapse.svg}}
 
 Class names are collapsed differently by default
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- Sys.time()
 cli_text("Hey, \{.var x\} has class \{.cls \{class(x)\}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Hey, `x` has class <span style="color: #268BD2">&lt;POSIXct/POSIXt&gt;</span>.                                            
+</pre></div>
+}}
 
-\if{html}{\figure{inline-collapse-2.svg}}
 
 By default cli truncates long vectors. The truncation limit is by default
 one hundred elements, but you can change it with the \code{vec_trunc} style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
 cli_text("Column names: \{nms\}.")
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{inline-collapse-trunc.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Column names: mpg, cyl, disp, hp, drat, ….                                      
+</pre></div>
+}}
 }
 
 \section{Formatting values}{
@@ -165,17 +197,23 @@ to refer to the string from a template:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{msg <- "Error in if (ncol(dat$y)) \{: argument is of length zero"
 cli_alert_warning("\{msg\}")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #B58900">!</span> Error in if (ncol(dat$y)) \{: argument is of length zero                       
+</pre></div>
+}}
 
-\if{html}{\figure{inline-escape.svg}}
 
 If you want to explicitly escape \verb{\{} and \verb{\}} characters, just double
 them:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_alert_warning("A warning with \{\{ braces \}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #B58900">!</span> A warning with \{ braces \}.                                                    
+</pre></div>
+}}
 
-\if{html}{\figure{inline-escape-2.svg}}
 
 See also examples below.
 }
@@ -189,9 +227,13 @@ All cli commands that emit text support pluralization. Some examples:
 nfiles <- 13
 cli_alert_info("Found \{ndirs\} diretor\{?y/ies\} and \{nfiles\} file\{?s\}.")
 cli_text("Will install \{length(pkgs)\} package\{?s\}: \{.pkg \{pkgs\}\}")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #2AA198">ℹ</span> Found 1 diretory and 13 files.                                                
+#> Will install 3 packages: <span style="color: #268BD2">pkg1</span>, <span style="color: #268BD2">pkg2</span>, and <span style="color: #268BD2">pkg3</span>                                   
+</pre></div>
+}}
 
-\if{html}{\figure{inline-plural.svg}}
 
 See \link{pluralization} for details.
 }

@@ -29,9 +29,13 @@ stop(format_error(c(
         "\{.var n\} must be a numeric vector",
   "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 )))
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Error: `n` must be a numeric vector                                             
+#> <span style="color: #DC322F">✖</span> You've supplied a <span style="color: #268BD2">&lt;character&gt;</span> vector.                                         
+</pre></div>
+}}
 
-\if{html}{\figure{format-error.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
@@ -40,7 +44,11 @@ stop(format_error(c(
   "i" = "There \{?is/are\} \{len\} element\{?s\}.",
   "x" = "You've tried to subset element \{idx\}."
 )))
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{format-error-2.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Error: Must index an existing element:                                          
+#> <span style="color: #2AA198">ℹ</span> There are 26 elements.                                                        
+#> <span style="color: #DC322F">✖</span> You've tried to subset element 100.                                           
+</pre></div>
+}}
 }

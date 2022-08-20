@@ -107,6 +107,12 @@ Set to anything else to assume no hyperlink support.
 See \code{\link[=style_hyperlink]{style_hyperlink()}}.
 }
 
+\subsection{\code{cli.ignore_unknown_rstudio_theme}}{
+
+Set to \code{TRUE} to omit a warning for an unknown RStudio theme in
+\code{code_highlight()}.
+}
+
 \subsection{\code{cli.num_colors}}{
 
 Number of ANSI colors. See \code{\link[=num_ansi_colors]{num_ansi_colors()}}. See also the

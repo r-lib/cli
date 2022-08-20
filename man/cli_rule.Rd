@@ -35,9 +35,12 @@ It can be used to separate parts of the output.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pkg <- "mypackage"
 cli_rule(left = "\{.pkg \{pkg\}\} results")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> ── <span style="color: #268BD2">mypackage</span> results ─────────────────────────────────────────────────          
+</pre></div>
+}}
 
-\if{html}{\figure{cli-rule.svg}}
 }
 
 \subsection{Theming}{
@@ -57,8 +60,11 @@ Colors and background colors can similarly changed via a theme.
   "line-type" = "double")))
 cli_rule("Summary", right = "\{.pkg mypackage\}")
 cli_end(d)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #2AA198">══ Summary ══════════════════════════════════════════════ </span><span style="color: #268BD2">mypackage</span><span style="color: #2AA198"> ══</span>          
+</pre></div>
+}}
 
-\if{html}{\figure{cli-rule-line-type.svg}}
 }
 }

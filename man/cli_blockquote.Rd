@@ -36,7 +36,16 @@ A section that is quoted from another source. It is typically indented.
   "times; premature optimization is the root of all evil (or at least",
   "most of it) in programming.")
 cli_blockquote(evil, citation = "Donald Ervin Knuth")
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{cli-blockquote.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#>                                                                                 
+#>     <span style="font-style: italic;">“The real problem is that programmers have spent far</span>                        
+#>     <span style="font-style: italic;">too much time worrying about efficiency in the wrong</span>                        
+#>     <span style="font-style: italic;">places and at the wrong times; premature optimization</span>                       
+#>     <span style="font-style: italic;">is the root of all evil (or at least most of it) in</span>                         
+#>     <span style="font-style: italic;">programming.”</span>                                                               
+#>     <span style="font-weight: bold;;font-style: italic;">— Donald Ervin Knuth</span>                                                        
+#>                                                                                 
+</pre></div>
+}}
 }

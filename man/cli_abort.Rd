@@ -56,9 +56,15 @@ cli_abort(c(
         "\{.var n\} must be a numeric vector",
   "x" = "You've supplied a \{.cls \{class(n)\}\} vector."
 ))
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="font-weight: bold;;color: #B58900">Error</span><span style="font-weight: bold;">:</span>                                                                          
+#> <span style="color: #B58900">!</span> `n` must be a numeric vector                                                  
+#> <span style="color: #DC322F">✖</span> You've supplied a <span style="color: #268BD2">&lt;character&gt;</span> vector.                                         
+#> <span style="color: #002B36">Run `rlang::last_error()` to see where the error occurred.</span>                      
+</pre></div>
+}}
 
-\if{html}{\figure{cli-abort.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{len <- 26
 idx <- 100
@@ -67,7 +73,13 @@ cli_abort(c(
   "i" = "There \{?is/are\} \{len\} element\{?s\}.",
   "x" = "You've tried to subset element \{idx\}."
 ))
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{cli-abort-2.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="font-weight: bold;;color: #B58900">Error</span><span style="font-weight: bold;">:</span>                                                                          
+#> <span style="color: #B58900">!</span> Must index an existing element:                                               
+#> <span style="color: #2AA198">ℹ</span> There are 26 elements.                                                        
+#> <span style="color: #DC322F">✖</span> You've tried to subset element 100.                                           
+#> <span style="color: #002B36">Run `rlang::last_error()` to see where the error occurred.</span>                      
+</pre></div>
+}}
 }

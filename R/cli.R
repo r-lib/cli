@@ -642,7 +642,7 @@ cli_li <- function(items = NULL, labels = names(items), id = NULL,
 #'
 #' Alerts are printed without wrapping, unless you set `wrap = TRUE`:
 #'
-#' ```{asciicast alert-wrap, R.options = list(asciicast_rows = 4)}
+#' ```{asciicast alert-wrap, asciicast_rows = 4}
 #' cli_alert_info("Data columns: {.val {names(mtcars)}}.")
 #' cli_alert_info("Data columns: {.val {names(mtcars)}}.", wrap = TRUE)
 #' ```

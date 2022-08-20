@@ -21,21 +21,12 @@ knitr::opts_chunk$set(
   out.width = "100%",
   cache = TRUE
 )
-.cast_opts <- modifyList(
-  keep.null = TRUE,
-  asciicast::asciicast_knitr_options(),
-  list(
-    asciicast_theme = "github-light",
-    asciicast_omit_last_line = TRUE
-  )
-)
 asciicast::init_knitr_engine(
-  startup = quote({
-    library(cli)
-    set.seed(1) }),
   echo = TRUE,
   echo_input = FALSE,
-  options = .cast_opts
+  startup = quote({
+    library(cli)
+    set.seed(1) })
 )
 ```
 
@@ -345,7 +336,8 @@ This output is created "above" the status bar, which is always kept in the last 
 See the following example:
 
 ```{asciicast}
-#| R.options = modifyList(keep.null = TRUE, .cast_opts, list(asciicast_at = NULL, asciicast_end_wait = 30))
+#| asciicast_at = "all",
+#| asciicast_end_wait = 30
 f <- function() {
   cli_alert_info("About to start downloads.")
   sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
@@ -610,11 +602,11 @@ get_spinner("dots")
 ```
 
 ```{asciicast}
-#| R.options = modifyList(keep.null = TRUE, .cast_opts, list(asciicast_at = NULL))
+#| asciicast_at = "all"
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
 ```{asciicast}
-#| R.options = modifyList(keep.null = TRUE, .cast_opts, list(asciicast_at = NULL))
+#| asciicast_at = "all"
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```

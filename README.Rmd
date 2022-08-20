@@ -13,25 +13,16 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README",
   out.width = "100%",
-  cache = TRUE
+  cache = TRUE,
+  asciicast_theme = "pkgdown"
 )
 Sys.setenv(CLI_TICK_TIME = "100")
-.cast_opts <- modifyList(
-  keep.null = TRUE,
-  asciicast::asciicast_knitr_options(),
-  list(
-    asciicast_theme = "github-light",
-    asciicast_omit_last_line = TRUE,
-    asciicast_end_wait = 3
-  )
-)
 asciicast::init_knitr_engine(
   startup = quote({
     library(cli)
     set.seed(1) }),
   echo = TRUE,
-  echo_input = FALSE,
-  options = .cast_opts
+  echo_input = FALSE
 )
 ```
 
@@ -182,7 +173,9 @@ options(cli.progress_clear = FALSE)
 ```
 
 ```{asciicast progress}
-#| R.options = modifyList(keep.null = TRUE, .cast_opts, list(asciicast_at = NULL))
+#| asciicast_knitr_output = "svg",
+#| asciicast_at = "all",
+#| asciicast_cursor = FALSE
 clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {

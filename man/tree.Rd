@@ -60,14 +60,49 @@ at all.
   ))
 )
 tree(data)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> processx                                                                        
+#> ├─assertthat                                                                    
+#> ├─crayon                                                                        
+#> ├─debugme                                                                       
+#> │ └─crayon                                                                      
+#> └─R6                                                                            
+</pre></div>
+}}
 
-\if{html}{\figure{tree.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tree(data, root = "rcmdcheck")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> rcmdcheck                                                                       
+#> ├─callr                                                                         
+#> │ ├─processx                                                                    
+#> │ │ ├─assertthat                                                                
+#> │ │ ├─crayon                                                                    
+#> │ │ ├─debugme                                                                   
+#> │ │ │ └─crayon                                                                  
+#> │ │ └─R6                                                                        
+#> │ └─R6                                                                          
+#> ├─clisymbols                                                                    
+#> ├─crayon                                                                        
+#> ├─desc                                                                          
+#> │ ├─assertthat                                                                  
+#> │ ├─R6                                                                          
+#> │ ├─crayon                                                                      
+#> │ └─rprojroot                                                                   
+#> │   └─backports                                                                 
+#> ├─digest                                                                        
+#> ├─prettyunits                                                                   
+#> │ ├─magrittr                                                                    
+#> │ └─assertthat                                                                  
+#> ├─R6                                                                            
+#> ├─rprojroot                                                                     
+#> │ └─backports                                                                   
+#> └─withr                                                                         
+</pre></div>
+}}
 
-\if{html}{\figure{tree-root.svg}}
 \subsection{Colored nodes}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{data$label <- paste(data$package,
@@ -79,9 +114,36 @@ tree(data)
 roots <- ! data$package \%in\% unlist(data$dependencies)
 data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="font-style: italic;;color: #2AA198">rcmdcheck (1.2.1.9002)</span>                                                          
+#> ├─callr (1.0.0.9000)                                                            
+#> │ ├─processx (2.0.0.1)                                                          
+#> │ │ ├─assertthat (0.2.0)                                                        
+#> │ │ ├─crayon (1.3.4)                                                            
+#> │ │ ├─debugme (1.0.2)                                                           
+#> │ │ │ └─crayon (1.3.4)                                                          
+#> │ │ └─R6 (2.2.2)                                                                
+#> │ └─R6 (2.2.2)                                                                  
+#> ├─clisymbols (1.2.0)                                                            
+#> ├─crayon (1.3.4)                                                                
+#> ├─desc (1.1.1.9000)                                                             
+#> │ ├─assertthat (0.2.0)                                                          
+#> │ ├─R6 (2.2.2)                                                                  
+#> │ ├─crayon (1.3.4)                                                              
+#> │ └─rprojroot (1.2)                                                             
+#> │   └─backports (1.1.1)                                                         
+#> ├─digest (0.6.12)                                                               
+#> ├─prettyunits (1.0.2)                                                           
+#> │ ├─magrittr (1.5)                                                              
+#> │ └─assertthat (0.2.0)                                                          
+#> ├─R6 (2.2.2)                                                                    
+#> ├─rprojroot (1.2)                                                               
+#> │ └─backports (1.1.1)                                                           
+#> └─withr (2.0.0)                                                                 
+</pre></div>
+}}
 
-\if{html}{\figure{tree-colored.svg}}
 }
 
 \subsection{Trimming}{
@@ -124,16 +186,86 @@ pkgs <- data.frame(
 )
 
 tree(pkgs, trim = TRUE)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> dplyr@0.8.3                                                                     
+#> ├─assertthat@0.2.1                                                              
+#> ├─glue@1.3.1                                                                    
+#> ├─magrittr@1.5                                                                  
+#> ├─R6@2.4.0                                                                      
+#> ├─Rcpp@1.0.2                                                                    
+#> ├─rlang@0.4.0                                                                   
+#> ├─tibble@2.1.3                                                                  
+#> │ ├─cli@1.1.0                                                                   
+#> │ │ ├─assertthat@0.2.1                                                          
+#> │ │ └─crayon@1.3.4                                                              
+#> │ ├─crayon@1.3.4                                                                
+#> │ ├─fansi@0.4.0                                                                 
+#> │ ├─pillar@1.4.2                                                                
+#> │ │ ├─cli@1.1.0                                                                 
+#> │ │ ├─crayon@1.3.4                                                              
+#> │ │ ├─fansi@0.4.0                                                               
+#> │ │ ├─rlang@0.4.0                                                               
+#> │ │ ├─utf8@1.1.4                                                                
+#> │ │ └─vctrs@0.2.0                                                               
+#> │ │   ├─backports@1.1.5                                                         
+#> │ │   ├─ellipsis@0.3.0                                                          
+#> │ │   │ └─rlang@0.4.0                                                           
+#> │ │   ├─digest@0.6.21                                                           
+#> │ │   ├─glue@1.3.1                                                              
+#> │ │   ├─rlang@0.4.0                                                             
+#> │ │   └─zeallot@0.1.0                                                           
+#> │ ├─pkgconfig@2.0.3                                                             
+#> │ └─rlang@0.4.0                                                                 
+#> └─tidyselect@0.2.5                                                              
+#>   ├─glue@1.3.1                                                                  
+#>   ├─rlang@0.4.0                                                                 
+#>   └─Rcpp@1.0.2                                                                  
+</pre></div>
+}}
 
-\if{html}{\figure{tree-trimming.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# Mark the trimmed nodes
 pkgs$label <- pkgs$name
 pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
 tree(pkgs, trim = TRUE)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> dplyr@0.8.3                                                                     
+#> ├─assertthat@0.2.1                                                              
+#> ├─glue@1.3.1                                                                    
+#> ├─magrittr@1.5                                                                  
+#> ├─R6@2.4.0                                                                      
+#> ├─Rcpp@1.0.2                                                                    
+#> ├─rlang@0.4.0                                                                   
+#> ├─tibble@2.1.3                                                                  
+#> │ ├─cli@1.1.0                                                                   
+#> │ │ ├─assertthat@0.2.1  (trimmed)                                               
+#> │ │ └─crayon@1.3.4                                                              
+#> │ ├─crayon@1.3.4  (trimmed)                                                     
+#> │ ├─fansi@0.4.0                                                                 
+#> │ ├─pillar@1.4.2                                                                
+#> │ │ ├─cli@1.1.0  (trimmed)                                                      
+#> │ │ ├─crayon@1.3.4  (trimmed)                                                   
+#> │ │ ├─fansi@0.4.0  (trimmed)                                                    
+#> │ │ ├─rlang@0.4.0  (trimmed)                                                    
+#> │ │ ├─utf8@1.1.4                                                                
+#> │ │ └─vctrs@0.2.0                                                               
+#> │ │   ├─backports@1.1.5                                                         
+#> │ │   ├─ellipsis@0.3.0                                                          
+#> │ │   │ └─rlang@0.4.0  (trimmed)                                                
+#> │ │   ├─digest@0.6.21                                                           
+#> │ │   ├─glue@1.3.1  (trimmed)                                                   
+#> │ │   ├─rlang@0.4.0  (trimmed)                                                  
+#> │ │   └─zeallot@0.1.0                                                           
+#> │ ├─pkgconfig@2.0.3                                                             
+#> │ └─rlang@0.4.0  (trimmed)                                                      
+#> └─tidyselect@0.2.5                                                              
+#>   ├─glue@1.3.1  (trimmed)                                                       
+#>   ├─rlang@0.4.0  (trimmed)                                                      
+#>   └─Rcpp@1.0.2  (trimmed)                                                       
+</pre></div>
+}}
 
-\if{html}{\figure{tree-trim-mark.svg}}
 }
 }

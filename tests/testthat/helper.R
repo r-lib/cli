@@ -166,3 +166,21 @@ st_from_bel <- function(x) {
 st_to_bel <- function(x) {
   gsub("\033\\", "\007", x, fixed = TRUE)
 }
+
+test_package_root <- function() {
+  x <- tryCatch(
+    rprojroot::find_package_root_file(),
+    error = function(e) NULL)
+
+  if (!is.null(x)) return(x)
+
+  pkg <- testthat::testing_package()
+  x <- tryCatch(
+    rprojroot::find_package_root_file(
+      path = file.path("..", "..", "00_pkg_src", pkg)),
+    error = function(e) NULL)
+
+  if (!is.null(x)) return(x)
+
+  stop("Cannot find package root")
+}

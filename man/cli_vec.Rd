@@ -29,18 +29,24 @@ attributes will remove the style as well.
   style = list(vec_sep = " & ", vec_last = " & ")
 )
 cli_text("My list: \{v\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> My list: foo &amp; bar &amp; foobar.                                                    
+</pre></div>
+}}
 
-\if{html}{\figure{cli-vec.svg}}
 }
 
 \subsection{Custom truncation}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- cli_vec(names(mtcars), list(vec_trunc = 3))
 cli_text("Column names: \{x\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Column names: mpg, cyl, disp, ….                                                
+</pre></div>
+}}
 
-\if{html}{\figure{cli-vec-2.svg}}
 }
 }
 \seealso{

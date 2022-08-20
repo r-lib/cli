@@ -20,23 +20,12 @@ knitr::opts_chunk$set(
   out.width = "100%",
   cache = TRUE
 )
-.cast_opts <- modifyList(
-  keep.null = TRUE,
-  asciicast::asciicast_knitr_options(),
-  list(
-    asciicast_theme = "github-light",
-    asciicast_omit_last_line = TRUE
-  )
-)
 asciicast::init_knitr_engine(
   startup = quote({
     library(cli)
     library(usethis)
     set.seed(1)
-  }),
-  echo = TRUE,
-  echo_input = FALSE,
-  options = .cast_opts
+  })
 )
 ```
 
@@ -107,7 +96,8 @@ cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}
 If you want to handle success and failure, then maybe the `cli_process_*()` functions are a better fit:
 
 ```{asciicast}
-#| R.options = modifyList(keep.null = TRUE, .cast_opts, list(asciicast_at = NULL, asciicast_end_wait = 5))
+#| asciicast_at = "all",
+#| asciicast_end_wait = 5
 tryCatch({
     cli_process_start("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")
     Sys.sleep(1) # <- do the task here, we just sleep

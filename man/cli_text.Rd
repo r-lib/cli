@@ -22,9 +22,16 @@ longer paragraphs. See \code{\link[=cli_alert]{cli_alert()}} for shorter status 
 Text is wrapped to the console width, see \code{\link[=console_width]{console_width()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(cli:::lorem_ipsum())
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Lorem ad ipsum veniam esse nisi deserunt duis. Qui incididunt elit              
+#> elit mollit sint nulla consectetur aute commodo do elit laboris minim           
+#> et. Laboris ipsum mollit voluptate et non do incididunt eiusmod. Anim           
+#> consectetur mollit laborum occaecat eiusmod excepteur. Ullamco non              
+#> tempor esse anim tempor magna non.                                              
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text.svg}}
 }
 
 \subsection{New lines}{
@@ -33,9 +40,13 @@ A \code{cli_text()} call always appends a newline character to the end.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("First line.")
 cli_text("Second line.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> First line.                                                                     
+#> Second line.                                                                    
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text-newline.svg}}
 }
 
 \subsection{Styling}{
@@ -43,9 +54,12 @@ cli_text("Second line.")
 You can use \link[=inline-markup]{inline markup}, as usual.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("The \{.fn cli_text\} function in the \{.pkg cli\} package.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> The `cli_text()` function in the <span style="color: #268BD2">cli</span> package.                                   
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text-markup.svg}}
 }
 
 \subsection{Interpolation}{
@@ -55,9 +69,12 @@ are collapsed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pos <- c(5, 14, 25, 26)
 cli_text("We have \{length(pos)\} missing measurements: \{pos\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> We have 4 missing measurements: 5, 14, 25, and 26.                              
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text-glue.svg}}
 }
 
 \subsection{Styling and interpolation}{
@@ -67,9 +84,12 @@ Use double braces to combine styling and string interpolation.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- "cli-text"
 pkg <- "cli"
 cli_text("The \{.fn \{fun\}\} function in the \{.pkg \{pkg\}\} package.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> The `cli-text()` function in the <span style="color: #268BD2">cli</span> package.                                   
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text-glue-style.svg}}
 }
 
 \subsection{Multiple arguments}{
@@ -77,9 +97,12 @@ cli_text("The \{.fn \{fun\}\} function in the \{.pkg \{pkg\}\} package.")
 Arguments are concatenated.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text(c("This ", "will ", "all "), "be ", "one ", "sentence.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> This will all be one sentence.                                                  
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text-concat.svg}}
 }
 
 \subsection{Containers}{
@@ -92,8 +115,14 @@ cli_text("Still the \{.emph first\} item")
 cli_li("Second item.")
 cli_text("Still the \{.emph second\} item")
 cli_end(ul)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> • First item.                                                                   
+#> Still the <span style="font-style: italic;">first</span> item                                                            
+#> • Second item.                                                                  
+#> Still the <span style="font-style: italic;">second</span> item                                                           
+</pre></div>
+}}
 
-\if{html}{\figure{cli-text-containers.svg}}
 }
 }

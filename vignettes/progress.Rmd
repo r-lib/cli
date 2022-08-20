@@ -18,25 +18,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  cache = TRUE
+  cache = TRUE,
+  asciicast_at = "all",
+  asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
 )
-.cast_opts <- modifyList(
-  keep.null = TRUE,
-  asciicast::asciicast_knitr_options(),
-  list(
-    asciicast_at = NULL,
-    asciicast_theme = "github-light",
-    asciicast_end_wait = 3,
-    asciicast_speed = 1,
-    asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]",
-    asciicast_omit_last_line = TRUE
-  )
-)
-asciicast::init_knitr_engine(
-  echo = TRUE,
-  echo_input = FALSE,
-  options = .cast_opts
-)
+asciicast::init_knitr_engine()
 ```
 
 # Introduction
@@ -113,7 +99,6 @@ or is interrupted.
 The current progress bar lets us omit the `cli_progress_done()` call:
 
 ```{asciicast current}
-#| R.options = modifyList(.cast_opts, list(asciicast_omit_last_line = TRUE))
 clean <- function() {
   cli_progress_bar("Cleaning data #1", total = 100)
   for (i in 1:100) {
@@ -328,7 +313,7 @@ f()
 status message accordingly:
 
 ```{asciicast step-error}
-#| R.options = c(.cast_opts, list(asciicast_rows = 3))
+#| asciicast_rows = 3
 f <- function() {
   cli_progress_step("First step, this will succeed")
   Sys.sleep(1)

@@ -33,9 +33,17 @@ Align an ANSI colored string
 )
 astr <- ansi_align(str, width = 30)
 boxx(astr)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> ┌────────────────────────────────────┐                                          
+#> │                                    │                                          
+#> │   <span style="color: #DC322F">This is red</span>                      │                                          
+#> │   <span style="font-weight: bold;">This is bold</span>                     │                                          
+#> │                                    │                                          
+#> └────────────────────────────────────┘                                          
+</pre></div>
+}}
 
-\if{html}{\figure{ansi-align.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{str <- c(
   col_red("This is red"),
@@ -43,9 +51,17 @@ boxx(astr)
 )
 astr <- ansi_align(str, align = "center", width = 30)
 boxx(astr)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> ┌────────────────────────────────────┐                                          
+#> │                                    │                                          
+#> │             <span style="color: #DC322F">This is red</span>            │                                          
+#> │            <span style="font-weight: bold;">This is bold</span>            │                                          
+#> │                                    │                                          
+#> └────────────────────────────────────┘                                          
+</pre></div>
+}}
 
-\if{html}{\figure{ansi-align-center.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{str <- c(
   col_red("This is red"),
@@ -53,9 +69,16 @@ boxx(astr)
 )
 astr <- ansi_align(str, align = "right", width = 30)
 boxx(astr)
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{ansi-align-right.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> ┌────────────────────────────────────┐                                          
+#> │                                    │                                          
+#> │                      <span style="color: #DC322F">This is red</span>   │                                          
+#> │                     <span style="font-weight: bold;">This is bold</span>   │                                          
+#> │                                    │                                          
+#> └────────────────────────────────────┘                                          
+</pre></div>
+}}
 }
 \seealso{
 Other ANSI string operations: 

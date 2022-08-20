@@ -56,9 +56,14 @@ truncated using \code{\link[=ansi_strtrim]{ansi_strtrim()}}.
   sep = "   "
 )
 boxx(fmt, padding = c(0,1,0,1), header = col_cyan("Columns"))
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{ansi-column.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> ┌ <span style="color: #2AA198">Columns</span> ───────────────────────────────────────────┐                          
+#> │  <span style="color: #DC322F">foo</span> 1     <span style="color: #DC322F">foo</span> 2     <span style="color: #DC322F">foo</span> 3     <span style="color: #DC322F">foo</span> 4     <span style="color: #DC322F">foo</span> 5     │                          
+#> │  <span style="color: #DC322F">foo</span> 6     <span style="color: #DC322F">foo</span> 7     <span style="color: #DC322F">foo</span> 8     <span style="color: #DC322F">foo</span> 9     <span style="color: #DC322F">foo</span> 10    │                          
+#> └────────────────────────────────────────────────────┘                          
+</pre></div>
+}}
 }
 \seealso{
 Other ANSI string operations: 

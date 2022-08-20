@@ -48,7 +48,13 @@ valid R code.
   graphics::pairs(iris, col = 1:4)
 \}
 cli_code(format(myfun))
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{cli-code.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #DC322F">function</span> <span style="color: #B58900">()</span>                                                                     
+#> <span style="color: #B58900">\{</span>                                                                               
+#>     <span style="color: #2AA198">message</span><span style="color: #268BD2">(</span><span style="color: #B58900">"Just an example function"</span><span style="color: #268BD2">)</span>                                         
+#>     graphics::<span style="color: #2AA198">pairs</span><span style="color: #268BD2">(</span>iris, col = <span style="color: #268BD2">1</span><span style="color: #859900">:</span><span style="color: #268BD2">4)</span>                                            
+#> <span style="color: #B58900">\}</span>                                                                               
+</pre></div>
+}}
 }

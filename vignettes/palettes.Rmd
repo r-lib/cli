@@ -15,24 +15,17 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  cache = TRUE
+  cache = TRUE,
+  asciicast_knitr_output = "html"
 )
-.cast_opts <- modifyList(
-  asciicast::asciicast_knitr_options(),
-  list(
-    asciicast_theme = "github-light",
-    asciicast_cols = 80,
-    asciicast_omit_last_line = TRUE
-  )
-)
-options(asciicast_knitr_svg = TRUE)
 asciicast::init_knitr_engine(
+  echo = FALSE,
+  echo_input = FALSE,
   startup = quote({
     library(cli)
     options(cli.num_colors = cli::truecolor)
-    set.seed(1) }),
-  echo_input = FALSE,
-  options = .cast_opts
+    set.seed(1)
+  })
 )
 ```
 
@@ -44,14 +37,14 @@ asciicast::init_knitr_engine(
 cat(attr(cli::ansi_palettes, "info")$dichro)
 ```
 
-```{asciicast}
-#| dichro,
+```{asciicast }
+#| dichro
 ansi_palette_show("dichro", colors = truecolor)
 ```
 
 ```{asciicast}
 #| dichro-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("dichro", colors = truecolor)
 ```
 
@@ -62,13 +55,13 @@ cat(attr(cli::ansi_palettes, "info")$vga)
 ```
 
 ```{asciicast}
-#| vga, 
+#| vga
 ansi_palette_show("vga", colors = truecolor)
 ```
 
 ```{asciicast}
 #| vga-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("vga", colors = truecolor)
 ```
 
@@ -85,7 +78,7 @@ ansi_palette_show("winxp", colors = truecolor)
 
 ```{asciicast}
 #| winxp-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("winxp", colors = truecolor)
 ```
 
@@ -102,7 +95,7 @@ ansi_palette_show("vscode", colors = truecolor)
 
 ```{asciicast}
 #| vscode-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("vscode", colors = truecolor)
 ```
 
@@ -119,7 +112,7 @@ ansi_palette_show("win10", colors = truecolor)
 
 ```{asciicast}
 #| win10-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("win10", colors = truecolor)
 ```
 
@@ -136,7 +129,7 @@ ansi_palette_show("macos", colors = truecolor)
 
 ```{asciicast}
 #| macos-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("macos", colors = truecolor)
 ```
 
@@ -153,7 +146,7 @@ ansi_palette_show("putty", colors = truecolor)
 
 ```{asciicast}
 #| putty-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("putty", colors = truecolor)
 ```
 
@@ -168,9 +161,9 @@ cat(attr(cli::ansi_palettes, "info")$mirc)
 ansi_palette_show("mirc", colors = truecolor)
 ```
 
-```{asciicast|
+```{asciicast}
 #| mirc-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("mirc", colors = truecolor)
 ```
 
@@ -187,7 +180,7 @@ ansi_palette_show("xterm", colors = truecolor)
 
 ```{asciicast}
 #| xterm-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("xterm", colors = truecolor)
 ```
 
@@ -204,7 +197,7 @@ ansi_palette_show("ubuntu", colors = truecolor)
 
 ```{asciicast}
 #| ubuntu-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("ubuntu", colors = truecolor)
 ```
 
@@ -221,7 +214,7 @@ ansi_palette_show("eclipse", colors = truecolor)
 
 ```{asciicast}
 #| eclipse-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("eclipse", colors = truecolor)
 ```
 
@@ -238,7 +231,7 @@ ansi_palette_show("iterm", colors = truecolor)
 
 ```{asciicast}
 #| iterm-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("iterm", colors = truecolor)
 ```
 
@@ -249,13 +242,13 @@ cat(attr(cli::ansi_palettes, "info")$`iterm-pastel`)
 ```
 
 ```{asciicast}
-#| iterm-pastel,
+#| iterm-pastel
 ansi_palette_show("iterm-pastel", colors = truecolor)
 ```
 
 ```{asciicast}
 #| iterm--pastel-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("iterm-pastel", colors = truecolor)
 ```
 
@@ -272,7 +265,7 @@ ansi_palette_show("iterm-smoooooth", colors = truecolor)
 
 ```{asciicast}
 #| iterm--smoooooth-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("iterm-smoooooth", colors = truecolor)
 ```
 
@@ -289,7 +282,7 @@ ansi_palette_show("iterm-snazzy", colors = truecolor)
 
 ```{asciicast}
 #| iterm--snazzy-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("iterm-snazzy", colors = truecolor)
 ```
 
@@ -306,7 +299,7 @@ ansi_palette_show("iterm-solarized", colors = truecolor)
 
 ```{asciicast}
 #| iterm--solarized-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("iterm-solarized", colors = truecolor)
 ```
 
@@ -321,8 +314,8 @@ cat(attr(cli::ansi_palettes, "info")$`iterm-tango`)
 ansi_palette_show("iterm-tango", colors = truecolor)
 ```
 
-```{asciicast|
+```{asciicast}
 #| iterm--tango-dark,
-#| R.options = modifyList(.cast_opts, list(asciicast_theme = "solarized-dark"))
+#| asciicast_theme = "solarized-dark"
 ansi_palette_show("iterm-tango", colors = truecolor)
 ```

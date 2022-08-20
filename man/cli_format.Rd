@@ -33,15 +33,22 @@ of \code{expr}, before styling and collapsing it.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{months <- month.name[1:3]
 cli_text("\{.val \{months\}\}")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #268BD2">"January"</span>, <span style="color: #268BD2">"February"</span>, and <span style="color: #268BD2">"March"</span>                                              
+</pre></div>
+}}
 
-\if{html}{\figure{cli-format-default.svg}}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{nums <- 1:5 / 7
 cli_text("\{.val \{nums\}\}")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #268BD2">0.142857142857143</span>, <span style="color: #268BD2">0.285714285714286</span>, <span style="color: #268BD2">0.428571428571429</span>,                        
+#> <span style="color: #268BD2">0.571428571428571</span>, and <span style="color: #268BD2">0.714285714285714</span>                                        
+</pre></div>
+}}
 
-\if{html}{\figure{cli-format-num.svg}}
 }
 
 \subsection{Styling with themes}{
@@ -50,9 +57,12 @@ cli_text("\{.val \{nums\}\}")
 divid <- cli_div(theme = list(.val = list(digits = 3)))
 cli_text("\{.val \{nums\}\}")
 cli_end(divid)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #268BD2">0.143</span>, <span style="color: #268BD2">0.286</span>, <span style="color: #268BD2">0.429</span>, <span style="color: #268BD2">0.571</span>, and <span style="color: #268BD2">0.714</span>                                           
+</pre></div>
+}}
 
-\if{html}{\figure{cli-format-theme.svg}}
 
 It is possible to define new S3 methods for \code{cli_format} and then
 these will be used automatically for \verb{\{.val ...\}} expressions.
@@ -64,9 +74,12 @@ these will be used automatically for \verb{\{.val ...\}} expressions.
 registerS3method("cli_format", "month", cli_format.month)
 months <- structure(month.name[1:3], class = "month")
 cli_text("\{.val \{months\}\}")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #268BD2">"Jan"</span>, <span style="color: #268BD2">"Feb"</span>, and <span style="color: #268BD2">"Mar"</span>                                                         
+</pre></div>
+}}
 
-\if{html}{\figure{cli-format-class.svg}}
 }
 }
 \seealso{
