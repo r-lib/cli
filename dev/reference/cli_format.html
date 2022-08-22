@@ -113,10 +113,16 @@ for the style options they support.</p></dd>
 
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">months</span> <span class="op">&lt;-</span> <span class="va">month.name</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {months}}"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/cli-format-default.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; <span style="color: #268BD2">"January"</span>, <span style="color: #268BD2">"February"</span>, and <span style="color: #268BD2">"March"</span>                                              
+</pre></div></div>
+
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">nums</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span> <span class="op">/</span> <span class="fl">7</span></span>
 <span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {nums}}"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/cli-format-num.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; <span style="color: #268BD2">0.142857142857143</span>, <span style="color: #268BD2">0.285714285714286</span>, <span style="color: #268BD2">0.428571428571429</span>,                        
+#&gt; <span style="color: #268BD2">0.571428571428571</span>, and <span style="color: #268BD2">0.714285714285714</span>                                        
+</pre></div></div>
 </div>
 
 <div class="section">
@@ -127,7 +133,10 @@ for the style options they support.</p></dd>
 <span><span class="va">divid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>.val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {nums}}"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="va">divid</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/cli-format-theme.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; <span style="color: #268BD2">0.143</span>, <span style="color: #268BD2">0.286</span>, <span style="color: #268BD2">0.429</span>, <span style="color: #268BD2">0.571</span>, and <span style="color: #268BD2">0.714</span>                                           
+</pre></div></div>
+
 <p>It is possible to define new S3 methods for <code>cli_format</code> and then
 these will be used automatically for <code>{.val ...}</code> expressions.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">cli_format.month</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">style</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
@@ -137,7 +146,9 @@ these will be used automatically for <code>{.val ...}</code> expressions.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ns-internal.html" class="external-link">registerS3method</a></span><span class="op">(</span><span class="st">"cli_format"</span>, <span class="st">"month"</span>, <span class="va">cli_format.month</span><span class="op">)</span></span>
 <span><span class="va">months</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="va">month.name</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, class <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{.val {months}}"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/cli-format-class.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; <span style="color: #268BD2">"Jan"</span>, <span style="color: #268BD2">"Feb"</span>, and <span style="color: #268BD2">"Mar"</span>                                                         
+</pre></div></div>
 </div>
 
     </div>

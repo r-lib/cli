@@ -143,9 +143,44 @@ at all.</p>
 <span>  <span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/tree.html">tree</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/tree.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; processx                                                                        
+#&gt; ├─assertthat                                                                    
+#&gt; ├─crayon                                                                        
+#&gt; ├─debugme                                                                       
+#&gt; │ └─crayon                                                                      
+#&gt; └─R6                                                                            
+</pre></div></div>
+
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/tree.html">tree</a></span><span class="op">(</span><span class="va">data</span>, root <span class="op">=</span> <span class="st">"rcmdcheck"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/tree-root.svg" alt=""></p><div class="section">
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; rcmdcheck                                                                       
+#&gt; ├─callr                                                                         
+#&gt; │ ├─processx                                                                    
+#&gt; │ │ ├─assertthat                                                                
+#&gt; │ │ ├─crayon                                                                    
+#&gt; │ │ ├─debugme                                                                   
+#&gt; │ │ │ └─crayon                                                                  
+#&gt; │ │ └─R6                                                                        
+#&gt; │ └─R6                                                                          
+#&gt; ├─clisymbols                                                                    
+#&gt; ├─crayon                                                                        
+#&gt; ├─desc                                                                          
+#&gt; │ ├─assertthat                                                                  
+#&gt; │ ├─R6                                                                          
+#&gt; │ ├─crayon                                                                      
+#&gt; │ └─rprojroot                                                                   
+#&gt; │   └─backports                                                                 
+#&gt; ├─digest                                                                        
+#&gt; ├─prettyunits                                                                   
+#&gt; │ ├─magrittr                                                                    
+#&gt; │ └─assertthat                                                                  
+#&gt; ├─R6                                                                            
+#&gt; ├─rprojroot                                                                     
+#&gt; │ └─backports                                                                   
+#&gt; └─withr                                                                         
+</pre></div></div>
+<div class="section">
 <h3 id="colored-nodes">Colored nodes<a class="anchor" aria-label="anchor" href="#colored-nodes"></a></h3>
 
 
@@ -158,7 +193,33 @@ at all.</p>
 <span><span class="va">roots</span> <span class="op">&lt;-</span> <span class="op">!</span> <span class="va">data</span><span class="op">$</span><span class="va">package</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">dependencies</span><span class="op">)</span></span>
 <span><span class="va">data</span><span class="op">$</span><span class="va">label</span><span class="op">[</span><span class="va">roots</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ansi-styles.html">col_cyan</a></span><span class="op">(</span><span class="fu"><a href="../reference/ansi-styles.html">style_italic</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">label</span><span class="op">[</span><span class="va">roots</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/tree.html">tree</a></span><span class="op">(</span><span class="va">data</span>, root <span class="op">=</span> <span class="st">"rcmdcheck"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/tree-colored.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; <span style="font-style: italic;;color: #2AA198">rcmdcheck (1.2.1.9002)</span>                                                          
+#&gt; ├─callr (1.0.0.9000)                                                            
+#&gt; │ ├─processx (2.0.0.1)                                                          
+#&gt; │ │ ├─assertthat (0.2.0)                                                        
+#&gt; │ │ ├─crayon (1.3.4)                                                            
+#&gt; │ │ ├─debugme (1.0.2)                                                           
+#&gt; │ │ │ └─crayon (1.3.4)                                                          
+#&gt; │ │ └─R6 (2.2.2)                                                                
+#&gt; │ └─R6 (2.2.2)                                                                  
+#&gt; ├─clisymbols (1.2.0)                                                            
+#&gt; ├─crayon (1.3.4)                                                                
+#&gt; ├─desc (1.1.1.9000)                                                             
+#&gt; │ ├─assertthat (0.2.0)                                                          
+#&gt; │ ├─R6 (2.2.2)                                                                  
+#&gt; │ ├─crayon (1.3.4)                                                              
+#&gt; │ └─rprojroot (1.2)                                                             
+#&gt; │   └─backports (1.1.1)                                                         
+#&gt; ├─digest (0.6.12)                                                               
+#&gt; ├─prettyunits (1.0.2)                                                           
+#&gt; │ ├─magrittr (1.5)                                                              
+#&gt; │ └─assertthat (0.2.0)                                                          
+#&gt; ├─R6 (2.2.2)                                                                    
+#&gt; ├─rprojroot (1.2)                                                               
+#&gt; │ └─backports (1.1.1)                                                           
+#&gt; └─withr (2.0.0)                                                                 
+</pre></div></div>
 </div>
 
 <div class="section">
@@ -203,12 +264,81 @@ at all.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tree.html">tree</a></span><span class="op">(</span><span class="va">pkgs</span>, trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/tree-trimming.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; dplyr@0.8.3                                                                     
+#&gt; ├─assertthat@0.2.1                                                              
+#&gt; ├─glue@1.3.1                                                                    
+#&gt; ├─magrittr@1.5                                                                  
+#&gt; ├─R6@2.4.0                                                                      
+#&gt; ├─Rcpp@1.0.2                                                                    
+#&gt; ├─rlang@0.4.0                                                                   
+#&gt; ├─tibble@2.1.3                                                                  
+#&gt; │ ├─cli@1.1.0                                                                   
+#&gt; │ │ ├─assertthat@0.2.1                                                          
+#&gt; │ │ └─crayon@1.3.4                                                              
+#&gt; │ ├─crayon@1.3.4                                                                
+#&gt; │ ├─fansi@0.4.0                                                                 
+#&gt; │ ├─pillar@1.4.2                                                                
+#&gt; │ │ ├─cli@1.1.0                                                                 
+#&gt; │ │ ├─crayon@1.3.4                                                              
+#&gt; │ │ ├─fansi@0.4.0                                                               
+#&gt; │ │ ├─rlang@0.4.0                                                               
+#&gt; │ │ ├─utf8@1.1.4                                                                
+#&gt; │ │ └─vctrs@0.2.0                                                               
+#&gt; │ │   ├─backports@1.1.5                                                         
+#&gt; │ │   ├─ellipsis@0.3.0                                                          
+#&gt; │ │   │ └─rlang@0.4.0                                                           
+#&gt; │ │   ├─digest@0.6.21                                                           
+#&gt; │ │   ├─glue@1.3.1                                                              
+#&gt; │ │   ├─rlang@0.4.0                                                             
+#&gt; │ │   └─zeallot@0.1.0                                                           
+#&gt; │ ├─pkgconfig@2.0.3                                                             
+#&gt; │ └─rlang@0.4.0                                                                 
+#&gt; └─tidyselect@0.2.5                                                              
+#&gt;   ├─glue@1.3.1                                                                  
+#&gt;   ├─rlang@0.4.0                                                                 
+#&gt;   └─Rcpp@1.0.2                                                                  
+</pre></div></div>
+
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># Mark the trimmed nodes</span></span>
 <span><span class="va">pkgs</span><span class="op">$</span><span class="va">label</span> <span class="op">&lt;-</span> <span class="va">pkgs</span><span class="op">$</span><span class="va">name</span></span>
 <span><span class="va">pkgs</span><span class="op">$</span><span class="va">trimmed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">pkgs</span><span class="op">$</span><span class="va">name</span>, <span class="st">" (trimmed)"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/tree.html">tree</a></span><span class="op">(</span><span class="va">pkgs</span>, trim <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="figures/tree-trim-mark.svg" alt=""></p>
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
+#&gt; dplyr@0.8.3                                                                     
+#&gt; ├─assertthat@0.2.1                                                              
+#&gt; ├─glue@1.3.1                                                                    
+#&gt; ├─magrittr@1.5                                                                  
+#&gt; ├─R6@2.4.0                                                                      
+#&gt; ├─Rcpp@1.0.2                                                                    
+#&gt; ├─rlang@0.4.0                                                                   
+#&gt; ├─tibble@2.1.3                                                                  
+#&gt; │ ├─cli@1.1.0                                                                   
+#&gt; │ │ ├─assertthat@0.2.1  (trimmed)                                               
+#&gt; │ │ └─crayon@1.3.4                                                              
+#&gt; │ ├─crayon@1.3.4  (trimmed)                                                     
+#&gt; │ ├─fansi@0.4.0                                                                 
+#&gt; │ ├─pillar@1.4.2                                                                
+#&gt; │ │ ├─cli@1.1.0  (trimmed)                                                      
+#&gt; │ │ ├─crayon@1.3.4  (trimmed)                                                   
+#&gt; │ │ ├─fansi@0.4.0  (trimmed)                                                    
+#&gt; │ │ ├─rlang@0.4.0  (trimmed)                                                    
+#&gt; │ │ ├─utf8@1.1.4                                                                
+#&gt; │ │ └─vctrs@0.2.0                                                               
+#&gt; │ │   ├─backports@1.1.5                                                         
+#&gt; │ │   ├─ellipsis@0.3.0                                                          
+#&gt; │ │   │ └─rlang@0.4.0  (trimmed)                                                
+#&gt; │ │   ├─digest@0.6.21                                                           
+#&gt; │ │   ├─glue@1.3.1  (trimmed)                                                   
+#&gt; │ │   ├─rlang@0.4.0  (trimmed)                                                  
+#&gt; │ │   └─zeallot@0.1.0                                                           
+#&gt; │ ├─pkgconfig@2.0.3                                                             
+#&gt; │ └─rlang@0.4.0  (trimmed)                                                      
+#&gt; └─tidyselect@0.2.5                                                              
+#&gt;   ├─glue@1.3.1  (trimmed)                                                       
+#&gt;   ├─rlang@0.4.0  (trimmed)                                                      
+#&gt;   └─Rcpp@1.0.2  (trimmed)                                                       
+</pre></div></div>
 </div>
 
     </div>
