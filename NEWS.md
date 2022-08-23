@@ -26,7 +26,7 @@
   (#422, #474).
 
 * cli new replaces newline characters within `{.class ... }` inline styles
-  with spaces. If the `cli.warn_inline_newlines` option is set to FALSE, then
+  with spaces. If the `cli.warn_inline_newlines` option is set to TRUE, then
   it also throws a warning. (#417).
 
 * `code_highlight` now falls to the default theme (instead of no theme) for
