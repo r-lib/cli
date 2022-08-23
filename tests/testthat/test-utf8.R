@@ -7,6 +7,7 @@ if (!utf8 && !newwin) return()
 
 test_that("UTF-8 output on Windows", {
   skip_on_cran()
+  skip_on_covr()
   out <- r_utf8(function() {
     library(cli)
     options(cli.unicode = TRUE)
