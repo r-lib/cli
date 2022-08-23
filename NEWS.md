@@ -1,5 +1,7 @@
 # cli (development version)
 
+* cli exit handlers are now compatible again with the withr package (#437).
+
 * cli functions now keep trailing `\f` characters as newlines (#491).
 
 * `{}` substitutions within inline styles are now formatted correctly.
