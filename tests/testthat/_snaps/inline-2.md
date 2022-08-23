@@ -246,7 +246,7 @@
     Output
       [1] "\033[31m`a()`\033[39m, \033[31m`` `x` ()``\033[39m, and \033[31m`b()`\033[39m"
 
-# issue #422
+# do not inherit 'transform' issue #422
 
     Code
       d <- deparse(c("cli", "glue"))
@@ -260,4 +260,18 @@
       cli::cli_text("{.code foo({1+1})}")
     Message
       `foo(2)`
+
+# no inherit color, issue #474 [plain]
+
+    Code
+      cli::cli_text("pre {.val x {'foo'} y} post")
+    Message
+      pre "x foo y" post
+
+# no inherit color, issue #474 [ansi]
+
+    Code
+      cli::cli_text("pre {.val x {'foo'} y} post")
+    Message
+      pre [34m"x foo y"[39m post
 

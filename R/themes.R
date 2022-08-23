@@ -404,6 +404,9 @@ merge_embedded_styles <- function(old, new) {
   old$before <- old$after <- old$fmt <- NULL
   old$transform <- NULL
 
+  # these will be applied on the container, so we don't need them inside
+  old$color <- old$`background-color` <- NULL
+
   top <- new$`margin-top` %||% 0L
   bottom <- new$`margin-bottom` %||% 0L
   left <- (old$`margin-left` %||% 0L) + (new$`margin-left` %||% 0L)

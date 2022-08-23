@@ -1,7 +1,9 @@
 # cli (development version)
 
 * `{}` substitutions within inline styles are now formatted correctly.
-  E.g. `{.code download({url})}` will not add backticks to `url`. (#422).
+  E.g. `{.code download({url})}` will not add backticks to `url`, and
+  `{.val pre-{x}-post}` will format the whole value instead of `x`.
+  (#422, #474).
 
 * cli new replaces newline characters within `{.class ... }` inline styles
   with spaces. If the `cli.warn_inline_newlines` option is set to FALSE, then
@@ -31,8 +33,8 @@
   E.g. the meaning of `"{.emph +1}"` is now always the "+1", with style
   `.emph`, even if an `.emph` variable is available and the `.emph + 1`
   expression can be evaluated.
-  
-* Functions that apply bright background colors (e.g. `bg_br_yellow()`) now 
+
+* Functions that apply bright background colors (e.g. `bg_br_yellow()`) now
   close themselves. They no longer format text after the end of the function
   (#484, @rossellhayes).
 
