@@ -49,7 +49,7 @@ inline_collapse <- function(x, style = list()) {
   } else {
     last <- style$vec_sep2 %||% style$vec_last %||% " and "
   }
-  trunc <- style$vec_trunc %||% 100L
+  trunc <- style$vec_trunc %||% 20L
   if (length(x) > trunc) {
     x <- c(x[1:trunc], cli::symbol$ellipsis)
     last <- sep

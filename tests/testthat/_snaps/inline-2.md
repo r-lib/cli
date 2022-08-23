@@ -295,3 +295,10 @@
       [34m"b"[39m
       
 
+# truncate vectors at 20
+
+    Code
+      cli::cli_text("Some letters: {letters}")
+    Message
+      Some letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, ...
+

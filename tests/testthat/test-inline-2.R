@@ -138,3 +138,9 @@ test_that_cli(config = c("ansi", "plain"), "\\f at the end, issue #491", {
     cli::cli_text("\f\f{.val a}\f\f\f{.val b}\f")
   })
 })
+
+test_that("truncate vectors at 20", {
+  expect_snapshot(
+    cli::cli_text("Some letters: {letters}")
+  )
+})

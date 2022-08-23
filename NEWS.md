@@ -1,5 +1,7 @@
 # cli (development version)
 
+* Vectors are truncated at 20 elements now by default, instead of 100 (#430).
+
 * 20 new spinners from the awesome
   [cli-spinners](https://github.com/sindresorhus/cli-spinners) package,
   and from @HenrikBengtsson in #469.
