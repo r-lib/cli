@@ -1,14 +1,16 @@
 # cli (development version)
 
 * 20 new spinners from the awesome
-  [cli-spinners](https://github.com/sindresorhus/cli-spinners) package.
-  Run this to demo them, some of them need emoji support:
+  [cli-spinners](https://github.com/sindresorhus/cli-spinners) package,
+  and from @HenrikBengtsson in #469.
+  Run this to demo to see them, some need UTF-8 and emoji support:
 
   ```r
   new <- c("dots13", "dots8Bit", "sand", "material", "weather", "christmas",
     "grenade", "point", "layer", "betaWave", "fingerDance", "fistBump",
     "soccerHeader", "mindblown", "speaker", "orangePulse", "bluePulse",
-    "orangeBluePulse", "timeTravel", "aesthetic")
+    "orangeBluePulse", "timeTravel", "aesthetic", "growVeriticalDotsLR",
+    "growVeriticalDotsRL", "growVeriticalDotsLL", "growVeriticalDotsRR")
   demo_spinners(new)
   ```
 

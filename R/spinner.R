@@ -1,16 +1,5 @@
 
-## This is how the RDS file is created:
-
-'
-json <- "https://raw.githubusercontent.com/sindresorhus/cli-spinners/45cef9dff64ac5e36b46a194c68bccba448899ac/spinners.json"
-parsed <- jsonlite::fromJSON(json, simplifyVector = TRUE)
-pasis <- lapply(parsed, function(x) { x$frames <- I(x$frames); x })
-pdt <- as.data.frame(do.call(rbind, pasis))
-pdt$name <- rownames(pdt)
-rownames(pdt) <- NULL
-spinners <- pdt[, c("name", "interval", "frames")]
-usethis::use_data(spinners, internal = TRUE)
-'
+## See tools/spinners.R for how the RDS file is created
 
 #' Character vector to put a spinner on the screen
 #'
