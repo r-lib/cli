@@ -274,8 +274,8 @@ See \link{themes}.
 
 \subsection{\code{cli.warn_inline_newlines}}{
 
-Whether to emit a warning when cli replaces a newline character within a
-\code{{.class }} inline style with a space.
+Whether to emit a warning when cli replaces newline characters with
+spaces within a \code{{.class }} inline style.
 Defaults to \code{FALSE}.
 }
 

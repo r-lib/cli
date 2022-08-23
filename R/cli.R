@@ -64,11 +64,24 @@ cli__fmt <- function(record, collapse = FALSE, strip_newline = FALSE,
   txt
 }
 
-# cli__rec + cli__fmt
+#' Capture the output of cli functions instead of printing it
+#'
+#' @param expr Expression to evaluate, containing `cli_*()` calls,
+#'   typically.
+#' @param collapse Whether to collapse the output into a single character
+#'   scalar, or return a character vector with one element for each line.
+#' @param strip_newline Whether to strip the trailing newline.
+#'
+#' @export
+#' @examples
+#' fmt({
+#'   cli_alert_info("Loading data file")
+#'   cli_alert_success("Loaded data file")
+#' })
 
-fmt <- function(expr, collapse = FALSE, strip_newline = FALSE, app = NULL) {
+fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
   rec <- cli__rec(expr)
-  cli__fmt(rec, collapse, strip_newline, app)
+  cli__fmt(rec, collapse, strip_newline)
 }
 
 #' Format and returns a line of text
