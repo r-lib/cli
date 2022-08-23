@@ -275,3 +275,23 @@
     Message
       pre [34m"x foo y"[39m post
 
+# \f at the end, issue #491 [plain]
+
+    Code
+      cli::cli_text("\f\f{.val a}\f\f\f{.val b}\f")
+    Message
+      
+      "a"
+      "b"
+      
+
+# \f at the end, issue #491 [ansi]
+
+    Code
+      cli::cli_text("\f\f{.val a}\f\f\f{.val b}\f")
+    Message
+      
+      [34m"a"[39m
+      [34m"b"[39m
+      
+

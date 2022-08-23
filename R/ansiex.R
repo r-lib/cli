@@ -507,12 +507,16 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   smark <- paste0("\n\n", mark, "\n\n")
   x <- gsub("\f", smark, x, fixed = TRUE, useBytes = TRUE)
   fix_ff <- function(x) {
-    rem <- which(ansi_strip(x) == mark)
+    xs <- ansi_strip(x)
+    rem <- which(xs == mark)
     if (length(rem)) {
-      x[-c(rem - 1, rem, rem + 1)]
+      x <- x[-c(rem - 1, rem, rem + 1)]
+      if (xs[length(xs)] == mark) x <- c(x, "")
+      x
     } else {
       x
     }
+
   }
 
   # First we need to remove the multiple spaces, to make it easier to

@@ -1,5 +1,7 @@
 # cli (development version)
 
+* cli functions now keep trailing `\f` characters as newlines (#491).
+
 * `{}` substitutions within inline styles are now formatted correctly.
   E.g. `{.code download({url})}` will not add backticks to `url`, and
   `{.val pre-{x}-post}` will format the whole value instead of `x`.

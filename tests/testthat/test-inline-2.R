@@ -132,3 +132,9 @@ test_that_cli(config = c("ansi", "plain"), "no inherit color, issue #474", {
     cli::cli_text("pre {.val x {'foo'} y} post")
   })
 })
+
+test_that_cli(config = c("ansi", "plain"), "\\f at the end, issue #491", {
+  expect_snapshot({
+    cli::cli_text("\f\f{.val a}\f\f\f{.val b}\f")
+  })
+})
