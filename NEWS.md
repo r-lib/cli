@@ -1,5 +1,8 @@
 # cli (development version)
 
+* Fixed an issue where the R session could crash on exit when loading cli
+  when running with Windows on Arm. (#494; @kevinushey)
+
 * Vectors are truncated at 20 elements now by default, instead of 100 (#430).
 
 * 20 new spinners from the awesome
