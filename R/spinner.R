@@ -2,7 +2,7 @@
 ## This is how the RDS file is created:
 
 '
-json <- "https://raw.githubusercontent.com/sindresorhus/cli-spinners/dac4fc6571059bb9e9bc204711e9dfe8f72e5c6f/spinners.json"
+json <- "https://raw.githubusercontent.com/sindresorhus/cli-spinners/45cef9dff64ac5e36b46a194c68bccba448899ac/spinners.json"
 parsed <- jsonlite::fromJSON(json, simplifyVector = TRUE)
 pasis <- lapply(parsed, function(x) { x$frames <- I(x$frames); x })
 pdt <- as.data.frame(do.call(rbind, pasis))

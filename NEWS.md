@@ -1,5 +1,17 @@
 # cli (development version)
 
+* 20 new spinners from the awesome
+  [cli-spinners](https://github.com/sindresorhus/cli-spinners) package.
+  Run this to demo them, some of them need emoji support:
+
+  ```r
+  new <- c("dots13", "dots8Bit", "sand", "material", "weather", "christmas",
+    "grenade", "point", "layer", "betaWave", "fingerDance", "fistBump",
+    "soccerHeader", "mindblown", "speaker", "orangePulse", "bluePulse",
+    "orangeBluePulse", "timeTravel", "aesthetic")
+  demo_spinners(new)
+  ```
+
 * cli exit handlers are now compatible again with the withr package (#437).
 
 * cli functions now keep trailing `\f` characters as newlines (#491).
