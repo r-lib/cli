@@ -50,6 +50,8 @@
 #' * `file` for a file name.
 #' * `fun` for a function name.
 #' * `key` for a keyboard key.
+#' * `or` changes the string that separates the last two elements of
+#'   collapsed vectors (see below) from "and" to "or".
 #' * `path` for a path (essentially the same as `file`).
 #' * `pkg` for a package name.
 #' * `strong` for strong importance.

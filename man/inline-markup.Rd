@@ -70,6 +70,8 @@ The default theme defines the following inline classes:
 \item \code{file} for a file name.
 \item \code{fun} for a function name.
 \item \code{key} for a keyboard key.
+\item \code{or} changes the string that separates the last two elements of
+collapsed vectors (see below) from "and" to "or".
 \item \code{path} for a path (essentially the same as \code{file}).
 \item \code{pkg} for a package name.
 \item \code{strong} for strong importance.
