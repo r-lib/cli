@@ -1,5 +1,8 @@
 # cli (development version)
 
+* `{}` substitutions within inline styles are now formatted correctly.
+  E.g. `{.code download({url})}` will not add backticks to `url`. (#422).
+
 * cli new replaces newline characters within `{.class ... }` inline styles
   with spaces. If the `cli.warn_inline_newlines` option is set to FALSE, then
   it also throws a warning. (#417).

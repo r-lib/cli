@@ -246,3 +246,18 @@
     Output
       [1] "\033[31m`a()`\033[39m, \033[31m`` `x` ()``\033[39m, and \033[31m`b()`\033[39m"
 
+# issue #422
+
+    Code
+      d <- deparse(c("cli", "glue"))
+      cli::cli_alert_info("To install, run {.code install.packages({d})}")
+    Message
+      i To install, run `install.packages(c("cli", "glue"))`
+
+---
+
+    Code
+      cli::cli_text("{.code foo({1+1})}")
+    Message
+      `foo(2)`
+

@@ -115,3 +115,14 @@ test_that_cli(config = "ansi", "double ticks", {
   expect_snapshot(format_inline("{.code {x}}"))
   expect_snapshot(format_inline("{.fun {x}}"))
 })
+
+test_that("issue #422", {
+  expect_snapshot({
+    d <- deparse(c("cli", "glue"))
+    cli::cli_alert_info("To install, run {.code install.packages({d})}")
+  })
+
+  expect_snapshot({
+    cli::cli_text("{.code foo({1+1})}")
+  })
+})

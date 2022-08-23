@@ -402,6 +402,7 @@ merge_embedded_styles <- function(old, new) {
   # side margins are additive, class mappings are merged
   # rest is updated, counter is reset, prefix and postfix are merged
   old$before <- old$after <- old$fmt <- NULL
+  old$transform <- NULL
 
   top <- new$`margin-top` %||% 0L
   bottom <- new$`margin-bottom` %||% 0L
