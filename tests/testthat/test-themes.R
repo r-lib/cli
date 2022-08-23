@@ -10,11 +10,11 @@ test_that_cli("add/remove/list themes", {
   on.exit(default_app()$remove_theme(id), add = TRUE)
   expect_true(id %in% names(default_app()$list_themes()))
 
-  expect_snapshot(local({
+  expect_snapshot({
     cli_par(class = "green")
     cli_text(lorem_ipsum())
     cli_end()
-  }))
+  })
 
   default_app()$remove_theme(id)
   expect_false(id %in% names(default_app()$list_themes()))
