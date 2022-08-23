@@ -185,6 +185,9 @@ cli_text("Column names: \{nms\}.")
 The \code{val} inline class formats values. By default (c.f. the built-in
 theme), it calls the \code{\link[=cli_format]{cli_format()}} generic function, with the current
 style as the argument. See \code{\link[=cli_format]{cli_format()}} for examples.
+
+\code{str} is for formatting strings, it uses \code{\link[base:encodeString]{base::encodeString()}} with
+double quotes.
 }
 
 \section{Escaping \verb{\{} and \verb{\}}}{

@@ -130,6 +130,9 @@
 #' theme), it calls the [cli_format()] generic function, with the current
 #' style as the argument. See [cli_format()] for examples.
 #'
+#' `str` is for formatting strings, it uses [base::encodeString()] with
+#' double quotes.
+#'
 #' @section Escaping `{` and `}`:
 #'
 #' It might happen that you want to pass a string to `cli_*` functions,
