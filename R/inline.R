@@ -2,6 +2,14 @@
 if (getRversion() >= "2.15.1") utils::globalVariables("app")
 
 inline_generic <- function(app, x, style) {
+
+  if (any(grepl("\n", x))) {
+    if (getOption("cli.warn_inline_newlines", FALSE)) {
+      warning("cli replaced newlines within {. ... } with spaces")
+    }
+    x <- gsub("\n", " ", x, useBytes = TRUE, fixed = TRUE)
+  }
+
   before <- call_if_fun(style$before)
   after <- call_if_fun(style$after)
   transform <- style$transform

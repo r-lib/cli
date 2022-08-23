@@ -272,6 +272,13 @@ This option is intended for end users.
 See \link{themes}.
 }
 
+\subsection{\code{cli.warn_inline_newlines}}{
+
+Whether to emit a warning when cli replaces a newline character within a
+\code{{.class }} inline style with a space.
+Defaults to \code{FALSE}.
+}
+
 \subsection{\code{cli.width}}{
 
 Terminal width to assume.
