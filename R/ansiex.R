@@ -505,7 +505,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   # se we need to put in a random marker instead
   mark <- "yShtnpteEk"
   smark <- paste0("\n\n", mark, "\n\n")
-  x <- gsub("\f", smark, x, fixed = TRUE, useBytes = TRUE)
+  x <- gsub_("\f", smark, x, fixed = TRUE, useBytes = TRUE)
   fix_ff <- function(x) {
     xs <- ansi_strip(x)
     rem <- which(xs == mark)
@@ -846,9 +846,9 @@ ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
   csi <- match.arg(csi)
   x <- enc2utf8(x)
   if (escape_reserved) {
-    x <- gsub("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
-    x <- gsub("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
-    x <- gsub(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub_("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub_("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub_(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
   }
   .Call(clic_ansi_html, x, csi == "keep")
 }

@@ -7,7 +7,7 @@ inline_generic <- function(app, x, style) {
     if (getOption("cli.warn_inline_newlines", FALSE)) {
       warning("cli replaced newlines within {. ... } with spaces")
     }
-    x <- gsub("\n", " ", x, useBytes = TRUE, fixed = TRUE)
+    x <- gsub_("\n", " ", x, useBytes = TRUE, fixed = TRUE)
   }
 
   before <- call_if_fun(style$before)

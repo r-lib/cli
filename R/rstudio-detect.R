@@ -195,7 +195,7 @@ rstudio <- local({
       "devtools::check",
       "testthat::test_file"
     )
-    any(vapply(calls, grepl, logical(1), cmd))
+    any(vapply(calls, grepl, logical(1), cmd, useBytes = TRUE))
   }
 
   # -- Capabilities ------------------------------------------------------
