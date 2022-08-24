@@ -53,6 +53,9 @@ collapse <- function(x, sep = "", last = "", trunc = Inf,
                      ellipsis = symbol$ellipsis,
                      style = c("both-ends", "head")) {
 
+  # does not make sense to show ... instead of an element
+  if (trunc == length(x) - 1L) trunc <- trunc + 1L
+
   style <- match.arg(style)
   switch(
     style,
@@ -64,6 +67,7 @@ collapse <- function(x, sep = "", last = "", trunc = Inf,
 collapse_head <- function(x, sep = "", last = "", trunc = Inf,
                           ellipsis = symbol$ellipsis) {
 
+  trunc <- max(trunc, 1L)
   x <- as.character(x)
   if (length(x) > trunc) {
       x <- c(x[1:trunc], ellipsis)
@@ -83,8 +87,21 @@ collapse_head <- function(x, sep = "", last = "", trunc = Inf,
 
 collapse_both_ends <- function(x, sep = "", last = "", trunc = Inf,
                                ellipsis = symbol$ellipsis) {
-  # TODO
-  collapse_head(x, sep, last, trunc, ellipsis)
+
+  # we always list five or less elements
+  trunc <- max(trunc, 5L)
+  trunc <- min(trunc, length(x))
+  if (length(x) <= 5 || length(x) <= trunc) {
+    return(collapse_head(x, sep, last, trunc = trunc, ellipsis))
+  }
+
+  # we have at list six elements in the vector
+  # 1, 2, 3, ..., 9, and 10
+  x <- as.character(c(x[1:(trunc-2)], x[length(x)-1], x[length(x)]))
+  paste0(
+    c(x[1:(trunc-2)], ellipsis, paste0(x[trunc-1], last, x[trunc])),
+    collapse = sep
+  )
 }
 
 trim <- function (x) {
