@@ -51,11 +51,15 @@ inline_collapse <- function(x, style = list()) {
       style$vec_last %||% " and "
   }
   trunc <- style$`vec-trunc` %||% style$vec_trunc %||% 20L
-  if (length(x) > trunc) {
-    x <- c(x[1:trunc], cli::symbol$ellipsis)
-    last <- sep
-  }
-  glue_collapse(as.character(x), sep = sep, last = last)
+  col_style <- style[["collapse-style"]] %||% "both-ends"
+
+  collapse(
+    x,
+    sep = sep,
+    last = last,
+    trunc = trunc,
+    style = col_style
+  )
 }
 
 #' This glue transformer performs the inline styling of cli
