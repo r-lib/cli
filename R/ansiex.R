@@ -510,8 +510,26 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
     xs <- ansi_strip(x)
     rem <- which(xs == mark)
     if (length(rem)) {
-      x <- x[-c(rem - 1, rem, rem + 1)]
-      if (xs[length(xs)] == mark) x <- c(x, "")
+      x <- x[-c(rem - 1, rem + 1)]
+      xs <- xs[-c(rem - 1, rem + 1)]
+      if (xs[length(xs)] == mark) {
+        x <- c(x, mark)
+        xs <- c(xs, mark)
+      }
+      if (length(x) >= 2 && x[1] == "" && xs[2] == mark) {
+        x <- x[-1]
+        xs <- xs[-1]
+      }
+      # At this point, we have as many marks as many newlines we need
+      # But (except for the begnning) we need one less empty lines than
+      # newlines, because an empty line corresponds to two newlines at
+      # the end of a non-empty line.
+      del <- which(xs[-1] == mark & xs[-length(xs)] != mark) + 1L
+      if (length(del) > 0) {
+        x <- x[-del]
+        xs <- xs[-del]
+      }
+      x[xs == mark] <- ""
       x
     } else {
       x

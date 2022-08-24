@@ -278,22 +278,78 @@
 # \f at the end, issue #491 [plain]
 
     Code
-      cli::cli_text("\f\f{.val a}\f\f\f{.val b}\f")
-    Message
-      
-      "a"
-      "b"
-      
+      fmt(cli::cli_text("{.val a}{.val b}"))
+    Output
+      [1] "\"a\"\"b\""
+    Code
+      fmt(cli::cli_text("\f{.val a}{.val b}"))
+    Output
+      [1] ""           "\"a\"\"b\""
+    Code
+      fmt(cli::cli_text("\f\f{.val a}{.val b}"))
+    Output
+      [1] ""           ""           "\"a\"\"b\""
+    Code
+      fmt(cli::cli_text("{.val a}\f{.val b}"))
+    Output
+      [1] "\"a\"" "\"b\""
+    Code
+      fmt(cli::cli_text("{.val a}\f\f{.val b}"))
+    Output
+      [1] "\"a\"" ""      "\"b\""
+    Code
+      fmt(cli::cli_text("{.val a}{.val b}\f"))
+    Output
+      [1] "\"a\"\"b\"" ""          
+    Code
+      fmt(cli::cli_text("{.val a}{.val b}\f\f"))
+    Output
+      [1] "\"a\"\"b\"" ""           ""          
+    Code
+      fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
+    Output
+       [1] ""      ""      ""      "\"a\"" ""      ""      "\"b\"" ""      ""     
+      [10] ""     
 
 # \f at the end, issue #491 [ansi]
 
     Code
-      cli::cli_text("\f\f{.val a}\f\f\f{.val b}\f")
-    Message
-      
-      [34m"a"[39m
-      [34m"b"[39m
-      
+      fmt(cli::cli_text("{.val a}{.val b}"))
+    Output
+      [1] "\033[34m\"a\"\"b\"\033[39m"
+    Code
+      fmt(cli::cli_text("\f{.val a}{.val b}"))
+    Output
+      [1] ""                           "\033[34m\"a\"\"b\"\033[39m"
+    Code
+      fmt(cli::cli_text("\f\f{.val a}{.val b}"))
+    Output
+      [1] ""                           ""                          
+      [3] "\033[34m\"a\"\"b\"\033[39m"
+    Code
+      fmt(cli::cli_text("{.val a}\f{.val b}"))
+    Output
+      [1] "\033[34m\"a\"\033[39m" "\033[34m\"b\"\033[39m"
+    Code
+      fmt(cli::cli_text("{.val a}\f\f{.val b}"))
+    Output
+      [1] "\033[34m\"a\"\033[39m" ""                      "\033[34m\"b\"\033[39m"
+    Code
+      fmt(cli::cli_text("{.val a}{.val b}\f"))
+    Output
+      [1] "\033[34m\"a\"\"b\"\033[39m" ""                          
+    Code
+      fmt(cli::cli_text("{.val a}{.val b}\f\f"))
+    Output
+      [1] "\033[34m\"a\"\"b\"\033[39m" ""                          
+      [3] ""                          
+    Code
+      fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
+    Output
+       [1] ""                      ""                      ""                     
+       [4] "\033[34m\"a\"\033[39m" ""                      ""                     
+       [7] "\033[34m\"b\"\033[39m" ""                      ""                     
+      [10] ""                     
 
 # truncate vectors at 20
 

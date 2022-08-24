@@ -21,7 +21,8 @@
 
 * cli exit handlers are now compatible again with the withr package (#437).
 
-* cli functions now keep trailing `\f` characters as newlines (#491).
+* cli functions now keep trailing `\f` characters as newlines.
+  They also keep multiple consecutive `\f` as multiple newlinees (#491).
 
 * `{}` substitutions within inline styles are now formatted correctly.
   E.g. `{.code download({url})}` will not add backticks to `url`, and
