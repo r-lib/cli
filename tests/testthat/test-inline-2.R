@@ -40,7 +40,7 @@ test_that_cli(config = c("ansi"), "~/ files are not weird", {
 
 test_that_cli("custom truncation", {
   expect_snapshot({
-    x <- cli_vec(1:100, list(vec_trunc = 5))
+    x <- cli_vec(1:100, list("vec-trunc" = 5))
     cli_text("Some numbers: {x}.")
     cli_text("Some numbers: {.val {x}}.")
   })

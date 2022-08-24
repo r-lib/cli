@@ -29,7 +29,7 @@
 
     Code
       local({
-        cli_div(theme = list(div = list(vec_sep = " ... ")))
+        cli_div(theme = list(div = list(`vec-sep` = " ... ")))
         pkgs <- paste0("pkg", 1:5)
         cli_text("Packages: {.pkg {pkgs}}.")
       })
@@ -39,7 +39,7 @@
 # collapsing a cli_vec
 
     Code
-      pkgs <- cli_vec(paste0("pkg", 1:5), style = list(vec_sep = " & ", vec_last = " & "))
+      pkgs <- cli_vec(paste0("pkg", 1:5), style = list(`vec-sep` = " & ", `vec-last` = " & "))
       cli_text("Packages: {pkgs}.")
     Message
       Packages: pkg1 & pkg2 & pkg3 & pkg4 & pkg5.
@@ -48,9 +48,9 @@
 
     Code
       local({
-        cli_div(theme = list(body = list(vec_sep = " ... ")))
-        pkgs <- cli_vec(paste0("pkg", 1:5), style = list(vec_sep = " & ", vec_last = " & ",
-          color = "blue"))
+        cli_div(theme = list(body = list(`vec-sep` = " ... ")))
+        pkgs <- cli_vec(paste0("pkg", 1:5), style = list(`vec-sep` = " & ",
+          `vec-last` = " & ", color = "blue"))
         cli_text("Packages: {pkgs}.")
       })
     Message
@@ -60,9 +60,9 @@
 
     Code
       local({
-        cli_div(theme = list(body = list(vec_sep = " ... ")))
-        pkgs <- cli_vec(paste0("pkg", 1:5), style = list(vec_sep = " & ", vec_last = " & ",
-          color = "blue"))
+        cli_div(theme = list(body = list(`vec-sep` = " ... ")))
+        pkgs <- cli_vec(paste0("pkg", 1:5), style = list(`vec-sep` = " & ",
+          `vec-last` = " & ", color = "blue"))
         cli_text("Packages: {pkgs}.")
       })
     Message

@@ -43,13 +43,14 @@ inline_generic <- function(app, x, style) {
 }
 
 inline_collapse <- function(x, style = list()) {
-  sep <- style[["vec_sep"]] %||% ", "
+  sep <- style[["vec-sep"]] %||% style[["vec_sep"]] %||% ", "
   if (length(x) >= 3) {
-    last <- style$vec_last %||% ", and "
+    last <- style$`vec-last` %||% style$vec_last %||% ", and "
   } else {
-    last <- style$vec_sep2 %||% style$vec_last %||% " and "
+    last <- style$`vec-sep2` %||% style$vec_sep2 %||% style$`vec-last` %||%
+      style$vec_last %||% " and "
   }
-  trunc <- style$vec_trunc %||% 20L
+  trunc <- style$`vec-trunc` %||% style$vec_trunc %||% 20L
   if (length(x) > trunc) {
     x <- c(x[1:trunc], cli::symbol$ellipsis)
     last <- sep

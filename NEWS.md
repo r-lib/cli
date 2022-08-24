@@ -1,5 +1,9 @@
 # cli (development version)
 
+* Style attributes with underscores have new named with dashes instead:
+  `vec_sep`, `vec_last`, `vec_trunc`, `string-quote`. The old names still
+  work, but the new ones take precedence (#483).
+
 * Fixed an issue where the R session could crash on exit when loading cli
   when running with Windows on Arm. (#494; @kevinushey)
 

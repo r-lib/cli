@@ -80,7 +80,7 @@
 # custom truncation [plain]
 
     Code
-      x <- cli_vec(1:100, list(vec_trunc = 5))
+      x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
       Some numbers: 1, 2, 3, 4, 5, ....
@@ -92,7 +92,7 @@
 # custom truncation [ansi]
 
     Code
-      x <- cli_vec(1:100, list(vec_trunc = 5))
+      x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
       Some numbers: 1, 2, 3, 4, 5, ....
@@ -104,7 +104,7 @@
 # custom truncation [unicode]
 
     Code
-      x <- cli_vec(1:100, list(vec_trunc = 5))
+      x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
       Some numbers: 1, 2, 3, 4, 5, ….
@@ -116,7 +116,7 @@
 # custom truncation [fancy]
 
     Code
-      x <- cli_vec(1:100, list(vec_trunc = 5))
+      x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
       Some numbers: 1, 2, 3, 4, 5, ….

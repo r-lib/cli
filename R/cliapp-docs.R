@@ -119,10 +119,10 @@
 #' ```
 #'
 #' By default cli truncates long vectors. The truncation limit is by default
-#' one hundred elements, but you can change it with the `vec_trunc` style.
+#' one hundred elements, but you can change it with the `vec-trunc` style.
 #'
 #' ```{asciicast inline-collapse-trunc}
-#' nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
+#' nms <- cli_vec(names(mtcars), list("vec-trunc" = 5))
 #' cli_text("Column names: {nms}.")
 #' ```
 #'
@@ -326,16 +326,16 @@ NULL
 #' * `padding-left`, `padding-right`: This is currently used the same way
 #'   as the margins, but this might change later.
 #' * `start`: Integer number, the first element in an ordered list.
-#' * `string_quote`: Quoting character for inline elements of class `.val`.
+#' * `string-quote`: Quoting character for inline elements of class `.val`.
 #' * `text-decoration`: If `"underline"`, then underlined text is created.
 #' * `text-exdent`: Amount of indentation from the second line of wrapped
 #'    text.
 #' * `transform`: A function to call on glue substitutions, before
 #'   collapsing them. Note that `transform` is applied prior to
 #'   implementing color via ANSI sequences.
-#' * `vec_last`: The last separator when collapsing vectors.
-#' * `vec_sep`: The separator to use when collapsing vectors.
-#' * `vec_trunc`: Vectors longer than this will be truncated. Defaults to
+#' * `vec-last`: The last separator when collapsing vectors.
+#' * `vec-sep`: The separator to use when collapsing vectors.
+#' * `vec-trunc`: Vectors longer than this will be truncated. Defaults to
 #'   100.
 #'
 #' More properties might be added later. If you think that a property is

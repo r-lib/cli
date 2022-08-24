@@ -64,13 +64,13 @@ cli_format.default <- function(x, style = NULL, ...) {
 }
 
 #' * Styles for character vectors:
-#'   - `string_quote` is the quoting character for [encodeString()].
+#'   - `string-quote` is the quoting character for [encodeString()].
 #'
 #' @rdname cli_format
 #' @export
 
 cli_format.character <- function(x, style = NULL, ...) {
-  quote <- style$string_quote %||% "\""
+  quote <- style$`string-quote` %||% style$string_quote %||% "\""
   encodeString(x, quote = quote)
 }
 
@@ -100,7 +100,7 @@ cli_format.numeric <- function(x, style = NULL, ...) {
 #' ```{asciicast cli-vec}
 #' v <- cli_vec(
 #'   c("foo", "bar", "foobar"),
-#'   style = list(vec_sep = " & ", vec_last = " & ")
+#'   style = list("vec-sep" = " & ", "vec-last" = " & ")
 #' )
 #' cli_text("My list: {v}.")
 #' ```
@@ -108,14 +108,14 @@ cli_format.numeric <- function(x, style = NULL, ...) {
 #' ## Custom truncation
 #'
 #' ```{asciicast cli-vec-2}
-#' x <- cli_vec(names(mtcars), list(vec_trunc = 3))
+#' x <- cli_vec(names(mtcars), list("vec-trunc" = 3))
 #' cli_text("Column names: {x}.")
 #' ```
 #'
 #' @param x Vector that will be collapsed by cli.
 #' @param style Style to apply to the vector. It is used as a theme on
-#' a `span` element that is created for the vector. You can set `vec_sep`
-#' and `vec_last` to modify the separator and the last separator.
+#' a `span` element that is created for the vector. You can set `vec-sep`
+#' and `vec-last` to modify the separator and the last separator.
 #'
 #' @export
 #' @seealso [cli_format()]

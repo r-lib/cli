@@ -223,7 +223,7 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       transform = theme_progress_bar,
       color = "green"
     ),
-    span.or = list(vec_sep2 = " or ", vec_last = ", or "),
+    span.or = list("vec-sep2" = " or ", "vec-last" = ", or "),
     span.timestamp = list(before = "[", after = "]", color = "grey")
   )
 }

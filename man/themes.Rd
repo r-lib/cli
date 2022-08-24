@@ -102,16 +102,16 @@ literal, to be used as a list item marker in un-ordered lists.
 \item \code{padding-left}, \code{padding-right}: This is currently used the same way
 as the margins, but this might change later.
 \item \code{start}: Integer number, the first element in an ordered list.
-\item \code{string_quote}: Quoting character for inline elements of class \code{.val}.
+\item \code{string-quote}: Quoting character for inline elements of class \code{.val}.
 \item \code{text-decoration}: If \code{"underline"}, then underlined text is created.
 \item \code{text-exdent}: Amount of indentation from the second line of wrapped
 text.
 \item \code{transform}: A function to call on glue substitutions, before
 collapsing them. Note that \code{transform} is applied prior to
 implementing color via ANSI sequences.
-\item \code{vec_last}: The last separator when collapsing vectors.
-\item \code{vec_sep}: The separator to use when collapsing vectors.
-\item \code{vec_trunc}: Vectors longer than this will be truncated. Defaults to
+\item \code{vec-last}: The last separator when collapsing vectors.
+\item \code{vec-sep}: The separator to use when collapsing vectors.
+\item \code{vec-trunc}: Vectors longer than this will be truncated. Defaults to
 100.
 }
 

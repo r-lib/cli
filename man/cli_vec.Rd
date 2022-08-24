@@ -10,8 +10,8 @@ cli_vec(x, style = list())
 \item{x}{Vector that will be collapsed by cli.}
 
 \item{style}{Style to apply to the vector. It is used as a theme on
-a \code{span} element that is created for the vector. You can set \code{vec_sep}
-and \code{vec_last} to modify the separator and the last separator.}
+a \code{span} element that is created for the vector. You can set \code{vec-sep}
+and \code{vec-last} to modify the separator and the last separator.}
 }
 \description{
 Add custom cli style to a vector
@@ -26,7 +26,7 @@ attributes will remove the style as well.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{v <- cli_vec(
   c("foo", "bar", "foobar"),
-  style = list(vec_sep = " & ", vec_last = " & ")
+  style = list("vec-sep" = " & ", "vec-last" = " & ")
 )
 cli_text("My list: \{v\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
@@ -39,7 +39,7 @@ cli_text("My list: \{v\}.")
 
 \subsection{Custom truncation}{
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- cli_vec(names(mtcars), list(vec_trunc = 3))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- cli_vec(names(mtcars), list("vec-trunc" = 3))
 cli_text("Column names: \{x\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
