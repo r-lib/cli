@@ -897,7 +897,7 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
 
   } else {
     cli_recorded[[record]] <- c(cli_recorded[[record]], list(cond))
-    invisible(cond)
+    invisible(args$id)
   }
 }
 

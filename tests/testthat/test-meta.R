@@ -57,3 +57,13 @@ test_that_cli("substitution", {
     })
   }))
 })
+
+test_that("return values are ok when recording (#496)", {
+  expect_snapshot(
+    cli::cli({
+      lid <- cli::cli_ul()
+      cli::cli_li("a bullet")
+      cli::cli_end(lid)
+    })
+  )
+})
