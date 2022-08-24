@@ -335,6 +335,8 @@ NULL
 #'   implementing color via ANSI sequences.
 #' * `vec-last`: The last separator when collapsing vectors.
 #' * `vec-sep`: The separator to use when collapsing vectors.
+#' * `vec-sep2`: The separator to use for two elements when collapsing
+#'   vectors. If not set, then `vec-sep` is used for these as well.
 #' * `vec-trunc`: Vectors longer than this will be truncated. Defaults to
 #'   100.
 #'

@@ -111,6 +111,8 @@ collapsing them. Note that \code{transform} is applied prior to
 implementing color via ANSI sequences.
 \item \code{vec-last}: The last separator when collapsing vectors.
 \item \code{vec-sep}: The separator to use when collapsing vectors.
+\item \code{vec-sep2}: The separator to use for two elements when collapsing
+vectors. If not set, then \code{vec-sep} is used for these as well.
 \item \code{vec-trunc}: Vectors longer than this will be truncated. Defaults to
 100.
 }
