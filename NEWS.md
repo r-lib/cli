@@ -1,5 +1,9 @@
 # cli (development version)
 
+* Nested `cli()` calls work now (#497).
+
+* Return values now work as they should within `cli()` calls (#496).
+
 * Style attributes with underscores have new named with dashes instead:
   `vec_sep`, `vec_last`, `vec_trunc`, `string-quote`. The old names still
   work, but the new ones take precedence (#483).

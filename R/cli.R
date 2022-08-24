@@ -24,7 +24,13 @@
 
 cli <- function(expr) {
   cond <- cli__message_create("meta", cli__rec(expr))
-  cli__message_emit(cond)
+  # cli() might be nested
+  record <- getOption("cli.record")
+  if (is.null(record)) {
+    cli__message_emit(cond)
+  } else {
+    cli_recorded[[record]] <- c(cli_recorded[[record]], list(cond))
+  }
   invisible()
 }
 
@@ -43,8 +49,9 @@ cli__fmt <- function(record, collapse = FALSE, strip_newline = FALSE,
   app <- app %||% default_app() %||% start_app(.auto_close = FALSE)
 
   old <- app$output
+  oldsig <- app$signal
   on.exit(app$output <- old, add = TRUE)
-  on.exit(app$signal <- NULL, add = TRUE)
+  on.exit(app$signal <- oldsig, add = TRUE)
   out <- rawConnection(raw(1000), open = "wb")
   on.exit(close(out), add = TRUE)
   app$output <- out
@@ -893,12 +900,11 @@ cli__message <- function(type, args, .auto_close = TRUE, .envir = NULL,
 
   if (is.null(record)) {
     cli__message_emit(cond)
-    invisible(args$id)
-
   } else {
     cli_recorded[[record]] <- c(cli_recorded[[record]], list(cond))
-    invisible(args$id)
   }
+
+  invisible(args$id)
 }
 
 cli__message_create <- function(type, args) {

@@ -67,3 +67,13 @@ test_that("return values are ok when recording (#496)", {
     })
   )
 })
+
+test_that("nested cli() (#497)", {
+  expect_snapshot(
+    cli::cli({
+      cli::cli_h1("Header")
+      cli::cli(cli::cli_text("Some text"))
+      cli::cli_text("Some more text")
+    })
+  )
+})

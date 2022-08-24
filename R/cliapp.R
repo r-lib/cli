@@ -12,7 +12,7 @@ cliapp <- function(theme = getOption("cli.theme"),
     ## Meta
     meta = function(...) {
       txt <- cli__fmt(list(...), collapse = TRUE, app = app)
-      clii__message(txt, appendLF = FALSE, output = app$output, signal = TRUE)
+      clii__message(txt, appendLF = FALSE, output = app$output, signal = app$signal)
     },
 
     ## Themes

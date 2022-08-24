@@ -225,3 +225,17 @@
     Message
       * a bullet
 
+# nested cli() (#497)
+
+    Code
+      cli::cli({
+        cli::cli_h1("Header")
+        cli::cli(cli::cli_text("Some text"))
+        cli::cli_text("Some more text")
+      })
+    Message
+      
+      -- Header ----------------------------------------------------------------------
+      Some text
+      Some more text
+
