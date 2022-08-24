@@ -525,7 +525,7 @@ test_that("ansi_strwrap and \f edge cases", {
   )
   expect_equal(
     ansi_strwrap("\033[32m\ffoo\f\033[39m"),
-    ansi_string(c("", "\033[32mfoo\033[39m"))
+    ansi_string(c("", "\033[32mfoo\033[39m", ""))
   )
 })
 
