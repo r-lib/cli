@@ -55,6 +55,8 @@
 #' * `path` for a path (essentially the same as `file`).
 #' * `pkg` for a package name.
 #' * `strong` for strong importance.
+#' * `type` formats the type of an R object in a readable way, and it
+#'   should be used with `{}`, see an example below.
 #' * `url` for a URL.
 #' * `var` for a variable name.
 #' * `val` for a generic "value".
@@ -71,6 +73,7 @@
 #' cli_li("An email address: {.email bugs.bunny@acme.com}.")
 #' cli_li("A URL: {.url https://acme.com}.")
 #' cli_li("An environment variable: {.envvar R_LIBS}.")
+#' cli_li("`mtcars` is {.type {mtcars}}")
 #' cli_end(ul)
 #' ```
 #'
