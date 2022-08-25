@@ -74,7 +74,7 @@ collapse_head <- function(x, sep = "", last = "", trunc = Inf,
       last <- sep
   }
   if (length(x) == 0) {
-    character()
+    ""
   } else if (any(is.na(x))) {
     NA_character_
   } else if (nzchar(last) && length(x) > 1) {

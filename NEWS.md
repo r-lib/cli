@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New `{.type}` inline style to format the type of an R object in a user
+  friendly way (#463).
+
 * Improved vector collapsing behavior. cli now shows both the beginning
   and end of the collapsed vector, by default (#419).
 

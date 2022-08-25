@@ -3,7 +3,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables("app")
 
 inline_generic <- function(app, x, style) {
 
-  if (any(grepl("\n", x))) {
+  if (is.character(x) && any(grepl("\n", x))) {
     if (getOption("cli.warn_inline_newlines", FALSE)) {
       warning("cli replaced newlines within {. ... } with spaces")
     }
@@ -254,9 +254,8 @@ make_cmd_transformer <- function(values) {
 
     if (!inherits(res, "error")) {
       id <- paste0("v", length(values))
-      if (length(res) == 0) res <- qty(0)
       values[[id]] <- res
-      values$qty <- res
+      values$qty <- if (length(res) == 0) 0 else res
       values$num_subst <- values$num_subst + 1L
       return(paste0("<", values$marker, id, values$marker, ">"))
     }
