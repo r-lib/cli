@@ -83,11 +83,11 @@
       x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
-      Some numbers: 1, 2, 3, 4, 5, ....
+      Some numbers: 1, 2, 3, ..., 99, and 100.
     Code
       cli_text("Some numbers: {.val {x}}.")
     Message
-      Some numbers: 1, 2, 3, 4, 5, ....
+      Some numbers: 1, 2, 3, ..., 99, and 100.
 
 # custom truncation [ansi]
 
@@ -95,11 +95,11 @@
       x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
-      Some numbers: 1, 2, 3, 4, 5, ....
+      Some numbers: 1, 2, 3, ..., 99, and 100.
     Code
       cli_text("Some numbers: {.val {x}}.")
     Message
-      Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, ....
+      Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, ..., [34m99[39m, and [34m100[39m.
 
 # custom truncation [unicode]
 
@@ -107,11 +107,11 @@
       x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
-      Some numbers: 1, 2, 3, 4, 5, ….
+      Some numbers: 1, 2, 3, …, 99, and 100.
     Code
       cli_text("Some numbers: {.val {x}}.")
     Message
-      Some numbers: 1, 2, 3, 4, 5, ….
+      Some numbers: 1, 2, 3, …, 99, and 100.
 
 # custom truncation [fancy]
 
@@ -119,11 +119,11 @@
       x <- cli_vec(1:100, list(`vec-trunc` = 5))
       cli_text("Some numbers: {x}.")
     Message
-      Some numbers: 1, 2, 3, 4, 5, ….
+      Some numbers: 1, 2, 3, …, 99, and 100.
     Code
       cli_text("Some numbers: {.val {x}}.")
     Message
-      Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, ….
+      Some numbers: [34m1[39m, [34m2[39m, [34m3[39m, …, [34m99[39m, and [34m100[39m.
 
 # collapsing class names [plain]
 
@@ -356,5 +356,6 @@
     Code
       cli::cli_text("Some letters: {letters}")
     Message
-      Some letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, ...
+      Some letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, ..., y, and
+      z
 

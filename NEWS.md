@@ -1,5 +1,8 @@
 # cli (development version)
 
+* Improved vector collapsing behavior. cli now shows both the beginning
+  and end of the collapsed vector, by default (#419).
+
 * Nested `cli()` calls work now (#497).
 
 * Return values now work as they should within `cli()` calls (#496).

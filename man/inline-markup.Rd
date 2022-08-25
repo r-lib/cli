@@ -170,13 +170,13 @@ cli_text("Hey, \{.var x\} has class \{.cls \{class(x)\}\}.")
 
 
 By default cli truncates long vectors. The truncation limit is by default
-one hundred elements, but you can change it with the \code{vec-trunc} style.
+twenty elements, but you can change it with the \code{vec-trunc} style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{nms <- cli_vec(names(mtcars), list("vec-trunc" = 5))
 cli_text("Column names: \{nms\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Column names: mpg, cyl, disp, hp, drat, ….                                      
+#> Column names: mpg, cyl, disp, …, gear, and carb.                                
 </pre></div>
 }}
 }

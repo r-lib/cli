@@ -115,6 +115,12 @@ implementing color via ANSI sequences.
 vectors. If not set, then \code{vec-sep} is used for these as well.
 \item \code{vec-trunc}: Vectors longer than this will be truncated. Defaults to
 100.
+\item \code{vec-trunc-style}: Select between two ways of collapsing vectors:
+\itemize{
+\item \code{"both-ends"} is the current default and it shows the beginning and
+the end of the vector.
+\item \code{"head"} only shows the beginning of the vector.
+}
 }
 
 More properties might be added later. If you think that a property is

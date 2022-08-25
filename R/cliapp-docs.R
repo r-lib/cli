@@ -119,7 +119,7 @@
 #' ```
 #'
 #' By default cli truncates long vectors. The truncation limit is by default
-#' one hundred elements, but you can change it with the `vec-trunc` style.
+#' twenty elements, but you can change it with the `vec-trunc` style.
 #'
 #' ```{asciicast inline-collapse-trunc}
 #' nms <- cli_vec(names(mtcars), list("vec-trunc" = 5))
@@ -339,6 +339,10 @@ NULL
 #'   vectors. If not set, then `vec-sep` is used for these as well.
 #' * `vec-trunc`: Vectors longer than this will be truncated. Defaults to
 #'   100.
+#' * `vec-trunc-style`: Select between two ways of collapsing vectors:
+#'   - `"both-ends"` is the current default and it shows the beginning and
+#'     the end of the vector.
+#'   - `"head"` only shows the beginning of the vector.
 #'
 #' More properties might be added later. If you think that a property is
 #' not applied properly to an element, please open an issue about it in

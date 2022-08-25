@@ -185,14 +185,14 @@ hash_emoji <- function(x, size = 3) {
 
   data.frame(
     stringsAsFactors = FALSE,
-    hash = vapply(emojis, collapse, character(1)),
+    hash = vapply(emojis, hash_collapse, character(1)),
     emojis = I(emojis),
-    text = vapply(names, collapse, character(1), sep = ", "),
+    text = vapply(names, hash_collapse, character(1), sep = ", "),
     names = I(names)
   )
 }
 
-collapse <- function(x, sep = "") {
+hash_collapse <- function(x, sep = "") {
   if (anyNA(x)) {
     NA_character_
   } else {
@@ -253,9 +253,9 @@ hash_raw_emoji <- function(x, size = 3) {
   emo <- hash_emoji1_transform(md5, size)
 
   list(
-    hash = collapse(emo$emoji),
+    hash = hash_collapse(emo$emoji),
     emojis = emo$emoji,
-    text = collapse(emo$emoji, sep = ", "),
+    text = hash_collapse(emo$emoji, sep = ", "),
     names = emo$names
   )
 }
@@ -341,7 +341,7 @@ hash_animal <- function(x, n_adj = 2) {
 
   data.frame(
     stringsAsFactors = FALSE,
-    hash = vapply(hashes, collapse, character(1), sep = " "),
+    hash = vapply(hashes, hash_collapse, character(1), sep = " "),
     words = I(hashes)
   )
 }
@@ -395,7 +395,7 @@ hash_raw_animal <- function(x, n_adj = 2) {
   hash <- hash_animal1_transform(md5, n_adj)
 
   list(
-    hash = collapse(hash, sep = ", "),
+    hash = hash_collapse(hash, sep = ", "),
     words = hash
   )
 }
