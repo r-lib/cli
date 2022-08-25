@@ -75,6 +75,8 @@ collapsed vectors (see below) from "and" to "or".
 \item \code{path} for a path (essentially the same as \code{file}).
 \item \code{pkg} for a package name.
 \item \code{strong} for strong importance.
+\item \code{type} formats the type of an R object in a readable way, and it
+should be used with \code{{}}, see an example below.
 \item \code{url} for a URL.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
@@ -91,10 +93,11 @@ cli_li("A file name: \{.file /usr/bin/env\}.")
 cli_li("An email address: \{.email bugs.bunny@acme.com\}.")
 cli_li("A URL: \{.url https://acme.com\}.")
 cli_li("An environment variable: \{.envvar R_LIBS\}.")
+cli_li("`mtcars` is \{.type \{mtcars\}\}")
 cli_end(ul)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> • <span style="font-style: italic;;color: #DC322F">Emphasized</span> text.                                                              
+#> • <span style="font-style: italic;">Emphasized</span> text.                                                              
 #> • <span style="font-weight: bold;">Strong</span> importance.                                                            
 #> • A piece of code: `sum(a) / length(a)`.                                        
 #> • A package name: <span style="color: #268BD2">cli</span>.                                                          
@@ -104,6 +107,7 @@ cli_end(ul)
 #> • An email address: <span style="color: #268BD2">bugs.bunny@acme.com</span>.                                        
 #> • A URL: <span style="font-style: italic;;color: #268BD2">&lt;https://acme.com&gt;</span>.                                                    
 #> • An environment variable: `R_LIBS`.                                            
+#> • `mtcars` is a <span style="color: #268BD2">&lt;data.frame&gt;</span> object                                             
 </pre></div>
 }}
 
