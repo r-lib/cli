@@ -284,7 +284,7 @@ detect_dark_theme <- function(dark) {
   tryCatch({
     if (dark == "auto") {
       dark <- if (Sys.getenv("RSTUDIO", "0") == "1") {
-        rstudioapi::getThemeInfo()$dark
+        get_rstudio_theme()$dark
       } else if (is_iterm()) {
         is_iterm_dark()
       } else if (is_emacs()) {

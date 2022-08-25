@@ -201,14 +201,14 @@ test_that("code themes 2", {
 test_that("code_theme_default_rstudio", {
   mockery::stub(
     code_theme_default_rstudio,
-    "rstudioapi::getThemeInfo",
+    "get_rstudio_theme",
     list(editor = "Solarized Dark")
   )
   expect_equal(code_theme_default_rstudio()$reserved, "#859900")
 
   mockery::stub(
     code_theme_default_rstudio,
-    "rstudioapi::getThemeInfo",
+    "get_rstudio_theme",
     list(editor = "Not really")
   )
   expect_warning(

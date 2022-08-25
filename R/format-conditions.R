@@ -118,7 +118,7 @@ get_rstudio_fg_color0 <- function() {
   oktypes <- c("rstudio_console", "rstudio_console_starting")
   if (! rs$type %in% oktypes) return(NULL)
   if (rs$num_colors == 1) return(NULL)
-  colstr <- rstudioapi::getThemeInfo()$foreground
+  colstr <- get_rstudio_theme()$foreground
   if (is.null(colstr)) return(NULL)
   colstr0 <- substr(colstr, 5, nchar(colstr) - 1)
   rgbnum <- scan(text = colstr0, sep = ",", quiet = TRUE)

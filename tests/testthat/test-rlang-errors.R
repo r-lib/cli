@@ -129,7 +129,7 @@ test_that_cli(config = "ansi", "color in RStudio", {
   )
   mockery::stub(
     get_rstudio_fg_color0,
-    "rstudioapi::getThemeInfo",
+    "get_rstudio_theme",
     list(foreground = "rgb(0, 0, 0)")
   )
   expect_snapshot({
@@ -139,7 +139,7 @@ test_that_cli(config = "ansi", "color in RStudio", {
 
   mockery::stub(
     get_rstudio_fg_color0,
-    "rstudioapi::getThemeInfo",
+    "get_rstudio_theme",
     list()
   )
   expect_null(get_rstudio_fg_color0())

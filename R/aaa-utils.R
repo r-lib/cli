@@ -158,3 +158,7 @@ leading_space <- function(x) {
 trailing_space <- function(x) {
   sub("^.*[^\\s\u00a0]([\\s\u00a0]*)$", "\\1", x, perl = TRUE)
 }
+
+get_rstudio_theme <- function() {
+  suppressWarnings(rstudioapi::getThemeInfo())
+}

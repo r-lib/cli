@@ -264,7 +264,7 @@ code_theme_make <- function(theme) {
 }
 
 code_theme_default_rstudio <- function() {
-  theme <- rstudioapi::getThemeInfo()$editor
+  theme <- get_rstudio_theme()$editor
   if (! theme %in% names(rstudio_themes)) {
     if (!getOption("cli.ignore_unknown_rstudio_theme", FALSE)) {
       warning(
