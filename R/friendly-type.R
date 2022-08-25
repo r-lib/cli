@@ -172,13 +172,6 @@ is_list <- function(x) {
   typeof(x) == "list"
 }
 
-abort <- function(message, call = NULL, ...) {
-  cond <- simpleError(message, call = call)
-  data <- list(...)
-  cond[names(data)] <- data
-  stop(cond)
-}
-
 list(
   .internal = environment(),
   friendly_type = friendly_type
