@@ -11,6 +11,10 @@ friendly_type <- function(x, value = TRUE, length = FALSE) {
   if (is.object(x)) {
     if (inherits(x, "quosure")) {
       return("a {.cls quosure} object")
+    } else if (identical(class(x), "data.frame")) {
+      return("a data frame")
+    } else if (identical(class(x), c("tbl_df", "tbl", "data.frame"))) {
+      return("a tibble")
     } else {
       # this is sometimes wrong for 'h', but ce la vie
       fst <- tolower(substr(class(x)[1], 1, 1))

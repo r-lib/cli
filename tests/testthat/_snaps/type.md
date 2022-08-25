@@ -3,11 +3,11 @@
     Code
       cli_text("{.type {mtcars}}")
     Message
-      a <data.frame> object
+      a data frame
     Code
       cli_text("{.type {tibble::as_tibble(mtcars)}}")
     Message
-      a <tbl_df/tbl/data.frame> object
+      a tibble
     Code
       cli_text("{.type {rlang::quo(1)}}")
     Message
