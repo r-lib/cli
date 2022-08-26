@@ -58,6 +58,10 @@
 #' * `pkg` for a package name.
 #' * `strong` for strong importance.
 #' * `url` for a URL.
+#' * `type` formats the type of an R object in a readable way, and it
+#'   should be used with `{}`, see an example below.
+#' * `url` for a URL. If the terminal supports ANSI hyperlinks (e.g.
+#'   RStudio, iTerm2, etc.), then cli creates a clickable link.
 #' * `var` for a variable name.
 #' * `val` for a generic "value".
 #'
@@ -71,7 +75,7 @@
 #' cli_li("A keyboard key: press {.kbd ENTER}.")
 #' cli_li("A file name: {.file /usr/bin/env}.")
 #' cli_li("An email address: {.email bugs.bunny@acme.com}.")
-#' cli_li("A URL: {.url https://acme.com}.")
+#' cli_li("A URL: {.url https://example.com}.")
 #' cli_li("An environment variable: {.envvar R_LIBS}.")
 #' cli_li("`mtcars` is {.obj_type_friendly {mtcars}}")
 #' cli_end(ul)

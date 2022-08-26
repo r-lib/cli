@@ -78,6 +78,10 @@ collapsed vectors (see below) from "and" to "or".
 \item \code{pkg} for a package name.
 \item \code{strong} for strong importance.
 \item \code{url} for a URL.
+\item \code{type} formats the type of an R object in a readable way, and it
+should be used with \code{{}}, see an example below.
+\item \code{url} for a URL. If the terminal supports ANSI hyperlinks (e.g.
+RStudio, iTerm2, etc.), then cli creates a clickable link.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
 }
@@ -91,7 +95,7 @@ cli_li("A function name: \{.fn cli_text\}.")
 cli_li("A keyboard key: press \{.kbd ENTER\}.")
 cli_li("A file name: \{.file /usr/bin/env\}.")
 cli_li("An email address: \{.email bugs.bunny@acme.com\}.")
-cli_li("A URL: \{.url https://acme.com\}.")
+cli_li("A URL: \{.url https://example.com\}.")
 cli_li("An environment variable: \{.envvar R_LIBS\}.")
 cli_li("`mtcars` is \{.obj_type_friendly \{mtcars\}\}")
 cli_end(ul)
@@ -105,7 +109,7 @@ cli_end(ul)
 #> • A keyboard key: press <span style="color: #268BD2">[ENTER]</span>.                                                
 #> • A file name: <span style="color: #268BD2">/usr/bin/env</span>.                                                    
 #> • An email address: <span style="color: #268BD2">bugs.bunny@acme.com</span>.                                        
-#> • A URL: <span style="font-style: italic;;color: #268BD2">&lt;https://acme.com&gt;</span>.                                                    
+#> • A URL: <span style="font-style: italic;;color: #268BD2">&lt;https://example.com&gt;</span>.                                                 
 #> • An environment variable: `R_LIBS`.                                            
 #> • `mtcars` is a data frame                                                      
 </pre></div>

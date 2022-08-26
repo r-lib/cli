@@ -1,4 +1,17 @@
 
+make_link <- function(txt, type = c("url")) {
+  type <- match.arg(type)
+
+  switch(
+    type,
+    "url" = make_link_url(txt)
+  )
+}
+
+make_link_url <- function(txt) {
+  style_hyperlink(txt, txt)
+}
+
 #' Terminal Hyperlinks
 #'
 #' `ansi_hyperlink()` creates an ANSI hyperlink.
