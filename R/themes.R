@@ -204,8 +204,8 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.arg = theme_code_tick(dark),
     span.kbd = list(before = "[", after = "]", color = "blue"),
     span.key = list(before = "[", after = "]", color = "blue"),
-    span.file = list(color = "blue", fmt = quote_weird_name),
-    span.path = list(color = "blue", fmt = quote_weird_name),
+    span.file = theme_file(),
+    span.path = theme_file(),
     span.email = list(color = "blue", fmt = quote_weird_name),
     span.url = list(
       before = "<", after = ">",
@@ -333,6 +333,14 @@ theme_function <- function(dark) {
   utils::modifyList(
     theme_code(dark),
     list(transform = tick_formatter_fun)
+  )
+}
+
+theme_file <- function() {
+  list(
+    color = "blue",
+    transform = function(x) make_link(x, type = "file"),
+    fmt = quote_weird_name
   )
 }
 

@@ -47,7 +47,9 @@
 #' * `emph` for emphasized text.
 #' * `envvar` for the name of an environment variable.
 #' * `field` for a generic field, e.g. in a named list.
-#' * `file` for a file name.
+#' * `file` for a file name. If the terminal supports ANSI hyperlinks (e.g.
+#'   RStudio, iTerm2, etc.), then cli creates a clickable link that opens
+#'   the file in RStudio or with the default app for the file type.
 #' * `fun` for a function name.
 #' * `key` for a keyboard key.
 #' * `obj_type_friendly` formats the type of an R object in a readable way,

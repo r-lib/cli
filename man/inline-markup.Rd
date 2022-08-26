@@ -67,7 +67,9 @@ The default theme defines the following inline classes:
 \item \code{emph} for emphasized text.
 \item \code{envvar} for the name of an environment variable.
 \item \code{field} for a generic field, e.g. in a named list.
-\item \code{file} for a file name.
+\item \code{file} for a file name. If the terminal supports ANSI hyperlinks (e.g.
+RStudio, iTerm2, etc.), then cli creates a clickable link that opens
+the file in RStudio or with the default app for the file type.
 \item \code{fun} for a function name.
 \item \code{key} for a keyboard key.
 \item \code{obj_type_friendly} formats the type of an R object in a readable way,

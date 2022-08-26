@@ -1,15 +1,40 @@
 
-make_link <- function(txt, type = c("url")) {
+make_link <- function(txt, type = c("url", "file")) {
   type <- match.arg(type)
 
   switch(
     type,
-    "url" = make_link_url(txt)
+    url = make_link_url(txt),
+    file = make_link_file(txt)
   )
 }
 
 make_link_url <- function(txt) {
   style_hyperlink(txt, txt)
+}
+
+abs_path1 <- function(x) {
+  if (grepl("^file://", x)) return(x)
+  if (grepl("^/", x)) return(paste0("file://", x))
+  if (is_windows() && grepl("^[a-zA-Z]:", x)) return(paste0("file://", x))
+  paste0("file://", file.path(getwd(), x))
+}
+
+abs_path <- function(x) {
+  x <- path.expand(x)
+  vcapply(x, abs_path1, USE.NAMES = FALSE)
+}
+
+# if txt already contains a hyperlink, then we do not add another link
+# this is needed because some packages, e.g. roxygen2 currently create
+# links to files manually:
+# https://github.com/r-lib/roxygen2/blob/3ddfd7f2e35c3a71d5705ab4f49e851cd8da306d/R/utils.R#L91
+
+make_link_file <- function(txt) {
+  ret <- txt
+  linked <- grepl("\007|\033\\\\", txt)
+  ret[!linked] <- style_hyperlink(txt[!linked], abs_path(txt[!linked]))
+  ret
 }
 
 #' Terminal Hyperlinks
