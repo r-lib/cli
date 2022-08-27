@@ -38,19 +38,24 @@ abs_path <- function(x) {
   vcapply(x, abs_path1, USE.NAMES = FALSE)
 }
 
-make_link_href1 <- function(txt) {
-  url <- parse_spaced_tag1(txt)
+make_link_href1 <- function(txt, name = NULL) {
+  if (is.null(name)) {
+    url <- parse_spaced_tag1(txt)
+  } else {
+    url <- list(link_text = name, url = txt)
+  }
   if (ansi_has_hyperlink_support()) {
     style_hyperlink(url$link_text, url$url)
-  } else if (url$url == txt) {
-    txt
-  } else {
+  } else if (url$link_text != url$url) {
     paste0(url$link_text, " (", url$url, ")")
+  } else {
+    txt
   }
 }
 
 make_link_href <- function(txt) {
-  vcapply(txt, make_link_href1)
+  nms <- names(txt)
+  vcapply(seq_along(txt), function(i) make_link_href1(txt[i], nms[i]))
 }
 
 # if txt already contains a hyperlink, then we do not add another link

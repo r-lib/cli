@@ -452,6 +452,15 @@
     Message
       https://cli.r-lib.org/1, https://cli.r-lib.org/2, and https://cli.r-lib.org/3
 
+---
+
+    Code
+      url <- structure(paste0("https://cli.r-lib.org/", 1:3), names = letters[1:3])
+      cli_text("{.href {url}}")
+    Message
+      a (https://cli.r-lib.org/1), b (https://cli.r-lib.org/2), and c
+      (https://cli.r-lib.org/3)
+
 # {.href} vectors [plain-all]
 
     Code
@@ -459,4 +468,12 @@
       cli_text("{.href {url}}")
     Message
       ]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;, ]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;, and ]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;
+
+---
+
+    Code
+      url <- structure(paste0("https://cli.r-lib.org/", 1:3), names = letters[1:3])
+      cli_text("{.href {url}}")
+    Message
+      ]8;;https://cli.r-lib.org/1a]8;;, ]8;;https://cli.r-lib.org/2b]8;;, and ]8;;https://cli.r-lib.org/3c]8;;
 

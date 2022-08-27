@@ -53,6 +53,8 @@
 #' * `fun` for a function name.
 #' * `href` creates a hyperlink, potentially with a link text. The first
 #'   word is the URL (until the first space), and the rest is the link text.
+#'   If the `.href` tag consists of a single substitution, which evaluates
+#'   to a named vector, then the names are used as link texts.
 #'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 #'   then cli creates a clickable link.
 #' * `key` for a keyboard key.

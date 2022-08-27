@@ -98,4 +98,12 @@ test_that_cli(config = "plain", links = c("all", "none"),
     url <- paste0("https://cli.r-lib.org/", 1:3)
     cli_text("{.href {url}}")
   })
+
+  expect_snapshot({
+    url <- structure(
+      paste0("https://cli.r-lib.org/", 1:3),
+      names = letters[1:3]
+    )
+    cli_text("{.href {url}}")
+  })
 })
