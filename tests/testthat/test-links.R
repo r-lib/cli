@@ -8,6 +8,14 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
   })
 })
 
+test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+              "{.url} vector", {
+  expect_snapshot({
+    urls <- paste0("https://cli.r-lib.org/", 1:3)
+    cli_text("{.url {urls}}")
+  })
+})
+
 # -- {.file} and {.path} --------------------------------------------------
 
 test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
@@ -61,6 +69,15 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
 
   expect_snapshot({
     cli_text("{.email bugs.bunny@acme.com}")
+  })
+})
+
+test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+              "{.email} vectors", {
+
+  expect_snapshot({
+    emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
+    cli_text("{.email {emails}}")
   })
 })
 

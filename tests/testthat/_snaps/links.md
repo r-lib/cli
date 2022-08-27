@@ -26,6 +26,42 @@
     Message
       [3m[34m<]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;>[39m[23m
 
+# {.url} vector [plain-none]
+
+    Code
+      urls <- paste0("https://cli.r-lib.org/", 1:3)
+      cli_text("{.url {urls}}")
+    Message
+      <https://cli.r-lib.org/1>, <https://cli.r-lib.org/2>, and
+      <https://cli.r-lib.org/3>
+
+# {.url} vector [fancy-none]
+
+    Code
+      urls <- paste0("https://cli.r-lib.org/", 1:3)
+      cli_text("{.url {urls}}")
+    Message
+      [3m[34m<https://cli.r-lib.org/1>[39m[23m, [3m[34m<https://cli.r-lib.org/2>[39m[23m, and
+      [3m[34m<https://cli.r-lib.org/3>[39m[23m
+
+# {.url} vector [plain-all]
+
+    Code
+      urls <- paste0("https://cli.r-lib.org/", 1:3)
+      cli_text("{.url {urls}}")
+    Message
+      <]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;>, <]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;>, and
+      <]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;>
+
+# {.url} vector [fancy-all]
+
+    Code
+      urls <- paste0("https://cli.r-lib.org/", 1:3)
+      cli_text("{.url {urls}}")
+    Message
+      [3m[34m<]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;>[39m[23m, [3m[34m<]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;>[39m[23m, and
+      [3m[34m<]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;>[39m[23m
+
 # {.file} and {.path} [plain-none]
 
     Code
@@ -345,6 +381,38 @@
       cli_text("{.email bugs.bunny@acme.com}")
     Message
       ]8;;mailto:bugs.bunny@acme.com[34mbugs.bunny@acme.com[39m]8;;
+
+# {.email} vectors [plain-none]
+
+    Code
+      emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
+      cli_text("{.email {emails}}")
+    Message
+      'bugs.bunny-1@acme.com', 'bugs.bunny-2@acme.com', and 'bugs.bunny-3@acme.com'
+
+# {.email} vectors [fancy-none]
+
+    Code
+      emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
+      cli_text("{.email {emails}}")
+    Message
+      [34mbugs.bunny-1@acme.com[39m, [34mbugs.bunny-2@acme.com[39m, and [34mbugs.bunny-3@acme.com[39m
+
+# {.email} vectors [plain-all]
+
+    Code
+      emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
+      cli_text("{.email {emails}}")
+    Message
+      ']8;;mailto:bugs.bunny-1@acme.combugs.bunny-1@acme.com]8;;', ']8;;mailto:bugs.bunny-2@acme.combugs.bunny-2@acme.com]8;;', and ']8;;mailto:bugs.bunny-3@acme.combugs.bunny-3@acme.com]8;;'
+
+# {.email} vectors [fancy-all]
+
+    Code
+      emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
+      cli_text("{.email {emails}}")
+    Message
+      ]8;;mailto:bugs.bunny-1@acme.com[34mbugs.bunny-1@acme.com[39m]8;;, ]8;;mailto:bugs.bunny-2@acme.com[34mbugs.bunny-2@acme.com[39m]8;;, and ]8;;mailto:bugs.bunny-3@acme.com[34mbugs.bunny-3@acme.com[39m]8;;
 
 # {.href} [plain-none]
 
