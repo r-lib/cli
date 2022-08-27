@@ -5,7 +5,28 @@
     Message
       <https://cli.r-lib.org>
 
----
+# {.url} [fancy-none]
+
+    Code
+      cli_text("{.url https://cli.r-lib.org}")
+    Message
+      [3m[34m<https://cli.r-lib.org>[39m[23m
+
+# {.url} [plain-all]
+
+    Code
+      cli_text("{.url https://cli.r-lib.org}")
+    Message
+      <]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;>
+
+# {.url} [fancy-all]
+
+    Code
+      cli_text("{.url https://cli.r-lib.org}")
+    Message
+      [3m[34m<]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;>[39m[23m
+
+# {.file} and {.path} [plain-none]
 
     Code
       cli_text("{.file /absolute/path}")
@@ -78,14 +99,7 @@
     Message
       '/foo/bar'
 
-# {.url} [fancy-none]
-
-    Code
-      cli_text("{.url https://cli.r-lib.org}")
-    Message
-      [3m[34m<https://cli.r-lib.org>[39m[23m
-
----
+# {.file} and {.path} [fancy-none]
 
     Code
       cli_text("{.file /absolute/path}")
@@ -158,14 +172,7 @@
     Message
       [34m/foo/bar[39m
 
-# {.url} [plain-all]
-
-    Code
-      cli_text("{.url https://cli.r-lib.org}")
-    Message
-      <]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;>
-
----
+# {.file} and {.path} [plain-all]
 
     Code
       cli_text("{.file /absolute/path}")
@@ -238,14 +245,7 @@
     Message
       ']8;;/foo/bar/foo/bar]8;;'
 
-# {.url} [fancy-all]
-
-    Code
-      cli_text("{.url https://cli.r-lib.org}")
-    Message
-      [3m[34m<]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;>[39m[23m
-
----
+# {.file} and {.path} [fancy-all]
 
     Code
       cli_text("{.file /absolute/path}")
@@ -317,4 +317,78 @@
       cli_text("{.file {name}}")
     Message
       ]8;;/foo/bar[34m/foo/bar[39m]8;;
+
+# {.email} [plain-none]
+
+    Code
+      cli_text("{.email bugs.bunny@acme.com}")
+    Message
+      'bugs.bunny@acme.com'
+
+# {.email} [fancy-none]
+
+    Code
+      cli_text("{.email bugs.bunny@acme.com}")
+    Message
+      [34mbugs.bunny@acme.com[39m
+
+# {.email} [plain-all]
+
+    Code
+      cli_text("{.email bugs.bunny@acme.com}")
+    Message
+      ']8;;mailto:bugs.bunny@acme.combugs.bunny@acme.com]8;;'
+
+# {.email} [fancy-all]
+
+    Code
+      cli_text("{.email bugs.bunny@acme.com}")
+    Message
+      ]8;;mailto:bugs.bunny@acme.com[34mbugs.bunny@acme.com[39m]8;;
+
+# {.href} [plain-none]
+
+    Code
+      cli_text("{.href https://cli.r-lib.org}")
+    Message
+      https://cli.r-lib.org
+    Code
+      cli_text("{.href https://cli.r-lib.org linktext}")
+    Message
+      linktext (https://cli.r-lib.org)
+    Code
+      cli_text("{.href https://cli.r-lib.org link text}")
+    Message
+      link text (https://cli.r-lib.org)
+
+# {.href} [plain-all]
+
+    Code
+      cli_text("{.href https://cli.r-lib.org}")
+    Message
+      ]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;
+    Code
+      cli_text("{.href https://cli.r-lib.org linktext}")
+    Message
+      ]8;;https://cli.r-lib.orglinktext]8;;
+    Code
+      cli_text("{.href https://cli.r-lib.org link text}")
+    Message
+      ]8;;https://cli.r-lib.orglink text]8;;
+
+# {.href} vectors [plain-none]
+
+    Code
+      url <- paste0("https://cli.r-lib.org/", 1:3)
+      cli_text("{.href {url}}")
+    Message
+      https://cli.r-lib.org/1, https://cli.r-lib.org/2, and https://cli.r-lib.org/3
+
+# {.href} vectors [plain-all]
+
+    Code
+      url <- paste0("https://cli.r-lib.org/", 1:3)
+      cli_text("{.href {url}}")
+    Message
+      ]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;, ]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;, and ]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;
 

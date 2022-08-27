@@ -71,6 +71,10 @@ The default theme defines the following inline classes:
 RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 the file in RStudio or with the default app for the file type.
 \item \code{fun} for a function name.
+\item \code{hxxx} creates a hyperlink, potentially with a link text. The first
+word is the URL (until the first space), and the rest is the link text.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
 \item \code{key} for a keyboard key.
 \item \code{obj_type_friendly} formats the type of an R object in a readable way,
 and it should be used with \code{{}}, see an example below.

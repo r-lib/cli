@@ -206,11 +206,18 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.key = list(before = "[", after = "]", color = "blue"),
     span.file = theme_file(),
     span.path = theme_file(),
-    span.email = list(color = "blue", fmt = quote_weird_name),
+    span.email = list(
+      color = "blue",
+      transform = function(x) make_link(x, type = "email"),
+      fmt = quote_weird_name
+    ),
     span.url = list(
       before = "<", after = ">",
       color = "blue", "font-style" = "italic",
       transform = function(x) make_link(x, type = "url")
+    ),
+    span.href = list(
+      transform = function(x) make_link(x, type = "href")
     ),
     span.var = theme_code_tick(dark),
     span.col = theme_code_tick(dark),

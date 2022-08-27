@@ -1,16 +1,29 @@
 
-make_link <- function(txt, type = c("url", "file")) {
+make_link <- function(txt, type = c("url", "file", "email", "href")) {
   type <- match.arg(type)
 
   switch(
     type,
     url = make_link_url(txt),
-    file = make_link_file(txt)
+    file = make_link_file(txt),
+    email = make_link_email(txt),
+    href = make_link_href(txt)
   )
 }
 
 make_link_url <- function(txt) {
   style_hyperlink(txt, txt)
+}
+
+parse_spaced_tag1 <- function(txt) {
+  if (!grepl(" ", txt)) {
+    list(link_text = txt, url = txt)
+  } else {
+    list(
+      url = sub("^([^ ]*) .*$", "\\1", txt),
+      link_text = sub("^[^ ]* (.*)$", "\\1", txt)
+    )
+  }
 }
 
 abs_path1 <- function(x) {
@@ -25,6 +38,21 @@ abs_path <- function(x) {
   vcapply(x, abs_path1, USE.NAMES = FALSE)
 }
 
+make_link_href1 <- function(txt) {
+  url <- parse_spaced_tag1(txt)
+  if (ansi_has_hyperlink_support()) {
+    style_hyperlink(url$link_text, url$url)
+  } else if (url$url == txt) {
+    txt
+  } else {
+    paste0(url$link_text, " (", url$url, ")")
+  }
+}
+
+make_link_href <- function(txt) {
+  vcapply(txt, make_link_href1)
+}
+
 # if txt already contains a hyperlink, then we do not add another link
 # this is needed because some packages, e.g. roxygen2 currently create
 # links to files manually:
@@ -35,6 +63,10 @@ make_link_file <- function(txt) {
   linked <- grepl("\007|\033\\\\", txt)
   ret[!linked] <- style_hyperlink(txt[!linked], abs_path(txt[!linked]))
   ret
+}
+
+make_link_email <- function(txt) {
+  style_hyperlink(txt, paste0("mailto:", txt))
 }
 
 #' Terminal Hyperlinks
