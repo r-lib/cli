@@ -1,6 +1,6 @@
 # cli (development version)
 
-* New `{.type}` inline style to format the type of an R object in a user
+* New `{.typeof}` inline style to format the type of an R object in a user
   friendly way (#463).
 
 * Improved vector collapsing behavior. cli now shows both the beginning

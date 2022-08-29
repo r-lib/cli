@@ -223,7 +223,7 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       transform = theme_progress_bar,
       color = "green"
     ),
-    span.type = list(
+    span.typeof = list(
       transform = function(x) format_inline(typename(x))
     ),
     span.or = list("vec-sep2" = " or ", "vec-last" = ", or "),
