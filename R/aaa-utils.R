@@ -47,7 +47,10 @@ apply_style <- function(text, style, bg = FALSE) {
   } else if (is.null(style)) {
     text
   } else {
-    stop("Not a colour name or ANSI style function", call. = FALSE)
+    throw(cli_error(
+      "{.arg style} must be a color name or an ANSI style function",
+      "i" = "{.arg style} is {.typeof {style}}"
+    ))
   }
 }
 

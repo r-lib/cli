@@ -228,10 +228,21 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
 
   orig_style_name <- style_name <- names(args)[1]
 
-  stopifnot(is.character(style) && length(style) == 1 ||
-            is_rgb_matrix(style) && ncol(style) == 1,
-            is.logical(bg) && length(bg) == 1,
-            is.numeric(colors) && length(colors) == 1)
+  stop_if_not(
+    is.character(style) && length(style) == 1 ||
+    is_rgb_matrix(style) && ncol(style) == 1,
+    message = c(
+      "{.arg style} must be an ANSI style",
+      "i" = paste(
+        "an ANSI style is a character scalar (cli style name, RGB or R color",
+        "name), or a [3x1] or [4x1] numeric RGB matrix"),
+      "i" = "{.arg style} is {.typeof {style}}"
+    )
+  )
+  stopifnot(
+    is.logical(bg) && length(bg) == 1,
+    is.numeric(colors) && length(colors) == 1
+  )
 
   ansi_seqs <- if (is_builtin_style(style)) {
     if (bg && substr(style, 1, 3) != "bg_") {
@@ -248,7 +259,11 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
     ansi_style_from_rgb(style, bg, colors, grey)
 
   } else {
-    stop("Unknown style specification: ", style)
+    throw(cli_error(
+      "Unknown style specification: {.val style}, it must be one of",
+      "*" = "a builtin cli style, e.g. {.val bold} or {.val red},",
+      "*" = "an R color name, see {.help grDevices::colors}."
+    ))
   }
 
   create_ansi_style(style_name, ansi_seqs$open, ansi_seqs$close)
