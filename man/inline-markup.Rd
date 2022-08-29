@@ -70,13 +70,13 @@ The default theme defines the following inline classes:
 \item \code{file} for a file name.
 \item \code{fun} for a function name.
 \item \code{key} for a keyboard key.
+\item \code{obj_type_friendly} formats the type of an R object in a readable way,
+and it should be used with \code{{}}, see an example below.
 \item \code{or} changes the string that separates the last two elements of
 collapsed vectors (see below) from "and" to "or".
 \item \code{path} for a path (essentially the same as \code{file}).
 \item \code{pkg} for a package name.
 \item \code{strong} for strong importance.
-\item \code{typeof} formats the type of an R object in a readable way, and it
-should be used with \code{{}}, see an example below.
 \item \code{url} for a URL.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
@@ -93,7 +93,7 @@ cli_li("A file name: \{.file /usr/bin/env\}.")
 cli_li("An email address: \{.email bugs.bunny@acme.com\}.")
 cli_li("A URL: \{.url https://acme.com\}.")
 cli_li("An environment variable: \{.envvar R_LIBS\}.")
-cli_li("`mtcars` is \{.typeof \{mtcars\}\}")
+cli_li("`mtcars` is \{.obj_type_friendly \{mtcars\}\}")
 cli_end(ul)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
