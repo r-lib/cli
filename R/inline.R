@@ -141,7 +141,8 @@ inline_transformer <- function(code, envir) {
     # but only to the whole non-brace expression. We don't need to end this
     # container, because the one above (`id`) will end this one as well.
 
-    braceexp <- grepl("^[<][^.][^}]*[>]$", text)
+    braceexp <- grepl("^[<][^.][^}]*[>]$", text) &&
+      count_brace_exp(text, .open = "<", .close = ">") == 1
     if (!braceexp) {
       id2 <- clii__container_start(app, "span", class = NULL)
     }

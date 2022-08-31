@@ -359,3 +359,18 @@
       Some letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, ..., y, and
       z
 
+# brace expresssion edge cases [ansi]
+
+    Code
+      cli_text("{.code {foo} and {bar}}")
+    Message
+      `foo and bar`
+    Code
+      cli_text("{.emph {foo} and {bar}}")
+    Message
+      [3mfoo and bar[23m
+    Code
+      cli_text("{.q {foo} and {bar}}")
+    Message
+      "foo and bar"
+

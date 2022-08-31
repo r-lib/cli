@@ -151,3 +151,13 @@ test_that("truncate vectors at 20", {
     cli::cli_text("Some letters: {letters}")
   )
 })
+
+test_that_cli(config = "ansi", "brace expresssion edge cases", {
+  foo <- "foo"
+  bar <- "bar"
+  expect_snapshot({
+    cli_text("{.code {foo} and {bar}}")
+    cli_text("{.emph {foo} and {bar}}")
+    cli_text("{.q {foo} and {bar}}")
+  })
+})

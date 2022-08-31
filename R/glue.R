@@ -41,6 +41,16 @@ glue <- function(text, .envir = parent.frame(),
   do.call(paste0, res)
 }
 
+count_brace_exp <- function(text, .open = "{", .close = "}") {
+  cnt <- 0
+  trans <- function(text, envir) {
+    cnt <<- cnt + 1L
+    ""
+  }
+  glue(text, .transformer = trans, .open = .open, .close = .close)
+  cnt
+}
+
 identity_transformer <- function (text, envir) {
   eval(parse(text = text, keep.source = FALSE), envir)
 }

@@ -1,5 +1,8 @@
 # cli (development version)
 
+* Expressions that start and end with a `{}` substitution are now styles
+  correctly. E.g. `{.code {var1} + {var2}}` (#517).
+
 * New `{.obj_type_friendly}` inline style to format the type of an R object
   in a user friendly way (#463).
 
