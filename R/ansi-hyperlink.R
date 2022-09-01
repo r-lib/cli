@@ -1,18 +1,106 @@
 
-make_link <- function(txt, type = c("url", "file", "email", "href")) {
+#' Auto-linking existing styles
+#'
+#' They keep formatting. It is not possible to use a different link text
+#' with them. We could add link text support, but theming is applied to the
+#' result of these tags, and it would look weird for link text. (I.e. if
+#' there is link text you don't want to append `()` to the function name,
+#' etc.)
+#'
+#' N | Goal                                        | Input                           |Links to (link text is always the verbatim content, styled)
+#' --|---------------------------------------------|---------------------------------|------------------------------------------------------------
+#' 1 | auto-link emails                            | `{.email foo@bar.com}`          | `mailto:foo@bar.com`
+#' 2 | auto-link file                              | `{.file path/file}`             | `file:///abs/path/dile`
+#' 3 | auto-link file with line and column numbers | `{.file /abs/path:line:col}`    | `file:///abs/path`, `params = list(line = line, col = col)`
+#' 4 | auto-link function                          | `{.fun pkg::fun}`               | `x-r-help:pkg::fun`
+#' 5 | mention function w/o package                | `{.fun fun}`                    | no link is created for this form
+#' 6 | auto-link url                               | `{.url url}`                    | `url`
+#'
+#' ## New styles to create links
+#'
+#' These all have link text support, via the `[text](link)` markdown syntax.
+#'
+#' N | Goal                                        | Input                           | Link text         | Links to                 | Non-link form
+#' --|---------------------------------------------|---------------------------------|-------------------|--------------------------|-------------------------
+#' 7 | link qualified function name to help        | `{.help pkg::fun}`              | `{.fun pkg::fun}` | `x-r-help:pkg::fun`      | `{.fun pkg::fun}`
+#' 8 | link to function with link text             | `{.help [text](pkg::fun)}`      | `text`            | `x-r-help:pkg::fun`      | `text ({.fun pkg::fun})`
+#' 9 | link to topic                               | `{.topic pkg::topic}`           | `pkg::topic`      | `x-r-help:pkg::topic`    | `pkg::topic`
+#' 10| link to topic with link text                | `{.topic [text](pkg::topic)}`   | `text`            | `x-r-help:pkg::topic`    | `text (pkg::topic)`
+#' 11| link url                                    | `{.href url}`                   | `{.url url}`      | `url`                    | `url`
+#' 12| link url with link text                     | `{.href [text](url)}`           | `text`            | `url`                    | `text ({.url url})`
+#' 13| link running expr                           | `{.run expr}`                   | `{.code expr}`    | `x-r-run:expr`           | `{.code expr}`
+#' 14| link running expr, show code                | `{.run [code](expr)}`           | `{.code code}`    | `x-r-run:expr`           | `{.code expr}`
+#' 15| link to vignette                            | `{.vignette pkg::name}`         | `pkg::name`       | `x-r-vignette:pkg::name` | `pkg::name`
+#' 16| link to vignette with link text             | `{.vignette [text](pkg::name)}` | `text`            | `x-r-vignette:pkg::name` | `text (pkg::name)`
+#'
+#' @name cli-links
+#' @noRd
+NULL
+
+make_link <- function(txt, type = c("email", "file", "fun", "help", "href",
+                                    "run", "topic", "url", "vignette")) {
   type <- match.arg(type)
 
   switch(
     type,
-    url = make_link_url(txt),
-    file = make_link_file(txt),
-    email = make_link_email(txt),
-    href = make_link_href(txt)
+    email    = make_link_email(txt),
+    file     = make_link_file(txt),
+    fun      = make_link_fun(txt),
+    help     = make_link_help(txt),
+    href     = make_link_href(txt),
+    run      = make_link_run(txt),
+    topic    = make_link_topic(txt),
+    url      = make_link_url(txt),
+    vignette = make_link_vignette(txt),
+    stop("Unknown link type")
   )
 }
 
-make_link_url <- function(txt) {
-  style_hyperlink(txt, txt)
+# -- {.email} -------------------------------------------------------------
+
+make_link_email <- function(txt) {
+  style_hyperlink(txt, paste0("mailto:", txt))
+}
+
+# -- {.file} and {.path} --------------------------------------------------
+
+# if txt already contains a hyperlink, then we do not add another link
+# this is needed because some packages, e.g. roxygen2 currently create
+# links to files manually:
+# https://github.com/r-lib/roxygen2/blob/3ddfd7f2e35c3a71d5705ab4f49e851cd8da306d/R/utils.R#L91
+
+make_link_file <- function(txt) {
+  ret <- txt
+  linked <- grepl("\007|\033\\\\", txt)
+  ret[!linked] <- style_hyperlink(txt[!linked], abs_path(txt[!linked]))
+  ret
+}
+
+abs_path <- function(x) {
+  x <- path.expand(x)
+  vcapply(x, abs_path1, USE.NAMES = FALSE)
+}
+
+abs_path1 <- function(x) {
+  if (grepl("^file://", x)) return(x)
+  if (grepl("^/", x)) return(paste0("file://", x))
+  if (is_windows() && grepl("^[a-zA-Z]:", x)) return(paste0("file://", x))
+  paste0("file://", file.path(getwd(), x))
+}
+
+# -- {.fun} ---------------------------------------------------------------
+
+# TODO
+
+# -- {.help} --------------------------------------------------------------
+
+# TODO
+
+# -- {.href} --------------------------------------------------------------
+
+make_link_href <- function(txt) {
+  nms <- names(txt)
+  vcapply(seq_along(txt), function(i) make_link_href1(txt[i], nms[i]))
 }
 
 parse_spaced_tag1 <- function(txt) {
@@ -24,18 +112,6 @@ parse_spaced_tag1 <- function(txt) {
       link_text = sub("^[^ ]* (.*)$", "\\1", txt)
     )
   }
-}
-
-abs_path1 <- function(x) {
-  if (grepl("^file://", x)) return(x)
-  if (grepl("^/", x)) return(paste0("file://", x))
-  if (is_windows() && grepl("^[a-zA-Z]:", x)) return(paste0("file://", x))
-  paste0("file://", file.path(getwd(), x))
-}
-
-abs_path <- function(x) {
-  x <- path.expand(x)
-  vcapply(x, abs_path1, USE.NAMES = FALSE)
 }
 
 make_link_href1 <- function(txt, name = NULL) {
@@ -53,26 +129,23 @@ make_link_href1 <- function(txt, name = NULL) {
   }
 }
 
-make_link_href <- function(txt) {
-  nms <- names(txt)
-  vcapply(seq_along(txt), function(i) make_link_href1(txt[i], nms[i]))
+# -- {.run} ---------------------------------------------------------------
+
+# TODO
+
+# -- {.topic} -------------------------------------------------------------
+
+# TODO
+
+# -- {.url} ---------------------------------------------------------------
+
+make_link_url <- function(txt) {
+  style_hyperlink(txt, txt)
 }
 
-# if txt already contains a hyperlink, then we do not add another link
-# this is needed because some packages, e.g. roxygen2 currently create
-# links to files manually:
-# https://github.com/r-lib/roxygen2/blob/3ddfd7f2e35c3a71d5705ab4f49e851cd8da306d/R/utils.R#L91
+# -- {.vignette} ----------------------------------------------------------
 
-make_link_file <- function(txt) {
-  ret <- txt
-  linked <- grepl("\007|\033\\\\", txt)
-  ret[!linked] <- style_hyperlink(txt[!linked], abs_path(txt[!linked]))
-  ret
-}
-
-make_link_email <- function(txt) {
-  style_hyperlink(txt, paste0("mailto:", txt))
-}
+# TODO
 
 #' Terminal Hyperlinks
 #'

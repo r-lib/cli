@@ -1,18 +1,20 @@
 
-# -- {.url} ---------------------------------------------------------------
+# -- {.email} -------------------------------------------------------------
 
 test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
-              "{.url}", {
+              "{.email}", {
+
   expect_snapshot({
-    cli_text("{.url https://cli.r-lib.org}")
+    cli_text("{.email bugs.bunny@acme.com}")
   })
 })
 
 test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
-              "{.url} vector", {
+              "{.email} vectors", {
+
   expect_snapshot({
-    urls <- paste0("https://cli.r-lib.org/", 1:3)
-    cli_text("{.url {urls}}")
+    emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
+    cli_text("{.email {emails}}")
   })
 })
 
@@ -60,26 +62,21 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
     name <- cli::style_hyperlink("/foo/bar", "/foo/bar")
     cli_text("{.file {name}}")
   })
+
+  # line numbers
+
+  # line and column numbers
+
+
 })
 
-# -- {.email} -------------------------------------------------------------
+# -- {.fun} ---------------------------------------------------------------
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
-              "{.email}", {
+# TODO
 
-  expect_snapshot({
-    cli_text("{.email bugs.bunny@acme.com}")
-  })
-})
+# -- {.help} --------------------------------------------------------------
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
-              "{.email} vectors", {
-
-  expect_snapshot({
-    emails <- paste0("bugs.bunny-", 1:3, "@acme.com")
-    cli_text("{.email {emails}}")
-  })
-})
+# TODO
 
 # -- {.href} --------------------------------------------------------------
 
@@ -98,12 +95,33 @@ test_that_cli(config = "plain", links = c("all", "none"),
     url <- paste0("https://cli.r-lib.org/", 1:3)
     cli_text("{.href {url}}")
   })
+})
 
+# -- {.run} ---------------------------------------------------------------
+
+# TODO
+
+# -- {.topic} -------------------------------------------------------------
+
+# TODO
+
+# -- {.url} ---------------------------------------------------------------
+
+test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+              "{.url}", {
   expect_snapshot({
-    url <- structure(
-      paste0("https://cli.r-lib.org/", 1:3),
-      names = letters[1:3]
-    )
-    cli_text("{.href {url}}")
+    cli_text("{.url https://cli.r-lib.org}")
   })
 })
+
+test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+              "{.url} vector", {
+  expect_snapshot({
+    urls <- paste0("https://cli.r-lib.org/", 1:3)
+    cli_text("{.url {urls}}")
+  })
+})
+
+# -- {.vignette} ----------------------------------------------------------
+
+# TODO
