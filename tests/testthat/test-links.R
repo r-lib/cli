@@ -64,10 +64,44 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
   })
 
   # line numbers
+  expect_snapshot({
+    cli_text("{.file /absolute/path:12}")
+    cli_text("{.file file:///absolute/path:5}")
+    cli_text("{.path /absolute/path:123}")
+    cli_text("{.path file:///absolute/path:51}")
+  })
+  expect_snapshot({
+    cli_text("{.file relative/path:12}")
+    cli_text("{.file ./relative/path:5}")
+    cli_text("{.path relative/path:123}")
+    cli_text("{.path ./relative/path:51}")
+  }, transform = sanitize_wd)
+  expect_snapshot({
+    cli_text("{.file ~/relative/path:12}")
+    cli_text("{.path ~/relative/path:5}")
+  }, transform = sanitize_home)
 
   # line and column numbers
-
-
+  expect_snapshot({
+    cli_text("{.file /absolute/path:12:5}")
+    cli_text("{.file file:///absolute/path:5:100}")
+    cli_text("{.path /absolute/path:123:1}")
+    cli_text("{.path file:///absolute/path:51:6}")
+  })
+  expect_snapshot({
+    cli_text("{.file relative/path:12:13}")
+    cli_text("{.file ./relative/path:5:20}")
+    cli_text("{.path relative/path:123:21}")
+    cli_text("{.path ./relative/path:51:2}")
+  }, transform = sanitize_wd)
+  expect_snapshot({
+    cli_text("{.file ~/relative/path:12:23}")
+    cli_text("{.path ~/relative/path:5:2}")
+  }, transform = sanitize_home)
+  expect_snapshot({
+    paths <- c("~/foo", "bar:10", "file:///abs:10:20")
+    cli_text("{.file {paths}}")
+  }, transform = function(x) sanitize_home(sanitize_wd(x)))
 })
 
 # -- {.fun} ---------------------------------------------------------------
@@ -84,8 +118,8 @@ test_that_cli(config = "plain", links = c("all", "none"),
               "{.href}", {
   expect_snapshot({
     cli_text("{.href https://cli.r-lib.org}")
-    cli_text("{.href https://cli.r-lib.org linktext}")
-    cli_text("{.href https://cli.r-lib.org link text}")
+    cli_text("{.href [linktext](https://cli.r-lib.org)}")
+    cli_text("{.href [link text](https://cli.r-lib.org)}")
   })
 })
 

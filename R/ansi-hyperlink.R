@@ -8,10 +8,10 @@
 #' etc.)
 #'
 #' N | Goal                                        | Input                           |Links to (link text is always the verbatim content, styled)
-#' --|---------------------------------------------|---------------------------------|------------------------------------------------------------
+#' --|---------------------------------------------|---------------------------------|---------------------------------------------------------------------
 #' 1 | auto-link emails                            | `{.email foo@bar.com}`          | `mailto:foo@bar.com`
 #' 2 | auto-link file                              | `{.file path/file}`             | `file:///abs/path/dile`
-#' 3 | auto-link file with line and column numbers | `{.file /abs/path:line:col}`    | `file:///abs/path`, `params = list(line = line, col = col)`
+#' 3 | auto-link file with line and column numbers | `{.file /abs/path:line:col}`    | `file:///abs/path:line:col`, `params = list(line = line, col = col)`
 #' 4 | auto-link function                          | `{.fun pkg::fun}`               | `x-r-help:pkg::fun`
 #' 5 | mention function w/o package                | `{.fun fun}`                    | no link is created for this form
 #' 6 | auto-link url                               | `{.url url}`                    | `url`
@@ -72,8 +72,29 @@ make_link_email <- function(txt) {
 make_link_file <- function(txt) {
   ret <- txt
   linked <- grepl("\007|\033\\\\", txt)
-  ret[!linked] <- style_hyperlink(txt[!linked], abs_path(txt[!linked]))
+  ret[!linked] <- vcapply(which(!linked), function(i) {
+    params <- parse_file_link_params(txt[i])
+    style_hyperlink(txt[i], abs_path(params$path), params = params$params)
+  })
   ret
+}
+
+parse_file_link_params <- function(txt) {
+  if (grepl(":[0-9]+:[0-9]+$", txt)) {
+    # path:line:col
+    path <- sub("^(.*):[0-9]+:[0-9]+$", "\\1", txt)
+    num <- strsplit(sub("^.*:([0-9]+:[0-9]+)$", "\\1", txt), ":", fixed = TRUE)[[1]]
+    list(path = path, params = c(line = num[1], col = num[2]))
+
+  } else if (grepl(":[0-9]+$", txt)) {
+    # path:line
+    path <- sub("^(.*):[0-9]+$", "\\1", txt)
+    num <- sub("^.*:([0-9]+$)", "\\1", txt)
+    list(path = path, params = c(line = num, col = "1"))
+
+  } else {
+    list(path = txt, params = NULL)
+  }
 }
 
 abs_path <- function(x) {
@@ -99,33 +120,20 @@ abs_path1 <- function(x) {
 # -- {.href} --------------------------------------------------------------
 
 make_link_href <- function(txt) {
-  nms <- names(txt)
-  vcapply(seq_along(txt), function(i) make_link_href1(txt[i], nms[i]))
-}
-
-parse_spaced_tag1 <- function(txt) {
-  if (!grepl(" ", txt)) {
-    list(link_text = txt, url = txt)
-  } else {
-    list(
-      url = sub("^([^ ]*) .*$", "\\1", txt),
-      link_text = sub("^[^ ]* (.*)$", "\\1", txt)
-    )
-  }
-}
-
-make_link_href1 <- function(txt, name = NULL) {
-  if (is.null(name)) {
-    url <- parse_spaced_tag1(txt)
-  } else {
-    url <- list(link_text = name, url = txt)
-  }
+  mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
+  text <- ifelse(is.na(mch$text), txt, mch$text)
+  url <- ifelse(is.na(mch$url), txt, mch$url)
   if (ansi_has_hyperlink_support()) {
-    style_hyperlink(url$link_text, url$url)
-  } else if (url$link_text != url$url) {
-    paste0(url$link_text, " (", url$url, ")")
+    link <- style_hyperlink(text = text, url = url)
+    style <- is.na(mch$text)
+    link[style] <- vcapply(
+      url[style],
+      function(url1) format_inline("{.url {url1}}")
+    )
+    link
   } else {
-    txt
+    url2 <- vcapply(url, function(url1) format_inline("{.url {url1}}"))
+    ifelse(text == url, url2, paste0(text, " (", url2, ")"))
   }
 }
 
