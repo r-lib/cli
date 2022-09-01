@@ -21,17 +21,17 @@
 #' These all have link text support, via the `[text](link)` markdown syntax.
 #'
 #' N | Goal                                        | Input                           | Link text         | Links to                 | Non-link form
-#' --|---------------------------------------------|---------------------------------|-------------------|--------------------------|-------------------------
-#' 7 | link qualified function name to help        | `{.help pkg::fun}`              | `{.fun pkg::fun}` | `x-r-help:pkg::fun`      | `{.fun pkg::fun}`
+#' --|---------------------------------------------|---------------------------------|-------------------|--------------------------|------------------------------------
+#' 7 | link qualified function name to help        | `{.help pkg::fun}`              | `{.fun pkg::fun}` | `x-r-help:pkg::fun`      | `{.fun ?pkg::fun}`
 #' 8 | link to function with link text             | `{.help [text](pkg::fun)}`      | `text`            | `x-r-help:pkg::fun`      | `text ({.fun pkg::fun})`
 #' 9 | link to topic                               | `{.topic pkg::topic}`           | `pkg::topic`      | `x-r-help:pkg::topic`    | `pkg::topic`
 #' 10| link to topic with link text                | `{.topic [text](pkg::topic)}`   | `text`            | `x-r-help:pkg::topic`    | `text (pkg::topic)`
-#' 11| link url                                    | `{.href url}`                   | `{.url url}`      | `url`                    | `url`
+#' 11| link url                                    | `{.href url}`                   | `{.url url}`      | `url`                    | `{.url url}`
 #' 12| link url with link text                     | `{.href [text](url)}`           | `text`            | `url`                    | `text ({.url url})`
 #' 13| link running expr                           | `{.run expr}`                   | `{.code expr}`    | `x-r-run:expr`           | `{.code expr}`
 #' 14| link running expr, show code                | `{.run [code](expr)}`           | `{.code code}`    | `x-r-run:expr`           | `{.code expr}`
-#' 15| link to vignette                            | `{.vignette pkg::name}`         | `pkg::name`       | `x-r-vignette:pkg::name` | `pkg::name`
-#' 16| link to vignette with link text             | `{.vignette [text](pkg::name)}` | `text`            | `x-r-vignette:pkg::name` | `text (pkg::name)`
+#' 15| link to vignette                            | `{.vignette pkg::name}`         | `pkg::name`       | `x-r-vignette:pkg::name` | `{.code vignette(pkg::name)}`
+#' 16| link to vignette with link text             | `{.vignette [text](pkg::name)}` | `text`            | `x-r-vignette:pkg::name` | `text ({.code vignette(pkg::name)})`
 #'
 #' @name cli-links
 #' @noRd
