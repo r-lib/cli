@@ -339,7 +339,7 @@ theme_code_tick <- function(dark) {
 theme_function <- function(dark) {
   utils::modifyList(
     theme_code(dark),
-    list(transform = tick_formatter_fun)
+    list(transform = function(x) tick_formatter_fun(make_link(x, type = "fun")))
   )
 }
 

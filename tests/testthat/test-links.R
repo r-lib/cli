@@ -106,7 +106,19 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
 
 # -- {.fun} ---------------------------------------------------------------
 
-# TODO
+test_that_cli(config = "plain", links = c("all", "none"),
+              "{.fun}", {
+
+  expect_snapshot({
+    cli_text("{.fun myfun}")
+    cli_text("{.fun mypackage::myfun}")
+  })
+
+  expect_snapshot({
+    funs <- paste0("mypkg::myfun", 1:3)
+    cli_text("{.fun {funs}}")
+  })
+})
 
 # -- {.help} --------------------------------------------------------------
 

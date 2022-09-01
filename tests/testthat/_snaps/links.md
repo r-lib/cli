@@ -774,6 +774,44 @@
     Message
       ]8;;file:///my/home/foo[34m~/foo[39m]8;;, ]8;line = 10:col = 1;file:///testthat/home/bar[34mbar:10[39m]8;;, and ]8;line = 10:col = 20;file:///abs[34mfile:///abs:10:20[39m]8;;
 
+# {.fun} [plain-none]
+
+    Code
+      cli_text("{.fun myfun}")
+    Message
+      `myfun()`
+    Code
+      cli_text("{.fun mypackage::myfun}")
+    Message
+      `mypackage::myfun()`
+
+---
+
+    Code
+      funs <- paste0("mypkg::myfun", 1:3)
+      cli_text("{.fun {funs}}")
+    Message
+      `mypkg::myfun1()`, `mypkg::myfun2()`, and `mypkg::myfun3()`
+
+# {.fun} [plain-all]
+
+    Code
+      cli_text("{.fun myfun}")
+    Message
+      `myfun()`
+    Code
+      cli_text("{.fun mypackage::myfun}")
+    Message
+      `]8;;x-r-help:mypackage::myfunmypackage::myfun]8;;()`
+
+---
+
+    Code
+      funs <- paste0("mypkg::myfun", 1:3)
+      cli_text("{.fun {funs}}")
+    Message
+      `]8;;x-r-help:mypkg::myfun1mypkg::myfun1]8;;()`, `]8;;x-r-help:mypkg::myfun2mypkg::myfun2]8;;()`, and `]8;;x-r-help:mypkg::myfun3mypkg::myfun3]8;;()`
+
 # {.href} [plain-none]
 
     Code

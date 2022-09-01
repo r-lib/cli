@@ -111,7 +111,26 @@ abs_path1 <- function(x) {
 
 # -- {.fun} ---------------------------------------------------------------
 
-# TODO
+make_link_fun <- function(txt) {
+  tolink <- grepl("::", txt)
+  linked <- grepl("\007|\033\\\\", txt)
+  todo <- tolink & !linked
+  if (!any(todo)) return(txt)
+
+  sprt <- ansi_hyperlink_types()$help
+  scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
+    "ide:help"
+  } else {
+    "x-r-help"
+  }
+
+  txt[todo] <- style_hyperlink(
+    text = txt[todo],
+    url = paste0(scheme, ":", txt[todo])
+  )
+
+  txt
+}
 
 # -- {.help} --------------------------------------------------------------
 
@@ -201,7 +220,7 @@ style_hyperlink <- function(text, url, params = NULL) {
 }
 
 #' @export
-#' @name style_hyperlink
+#' @rdname style_hyperlink
 #' @examples
 #' ansi_has_hyperlink_support()
 
@@ -269,4 +288,59 @@ ansi_has_hyperlink_support <- function() {
   }
 
   FALSE
+}
+
+
+#' @details
+#' `ansi_hyperlink_types()` checks if current `stdout()` supports various
+#' types of hyperlinks. It returns a list with entries `href`, `run`,
+#' `help` and `vignettes`.
+#'
+#' @rdname style_hyperlink
+#' @export
+
+ansi_hyperlink_types <- function() {
+
+  get_config <- function(x, default = NULL) {
+    opt <- getOption(paste0("cli.", tolower(x)))
+    if (!is.null(opt)) return(isTRUE(opt))
+
+    env <- Sys.getenv(paste0("R_CLI_", toupper(x)), NA_character_)
+    if (!is.na(env)) return(isTRUE(as.logical(env)))
+
+    default
+  }
+
+  rs <- rstudio_detect()
+  has <- ansi_has_hyperlink_support()
+
+  # they are on by default in RStudio, but not otherwise
+  run <- get_config("hyperlink_run", default = rs$hyperlink)
+  hlp <- get_config("hyperlink_help", default = rs$hyperlink)
+  vgn <- get_config("hyperlink_vignette", default = rs$hyperlink)
+
+  if (!has) {
+    list(
+      href = FALSE,
+      run = FALSE,
+      help = FALSE,
+      vignette = FALSE
+    )
+
+  } else if (rs$hyperlink) {
+    list(
+      href = TRUE,
+      run = structure(run, type = "rstudio"),
+      help = structure(hlp, type = "rstudio"),
+      vignette = structure(vgn, type = "rstudio")
+    )
+
+  } else {
+    list(
+      href = TRUE,
+      run = structure(run, type = "standard"),
+      help = structure(hlp, type = "standard"),
+      vignette = structure(vgn, type = "standard")
+    )
+  }
 }
