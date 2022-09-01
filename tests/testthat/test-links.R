@@ -168,6 +168,16 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
   })
 })
 
+test_that_cli(config = "plain", links = "all", "linked {.url}", {
+  expect_snapshot({
+    link <- c(
+      "https://cli.r-lib.org",
+      style_hyperlink("text", "https://cli.r-lib.org")
+    )
+    cli_text("{.url {link}}")
+  })
+})
+
 # -- {.vignette} ----------------------------------------------------------
 
 # TODO

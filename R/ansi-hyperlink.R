@@ -167,7 +167,10 @@ make_link_href <- function(txt) {
 # -- {.url} ---------------------------------------------------------------
 
 make_link_url <- function(txt) {
-  style_hyperlink(txt, txt)
+  linked <- grepl("\007|\033\\\\", txt)
+  if (all(linked)) return(txt)
+  txt[!linked] <- style_hyperlink(txt[!linked], txt[!linked])
+  txt
 }
 
 # -- {.vignette} ----------------------------------------------------------

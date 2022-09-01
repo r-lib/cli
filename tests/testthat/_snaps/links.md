@@ -924,3 +924,12 @@
       [3m[34m<]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;>[39m[23m, [3m[34m<]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;>[39m[23m, and
       [3m[34m<]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;>[39m[23m
 
+# linked {.url} [plain-all]
+
+    Code
+      link <- c("https://cli.r-lib.org", style_hyperlink("text",
+        "https://cli.r-lib.org"))
+      cli_text("{.url {link}}")
+    Message
+      <]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;> and <]8;;https://cli.r-lib.orgtext]8;;>
+
