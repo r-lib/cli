@@ -197,7 +197,8 @@ make_link_topic <- function(txt) {
     style_hyperlink(text = text, url = paste0(scheme, ":", url))
 
   } else {
-    ifelse(text == url, url, paste0(text, " (", url, ")"))
+    url2 <- vcapply(url, function(url1) format_inline("{.code ?{url1}}"))
+    ifelse(text == url, url2, paste0(text, " (", url2, ")"))
   }
 }
 

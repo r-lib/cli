@@ -178,7 +178,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
   expect_snapshot({
     topics <- paste0("pkg::topic", 1:3)
-    cli_text("{.help {topics}}")
+    cli_text("{.topic {topics}}")
   })
 })
 

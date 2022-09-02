@@ -910,19 +910,19 @@
     Code
       cli_text("{.topic pkg::topic}")
     Message
-      pkg::topic
+      `?pkg::topic`
     Code
       cli_text("{.topic [link text](pkg::topic)}")
     Message
-      link text (pkg::topic)
+      link text (`?pkg::topic`)
 
 ---
 
     Code
       topics <- paste0("pkg::topic", 1:3)
-      cli_text("{.help {topics}}")
+      cli_text("{.topic {topics}}")
     Message
-      `?pkg::topic1()`, `?pkg::topic2()`, and `?pkg::topic3()`
+      `?pkg::topic1`, `?pkg::topic2`, and `?pkg::topic3`
 
 # {.topic} [plain-all]
 
@@ -939,7 +939,7 @@
 
     Code
       topics <- paste0("pkg::topic", 1:3)
-      cli_text("{.help {topics}}")
+      cli_text("{.topic {topics}}")
     Message
       ]8;;x-r-help:pkg::topic1pkg::topic1]8;;, ]8;;x-r-help:pkg::topic2pkg::topic2]8;;, and ]8;;x-r-help:pkg::topic3pkg::topic3]8;;
 
