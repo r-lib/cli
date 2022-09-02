@@ -182,7 +182,24 @@ make_link_href <- function(txt) {
 
 # -- {.topic} -------------------------------------------------------------
 
-# TODO
+make_link_topic <- function(txt) {
+  mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
+  text <- ifelse(is.na(mch$text), txt, mch$text)
+  url <- ifelse(is.na(mch$url), txt, mch$url)
+
+  sprt <- ansi_hyperlink_types()$help
+  if (sprt) {
+    scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
+      "ide:help"
+    } else {
+      "x-r-help"
+    }
+    style_hyperlink(text = text, url = paste0(scheme, ":", url))
+
+  } else {
+    ifelse(text == url, url, paste0(text, " (", url, ")"))
+  }
+}
 
 # -- {.url} ---------------------------------------------------------------
 

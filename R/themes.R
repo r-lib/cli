@@ -222,6 +222,9 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.help = list(
       transform = function(x) make_link(x, type = "help")
     ),
+    span.topic = list(
+      transform = function(x) make_link(x, type = "topic")
+    ),
     span.var = theme_code_tick(dark),
     span.col = theme_code_tick(dark),
     span.str = list(fmt = encode_string),

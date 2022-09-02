@@ -168,7 +168,19 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
 # -- {.topic} -------------------------------------------------------------
 
-# TODO
+test_that_cli(config = "plain", links = c("all", "none"),
+              "{.topic}", {
+
+  expect_snapshot({
+    cli_text("{.topic pkg::topic}")
+    cli_text("{.topic [link text](pkg::topic)}")
+  })
+
+  expect_snapshot({
+    topics <- paste0("pkg::topic", 1:3)
+    cli_text("{.help {topics}}")
+  })
+})
 
 # -- {.url} ---------------------------------------------------------------
 

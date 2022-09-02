@@ -905,6 +905,44 @@
       <]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;>, <]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;>, and
       <]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;>
 
+# {.topic} [plain-none]
+
+    Code
+      cli_text("{.topic pkg::topic}")
+    Message
+      pkg::topic
+    Code
+      cli_text("{.topic [link text](pkg::topic)}")
+    Message
+      link text (pkg::topic)
+
+---
+
+    Code
+      topics <- paste0("pkg::topic", 1:3)
+      cli_text("{.help {topics}}")
+    Message
+      `?pkg::topic1()`, `?pkg::topic2()`, and `?pkg::topic3()`
+
+# {.topic} [plain-all]
+
+    Code
+      cli_text("{.topic pkg::topic}")
+    Message
+      ]8;;x-r-help:pkg::topicpkg::topic]8;;
+    Code
+      cli_text("{.topic [link text](pkg::topic)}")
+    Message
+      ]8;;x-r-help:pkg::topiclink text]8;;
+
+---
+
+    Code
+      topics <- paste0("pkg::topic", 1:3)
+      cli_text("{.help {topics}}")
+    Message
+      ]8;;x-r-help:pkg::topic1pkg::topic1]8;;, ]8;;x-r-help:pkg::topic2pkg::topic2]8;;, and ]8;;x-r-help:pkg::topic3pkg::topic3]8;;
+
 # {.url} [plain-none]
 
     Code
