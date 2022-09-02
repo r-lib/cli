@@ -819,6 +819,44 @@
     Message
       `pkg::func()`
 
+# {.help} [plain-none]
+
+    Code
+      cli_text("{.help pkg::fun}")
+    Message
+      `?pkg::fun()`
+    Code
+      cli_text("{.help [link text](pkg::fun)}")
+    Message
+      link text (`?pkg::fun()`)
+
+---
+
+    Code
+      funcs <- paste0("pkg::fun", 1:3)
+      cli_text("{.help {funcs}}")
+    Message
+      `?pkg::fun1()`, `?pkg::fun2()`, and `?pkg::fun3()`
+
+# {.help} [plain-all]
+
+    Code
+      cli_text("{.help pkg::fun}")
+    Message
+      ]8;;x-r-help:pkg::funpkg::fun]8;;
+    Code
+      cli_text("{.help [link text](pkg::fun)}")
+    Message
+      ]8;;x-r-help:pkg::funlink text]8;;
+
+---
+
+    Code
+      funcs <- paste0("pkg::fun", 1:3)
+      cli_text("{.help {funcs}}")
+    Message
+      ]8;;x-r-help:pkg::fun1pkg::fun1]8;;, ]8;;x-r-help:pkg::fun2pkg::fun2]8;;, and ]8;;x-r-help:pkg::fun3pkg::fun3]8;;
+
 # {.href} [plain-none]
 
     Code

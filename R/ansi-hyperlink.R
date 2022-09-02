@@ -136,7 +136,25 @@ make_link_fun <- function(txt) {
 
 # -- {.help} --------------------------------------------------------------
 
-# TODO
+make_link_help <- function(txt) {
+  mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
+  text <- ifelse(is.na(mch$text), txt, mch$text)
+  url <- ifelse(is.na(mch$url), txt, mch$url)
+
+  sprt <- ansi_hyperlink_types()$help
+  if (sprt) {
+    scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
+      "ide:help"
+    } else {
+      "x-r-help"
+    }
+    style_hyperlink(text = text, url = paste0(scheme, ":", url))
+
+  } else {
+    url2 <- vcapply(url, function(url1) format_inline("{.fun ?{url1}}"))
+    ifelse(text == url, url2, paste0(text, " (", url2, ")"))
+  }
+}
 
 # -- {.href} --------------------------------------------------------------
 

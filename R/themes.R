@@ -219,6 +219,9 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.href = list(
       transform = function(x) make_link(x, type = "href")
     ),
+    span.help = list(
+      transform = function(x) make_link(x, type = "help")
+    ),
     span.var = theme_code_tick(dark),
     span.col = theme_code_tick(dark),
     span.str = list(fmt = encode_string),

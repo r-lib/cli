@@ -129,7 +129,19 @@ test_that_cli(config = "plain", links = "all", "turning off help", {
 
 # -- {.help} --------------------------------------------------------------
 
-# TODO
+test_that_cli(config = "plain", links = c("all", "none"),
+              "{.help}", {
+
+  expect_snapshot({
+    cli_text("{.help pkg::fun}")
+    cli_text("{.help [link text](pkg::fun)}")
+  })
+
+  expect_snapshot({
+    funcs <- paste0("pkg::fun", 1:3)
+    cli_text("{.help {funcs}}")
+  })
+})
 
 # -- {.href} --------------------------------------------------------------
 
