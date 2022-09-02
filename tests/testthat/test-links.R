@@ -211,4 +211,16 @@ test_that_cli(config = "plain", links = "all", "linked {.url}", {
 
 # -- {.vignette} ----------------------------------------------------------
 
-# TODO
+test_that_cli(config = "plain", links = c("all", "none"),
+              "{.vignette}", {
+
+  expect_snapshot({
+    cli_text("{.vignette pkg::name}")
+    cli_text("{.vignette [link text](pkg::name)}")
+  })
+
+  expect_snapshot({
+    vignettes <- paste0("pkg::topic", 1:3)
+    cli_text("{.vignette {vignettes}}")
+  })
+})

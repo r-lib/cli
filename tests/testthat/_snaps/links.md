@@ -1016,3 +1016,41 @@
     Message
       <]8;;https://cli.r-lib.orghttps://cli.r-lib.org]8;;> and <]8;;https://cli.r-lib.orgtext]8;;>
 
+# {.vignette} [plain-none]
+
+    Code
+      cli_text("{.vignette pkg::name}")
+    Message
+      `vignette(pkg::name)`
+    Code
+      cli_text("{.vignette [link text](pkg::name)}")
+    Message
+      link text (`vignette(pkg::name)`)
+
+---
+
+    Code
+      vignettes <- paste0("pkg::topic", 1:3)
+      cli_text("{.vignette {vignettes}}")
+    Message
+      `vignette(pkg::topic1)`, `vignette(pkg::topic2)`, and `vignette(pkg::topic3)`
+
+# {.vignette} [plain-all]
+
+    Code
+      cli_text("{.vignette pkg::name}")
+    Message
+      ]8;;x-r-vignette:pkg::namepkg::name]8;;
+    Code
+      cli_text("{.vignette [link text](pkg::name)}")
+    Message
+      ]8;;x-r-vignette:pkg::namelink text]8;;
+
+---
+
+    Code
+      vignettes <- paste0("pkg::topic", 1:3)
+      cli_text("{.vignette {vignettes}}")
+    Message
+      ]8;;x-r-vignette:pkg::topic1pkg::topic1]8;;, ]8;;x-r-vignette:pkg::topic2pkg::topic2]8;;, and ]8;;x-r-vignette:pkg::topic3pkg::topic3]8;;
+
