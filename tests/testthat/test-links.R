@@ -164,7 +164,21 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
 # -- {.run} ---------------------------------------------------------------
 
-# TODO
+test_that_cli(config = "plain", links = c("all", "none"),
+              "{.run}", {
+  expect_snapshot({
+    cli_text("{.run pkg::fun(param)}")
+    cli_text("{.run [run(p1, p2)](pkg::fun(p1, p2, other = 'foo'))}")
+  })
+})
+
+test_that_cli(config = "plain", links = c("all", "none"),
+              "{.run} vectors", {
+  expect_snapshot({
+    codes <- paste0("pkg::fun", 1:3, "()")
+    cli_text("{.run {codes}}")
+  })
+})
 
 # -- {.topic} -------------------------------------------------------------
 

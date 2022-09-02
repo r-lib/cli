@@ -228,6 +228,9 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.vignette = list(
       transform = function(x) make_link(x, type = "vignette")
     ),
+    span.run = list(
+      transform = function(x) make_link(x, type = "run")
+    ),
     span.var = theme_code_tick(dark),
     span.col = theme_code_tick(dark),
     span.str = list(fmt = encode_string),

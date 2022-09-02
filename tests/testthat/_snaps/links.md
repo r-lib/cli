@@ -905,6 +905,44 @@
       <]8;;https://cli.r-lib.org/1https://cli.r-lib.org/1]8;;>, <]8;;https://cli.r-lib.org/2https://cli.r-lib.org/2]8;;>, and
       <]8;;https://cli.r-lib.org/3https://cli.r-lib.org/3]8;;>
 
+# {.run} [plain-none]
+
+    Code
+      cli_text("{.run pkg::fun(param)}")
+    Message
+      `pkg::fun(param)`
+    Code
+      cli_text("{.run [run(p1, p2)](pkg::fun(p1, p2, other = 'foo'))}")
+    Message
+      `run(p1, p2)`
+
+# {.run} [plain-all]
+
+    Code
+      cli_text("{.run pkg::fun(param)}")
+    Message
+      ]8;;x-r-run:pkg::fun(param)pkg::fun(param)]8;;
+    Code
+      cli_text("{.run [run(p1, p2)](pkg::fun(p1, p2, other = 'foo'))}")
+    Message
+      ]8;;x-r-run:pkg::fun(p1, p2, other = 'foo')run(p1, p2)]8;;
+
+# {.run} vectors [plain-none]
+
+    Code
+      codes <- paste0("pkg::fun", 1:3, "()")
+      cli_text("{.run {codes}}")
+    Message
+      `pkg::fun1()`, `pkg::fun2()`, and `pkg::fun3()`
+
+# {.run} vectors [plain-all]
+
+    Code
+      codes <- paste0("pkg::fun", 1:3, "()")
+      cli_text("{.run {codes}}")
+    Message
+      ]8;;x-r-run:pkg::fun1()pkg::fun1()]8;;, ]8;;x-r-run:pkg::fun2()pkg::fun2()]8;;, and ]8;;x-r-run:pkg::fun3()pkg::fun3()]8;;
+
 # {.topic} [plain-none]
 
     Code
