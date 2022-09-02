@@ -120,6 +120,13 @@ test_that_cli(config = "plain", links = c("all", "none"),
   })
 })
 
+test_that_cli(config = "plain", links = "all", "turning off help", {
+  withr::local_options(cli.hyperlink_help = FALSE)
+  expect_snapshot({
+    cli_text("{.fun pkg::func}")
+  })
+})
+
 # -- {.help} --------------------------------------------------------------
 
 # TODO

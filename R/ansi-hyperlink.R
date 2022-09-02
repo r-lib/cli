@@ -118,16 +118,18 @@ make_link_fun <- function(txt) {
   if (!any(todo)) return(txt)
 
   sprt <- ansi_hyperlink_types()$help
-  scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
-    "ide:help"
-  } else {
-    "x-r-help"
-  }
+  if (sprt) {
+    scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
+      "ide:help"
+    } else {
+      "x-r-help"
+    }
 
-  txt[todo] <- style_hyperlink(
-    text = txt[todo],
-    url = paste0(scheme, ":", txt[todo])
-  )
+    txt[todo] <- style_hyperlink(
+      text = txt[todo],
+      url = paste0(scheme, ":", txt[todo])
+    )
+  }
 
   txt
 }

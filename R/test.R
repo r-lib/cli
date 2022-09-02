@@ -107,7 +107,12 @@ test_that_cli <- function(desc, code,
         crayon = num_colors > 1,
         unicode = unicode
       )
-      withr::local_options(cli.hyperlink = links)
+      withr::local_options(
+        cli.hyperlink = links,
+        cli.hyperlink_help = links,
+        cli.hyperlink_run = links,
+        cli.hyperlink_vignette = links,
+      )
       code_
     }, c(conf, list(code_ = code)))
     desc2 <- paste0(desc, " [", conf$id, "]")

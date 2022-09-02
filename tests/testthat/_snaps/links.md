@@ -812,6 +812,13 @@
     Message
       `]8;;x-r-help:mypkg::myfun1mypkg::myfun1]8;;()`, `]8;;x-r-help:mypkg::myfun2mypkg::myfun2]8;;()`, and `]8;;x-r-help:mypkg::myfun3mypkg::myfun3]8;;()`
 
+# turning off help [plain-all]
+
+    Code
+      cli_text("{.fun pkg::func}")
+    Message
+      `pkg::func()`
+
 # {.href} [plain-none]
 
     Code
