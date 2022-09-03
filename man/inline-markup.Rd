@@ -64,34 +64,57 @@ The default theme defines the following inline classes:
 \item \code{dt} is used for the terms in a definition list (\code{\link[=cli_dl]{cli_dl()}}).
 \item \code{dd} is used for the descriptions in a definition list (\code{\link[=cli_dl]{cli_dl()}}).
 \item \code{email} for an email address.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
 \item \code{emph} for emphasized text.
 \item \code{envvar} for the name of an environment variable.
 \item \code{field} for a generic field, e.g. in a named list.
 \item \code{file} for a file name. If the terminal supports ANSI hyperlinks (e.g.
 RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 the file in RStudio or with the default app for the file type.
-\item \code{fun} for a function name.
-\item \code{href} creates a hyperlink, potentially with a link text. The first
-word is the URL (until the first space), and the rest is the link text.
-If the \code{.href} tag consists of a single substitution, which evaluates
-to a named vector, then the names are used as link texts.
+See \link{links} for more about cli hyperlinks.
+\item \code{fun} for a function name. If it is in the \code{package::function_name}
+form, and the the terminal supports ANSI hyperlinks (e.g. RStudio,
+iTerm2, etc.), then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
+\item \code{help} is a help page of a \emph{function}.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See \link{links} for more about cli hyperlinks.
+\item \code{href} creates a hyperlink, potentially with a link text.
 If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
 \item \code{key} for a keyboard key.
 \item \code{obj_type_friendly} formats the type of an R object in a readable way,
 and it should be used with \code{{}}, see an example below.
 \item \code{or} changes the string that separates the last two elements of
 collapsed vectors (see below) from "and" to "or".
-\item \code{path} for a path (essentially the same as \code{file}).
+\item \code{path} for a path (the same as \code{file} in the default theme).
 \item \code{pkg} for a package name.
+\item \code{run} is an R expression, that is potentially clickable if the terminal
+supports ANSI hyperlinks to runnable code (e.g. RStudio).
+It supports link text. See \link{links} for more about cli hyperlinks.
 \item \code{strong} for strong importance.
+\item \code{topic} is a help page of a \emph{ropic}.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See \link{links} for more about cli hyperlinks.
 \item \code{url} for a URL.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
 \item \code{type} formats the type of an R object in a readable way, and it
 should be used with \code{{}}, see an example below.
 \item \code{url} for a URL. If the terminal supports ANSI hyperlinks (e.g.
 RStudio, iTerm2, etc.), then cli creates a clickable link.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
+\item \code{vignette} is a vignette.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See \link{links} for more about cli hyperlinks.
 }
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ul <- cli_ul()
