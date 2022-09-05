@@ -11,5 +11,9 @@ vt_simulate <- function(output, width = 80L, height = 25L) {
     as.integer(height)
   )
 
-  vapply(screen, intToUtf8, character(1))
+  for (i in seq_along(screen)) {
+    screen[[i]][[1]] <- intToUtf8(screen[[i]][[1]])
+  }
+
+  screen
 }
