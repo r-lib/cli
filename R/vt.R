@@ -35,13 +35,13 @@
 #'
 #' @export
 
-vt_simulate <- function(output, width = 80L, height = 25L) {
+vt_output <- function(output, width = 80L, height = 25L) {
   if (is.character(output)) {
     output <- charToRaw(paste(output, collapse = ""))
   }
 
   res <- .Call(
-    clic_vt_simulate,
+    clic_vt_output,
     output,
     as.integer(width),
     as.integer(height)

@@ -431,7 +431,7 @@ void clic_vt_callback(vtparse_t *vt, vtparse_action_t action,
   }
 }
 
-SEXP clic_vt_simulate(SEXP bytes, SEXP width, SEXP height) {
+SEXP clic_vt_output(SEXP bytes, SEXP width, SEXP height) {
   int c_width = INTEGER(width)[0];
   int c_height = INTEGER(height)[0];
 
