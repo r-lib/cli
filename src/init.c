@@ -75,6 +75,8 @@ static const R_CallMethodDef callMethods[]  = {
   { "glue_",               (DL_FUNC) glue_,               5 },
   { "trim_",               (DL_FUNC) trim_,               1 },
 
+  { "clic_vt_simulate",    (DL_FUNC) clic_vt_simulate,    3 },
+
   { NULL, NULL, 0 }
 };
 
