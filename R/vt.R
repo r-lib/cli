@@ -26,6 +26,8 @@
 #' [base::charToRaw()].
 #' @param width Terminal width.
 #' @param height Terminal height.
+#' @return Data frame with columns `lineno`, `segmentno`, `segment`,
+#' `attributes`.
 #'
 #' @note
 #' This function is experimental, and the virtual temrinal API will
@@ -38,16 +40,38 @@ vt_simulate <- function(output, width = 80L, height = 25L) {
     output <- charToRaw(paste(output, collapse = ""))
   }
 
-  screen <- .Call(
+  res <- .Call(
     clic_vt_simulate,
     output,
     as.integer(width),
     as.integer(height)
   )
 
-  for (i in seq_along(screen)) {
-    screen[[i]][[1]] <- intToUtf8(screen[[i]][[1]])
-  }
+  df <- data.frame(
+    stringsAsFactors = FALSE,
+    lineno = integer(),
+    segmentno = integer(),
+    segment = character(),
+    attributes = character()
+  )
 
-  screen
+  segments <- lapply(seq_along(res$lines), function(i) {
+    line <- intToUtf8(res$lines[[i]])
+    attr <- res$attrs[[i]]
+    lgs <- rle(attr)
+    clgs <- cumsum(c(0, lgs$lengths))
+    segs <- mapply(clgs[-length(clgs)], clgs[-1], FUN = function(s, e) {
+      utf8_substr(line, s + 1, e)
+    })
+
+    data.frame(
+      stringsAsFactors = FALSE,
+      lineno = i,
+      segmentno = seq_along(segments),
+      segment = segs,
+      attributes = lgs$values
+    )
+  })
+
+  do.call(rbind, c(list(df), segments))
 }

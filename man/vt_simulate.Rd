@@ -15,6 +15,10 @@ collapsed (without a separater), and converted to a raw vector using
 
 \item{height}{Terminal height.}
 }
+\value{
+Data frame with columns \code{lineno}, \code{segmentno}, \code{segment},
+\code{attributes}.
+}
 \description{
 This is utility function that calculates the state of a VT-5xx screen
 after a certain set of output.

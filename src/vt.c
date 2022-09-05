@@ -156,8 +156,13 @@ int cli_term_pen_empty(struct pen *pen) {
     !pen->inverse;
 }
 
-SEXP cli_term_lines(struct terminal *term) {
-  SEXP res = PROTECT(Rf_allocVector(VECSXP, term->height));
+SEXP cli_term_state(struct terminal *term) {
+  const char *res_names[] = { "lines", "attrs", "cursor-x", "cursor-y", "" };
+  SEXP res = PROTECT(Rf_mkNamed(VECSXP, res_names));
+  SEXP lines = PROTECT(Rf_allocVector(VECSXP, term->height));
+  SEXP attrs = PROTECT(Rf_allocVector(VECSXP, term->height));
+  SET_VECTOR_ELT(res, 2, Rf_ScalarInteger(term->cursor_x));
+  SET_VECTOR_ELT(res, 3, Rf_ScalarInteger(term->cursor_y));
   int i, j, p;
 
   for (i = 0, p = 0; i < term->height; i++) {
@@ -172,14 +177,14 @@ SEXP cli_term_lines(struct terminal *term) {
       p++;
     }
 
-    SEXP resi = PROTECT(Rf_allocVector(VECSXP, 2));
-    SET_VECTOR_ELT(resi, 0, line);
-    SET_VECTOR_ELT(resi, 1, attr);
-    SET_VECTOR_ELT(res, i, resi);
-    UNPROTECT(3);
+    SET_VECTOR_ELT(lines, i, line);
+    SET_VECTOR_ELT(attrs, i, attr);
+    UNPROTECT(2);
   }
 
-  UNPROTECT(1);
+  SET_VECTOR_ELT(res, 0, lines);
+  SET_VECTOR_ELT(res, 1, attrs);
+  UNPROTECT(3);
   return res;
 }
 
@@ -441,5 +446,5 @@ SEXP clic_vt_simulate(SEXP bytes, SEXP width, SEXP height) {
   vt.user_data = &term;
   vtparse(&vt, RAW(bytes), LENGTH(bytes));
 
-  return cli_term_lines(&term);
+  return cli_term_state(&term);
 }
