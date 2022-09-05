@@ -408,15 +408,17 @@ void clic_vt_callback(vtparse_t *vt, vtparse_action_t action,
     break;
 
   case VTPARSE_ACTION_PRINT:
+    if (term->cursor_x == term->width) {
+      if (term->cursor_y == term->height - 1) {
+        cli_term_scroll_up(term);
+      } else {
+        term->cursor_y += 1;
+      }
+      term->cursor_x = 0;
+    }
     term->screen[CUR(term)].ch = ch;
     term->screen[CUR(term)].pen = term->pen;
     term->cursor_x += 1;
-    if (term->cursor_x == term->width) {
-      term->cursor_x = 0;
-      term->cursor_y += 1;
-      // TODO: scroll if needed. Or should we scrool at the next character
-      // only, so we can write at the bottom right corner?
-    }
     break;
 
   default:
