@@ -60,3 +60,15 @@ test_that_cli(config = "ansi", "ANSI SGR", {
     vt_output(style_inverse("I'm inverse"), width = 20, height = 2)
   )
 })
+
+test_that("hyperlinks", {
+  withr::local_options(cli.hyperlink = TRUE)
+  expect_snapshot({
+    link <- style_hyperlink("text", "url")
+    vt_output(c("pre ", st_from_bel(link), " post"), width = 20, height = 2)
+  })
+  expect_snapshot({
+    link <- style_hyperlink("text", "url", params = c("f" = "x", "g" = "y"))
+    vt_output(c("pre ", st_from_bel(link), " post"), width = 20, height = 2)
+  })
+})

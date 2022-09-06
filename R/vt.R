@@ -47,6 +47,10 @@ vt_output <- function(output, width = 80L, height = 25L) {
     as.integer(height)
   )
 
+  linksx <- vapply(res$links, intToUtf8, character(1))
+  links <- sub("^[^;]*;", "", linksx)
+  links_params <- sub(";[^;]*$", "", linksx)
+
   df <- data.frame(
     stringsAsFactors = FALSE,
     lineno = integer(),
@@ -64,12 +68,27 @@ vt_output <- function(output, width = 80L, height = 25L) {
       utf8_substr(line, s + 1, e)
     })
 
+    fg <- re_match(lgs$values, "fg:([0-9]+|#[0-9a-f]+);")[,1]
+    bg <- re_match(lgs$values, "bg:([0-9]+|#[0-9a-f]+);")[,1]
+    linkno <- as.integer(re_match(lgs$values, "link:([0-9]+);")[,1])
+    link <- links[linkno]
+    link_params <- links_params[linkno]
+
     data.frame(
       stringsAsFactors = FALSE,
       lineno = i,
       segmentno = seq_along(segments),
       segment = segs,
-      attributes = lgs$values
+      bold = grepl("bold;", lgs$values),
+      italic = grepl("italic;", lgs$values),
+      underline = grepl("underline;", lgs$values),
+      strikethrough = grepl("strikethrough;", lgs$values),
+      blink = grepl("blink;", lgs$values),
+      inverse = grepl("inverse;", lgs$values),
+      color= fg,
+      background_color = bg,
+      link = link,
+      link_params = link_params
     )
   })
 
