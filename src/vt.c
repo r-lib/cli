@@ -107,7 +107,7 @@ const char *cli_term_color_fg_to_string(struct color *col) {
     snprintf(buf, sizeof(buf), "fg:%d;", col->r);
 
   } else if (col->col == CLI_COL_RGB) {
-    snprintf(buf, sizeof(buf), "fg:#%x%x%x;", col->r, col->g, col->b);
+    snprintf(buf, sizeof(buf), "fg:#%02x%02x%02x;", col->r, col->g, col->b);
 
   } else if (col->col >= 30 && col->col <= 37) {
     snprintf(buf, sizeof(buf), "fg:%d;", col->col - 30);
@@ -128,7 +128,7 @@ const char *cli_term_color_bg_to_string(struct color *col) {
     snprintf(buf, sizeof(buf), "bg:%d;", col->r);
 
   } else if (col->col == CLI_COL_RGB) {
-    snprintf(buf, sizeof(buf), "bg:#%x%x%x;", col->r, col->g, col->b);
+    snprintf(buf, sizeof(buf), "bg:#%02x%02x%02x;", col->r, col->g, col->b);
 
   } else if (col->col >= 40 && col->col <= 47) {
     snprintf(buf, sizeof(buf), "bg:%d;", col->col - 40);
