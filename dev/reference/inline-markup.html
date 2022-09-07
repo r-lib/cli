@@ -116,23 +116,58 @@ text is emphasized:</p>
 <li><p><code>code</code> for a piece of code.</p></li>
 <li><p><code>dt</code> is used for the terms in a definition list (<code><a href="cli_dl.html">cli_dl()</a></code>).</p></li>
 <li><p><code>dd</code> is used for the descriptions in a definition list (<code><a href="cli_dl.html">cli_dl()</a></code>).</p></li>
-<li><p><code>email</code> for an email address.</p></li>
+<li><p><code>email</code> for an email address.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
 <li><p><code>emph</code> for emphasized text.</p></li>
 <li><p><code>envvar</code> for the name of an environment variable.</p></li>
 <li><p><code>field</code> for a generic field, e.g. in a named list.</p></li>
-<li><p><code>file</code> for a file name.</p></li>
-<li><p><code>fun</code> for a function name.</p></li>
+<li><p><code>file</code> for a file name. If the terminal supports ANSI hyperlinks (e.g.
+RStudio, iTerm2, etc.), then cli creates a clickable link that opens
+the file in RStudio or with the default app for the file type.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
+<li><p><code>fun</code> for a function name. If it is in the <code>package::function_name</code>
+form, and the the terminal supports ANSI hyperlinks (e.g. RStudio,
+iTerm2, etc.), then cli creates a clickable link.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
+<li><p><code>help</code> is a help page of a <em>function</em>.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
+<li><p><code>href</code> creates a hyperlink, potentially with a link text.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
 <li><p><code>key</code> for a keyboard key.</p></li>
 <li><p><code>obj_type_friendly</code> formats the type of an R object in a readable way,
 and it should be used with <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code>, see an example below.</p></li>
 <li><p><code>or</code> changes the string that separates the last two elements of
 collapsed vectors (see below) from "and" to "or".</p></li>
-<li><p><code>path</code> for a path (essentially the same as <code>file</code>).</p></li>
+<li><p><code>path</code> for a path (the same as <code>file</code> in the default theme).</p></li>
 <li><p><code>pkg</code> for a package name.</p></li>
+<li><p><code>run</code> is an R expression, that is potentially clickable if the terminal
+supports ANSI hyperlinks to runnable code (e.g. RStudio).
+It supports link text. See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
 <li><p><code>strong</code> for strong importance.</p></li>
-<li><p><code>url</code> for a URL.</p></li>
+<li><p><code>topic</code> is a help page of a <em>ropic</em>.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
+<li><p><code>url</code> for a URL.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
+<li><p><code>type</code> formats the type of an R object in a readable way, and it
+should be used with <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code>, see an example below.</p></li>
+<li><p><code>url</code> for a URL. If the terminal supports ANSI hyperlinks (e.g.
+RStudio, iTerm2, etc.), then cli creates a clickable link.</p></li>
 <li><p><code>var</code> for a variable name.</p></li>
 <li><p><code>val</code> for a generic "value".</p></li>
+<li><p><code>vignette</code> is a vignette.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See <a href="links.html">links</a> for more about cli hyperlinks.</p></li>
 </ul><p></p><div class="sourceCode r"><pre><code><span><span class="va">ul</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.emph Emphasized} text."</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"{.strong Strong} importance."</span><span class="op">)</span></span>
@@ -142,12 +177,12 @@ collapsed vectors (see below) from "and" to "or".</p></li>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"A keyboard key: press {.kbd ENTER}."</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"A file name: {.file /usr/bin/env}."</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"An email address: {.email bugs.bunny@acme.com}."</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"A URL: {.url https://acme.com}."</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"A URL: {.url https://example.com}."</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"An environment variable: {.envvar R_LIBS}."</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_li.html">cli_li</a></span><span class="op">(</span><span class="st">"`mtcars` is {.obj_type_friendly {mtcars}}"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_end.html">cli_end</a></span><span class="op">(</span><span class="va">ul</span><span class="op">)</span></span></code></pre><p></p></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><div class="sourceCode"><pre>
-#&gt; • <span style="font-style: italic;color: #DC322F;">Emphasized</span> text.                                                              
+#&gt; • <span style="font-style: italic;">Emphasized</span> text.                                                              
 #&gt; • <span style="font-weight: bold;">Strong</span> importance.                                                            
 #&gt; • A piece of code: `sum(a) / length(a)`.                                        
 #&gt; • A package name: <span style="color: #268BD2;">cli</span>.                                                          
@@ -155,7 +190,7 @@ collapsed vectors (see below) from "and" to "or".</p></li>
 #&gt; • A keyboard key: press <span style="color: #268BD2;">[ENTER]</span>.                                                
 #&gt; • A file name: <span style="color: #268BD2;">/usr/bin/env</span>.                                                    
 #&gt; • An email address: <span style="color: #268BD2;">bugs.bunny@acme.com</span>.                                        
-#&gt; • A URL: <span style="font-style: italic;color: #268BD2;">&lt;https://acme.com&gt;</span>.                                                    
+#&gt; • A URL: <span style="font-style: italic;color: #268BD2;">&lt;https://example.com&gt;</span>.                                                 
 #&gt; • An environment variable: `R_LIBS`.                                            
 #&gt; • `mtcars` is a data frame                                                      
 </pre></div></div>
