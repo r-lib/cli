@@ -108,6 +108,12 @@ static void clic__buffer_realloc(struct cli_buffer *buf, size_t size) {
 
 /* ---------------------------------------------------------------------- */
 
+static int clic__hyperlink_mode_posix() {
+  char *ev = getenv("R_CLI_HYPERLINK_MODE");
+  if (ev == NULL) return 0;
+  return !strcmp("posix", ev);
+}
+
 #define CLI_COL_256 254
 #define CLI_COL_RGB 255
 
@@ -356,8 +362,11 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
   }
 
   if (state->old.link_uri && state->new.link_uri != state->old.link_uri) {
-    EMITS("\033]8;;\007");
-    // EMITS("\033]8;;\033\\");
+    if (clic__hyperlink_mode_posix()) {
+      EMITS("\033]8;;\033\\");
+    } else {
+      EMITS("\033]8;;\007");
+    }
   }
 
   /* Opening tags in reverse order ------------------------------------- */
@@ -368,10 +377,16 @@ static void clic__state_update_buffer(struct cli_buffer *buffer,
     EMITP(state->new.link_param, state->new.link_uri);
     if (*(state->new.link_end) == '\007') {
       EMITP(state->new.link_uri, state->new.link_end);
+    } else if (*(state->new.link_end) == '\\' && *(state->new.link_end-1) == '\033') {
+      EMITP(state->new.link_uri, state->new.link_end - 1);
     } else {
       EMITP(state->new.link_uri, state->new.link_end - 1);
     }
-    EMITS("\007");
+    if (clic__hyperlink_mode_posix()) {
+      EMITS("\033\\");
+    } else {
+      EMITS("\007");
+    }
   }
 
   if (state->new.bold > state->old.bold) {
@@ -844,6 +859,8 @@ static void clic__html_start(struct html_data *data) {
     EMITS("<a class=\"ansi-link\" href=\"");
     if (*(state->new.link_end) == '\007') {
       EMITP(state->new.link_uri, state->new.link_end);
+    } else if (*(state->new.link_end) == '\\' && *(state->new.link_end-1) == '\033') {
+      EMITP(state->new.link_uri, state->new.link_end - 1);
     } else {
       EMITP(state->new.link_uri, state->new.link_end - 1);
     }

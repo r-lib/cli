@@ -64,22 +64,57 @@ The default theme defines the following inline classes:
 \item \code{dt} is used for the terms in a definition list (\code{\link[=cli_dl]{cli_dl()}}).
 \item \code{dd} is used for the descriptions in a definition list (\code{\link[=cli_dl]{cli_dl()}}).
 \item \code{email} for an email address.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
 \item \code{emph} for emphasized text.
 \item \code{envvar} for the name of an environment variable.
 \item \code{field} for a generic field, e.g. in a named list.
-\item \code{file} for a file name.
-\item \code{fun} for a function name.
+\item \code{file} for a file name. If the terminal supports ANSI hyperlinks (e.g.
+RStudio, iTerm2, etc.), then cli creates a clickable link that opens
+the file in RStudio or with the default app for the file type.
+See \link{links} for more about cli hyperlinks.
+\item \code{fun} for a function name. If it is in the \code{package::function_name}
+form, and the the terminal supports ANSI hyperlinks (e.g. RStudio,
+iTerm2, etc.), then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
+\item \code{help} is a help page of a \emph{function}.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See \link{links} for more about cli hyperlinks.
+\item \code{href} creates a hyperlink, potentially with a link text.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
 \item \code{key} for a keyboard key.
 \item \code{obj_type_friendly} formats the type of an R object in a readable way,
 and it should be used with \code{{}}, see an example below.
 \item \code{or} changes the string that separates the last two elements of
 collapsed vectors (see below) from "and" to "or".
-\item \code{path} for a path (essentially the same as \code{file}).
+\item \code{path} for a path (the same as \code{file} in the default theme).
 \item \code{pkg} for a package name.
+\item \code{run} is an R expression, that is potentially clickable if the terminal
+supports ANSI hyperlinks to runnable code (e.g. RStudio).
+It supports link text. See \link{links} for more about cli hyperlinks.
 \item \code{strong} for strong importance.
+\item \code{topic} is a help page of a \emph{ropic}.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See \link{links} for more about cli hyperlinks.
 \item \code{url} for a URL.
+If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
+\item \code{type} formats the type of an R object in a readable way, and it
+should be used with \code{{}}, see an example below.
+\item \code{url} for a URL. If the terminal supports ANSI hyperlinks (e.g.
+RStudio, iTerm2, etc.), then cli creates a clickable link.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
+\item \code{vignette} is a vignette.
+If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+then cli creates a clickable link. It supports link text.
+See \link{links} for more about cli hyperlinks.
 }
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ul <- cli_ul()
@@ -91,13 +126,13 @@ cli_li("A function name: \{.fn cli_text\}.")
 cli_li("A keyboard key: press \{.kbd ENTER\}.")
 cli_li("A file name: \{.file /usr/bin/env\}.")
 cli_li("An email address: \{.email bugs.bunny@acme.com\}.")
-cli_li("A URL: \{.url https://acme.com\}.")
+cli_li("A URL: \{.url https://example.com\}.")
 cli_li("An environment variable: \{.envvar R_LIBS\}.")
 cli_li("`mtcars` is \{.obj_type_friendly \{mtcars\}\}")
 cli_end(ul)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> • <span style="font-style: italic;color: #DC322F;">Emphasized</span> text.                                                              
+#> • <span style="font-style: italic;">Emphasized</span> text.                                                              
 #> • <span style="font-weight: bold;">Strong</span> importance.                                                            
 #> • A piece of code: `sum(a) / length(a)`.                                        
 #> • A package name: <span style="color: #268BD2;">cli</span>.                                                          
@@ -105,7 +140,7 @@ cli_end(ul)
 #> • A keyboard key: press <span style="color: #268BD2;">[ENTER]</span>.                                                
 #> • A file name: <span style="color: #268BD2;">/usr/bin/env</span>.                                                    
 #> • An email address: <span style="color: #268BD2;">bugs.bunny@acme.com</span>.                                        
-#> • A URL: <span style="font-style: italic;color: #268BD2;">&lt;https://acme.com&gt;</span>.                                                    
+#> • A URL: <span style="font-style: italic;color: #268BD2;">&lt;https://example.com&gt;</span>.                                                 
 #> • An environment variable: `R_LIBS`.                                            
 #> • `mtcars` is a data frame                                                      
 </pre></div>

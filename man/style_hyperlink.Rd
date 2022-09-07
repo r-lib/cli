@@ -3,11 +3,14 @@
 \name{style_hyperlink}
 \alias{style_hyperlink}
 \alias{ansi_has_hyperlink_support}
+\alias{ansi_hyperlink_types}
 \title{Terminal Hyperlinks}
 \usage{
 style_hyperlink(text, url, params = NULL)
 
 ansi_has_hyperlink_support()
+
+ansi_hyperlink_types()
 }
 \arguments{
 \item{text}{Text to show. \code{text} and \code{url} are recycled to match their
@@ -33,6 +36,10 @@ supports hyperlinks.
 
 See also
 \url{https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda}.
+
+\code{ansi_hyperlink_types()} checks if current \code{stdout()} supports various
+types of hyperlinks. It returns a list with entries \code{href}, \code{run},
+\code{help} and \code{vignettes}.
 }
 \examples{
 cat("This is an", style_hyperlink("R", "https://r-project.org"), "link.\n")

@@ -12,6 +12,14 @@ cli environment variables and options
 These are environment variables and options that uses may set, to modify
 the behavior of cli.
 \subsection{User facing environment variables}{
+\subsection{\code{R_CLI_HYPERLINK_MODE}}{
+
+Set to \code{posix} to force generating POSIX compatible ANSI hyperlinks.
+If not set, then RStudio compatible links are generated. This is a
+temporary crutch until RStudio handles POSIX hyperlinks correctly, and
+after that it will be removed.
+}
+
 \subsection{\code{NO_COLOR}}{
 
 Set to a nonempty value to turn off ANSI colors.
