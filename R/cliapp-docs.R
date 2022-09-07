@@ -443,7 +443,6 @@ NULL
 #'
 #' Examples:
 #' ```{asciicast links-url}
-#' #| R.options = list(cli.hyperlink = TRUE)
 #' cli_text(
 #'   "See the cli homepage at {.url https://cli.r-lib.org} for details."
 #' )
@@ -452,15 +451,27 @@ NULL
 #'
 #' @section Files:
 #'
+#' TODO
+#' 
 #' @section Functions, help topics and vignettes:
 #'
+#' TODO
+#' 
 #' @section Click to run code:
 #'
+#' TODO
+#' 
 #' @section Link text:
 #'
+#' TODO
+#' 
 #' @section Vectorization:
 #'
+#' TODO
+#' 
 #' @section Custom links:
 #'
+#' TODO
+#' 
 #' @name links
 NULL

@@ -43,32 +43,44 @@ Examples:
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> See the cli homepage at <span style="font-style: italic;;color: #268BD2">&lt;https://cli.r-lib.org&gt;</span> for details.                    
+#> See the cli homepage at <span style="font-style: italic;color: #268BD2;">&lt;</span><span style="font-style: italic;color: #268BD2;"><a href="https://cli.r-lib.org">https://cli.r-lib.org</a></span><span style="font-style: italic;color: #268BD2;">&gt;</span> for details.                    
 </pre></div>
 }}
 }
 
 \section{Files}{
 
+
+TODO
 }
 
 \section{Functions, help topics and vignettes}{
 
+
+TODO
 }
 
 \section{Click to run code}{
 
+
+TODO
 }
 
 \section{Link text}{
 
+
+TODO
 }
 
 \section{Vectorization}{
 
+
+TODO
 }
 
 \section{Custom links}{
 
+
+TODO
 }
 

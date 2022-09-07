@@ -135,12 +135,12 @@ cli_end(ul)
 #> • <span style="font-style: italic;">Emphasized</span> text.                                                              
 #> • <span style="font-weight: bold;">Strong</span> importance.                                                            
 #> • A piece of code: `sum(a) / length(a)`.                                        
-#> • A package name: <span style="color: #268BD2">cli</span>.                                                          
+#> • A package name: <span style="color: #268BD2;">cli</span>.                                                          
 #> • A function name: `cli_text()`.                                                
-#> • A keyboard key: press <span style="color: #268BD2">[ENTER]</span>.                                                
-#> • A file name: <span style="color: #268BD2">/usr/bin/env</span>.                                                    
-#> • An email address: <span style="color: #268BD2">bugs.bunny@acme.com</span>.                                        
-#> • A URL: <span style="font-style: italic;;color: #268BD2">&lt;https://example.com&gt;</span>.                                                 
+#> • A keyboard key: press <span style="color: #268BD2;">[ENTER]</span>.                                                
+#> • A file name: <span style="color: #268BD2;">/usr/bin/env</span>.                                                    
+#> • An email address: <span style="color: #268BD2;">bugs.bunny@acme.com</span>.                                        
+#> • A URL: <span style="font-style: italic;color: #268BD2;">&lt;https://example.com&gt;</span>.                                                 
 #> • An environment variable: `R_LIBS`.                                            
 #> • `mtcars` is a data frame                                                      
 </pre></div>
