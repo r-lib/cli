@@ -44,7 +44,7 @@ cli_blockquote(evil, citation = "Donald Ervin Knuth")
 #>     <span style="font-style: italic;">places and at the wrong times; premature optimization</span>                       
 #>     <span style="font-style: italic;">is the root of all evil (or at least most of it) in</span>                         
 #>     <span style="font-style: italic;">programming.”</span>                                                               
-#>     <span style="font-weight: bold;;font-style: italic;">— Donald Ervin Knuth</span>                                                        
+#>     <span style="font-weight: bold;font-style: italic;">— Donald Ervin Knuth</span>                                                        
 #>                                                                                 
 </pre></div>
 }}

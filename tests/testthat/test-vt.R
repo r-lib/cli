@@ -72,3 +72,40 @@ test_that("hyperlinks", {
     vt_output(c("pre ", st_from_bel(link), " post"), width = 20, height = 2)
   })
 })
+
+test_that("erase in line", {
+  expect_snapshot({
+    vt_output("foobar\033[3D\033[K", width = 10, height = 2)$segment
+    vt_output("foobar\033[3D\033[0K", width = 10, height = 2)$segment
+    vt_output("foobar\033[3D\033[1K", width = 10, height = 2)$segment
+    vt_output("foobar\033[3D\033[2K", width = 10, height = 2)$segment
+  })
+})
+
+test_that("erase in screen", {
+  expect_snapshot({
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[J", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[0J", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[1J", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[2Jx", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[3Jx", width = 10, height = 4)$segment
+  })
+})
+
+test_that("colors", {
+  expect_equal(vt_output("\033[30mcolored\033[39m")$color[1], "0")
+  expect_equal(vt_output("\033[37mcolored\033[39m")$color[1], "7")
+  expect_equal(vt_output("\033[90mcolored\033[39m")$color[1], "8")
+  expect_equal(vt_output("\033[97mcolored\033[39m")$color[1], "15")
+
+  expect_equal(vt_output("\033[40mcolored\033[39m")$background_color[1], "0")
+  expect_equal(vt_output("\033[47mcolored\033[39m")$background_color[1], "7")
+  expect_equal(vt_output("\033[100mcolored\033[39m")$background_color[1], "8")
+  expect_equal(vt_output("\033[107mcolored\033[39m")$background_color[1], "15")
+
+  expect_equal(vt_output("\033[38;5;100mcolored\033[39m")$color[1], "100")
+  expect_equal(vt_output("\033[48;5;110mcolored\033[39m")$background_color[1], "110")
+
+  expect_equal(vt_output("\033[38;2;1;2;3mcolored\033[39m")$color[1], "#010203")
+  expect_equal(vt_output("\033[48;2;4;5;6mcolored\033[39m")$background_color[1], "#040506")
+})

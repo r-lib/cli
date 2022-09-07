@@ -171,3 +171,50 @@
       3 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
       4 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
 
+# erase in line
+
+    Code
+      vt_output("foobar\033[3D\033[K", width = 10, height = 2)$segment
+    Output
+      [1] "foo       " "          "
+    Code
+      vt_output("foobar\033[3D\033[0K", width = 10, height = 2)$segment
+    Output
+      [1] "foo       " "          "
+    Code
+      vt_output("foobar\033[3D\033[1K", width = 10, height = 2)$segment
+    Output
+      [1] "    ar    " "          "
+    Code
+      vt_output("foobar\033[3D\033[2K", width = 10, height = 2)$segment
+    Output
+      [1] "          " "          "
+
+# erase in screen
+
+    Code
+      vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[J", width = 10, height = 4)$
+        segment
+    Output
+      [1] "foo       " "foo       " "          " "          "
+    Code
+      vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[0J", width = 10, height = 4)$
+        segment
+    Output
+      [1] "foo       " "foo       " "          " "          "
+    Code
+      vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[1J", width = 10, height = 4)$
+        segment
+    Output
+      [1] "          " "    ar    " "foobar2   " "          "
+    Code
+      vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[2Jx", width = 10, height = 4)$
+        segment
+    Output
+      [1] "          " "   x      " "          " "          "
+    Code
+      vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[3Jx", width = 10, height = 4)$
+        segment
+    Output
+      [1] "          " "   x      " "          " "          "
+

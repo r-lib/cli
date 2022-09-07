@@ -56,7 +56,7 @@ You can use \link[=inline-markup]{inline markup}, as usual.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("The \{.fn cli_text\} function in the \{.pkg cli\} package.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> The `cli_text()` function in the <span style="color: #268BD2">cli</span> package.                                   
+#> The `cli_text()` function in the <span style="color: #268BD2;">cli</span> package.                                   
 </pre></div>
 }}
 
@@ -86,7 +86,7 @@ pkg <- "cli"
 cli_text("The \{.fn \{fun\}\} function in the \{.pkg \{pkg\}\} package.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> The `cli-text()` function in the <span style="color: #268BD2">cli</span> package.                                   
+#> The `cli-text()` function in the <span style="color: #268BD2;">cli</span> package.                                   
 </pre></div>
 }}
 

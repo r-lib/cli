@@ -116,7 +116,7 @@ data$label[roots] <- col_cyan(style_italic(data$label[roots]))
 tree(data, root = "rcmdcheck")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="font-style: italic;;color: #2AA198">rcmdcheck (1.2.1.9002)</span>                                                          
+#> <span style="font-style: italic;color: #2AA198;">rcmdcheck (1.2.1.9002)</span>                                                          
 #> ├─callr (1.0.0.9000)                                                            
 #> │ ├─processx (2.0.0.1)                                                          
 #> │ │ ├─assertthat (0.2.0)                                                        

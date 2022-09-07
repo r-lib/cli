@@ -37,7 +37,7 @@ boxx(astr)
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> ┌────────────────────────────────────┐                                          
 #> │                                    │                                          
-#> │   <span style="color: #DC322F">This is red</span>                      │                                          
+#> │   <span style="color: #DC322F;">This is red</span>                      │                                          
 #> │   <span style="font-weight: bold;">This is bold</span>                     │                                          
 #> │                                    │                                          
 #> └────────────────────────────────────┘                                          
@@ -55,7 +55,7 @@ boxx(astr)
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> ┌────────────────────────────────────┐                                          
 #> │                                    │                                          
-#> │             <span style="color: #DC322F">This is red</span>            │                                          
+#> │             <span style="color: #DC322F;">This is red</span>            │                                          
 #> │            <span style="font-weight: bold;">This is bold</span>            │                                          
 #> │                                    │                                          
 #> └────────────────────────────────────┘                                          
@@ -73,7 +73,7 @@ boxx(astr)
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> ┌────────────────────────────────────┐                                          
 #> │                                    │                                          
-#> │                      <span style="color: #DC322F">This is red</span>   │                                          
+#> │                      <span style="color: #DC322F;">This is red</span>   │                                          
 #> │                     <span style="font-weight: bold;">This is bold</span>   │                                          
 #> │                                    │                                          
 #> └────────────────────────────────────┘                                          

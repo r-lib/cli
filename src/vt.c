@@ -63,17 +63,19 @@ struct terminal {
   int linkdataptr;
 };
 
-void cli_term_clear_line(struct terminal *term, int line) {
+void cli_term_clear_cells(struct terminal *term, int beg, int end) {
   memset(
-    term->screen + line * term->width,
+    term->screen + beg,
     0,
-    sizeof(struct cell) * term->width
+    sizeof(struct cell) * (end - beg)
   );
-  int i, from = term->width * line;
-  int to = from + term->width;
-  for (i = from; i < to; i++) {
-    term->screen[i].ch = ' ';
+  for (; beg <= end; beg++) {
+    term->screen[beg].ch = ' ';
   }
+}
+
+void cli_term_clear_line(struct terminal *term, int line) {
+  cli_term_clear_cells(term, POS(term, 0, line), POS(term, 0, line + 1) - 1);
 }
 
 void cli_term_clear_screen(struct terminal *term) {
@@ -244,6 +246,10 @@ void cli_term_scroll_up(struct terminal *term) {
   cli_term_clear_line(term, term->height - 1);
 }
 
+void cli_term_move_cursor_rel_col(struct terminal *term, int n) {
+  // TODO
+}
+
 void cli_term_move_cursor_down(struct terminal *term) {
   if (term->cursor_y == term->height - 1) {
     cli_term_scroll_up(term);
@@ -254,20 +260,240 @@ void cli_term_move_cursor_down(struct terminal *term) {
 }
 
 void cli_term_execute(struct terminal *term, int ch) {
-  // TODO: rest
   switch (ch) {
 
-  case '\n':
+  case 0x08: // bs
+    cli_term_move_cursor_rel_col(term, -1);
+    break;
+
+  case 0x09: // ht
+    // TODO: tab support (to next tab)
+    break;
+
+  case 0x0a: // nl
+  case 0x0b: // vt
+  case 0x0c: // np
+  case 0x84: //
+  case 0x85: // nel
     cli_term_move_cursor_down(term);
     break;
 
-  case '\r':
+  case 0x0d: // cr
     term->cursor_x = 0;
+    break;
+
+  case 0x0e: // so
+    // TODO: charset support
+    break;
+
+  case 0x0f: // si
+    // TODO: charset support
+    break;
+
+  case 0x88: // hts
+    // TODO: tab support (set tab)
+    break;
+
+  case 0x8d: // ri
+    // TODO: ???
     break;
 
   default:
     break;
   }
+}
+
+int cli_term_get_param(vtparse_t *vt, int which, int dflt) {
+  if (vt->num_params <= which) return dflt;
+  return vt->params[which];
+}
+
+// See also https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
+
+// '@' insert character, insert n spaces (MS)
+void cli_term_execute_ich(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+// 'A' cursor up (n), no effect if at edge
+void cli_term_execute_cuu(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_y -= n;
+  if (term->cursor_y < 0) term->cursor_y = 0;
+}
+
+// 'B' cursor down (n), no effect if at edge
+void cli_term_execute_cud(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_y += n;
+  if (term->cursor_y >= term->height) term->cursor_y = term->height - 1;
+}
+
+// 'C' cursor forward (n), no effect if at edge
+void  cli_term_execute_cuf(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_x += n;
+  if (term->cursor_x >= term->width) term->cursor_x = term->width - 1;
+}
+
+// 'D' cursor back (n), no effect if at edge
+void cli_term_execute_cub(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_x -= n;
+  if (term->cursor_x < 0) term->cursor_x = 0;
+}
+
+// 'E' cursor next line (n)
+void cli_term_execute_cnl(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_x = 0;
+  term->cursor_y += n;
+  if (term->cursor_y >= term->height) term->cursor_y = term->height - 1;
+}
+
+// 'F' cursor previous line (n)
+void cli_term_execute_cpl(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_x = 0;
+  term->cursor_y -= n;
+  if (term->cursor_y < 0) term->cursor_y = 0;
+}
+
+// 'G' cursor horizontal absolute (n)
+void cli_term_execute_cha(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  term->cursor_x = n - 1;
+  if (term->cursor_x < 0) term->cursor_x = 0;
+  if (term->cursor_x >= term->width) term->cursor_x = term->width -1;
+}
+
+// 'H' cursor position (n,m)
+void cli_term_execute_cup(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 1);
+  int m = cli_term_get_param(vt, 1, 1);
+  term->cursor_y = n - 1;
+  term->cursor_x = m - 1;
+  if (term->cursor_x < 0) term->cursor_x = 0;
+  if (term->cursor_x >= term->width) term->cursor_x = term->width -1;
+  if (term->cursor_y < 0) term->cursor_y = 0;
+  if (term->cursor_y >= term->height) term->cursor_y = term->height - 1;
+}
+
+// 'I' cursor horizontal (forward) tab (n) (MS)
+void cli_term_execute_cht(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+// 'J' erase in display (n)
+void cli_term_execute_ed(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 0);
+  int cur = CUR(term);
+  int disp_beg = 0;
+  int disp_end = (term->width) * (term->height) - 1;
+  int del_beg = disp_beg;
+  int del_end = disp_end;
+  switch (n) {
+  case 0:
+    // cursor to end of screen
+    del_beg = cur;
+    break;
+  case 1:
+    // beginning of screen to cursor
+    del_end = cur;
+    break;
+  case 2:
+    // clear screen
+  case 3:
+    // clear screen + scrollback buffer, but we don't have scrollback
+    // buffer yet, so it is the same for now
+    // ANSI.SYS moves the cursor, but Unix terminals don't, so we don't
+    break;
+  default:
+    break;
+  }
+  cli_term_clear_cells(term, del_beg, del_end);
+}
+
+// 'K' erase in line (n)
+void cli_term_execute_el(vtparse_t *vt, struct terminal *term) {
+  int n = cli_term_get_param(vt, 0, 0);
+  int cur = CUR(term);
+  int line_beg = POS(term, 0, term->cursor_y);
+  int line_end = POS(term, 0, term->cursor_y + 1) - 1;
+  int del_beg = line_beg;
+  int del_end = line_end;
+  switch (n) {
+  case 0:
+    // cursor (inclusive) to end of line
+    del_beg = cur;
+    break;
+  case 1:
+    // beginning of line to cursor (inclusive (!))
+    del_end = cur;
+    break;
+  case 2:
+    // entire line
+    break;
+  default:
+    break;
+  }
+  cli_term_clear_cells(term, del_beg, del_end);
+}
+
+// insert line (n) (MS)
+void cli_term_execute_il(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+// delete line (n) (MS)
+void cli_term_execute_dl(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+// delete character (MS)
+void cli_term_execute_dch(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+// scroll up (n)
+void cli_term_execute_su(vtparse_t *vt, struct terminal *term) {
+  // TODO: scroll support
+}
+
+// scrool down (n)
+void cli_term_execute_sd(vtparse_t *vt, struct terminal *term) {
+  // TODO: scroll support
+}
+
+void cli_term_execute_ctc(vtparse_t *vt, struct terminal *term) {
+  // TODO: ???
+}
+
+// erase character (MS)
+void cli_term_execute_ech(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+// cursor backwards tab (n) MS
+void cli_term_execute_cbt(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+void cli_term_execute_rep(vtparse_t *vt, struct terminal *term) {
+  // TODO: ???
+}
+
+// vertical line position absolute (n) (MS)
+void cli_term_execute_vpa(vtparse_t *vt, struct terminal *term) {
+  // TODO: should we support MS?
+}
+
+void cli_term_execute_sm(vtparse_t *vt, struct terminal *term) {
+  // TODO: ???
+}
+
+void cli_term_execute_rm(vtparse_t *vt, struct terminal *term) {
+  // TODO: ???
 }
 
 void cli_term_execute_sgr(vtparse_t *vt, struct terminal *term) {
@@ -349,6 +575,14 @@ void cli_term_execute_sgr(vtparse_t *vt, struct terminal *term) {
     case 35:
     case 36:
     case 37:
+    case 90:
+    case 91:
+    case 92:
+    case 93:
+    case 94:
+    case 95:
+    case 96:
+    case 97:
       term->pen.fg.col = param;
       i++;
       break;
@@ -390,6 +624,14 @@ void cli_term_execute_sgr(vtparse_t *vt, struct terminal *term) {
     case 45:
     case 46:
     case 47:
+    case 100:
+    case 101:
+    case 102:
+    case 103:
+    case 104:
+    case 105:
+    case 106:
+    case 107:
       term->pen.bg.col = param;
       i++;
       break;
@@ -430,13 +672,138 @@ void cli_term_execute_sgr(vtparse_t *vt, struct terminal *term) {
   }
 }
 
+// 'r'
+void cli_term_execute_decstbm(vtparse_t *vt, struct terminal *term) {
+  // TODO: ???
+}
+
 void cli_term_csi_dispatch(vtparse_t *vt, struct terminal *term,
                            CHARTYPE ch) {
   // TODO: check intermediates for Dec stuff
   // TODO: rest
   switch (ch) {
+  case '@':
+    cli_term_execute_ich(vt, term);
+    break;
+
+  case 'A':
+    cli_term_execute_cuu(vt, term);
+    break;
+
+  case 'B':
+    cli_term_execute_cud(vt, term);
+    break;
+
+  case 'C':
+    cli_term_execute_cuf(vt, term);
+    break;
+
+  case 'D':
+    cli_term_execute_cub(vt, term);
+    break;
+
+  case 'E':
+    cli_term_execute_cnl(vt, term);
+    break;
+
+  case 'F':
+    cli_term_execute_cpl(vt, term);
+    break;
+
+  case 'G':
+    cli_term_execute_cha(vt, term);
+    break;
+
+  case 'H':
+    cli_term_execute_cup(vt, term);
+    break;
+
+  case 'I':
+    cli_term_execute_cht(vt, term);
+    break;
+
+  case 'J':
+    cli_term_execute_ed(vt, term);
+    break;
+
+  case 'K':
+    cli_term_execute_el(vt, term);
+    break;
+
+  case 'L':
+    cli_term_execute_il(vt, term);
+    break;
+
+  case 'M':
+    cli_term_execute_dl(vt, term);
+    break;
+
+  case 'P':
+    cli_term_execute_dch(vt, term);
+    break;
+
+  case 'S':
+    cli_term_execute_su(vt, term);
+    break;
+
+  case 'T':
+    cli_term_execute_sd(vt, term);
+    break;
+
+  case 'W':
+    cli_term_execute_ctc(vt, term);
+    break;
+
+  case 'X':
+    cli_term_execute_ech(vt, term);
+    break;
+
+  case 'Z':
+    cli_term_execute_cbt(vt, term);
+    break;
+
+  case ' ':
+    cli_term_execute_cha(vt, term);
+    break;
+
+  case 'a':
+    cli_term_execute_cuf(vt, term);
+    break;
+
+  case 'b':
+    cli_term_execute_rep(vt, term);
+    break;
+
+  case 'd':
+    cli_term_execute_vpa(vt, term);
+    break;
+
+  case 'e':
+    cli_term_execute_cuu(vt, term);
+    break;
+
+  case 'f':
+    cli_term_execute_cbt(vt, term);
+    break;
+
+  case 'g':
+    cli_term_execute_cup(vt, term);
+    break;
+
+  case 'h':
+    cli_term_execute_sm(vt, term);
+    break;
+
+  case 'l':
+    cli_term_execute_rm(vt, term);
+    break;
+
   case 'm':
     cli_term_execute_sgr(vt, term);
+    break;
+
+  case 'r':
+    cli_term_execute_decstbm(vt, term);
     break;
 
   default:
