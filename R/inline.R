@@ -246,9 +246,23 @@ make_cmd_transformer <- function(values) {
   values$postprocess <- FALSE
   values$pmarkers <- list()
 
+  # These are common because of purrr's default argument names, so we
+  # hardcode them es exceptions. They are in packages
+  # crossmap, crosstable, rstudio.prefs, rxode2, starter.
+  # rxode2 has the other ones, and we should fix that in rxode2
+  # the function calls are in the oolong packagee, need to fix this as well.
+  exceptions <- c(
+    ".x", ".y", ".",
+    ".md", ".met", ".med", ".mul", ".muR", ".dir", ".muU",
+    ".sym_flip(bool_word)", ".sym_flip(bool_topic)", ".sym_flip(bool_wsi)"
+  )
+
   function(code, envir) {
     res <- tryCatch({
-      if (substr(code, 1, 1) == ".") stop("style")
+      if (substr(code, 1, 1) == "." &&
+          ! code %in% exceptions) {
+        stop("style")
+      }
       expr <- parse(text = code, keep.source = FALSE)
       eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
     }, error = function(e) e)
