@@ -110,7 +110,7 @@ rule(line = "bar5")
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = "TITLE", line = col_blue("~-"))
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #268BD2">~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span> TITLE <span style="color: #268BD2">~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~</span>          
+#> <span style="color: #268BD2;">~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-</span> TITLE <span style="color: #268BD2;">~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~</span>          
 </pre></div>
 }}
 
@@ -121,7 +121,7 @@ rule(line = "bar5")
   line_col = "orange")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #ff9900">▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</span> <span style="background-color: #DC322F"> ★TITLE★ </span> <span style="color: #ff9900">▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</span>          
+#> <span style="color: #ff9900;">▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</span> <span style="background-color: #DC322F;"> ★TITLE★ </span> <span style="color: #ff9900;">▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂</span>          
 </pre></div>
 }}
 
@@ -156,7 +156,7 @@ rule(line = "bar5")
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = col_red(" * RESULTS * "))
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> ──────────────────────────── <span style="color: #DC322F"> * RESULTS * </span> ───────────────────────────          
+#> ──────────────────────────── <span style="color: #DC322F;"> * RESULTS * </span> ───────────────────────────          
 </pre></div>
 }}
 
@@ -167,7 +167,7 @@ rule(line = "bar5")
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rule(center = col_red(" * RESULTS * "), line_col = "red")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #DC322F">────────────────────────────</span> <span style="color: #DC322F"> * RESULTS * </span> <span style="color: #DC322F">───────────────────────────</span>          
+#> <span style="color: #DC322F;">────────────────────────────</span> <span style="color: #DC322F;"> * RESULTS * </span> <span style="color: #DC322F;">───────────────────────────</span>          
 </pre></div>
 }}
 

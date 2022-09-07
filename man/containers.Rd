@@ -22,7 +22,7 @@ cli_end(d)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #>                                                                                 
-#> <span style="font-weight: bold;;color: #268BD2">Custom title</span>                                                                    
+#> <span style="font-weight: bold;color: #268BD2;">Custom title</span>                                                                    
 </pre></div>
 }}
 
@@ -43,7 +43,7 @@ div()
 cli_text("This is not yellow any more")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #B58900">This is yellow</span>                                                                  
+#> <span style="color: #B58900;">This is yellow</span>                                                                  
 #> This is not yellow any more                                                     
 </pre></div>
 }}
@@ -67,7 +67,7 @@ fun()
 #> &lt;cli document&gt;                                                                  
 #> &lt;body id="body"&gt;                                                                
 #> &lt;div id="mydiv"&gt; +theme                                                         
-#> &lt;par id="cli-62005-223" class="myclass"&gt;                                        
+#> &lt;par id="cli-82040-226" class="myclass"&gt;                                        
 </pre></div>
 }}
 

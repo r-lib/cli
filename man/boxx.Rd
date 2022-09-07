@@ -165,7 +165,7 @@ boxx("Hello there!", padding = 1, float = "right")
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #>                           ┌──────────────────┐                                  
 #>                           │                  │                                  
-#>                           │   <span style="color: #2AA198">Hello there!</span>   │                                  
+#>                           │   <span style="color: #2AA198;">Hello there!</span>   │                                  
 #>                           │                  │                                  
 #>                           └──────────────────┘                                  
 </pre></div>
@@ -180,14 +180,14 @@ boxx("Hello there!", padding = 1, background_col = bg_red)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> ┌──────────────────┐                                                            
-#> │<span style="background-color: #990000">                  </span>│                                                            
-#> │<span style="background-color: #990000">   Hello there!   </span>│                                                            
-#> │<span style="background-color: #990000">                  </span>│                                                            
+#> │<span style="background-color: #990000;">                  </span>│                                                            
+#> │<span style="background-color: #990000;">   Hello there!   </span>│                                                            
+#> │<span style="background-color: #990000;">                  </span>│                                                            
 #> └──────────────────┘                                                            
 #> ┌──────────────────┐                                                            
-#> │<span style="background-color: #DC322F">                  </span>│                                                            
-#> │<span style="background-color: #DC322F">   Hello there!   </span>│                                                            
-#> │<span style="background-color: #DC322F">                  </span>│                                                            
+#> │<span style="background-color: #DC322F;">                  </span>│                                                            
+#> │<span style="background-color: #DC322F;">   Hello there!   </span>│                                                            
+#> │<span style="background-color: #DC322F;">                  </span>│                                                            
 #> └──────────────────┘                                                            
 </pre></div>
 }}
@@ -200,16 +200,16 @@ boxx("Hello there!", padding = 1, background_col = bg_red)
 boxx("Hello there!", padding = 1, border_col = col_red)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900">┌──────────────────┐</span>                                                            
-#> <span style="color: #859900">│</span>                  <span style="color: #859900">│</span>                                                            
-#> <span style="color: #859900">│</span>   Hello there!   <span style="color: #859900">│</span>                                                            
-#> <span style="color: #859900">│</span>                  <span style="color: #859900">│</span>                                                            
-#> <span style="color: #859900">└──────────────────┘</span>                                                            
-#> <span style="color: #DC322F">┌──────────────────┐</span>                                                            
-#> <span style="color: #DC322F">│</span>                  <span style="color: #DC322F">│</span>                                                            
-#> <span style="color: #DC322F">│</span>   Hello there!   <span style="color: #DC322F">│</span>                                                            
-#> <span style="color: #DC322F">│</span>                  <span style="color: #DC322F">│</span>                                                            
-#> <span style="color: #DC322F">└──────────────────┘</span>                                                            
+#> <span style="color: #859900;">┌──────────────────┐</span>                                                            
+#> <span style="color: #859900;">│</span>                  <span style="color: #859900;">│</span>                                                            
+#> <span style="color: #859900;">│</span>   Hello there!   <span style="color: #859900;">│</span>                                                            
+#> <span style="color: #859900;">│</span>                  <span style="color: #859900;">│</span>                                                            
+#> <span style="color: #859900;">└──────────────────┘</span>                                                            
+#> <span style="color: #DC322F;">┌──────────────────┐</span>                                                            
+#> <span style="color: #DC322F;">│</span>                  <span style="color: #DC322F;">│</span>                                                            
+#> <span style="color: #DC322F;">│</span>   Hello there!   <span style="color: #DC322F;">│</span>                                                            
+#> <span style="color: #DC322F;">│</span>                  <span style="color: #DC322F;">│</span>                                                            
+#> <span style="color: #DC322F;">└──────────────────┘</span>                                                            
 </pre></div>
 }}
 
@@ -262,12 +262,12 @@ boxx(
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #cc3333">                           ╭───────────────╮</span>                                    
-#>                            <span style="color: #cc3333">│</span><span style="background-color: #336633">               </span><span style="color: #cc3333">│</span>                                    
-#>                            <span style="color: #cc3333">│</span><span style="background-color: #336633">   </span><span style="background-color: #336633;color: #EEE8D5">★ Hello ★</span><span style="background-color: #336633">   </span><span style="color: #cc3333">│</span>                                    
-#>                            <span style="color: #cc3333">│</span><span style="background-color: #336633">   </span><span style="background-color: #336633;color: #EEE8D5">  there!</span><span style="background-color: #336633">    </span><span style="color: #cc3333">│</span>                                    
-#>                            <span style="color: #cc3333">│</span><span style="background-color: #336633">               </span><span style="color: #cc3333">│</span>                                    
-#> <span style="color: #cc3333">                           ╰───────────────╯</span>                                    
+#> <span style="color: #cc3333;">                           ╭───────────────╮</span>                                    
+#>                            <span style="color: #cc3333;">│</span><span style="background-color: #336633;">               </span><span style="color: #cc3333;">│</span>                                    
+#>                            <span style="color: #cc3333;">│</span><span style="background-color: #336633;">   </span><span style="color: #EEE8D5;background-color: #336633;">★ Hello ★</span><span style="background-color: #336633;">   </span><span style="color: #cc3333;">│</span>                                    
+#>                            <span style="color: #cc3333;">│</span><span style="background-color: #336633;">   </span><span style="color: #EEE8D5;background-color: #336633;">  there!</span><span style="background-color: #336633;">    </span><span style="color: #cc3333;">│</span>                                    
+#>                            <span style="color: #cc3333;">│</span><span style="background-color: #336633;">               </span><span style="color: #cc3333;">│</span>                                    
+#> <span style="color: #cc3333;">                           ╰───────────────╯</span>                                    
 </pre></div>
 }}
 

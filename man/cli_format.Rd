@@ -35,7 +35,7 @@ of \code{expr}, before styling and collapsing it.
 cli_text("\{.val \{months\}\}")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #268BD2">"January"</span>, <span style="color: #268BD2">"February"</span>, and <span style="color: #268BD2">"March"</span>                                              
+#> <span style="color: #268BD2;">"January"</span>, <span style="color: #268BD2;">"February"</span>, and <span style="color: #268BD2;">"March"</span>                                              
 </pre></div>
 }}
 
@@ -44,8 +44,8 @@ cli_text("\{.val \{months\}\}")
 cli_text("\{.val \{nums\}\}")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #268BD2">0.142857142857143</span>, <span style="color: #268BD2">0.285714285714286</span>, <span style="color: #268BD2">0.428571428571429</span>,                        
-#> <span style="color: #268BD2">0.571428571428571</span>, and <span style="color: #268BD2">0.714285714285714</span>                                        
+#> <span style="color: #268BD2;">0.142857142857143</span>, <span style="color: #268BD2;">0.285714285714286</span>, <span style="color: #268BD2;">0.428571428571429</span>,                        
+#> <span style="color: #268BD2;">0.571428571428571</span>, and <span style="color: #268BD2;">0.714285714285714</span>                                        
 </pre></div>
 }}
 
@@ -59,7 +59,7 @@ cli_text("\{.val \{nums\}\}")
 cli_end(divid)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #268BD2">0.143</span>, <span style="color: #268BD2">0.286</span>, <span style="color: #268BD2">0.429</span>, <span style="color: #268BD2">0.571</span>, and <span style="color: #268BD2">0.714</span>                                           
+#> <span style="color: #268BD2;">0.143</span>, <span style="color: #268BD2;">0.286</span>, <span style="color: #268BD2;">0.429</span>, <span style="color: #268BD2;">0.571</span>, and <span style="color: #268BD2;">0.714</span>                                           
 </pre></div>
 }}
 
@@ -76,7 +76,7 @@ months <- structure(month.name[1:3], class = "month")
 cli_text("\{.val \{months\}\}")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #268BD2">"Jan"</span>, <span style="color: #268BD2">"Feb"</span>, and <span style="color: #268BD2">"Mar"</span>                                                         
+#> <span style="color: #268BD2;">"Jan"</span>, <span style="color: #268BD2;">"Feb"</span>, and <span style="color: #268BD2;">"Mar"</span>                                                         
 </pre></div>
 }}
 

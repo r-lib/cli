@@ -58,12 +58,12 @@ corresponding \verb{bullet-<name>} classes.
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> noindent                                                                        
 #>   indent                                                                        
-#> <span style="color: #2AA198">•</span> bullet                                                                        
+#> <span style="color: #2AA198;">•</span> bullet                                                                        
 #> → arrow                                                                         
-#> <span style="color: #859900">✔</span> success                                                                       
-#> <span style="color: #DC322F">✖</span> danger                                                                        
-#> <span style="color: #B58900">!</span> warning                                                                       
-#> <span style="color: #2AA198">ℹ</span> info                                                                          
+#> <span style="color: #859900;">✔</span> success                                                                       
+#> <span style="color: #DC322F;">✖</span> danger                                                                        
+#> <span style="color: #B58900;">!</span> warning                                                                       
+#> <span style="color: #2AA198;">ℹ</span> info                                                                          
 </pre></div>
 }}
 }

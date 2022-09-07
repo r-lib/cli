@@ -43,7 +43,7 @@ cli_text("My list: \{v\}.")
 cli_text("Column names: \{x\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Column names: mpg, cyl, disp, ….                                                
+#> Column names: mpg, cyl, disp, …, gear, and carb.                                
 </pre></div>
 }}
 

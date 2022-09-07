@@ -48,7 +48,7 @@ adjective <- "nice and red"
 cli_text("This is \{.emph \{adjective\}\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> This is <span style="font-style: italic;;color: #DC322F">nice and red</span>.                                                           
+#> This is <span style="font-style: italic;color: #DC322F;">nice and red</span>.                                                           
 </pre></div>
 }}
 }
@@ -97,15 +97,15 @@ cli_li("`mtcars` is \{.obj_type_friendly \{mtcars\}\}")
 cli_end(ul)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> • <span style="font-style: italic;">Emphasized</span> text.                                                              
+#> • <span style="font-style: italic;color: #DC322F;">Emphasized</span> text.                                                              
 #> • <span style="font-weight: bold;">Strong</span> importance.                                                            
 #> • A piece of code: `sum(a) / length(a)`.                                        
-#> • A package name: <span style="color: #268BD2">cli</span>.                                                          
+#> • A package name: <span style="color: #268BD2;">cli</span>.                                                          
 #> • A function name: `cli_text()`.                                                
-#> • A keyboard key: press <span style="color: #268BD2">[ENTER]</span>.                                                
-#> • A file name: <span style="color: #268BD2">/usr/bin/env</span>.                                                    
-#> • An email address: <span style="color: #268BD2">bugs.bunny@acme.com</span>.                                        
-#> • A URL: <span style="font-style: italic;;color: #268BD2">&lt;https://acme.com&gt;</span>.                                                    
+#> • A keyboard key: press <span style="color: #268BD2;">[ENTER]</span>.                                                
+#> • A file name: <span style="color: #268BD2;">/usr/bin/env</span>.                                                    
+#> • An email address: <span style="color: #268BD2;">bugs.bunny@acme.com</span>.                                        
+#> • A URL: <span style="font-style: italic;color: #268BD2;">&lt;https://acme.com&gt;</span>.                                                    
 #> • An environment variable: `R_LIBS`.                                            
 #> • `mtcars` is a data frame                                                      
 </pre></div>
@@ -123,7 +123,7 @@ cli_text("This is \{.myclass in angle brackets\}.")
 cli_end()
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> This is <span style="color: #cccccc">&lt;&lt;in angle brackets&gt;&gt;</span>.                                                  
+#> This is <span style="color: #cccccc;">&lt;&lt;in angle brackets&gt;&gt;</span>.                                                  
 </pre></div>
 }}
 
@@ -157,7 +157,7 @@ cli_text("Packages: \{.pkg \{pkgs\}\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> Packages: pkg1, pkg2, and pkg3.                                                 
-#> Packages: <span style="color: #268BD2">pkg1</span>, <span style="color: #268BD2">pkg2</span>, and <span style="color: #268BD2">pkg3</span>.                                                 
+#> Packages: <span style="color: #268BD2;">pkg1</span>, <span style="color: #268BD2;">pkg2</span>, and <span style="color: #268BD2;">pkg3</span>.                                                 
 </pre></div>
 }}
 
@@ -168,7 +168,7 @@ Class names are collapsed differently by default
 cli_text("Hey, \{.var x\} has class \{.cls \{class(x)\}\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Hey, `x` has class <span style="color: #268BD2">&lt;POSIXct/POSIXt&gt;</span>.                                            
+#> Hey, `x` has class <span style="color: #268BD2;">&lt;POSIXct/POSIXt&gt;</span>.                                            
 </pre></div>
 }}
 
@@ -208,7 +208,7 @@ to refer to the string from a template:
 cli_alert_warning("\{msg\}")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #B58900">!</span> Error in if (ncol(dat$y)) \{: argument is of length zero                       
+#> <span style="color: #B58900;">!</span> Error in if (ncol(dat$y)) \{: argument is of length zero                       
 </pre></div>
 }}
 
@@ -219,7 +219,7 @@ them:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_alert_warning("A warning with \{\{ braces \}\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #B58900">!</span> A warning with \{ braces \}.                                                    
+#> <span style="color: #B58900;">!</span> A warning with \{ braces \}.                                                    
 </pre></div>
 }}
 
@@ -238,8 +238,8 @@ cli_alert_info("Found \{ndirs\} diretor\{?y/ies\} and \{nfiles\} file\{?s\}.")
 cli_text("Will install \{length(pkgs)\} package\{?s\}: \{.pkg \{pkgs\}\}")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #2AA198">ℹ</span> Found 1 diretory and 13 files.                                                
-#> Will install 3 packages: <span style="color: #268BD2">pkg1</span>, <span style="color: #268BD2">pkg2</span>, and <span style="color: #268BD2">pkg3</span>                                   
+#> <span style="color: #2AA198;">ℹ</span> Found 1 diretory and 13 files.                                                
+#> Will install 3 packages: <span style="color: #268BD2;">pkg1</span>, <span style="color: #268BD2;">pkg2</span>, and <span style="color: #268BD2;">pkg3</span>                                   
 </pre></div>
 }}
 
