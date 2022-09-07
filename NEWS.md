@@ -1,6 +1,9 @@
 # cli (development version)
 
-* Expressions that start and end with a `{}` substitution are now styles
+* New experimental styles to create ANSI hyperlinks in RStudio and
+  terminals that support them. See `?cli::links` for details (#513).
+
+* Expressions that start and end with a `{}` substitution are now styled
   correctly. E.g. `{.code {var1} + {var2}}` (#517).
 
 * New `{.obj_type_friendly}` inline style to format the type of an R object

@@ -416,6 +416,11 @@ NULL
 #' Certain cli styles create clickable links, if your IDE or terminal
 #' supports them.
 #'
+#' # Note: hyperlinks are currently experimental
+#'
+#' The details of the styles that create hyperlinks will prrobably change
+#' in the near future, based on user feedback.
+#'
 #' # About the links in this manual page
 #'
 #' The hyperlinks that are included in this manual are demonstrative
