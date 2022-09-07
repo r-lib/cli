@@ -81,12 +81,12 @@ cli__fmt <- function(record, collapse = FALSE, strip_newline = FALSE,
 #'
 #' @export
 #' @examples
-#' fmt({
+#' cli_fmt({
 #'   cli_alert_info("Loading data file")
 #'   cli_alert_success("Loaded data file")
 #' })
 
-fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
+cli_fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
   rec <- cli__rec(expr)
   cli__fmt(rec, collapse, strip_newline)
 }
@@ -109,7 +109,7 @@ fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
 format_inline <- function(..., .envir = parent.frame()) {
   opts <- options(cli.width = Inf)
   on.exit(options(opts), add = TRUE)
-  fmt(cli_text(..., .envir = .envir))
+  cli_fmt(cli_text(..., .envir = .envir))
 }
 
 #' CLI text

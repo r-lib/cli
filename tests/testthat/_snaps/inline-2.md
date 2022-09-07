@@ -278,35 +278,35 @@
 # \f at the end, issue #491 [plain]
 
     Code
-      fmt(cli::cli_text("{.val a}{.val b}"))
+      cli_fmt(cli::cli_text("{.val a}{.val b}"))
     Output
       [1] "\"a\"\"b\""
     Code
-      fmt(cli::cli_text("\f{.val a}{.val b}"))
+      cli_fmt(cli::cli_text("\f{.val a}{.val b}"))
     Output
       [1] ""           "\"a\"\"b\""
     Code
-      fmt(cli::cli_text("\f\f{.val a}{.val b}"))
+      cli_fmt(cli::cli_text("\f\f{.val a}{.val b}"))
     Output
       [1] ""           ""           "\"a\"\"b\""
     Code
-      fmt(cli::cli_text("{.val a}\f{.val b}"))
+      cli_fmt(cli::cli_text("{.val a}\f{.val b}"))
     Output
       [1] "\"a\"" "\"b\""
     Code
-      fmt(cli::cli_text("{.val a}\f\f{.val b}"))
+      cli_fmt(cli::cli_text("{.val a}\f\f{.val b}"))
     Output
       [1] "\"a\"" ""      "\"b\""
     Code
-      fmt(cli::cli_text("{.val a}{.val b}\f"))
+      cli_fmt(cli::cli_text("{.val a}{.val b}\f"))
     Output
       [1] "\"a\"\"b\"" ""          
     Code
-      fmt(cli::cli_text("{.val a}{.val b}\f\f"))
+      cli_fmt(cli::cli_text("{.val a}{.val b}\f\f"))
     Output
       [1] "\"a\"\"b\"" ""           ""          
     Code
-      fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
+      cli_fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
     Output
        [1] ""      ""      ""      "\"a\"" ""      ""      "\"b\"" ""      ""     
       [10] ""     
@@ -314,37 +314,37 @@
 # \f at the end, issue #491 [ansi]
 
     Code
-      fmt(cli::cli_text("{.val a}{.val b}"))
+      cli_fmt(cli::cli_text("{.val a}{.val b}"))
     Output
       [1] "\033[34m\"a\"\"b\"\033[39m"
     Code
-      fmt(cli::cli_text("\f{.val a}{.val b}"))
+      cli_fmt(cli::cli_text("\f{.val a}{.val b}"))
     Output
       [1] ""                           "\033[34m\"a\"\"b\"\033[39m"
     Code
-      fmt(cli::cli_text("\f\f{.val a}{.val b}"))
+      cli_fmt(cli::cli_text("\f\f{.val a}{.val b}"))
     Output
       [1] ""                           ""                          
       [3] "\033[34m\"a\"\"b\"\033[39m"
     Code
-      fmt(cli::cli_text("{.val a}\f{.val b}"))
+      cli_fmt(cli::cli_text("{.val a}\f{.val b}"))
     Output
       [1] "\033[34m\"a\"\033[39m" "\033[34m\"b\"\033[39m"
     Code
-      fmt(cli::cli_text("{.val a}\f\f{.val b}"))
+      cli_fmt(cli::cli_text("{.val a}\f\f{.val b}"))
     Output
       [1] "\033[34m\"a\"\033[39m" ""                      "\033[34m\"b\"\033[39m"
     Code
-      fmt(cli::cli_text("{.val a}{.val b}\f"))
+      cli_fmt(cli::cli_text("{.val a}{.val b}\f"))
     Output
       [1] "\033[34m\"a\"\"b\"\033[39m" ""                          
     Code
-      fmt(cli::cli_text("{.val a}{.val b}\f\f"))
+      cli_fmt(cli::cli_text("{.val a}{.val b}\f\f"))
     Output
       [1] "\033[34m\"a\"\"b\"\033[39m" ""                          
       [3] ""                          
     Code
-      fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
+      cli_fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
     Output
        [1] ""                      ""                      ""                     
        [4] "\033[34m\"a\"\033[39m" ""                      ""                     

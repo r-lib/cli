@@ -97,5 +97,5 @@ cli_bullets_raw <- function(text, id = NULL, class = NULL) {
 #' @export
 
 format_bullets_raw <- function(text, id = NULL, class = NULL) {
-  fmt(cli_bullets_raw(text, id, class))
+  cli_fmt(cli_bullets_raw(text, id, class))
 }

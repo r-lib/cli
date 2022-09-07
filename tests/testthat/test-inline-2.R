@@ -135,14 +135,14 @@ test_that_cli(config = c("ansi", "plain"), "no inherit color, issue #474", {
 
 test_that_cli(config = c("ansi", "plain"), "\\f at the end, issue #491", {
   expect_snapshot({
-    fmt(cli::cli_text("{.val a}{.val b}"))
-    fmt(cli::cli_text("\f{.val a}{.val b}"))
-    fmt(cli::cli_text("\f\f{.val a}{.val b}"))
-    fmt(cli::cli_text("{.val a}\f{.val b}"))
-    fmt(cli::cli_text("{.val a}\f\f{.val b}"))
-    fmt(cli::cli_text("{.val a}{.val b}\f"))
-    fmt(cli::cli_text("{.val a}{.val b}\f\f"))
-    fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
+    cli_fmt(cli::cli_text("{.val a}{.val b}"))
+    cli_fmt(cli::cli_text("\f{.val a}{.val b}"))
+    cli_fmt(cli::cli_text("\f\f{.val a}{.val b}"))
+    cli_fmt(cli::cli_text("{.val a}\f{.val b}"))
+    cli_fmt(cli::cli_text("{.val a}\f\f{.val b}"))
+    cli_fmt(cli::cli_text("{.val a}{.val b}\f"))
+    cli_fmt(cli::cli_text("{.val a}{.val b}\f\f"))
+    cli_fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
   })
 })
 

@@ -546,7 +546,7 @@ cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
   pb <- clienv$progress[[id]]
   if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
 
-  txt <- fmt(cli_text(text, .envir = .envir))
+  txt <- cli_fmt(cli_text(text, .envir = .envir))
   for (h in pb$handlers) {
     if ("output" %in% names(h)) {
       h$output(pb, .envir = .envir, text = txt)
