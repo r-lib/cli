@@ -16,19 +16,19 @@
 
 * Return values now work as they should within `cli()` calls (#496).
 
-* Style attributes with underscores have new named with dashes instead:
+* Style attributes with underscores have new names with dashes instead:
   `vec_sep`, `vec_last`, `vec_trunc`, `string-quote`. The old names still
   work, but the new ones take precedence (#483).
 
-* Fixed an issue where the R session could crash on exit when loading cli
-  when running with Windows on Arm. (#494; @kevinushey)
+* cli now does not crash at the end of the R session on Arm Windows
+  (#494; @kevinushey)
 
 * Vectors are truncated at 20 elements now by default, instead of 100 (#430).
 
 * 20 new spinners from the awesome
   [cli-spinners](https://github.com/sindresorhus/cli-spinners) package,
   and from @HenrikBengtsson in #469.
-  Run this to demo to see them, some need UTF-8 and emoji support:
+  Run this to demo them, some need UTF-8 and emoji support:
 
   ```r
   new <- c("dots13", "dots8Bit", "sand", "material", "weather", "christmas",
@@ -49,12 +49,12 @@
   `{.val pre-{x}-post}` will format the whole value instead of `x`.
   (#422, #474).
 
-* cli new replaces newline characters within `{.class ... }` inline styles
+* cli now replaces newline characters within `{.class ... }` inline styles
   with spaces. If the `cli.warn_inline_newlines` option is set to TRUE, then
   it also throws a warning. (#417).
 
-* `code_highlight` now falls to the default theme (instead of no theme) for
-  unknown RStudio themes (#482, @rossellhayes).
+* `code_highlight` now falls back to the default theme (instead of no theme)
+  for unknown RStudio themes (#482, @rossellhayes).
 
 * `cli_abort()` now supplies `.frame` to `abort()`. This fixes an
   issue with the `.internal = TRUE` argument (r-lib/rlang#1386).
