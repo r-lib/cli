@@ -72,3 +72,22 @@ test_that("hyperlinks", {
     vt_output(c("pre ", st_from_bel(link), " post"), width = 20, height = 2)
   })
 })
+
+test_that("erase in line", {
+  expect_snapshot({
+    vt_output("foobar\033[3D\033[K", width = 10, height = 2)$segment
+    vt_output("foobar\033[3D\033[0K", width = 10, height = 2)$segment
+    vt_output("foobar\033[3D\033[1K", width = 10, height = 2)$segment
+    vt_output("foobar\033[3D\033[2K", width = 10, height = 2)$segment
+  })
+})
+
+test_that("erase in screen", {
+  expect_snapshot({
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[J", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[0J", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[1J", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[2Jx", width = 10, height = 4)$segment
+    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[3Jx", width = 10, height = 4)$segment
+  })
+})
