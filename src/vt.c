@@ -575,6 +575,14 @@ void cli_term_execute_sgr(vtparse_t *vt, struct terminal *term) {
     case 35:
     case 36:
     case 37:
+    case 90:
+    case 91:
+    case 92:
+    case 93:
+    case 94:
+    case 95:
+    case 96:
+    case 97:
       term->pen.fg.col = param;
       i++;
       break;
@@ -616,6 +624,14 @@ void cli_term_execute_sgr(vtparse_t *vt, struct terminal *term) {
     case 45:
     case 46:
     case 47:
+    case 100:
+    case 101:
+    case 102:
+    case 103:
+    case 104:
+    case 105:
+    case 106:
+    case 107:
       term->pen.bg.col = param;
       i++;
       break;
