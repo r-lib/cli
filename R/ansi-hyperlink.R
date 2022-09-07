@@ -283,7 +283,11 @@ style_hyperlink <- function(text, url, params = NULL) {
     )
   }
 
-  ST <- "\u0007"
+  if (Sys.getenv("R_CLI_HYPERLINK_MODE") == "posix") {
+    ST <- "\033\\"
+  } else {
+    ST <- "\u0007"
+  }
 
   out <- if (ansi_has_hyperlink_support()) {
     paste0("\u001B]8;", params, ";", url, ST, text, "\u001B]8;;", ST)
