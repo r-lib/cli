@@ -93,7 +93,7 @@
       <img src="" class="logo" alt=""><h1>Introduction to progress bars in cli</h1>
                         <h4 data-toc-skip class="author">Gábor Csárdi</h4>
             
-            <h4 data-toc-skip class="date">2022-09-08</h4>
+            <h4 data-toc-skip class="date">2022-09-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/HEAD/vignettes/progress.Rmd" class="external-link"><code>vignettes/progress.Rmd</code></a></small>
       <div class="d-none name"><code>progress.Rmd</code></div>
@@ -126,6 +126,16 @@
 <li>Call <code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> to terminate it.</li>
 </ol>
 <p>For example:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">clean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Cleaning data"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">clean</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/classic-example.svg" width="100%"></p>
 <p>The traditional API provides full control w.r.t when to create, update and terminate a progress bar.</p>
 </div>
@@ -134,12 +144,38 @@
 </h2>
 <p>For conciseness, the progress bar functions refer to the <em>current progress bar</em> by default. Every function has at most one current progress bar at any time. The current progress bar of a function is terminated when the function creates another progress bar or when the function returns, errors or is interrupted.</p>
 <p>The current progress bar lets us omit the <code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> call:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">clean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Cleaning data #1"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Cleaning data #2"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">clean</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/current.svg" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="unknown-total-number-of-units">Unknown total number of units<a class="anchor" aria-label="anchor" href="#unknown-total-number-of-units"></a>
 </h2>
 <p>In some cases the total number of progress units is unknown, so simply omit them from <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code> (or set them to <code>NA</code>). cli uses a different display when <code>total</code> is unknown:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">walk_dirs</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Walking directories"</span><span class="op">)</span></span>
+<span>  <span class="kw">while</span> <span class="op">(</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">0.01</span><span class="op">)</span> <span class="kw">break</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.01</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span>force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">walk_dirs</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/unknown-total.svg" width="100%"></p>
 </div>
 <div class="section level2">
@@ -153,11 +189,22 @@
 </h2>
 <p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> is currently experimental.</p>
 <p>To add a progress bar to a call to <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or another mapping function, wrap the input sequence into <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="va">fun</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> works similarly to <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code>, it returns an index vector. If you use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code>, then <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> will pass the <em>indices</em> of the elements in <code>X</code> to <code>fun</code>, instead of the elements themselves.</p>
 <p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> expects that the index vector will be used only once, from beginning to end. It is best to never assign the return value of <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> to a variable.</p>
 <p>An example:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">rawabc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">letters</span><span class="op">)</span>,</span>
+<span>    <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html" class="external-link">charToRaw</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/tickalong.svg" width="100%"></p>
 <p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> uses ALTREP, so it only works from R 3.5.0 and later. On older R versions it is equivalent to <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code> and it does not create a progress bar.</p>
 <div class="section level3">
@@ -165,7 +212,7 @@
 <code>for</code> loops<a class="anchor" aria-label="anchor" href="#for-loops"></a>
 </h3>
 <p>You can also use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> in <code>for</code> loops, with the additional complication that if you use <code><a href="https://rdrr.io/r/base/Control.html" class="external-link">break</a></code>, then you might need to terminate the progress bar explicitly:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">...</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw">break</span></span>
@@ -173,7 +220,7 @@
 <span><span class="op">}</span></span></code></pre></div>
 <p><code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> always returns <code>TRUE</code> to allow this form.</p>
 <p>Alternatively, you can terminate the progress bar right after loop:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">...</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="kw">break</span></span>
@@ -192,15 +239,79 @@
 <li>Status messages are removed when their calling function exits.</li>
 <li>A status message removes the previous status message or progress bar of the same caller function.</li>
 </ul>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_message.html">cli_progress_message</a></span><span class="op">(</span><span class="st">"Task one is running..."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_message.html">cli_progress_message</a></span><span class="op">(</span><span class="st">"Task two is running..."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">step</span> <span class="op">&lt;-</span> <span class="fl">1L</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_message.html">cli_progress_message</a></span><span class="op">(</span><span class="st">"Task three is underway: step {step}"</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">step</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_message.svg" width="100%"></p>
 <p>Status messages may use glue interpolation, cli styling and pluralization, as usual. You can call <code><a href="../reference/cli_progress_bar.html">cli_progress_update()</a></code> to update a status message.</p>
 <p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> is slightly different from <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>: * it adds cli’s alert themes to the status messages (info, success or danger), * prints the duration of each step (by default), and * it keeps the messages on the screen after they are terminated.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Downloading data"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Importing data"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Cleaning data"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Fitting model"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step_simple.svg" width="100%"></p>
 <p>As usual, you can use <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> to update an existing status message.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"About to start downloads of {n} file{?s}"</span><span class="op">)</span></span>
+<span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Got {i}/{n} {qty(i)}file{?s}."</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span> <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"Already half way!"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step.svg" width="100%"></p>
 <p>If you can update the status message frequently enough, then you can also add a spinner to it:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Downloading data"</span>, spinner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">}</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Importing data"</span>, spinner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">}</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Cleaning data"</span>, spinner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">}</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Fitting model"</span>, spinner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step_spinner.svg" width="100%"></p>
 <p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> automatically handles errors, and styles the status message accordingly:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"First step, this will succeed"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Second step, this will fail"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"Something is wrong here"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/step-error.svg" width="100%"></p>
 <!-- # Downloads -->
 <!-- ## Downloads with httr -->
