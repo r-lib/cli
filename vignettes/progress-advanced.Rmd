@@ -19,9 +19,14 @@ knitr::opts_chunk$set(
   comment = "#>",
   out.width = "100%",
   cache = TRUE,
+  asciicast_at = "all",
+  asciicast_cursor = FALSE,
   asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
 )
-asciicast::init_knitr_engine()
+asciicast::init_knitr_engine(
+  echo = TRUE,
+  echo_input = FALSE
+)
 ```
 
 ```{asciicast, setup, cache = FALSE, include = FALSE}
@@ -322,8 +327,8 @@ format string as an end user option, we suggest that you always use the
 qualified form, in case the cli package is not attached. For example, to
 set a minimal display for downloads you might write 
 
-```{asciicast include = FALSE, cache = FALSE}
-#| asciicast_at = "all"
+```{asciicast download, include = FALSE, cache = FALSE}
+#| asciicast_at = "end",
 options(cli.progress_format_download =
   paste0(
     "{cli::col_cyan('\u2B07')} {cli::pb_spin} ",
@@ -332,7 +337,13 @@ options(cli.progress_format_download =
 )
 ```
 
-```{asciicast echo = FALSE}
+```{asciicast eval = FALSE}
+<<download>>
+```
+
+to get
+
+```{asciicast, echo = FALSE}
 cli_progress_demo(
 "Downloading", total = 10280, at = 5121, clear = FALSE,
   type = "download"
