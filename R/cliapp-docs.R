@@ -459,7 +459,7 @@ NULL
 #'
 #' * `.href`
 #' * `.help`
-#' * `.topic
+#' * `.topic`
 #' * `.vignette`
 #' * `.run`
 #'

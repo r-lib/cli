@@ -40,7 +40,7 @@ about link texts. Some link styles support a custom link text:
 \itemize{
 \item \code{.href}
 \item \code{.help}
-\item `.topic
+\item \code{.topic}
 \item \code{.vignette}
 \item \code{.run}
 }
