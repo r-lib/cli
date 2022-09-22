@@ -121,7 +121,7 @@ void clic_utf8_graphscan_next(struct grapheme_iterator *iter,
                               uint8_t **ptr,
                               int *width);
 
-SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg);
+SEXP glue_(SEXP x, SEXP f, SEXP open_arg, SEXP close_arg, SEXP cli_arg);
 SEXP trim_(SEXP x);
 
 SEXP clic_vt_output(SEXP bytes, SEXP width, SEXP height);
