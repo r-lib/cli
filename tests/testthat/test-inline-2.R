@@ -172,7 +172,8 @@ test_that("various errors", {
   expect_snapshot(
     error = TRUE,
     cli_text("xx {__cannot-parse-this__} yy"),
-    transform = sanitize_srcref
+    transform = sanitize_srcref,
+    variant = if (getRversion() < "4.2.0") "old-r" else "new-r"
   )
   expect_snapshot(
     error = TRUE,

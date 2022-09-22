@@ -391,18 +391,6 @@
 ---
 
     Code
-      cli_text("xx {__cannot-parse-this__} yy")
-    Condition
-      Error:
-      ! Error while parsing cli `{}` expression: `__cannot-parse-th...`.
-      Caused by error:
-      ! <text>:1:2: unexpected input
-      1: __
-           ^
-
----
-
-    Code
       cli_text("xx {1 + 'a'} yy")
     Condition
       Error:
