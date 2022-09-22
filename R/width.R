@@ -102,8 +102,7 @@ console_width <- function() {
 }
 
 tty_size <- function() {
-  ret <- .Call(clic_tty_size) %??%
-    cli_error("Could not query terminal size", .class = "ps_unknown_tty_size")
+  ret <- .Call(clic_tty_size)
   c(width = ret[1], height = ret[2])
 }
 

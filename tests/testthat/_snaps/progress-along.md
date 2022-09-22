@@ -45,7 +45,7 @@
       cli_with_ticks(fun())
     Condition
       Warning in `value[[3L]]()`:
-      cli progress bar update failed: ! Error while evaluating cli `{}` expression
+      cli progress bar update failed: ! Error while evaluating cli `{}` expression: `1+''`.
       Caused by error in `1 + ""`:
       ! non-numeric argument to binary operator
     Output

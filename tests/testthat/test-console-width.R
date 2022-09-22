@@ -14,11 +14,4 @@ test_that("errors", {
   expect_snapshot_error(
     console_width()
   )
-
-  mockery::stub(tty_size, ".Call", function(...) stop("failed :("))
-  expect_snapshot(
-    error = TRUE,
-    tty_size(),
-    transform = sanitize_srcref
-  )
 })
