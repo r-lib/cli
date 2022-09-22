@@ -1,5 +1,7 @@
 # cli (development version)
 
+* cli has better error messages now.
+
 # cli 3.4.0
 
 * New experimental styles to create ANSI hyperlinks in RStudio and
