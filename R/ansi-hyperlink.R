@@ -52,7 +52,7 @@ make_link <- function(txt, type = c("email", "file", "fun", "help", "href",
     topic    = make_link_topic(txt),
     url      = make_link_url(txt),
     vignette = make_link_vignette(txt),
-    stop("Unknown link type")
+    throw(cli_error("Unknown hyperlink type: {.code {type}}, internal cli error"))
   )
 }
 

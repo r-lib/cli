@@ -98,7 +98,10 @@ test_that("error in handler is a single warning", {
     sapply(cli_progress_along(1:5, format = "{1+''}"), function(i) i)
   }
 
-  expect_snapshot(cli_with_ticks(fun()))
+  expect_snapshot(
+    cli_with_ticks(fun()),
+    transform = sanitize_srcref
+  )
 })
 
 test_that("length 1 seq", {

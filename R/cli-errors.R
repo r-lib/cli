@@ -1,6 +1,9 @@
 
-cli_error <- function(..., .data = NULL, .envir = parent.frame()) {
+cli_error <- function(..., .data = NULL, .class = NULL, .envir = parent.frame(),
+                      call. = TRUE) {
+  .hide_from_trace <- TRUE
   cnd <- new_error(
+    call. = call.,
     format_error(
       .envir = .envir,
       c(
@@ -10,6 +13,7 @@ cli_error <- function(..., .data = NULL, .envir = parent.frame()) {
   )
 
   if (length(.data)) cnd[names(.data)] <- .data
+  if (length(class)) class(cnd) <- c(.class, class(cnd))
 
   cnd
 }
@@ -25,4 +29,8 @@ stop_if_not <- function(message, ..., .envir = parent.frame(),
       )
     }
   }
+}
+
+`%??%` <- function(expr, err) {
+  chain_error(expr, err, srcref = utils::getSrcref(sys.call()))
 }

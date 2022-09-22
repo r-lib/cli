@@ -258,32 +258,28 @@ make_cmd_transformer <- function(values) {
   )
 
   function(code, envir) {
-    res <- tryCatch({
-      if (substr(code, 1, 1) == "." &&
-          ! code %in% exceptions) {
-        stop("style")
-      }
-      expr <- parse(text = code, keep.source = FALSE)
-      eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
-    }, error = function(e) e)
+    first_char <- substr(code, 1, 1)
 
-    if (!inherits(res, "error")) {
-      id <- paste0("v", length(values))
-      values[[id]] <- res
-      values$qty <- if (length(res) == 0) 0 else res
-      values$num_subst <- values$num_subst + 1L
-      return(paste0("<", values$marker, id, values$marker, ">"))
-    }
+    # {?} pluralization
+    if (first_char == "?") {
+      parse_plural(code, values)
 
-    # plurals
-    if (substr(code, 1, 1) == "?") {
-      return(parse_plural(code, values))
-
-    } else {
-      # inline styles
+    # {.} cli style
+    } else if (first_char == "." && ! code %in% exceptions) {
       m <- regexpr(inline_regex(), code, perl = TRUE)
       has_match <- m != -1
-      if (!has_match) stop(res)
+      if (!has_match) {
+        throw(cli_error(
+          call. = sys.call(-3),
+          "Invalid cli literal: {.code {{{abbrev(code, 10)}}}} starts with a dot.",
+          "i" = "Interpreted literals must not start with a dot in cli >= 3.4.0.",
+          "i" = paste("{.code {{}}} expressions starting with a dot are",
+                      "now only used for cli styles."),
+          "i" = paste("To avoid this error, put a space character after",
+                      "the starting {.code {'{'}} or use parentheses:",
+                      "{.code {{({abbrev(code, 10)})}}}.")
+        ))
+      }
 
       starts <- attr(m, "capture.start")
       ends <- starts + attr(m, "capture.length") - 1L
@@ -298,6 +294,25 @@ make_cmd_transformer <- function(values) {
         .cli = TRUE
       )
       paste0("<", values$marker, ".", funname, " ", out, values$marker, ">")
+
+    # {} plain substitution
+    } else {
+      expr <- parse(text = code, keep.source = FALSE) %??%
+        cli_error(paste(
+          "Error while parsing cli {.code {{}}} expression:",
+          "{.code {abbrev(code, 20)}}."
+        ))
+      res <- eval(expr, envir = envir) %??%
+        cli_error(paste(
+          "Error while evaluating cli {.code {{}}} expression:",
+          "{.code {abbrev(code, 20)}}."
+        ))
+
+      id <- paste0("v", length(values))
+      values[[id]] <- res
+      values$qty <- if (length(res) == 0) 0 else res
+      values$num_subst <- values$num_subst + 1L
+      paste0("<", values$marker, id, values$marker, ">")
     }
   }
 }

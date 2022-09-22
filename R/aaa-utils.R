@@ -165,3 +165,8 @@ trailing_space <- function(x) {
 get_rstudio_theme <- function() {
   suppressWarnings(rstudioapi::getThemeInfo())
 }
+
+abbrev <- function(x, len = 10) {
+  # this is better than strtrim() because it adds ...
+  ansi_strtrim(x, len)
+}

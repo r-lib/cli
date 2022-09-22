@@ -222,3 +222,10 @@ test_that("ansi_trimws", {
     ansi_string(txt)
   )
 })
+
+test_that("unknown hyperlink type", {
+  expect_snapshot(
+    error = TRUE,
+    make_link("this", "foobar")
+  )
+})

@@ -33,3 +33,10 @@ test_that("we can create a style from an R color", {
   red_text <- red4("text")
   expect_true(num_ansi_colors() == 1 || ansi_has_any(red_text))
 })
+
+test_that("errors", {
+  expect_snapshot(
+    error = TRUE,
+    make_ansi_style(1:10)
+  )
+})

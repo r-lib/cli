@@ -65,16 +65,15 @@ test_that("warnings and errors", {
 })
 
 test_that("max_diff", {
-  err <- tryCatch(
-    diff_chr("a", c("a", "b"), 0),
-    error = function(e) e
+  expect_snapshot_error(
+    class = "cli_diff_max_dist",
+    diff_chr("a", c("a", "b"), 0)
   )
-  expect_s3_class(err, "cli_diff_max_dist")
 
   expect_silent(diff_chr(c("a", "c"), c("a", "b"), 2))
-  err <- tryCatch(
-    diff_chr(c("a", "c"), c("a", "b"), 1),
-    error = function(e) e
+
+  expect_snapshot_error(
+    class = "cli_diff_max_dist",
+    diff_chr(c("a", "c"), c("a", "b"), 1)
   )
-  expect_s3_class(err, "cli_diff_max_dist")
 })

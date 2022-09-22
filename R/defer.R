@@ -1,3 +1,6 @@
+
+# NOTE: patched to use `cli_error()`
+
 # nocov start --- compat-defer ---
 #
 # This drop-in file implements withr::defer(). Please find the most
@@ -197,7 +200,8 @@ execute_handlers <- function(envir) {
   attr(envir, "withr_handlers") <- NULL
 
   for (error in errors) {
-    stop(error)
+    stop(error) %??%
+      cli_error("Error in a deferred {.code on.exit()} clause")
   }
 }
 

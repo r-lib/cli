@@ -374,3 +374,35 @@
     Message
       "foo and bar"
 
+# various errors
+
+    ! Invalid cli literal: `{.foobar}` starts with a dot.
+    i Interpreted literals must not start with a dot in cli >= 3.4.0.
+    i `{}` expressions starting with a dot are now only used for cli styles.
+    i To avoid this error, put a space character after the starting `{` or use parentheses: `{(.foobar)}`.
+
+---
+
+    ! Invalid cli literal: `{.someve...}` starts with a dot.
+    i Interpreted literals must not start with a dot in cli >= 3.4.0.
+    i `{}` expressions starting with a dot are now only used for cli styles.
+    i To avoid this error, put a space character after the starting `{` or use parentheses: `{(.someve...)}`.
+
+---
+
+    Code
+      cli_text("xx {__cannot-parse-this__} yy")
+    Condition
+      Error:
+      ! Error while parsing cli `{}` expression: `__cannot-parse-th...`.
+      Caused by error:
+      ! <text>:1:2: unexpected input
+      1: __
+           ^
+
+---
+
+    ! Error while evaluating cli `{}` expression: `1 + 'a'`.
+    Caused by error in `1 + "a"` at inline.R:305:7:
+    ! non-numeric argument to binary operator
+

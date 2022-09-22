@@ -309,10 +309,10 @@ err <- local({
   #' @param err Error object or message to use for the child error.
   #' @param call Call to use in the re-thrown error. See [throw()].
 
-  chain_error <- function(expr, err, call = sys.call(-1)) {
+  chain_error <- function(expr, err, call = sys.call(-1), srcref = NULL) {
     .hide_from_trace <- 1
     force(call)
-    srcref <- utils::getSrcref(sys.call())
+    srcref <- srcref %||% utils::getSrcref(sys.call())
     withCallingHandlers({
       expr
     }, error = function(e) {

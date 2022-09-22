@@ -170,13 +170,27 @@ ansi_nchar <- function(x,
 ansi_substr <- function(x, start, stop) {
   if (!is.character(x)) x <- as.character(x)
   if (!length(x)) return(ansi_string(x))
-  start <- as.integer(start)
-  stop <- as.integer(stop)
+  start <- suppressWarnings(as.integer(start))
+  stop <- suppressWarnings(as.integer(stop))
   if (!length(start) || !length(stop)) {
-    stop("invalid substring arguments")
+    throw(cli_error(
+      "{.code ansi_substr()} must have non-empty {.arg start} and {.arg stop} arguments",
+      "i" = if (!length(start)) "{.arg start} has length {length(start)}",
+      "i" = if (!length(stop)) "{.arg stop} has length {length(stop)}"
+    ))
   }
-  if (anyNA(start) || anyNA(stop)) {
-    stop("non-numeric substring arguments not supported")
+  nastart <- anyNA(start)
+  nastop <- anyNA(stop)
+  if (nastart || nastop) {
+    throw(cli_error(
+      "{.arg start} and {.arg stop} must not have {.code NA} values",
+      "i" = if (nastart) paste(
+              "{.arg start} has {sum(is.na(start))}",
+              "{.code NA} value{?s}, after coercion to integer"),
+      "i" = if (nastop) paste(
+              "{.arg stop} has {sum(is.na(stop))} {.code NA} value{?s},",
+              "after coercion to integer")
+    ))
   }
   x <- enc2utf8(x)
   start <- rep_len(start, length(x))
@@ -277,9 +291,13 @@ ansi_substring <- function(text, first, last = 1000000L) {
 #' strsplit(ansi_strip(str), "")
 
 ansi_strsplit <- function(x, split, ...) {
-  split <- try(as.character(split), silent=TRUE)
-  if(inherits(split, "try-error") || !is.character(split) || length(split) > 1L)
-    stop("`split` must be character of length <= 1, or must coerce to that")
+  split <- try(as.character(split), silent = TRUE)
+  if (inherits(split, "try-error") || !is.character(split) || length(split) > 1L) {
+    throw(cli_error(
+      "{.arg split} must be character of length <= 1, or must coerce to that",
+      i = "{.arg split} is (or was coerced to) {.type {split}}"
+    ))
+  }
   if (!is.character(x)) x <- as.character(x)
   x <- enc2utf8(x)
   if(!length(split)) split <- ""
@@ -588,7 +606,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
     } else if (xwc == " ") {
       xwidx[2] <- xwidx[2] + 1L
     } else {
-      stop("Internal error")
+      throw(cli_error("Internal error in {.fun cli::ansi_strwrap}"))
     }
 
     while (xsidx <= xslen && xwidx[1] <= length(xw) && xwidx[2] > xwlen) {

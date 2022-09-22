@@ -566,7 +566,10 @@ cli_dl <- function(items = NULL, labels = names(items), id = NULL,
                    class = NULL, .close = TRUE, .auto_close = TRUE,
                    .envir = parent.frame()) {
   if (!is.null(items) && !is_named(items)) {
-    stop("`items` must be a named character vector.")
+    throw(cli_error(
+      "{.arg items} must be a named character vector",
+      "i" = if (!is_named(items)) "{.arg items} is not named"
+    ))
   }
 
   cli__message(
