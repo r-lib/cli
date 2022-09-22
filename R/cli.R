@@ -100,16 +100,22 @@ cli_fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
 #'
 #' @param ... Passed to [cli_text()].
 #' @param .envir Environment to evaluate the expressions in.
+#' @param collapse Whether to collapse the result if it has multiple
+#'   lines, e.g. because of `\f` characters.
 #' @return Character scalar, the formatted string.
 #'
 #' @export
 #' @examples
 #' format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 
-format_inline <- function(..., .envir = parent.frame()) {
+format_inline <- function(..., .envir = parent.frame(), collapse = TRUE) {
   opts <- options(cli.width = Inf)
   on.exit(options(opts), add = TRUE)
-  cli_fmt(cli_text(..., .envir = .envir))
+  cli_fmt(
+    cli_text(..., .envir = .envir),
+    collapse = collapse,
+    strip_newline = TRUE
+  )
 }
 
 #' CLI text

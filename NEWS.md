@@ -2,6 +2,9 @@
 
 * cli has better error messages now.
 
+* New `format_inline()` argument: `collapse`, to collapse multi-line output,
+  potentially because of `\f` characters.
+
 # cli 3.4.0
 
 * New experimental styles to create ANSI hyperlinks in RStudio and

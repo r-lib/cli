@@ -4,12 +4,15 @@
 \alias{format_inline}
 \title{Format and returns a line of text}
 \usage{
-format_inline(..., .envir = parent.frame())
+format_inline(..., .envir = parent.frame(), collapse = TRUE)
 }
 \arguments{
 \item{...}{Passed to \code{\link[=cli_text]{cli_text()}}.}
 
 \item{.envir}{Environment to evaluate the expressions in.}
+
+\item{collapse}{Whether to collapse the result if it has multiple
+lines, e.g. because of \verb{\\f} characters.}
 }
 \value{
 Character scalar, the formatted string.
