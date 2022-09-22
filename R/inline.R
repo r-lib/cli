@@ -299,12 +299,12 @@ make_cmd_transformer <- function(values) {
     } else {
       expr <- parse(text = code, keep.source = FALSE) %??%
         cli_error(paste(
-          "Error while parsing cli {.code {{}}} expression:",
+          "Could not parse cli {.code {{}}} expression:",
           "{.code {abbrev(code, 20)}}."
         ))
       res <- eval(expr, envir = envir) %??%
         cli_error(paste(
-          "Error while evaluating cli {.code {{}}} expression:",
+          "Could not evaluate cli {.code {{}}} expression:",
           "{.code {abbrev(code, 20)}}."
         ))
 
