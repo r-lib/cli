@@ -167,16 +167,6 @@
       i There are 26 elements.
       x You've tried to subset element 100.
 
----
-
-    Code
-      wrn$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
-
 # cli_warn [ansi]
 
     Code
@@ -201,16 +191,6 @@
       [1m[22mMust index an existing element:
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
-
----
-
-    Code
-      wrn$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
 
 # cli_warn [unicode]
 
@@ -237,16 +217,6 @@
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
 
----
-
-    Code
-      wrn$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
-
 # cli_warn [fancy]
 
     Code
@@ -272,16 +242,6 @@
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
 
----
-
-    Code
-      wrn$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
-
 # cli_inform [plain]
 
     Code
@@ -304,16 +264,6 @@
       Must index an existing element:
       i There are 26 elements.
       x You've tried to subset element 100.
-
----
-
-    Code
-      tail(inf, 1)[[1]]$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
 
 # cli_inform [ansi]
 
@@ -338,16 +288,6 @@
       [36mi[39m There are 26 elements.
       [31mx[39m You've tried to subset element 100.
 
----
-
-    Code
-      tail(inf, 1)[[1]]$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
-
 # cli_inform [unicode]
 
     Code
@@ -371,16 +311,6 @@
       ℹ There are 26 elements.
       ✖ You've tried to subset element 100.
 
----
-
-    Code
-      tail(inf, 1)[[1]]$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
-
 # cli_inform [fancy]
 
     Code
@@ -403,16 +333,6 @@
       [1m[22mMust index an existing element:
       [36mℹ[39m There are 26 elements.
       [31m✖[39m You've tried to subset element 100.
-
----
-
-    Code
-      tail(inf, 1)[[1]]$cli_bullets
-    Output
-                                                                                i 
-          "Must index an existing element:"              "There are 26 elements." 
-                                          x 
-      "You've tried to subset element 100." 
 
 # cli_abort width in RStudio
 

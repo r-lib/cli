@@ -50,18 +50,6 @@ test_that_cli("cli_warn", {
       "x" = "You've tried to subset element {idx}."
     ))
   }))
-
-  len <- 26
-  idx <- 100
-  wrn <- tryCatch(
-    cli_warn(c(
-            "Must index an existing element:",
-      "i" = "There {?is/are} {len} element{?s}.",
-      "x" = "You've tried to subset element {idx}."
-    )),
-    warning = function(w) w
-  )
-  expect_snapshot(wrn$cli_bullets)
 })
 
 test_that_cli("cli_inform", {
@@ -85,23 +73,6 @@ test_that_cli("cli_inform", {
       "x" = "You've tried to subset element {idx}."
     ))
   }))
-
-  len <- 26
-  idx <- 100
-  # This is weirder because cli_inform emits another cli message first
-  inf <- NULL
-  withCallingHandlers(
-    cli_inform(c(
-            "Must index an existing element:",
-      "i" = "There {?is/are} {len} element{?s}.",
-      "x" = "You've tried to subset element {idx}."
-    )),
-    message = function(m) {
-      inf <<- c(inf, list(m))
-      invokeRestart("muffleMessage")
-    }
-  )
-  expect_snapshot(tail(inf, 1)[[1]]$cli_bullets)
 })
 
 test_that("cli_abort width in RStudio", {
