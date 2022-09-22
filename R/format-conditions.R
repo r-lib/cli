@@ -30,12 +30,15 @@
 #' @export
 
 format_error <- function(message, .envir = parent.frame()) {
-  if (is.null(names(message)) || names(message)[1] == "") {
+  if (length(message) > 0 &&
+      (is.null(names(message)) || names(message)[1] == "")) {
     # The default theme will make this bold
     names(message)[1] <- "1"
   }
 
-  message[1] <- paste0("Error: ", message[1])
+  if (length(message) > 0) {
+    message[1] <- paste0("Error: ", message[1])
+  }
 
   rsconsole <- c("rstudio_console", "rstudio_console_starting")
   oldopt <- options(
@@ -61,7 +64,8 @@ format_error <- function(message, .envir = parent.frame()) {
 #' @export
 
 format_warning <- function(message, .envir = parent.frame()) {
-  if (is.null(names(message)) || names(message)[1] == "") {
+  if (length(message) > 0 &&
+      (is.null(names(message)) || names(message)[1] == "")) {
     # The default theme will make this bold
     names(message)[1] <- "1"
   }

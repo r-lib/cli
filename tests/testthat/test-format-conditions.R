@@ -153,4 +153,14 @@ test_that_cli("suppressing Unicode bullets", {
 
 test_that("edge cases", {
   expect_equal(cli::format_error(""), "")
+  expect_equal(cli::format_error(NULL), "")
+  expect_equal(cli::format_error(character()), "")
+
+  expect_equal(cli::format_warning(""), "")
+  expect_equal(cli::format_warning(NULL), "")
+  expect_equal(cli::format_warning(character()), "")
+
+  expect_equal(cli::format_message(""), "")
+  expect_equal(cli::format_message(NULL), "")
+  expect_equal(cli::format_message(character()), "")
 })
