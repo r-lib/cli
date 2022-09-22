@@ -47,7 +47,10 @@ apply_style <- function(text, style, bg = FALSE) {
   } else if (is.null(style)) {
     text
   } else {
-    stop("Not a colour name or ANSI style function", call. = FALSE)
+    throw(cli_error(
+      "{.arg style} must be a color name or an ANSI style function",
+      "i" = "{.arg style} is {.typeof {style}}"
+    ))
   }
 }
 
@@ -161,4 +164,9 @@ trailing_space <- function(x) {
 
 get_rstudio_theme <- function() {
   suppressWarnings(rstudioapi::getThemeInfo())
+}
+
+abbrev <- function(x, len = 10) {
+  # this is better than strtrim() because it adds ...
+  ansi_strtrim(x, len)
 }

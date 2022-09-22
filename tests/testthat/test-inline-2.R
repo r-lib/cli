@@ -161,3 +161,23 @@ test_that_cli(config = "ansi", "brace expresssion edge cases", {
     cli_text("{.q {foo} and {bar}}")
   })
 })
+
+test_that("various errors", {
+  expect_snapshot_error(
+    cli_text("xx {.foobar} yy")
+  )
+  expect_snapshot_error(
+    cli_text("xx {.someverylong+expression} yy")
+  )
+  expect_snapshot(
+    error = TRUE,
+    cli_text("xx {__cannot-parse-this__} yy"),
+    transform = sanitize_srcref,
+    variant = if (getRversion() < "4.2.0") "old-r" else "new-r"
+  )
+  expect_snapshot(
+    error = TRUE,
+    cli_text("xx {1 + 'a'} yy"),
+    transform = function(x) sanitize_call(sanitize_srcref(x))
+  )
+})

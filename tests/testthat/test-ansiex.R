@@ -75,13 +75,17 @@ test_that("ansi_nchar wide characters", {
 })
 
 test_that("ansi_substr bad input", {
-  expect_error(
-    ansi_substr("foobar", NULL, 10),
-    "invalid substring arguments"
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("foobar", NULL, 10)
   )
-  expect_error(
-    ansi_substr("foobar", 10, NULL),
-    "invalid substring arguments"
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("foobar", 10, NULL)
+  )
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("foobar", "bad", "bad")
   )
 })
 
@@ -181,10 +185,10 @@ test_that("ansi_substr corner cases", {
 
   # non-numeric arguments cause errors; NOTE: this actually "works"
   # with 'substr' but not implemented in 'ansi_substr'
-  suppressWarnings(
-    expect_error(ansi_substr("abc", "hello", 1), "non-numeric")
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("abc", "hello", 1)
   )
-
 })
 
 test_that("ansi_substring", {
@@ -324,9 +328,9 @@ test_that("ansi_strsplit edge cases", {
 
 test_that("Weird length 'split'", {
   withr::local_options(list(cli.num_colors = 256L))
-  expect_error(
-    ansi_strsplit(c("ab", "bd"), c("b", "d")),
-    "must be character"
+  expect_snapshot(
+    error = TRUE,
+    ansi_strsplit(c("ab", "bd"), c("b", "d"))
   )
   expect_identical(
     ansi_strsplit("ab", NULL),

@@ -45,14 +45,12 @@ diff_chr <- function(old, new, max_dist = Inf) {
   lcs <- .Call(clic_diff_chr, old, new, max_dist2)
 
   if (max_dist2 != 0 && lcs[[4]] == max_dist2) {
-    cnd <- structure(
-      list(
-        message = paste0("diff edit distance is larger than ", max_dist),
-        max_dist = max_dist
-      ),
-      class = c("cli_diff_max_dist", "error", "condition")
-    )
-    stop(cnd)
+    throw(cli_error(
+      "Diff edit distance is larger than the limit.",
+      "i" = "The edit distance limit is {max_dist}.",
+      .data = list(max_dist = max_dist),
+      .class = "cli_diff_max_dist"
+    ))
   }
 
   op <- c("match", "delete", "insert")[lcs[[1]]]

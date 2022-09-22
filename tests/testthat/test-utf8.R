@@ -95,3 +95,9 @@ test_that("utf8_graphemes", {
   exp2 <- list(na.omit(unlist(exp)))
   expect_equal(utf8_graphemes(str2), exp2)
 })
+
+test_that("errors", {
+  expect_snapshot_error(
+    fix_r_utf8_output("\x02\xff\xfe \x03\xff\xfe \x03\xff\xfe")
+  )
+})

@@ -186,3 +186,11 @@ sanitize_home <- function(x) {
   home <- paste0("file://", path.expand("~"))
   gsub(home, "file:///my/home", x, fixed = TRUE)
 }
+
+sanitize_srcref <- function(x) {
+  gsub(" at .*.R:[0-9]+:[0-9]+", "", x)
+}
+
+sanitize_call <- function(x) {
+  gsub(" in `.*`", "", x)
+}

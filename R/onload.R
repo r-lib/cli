@@ -28,6 +28,8 @@ rstudio_r_fix <- 0
 
 .onLoad <- function(libname, pkgname) {
 
+  err$onload_hook()
+
   # Try to restore cursor as much as we can
   if (isatty(stdout())) {
     reg.finalizer(clienv, function(e) cli::ansi_show_cursor(), TRUE)

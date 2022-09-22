@@ -243,7 +243,8 @@ test_that_cli(configs = "ansi", "styling pieces of a dl", {
 
 test_that("cli_dl edge cases", {
   # invalid input
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     cli_dl("foo", "must be a named character vector")
   )
 

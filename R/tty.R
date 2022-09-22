@@ -267,7 +267,7 @@ r_utf8 <- function(func,
   rp$wait(timeout)
   if (rp$is_alive()) {
     rp$kill()
-    stop("R subprocess timeout")
+    throw(cli_error("R subprocess timeout"))
   }
   list(
     status = rp$get_exit_status(),
@@ -282,7 +282,12 @@ fix_r_utf8_output <- function(x) {
   # In case the output is incomplete, and an UTF-8 tag is left open
   if (length(end) < length(beg)) end <- c(end, length(x) + 1L)
 
-  if (length(beg) != length(end)) stop("Invalid output from UTF-8 R")
+  if (length(beg) != length(end)) {
+    throw(cli_error(
+      "Invalid output from UTF-8 R",
+      "i" = "Found {length(beg)} UTF-8 begin marker{?s} and {length(end)} end marker{?s}."
+    ))
+  }
 
   # Easier to handle corner cases with this
   beg <- c(beg, length(x) + 1L)

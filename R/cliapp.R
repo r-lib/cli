@@ -172,7 +172,7 @@ clii_verbatim <- function(app, ..., .envir) {
 }
 
 clii_md_text <- function(app, ...) {
-  stop("Markdown text is not implemented yet")
+  throw(cli_error("Markdown text is not implemented yet"))
 }
 
 ## Headings ----------------------------------------------------------
@@ -214,7 +214,7 @@ clii_blockquote <- function(app, quote, citation, id, class) {
 ## Table ------------------------------------------------------------
 
 clii_table <- function(app, cells, id, class) {
-  stop("Tables are not implemented yet")
+  throw(cli_error("Tables are not implemented yet"))
 }
 
 ## Rule -------------------------------------------------------------

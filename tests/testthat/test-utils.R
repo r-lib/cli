@@ -8,7 +8,7 @@ test_that("make_space", {
 test_that("apply_style", {
   expect_error(
     apply_style("text", raw(0)),
-    "Not a colour name or ANSI style"
+    "must be a color name or an ANSI style function"
   )
 })
 

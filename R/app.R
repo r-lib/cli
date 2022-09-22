@@ -54,7 +54,12 @@ stop_app <- function(app = NULL) {
     cliappenv$stack <- utils::head(cliappenv$stack, -1)
 
   } else {
-    if (!inherits(app, "cliapp")) stop("Not a CLI app")
+    if (!inherits(app, "cliapp")) {
+      throw(cli_error(
+        "{.arg app} must be a CLI app",
+        "i" = "{.arg app} is {.type {app}}"
+      ))
+    }
     ndl <- format.default(app)
     nms <- vapply(cliappenv$stack, format.default, character(1))
     if (! ndl %in% nms) {

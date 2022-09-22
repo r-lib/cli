@@ -248,6 +248,9 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.obj_type_friendly = list(
       transform = function(x) format_inline(typename(x))
     ),
+    span.type = list(
+      transform = function(x) format_inline(typename(x))
+    ),
     span.or = list("vec-sep2" = " or ", "vec-last" = ", or "),
     span.timestamp = list(before = "[", after = "]", color = "grey")
   )
