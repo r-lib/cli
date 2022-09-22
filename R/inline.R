@@ -239,7 +239,7 @@ clii__inline <- function(app, text, .list) {
 
 inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
-make_cmd_transformer <- function(values) {
+make_cmd_transformer <- function(values, .call = NULL) {
   values$marker <- random_id()
   values$qty <- NA_integer_
   values$num_subst <- 0L
@@ -257,6 +257,10 @@ make_cmd_transformer <- function(values) {
     ".sym_flip(bool_word)", ".sym_flip(bool_topic)", ".sym_flip(bool_wsi)"
   )
 
+  # it is not easy to do better than this, we would need to pass a call
+  # down from the exported functions
+
+  caller <- .call %||% sys.call(-1)
   function(code, envir) {
     first_char <- substr(code, 1, 1)
 
@@ -270,7 +274,7 @@ make_cmd_transformer <- function(values) {
       has_match <- m != -1
       if (!has_match) {
         throw(cli_error(
-          call. = sys.call(-3),
+          call. = caller,
           "Invalid cli literal: {.code {{{abbrev(code, 10)}}}} starts with a dot.",
           "i" = "Interpreted literals must not start with a dot in cli >= 3.4.0.",
           "i" = paste("{.code {{}}} expressions starting with a dot are",
@@ -298,15 +302,17 @@ make_cmd_transformer <- function(values) {
     # {} plain substitution
     } else {
       expr <- parse(text = code, keep.source = FALSE) %??%
-        cli_error(paste(
-          "Could not parse cli {.code {{}}} expression:",
-          "{.code {abbrev(code, 20)}}."
-        ))
+        cli_error(
+          call. = caller,
+          "Could not parse cli {.code {{}}} expression:
+           {.code {abbrev(code, 20)}}."
+        )
       res <- eval(expr, envir = envir) %??%
-        cli_error(paste(
-          "Could not evaluate cli {.code {{}}} expression:",
-          "{.code {abbrev(code, 20)}}."
-        ))
+        cli_error(
+          call. = caller,
+          "Could not evaluate cli {.code {{}}} expression:
+           {.code {abbrev(code, 20)}}."
+        )
 
       id <- paste0("v", length(values))
       values[[id]] <- res
@@ -317,10 +323,10 @@ make_cmd_transformer <- function(values) {
   }
 }
 
-glue_cmd <- function(..., .envir) {
+glue_cmd <- function(..., .envir, .call = sys.call(-1)) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
-  transformer <- make_cmd_transformer(values)
+  transformer <- make_cmd_transformer(values, .call = .call)
   pstr <- glue(
     str,
     .envir = .envir,

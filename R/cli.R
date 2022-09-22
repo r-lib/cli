@@ -198,7 +198,7 @@ format_inline <- function(..., .envir = parent.frame(), collapse = TRUE) {
 #' @export
 
 cli_text <- function(..., .envir = parent.frame()) {
-  cli__message("text", list(text = glue_cmd(..., .envir = .envir)))
+  cli__message("text", list(text = glue_cmd(..., .envir = .envir, .call = sys.call())))
 }
 
 #' CLI verbatim text
@@ -256,24 +256,42 @@ cli_verbatim <- function(..., .envir = parent.frame()) {
 #' @export
 
 cli_h1 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
-  cli__message("h1", list(text = glue_cmd(text, .envir = .envir), id = id,
-                          class = class))
+  cli__message(
+    "h1",
+    list(
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
+      id = id,
+      class = class
+    )
+  )
 }
 
 #' @rdname cli_h1
 #' @export
 
 cli_h2 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
-  cli__message("h2", list(text = glue_cmd(text, .envir = .envir), id = id,
-                          class = class))
+  cli__message(
+    "h2",
+    list(
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
+      id = id,
+      class = class
+    )
+  )
 }
 
 #' @rdname cli_h1
 #' @export
 
 cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
-  cli__message("h3", list(text = glue_cmd(text, .envir = .envir), id = id,
-                          class = class))
+  cli__message(
+    "h3",
+    list(
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
+      id = id,
+      class = class
+    )
+  )
 }
 
 #' Generic CLI container
@@ -468,9 +486,13 @@ cli_ul <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "ul",
     list(
-      items = lapply(items, glue_cmd, .envir = .envir), id = id,
-      class = class, .close = .close),
-    .auto_close = .auto_close, .envir = .envir)
+      items = lapply(items, glue_cmd, .envir = .envir, .call = sys.call()),
+      id = id,
+      class = class,
+      .close = .close
+    ),
+    .auto_close = .auto_close, .envir = .envir
+  )
 }
 
 #' Ordered CLI list
@@ -528,9 +550,13 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
   cli__message(
     "ol",
     list(
-      items = lapply(items, glue_cmd, .envir = .envir), id = id,
-      class = class, .close = .close),
-    .auto_close = .auto_close, .envir = .envir)
+      items = lapply(items, glue_cmd, .envir = .envir, .call = sys.call()),
+      id = id,
+      class = class,
+      .close = .close
+    ),
+    .auto_close = .auto_close, .envir = .envir
+  )
 }
 
 #' Definition list
@@ -581,8 +607,10 @@ cli_dl <- function(items = NULL, labels = names(items), id = NULL,
   cli__message(
     "dl",
     list(
-      items = lapply(items, glue_cmd, .envir = .envir),
-      labels = if (!is.null(labels)) lapply(labels, glue_cmd, .envir = .envir),
+      items = lapply(items, glue_cmd, .envir = .envir, .call = sys.call()),
+      labels = if (!is.null(labels)) {
+                 lapply(labels, glue_cmd, .envir = .envir, .call = sys.call())
+               },
       id = id,
       class = class, .close = .close),
     .auto_close = .auto_close, .envir = .envir)
@@ -625,8 +653,10 @@ cli_li <- function(items = NULL, labels = names(items), id = NULL,
   cli__message(
     "li",
     list(
-      items = lapply(items, glue_cmd, .envir = .envir),
-      labels = if (!is.null(labels)) lapply(labels, glue_cmd, .envir = .envir),
+      items = lapply(items, glue_cmd, .envir = .envir, .call = sys.call()),
+      labels = if (!is.null(labels)) {
+                 lapply(labels, glue_cmd, .envir = .envir, .call = sys.call())
+               },
       id = id,
       class = class),
     .auto_close = .auto_close, .envir = .envir)
@@ -689,7 +719,7 @@ cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
   cli__message(
     "alert",
     list(
-      text = glue_cmd(text, .envir = .envir),
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
       id = id,
       class = class,
       wrap = wrap
@@ -705,7 +735,7 @@ cli_alert_success <- function(text, id = NULL, class = NULL, wrap = FALSE,
   cli__message(
     "alert_success",
     list(
-      text = glue_cmd(text, .envir = .envir),
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
       id = id,
       class = class,
       wrap = wrap
@@ -721,7 +751,7 @@ cli_alert_danger <- function(text, id = NULL, class = NULL, wrap = FALSE,
   cli__message(
     "alert_danger",
     list(
-      text = glue_cmd(text, .envir = .envir),
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
       id = id,
       class = class,
       wrap = wrap
@@ -737,7 +767,7 @@ cli_alert_warning <- function(text, id = NULL, class = NULL, wrap = FALSE,
   cli__message(
     "alert_warning",
     list(
-      text = glue_cmd(text, .envir = .envir),
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
       id = id,
       class = class,
       wrap = wrap
@@ -753,7 +783,7 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
   cli__message(
     "alert_info",
     list(
-      text = glue_cmd(text, .envir = .envir),
+      text = glue_cmd(text, .envir = .envir, .call = sys.call()),
       id = id,
       class = class,
       wrap = wrap
@@ -801,9 +831,9 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 
 cli_rule <- function(left = "", center = "", right = "", id = NULL,
                      .envir = parent.frame()) {
-  cli__message("rule", list(left = glue_cmd(left, .envir = .envir),
-                            center = glue_cmd(center, .envir = .envir),
-                            right = glue_cmd(right, .envir = .envir),
+  cli__message("rule", list(left = glue_cmd(left, .envir = .envir, .call = sys.call()),
+                            center = glue_cmd(center, .envir = .envir, .call = sys.call()),
+                            right = glue_cmd(right, .envir = .envir, .call = sys.call()),
                             id = id))
 }
 
@@ -833,8 +863,8 @@ cli_blockquote <- function(quote, citation = NULL, id = NULL,
   cli__message(
     "blockquote",
     list(
-      quote = glue_cmd(quote, .envir = .envir),
-      citation = glue_cmd(citation, .envir = .envir),
+      quote = glue_cmd(quote, .envir = .envir, .call = sys.call()),
+      citation = glue_cmd(citation, .envir = .envir, .call = sys.call()),
       id = id,
       class = class
     )
