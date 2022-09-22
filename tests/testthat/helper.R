@@ -190,3 +190,7 @@ sanitize_home <- function(x) {
 sanitize_srcref <- function(x) {
   gsub(" at .*.R:[0-9]+:[0-9]+", "", x)
 }
+
+sanitize_call <- function(x) {
+  gsub(" in `.*`", "", x)
+}

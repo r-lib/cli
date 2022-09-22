@@ -174,7 +174,9 @@ test_that("various errors", {
     cli_text("xx {__cannot-parse-this__} yy"),
     transform = sanitize_srcref
   )
-  expect_snapshot_error(
-    cli_text("xx {1 + 'a'} yy")
+  expect_snapshot(
+    error = TRUE,
+    cli_text("xx {1 + 'a'} yy"),
+    transform = function(x) sanitize_call(sanitize_srcref(x))
   )
 })

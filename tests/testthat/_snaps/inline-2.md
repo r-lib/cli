@@ -402,7 +402,11 @@
 
 ---
 
-    ! Error while evaluating cli `{}` expression: `1 + 'a'`.
-    Caused by error in `1 + "a"` at inline.R:305:7:
-    ! non-numeric argument to binary operator
+    Code
+      cli_text("xx {1 + 'a'} yy")
+    Condition
+      Error:
+      ! Error while evaluating cli `{}` expression: `1 + 'a'`.
+      Caused by error:
+      ! non-numeric argument to binary operator
 
