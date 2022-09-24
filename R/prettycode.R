@@ -336,3 +336,41 @@ code_theme_default_term <- function() {
 code_theme_list <- function() {
   names(rstudio_themes)
 }
+
+pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
+  if (num_ansi_colors() == 1L) return(base::print.function(x, useSource))
+
+  srcref <- getSrcref(x)
+  src <- if (useSource && ! is.null(srcref)) {
+    as.character(srcref)
+  } else {
+    deparse(x)
+  }
+
+  err <- FALSE
+  hisrc <- tryCatch(
+    code_highlight(src, code_theme = code_theme),
+    error = function(e) err <<- TRUE)
+  if (err) return(base::print.function(x, useSource))
+
+  ## Environment of the function
+  hisrc <- c(hisrc, capture.output(print(environment(x))))
+
+  cat(hisrc, sep = "\n")
+  invisible(x)
+}
+
+#' Turn on pretty-printing functions at the R console
+#'
+#' Defines a print method for functions, in the current session, that supports
+#' syntax highlighting.
+#'
+#' The new print method takes priority over the built-in one. Use
+#' [base::suppressMessages()] to suppress the alert message.
+#'
+#' @export
+
+pretty_print_code <- function() {
+  registerS3method("print", "function", pretty_print_function, asNamespace("cli"))
+  cli::cli_alert_success("Registered pretty printing function method")
+}

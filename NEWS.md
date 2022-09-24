@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New function `pretty_print_code()` to print function objects with syntax
+  highlighting at the R console.
+
 # cli 3.4.1
 
 * cli has better error messages now.
