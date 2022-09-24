@@ -25,6 +25,8 @@ reserved_words <- function() {
 #'
 #' @param code Character vector, each element is one line of code.
 #' @param code_theme Theme see [code_theme_list()].
+#' @param envir Environment to look up function calls for hyperlinks.
+#'   If `NULL`, then the global search path is used.
 #' @return Character vector, the highlighted code.
 #'
 #' @family syntax highlighting
@@ -34,7 +36,7 @@ reserved_words <- function() {
 #' code_highlight(deparse(ls))
 #' cat(code_highlight(deparse(ls)), sep = "\n")
 
-code_highlight <- function(code, code_theme = NULL) {
+code_highlight <- function(code, code_theme = NULL, envir = NULL) {
 
   code_theme <- code_theme %||% code_theme_default()
 
@@ -88,9 +90,12 @@ code_highlight <- function(code, code_theme = NULL) {
   }
 
   ## Function calls
+  fun_call <- data$token == "SYMBOL_FUNCTION_CALL"
+  if (ansi_hyperlink_types()$help) {
+    hitext[fun_call] <- pretty_fun_link(data, fun_call, envir)
+  }
   if (!is.null(theme$call)) {
-    fun_call <- data$token == "SYMBOL_FUNCTION_CALL"
-    hitext[fun_call] <- theme$call(data$text[fun_call])
+    hitext[fun_call] <- theme$call(hitext[fun_call])
   }
 
   ## Strings
@@ -349,7 +354,7 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
 
   err <- FALSE
   hisrc <- tryCatch(
-    code_highlight(src, code_theme = code_theme),
+    code_highlight(src, code_theme = code_theme, envir = environment(x)),
     error = function(e) err <<- TRUE)
   if (err) return(base::print.function(x, useSource))
 
@@ -373,4 +378,63 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
 pretty_print_code <- function() {
   registerS3method("print", "function", pretty_print_function, asNamespace("cli"))
   cli::cli_alert_success("Registered pretty printing function method")
+}
+
+pretty_fun_link <- function(data, fun_call, envir) {
+  sprt <- ansi_hyperlink_types()$help
+  wch <- which(fun_call)
+  txt <- data$text[wch]
+  if (! sprt || length(wch) == 0) return(txt)
+
+  scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
+    "ide:help"
+  } else {
+    "x-r-help"
+  }
+
+  pkg <- vcapply(wch, function(idx) {
+    prt <- data$parent[idx]
+    sgs <- which(data$parent == prt)
+    # not a pkg::fun call?
+    if (length(sgs) != 3 || data$token[sgs[1]] != "SYMBOL_PACKAGE" ||
+        data$token[sgs[2]] != "NS_GET") {
+      # note: we do not process ::: which would be NS_GET_INT
+      find_function_symbol(data$text[idx], envir %||% .GlobalEnv)
+    } else {
+      data$text[sgs[1]]
+    }
+  })
+
+  wlnk <- which(!is.na(pkg))
+  txt[wlnk] <- style_hyperlink(
+    text = txt[wlnk],
+    url = paste0(scheme, ":", pkg[wlnk], "::", txt[wlnk])
+  )
+
+  txt
+}
+
+find_function_symbol <- function(name, envir = .GlobalEnv) {
+  empty <- emptyenv()
+  while (!identical(envir, empty)) {
+    if (exists(name, envir = envir, inherits = FALSE, mode = "function")) {
+      env_name <- environmentName(envir)
+      if (grepl("package:", env_name)) {
+        env_name <- sub("^package:", "", env_name)
+      }
+      if (grepl("imports:", env_name)) {
+        env_name <- environmentName(environment(get(name, envir)))
+      }
+      if (grepl("package:", env_name)) {
+        env_name <- sub("^package:", "", env_name)
+      }
+      if (env_name %in% c("", "R_GlobalEnv")) {
+        env_name <- NA_character_
+      }
+      return(env_name)
+    } else {
+      envir <- parent.env(envir)
+    }
+  }
+  NA_character_
 }
