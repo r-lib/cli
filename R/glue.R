@@ -59,9 +59,46 @@ drop_null <- function(x) {
   x[!vapply(x, is.null, logical(1))]
 }
 
-collapse <- function(x, sep = "", last = "", trunc = Inf,
-                     ellipsis = symbol$ellipsis,
-                     style = c("both-ends", "head")) {
+#' Collapse a vector into a string scalar
+#'
+#' Features:
+#' - custom separator,
+#' - custom last separator: `last` argument,
+#' - adds ellipsis to truncated strings,
+#' - uses Unicode ellipsis character on UTF-8 console,
+#' - can collapse "from both ends", with `style = "both-ends"`.
+#'
+#' @param x Character vector, or an object with an `as.character()` method
+#' to collapse.
+#' @param sep Character string, separator.
+#' @param last Last separator, if there is no truncation. E.g. use
+#' `", and "` for the Oxford comma.
+#' @param trunc MAximum number of elements to show. For `sytle = "head"`
+#' at least `trunc = 1` is used. For `style = "both-ends"` at least
+#' `trunc = 5` is used, even if a smaller number is specified.
+#' @param ellipsis character string to use at the place of the truncation.
+#' By default the Unicode ellipsis character is used if the console is
+#' UTF-8 and three dots otherwise.
+#' @param style Truncation style:
+#' * `both-ends`: the default, shows the beginning and end of the vector,
+#'   and skips elements in the middle if needed.
+#' * `head`: shows the beginning of the vector, and skips elements at the
+#'   end, if needed.
+#'
+#' @seealso `glue_collapse` in the glue package incpired `cli_collapse`
+#' @export
+#' @examples
+#' cli_collapse(letters)
+#'
+#' # truncate
+#' cli_collapse(letters, trunc = 5)
+#'
+#' # head style
+#' cli_collapse(letters, trunc = 5, style = "head")
+
+cli_collapse <- function(x, sep = ", ", last = ", and ", trunc = Inf,
+                         ellipsis = symbol$ellipsis,
+                         style = c("both-ends", "head")) {
 
   # does not make sense to show ... instead of an element
   if (trunc == length(x) - 1L) trunc <- trunc + 1L
@@ -98,7 +135,7 @@ collapse_head <- function(x, sep = "", last = "", trunc = Inf,
 collapse_both_ends <- function(x, sep = "", last = "", trunc = Inf,
                                ellipsis = symbol$ellipsis) {
 
-  # we always list five or less elements
+  # we always list at least 5 elements
   trunc <- max(trunc, 5L)
   trunc <- min(trunc, length(x))
   if (length(x) <= 5 || length(x) <= trunc) {

@@ -138,3 +138,27 @@ test_that_cli(config = c("plain", "ansi"), "both-ends with formatting", {
     cli_text("{.val {v(11,10)}}")
   })
 })
+
+test_that("cli_collapse", {
+  l10 <- letters[1:10]
+  expect_snapshot({
+    cli_collapse(l10)
+    cli_collapse(l10, trunc = 6)
+    cli_collapse(l10, trunc = 5)
+    cli_collapse(l10, trunc = 4)
+    cli_collapse(l10, trunc = 1)
+    cli_collapse(l10, sep = "; ")
+    cli_collapse(l10, sep = "; ", last = "; or ")
+    cli_collapse(l10, sep = "; ")
+    cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6)
+
+    cli_collapse(l10, style = "head")
+    cli_collapse(l10, trunc = 6, style = "head")
+    cli_collapse(l10, trunc = 5, style = "head")
+    cli_collapse(l10, trunc = 4, style = "head")
+    cli_collapse(l10, trunc = 1, style = "head")
+    cli_collapse(l10, sep = "; ", style = "head")
+    cli_collapse(l10, sep = "; ", last = "; or ", style = "head")
+    cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6, style = "head")
+  })
+})

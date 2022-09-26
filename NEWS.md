@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New function `cli_collapse()` to collapse character vectors into a single
+  string.
+
 # cli 3.4.1
 
 * cli has better error messages now.

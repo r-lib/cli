@@ -316,3 +316,74 @@
     Message
       [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, [34m6[39m, [34m7[39m, [34m8[39m, [34m9[39m, [34m10[39m, and [34m11[39m
 
+# cli_collapse
+
+    Code
+      cli_collapse(l10)
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, and j"
+    Code
+      cli_collapse(l10, trunc = 6)
+    Output
+      [1] "a, b, c, d, ..., i, and j"
+    Code
+      cli_collapse(l10, trunc = 5)
+    Output
+      [1] "a, b, c, ..., i, and j"
+    Code
+      cli_collapse(l10, trunc = 4)
+    Output
+      [1] "a, b, c, ..., i, and j"
+    Code
+      cli_collapse(l10, trunc = 1)
+    Output
+      [1] "a, b, c, ..., i, and j"
+    Code
+      cli_collapse(l10, sep = "; ")
+    Output
+      [1] "a; b; c; d; e; f; g; h; i, and j"
+    Code
+      cli_collapse(l10, sep = "; ", last = "; or ")
+    Output
+      [1] "a; b; c; d; e; f; g; h; i; or j"
+    Code
+      cli_collapse(l10, sep = "; ")
+    Output
+      [1] "a; b; c; d; e; f; g; h; i, and j"
+    Code
+      cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6)
+    Output
+      [1] "a; b; c; d; ...; i; or j"
+    Code
+      cli_collapse(l10, style = "head")
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, and j"
+    Code
+      cli_collapse(l10, trunc = 6, style = "head")
+    Output
+      [1] "a, b, c, d, e, f, ..."
+    Code
+      cli_collapse(l10, trunc = 5, style = "head")
+    Output
+      [1] "a, b, c, d, e, ..."
+    Code
+      cli_collapse(l10, trunc = 4, style = "head")
+    Output
+      [1] "a, b, c, d, ..."
+    Code
+      cli_collapse(l10, trunc = 1, style = "head")
+    Output
+      [1] "a, ..."
+    Code
+      cli_collapse(l10, sep = "; ", style = "head")
+    Output
+      [1] "a; b; c; d; e; f; g; h; i, and j"
+    Code
+      cli_collapse(l10, sep = "; ", last = "; or ", style = "head")
+    Output
+      [1] "a; b; c; d; e; f; g; h; i; or j"
+    Code
+      cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6, style = "head")
+    Output
+      [1] "a; b; c; d; e; f; ..."
+
