@@ -44,6 +44,24 @@
       [33m![39m [1m[22m`split` must be character of length <= 1, or must coerce to that
       [36mi[39m `split` is (or was coerced to) a character vector
 
+# ansi_strtrim with zero-length ellipsis
+
+    Code
+      ansi_strtrim("12345", 1, ellipsis = "")
+    Output
+      <cli_ansi_string>
+      [1] 1
+    Code
+      ansi_strtrim("12345", 3, ellipsis = "")
+    Output
+      <cli_ansi_string>
+      [1] 123
+    Code
+      ansi_strtrim("12345", 5, ellipsis = "")
+    Output
+      <cli_ansi_string>
+      [1] 12345
+
 # ansi_columns
 
     foo 1     foo 2     foo 3     foo 4     

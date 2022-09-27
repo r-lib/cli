@@ -316,74 +316,142 @@
     Message
       [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, [34m6[39m, [34m7[39m, [34m8[39m, [34m9[39m, [34m10[39m, and [34m11[39m
 
-# cli_collapse
+# ansi_collapse
 
     Code
-      cli_collapse(l10)
+      ansi_collapse(l10)
     Output
       [1] "a, b, c, d, e, f, g, h, i, and j"
     Code
-      cli_collapse(l10, trunc = 6)
+      ansi_collapse(l10, trunc = 6)
     Output
       [1] "a, b, c, d, ..., i, and j"
     Code
-      cli_collapse(l10, trunc = 5)
+      ansi_collapse(l10, trunc = 5)
     Output
       [1] "a, b, c, ..., i, and j"
     Code
-      cli_collapse(l10, trunc = 4)
+      ansi_collapse(l10, trunc = 4)
     Output
       [1] "a, b, c, ..., i, and j"
     Code
-      cli_collapse(l10, trunc = 1)
+      ansi_collapse(l10, trunc = 1)
     Output
       [1] "a, b, c, ..., i, and j"
     Code
-      cli_collapse(l10, sep = "; ")
+      ansi_collapse(l10, sep = "; ")
     Output
       [1] "a; b; c; d; e; f; g; h; i, and j"
     Code
-      cli_collapse(l10, sep = "; ", last = "; or ")
+      ansi_collapse(l10, sep = "; ", last = "; or ")
     Output
       [1] "a; b; c; d; e; f; g; h; i; or j"
     Code
-      cli_collapse(l10, sep = "; ")
+      ansi_collapse(l10, sep = "; ")
     Output
       [1] "a; b; c; d; e; f; g; h; i, and j"
     Code
-      cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6)
+      ansi_collapse(l10, sep = "; ", last = "; or ", trunc = 6)
     Output
       [1] "a; b; c; d; ...; i; or j"
     Code
-      cli_collapse(l10, style = "head")
+      ansi_collapse(l10, style = "head")
     Output
       [1] "a, b, c, d, e, f, g, h, i, and j"
     Code
-      cli_collapse(l10, trunc = 6, style = "head")
+      ansi_collapse(l10, trunc = 6, style = "head")
     Output
       [1] "a, b, c, d, e, f, ..."
     Code
-      cli_collapse(l10, trunc = 5, style = "head")
+      ansi_collapse(l10, trunc = 5, style = "head")
     Output
       [1] "a, b, c, d, e, ..."
     Code
-      cli_collapse(l10, trunc = 4, style = "head")
+      ansi_collapse(l10, trunc = 4, style = "head")
     Output
       [1] "a, b, c, d, ..."
     Code
-      cli_collapse(l10, trunc = 1, style = "head")
+      ansi_collapse(l10, trunc = 1, style = "head")
     Output
       [1] "a, ..."
     Code
-      cli_collapse(l10, sep = "; ", style = "head")
+      ansi_collapse(l10, sep = "; ", style = "head")
     Output
       [1] "a; b; c; d; e; f; g; h; i, and j"
     Code
-      cli_collapse(l10, sep = "; ", last = "; or ", style = "head")
+      ansi_collapse(l10, sep = "; ", last = "; or ", style = "head")
     Output
       [1] "a; b; c; d; e; f; g; h; i; or j"
     Code
-      cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6, style = "head")
+      ansi_collapse(l10, sep = "; ", last = "; or ", trunc = 6, style = "head")
     Output
       [1] "a; b; c; d; e; f; ..."
+
+# ansi_collapse with width trimming
+
+    Code
+      ansi_collapse(l10, width = 1, style = "head")
+    Output
+      <cli_ansi_string>
+      [1] .
+    Code
+      ansi_collapse(l10, width = 2, style = "head")
+    Output
+      <cli_ansi_string>
+      [1] ..
+    Code
+      ansi_collapse(l10, width = 3, style = "head")
+    Output
+      [1] "..."
+    Code
+      ansi_collapse(l10, width = 4, style = "head")
+    Output
+      [1] "a..."
+    Code
+      ansi_collapse(l10, width = 5, style = "head")
+    Output
+      [1] "a..."
+    Code
+      ansi_collapse(l10, width = 6, style = "head")
+    Output
+      [1] "a, ..."
+    Code
+      ansi_collapse(l10, width = 7, style = "head")
+    Output
+      [1] "a, ..."
+    Code
+      ansi_collapse(l10, width = 8, style = "head")
+    Output
+      [1] "a, ..."
+    Code
+      ansi_collapse(l10, width = 9, style = "head")
+    Output
+      [1] "a, b, ..."
+    Code
+      ansi_collapse(l10, width = 30, style = "head")
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, ..."
+    Code
+      ansi_collapse(l10, width = 31, style = "head")
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, ..."
+    Code
+      ansi_collapse(l10, width = 32, style = "head")
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, and j"
+    Code
+      ansi_collapse(l10, width = 40, style = "head")
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, and j"
+
+---
+
+    Code
+      ansi_collapse(l10, width = 10, style = "both-ends")
+    Condition
+      Warning in `collapse_both_ends()`:
+      ! finite `width` is not implemented in `cli::ansi_collapse()`.
+      i `width = Inf` is used instead.
+    Output
+      [1] "a, b, c, d, e, f, g, h, i, and j"
 

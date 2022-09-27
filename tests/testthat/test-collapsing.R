@@ -139,26 +139,49 @@ test_that_cli(config = c("plain", "ansi"), "both-ends with formatting", {
   })
 })
 
-test_that("cli_collapse", {
+test_that("ansi_collapse", {
   l10 <- letters[1:10]
   expect_snapshot({
-    cli_collapse(l10)
-    cli_collapse(l10, trunc = 6)
-    cli_collapse(l10, trunc = 5)
-    cli_collapse(l10, trunc = 4)
-    cli_collapse(l10, trunc = 1)
-    cli_collapse(l10, sep = "; ")
-    cli_collapse(l10, sep = "; ", last = "; or ")
-    cli_collapse(l10, sep = "; ")
-    cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6)
+    ansi_collapse(l10)
+    ansi_collapse(l10, trunc = 6)
+    ansi_collapse(l10, trunc = 5)
+    ansi_collapse(l10, trunc = 4)
+    ansi_collapse(l10, trunc = 1)
+    ansi_collapse(l10, sep = "; ")
+    ansi_collapse(l10, sep = "; ", last = "; or ")
+    ansi_collapse(l10, sep = "; ")
+    ansi_collapse(l10, sep = "; ", last = "; or ", trunc = 6)
 
-    cli_collapse(l10, style = "head")
-    cli_collapse(l10, trunc = 6, style = "head")
-    cli_collapse(l10, trunc = 5, style = "head")
-    cli_collapse(l10, trunc = 4, style = "head")
-    cli_collapse(l10, trunc = 1, style = "head")
-    cli_collapse(l10, sep = "; ", style = "head")
-    cli_collapse(l10, sep = "; ", last = "; or ", style = "head")
-    cli_collapse(l10, sep = "; ", last = "; or ", trunc = 6, style = "head")
+    ansi_collapse(l10, style = "head")
+    ansi_collapse(l10, trunc = 6, style = "head")
+    ansi_collapse(l10, trunc = 5, style = "head")
+    ansi_collapse(l10, trunc = 4, style = "head")
+    ansi_collapse(l10, trunc = 1, style = "head")
+    ansi_collapse(l10, sep = "; ", style = "head")
+    ansi_collapse(l10, sep = "; ", last = "; or ", style = "head")
+    ansi_collapse(l10, sep = "; ", last = "; or ", trunc = 6, style = "head")
+  })
+})
+
+test_that("ansi_collapse with width trimming", {
+  l10 <- letters[1:10]
+  expect_snapshot({
+    ansi_collapse(l10, width = 1, style = "head")
+    ansi_collapse(l10, width = 2, style = "head")
+    ansi_collapse(l10, width = 3, style = "head")
+    ansi_collapse(l10, width = 4, style = "head")
+    ansi_collapse(l10, width = 5, style = "head")
+    ansi_collapse(l10, width = 6, style = "head")
+    ansi_collapse(l10, width = 7, style = "head")
+    ansi_collapse(l10, width = 8, style = "head")
+    ansi_collapse(l10, width = 9, style = "head")
+    ansi_collapse(l10, width = 30, style = "head")
+    ansi_collapse(l10, width = 31, style = "head")
+    ansi_collapse(l10, width = 32, style = "head")
+    ansi_collapse(l10, width = 40, style = "head")
+  })
+
+  expect_snapshot({
+    ansi_collapse(l10, width = 10, style = "both-ends")
   })
 })

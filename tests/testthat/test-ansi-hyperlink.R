@@ -151,8 +151,8 @@ test_that("ansi_strtrim", {
     ansi_string(txt)
   )
   expect_equal(
-    ansi_strtrim(txt, 5),
-    ansi_string(paste0(ansi_substr(txt, 1, 2), "..."))
+    ansi_strtrim(txt, 4),
+    ansi_string(paste0(ansi_substr(txt, 1, 1), "..."))
   )
 })
 

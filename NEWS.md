@@ -1,7 +1,10 @@
 # cli (development version)
 
-* New function `cli_collapse()` to collapse character vectors into a single
+* New function `ansi_collapse()` to collapse character vectors into a single
   string.
+
+* `ansi_strtrim()` now handles some edge cases better, when `ellipsis` has
+  length zero, and when it is wider than `width`.
 
 # cli 3.4.1
 
