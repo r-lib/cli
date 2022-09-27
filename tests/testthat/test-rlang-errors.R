@@ -176,5 +176,5 @@ test_that("cli_abort(.internal = TRUE) reports the correct function (r-lib/rlang
   # Should mention an internal error in the `base` package
   expect_snapshot({
     (expect_error(fn()))
-  })
+  }, variant = as.character(packageVersion("rlang")))
 })
