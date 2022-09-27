@@ -6,5 +6,5 @@
       <error/rlang_error>
       Error in `fn()`:
       ! Message.
-      i This is an internal error in the base package, please report it to the package authors.
+      i This is an internal error that was detected in the base package.
 
