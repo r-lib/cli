@@ -74,7 +74,11 @@ make_link_file <- function(txt) {
   linked <- grepl("\007|\033\\\\", txt)
   ret[!linked] <- vcapply(which(!linked), function(i) {
     params <- parse_file_link_params(txt[i])
-    style_hyperlink(txt[i], abs_path(params$path), params = params$params)
+    style_hyperlink(
+      txt[i],
+      paste0(abs_path(params$path), params$suffix),
+      params = params$params
+    )
   })
   ret
 }
@@ -84,13 +88,21 @@ parse_file_link_params <- function(txt) {
     # path:line:col
     path <- sub("^(.*):[0-9]+:[0-9]+$", "\\1", txt)
     num <- strsplit(sub("^.*:([0-9]+:[0-9]+)$", "\\1", txt), ":", fixed = TRUE)[[1]]
-    list(path = path, params = c(line = num[1], col = num[2]))
+    if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
+      list(path = path, params = NULL, suffix = paste0("#", num[1], ":", num[2]))
+    } else {
+      list(path = path, params = c(line = num[1], col = num[2]))
+    }
 
   } else if (grepl(":[0-9]+$", txt)) {
     # path:line
     path <- sub("^(.*):[0-9]+$", "\\1", txt)
     num <- sub("^.*:([0-9]+$)", "\\1", txt)
-    list(path = path, params = c(line = num, col = "1"))
+    if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
+      list(path = path, params = NULL, suffix = paste0("#", num))
+    } else {
+      list(path = path, params = c(line = num, col = "1"))
+    }
 
   } else {
     list(path = txt, params = NULL)

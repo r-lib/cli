@@ -23,6 +23,8 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
 test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
               "{.file} and {.path}", {
 
+  withr::local_envvar(R_CLI_HYPERLINK_STYLE = NA_character_)
+
   # absolute path
   expect_snapshot({
     cli_text("{.file /absolute/path}")
