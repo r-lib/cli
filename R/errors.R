@@ -888,7 +888,12 @@ err <- local({
     envir <- tryCatch(asNamespace(ns), error = function(e) .GlobalEnv)
     cl <- trimws(format(call))
     if (length(cl) > 1) { cl <- paste0(cl[1], " ", cli::symbol$ellipsis) }
-    fmc <- cli::code_highlight(cl, envir = envir)[1]
+    # Older cli does not have 'envir'.
+    if ("envir" %in% names(formals(cli::code_highlight))) {
+      fmc <- cli::code_highlight(cl, envir = envir)[1]
+    } else {
+      fmc <- cli::code_highlight(cl)[1]
+    }
     cli::ansi_strtrim(fmc, cli::console_width() - 5)
   }
 
