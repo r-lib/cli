@@ -14,10 +14,10 @@ SEXP clic_dataptr(SEXP x);
 
 #ifdef GCOV_COMPILE
 
-void __gcov_flush();
+void __gcov_dump();
 SEXP clic__gcov_flush() {
   REprintf("Flushing coverage info\n");
-  __gcov_flush();
+  __gcov_dump();
   return R_NilValue;
 }
 
