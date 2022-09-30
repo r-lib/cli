@@ -816,12 +816,18 @@ err <- local({
     if (is.null(ref)) return("")
 
     link <- if (ref$file != "") {
-      cli::style_hyperlink(
-        cli::format_inline("{basename(ref$file)}:{ref$line}:{ref$col}"),
-        paste0("file://", ref$file),
-        params = c(line = ref$line, col = ref$col)
-      )
-
+      if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
+        cli::style_hyperlink(
+          cli::format_inline("{basename(ref$file)}:{ref$line}:{ref$col}"),
+          paste0("file://", ref$file, "#", ref$line, ":", ref$col)
+        )
+      } else {
+        cli::style_hyperlink(
+          cli::format_inline("{basename(ref$file)}:{ref$line}:{ref$col}"),
+          paste0("file://", ref$file),
+          params = c(line = ref$line, col = ref$col)
+        )
+      }
     } else {
       paste0("line ", ref$line)
     }
