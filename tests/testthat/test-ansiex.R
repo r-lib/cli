@@ -552,6 +552,14 @@ test_that_cli(configs = c("plain", "ansi"), "ansi_strtrim", {
   for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
 })
 
+test_that("ansi_strtrim with zero-length ellipsis", {
+  expect_snapshot({
+    ansi_strtrim("12345", 1, ellipsis = "")
+    ansi_strtrim("12345", 3, ellipsis = "")
+    ansi_strtrim("12345", 5, ellipsis = "")
+  })
+})
+
 test_that("ansi_columns", {
   withr::local_options(c(cli.unicode = FALSE))
   local_edition(3)

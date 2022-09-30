@@ -650,24 +650,43 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 ansi_strtrim <- function(x, width = console_width(),
                          ellipsis = symbol$ellipsis) {
 
+  if (width < 0) {
+    throw(cli_error("{.arg width} must be non-negative"))
+  }
+
   x <- enc2utf8(x)
 
   # Unicode width notes. We have nothing to fix here, because we'll just
   # use ansi_substr() and ansi_nchar(), which work correctly with wide
   # characters.
 
+  # if ellipsis is already longer than width, then we just return that
+  tw <- ansi_nchar(ellipsis, "width")
+  if (tw == width) {
+    x[] <- ellipsis
+    return(x)
+  } else if (tw > width) {
+    x[] <- ansi_strtrim(ellipsis, width, ellipsis = "")
+    return(x)
+  }
+
   # First we cut according to _characters_. This might be too wide if we
   # have wide characters.
   lx <- length(x)
   xt <- .Call(clic_ansi_substr, x, rep(1L, lx), rep(as.integer(width), lx))
-  tw <- ansi_nchar(ellipsis, "width")
 
   # If there was a cut, or xt is too wide (using _width_!), that's bad
   # We keep the initial bad ones, these are the ones that need an ellipsis.
   # Then we keep chopping off single characters from the too wide ones,
   # until they are narrow enough.
-  bad0 <- bad <- !is.na(x) &
-    (ansi_strip(xt) != ansi_strip(x) | ansi_nchar(xt, "width") > width)
+  if (ansi_nzchar(ellipsis)) {
+    bad0 <- bad <- !is.na(x) &
+      (ansi_strip(xt) != ansi_strip(x) | ansi_nchar(xt, "width") > width)
+  } else {
+    # if ellipsis is zero length, then the truncated ones are not bad
+    bad0 <- bad <- !is.na(x) & ansi_nchar(xt, "width") > width
+  }
+
   while (any(bad)) {
     xt[bad] <- .Call(
       clic_ansi_substr,

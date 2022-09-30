@@ -53,7 +53,7 @@ inline_collapse <- function(x, style = list()) {
   trunc <- style[["vec-trunc"]] %||% style[["vec_trunc"]] %||% 20L
   col_style <- style[["vec-trunc-style"]] %||% "both-ends"
 
-  collapse(
+  ansi_collapse(
     x,
     sep = sep,
     last = last,
