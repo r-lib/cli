@@ -4,12 +4,15 @@
 \alias{code_highlight}
 \title{Syntax highlight R code}
 \usage{
-code_highlight(code, code_theme = NULL)
+code_highlight(code, code_theme = NULL, envir = NULL)
 }
 \arguments{
 \item{code}{Character vector, each element is one line of code.}
 
 \item{code_theme}{Theme see \code{\link[=code_theme_list]{code_theme_list()}}.}
+
+\item{envir}{Environment to look up function calls for hyperlinks.
+If \code{NULL}, then the global search path is used.}
 }
 \value{
 Character vector, the highlighted code.
