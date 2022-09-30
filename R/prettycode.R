@@ -359,7 +359,7 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
   if (err) return(base::print.function(x, useSource))
 
   ## Environment of the function
-  hisrc <- c(hisrc, capture.output(print(environment(x))))
+  hisrc <- c(hisrc, utils::capture.output(print(environment(x))))
 
   cat(hisrc, sep = "\n")
   invisible(x)
