@@ -636,6 +636,8 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 #' character if Unicode characters are allowed) to the end of truncated
 #' strings.
 #'
+#' Note: `ansi_strtrim()` does not support NA values currently.
+#'
 #' @param x Character vector of ANSI strings.
 #' @param width The width to truncate to.
 #' @param ellipsis The string to append to truncated strings. Supply an
