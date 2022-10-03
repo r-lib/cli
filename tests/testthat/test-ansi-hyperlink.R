@@ -320,6 +320,7 @@ test_that("ansi_has_hyperlink_support 2", {
 test_that("ansi_has_hyperlink_support 3", {
   local_clean_cli_context()
 
+  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
   mockery::stub(ansi_has_hyperlink_support, "is_windows", TRUE)
   withr::local_envvar(WT_SESSION = "4c464723-f51f-4612-83f7-31e1c75abd83")
   expect_true(ansi_has_hyperlink_support())

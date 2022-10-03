@@ -132,6 +132,7 @@ local_clean_cli_context <- function(.local_envir = parent.frame()) {
     cli.hyperlink_help = NULL,
     cli.hyperlink_vignette = NULL,
     cli.num_colors = NULL,
+    cli.palette = NULL,
     crayon.enabled = NULL
   )
   withr::local_envvar(
