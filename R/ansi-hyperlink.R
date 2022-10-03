@@ -52,7 +52,7 @@ make_link <- function(txt, type = c("email", "file", "fun", "help", "href",
     topic    = make_link_topic(txt),
     url      = make_link_url(txt),
     vignette = make_link_vignette(txt),
-    throw(cli_error("Unknown hyperlink type: {.code {type}}, internal cli error"))
+    throw(cli_error("Unknown hyperlink type: {.code {type}}, internal cli error")) # nocov
   )
 }
 
@@ -340,7 +340,7 @@ ansi_has_hyperlink_support <- function() {
   if (isTRUE(as.logical(enabled))){ return(TRUE) }
 
   ## Are we in RStudio?
-  rstudio <- rstudio$detect()
+  rstudio <- rstudio_detect()
   if (rstudio$type != "not_rstudio") { return(rstudio$hyperlink) }
 
   ## Are we in a terminal? No?

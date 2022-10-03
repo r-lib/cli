@@ -229,3 +229,143 @@ test_that("unknown hyperlink type", {
     make_link("this", "foobar")
   )
 })
+
+test_that("iterm file links", {
+  withr::local_envvar(R_CLI_HYPERLINK_STYLE = "iterm")
+  withr::local_options(cli.hyperlink = TRUE)
+  expect_snapshot({
+    cli::cli_text("{.file /path/to/file:10}")
+    cli::cli_text("{.file /path/to/file:10:20}")
+  })
+})
+
+test_that("rstudio links", {
+  withr::local_envvar(
+    RSTUDIO = "1",
+    RSTUDIO_SESSION_PID = Sys.getpid(),
+    RSTUDIO_CHILD_PROCESS_PANE = "build",
+    RSTUDIO_CLI_HYPERLINKS = "1"
+  )
+  withr::local_options(
+    cli.hyperlink = TRUE,
+    cli.hyperlink_help = TRUE,
+    cli.hyperlink_run = TRUE,
+    cli.hyperlink_vignette = TRUE
+  )
+  expect_snapshot(
+    cli::cli_text("{.fun pkg::fun}")
+  )
+  expect_snapshot(
+    cli::cli_text("{.help fun}")
+  )
+  expect_snapshot(
+    cli::cli_text("{.run package::func()}")
+  )
+  expect_snapshot(
+    cli::cli_text("{.vignette package::title}")
+  )
+  expect_snapshot(
+    cli::cli_text("{.topic pkg::topic}")
+  )
+})
+
+test_that("ST hyperlinks", {
+  withr::local_envvar(R_CLI_HYPERLINK_MODE = "posix")
+  withr::local_options(cli.hyperlink = TRUE)
+  expect_snapshot(
+    cat(style_hyperlink("text", "https://example.com"))
+  )
+})
+
+test_that("ansi_has_hyperlink_support", {
+  local_clean_cli_context()
+
+  # force with env var
+  withr::with_envvar(list(R_CLI_HYPERLINKS = "true"),
+    expect_true(ansi_has_hyperlink_support())
+  )
+
+  # if no ansi support, then no
+  withr::with_options(list(cli.num_colors = 1),
+    expect_false(ansi_has_hyperlink_support())
+  )
+  withr::with_envvar(list(R_CLI_NUM_COLORS = "1"),
+    expect_false(ansi_has_hyperlink_support())
+  )
+  withr::with_options(list(crayon.enabled = FALSE),
+    expect_false(ansi_has_hyperlink_support())
+  )
+  withr::with_envvar(list(NO_COLOR = "true"),
+    expect_false(ansi_has_hyperlink_support())
+  )
+
+  # rstudio env var
+  withr::with_envvar(list(RSTUDIO_CLI_HYPERLINKS = "true"),
+    expect_true(ansi_has_hyperlink_support())
+  )
+
+  # are we in rstudio with support?
+  mockery::stub(ansi_has_hyperlink_support, "rstudio_detect",
+                list(type = "rstudio_console", hyperlink = TRUE))
+  expect_true(ansi_has_hyperlink_support())
+})
+
+test_that("ansi_has_hyperlink_support 2", {
+  local_clean_cli_context()
+
+  mockery::stub(ansi_has_hyperlink_support, "isatty", FALSE)
+  expect_false(ansi_has_hyperlink_support())
+})
+
+test_that("ansi_has_hyperlink_support 3", {
+  local_clean_cli_context()
+
+  mockery::stub(ansi_has_hyperlink_support, "is_windows", TRUE)
+  withr::local_envvar(WT_SESSION = "4c464723-f51f-4612-83f7-31e1c75abd83")
+  expect_true(ansi_has_hyperlink_support())
+})
+
+test_that("ansi_has_hyperlink_support 4", {
+  local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
+
+  withr::local_envvar("CI" = "true")
+  expect_false(ansi_has_hyperlink_support())
+
+  withr::local_envvar("CI" = NA_character_, TEAMCITY_VERSION = "1")
+  expect_false(ansi_has_hyperlink_support())
+})
+
+test_that("ansi_has_hyperlink_support 5", {
+  local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
+
+  withr::local_envvar(
+    TERM_PROGRAM = "iTerm.app",
+    TERM_PROGRAM_VERSION = "3.4.16"
+  )
+  expect_true(ansi_has_hyperlink_support())
+})
+
+test_that("ansi_has_hyperlink_support 5", {
+  local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
+
+  withr::local_envvar(VTE_VERSION = "0.51.1")
+  expect_true(ansi_has_hyperlink_support())
+
+  withr::local_envvar(VTE_VERSION = "5110")
+  expect_true(ansi_has_hyperlink_support())
+
+  withr::local_envvar(VTE_VERSION = "foo")
+  expect_false(ansi_has_hyperlink_support())
+})
+
+test_that("ansi_hyperlink_types", {
+  local_clean_cli_context()
+  withr::local_envvar(
+    R_CLI_HYPERLINKS = "true",
+    R_CLI_HYPERLINK_RUN = "true"
+  )
+  expect_true(ansi_hyperlink_types()[["run"]])
+})

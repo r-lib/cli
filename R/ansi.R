@@ -308,7 +308,7 @@ bgcodes <- c(paste0('\x1b[48;5;', 0:255, 'm'), '\x1b[49m')
 rgb_index <- 17:232
 gray_index <- 233:256
 reset_index <- 257
-#nocov end
+# nocov end
 
 ansi_scale <- function(x, from = c(0, 255), to = c(0, 5), round = TRUE) {
   y <- (x - from[1]) /
