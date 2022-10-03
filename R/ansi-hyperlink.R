@@ -347,7 +347,7 @@ ansi_has_hyperlink_support <- function() {
   if (!isatty(stdout())) { return(FALSE) }
 
   ## Are we in a windows terminal?
-  if (os_type() == "windows")  { return(TRUE) }
+  if (is_windows() && Sys.getenv("WT_SESSION") != "")  { return(TRUE) }
 
   ## Better to avoid it in CIs
   if (nzchar(Sys.getenv("CI")) ||
