@@ -1,5 +1,7 @@
 # cli (development version)
 
+* `col_*` and `bg_*` functions how handle zero-length input correctly (#532).
+
 * New function `ansi_collapse()` to collapse character vectors into a single
   string.
 

@@ -124,7 +124,7 @@ create_ansi_style_fun <- function(styles) {
   fun <- eval(substitute(function(...) {
     txt <- paste0(...)
     nc <- num_ansi_colors()
-    if (nc > 1) {
+    if (nc > 1 && length(txt) > 0) {
       mystyles <- .styles
       for (st in rev(mystyles)) {
         if (!is.null(st$palette)) st <- get_palette_color(st, nc)
