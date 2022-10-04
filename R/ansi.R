@@ -1,4 +1,7 @@
 
+# this is install time
+# nocov start
+
 palette_idx <- function(id) {
   ifelse(
     id < 38,
@@ -77,6 +80,8 @@ ansi_builtin_styles <- list(
   bg_none          = list(c(0, 22, 23, 24, 27, 28, 29, 39    ), 49),
   no_bg_color      = list(c(0, 22, 23, 24, 27, 28, 29, 39    ), 49)
 )
+
+# nocov end
 
 is_builtin_style <- function(x) {
   is_string(x) && x %in% names(ansi_builtin_styles)
@@ -256,13 +261,20 @@ make_ansi_style <- function(..., bg = FALSE, grey = FALSE,
     ansi_style_from_r_color(style, bg, colors, grey)
 
   } else if (is_rgb_matrix(style)) {
+    if (is.null(style_name)) {
+      style_name <- paste0(
+        c("rgb", style, if (bg) "-bg", if (grey) "-grey"),
+        collapse = "-"
+      )
+    }
     ansi_style_from_rgb(style, bg, colors, grey)
 
   } else {
     throw(cli_error(
       "Unknown style specification: {.val style}, it must be one of",
       "*" = "a builtin cli style, e.g. {.val bold} or {.val red},",
-      "*" = "an R color name, see {.help grDevices::colors}."
+      "*" = "an R color name, see {.help grDevices::colors}.",
+      "*" = "a [3x1] or [4x1] numeric RGB matrix with, range 0-255."
     ))
   }
 

@@ -34,3 +34,86 @@
       [36mi[39m Know palettes are [34m"dichro"[39m, [34m"vga"[39m, [34m"winxp"[39m, [34m"vscode"[39m, [34m"win10"[39m, [34m"macos"[39m, [34m"putty"[39m, [34m"mirc"[39m, [34m"xterm"[39m, [34m"ubuntu"[39m, [34m"eclipse"[39m, [34m"iterm"[39m, [34m"iterm-pastel"[39m, [34m"iterm-smoooooth"[39m, [34m"iterm-snazzy"[39m, [34m"iterm-solarized"[39m, and [34m"iterm-tango"[39m.
       [36mi[39m Maybe the `cli.palette` option is incorrect?
 
+# custom palettes
+
+    Code
+      col_black("black")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;232mblack[39m
+    Code
+      col_red("red")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;210mred[39m
+    Code
+      col_green("green")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;121mgreen[39m
+    Code
+      col_yellow("yellow")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;229myellow[39m
+    Code
+      col_blue("blue")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;117mblue[39m
+    Code
+      col_magenta("magenta")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;212mmagenta[39m
+    Code
+      col_cyan("cyan")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;159mcyan[39m
+    Code
+      col_white("white")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;254mwhite[39m
+    Code
+      col_br_black("br_black")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;241mbr_black[39m
+    Code
+      col_br_red("br_red")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;210mbr_red[39m
+    Code
+      col_br_green("br_green")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;121mbr_green[39m
+    Code
+      col_br_yellow("br_yellow")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;229mbr_yellow[39m
+    Code
+      col_br_blue("br_blue")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;117mbr_blue[39m
+    Code
+      col_br_magenta("br_magenta")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;212mbr_magenta[39m
+    Code
+      col_br_cyan("br_cyan")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;159mbr_cyan[39m
+    Code
+      col_br_white("br_white")
+    Output
+      <cli_ansi_string>
+      [1] [38;5;254mbr_white[39m
+

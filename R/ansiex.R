@@ -606,7 +606,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
     } else if (xwc == " ") {
       xwidx[2] <- xwidx[2] + 1L
     } else {
-      throw(cli_error("Internal error in {.fun cli::ansi_strwrap}"))
+      throw(cli_error("Internal error in {.fun cli::ansi_strwrap}")) # nocov
     }
 
     while (xsidx <= xslen && xwidx[1] <= length(xw) && xwidx[2] > xwlen) {
@@ -653,7 +653,9 @@ ansi_strtrim <- function(x, width = console_width(),
                          ellipsis = symbol$ellipsis) {
 
   if (width < 0) {
-    throw(cli_error("{.arg width} must be non-negative"))
+    throw(cli_error(
+      "{.arg width} must be non-negative in {.fun cli::ansi_strtrim}."
+    ))
   }
 
   x <- enc2utf8(x)
