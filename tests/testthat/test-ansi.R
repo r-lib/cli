@@ -75,6 +75,7 @@ test_that("ansi-scale", {
     ansi_scale(c(255,100,0))
     ansi_scale(c(255,100,0), round = FALSE)
   })
+})
 
 test_that("zero length vectors", {
   withr::local_options(cli.num_colors = 1)
