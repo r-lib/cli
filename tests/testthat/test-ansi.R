@@ -75,4 +75,29 @@ test_that("ansi-scale", {
     ansi_scale(c(255,100,0))
     ansi_scale(c(255,100,0), round = FALSE)
   })
+
+test_that("zero length vectors", {
+  withr::local_options(cli.num_colors = 1)
+  expect_equal(length(col_cyan(character())), 0)
+  expect_equal(length(bg_cyan(character())), 0)
+  expect_equal(length(col_br_cyan(character())), 0)
+  expect_equal(length(bg_br_cyan(character())), 0)
+
+  withr::local_options(cli.num_colors = 8)
+  expect_equal(length(col_cyan(character())), 0)
+  expect_equal(length(bg_cyan(character())), 0)
+  expect_equal(length(col_br_cyan(character())), 0)
+  expect_equal(length(bg_br_cyan(character())), 0)
+
+  withr::local_options(cli.num_colors = 256)
+  expect_equal(length(col_cyan(character())), 0)
+  expect_equal(length(bg_cyan(character())), 0)
+  expect_equal(length(col_br_cyan(character())), 0)
+  expect_equal(length(bg_br_cyan(character())), 0)
+
+  withr::local_options(cli.num_colors = truecolor)
+  expect_equal(length(col_cyan(character())), 0)
+  expect_equal(length(bg_cyan(character())), 0)
+  expect_equal(length(col_br_cyan(character())), 0)
+  expect_equal(length(bg_br_cyan(character())), 0)
 })
