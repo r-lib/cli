@@ -418,7 +418,11 @@ err <- local({
     namespaces <- unlist(lapply(
       seq_along(frames),
       function(i) {
-        env_label(topenvx(environment(sys.function(i))))
+        if (is_operator(calls[[i]])) {
+          "o"
+        } else {
+          env_label(topenvx(environment(sys.function(i))))
+        }
       }
     ))
     pids <- rep(cond$`_pid` %||% Sys.getpid(), length(calls))
@@ -466,6 +470,11 @@ err <- local({
     )
 
     cond
+  }
+
+  is_operator <- function(cl) {
+    is.call(cl) && length(cl) >= 1 && is.symbol(cl[[1]]) &&
+      grepl("^[^.a-zA-Z]", as.character(cl[[1]]))
   }
 
   mark_invisible_frames <- function(funs, frames) {
@@ -807,12 +816,18 @@ err <- local({
     if (is.null(ref)) return("")
 
     link <- if (ref$file != "") {
-      cli::style_hyperlink(
-        cli::format_inline("{basename(ref$file)}:{ref$line}:{ref$col}"),
-        paste0("file://", ref$file),
-        params = c(line = ref$line, col = ref$col)
-      )
-
+      if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
+        cli::style_hyperlink(
+          cli::format_inline("{basename(ref$file)}:{ref$line}:{ref$col}"),
+          paste0("file://", ref$file, "#", ref$line, ":", ref$col)
+        )
+      } else {
+        cli::style_hyperlink(
+          cli::format_inline("{basename(ref$file)}:{ref$line}:{ref$col}"),
+          paste0("file://", ref$file),
+          params = c(line = ref$line, col = ref$col)
+        )
+      }
     } else {
       paste0("line ", ref$line)
     }
@@ -855,7 +870,9 @@ err <- local({
       cli::col_silver(format(x$num), ". "),
       ifelse (visible, "", "| "),
       scope,
-      vapply(x$call, format_trace_call_cli, character(1)),
+      vapply(seq_along(x$call), function(i) {
+        format_trace_call_cli(x$call[[i]], x$namespace[[i]])
+      }, character(1)),
       srcref
     )
 
@@ -867,10 +884,16 @@ err <- local({
     lines
   }
 
-  format_trace_call_cli <- function(call) {
+  format_trace_call_cli <- function(call, ns = "") {
+    envir <- tryCatch(asNamespace(ns), error = function(e) .GlobalEnv)
     cl <- trimws(format(call))
     if (length(cl) > 1) { cl <- paste0(cl[1], " ", cli::symbol$ellipsis) }
-    fmc <- cli::code_highlight(cl)[1]
+    # Older cli does not have 'envir'.
+    if ("envir" %in% names(formals(cli::code_highlight))) {
+      fmc <- cli::code_highlight(cl, envir = envir)[1]
+    } else {
+      fmc <- cli::code_highlight(cl)[1]
+    }
     cli::ansi_strtrim(fmc, cli::console_width() - 5)
   }
 

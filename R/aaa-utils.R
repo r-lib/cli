@@ -166,6 +166,8 @@ get_rstudio_theme <- function() {
   suppressWarnings(rstudioapi::getThemeInfo())
 }
 
+# ansi_strtrim might not support NAs
+
 abbrev <- function(x, len = 10) {
   # this is better than strtrim() because it adds ...
   ansi_strtrim(x, len)

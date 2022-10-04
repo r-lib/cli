@@ -123,3 +123,29 @@ test_that_cli <- function(desc, code,
     eval(test, envir = parent)
   })
 }
+
+local_clean_cli_context <- function(.local_envir = parent.frame()) {
+  withr::local_options(
+    .local_envir = .local_envir,
+    cli.hyperlink = NULL,
+    cli.hyperlink_run = NULL,
+    cli.hyperlink_help = NULL,
+    cli.hyperlink_vignette = NULL,
+    cli.num_colors = NULL,
+    cli.palette = NULL,
+    crayon.enabled = NULL
+  )
+  withr::local_envvar(
+    .local_envir = .local_envir,
+    R_CLI_HYPERLINKS = NA_character_,
+    RSTUDIO_CLI_HYPERLINKS = NA_character_,
+    R_CLI_NUM_COLORS = NA_character_,
+    NO_COLOR = NA_character_,
+    WT_SESSION = NA_character_,
+    CI = NA_character_,
+    TEAMCITY_VERSION = NA_character_,
+    TERM_PROGRAM = NA_character_,
+    TERM_PROGRAM_VERSION = NA_character_,
+    VTE_VERSION = NA_character_
+  )
+}

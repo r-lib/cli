@@ -62,6 +62,33 @@
       <cli_ansi_string>
       [1] 12345
 
+# ansi_strtrim errors
+
+    Code
+      ansi_strtrim("foobar", -1)
+    Condition
+      Error:
+      ! `width` must be non-negative in `cli::ansi_strtrim()`.
+
+# ansi_strtrim edge cases
+
+    Code
+      ansi_strtrim("foobar", width = 3, ellipsis = "...")
+    Output
+      [1] "..."
+    Code
+      ansi_strtrim("foobar", width = 2, ellipsis = "...")
+    Output
+      [1] ".."
+    Code
+      ansi_strtrim("foobar", width = 1, ellipsis = "...")
+    Output
+      [1] "."
+    Code
+      ansi_strtrim("foobar", width = 0, ellipsis = "...")
+    Output
+      [1] ""
+
 # ansi_columns
 
     foo 1     foo 2     foo 3     foo 4     

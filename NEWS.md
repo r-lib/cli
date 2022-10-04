@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New function `pretty_print_code()` to print function objects with syntax
+  highlighting at the R console.
+
 * `col_*` and `bg_*` functions how handle zero-length input correctly (#532).
 
 * New function `ansi_collapse()` to collapse character vectors into a single

@@ -23,6 +23,8 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
 test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
               "{.file} and {.path}", {
 
+  withr::local_envvar(R_CLI_HYPERLINK_STYLE = NA_character_)
+
   # absolute path
   expect_snapshot({
     cli_text("{.file /absolute/path}")
@@ -102,6 +104,12 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
     paths <- c("~/foo", "bar:10", "file:///abs:10:20")
     cli_text("{.file {paths}}")
   }, transform = function(x) sanitize_home(sanitize_wd(x)))
+
+  mockery::stub(abs_path1, "is_windows", TRUE)
+  expect_equal(
+    abs_path1("c:/foo/bar"),
+    "file://c:/foo/bar"
+  )
 })
 
 # -- {.fun} ---------------------------------------------------------------
@@ -221,6 +229,12 @@ test_that_cli(config = "plain", links = "all", "linked {.url}", {
     )
     cli_text("{.url {link}}")
   })
+})
+
+test_that("make_link_url", {
+  withr::local_options(cli.hyperlink = TRUE)
+  x <- style_hyperlink(paste0("foo", 1:3), paste0("https://foo.bar/", 1:3))
+  expect_equal(make_link_url(x), x)
 })
 
 # -- {.vignette} ----------------------------------------------------------
