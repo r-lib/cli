@@ -5,7 +5,7 @@
 #include <R_ext/Rdynload.h>
 #include <Rversion.h>
 
-SEXP clic_unload() {
+SEXP clic_unload(void) {
   clic_stop_thread();
   return R_NilValue;
 }
@@ -23,7 +23,7 @@ SEXP clic__gcov_flush() {
 
 #else
 
-SEXP clic__gcov_flush() {
+SEXP clic__gcov_flush(void) {
   return R_NilValue;
 }
 

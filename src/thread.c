@@ -77,7 +77,7 @@ SEXP clic_start_thread(SEXP pkg, SEXP ticktime, SEXP speedtime) {
   return R_NilValue;
 }
 
-int cli__kill_thread() {
+int cli__kill_thread(void) {
 
   int ret = 0;
 
@@ -115,7 +115,7 @@ int cli__kill_thread() {
   #define __has_feature(x) 0
 #endif
 
-SEXP clic_stop_thread() {
+SEXP clic_stop_thread(void) {
   if (unloaded) return R_NilValue;
   int ret = 1;
 #if defined(__clang__) && defined(__has_feature)
@@ -136,7 +136,7 @@ SEXP clic_stop_thread() {
   return R_NilValue;
 }
 
-SEXP clic_tick_reset() {
+SEXP clic_tick_reset(void) {
   if (cli__reset) {
     cli__timer_flag = 0;
   }

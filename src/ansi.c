@@ -108,7 +108,7 @@ static void clic__buffer_realloc(struct cli_buffer *buf, size_t size) {
 
 /* ---------------------------------------------------------------------- */
 
-static int clic__hyperlink_mode_posix() {
+static int clic__hyperlink_mode_posix(void) {
   char *ev = getenv("R_CLI_HYPERLINK_MODE");
   if (ev == NULL) return 0;
   return !strcmp("posix", ev);

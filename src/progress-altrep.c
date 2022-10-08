@@ -51,11 +51,11 @@ void *disable_gc_DataPtr(SEXP x, Rboolean writeable) {
 
 static SEXP cli__timer = 0;
 
-SEXP clic_make_timer() {
+SEXP clic_make_timer(void) {
   return cli__timer;
 }
 
-SEXP clic_update_due() {
+SEXP clic_update_due(void) {
   /* This will make a copy, which leads to better semantics. */
   return ScalarLogical(*cli_timer_flag);
 }

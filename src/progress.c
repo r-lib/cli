@@ -66,7 +66,7 @@ static int cli_clock_gettime(int clk_id, struct timespec *t) {
 #define cli_clock_gettime(a,b) clock_gettime(a,b)
 #endif
 
-static R_INLINE SEXP new_env() {
+static R_INLINE SEXP new_env(void) {
   SEXP env;
   PROTECT(env = allocSExp(ENVSXP));
   SET_FRAME(env, R_NilValue);
@@ -77,14 +77,14 @@ static R_INLINE SEXP new_env() {
   return env;
 }
 
-double clic__get_time() {
+double clic__get_time(void) {
   struct timespec t;
   int ret = cli_clock_gettime(CLOCK_MONOTONIC, &t);
   if (ret) R_THROW_POSIX_ERROR("Cannot query monotonic clock");
   return (double) t.tv_sec + 1e-9 * (double) t.tv_nsec;
 }
 
-SEXP clic_get_time() {
+SEXP clic_get_time(void) {
   struct timespec t;
   int ret = cli_clock_gettime(CLOCK_MONOTONIC, &t);
   if (ret) R_THROW_POSIX_ERROR("Cannot query monotonic clock");
@@ -303,7 +303,7 @@ void cli_progress_done(SEXP bar) {
   UNPROTECT(4);
 }
 
-int cli_progress_num() {
+int cli_progress_num(void) {
   SEXP clienv = PROTECT(clic__find_var(cli_pkgenv, Rf_install("clienv")));
   if (clienv == R_UnboundValue) error("Cannot find 'clienv'");
   SEXP bars = PROTECT(clic__find_var(clienv, Rf_install("progress")));

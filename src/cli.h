@@ -10,13 +10,13 @@
 
 SEXP clic_diff_chr(SEXP a, SEXP b, SEXP max);
 
-SEXP clic_getppid();
+SEXP clic_getppid(void);
 SEXP clic_md5(SEXP strs);
 SEXP clic_md5_raw(SEXP r);
 SEXP clic_sha256(SEXP strs);
 SEXP clic_sha256_raw(SEXP r);
 SEXP clic_sha256_file(SEXP paths);
-SEXP clic_tty_size();
+SEXP clic_tty_size(void);
 SEXP clic_ansi_simplify(SEXP x, SEXP keep_csi);
 SEXP clic_ansi_substr(SEXP x, SEXP start, SEXP stop);
 SEXP clic_ansi_html(SEXP x, SEXP keep_csi);
@@ -37,7 +37,7 @@ void cli_progress_add(SEXP bar, double inc);
 SEXP cli_progress_bar(vint **ptr, double total, SEXP config);
 void cli_progress_done(SEXP bar);
 void cli_progress_init_timer(vint **ptr);
-int cli_progress_num();
+int cli_progress_num(void);
 void cli_progress_set(SEXP bar, double set);
 void cli_progress_set_clear(SEXP bar, int);
 void cli_progress_set_format(SEXP bar, const char *name);
@@ -55,18 +55,18 @@ extern SEXP cli_pkgenv;
 void cli_init_altrep(DllInfo *dll);
 #endif
 
-double clic__get_time();
+double clic__get_time(void);
 SEXP clic__find_var(SEXP rho, SEXP symbol);
 
 SEXP clic_start_thread(SEXP pkgenv, SEXP tick, SEXP speed);
-SEXP clic_stop_thread();
-SEXP clic_tick_reset();
-SEXP clic_get_time();
+SEXP clic_stop_thread(void);
+SEXP clic_tick_reset(void);
+SEXP clic_get_time(void);
 SEXP clic_tick_set(SEXP ticktime, SEXP speedtime);
 SEXP clic_tick_pause(SEXP state);
 SEXP clic_tick_resume(SEXP state);
-SEXP clic_make_timer();
-SEXP clic_update_due();
+SEXP clic_make_timer(void);
+SEXP clic_update_due(void);
 
 /** Indicates whether a given unsigned integer is a valid ASCII codepoint */
 #define UTF8LITE_IS_ASCII(x) \
@@ -99,7 +99,7 @@ SEXP clic_update_due();
 	 && !UTF8LITE_IS_UTF16_HIGH(x) \
 	 && !UTF8LITE_IS_UTF16_LOW(x))
 
-SEXP clic_get_embedded_utf8();
+SEXP clic_get_embedded_utf8(void);
 SEXP clic_set_embedded_utf8(SEXP value);
 int clic__utf8_display_width_char(const uint8_t **x);
 

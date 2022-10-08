@@ -12,7 +12,7 @@
 #include <unistd.h>
 #endif
 
-SEXP clic_tty_size() {
+SEXP clic_tty_size(void) {
   SEXP result = PROTECT(Rf_allocVector(INTSXP, 2));
 
 #ifdef WIN32
