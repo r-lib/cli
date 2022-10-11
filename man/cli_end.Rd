@@ -24,9 +24,15 @@ cli_end(cnt)
 cnt <- cli_par()
 cli_text("Second paragraph.")
 cli_end(cnt)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> First paragraph.                                                                
+#>                                                                                 
+#> Second paragraph.                                                               
+#>                                                                                 
+</pre></div>
+}}
 
-\if{html}{\figure{cli-end.svg}}
 }
 
 \subsection{Closing a stack of containers}{
@@ -38,9 +44,16 @@ cli_par()
 cli_text("Still item two.")
 cli_end(list)
 cli_text("Not in the list any more")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> • Item one:                                                                     
+#> • Item two:                                                                     
+#> Still item two.                                                                 
+#>                                                                                 
+#> Not in the list any more                                                        
+</pre></div>
+}}
 
-\if{html}{\figure{cli-end-many.svg}}
 }
 
 \subsection{Omitting \code{id}}{
@@ -53,9 +66,15 @@ cli_end()
 cli_par()
 cli_text("Second paragraph")
 cli_end()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> First paragraph                                                                 
+#>                                                                                 
+#> Second paragraph                                                                
+#>                                                                                 
+</pre></div>
+}}
 
-\if{html}{\figure{cli-end-noid.svg}}
 }
 
 \subsection{Debugging containers}{
@@ -69,8 +88,14 @@ currently open containers.
   cli:::cli_debug_doc()
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> &lt;cli document&gt;                                                                  
+#> &lt;body id="body"&gt;                                                                
+#> &lt;div id="mydiv"&gt; +theme                                                         
+#> &lt;par id="cli-82040-64" class="myclass"&gt;                                         
+</pre></div>
+}}
 
-\if{html}{\figure{cli-end-debug.svg}}
 }
 }

@@ -17,9 +17,11 @@ for them.
 \details{
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- seq(0, 1, length = 10)
 spark_line(x)
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{spark-line.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> ⣀⡠⠔⠊⠉                                                                           
+</pre></div>
+}}
 }
 \seealso{
 \code{\link[=spark_bar]{spark_bar()}}

@@ -33,7 +33,13 @@ are are used.
   print(cli_progress_demo(label, live = FALSE, at = 66, total = 100))
 \}
 options(cli.progress_var_style = NULL)
-}\if{html}{\out{</div>}}
-
-\if{html}{\figure{progress-style.svg}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> Style 'classic'      <span style="color: #859900;">#####################           </span>  66&#37; | ETA:  3s           
+#> Style 'squares'      <span style="color: #859900;">■■■■■■■■■■■■■■■■■■■■■           </span>  66&#37; | ETA:  3s           
+#> Style 'dot'          <span style="color: #002B36;">────────────────────</span><span style="color: #DC322F;">●</span><span style="color: #002B36;">──────────</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s           
+#> Style 'fillsquares'  <span style="color: #859900;">■■■■■■■■■■■■■■■■■■■■■</span><span style="color: #002B36;">□□□□□□□□□□</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s           
+#> Style 'bar'          <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s           
+</pre></div>
+}}
 }

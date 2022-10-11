@@ -77,8 +77,23 @@ SEXP clic_start_thread(SEXP pkg, SEXP ticktime, SEXP speedtime) {
   return R_NilValue;
 }
 
-int cli__kill_thread() {
+int cli__kill_thread(void) {
+
   int ret = 0;
+
+#ifdef _WIN32
+
+  // On ARM64 builds of Windows (when running through x86 emulation),
+  // cancelling the running tick thread seems to cause issues during
+  // process shutdown. Avoid the issue by just neglecting to cancel
+  // the thread altogether.
+  const char* arch = getenv("PROCESSOR_ARCHITECTURE");
+  if (!strcmp(arch, "ARM64")) {
+    return 0;
+  }
+
+#endif
+
   /* This should not happen, but be extra careful */
   if (tick_thread) {
     ret = pthread_cancel(tick_thread);
@@ -96,7 +111,7 @@ int cli__kill_thread() {
   return ret;
 }
 
-SEXP clic_stop_thread() {
+SEXP clic_stop_thread(void) {
   if (unloaded) return R_NilValue;
   int ret = 1;
 #if defined(__has_feature)
@@ -115,7 +130,7 @@ SEXP clic_stop_thread() {
   return R_NilValue;
 }
 
-SEXP clic_tick_reset() {
+SEXP clic_tick_reset(void) {
   if (cli__reset) {
     cli__timer_flag = 0;
   }

@@ -747,10 +747,10 @@ cli_progress_demo <- function(name = NULL, status = NULL,
   })
 
   lines <- readChar(output, size, useBytes = TRUE)
-  lines <- sub("^\r\r*", "", lines, useBytes = TRUE)
-  lines <- sub("\r\r*$", "", lines, useBytes = TRUE)
-  lines <- gsub("\r\r*", "\r", lines, useBytes = TRUE)
-  lines <- strsplit(lines, "[\r\n]", useBytes = TRUE)[[1]]
+  lines <- sub_("^\r\r*", "", lines, useBytes = TRUE)
+  lines <- sub_("\r\r*$", "", lines, useBytes = TRUE)
+  lines <- gsub_("\r\r*", "\r", lines, useBytes = TRUE)
+  lines <- strsplit_(lines, "[\r\n]", useBytes = TRUE)[[1]]
 
   res <- structure(
     list(lines = lines),

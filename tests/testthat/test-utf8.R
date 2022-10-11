@@ -7,6 +7,7 @@ if (!utf8 && !newwin) return()
 
 test_that("UTF-8 output on Windows", {
   skip_on_cran()
+  skip_on_covr()
   out <- r_utf8(function() {
     library(cli)
     options(cli.unicode = TRUE)
@@ -93,4 +94,10 @@ test_that("utf8_graphemes", {
   str2 <- paste0(na.omit(str), collapse = "")
   exp2 <- list(na.omit(unlist(exp)))
   expect_equal(utf8_graphemes(str2), exp2)
+})
+
+test_that("errors", {
+  expect_snapshot_error(
+    fix_r_utf8_output("\x02\xff\xfe \x03\xff\xfe \x03\xff\xfe")
+  )
 })

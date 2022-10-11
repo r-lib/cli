@@ -46,9 +46,14 @@ An ordered list is a container, see \link{containers}.
   cli_ol(c("one", "two", "three"))
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> 1. one                                                                          
+#> 2. two                                                                          
+#> 3. three                                                                        
+</pre></div>
+}}
 
-\if{html}{\figure{cli-ol.svg}}
 }
 
 \subsection{Adding items one by one}{
@@ -62,9 +67,14 @@ fun <- function() \{
   cli_end()
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> 1. <span style="font-style: italic;">one</span>                                                                          
+#> 2. <span style="font-style: italic;">two</span>                                                                          
+#> 3. <span style="font-style: italic;">three</span>                                                                        
+</pre></div>
+}}
 
-\if{html}{\figure{cli-ol-2.svg}}
 }
 
 \subsection{Nested lists}{
@@ -79,8 +89,15 @@ fun()
   cli_end()
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> • one                                                                           
+#>     1. foo                                                                      
+#>     2. bar                                                                      
+#>     3. foobar                                                                   
+#> • two                                                                           
+</pre></div>
+}}
 
-\if{html}{\figure{cli-ol-3.svg}}
 }
 }

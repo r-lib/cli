@@ -20,6 +20,9 @@ ANSI styled strings. It also adds \code{...} (or the corresponding Unicode
 character if Unicode characters are allowed) to the end of truncated
 strings.
 }
+\details{
+Note: \code{ansi_strtrim()} does not support NA values currently.
+}
 \examples{
 text <- cli::col_red(cli:::lorem_ipsum())
 ansi_strtrim(c(text, "foobar"), 40)

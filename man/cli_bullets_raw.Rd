@@ -22,7 +22,7 @@ are interpreted.}
 not perform any inline styling or glue substitutions in the input.
 }
 \details{
-\code{format_bullets_raw()} returned the output instead of printing it.
+\code{format_bullets_raw()} returns the output instead of printing it.
 }
 \seealso{
 See \code{\link[=cli_bullets]{cli_bullets()}} for examples.

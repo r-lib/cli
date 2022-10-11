@@ -67,7 +67,7 @@ test_that_cli(config = "ansi", "color in RStudio", {
   )
   mockery::stub(
     get_rstudio_fg_color0,
-    "rstudioapi::getThemeInfo",
+    "get_rstudio_theme",
     list(foreground = "rgb(0, 0, 0)")
   )
   expect_snapshot({
@@ -77,7 +77,7 @@ test_that_cli(config = "ansi", "color in RStudio", {
 
   mockery::stub(
     get_rstudio_fg_color0,
-    "rstudioapi::getThemeInfo",
+    "get_rstudio_theme",
     list()
   )
   expect_null(get_rstudio_fg_color0())
@@ -153,4 +153,14 @@ test_that_cli("suppressing Unicode bullets", {
 
 test_that("edge cases", {
   expect_equal(cli::format_error(""), "")
+  expect_equal(cli::format_error(NULL), "")
+  expect_equal(cli::format_error(character()), "")
+
+  expect_equal(cli::format_warning(""), "")
+  expect_equal(cli::format_warning(NULL), "")
+  expect_equal(cli::format_warning(character()), "")
+
+  expect_equal(cli::format_message(""), "")
+  expect_equal(cli::format_message(NULL), "")
+  expect_equal(cli::format_message(character()), "")
 })

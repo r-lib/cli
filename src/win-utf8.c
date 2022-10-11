@@ -9,7 +9,7 @@
 extern Rboolean EmitEmbeddedUTF8;
 #endif
 
-SEXP clic_get_embedded_utf8() {
+SEXP clic_get_embedded_utf8(void) {
 #ifdef WIN32
 #if R_VERSION < R_Version(4, 0, 0)
   error("get_embedded_utf8() needs at least R 4.0.0");

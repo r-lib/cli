@@ -1,6 +1,7 @@
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+cli
+================
 
-# cli
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 > Helpers for Developing Command Line Interfaces
 
@@ -44,11 +45,11 @@ Install the stable version from CRAN:
 install.packages("cli")
 ```
 
-## Short tour
+# Short tour
 
 Some of the more commonly used cli elements, and features.
 
-### Short alert messages
+## Short alert messages
 
 One liner messages to inform or warn.
 
@@ -84,7 +85,7 @@ cli_alert("A generic alert")
 
 <img src="man/figures/README/alert.svg" width="100%" />
 
-### Headings
+## Headings
 
 Three levels of headings.
 
@@ -106,7 +107,7 @@ cli_h3("Heading 3")
 
 <img src="man/figures/README/h3.svg" width="100%" />
 
-### Lists
+## Lists
 
 Ordered, unordered and description lists, that can be nested.
 
@@ -126,7 +127,7 @@ fun()
 
 <img src="man/figures/README/lists.svg" width="100%" />
 
-### Themes
+## Themes
 
 Theming via a CSS-like language.
 
@@ -142,7 +143,7 @@ fun()
 
 <img src="man/figures/README/themes.svg" width="100%" />
 
-### Command substitution
+## Command substitution
 
 Automatic command substitution via the
 [glue](https://github.com/tidyverse/glue) package.
@@ -157,7 +158,7 @@ cli_alert_info(c(
 
 <img src="man/figures/README/glue.svg" width="100%" />
 
-### Pluralization
+## Pluralization
 
 Pluralization support.
 
@@ -169,7 +170,7 @@ cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
 
 <img src="man/figures/README/plurals.svg" width="100%" />
 
-### Progress bars
+## Progress bars
 
 ``` r
 clean <- function() {
@@ -184,17 +185,17 @@ clean()
 
 <img src="man/figures/README/progress.svg" width="100%" />
 
-## Documentation
+# Documentation
 
 See at
 [`https://cli.r-lib.org/`](https://cli.r-lib.org/reference/index.html)
 and also in the installed package: `help(package = "cli")`.
 
-## Code of Conduct
+# Code of Conduct
 
 Please note that the cli project is released with a [Contributor Code of
-Conduct](https://cli.r-lib.org/dev/CODE_OF_CONDUCT.html). By contributing to
-this project, you agree to abide by its terms.
+Conduct](https://cli.r-lib.org/dev/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.
 
 # License
 

@@ -18,21 +18,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  cache = TRUE
-)
-# Turn on ANSI colors
-options(
-  cli.num_colors = 256L
+  cache = TRUE,
+  asciicast_at = "all",
+  asciicast_cursor = FALSE,
+  asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
 )
 asciicast::init_knitr_engine(
   echo = TRUE,
-  echo_input = FALSE,
-  options = list(
-    asciicast_at = NULL,
-    asciicast_end_wait = 3,
-    asciicast_speed = 1,
-    asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
-  )
+  echo_input = FALSE
 )
 ```
 
@@ -137,11 +130,11 @@ default display, with known and unknown number of total progress units.
 Typically for loops and mapping functions. It shows a bar
 by default, if the total number of iterations is known.
 
-```{asciicast echo = FALSE,  R.options = list(asciicast_at = "end")}
+```{asciicast echo = FALSE}
 cli_progress_demo("Data cleaning", total = 100, at = 50, clear = FALSE)
 ```
 
-```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+```{asciicast echo = FALSE}
 cli_progress_demo("Data cleaning", at = 50, clear = FALSE)
 ```
 
@@ -149,14 +142,14 @@ cli_progress_demo("Data cleaning", at = 50, clear = FALSE)
 
 For a list of tasks, by default it shows a `current/total` display.
 
-```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+```{asciicast echo = FALSE}
 cli_progress_demo(
   "Finding data files", total = 100, at = 50,
   clear = FALSE, type = "tasks"
 )
 ```
 
-```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+```{asciicast echo = FALSE}
 cli_progress_demo(
   "Finding data files", at = 50,
   clear = FALSE, type = "tasks"
@@ -167,14 +160,14 @@ cli_progress_demo(
 
 For downloads, progress units are shown as bytes by default here.
 
-```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+```{asciicast echo = FALSE}
 cli_progress_demo(
   "Downloading", total = 10280, at = 5120, clear = FALSE,
   type = "download"
 )
 ```
 
-```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+```{asciicast echo = FALSE}
 cli_progress_demo(
   "Downloading", at = 5120, clear = FALSE,
   type = "download"
@@ -194,6 +187,7 @@ templating, cli pluralization and cli theming. They can also use a number
 of built-in cli progress variables, see 'Progress variables' below.
 
 ```{asciicast}
+#| asciicast_at = "all"
 f <- function() {
   cli_progress_bar(
     total = 20000,
@@ -248,6 +242,7 @@ names(cli_progress_styles())
 ```
 
 ```{asciicast}
+#| asciicast_at = "all"
 options(cli.progress_bar_style = "fillsquares")
 f <- function() lapply(cli_progress_along(letters), function(l) Sys.sleep(0.2))
 x <- f()
@@ -262,6 +257,7 @@ Alternatively, they can be set to a list with entries `complete`,
 parts of the progress bar:
 
 ```{asciicast}
+#| asciicast_at = "all"
 options(cli.progress_bar_style = list(
   complete = cli::col_yellow("\u2605"),
   incomplete = cli::col_grey("\u00b7")
@@ -271,6 +267,7 @@ x <- f()
 ```
 
 ```{asciicast include = FALSE}
+#| asciicast_at = "all"
 options(cli.progress_bar_style = NULL)
 ```
 
@@ -290,6 +287,7 @@ Use `list_spinners()` to list all spinners and `demo_spinners()` to take
 a peek at them.
 
 ```{asciicast custom-spinner}
+#| asciicast_at = "all"
 options(cli.spinner = "moon")
 f <- function() {
   cli_progress_bar(format = strrep("{cli::pb_spin} ", 20), clear = TRUE)
@@ -329,7 +327,8 @@ format string as an end user option, we suggest that you always use the
 qualified form, in case the cli package is not attached. For example, to
 set a minimal display for downloads you might write 
 
-```{asciicast include = FALSE, cache = FALSE}
+```{asciicast download, include = FALSE, cache = FALSE}
+#| asciicast_at = "end",
 options(cli.progress_format_download =
   paste0(
     "{cli::col_cyan('\u2B07')} {cli::pb_spin} ",
@@ -338,7 +337,13 @@ options(cli.progress_format_download =
 )
 ```
 
-```{asciicast echo = FALSE, R.options = list(asciicast_at = "end")}
+```{asciicast eval = FALSE}
+<<download>>
+```
+
+to get
+
+```{asciicast, echo = FALSE}
 cli_progress_demo(
 "Downloading", total = 10280, at = 5121, clear = FALSE,
   type = "download"
@@ -350,6 +355,7 @@ E.g. to show the current number of steps with letters instead of numbers,
 use `letters[pb_current]`:
 
 ```{asciicast function-of-token}
+#| asciicast_at = "all"
 f <- function() {
   cli_progress_bar(
     total = 26,
@@ -411,6 +417,7 @@ SEXP progress_test1() {
 ```
 
 ```{asciicast, echo = FALSE, dependson = -1}
+#| asciicast_at = "all"
 invisible(progress_test1())
 ```
 

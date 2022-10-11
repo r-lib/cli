@@ -46,9 +46,14 @@ An unordered list is a container, see \link{containers}.
   cli_ul(c("one", "two", "three"))
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> • one                                                                           
+#> • two                                                                           
+#> • three                                                                         
+</pre></div>
+}}
 
-\if{html}{\figure{cli-ul.svg}}
 }
 
 \subsection{Adding items one by one}{
@@ -61,8 +66,13 @@ fun()
   cli_end()
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> • <span style="font-style: italic;">one</span>                                                                           
+#> • <span style="font-style: italic;">two</span>                                                                           
+#> • <span style="font-style: italic;">three</span>                                                                         
+</pre></div>
+}}
 
-\if{html}{\figure{cli-ul-2.svg}}
 }
 }

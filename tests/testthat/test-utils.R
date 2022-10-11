@@ -1,4 +1,8 @@
 
+test_that("is_windows", {
+  expect_equal(is_windows(), .Platform$OS.type == "windows")
+})
+
 test_that("make_space", {
   expect_equal(make_space(0), "")
   expect_equal(make_space(1), " ")
@@ -8,7 +12,17 @@ test_that("make_space", {
 test_that("apply_style", {
   expect_error(
     apply_style("text", raw(0)),
-    "Not a colour name or ANSI style"
+    "must be a color name or an ANSI style function"
+  )
+  expect_equal(
+    apply_style("foo", function(x) toupper(x)),
+    "FOO"
+  )
+
+  withr::local_options(cli.num_ansi_colors = truecolor)
+  expect_equal(
+    apply_style("foo", "red"),
+    col_red("foo")
   )
 })
 
@@ -152,4 +166,82 @@ test_that("get_ppid", {
     ps::ps_ppid(),
     get_ppid()
   )
+})
+
+test_that("na.omit", {
+  expect_snapshot({
+    na.omit(character())
+    na.omit(integer())
+    na.omit(1:5)
+    na.omit(c(1,NA,2,NA))
+    na.omit(c(NA_integer_, NA_integer_))
+    na.omit(list(1,2,3))
+  })
+})
+
+test_that("get_rstudio_theme", {
+  mockery::stub(
+    get_rstudio_theme,
+    "rstudioapi::getThemeInfo",
+    function(...) warning("just a word")
+  )
+  expect_silent(get_rstudio_theme())
+})
+
+test_that("try_silently", {
+  expect_silent(
+    try_silently(1:10)
+  )
+  expect_s3_class(
+    try_silently(stop("not this")),
+    "error"
+  )
+})
+
+test_that("str_trim", {
+  expect_snapshot({
+    str_trim("foo")
+    str_trim(character())
+    str_trim("   foo")
+    str_trim("foo  ")
+    str_trim("   foo  ")
+    str_trim(c(NA_character_, " foo  ", NA_character_, "  bar  "))
+  })
+})
+
+test_that("leading_space", {
+  expect_snapshot({
+    paste0("-", leading_space("foo"), "-")
+    paste0("-", leading_space("  foo"), "-")
+    paste0("-", leading_space("  foo  "), "-")
+    paste0("-", leading_space(" \t foo  "), "-")
+    paste0("-", leading_space("\u00a0foo  "), "-")
+    paste0("-", leading_space(" \u00a0 foo  "), "-")
+  })
+})
+
+test_that("trailing_space", {
+  expect_snapshot({
+    paste0("-", trailing_space("foo"), "-")
+    paste0("-", trailing_space("foo  "), "-")
+    paste0("-", trailing_space("  foo  "), "-")
+    paste0("-", trailing_space("  foo \t "), "-")
+    paste0("-", trailing_space("  foo\u00a0"), "-")
+    paste0("-", trailing_space(" \u00a0 foo \u00a0 "), "-")
+  })
+})
+
+test_that("abbrev", {
+  expect_snapshot({
+    abbrev("123456789012345")
+    abbrev("12345678901")
+    abbrev("1234567890")
+    abbrev("123456789")
+    abbrev("12345")
+    abbrev("1")
+    abbrev("")
+    abbrev("\033[31m1234567890\033[39m")
+    abbrev(c("\033[31m1234567890\033[39m", "", "1234567890123"), 5)
+    abbrev(rep("\033[31m1234567890\033[39m", 5), 5)
+  })
 })

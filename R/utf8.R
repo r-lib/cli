@@ -103,18 +103,28 @@ utf8_nchar <- function(x, type = c("chars", "bytes", "width", "graphemes",
 
 utf8_substr <- function(x, start, stop) {
   if (!is.character(x)) x <- as.character(x)
-  start <- as.integer(start)
-  stop <- as.integer(stop)
-  if (!length(start) || !length(stop)) {
-    stop("invalid substring arguments")
+  if (!is.numeric(start) || !is.numeric(stop)) {
+    throw(cli_error(
+      "{.arg start} and {.arg stop} must be numeric vectors",
+      "i" = if (!is.numeric(start)) "{.arg start} is {.typeof {start}}",
+      "i" = if (!is.numeric(stop))  "{.arg stop}  is {.typeof {stop}}"
+    ))
   }
-  if (anyNA(start) || anyNA(stop)) {
-    stop("non-numeric substring arguments not supported")
+  start2 <- suppressWarnings(as.integer(start))
+  stop2 <- suppressWarnings(as.integer(stop))
+  if (!length(start2) || !length(stop2)) {
+    throw(cli_error(
+      "{.arg start} and {.arg stop} must have at least length 1",
+      "i" = if (!length(start2)) "{.arg start} has length 0",
+      "i" = if (!length(stop2))  "{.arg stop}  has length 0"
+    ))
   }
   x <- enc2utf8(x)
-  start <- rep_len(start, length(x))
-  stop <- rep_len(stop, length(x))
-  .Call(clic_utf8_substr, x, start, stop)
+
+  # TODO: better recycling
+  start2 <- rep_len(start2, length(x))
+  stop2 <- rep_len(stop2, length(x))
+  .Call(clic_utf8_substr, x, start2, stop2)
 }
 
 #' Break an UTF-8 character vector into grapheme clusters

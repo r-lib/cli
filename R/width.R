@@ -35,15 +35,31 @@ console_width <- function() {
   # cli.width option always takes priotity
   cwopt <- getOption("cli.width")
   if (!is.null(cwopt)) {
-    if (!is.numeric(cwopt)) stop("options(\"cli.width\") must be integer")
-    if (length(cwopt) != 1) stop("options(\"cli.width\") must be a scalar")
-    if (is.na(cwopt)) stop("options(\"cli.width\") cannot be NA")
+    if (!is.numeric(cwopt) || length(cwopt) != 1) {
+      opt <- options(cli.width = 60)
+      on.exit(options(opt), add = TRUE)
+      throw(cli_error(
+        "{.code options(\"cli.width\")} must be an integer scalar.",
+        "i" = "{.code options(\"cli.width\")} is {.type {cwopt}}."
+      ))
+    }
+    if (is.na(cwopt)) {
+      opt <- options(cli.width = 60)
+      on.exit(options(opt), add = TRUE)
+      throw(cli_error("{.code options(\"cli.width\")} cannot be {.code NA}."))
+    }
     if (cwopt == Inf) {
       cwopti <- .Machine$integer.max
     } else {
       cwopti <- as.integer(cwopt)
     }
-    if (cwopti <= 0) stop("options(\"cli.width\") must be a positive integer")
+    if (cwopti <= 0) {
+      opt <- options(cli.width = 60)
+      on.exit(options(opt), add = TRUE)
+      throw(cli_error(
+        "{.code options(\"cli.width\")} must be a positive integer and not {.val {cwopti}}."
+      ))
+    }
     return(cwopti)
   }
 
@@ -86,18 +102,20 @@ console_width <- function() {
 }
 
 tty_size <- function() {
-  tryCatch(
-    ret <- .Call(clic_tty_size),
-    error = function(err) {
-      class(err) <- c("ps_unknown_tty_size", class(err))
-      stop(err)
-    }
-  )
+  ret <- .Call(clic_tty_size)
   c(width = ret[1], height = ret[2])
 }
 
 terminal_width <- function() {
-  w <- tryCatch(tty_size()[["width"]], error = function(e) NULL)
+  if (isTRUE(clienv$notaconsole)) return(NULL)
+  w <- tryCatch(
+    tty_size()[["width"]],
+    error = function(e) {
+      clienv$notaconsole <- TRUE
+      NULL
+    }
+  )
+
   # this is probably a pty that does not set the width, use st sensible
   if (!is.null(w) && w == 0) w <- 80L
   w

@@ -170,13 +170,27 @@ ansi_nchar <- function(x,
 ansi_substr <- function(x, start, stop) {
   if (!is.character(x)) x <- as.character(x)
   if (!length(x)) return(ansi_string(x))
-  start <- as.integer(start)
-  stop <- as.integer(stop)
+  start <- suppressWarnings(as.integer(start))
+  stop <- suppressWarnings(as.integer(stop))
   if (!length(start) || !length(stop)) {
-    stop("invalid substring arguments")
+    throw(cli_error(
+      "{.code ansi_substr()} must have non-empty {.arg start} and {.arg stop} arguments",
+      "i" = if (!length(start)) "{.arg start} has length {length(start)}",
+      "i" = if (!length(stop)) "{.arg stop} has length {length(stop)}"
+    ))
   }
-  if (anyNA(start) || anyNA(stop)) {
-    stop("non-numeric substring arguments not supported")
+  nastart <- anyNA(start)
+  nastop <- anyNA(stop)
+  if (nastart || nastop) {
+    throw(cli_error(
+      "{.arg start} and {.arg stop} must not have {.code NA} values",
+      "i" = if (nastart) paste(
+              "{.arg start} has {sum(is.na(start))}",
+              "{.code NA} value{?s}, after coercion to integer"),
+      "i" = if (nastop) paste(
+              "{.arg stop} has {sum(is.na(stop))} {.code NA} value{?s},",
+              "after coercion to integer")
+    ))
   }
   x <- enc2utf8(x)
   start <- rep_len(start, length(x))
@@ -277,9 +291,13 @@ ansi_substring <- function(text, first, last = 1000000L) {
 #' strsplit(ansi_strip(str), "")
 
 ansi_strsplit <- function(x, split, ...) {
-  split <- try(as.character(split), silent=TRUE)
-  if(inherits(split, "try-error") || !is.character(split) || length(split) > 1L)
-    stop("`split` must be character of length <= 1, or must coerce to that")
+  split <- try(as.character(split), silent = TRUE)
+  if (inherits(split, "try-error") || !is.character(split) || length(split) > 1L) {
+    throw(cli_error(
+      "{.arg split} must be character of length <= 1, or must coerce to that",
+      i = "{.arg split} is (or was coerced to) {.type {split}}"
+    ))
+  }
   if (!is.character(x)) x <- as.character(x)
   x <- enc2utf8(x)
   if(!length(split)) split <- ""
@@ -505,14 +523,36 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   # se we need to put in a random marker instead
   mark <- "yShtnpteEk"
   smark <- paste0("\n\n", mark, "\n\n")
-  x <- gsub("\f", smark, x, fixed = TRUE, useBytes = TRUE)
+  x <- gsub_("\f", smark, x, fixed = TRUE, useBytes = TRUE)
   fix_ff <- function(x) {
-    rem <- which(ansi_strip(x) == mark)
+    xs <- ansi_strip(x)
+    rem <- which(xs == mark)
     if (length(rem)) {
-      x[-c(rem - 1, rem, rem + 1)]
+      x <- x[-c(rem - 1, rem + 1)]
+      xs <- xs[-c(rem - 1, rem + 1)]
+      if (xs[length(xs)] == mark) {
+        x <- c(x, mark)
+        xs <- c(xs, mark)
+      }
+      if (length(x) >= 2 && x[1] == "" && xs[2] == mark) {
+        x <- x[-1]
+        xs <- xs[-1]
+      }
+      # At this point, we have as many marks as many newlines we need
+      # But (except for the begnning) we need one less empty lines than
+      # newlines, because an empty line corresponds to two newlines at
+      # the end of a non-empty line.
+      del <- which(xs[-1] == mark & xs[-length(xs)] != mark) + 1L
+      if (length(del) > 0) {
+        x <- x[-del]
+        xs <- xs[-del]
+      }
+      x[xs == mark] <- ""
+      x
     } else {
       x
     }
+
   }
 
   # First we need to remove the multiple spaces, to make it easier to
@@ -566,7 +606,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
     } else if (xwc == " ") {
       xwidx[2] <- xwidx[2] + 1L
     } else {
-      stop("Internal error")
+      throw(cli_error("Internal error in {.fun cli::ansi_strwrap}")) # nocov
     }
 
     while (xsidx <= xslen && xwidx[1] <= length(xw) && xwidx[2] > xwlen) {
@@ -596,6 +636,8 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 #' character if Unicode characters are allowed) to the end of truncated
 #' strings.
 #'
+#' Note: `ansi_strtrim()` does not support NA values currently.
+#'
 #' @param x Character vector of ANSI strings.
 #' @param width The width to truncate to.
 #' @param ellipsis The string to append to truncated strings. Supply an
@@ -610,24 +652,45 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 ansi_strtrim <- function(x, width = console_width(),
                          ellipsis = symbol$ellipsis) {
 
+  if (width < 0) {
+    throw(cli_error(
+      "{.arg width} must be non-negative in {.fun cli::ansi_strtrim}."
+    ))
+  }
+
   x <- enc2utf8(x)
 
   # Unicode width notes. We have nothing to fix here, because we'll just
   # use ansi_substr() and ansi_nchar(), which work correctly with wide
   # characters.
 
+  # if ellipsis is already longer than width, then we just return that
+  tw <- ansi_nchar(ellipsis, "width")
+  if (tw == width) {
+    x[] <- ellipsis
+    return(x)
+  } else if (tw > width) {
+    x[] <- ansi_strtrim(ellipsis, width, ellipsis = "")
+    return(x)
+  }
+
   # First we cut according to _characters_. This might be too wide if we
   # have wide characters.
   lx <- length(x)
   xt <- .Call(clic_ansi_substr, x, rep(1L, lx), rep(as.integer(width), lx))
-  tw <- ansi_nchar(ellipsis, "width")
 
   # If there was a cut, or xt is too wide (using _width_!), that's bad
   # We keep the initial bad ones, these are the ones that need an ellipsis.
   # Then we keep chopping off single characters from the too wide ones,
   # until they are narrow enough.
-  bad0 <- bad <- !is.na(x) &
-    (ansi_strip(xt) != ansi_strip(x) | ansi_nchar(xt, "width") > width)
+  if (ansi_nzchar(ellipsis)) {
+    bad0 <- bad <- !is.na(x) &
+      (ansi_strip(xt) != ansi_strip(x) | ansi_nchar(xt, "width") > width)
+  } else {
+    # if ellipsis is zero length, then the truncated ones are not bad
+    bad0 <- bad <- !is.na(x) & ansi_nchar(xt, "width") > width
+  }
+
   while (any(bad)) {
     xt[bad] <- .Call(
       clic_ansi_substr,
@@ -824,9 +887,9 @@ ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
   csi <- match.arg(csi)
   x <- enc2utf8(x)
   if (escape_reserved) {
-    x <- gsub("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
-    x <- gsub("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
-    x <- gsub(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub_("&", "&amp;", x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub_("<", "&lt;",  x, fixed = TRUE, useBytes = TRUE)
+    x <- gsub_(">", "&gt;",  x, fixed = TRUE, useBytes = TRUE)
   }
   .Call(clic_ansi_html, x, csi == "keep")
 }

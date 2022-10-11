@@ -53,11 +53,8 @@ cli_abort <- function(message,
 #' @export
 
 cli_warn <- function(message, ..., .envir = parent.frame()) {
-  message[] <- vcapply(message, format_inline, .envir = .envir)
-  escaped_message <- cli_escape(message)
   rlang::warn(
-    format_warning(escaped_message, .envir = .envir),
-    cli_bullets = message,
+    format_warning(message, .envir = .envir),
     ...
   )
 }
@@ -66,11 +63,8 @@ cli_warn <- function(message, ..., .envir = parent.frame()) {
 #' @export
 
 cli_inform <- function(message, ..., .envir = parent.frame()) {
-  message[] <- vcapply(message, format_inline, .envir = .envir)
-  escaped_message <- cli_escape(message)
   rlang::inform(
     format_message(message, .envir = .envir),
-    cli_bullets = message,
     ...
   )
 }

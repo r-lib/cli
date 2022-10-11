@@ -286,7 +286,7 @@ builtin_handler_rstudio <- list(
         bar$rstudio_status <- bar$status
       }
     } else {
-      status <- fmt(
+      status <- cli_fmt(
         cli_text(bar$format, .envir = .envir),
         collapse = TRUE,
         strip_newline = TRUE
@@ -312,7 +312,7 @@ shiny_detail <- function(bar, .envir) {
   status <- if (is.null(bar$format_orig)) {
     bar$status %||% ""
   } else {
-    fmt(
+    cli_fmt(
       cli_text(bar$format, .envir = .envir),
       collapse = TRUE,
       strip_newline = TRUE

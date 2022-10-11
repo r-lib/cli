@@ -12,6 +12,14 @@ cli environment variables and options
 These are environment variables and options that uses may set, to modify
 the behavior of cli.
 \subsection{User facing environment variables}{
+\subsection{\code{R_CLI_HYPERLINK_MODE}}{
+
+Set to \code{posix} to force generating POSIX compatible ANSI hyperlinks.
+If not set, then RStudio compatible links are generated. This is a
+temporary crutch until RStudio handles POSIX hyperlinks correctly, and
+after that it will be removed.
+}
+
 \subsection{\code{NO_COLOR}}{
 
 Set to a nonempty value to turn off ANSI colors.
@@ -105,6 +113,12 @@ Set to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal sup
 ANSI hyperlinks.
 Set to anything else to assume no hyperlink support.
 See \code{\link[=style_hyperlink]{style_hyperlink()}}.
+}
+
+\subsection{\code{cli.ignore_unknown_rstudio_theme}}{
+
+Set to \code{TRUE} to omit a warning for an unknown RStudio theme in
+\code{code_highlight()}.
 }
 
 \subsection{\code{cli.num_colors}}{
@@ -264,6 +278,13 @@ See \code{\link[=is_utf8_output]{is_utf8_output()}}.
 cli user theme.
 This option is intended for end users.
 See \link{themes}.
+}
+
+\subsection{\code{cli.warn_inline_newlines}}{
+
+Whether to emit a warning when cli replaces newline characters with
+spaces within a \code{{.class }} inline style.
+Defaults to \code{FALSE}.
 }
 
 \subsection{\code{cli.width}}{

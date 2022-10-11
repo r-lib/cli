@@ -1,3 +1,94 @@
+# ansi_substr bad input
+
+    Code
+      ansi_substr("foobar", NULL, 10)
+    Condition
+      Error:
+      ! `ansi_substr()` must have non-empty `start` and `stop` arguments
+      i `start` has length 0
+
+---
+
+    Code
+      ansi_substr("foobar", 10, NULL)
+    Condition
+      Error:
+      ! `ansi_substr()` must have non-empty `start` and `stop` arguments
+      i `stop` has length 0
+
+---
+
+    Code
+      ansi_substr("foobar", "bad", "bad")
+    Condition
+      Error:
+      ! `start` and `stop` must not have `NA` values
+      i `start` has 1 `NA` value, after coercion to integer
+      i `stop` has 1 `NA` value, after coercion to integer
+
+# ansi_substr corner cases
+
+    Code
+      ansi_substr("abc", "hello", 1)
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22m`start` and `stop` must not have `NA` values
+      [36mi[39m `start` has 1 `NA` value, after coercion to integer
+
+# Weird length 'split'
+
+    Code
+      ansi_strsplit(c("ab", "bd"), c("b", "d"))
+    Condition
+      [1m[33mError[39m:[22m
+      [33m![39m [1m[22m`split` must be character of length <= 1, or must coerce to that
+      [36mi[39m `split` is (or was coerced to) a character vector
+
+# ansi_strtrim with zero-length ellipsis
+
+    Code
+      ansi_strtrim("12345", 1, ellipsis = "")
+    Output
+      <cli_ansi_string>
+      [1] 1
+    Code
+      ansi_strtrim("12345", 3, ellipsis = "")
+    Output
+      <cli_ansi_string>
+      [1] 123
+    Code
+      ansi_strtrim("12345", 5, ellipsis = "")
+    Output
+      <cli_ansi_string>
+      [1] 12345
+
+# ansi_strtrim errors
+
+    Code
+      ansi_strtrim("foobar", -1)
+    Condition
+      Error:
+      ! `width` must be non-negative in `cli::ansi_strtrim()`.
+
+# ansi_strtrim edge cases
+
+    Code
+      ansi_strtrim("foobar", width = 3, ellipsis = "...")
+    Output
+      [1] "..."
+    Code
+      ansi_strtrim("foobar", width = 2, ellipsis = "...")
+    Output
+      [1] ".."
+    Code
+      ansi_strtrim("foobar", width = 1, ellipsis = "...")
+    Output
+      [1] "."
+    Code
+      ansi_strtrim("foobar", width = 0, ellipsis = "...")
+    Output
+      [1] ""
+
 # ansi_columns
 
     foo 1     foo 2     foo 3     foo 4     

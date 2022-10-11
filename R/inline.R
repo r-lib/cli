@@ -2,6 +2,14 @@
 if (getRversion() >= "2.15.1") utils::globalVariables("app")
 
 inline_generic <- function(app, x, style) {
+
+  if (is.character(x) && any(grepl("\n", x))) {
+    if (getOption("cli.warn_inline_newlines", FALSE)) {
+      warning("cli replaced newlines within {. ... } with spaces")
+    }
+    x <- gsub_("\n", " ", x, useBytes = TRUE, fixed = TRUE)
+  }
+
   before <- call_if_fun(style$before)
   after <- call_if_fun(style$after)
   transform <- style$transform
@@ -35,18 +43,23 @@ inline_generic <- function(app, x, style) {
 }
 
 inline_collapse <- function(x, style = list()) {
-  sep <- style[["vec_sep"]] %||% ", "
+  sep <- style[["vec-sep"]] %||% style[["vec_sep"]] %||% ", "
   if (length(x) >= 3) {
-    last <- style$vec_last %||% ", and "
+    last <- style[["vec-last"]] %||% style[["vec_last"]] %||% ", and "
   } else {
-    last <- style$vec_sep2 %||% style$vec_last %||% " and "
+    last <- style[["vec-sep2"]] %||% style[["vec_sep2"]] %||% style[["vec-last"]] %||%
+      style[["vec_last"]] %||% " and "
   }
-  trunc <- style$vec_trunc %||% 100L
-  if (length(x) > trunc) {
-    x <- c(x[1:trunc], cli::symbol$ellipsis)
-    last <- sep
-  }
-  glue::glue_collapse(as.character(x), sep = sep, last = last)
+  trunc <- style[["vec-trunc"]] %||% style[["vec_trunc"]] %||% 20L
+  col_style <- style[["vec-trunc-style"]] %||% "both-ends"
+
+  ansi_collapse(
+    x,
+    sep = sep,
+    last = last,
+    trunc = trunc,
+    style = col_style
+  )
 }
 
 #' This glue transformer performs the inline styling of cli
@@ -128,19 +141,18 @@ inline_transformer <- function(code, envir) {
     # but only to the whole non-brace expression. We don't need to end this
     # container, because the one above (`id`) will end this one as well.
 
-    braceexp <- grepl("^[{][^.][^}]*[}]$", text)
+    braceexp <- grepl("^[<][^.][^}]*[>]$", text) &&
+      count_brace_exp(text, .open = "<", .close = ">") == 1
     if (!braceexp) {
       id2 <- clii__container_start(app, "span", class = NULL)
     }
 
-    out <- glue::glue(
+    out <- glue(
       text,
       .envir = envir,
       .transformer = inline_transformer,
-      .open = paste0("{", envir$marker),
-      .close = paste0(envir$marker, "}"),
-      .trim = TRUE,
-      .comment = ""
+      .open = paste0("<", envir$marker),
+      .close = paste0(envir$marker, ">")
     )
 
     # If we don't have a brace expression, then (non-inherited) styling was
@@ -214,14 +226,12 @@ clii__inline <- function(app, text, .list) {
   texts <- c(if (!is.null(text)) list(text), .list)
   out <- lapply(texts, function(t) {
     t$values$app <- app
-    glue::glue(
+    glue(
       t$str,
       .envir = t$values,
       .transformer = inline_transformer,
-      .open = paste0("{", t$values$marker),
-      .close = paste0(t$values$marker, "}"),
-      .trim = TRUE,
-      .comment = ""
+      .open = paste0("<", t$values$marker),
+      .close = paste0(t$values$marker, ">")
     )
   })
   paste(out, collapse = "")
@@ -229,38 +239,51 @@ clii__inline <- function(app, text, .list) {
 
 inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
-make_cmd_transformer <- function(values) {
+make_cmd_transformer <- function(values, .call = NULL) {
   values$marker <- random_id()
   values$qty <- NA_integer_
   values$num_subst <- 0L
   values$postprocess <- FALSE
   values$pmarkers <- list()
 
+  # These are common because of purrr's default argument names, so we
+  # hardcode them es exceptions. They are in packages
+  # crossmap, crosstable, rstudio.prefs, rxode2, starter.
+  # rxode2 has the other ones, and we should fix that in rxode2
+  # the function calls are in the oolong packagee, need to fix this as well.
+  exceptions <- c(
+    ".x", ".y", ".",
+    ".md", ".met", ".med", ".mul", ".muR", ".dir", ".muU",
+    ".sym_flip(bool_word)", ".sym_flip(bool_topic)", ".sym_flip(bool_wsi)"
+  )
+
+  # it is not easy to do better than this, we would need to pass a call
+  # down from the exported functions
+
+  caller <- .call %||% sys.call(-1)
   function(code, envir) {
-    res <- tryCatch({
-      if (substr(code, 1, 1) == ".") stop("style")
-      expr <- parse(text = code, keep.source = FALSE)
-      eval(expr, envir = list("?" = function(...) stop()), enclos = envir)
-    }, error = function(e) e)
+    first_char <- substr(code, 1, 1)
 
-    if (!inherits(res, "error")) {
-      id <- paste0("v", length(values))
-      if (length(res) == 0) res <- qty(0)
-      values[[id]] <- res
-      values$qty <- res
-      values$num_subst <- values$num_subst + 1L
-      return(paste0("{", values$marker, id, values$marker, "}"))
-    }
+    # {?} pluralization
+    if (first_char == "?") {
+      parse_plural(code, values)
 
-    # plurals
-    if (substr(code, 1, 1) == "?") {
-      return(parse_plural(code, values))
-
-    } else {
-      # inline styles
+    # {.} cli style
+    } else if (first_char == "." && ! code %in% exceptions) {
       m <- regexpr(inline_regex(), code, perl = TRUE)
       has_match <- m != -1
-      if (!has_match) stop(res)
+      if (!has_match) {
+        throw(cli_error(
+          call. = caller,
+          "Invalid cli literal: {.code {{{abbrev(code, 10)}}}} starts with a dot.",
+          "i" = "Interpreted literals must not start with a dot in cli >= 3.4.0.",
+          "i" = paste("{.code {{}}} expressions starting with a dot are",
+                      "now only used for cli styles."),
+          "i" = paste("To avoid this error, put a space character after",
+                      "the starting {.code {'{'}} or use parentheses:",
+                      "{.code {{({abbrev(code, 10)})}}}.")
+        ))
+      }
 
       starts <- attr(m, "capture.start")
       ends <- starts + attr(m, "capture.length") - 1L
@@ -268,28 +291,47 @@ make_cmd_transformer <- function(values) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      out <- glue::glue(
+      out <- glue(
         text,
         .envir = envir,
         .transformer = sys.function(),
-        .trim = TRUE,
-        .comment = ""
+        .cli = TRUE
       )
-      paste0("{", values$marker, ".", funname, " ", out, values$marker, "}")
+      paste0("<", values$marker, ".", funname, " ", out, values$marker, ">")
+
+    # {} plain substitution
+    } else {
+      expr <- parse(text = code, keep.source = FALSE) %??%
+        cli_error(
+          call. = caller,
+          "Could not parse cli {.code {{}}} expression:
+           {.code {abbrev(code, 20)}}."
+        )
+      res <- eval(expr, envir = envir) %??%
+        cli_error(
+          call. = caller,
+          "Could not evaluate cli {.code {{}}} expression:
+           {.code {abbrev(code, 20)}}."
+        )
+
+      id <- paste0("v", length(values))
+      values[[id]] <- res
+      values$qty <- if (length(res) == 0) 0 else res
+      values$num_subst <- values$num_subst + 1L
+      paste0("<", values$marker, id, values$marker, ">")
     }
   }
 }
 
-glue_cmd <- function(..., .envir) {
+glue_cmd <- function(..., .envir, .call = sys.call(-1)) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
-  transformer <- make_cmd_transformer(values)
-  pstr <- glue::glue(
+  transformer <- make_cmd_transformer(values, .call = .call)
+  pstr <- glue(
     str,
     .envir = .envir,
     .transformer = transformer,
-    .trim = TRUE,
-    .comment = ""
+    .cli = TRUE
   )
   glue_delay(
     str = post_process_plurals(pstr, values),

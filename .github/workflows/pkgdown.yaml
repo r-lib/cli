@@ -39,8 +39,12 @@ jobs:
           pak-version: rc
 
       - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        run: |
+          rmarkdown::render("README.Rmd")
+          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
+        env:
+          IN_PKGDOWN: true
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'

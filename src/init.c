@@ -5,7 +5,7 @@
 #include <R_ext/Rdynload.h>
 #include <Rversion.h>
 
-SEXP clic_unload() {
+SEXP clic_unload(void) {
   clic_stop_thread();
   return R_NilValue;
 }
@@ -14,16 +14,16 @@ SEXP clic_dataptr(SEXP x);
 
 #ifdef GCOV_COMPILE
 
-void __gcov_flush();
+void __gcov_dump();
 SEXP clic__gcov_flush() {
   REprintf("Flushing coverage info\n");
-  __gcov_flush();
+  __gcov_dump();
   return R_NilValue;
 }
 
 #else
 
-SEXP clic__gcov_flush() {
+SEXP clic__gcov_flush(void) {
   return R_NilValue;
 }
 
@@ -71,6 +71,11 @@ static const R_CallMethodDef callMethods[]  = {
 
   { "clic_get_embedded_utf8", (DL_FUNC) clic_get_embedded_utf8, 0 },
   { "clic_set_embedded_utf8", (DL_FUNC) clic_set_embedded_utf8, 1 },
+
+  { "glue_",               (DL_FUNC) glue_,               5 },
+  { "trim_",               (DL_FUNC) trim_,               1 },
+
+  { "clic_vt_output",      (DL_FUNC) clic_vt_output,      3 },
 
   { NULL, NULL, 0 }
 };

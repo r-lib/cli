@@ -20,9 +20,14 @@ No glue substitution is performed on verbatim text.
 \subsection{Line breaks}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("This has\\nthree\\nlines,")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> This has                                                                        
+#> three                                                                           
+#> lines,                                                                          
+</pre></div>
+}}
 
-\if{html}{\figure{cli-verbatim.svg}}
 }
 
 \subsection{Special characters}{
@@ -30,9 +35,12 @@ No glue substitution is performed on verbatim text.
 No glue substitution happens here.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_verbatim("No string \{interpolation\} or \{.emph styling\} here")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> No string \{interpolation\} or \{.emph styling\} here                               
+</pre></div>
+}}
 
-\if{html}{\figure{cli-verbatim-2.svg}}
 }
 }
 \seealso{

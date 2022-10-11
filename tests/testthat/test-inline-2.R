@@ -40,7 +40,7 @@ test_that_cli(config = c("ansi"), "~/ files are not weird", {
 
 test_that_cli("custom truncation", {
   expect_snapshot({
-    x <- cli_vec(1:100, list(vec_trunc = 5))
+    x <- cli_vec(1:100, list("vec-trunc" = 5))
     cli_text("Some numbers: {x}.")
     cli_text("Some numbers: {.val {x}}.")
   })
@@ -114,4 +114,70 @@ test_that_cli(config = "ansi", "double ticks", {
   ))
   expect_snapshot(format_inline("{.code {x}}"))
   expect_snapshot(format_inline("{.fun {x}}"))
+})
+
+test_that("do not inherit 'transform' issue #422", {
+  expect_snapshot({
+    d <- deparse(c("cli", "glue"))
+    cli::cli_alert_info("To install, run {.code install.packages({d})}")
+  })
+
+  expect_snapshot({
+    cli::cli_text("{.code foo({1+1})}")
+  })
+})
+
+test_that_cli(config = c("ansi", "plain"), "no inherit color, issue #474", {
+  expect_snapshot({
+    cli::cli_text("pre {.val x {'foo'} y} post")
+  })
+})
+
+test_that_cli(config = c("ansi", "plain"), "\\f at the end, issue #491", {
+  expect_snapshot({
+    cli_fmt(cli::cli_text("{.val a}{.val b}"))
+    cli_fmt(cli::cli_text("\f{.val a}{.val b}"))
+    cli_fmt(cli::cli_text("\f\f{.val a}{.val b}"))
+    cli_fmt(cli::cli_text("{.val a}\f{.val b}"))
+    cli_fmt(cli::cli_text("{.val a}\f\f{.val b}"))
+    cli_fmt(cli::cli_text("{.val a}{.val b}\f"))
+    cli_fmt(cli::cli_text("{.val a}{.val b}\f\f"))
+    cli_fmt(cli::cli_text("\f\f\f{.val a}\f\f\f{.val b}\f\f\f"))
+  })
+})
+
+test_that("truncate vectors at 20", {
+  expect_snapshot(
+    cli::cli_text("Some letters: {letters}")
+  )
+})
+
+test_that_cli(config = "ansi", "brace expresssion edge cases", {
+  foo <- "foo"
+  bar <- "bar"
+  expect_snapshot({
+    cli_text("{.code {foo} and {bar}}")
+    cli_text("{.emph {foo} and {bar}}")
+    cli_text("{.q {foo} and {bar}}")
+  })
+})
+
+test_that("various errors", {
+  expect_snapshot_error(
+    cli_text("xx {.foobar} yy")
+  )
+  expect_snapshot_error(
+    cli_text("xx {.someverylong+expression} yy")
+  )
+  expect_snapshot(
+    error = TRUE,
+    cli_text("xx {__cannot-parse-this__} yy"),
+    transform = sanitize_srcref,
+    variant = if (getRversion() < "4.2.0") "old-r" else "new-r"
+  )
+  expect_snapshot(
+    error = TRUE,
+    cli_text("xx {1 + 'a'} yy"),
+    transform = function(x) sanitize_call(sanitize_srcref(x))
+  )
 })

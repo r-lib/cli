@@ -44,18 +44,57 @@
 #' * `dt` is used for the terms in a definition list ([cli_dl()]).
 #' * `dd` is used for the descriptions in a definition list ([cli_dl()]).
 #' * `email` for an email address.
+#'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+#'   then cli creates a clickable link.
+#'   See [links] for more about cli hyperlinks.
 #' * `emph` for emphasized text.
 #' * `envvar` for the name of an environment variable.
 #' * `field` for a generic field, e.g. in a named list.
-#' * `file` for a file name.
-#' * `fun` for a function name.
+#' * `file` for a file name. If the terminal supports ANSI hyperlinks (e.g.
+#'   RStudio, iTerm2, etc.), then cli creates a clickable link that opens
+#'   the file in RStudio or with the default app for the file type.
+#'   See [links] for more about cli hyperlinks.
+#' * `fun` for a function name. If it is in the `package::function_name`
+#'   form, and the the terminal supports ANSI hyperlinks (e.g. RStudio,
+#'   iTerm2, etc.), then cli creates a clickable link.
+#'   See [links] for more about cli hyperlinks.
+#' * `help` is a help page of a _function_.
+#'   If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+#'   then cli creates a clickable link. It supports link text.
+#'   See [links] for more about cli hyperlinks.
+#' * `href` creates a hyperlink, potentially with a link text.
+#'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+#'   then cli creates a clickable link.
+#'   See [links] for more about cli hyperlinks.
 #' * `key` for a keyboard key.
-#' * `path` for a path (essentially the same as `file`).
+#' * `obj_type_friendly` formats the type of an R object in a readable way,
+#'   and it should be used with `{}`, see an example below.
+#' * `or` changes the string that separates the last two elements of
+#'   collapsed vectors (see below) from "and" to "or".
+#' * `path` for a path (the same as `file` in the default theme).
 #' * `pkg` for a package name.
+#' * `run` is an R expression, that is potentially clickable if the terminal
+#'   supports ANSI hyperlinks to runnable code (e.g. RStudio).
+#'   It supports link text. See [links] for more about cli hyperlinks.
 #' * `strong` for strong importance.
+#' * `topic` is a help page of a _ropic_.
+#'   If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+#'   then cli creates a clickable link. It supports link text.
+#'   See [links] for more about cli hyperlinks.
 #' * `url` for a URL.
+#'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
+#'   then cli creates a clickable link.
+#'   See [links] for more about cli hyperlinks.
+#' * `type` formats the type of an R object in a readable way, and it
+#'   should be used with `{}`, see an example below.
+#' * `url` for a URL. If the terminal supports ANSI hyperlinks (e.g.
+#'   RStudio, iTerm2, etc.), then cli creates a clickable link.
 #' * `var` for a variable name.
 #' * `val` for a generic "value".
+#' * `vignette` is a vignette.
+#'   If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+#'   then cli creates a clickable link. It supports link text.
+#'   See [links] for more about cli hyperlinks.
 #'
 #' ```{asciicast inline-examples}
 #' ul <- cli_ul()
@@ -67,8 +106,9 @@
 #' cli_li("A keyboard key: press {.kbd ENTER}.")
 #' cli_li("A file name: {.file /usr/bin/env}.")
 #' cli_li("An email address: {.email bugs.bunny@acme.com}.")
-#' cli_li("A URL: {.url https://acme.com}.")
+#' cli_li("A URL: {.url https://example.com}.")
 #' cli_li("An environment variable: {.envvar R_LIBS}.")
+#' cli_li("`mtcars` is {.obj_type_friendly {mtcars}}")
 #' cli_end(ul)
 #' ```
 #'
@@ -117,10 +157,10 @@
 #' ```
 #'
 #' By default cli truncates long vectors. The truncation limit is by default
-#' one hundred elements, but you can change it with the `vec_trunc` style.
+#' twenty elements, but you can change it with the `vec-trunc` style.
 #'
 #' ```{asciicast inline-collapse-trunc}
-#' nms <- cli_vec(names(mtcars), list(vec_trunc = 5))
+#' nms <- cli_vec(names(mtcars), list("vec-trunc" = 5))
 #' cli_text("Column names: {nms}.")
 #' ```
 #'
@@ -129,6 +169,9 @@
 #' The `val` inline class formats values. By default (c.f. the built-in
 #' theme), it calls the [cli_format()] generic function, with the current
 #' style as the argument. See [cli_format()] for examples.
+#'
+#' `str` is for formatting strings, it uses [base::encodeString()] with
+#' double quotes.
 #'
 #' @section Escaping `{` and `}`:
 #'
@@ -321,17 +364,23 @@ NULL
 #' * `padding-left`, `padding-right`: This is currently used the same way
 #'   as the margins, but this might change later.
 #' * `start`: Integer number, the first element in an ordered list.
-#' * `string_quote`: Quoting character for inline elements of class `.val`.
+#' * `string-quote`: Quoting character for inline elements of class `.val`.
 #' * `text-decoration`: If `"underline"`, then underlined text is created.
 #' * `text-exdent`: Amount of indentation from the second line of wrapped
 #'    text.
 #' * `transform`: A function to call on glue substitutions, before
 #'   collapsing them. Note that `transform` is applied prior to
 #'   implementing color via ANSI sequences.
-#' * `vec_last`: The last separator when collapsing vectors.
-#' * `vec_sep`: The separator to use when collapsing vectors.
-#' * `vec_trunc`: Vectors longer than this will be truncated. Defaults to
+#' * `vec-last`: The last separator when collapsing vectors.
+#' * `vec-sep`: The separator to use when collapsing vectors.
+#' * `vec-sep2`: The separator to use for two elements when collapsing
+#'   vectors. If not set, then `vec-sep` is used for these as well.
+#' * `vec-trunc`: Vectors longer than this will be truncated. Defaults to
 #'   100.
+#' * `vec-trunc-style`: Select between two ways of collapsing vectors:
+#'   - `"both-ends"` is the current default and it shows the beginning and
+#'     the end of the vector.
+#'   - `"head"` only shows the beginning of the vector.
 #'
 #' More properties might be added later. If you think that a property is
 #' not applied properly to an element, please open an issue about it in
@@ -359,4 +408,258 @@ NULL
 
 # TODO: examples
 
+NULL
+
+#' cli hyperlinks
+#'
+#' @description
+#' Certain cli styles create clickable links, if your IDE or terminal
+#' supports them.
+#'
+#' # Note: hyperlinks are currently experimental
+#'
+#' The details of the styles that create hyperlinks will prrobably change
+#' in the near future, based on user feedback.
+#'
+#' # About the links in this manual page
+#'
+#' The hyperlinks that are included in this manual are demonstrative
+#' only, except for the `https:` links. They look like a hyperlink, and
+#' you can click on them, but they do nothing. I.e. a `.run` link will
+#' not run the linked expression if you click on it.
+#'
+#' # Hyperlink Support
+#'
+#' As of today, the latest release of RStudio (version v2022.07.0+548)
+#' supports all hyperlink types discussed here. Certain terminals, e.g.
+#' iTerm on macOS, Linux terminals based on VTE (GNOME terminal) support
+#' `.href`, `.email` and `.file` links.
+#'
+#' You can use [ansi_has_hyperlink_support()] to check if your terminal or
+#' IDE has hyperlink support in general, and [ansi_hyperlink_types()] to
+#' check if various types of hyperlinks are supported.
+#'
+#' If your hyperlink support is not detected properly in your IDE or
+#' terminal, please open a cli issue at
+#' <https://github.com/r-lib/cli/issues>.
+#'
+#' ```{asciicast links-setup, include = FALSE, cache = FALSE}
+#' options(
+#'   cli.hyperlink = TRUE,
+#'   cli.hyperlink_run = TRUE,
+#'   cli.hyperlink_help = TRUE,
+#'   cli.hyperlink_vignette = TRUE
+#' )
+#' ```
+#'
+#' # Link text
+#'
+#' Before we delve into the various types of hyperlinks, a geneal comment
+#' about link texts. Some link styles support a custom link text:
+#'
+#' * `.href`
+#' * `.help`
+#' * `.topic`
+#' * `.vignette`
+#' * `.run`
+#'
+#' Others, i.e. `.email`, `.file`, `.fun` and `.url` do not support custom
+#' link text.
+#'
+#' The generic syntax for link text is the same as for Markdown hyperlinks:
+#' ```
+#' {.style [link text](url)}
+#' ```
+#'
+#' ## Vectorization
+#'
+#' Note that it is not possible to add link text to a vector of URLs. E.g.
+#' this will create a list of three URLs, all clickable:
+#'
+#' ```{asciicast link-example}
+#' urls <- paste0("https://httpbin.org/status/", c(200, 403, 404))
+#' cli::cli_text("Some httpbin URLs: {.url {urls}}.")
+#' ```
+#' But it is not possible to use a different link text for them.
+#'
+#' ## What if hyperlinks are not available?
+#'
+#' If ANSI hyperlinks are not available, then the link text for of these
+#' styles outputs both the link text and the URL in a (hopefully) helpful
+#' way. See examples below.
+#'
+#' # URLs
+#'
+#' There are two cli styles to link to generic URLs. `.url` does not
+#' allow custom link text, but `\href` does.
+#'
+#' ```{asciicast links-url-1}
+#' cli_text(
+#'   "See the cli homepage at {.url https://cli.r-lib.org} for details."
+#' )
+#' ```
+#'
+#'```{asciicast links-url-2}
+#' cli_text(
+#'   "See the {.href [cli homepage](https://cli.r-lib.org)} for details."
+#' )
+#' ```
+#'
+#' ## Without hyperlink support
+#'
+#' This is how these links look without hyperlink support:
+#'
+#' ```{asciicast links-url-3}
+#' local({
+#'   withr::local_options(cli.hyperlink = FALSE)
+#'   cli_text(
+#'     "See the cli homepage at {.url https://cli.r-lib.org} for details."
+#'   )
+#'   cli_text(
+#'     "See the {.href [cli homepage](https://cli.r-lib.org)} for details."
+#'   )
+#' })
+#' ```
+#'
+#' ## URL encoding
+#'
+#' Note that cli does not encode the url, so you might need to call
+#' `utils::URLencode()` on it, especially, if it is substituted in
+#' via `{}`.
+#'
+#' ```{asciicast links-url-4}
+#' weirdurl <- utils::URLencode("https://example.com/has some spaces")
+#' cli_text("See more at {.url {weirdurl}}.")
+#' ```
+#'
+#' # Files
+#'
+#' The `.file` style now automatically creates a `file:` hyperlink.
+#' Because `file:` hyperlinks must contain an absolute path, cli tries to
+#' convert relative paths, and paths starting with `~` to aboslute path.
+#'
+#' ```{asciicast links-file-1}
+#' cli_text("... edit your {.file ~/.Rprofile} file.}")
+#' ```
+#'
+#' ## Link text
+#'
+#' `.file` cannot use a custom link text. If you custom link text, then
+#' you can use `.href` with a `file:` URL.
+#'
+#' ```{asciicast links-file-2}
+#' prof <- path.expand("~/.Rprofile")
+#' cli_text("... edit your {.href [R profile](file://{prof})}.")
+#' ```
+#'
+#' ## Line and column numbers
+#'
+#' You may add a line number to a file name, separated by `:`. Handlers
+#' typically place the cursor at that line after opening the file.
+#' You may also add a column number, after the line number, separated by
+#' another `:`.
+#'
+#' ```{asciicast links-file-3}
+#' cli_text("... see line 5 in {.file ~/.Rprofile:5}.")
+#' ```
+#'
+#' ## Default handler
+#'
+#' In RStudio `file:` URLs open within RStudio. If you click on a file
+#' link outside of RStudio, typically the operating system is consulted
+#' for the application to open it.
+#'
+#' ## Without hyperlink support
+#'
+#' One issue with using `.href` file files is that it does not look great
+#' if hyperlinks are not available. This will be improved in the future:
+#'
+#' ```{asciicast links-file-4}
+#' local({
+#'   withr::local_options(cli.hyperlink = FALSE)
+#'   prof <- path.expand("~/.Rprofile")
+#'   cli_text("... edit your {.href [R profile](file://{prof})}.")
+#' })
+#' ```
+#'
+#' # Links to the manual
+#'
+#' `.fun` automatically creates links to the manual page of the function,
+#' provided the function name is in the `packagename::functionname` form:
+#'
+#' ```{asciicast links-fun-1}
+#' cli::cli_text("... see {.fun stats::lm} to learn more.")
+#' ```
+#'
+#' ## Link text
+#'
+#' For a custom link text, use `.help` instead of `.fun`.
+#'
+#' ```{asciicast links-fun-2}
+#' cli::cli_text("... see {.help [{.fun lm}](stats::lm)} to learn more.")
+#' ```
+#'
+#' ## Without hyperlink support
+#'
+#' The same message without hyperlink support looks like this:
+#'
+#' ```{asciicast links-fun-3}
+#' local({
+#'   withr::local_options(cli.hyperlink = FALSE)
+#'   cli::cli_text("... see {.help [{.fun lm}](stats::lm)} to learn more.")
+#' })
+#' ```
+#'
+#' ## Topics
+#'
+#' To link to a help topic that is not a function, use `.topic`:
+#'
+#' ```{asciicast links-topic}
+#' cli::cli_text("... the tibble options at {.help tibble::tibble_options}.")
+#' ```
+#'
+#' `.topic` support link text.
+#'
+#' ## Vignettes
+#'
+#' To link to a vignette, use `.vignette`:
+#'
+#' ```{asciicast links-vignette}
+#' cli::cli_text("... see the {.vignette tibble::types} vignette.")
+#' ```
+#'
+#' # Click to run code
+#'
+#' RStudio also supports a special link type that runs R code in the
+#' current R session upon clicking.
+#'
+#' You can create these links with `.run`:
+#'
+#' ```{asciicast links-run}
+#' cli::cli_text("Run {.run testthat::snapshot_review()} to review")
+#' ```
+#'
+#' ## Link text
+#'
+#' Sometimes you want to show a slightly different expression in the link,
+#' than the one that is evaluated. E.g. the evaluated expression probably
+#' needs to qualify packages with `::`, but you might not want to show this:
+#'
+#' ```{asciicast links-run-2}
+#' cli::cli_text(
+#'   "Run {.run [snapshot_review()](testthat::snapshot_review())} to review"
+#' )
+#' ```
+#'
+#' ## Security considerations
+#'
+#' To make `.run` hyperlinks more secure, RStudio with not run code
+#'
+#' * that is not in the `pkg::fun(args)` form,
+#' * if `args` contains `(`, `)` or `;`,
+#' * if it calls a core package (base, stats, etc.),
+#' * if it calls a package that is not loaded, and it is not one of
+#'   testthat, devtools, usethis, or rlang, which are explicitly allowed.
+#'
+#' @name links
 NULL

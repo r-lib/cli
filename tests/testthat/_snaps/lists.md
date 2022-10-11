@@ -590,6 +590,15 @@
 # cli_dl edge cases
 
     Code
+      cli_dl("foo", "must be a named character vector")
+    Condition
+      Error:
+      ! `items` must be a named character vector
+      i `items` is not named
+
+---
+
+    Code
       cli_dl(c(abc = "foo", empty = "", def = "bar"))
     Message
       abc: foo

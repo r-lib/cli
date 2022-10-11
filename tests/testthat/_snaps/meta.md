@@ -214,3 +214,28 @@
       [36m──[39m [1mTitle: [3mMy title[23m[22m [36m─────────────────────────────────────────────────────────────[39m
       And [3msome[23m more: [34m1[39m, [34m2[39m, and [34m3[39m
 
+# return values are ok when recording (#496)
+
+    Code
+      cli::cli({
+        lid <- cli::cli_ul()
+        cli::cli_li("a bullet")
+        cli::cli_end(lid)
+      })
+    Message
+      * a bullet
+
+# nested cli() (#497)
+
+    Code
+      cli::cli({
+        cli::cli_h1("Header")
+        cli::cli(cli::cli_text("Some text"))
+        cli::cli_text("Some more text")
+      })
+    Message
+      
+      -- Header ----------------------------------------------------------------------
+      Some text
+      Some more text
+

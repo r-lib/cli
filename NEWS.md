@@ -1,5 +1,81 @@
 # cli (development version)
 
+* New function `pretty_print_code()` to print function objects with syntax
+  highlighting at the R console.
+
+* `col_*` and `bg_*` functions how handle zero-length input correctly (#532).
+
+* New function `ansi_collapse()` to collapse character vectors into a single
+  string.
+
+* `ansi_strtrim()` now handles some edge cases better, when `ellipsis` has
+  length zero, and when it is wider than `width`.
+
+# cli 3.4.1
+
+* cli has better error messages now.
+
+* New `format_inline()` argument: `collapse`, to collapse multi-line output,
+  potentially because of `\f` characters.
+
+# cli 3.4.0
+
+* New experimental styles to create ANSI hyperlinks in RStudio and
+  terminals that support them. See `?cli::links` for details (#513).
+
+* Expressions that start and end with a `{}` substitution are now styled
+  correctly. E.g. `{.code {var1} + {var2}}` (#517).
+
+* New `{.obj_type_friendly}` inline style to format the type of an R object
+  in a user friendly way (#463).
+
+* Improved vector collapsing behavior. cli now shows both the beginning
+  and end of the collapsed vector, by default (#419).
+
+* Nested `cli()` calls work now (#497).
+
+* Return values now work as they should within `cli()` calls (#496).
+
+* Style attributes with underscores have new names with dashes instead:
+  `vec_sep`, `vec_last`, `vec_trunc`, `string-quote`. The old names still
+  work, but the new ones take precedence (#483).
+
+* cli now does not crash at the end of the R session on Arm Windows
+  (#494; @kevinushey)
+
+* Vectors are truncated at 20 elements now by default, instead of 100 (#430).
+
+* 20 new spinners from the awesome
+  [cli-spinners](https://github.com/sindresorhus/cli-spinners) package,
+  and from @HenrikBengtsson in #469.
+  Run this to demo them, some need UTF-8 and emoji support:
+
+  ```r
+  new <- c("dots13", "dots8Bit", "sand", "material", "weather", "christmas",
+    "grenade", "point", "layer", "betaWave", "fingerDance", "fistBump",
+    "soccerHeader", "mindblown", "speaker", "orangePulse", "bluePulse",
+    "orangeBluePulse", "timeTravel", "aesthetic", "growVeriticalDotsLR",
+    "growVeriticalDotsRL", "growVeriticalDotsLL", "growVeriticalDotsRR")
+  demo_spinners(new)
+  ```
+
+* cli exit handlers are now compatible again with the withr package (#437).
+
+* cli functions now keep trailing `\f` characters as newlines.
+  They also keep multiple consecutive `\f` as multiple newlinees (#491).
+
+* `{}` substitutions within inline styles are now formatted correctly.
+  E.g. `{.code download({url})}` will not add backticks to `url`, and
+  `{.val pre-{x}-post}` will format the whole value instead of `x`.
+  (#422, #474).
+
+* cli now replaces newline characters within `{.class ... }` inline styles
+  with spaces. If the `cli.warn_inline_newlines` option is set to TRUE, then
+  it also throws a warning. (#417).
+
+* `code_highlight` now falls back to the default theme (instead of no theme)
+  for unknown RStudio themes (#482, @rossellhayes).
+
 * `cli_abort()` now supplies `.frame` to `abort()`. This fixes an
   issue with the `.internal = TRUE` argument (r-lib/rlang#1386).
 
@@ -11,7 +87,7 @@
   `ansi_nzchar()`. They work like the corresponding base R functions, but
   handle ANSI markup.
 
-* `style_hyperlink()` (really) no longer breaks if the env varible `VTE_VERSION`
+* `style_hyperlink()` (really) no longer breaks if the env variable `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
 * `cli_dl()` and its corresponding `cli_li()` can now style the labels.
@@ -20,15 +96,15 @@
   cli does not try to evaluate a styled string as an R expression any more.
   E.g. the meaning of `"{.emph +1}"` is now always the "+1", with style
   `.emph`, even if an `.emph` variable is available and the `.emph + 1`
-  expresion can be evaluated.
-  
-* Functions that apply bright background colors (e.g. `bg_br_yellow()`) now 
+  expression can be evaluated.
+
+* Functions that apply bright background colors (e.g. `bg_br_yellow()`) now
   close themselves. They no longer format text after the end of the function
   (#484, @rossellhayes).
 
 # cli 3.3.0
 
-* `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
+* `style_hyperlink()` no longer breaks if the env variable `VTE_VERSION`
   is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
 
 * `ansi_*()` functions support ANSI hyperlinks again (#444).
@@ -49,7 +125,7 @@
 
 ## Other changes
 
-* The preferred names of the S3 clases `ansi_string`, `ansi_style`, `boxx`,
+* The preferred names of the S3 classes `ansi_string`, `ansi_style`, `boxx`,
   `rule` and `tree` now have `cli_` prefix: `cli_ansi_string`, etc. This will
   help avoiding name conflicts with other packages eventually, but for now
   the old names are kept as well, for compatibility.

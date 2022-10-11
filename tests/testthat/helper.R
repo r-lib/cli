@@ -151,18 +151,46 @@ win2unix <- function (str) {
   gsub("\r\n", "\n", str, fixed = TRUE, useBytes = TRUE)
 }
 
-expect_snapshot <- function(...) {
-  if (packageVersion("testthat") >= "3.1.1" &&
-      packageVersion("testthat") < "3.1.1.9000") {
-    skip("testthat bug with snapshots")
-  }
-  testthat::expect_snapshot(...)
-}
-
 st_from_bel <- function(x) {
   gsub("\007", "\033\\", x, fixed = TRUE)
 }
 
 st_to_bel <- function(x) {
   gsub("\033\\", "\007", x, fixed = TRUE)
+}
+
+test_package_root <- function() {
+  x <- tryCatch(
+    rprojroot::find_package_root_file(),
+    error = function(e) NULL)
+
+  if (!is.null(x)) return(x)
+
+  pkg <- testthat::testing_package()
+  x <- tryCatch(
+    rprojroot::find_package_root_file(
+      path = file.path("..", "..", "00_pkg_src", pkg)),
+    error = function(e) NULL)
+
+  if (!is.null(x)) return(x)
+
+  stop("Cannot find package root")
+}
+
+sanitize_wd <- function(x) {
+  wd <- paste0("file://", getwd())
+  gsub(wd, "file:///testthat/home", x, fixed = TRUE)
+}
+
+sanitize_home <- function(x) {
+  home <- paste0("file://", path.expand("~"))
+  gsub(home, "file:///my/home", x, fixed = TRUE)
+}
+
+sanitize_srcref <- function(x) {
+  gsub(" at .*.R:[0-9]+:[0-9]+", "", x)
+}
+
+sanitize_call <- function(x) {
+  gsub(" in `.*`", "", x)
 }

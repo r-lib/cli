@@ -1,4 +1,5 @@
 ---
+title: "Configuration"
 output:
   rmarkdown::html_document:
     toc: true
@@ -12,6 +13,13 @@ These are environment variables and options that uses may set, to modify
 the behavior of cli.
 
 ## User facing environment variables
+
+### `R_CLI_HYPERLINK_MODE`
+
+Set to `posix` to force generating POSIX compatible ANSI hyperlinks.
+If not set, then RStudio compatible links are generated. This is a
+temporary crutch until RStudio handles POSIX hyperlinks correctly, and
+after that it will be removed.
 
 ### `NO_COLOR`
 
@@ -93,6 +101,11 @@ Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
 ANSI hyperlinks.
 Set to anything else to assume no hyperlink support.
 See [style_hyperlink()].
+
+### `cli.ignore_unknown_rstudio_theme`
+
+Set to `TRUE` to omit a warning for an unknown RStudio theme in
+`code_highlight()`.
 
 ### `cli.num_colors`
 
@@ -226,6 +239,12 @@ See [is_utf8_output()].
 cli user theme.
 This option is intended for end users.
 See [themes].
+
+### `cli.warn_inline_newlines`
+
+Whether to emit a warning when cli replaces newline characters with
+spaces within a `{.class }` inline style.
+Defaults to `FALSE`.
 
 ### `cli.width`
 

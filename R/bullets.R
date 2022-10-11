@@ -68,7 +68,7 @@ cli_bullets <- function(text, id = NULL, class = NULL,
 #' `cli_format_bullets_raw()` is similar to [cli_bullets()], but it does
 #' not perform any inline styling or glue substitutions in the input.
 #'
-#' `format_bullets_raw()` returned the output instead of printing it.
+#' `format_bullets_raw()` returns the output instead of printing it.
 #'
 #' @param text Character vector of items. See details below on how names
 #' are interpreted.
@@ -97,5 +97,5 @@ cli_bullets_raw <- function(text, id = NULL, class = NULL) {
 #' @export
 
 format_bullets_raw <- function(text, id = NULL, class = NULL) {
-  fmt(cli_bullets_raw(text, id, class))
+  cli_fmt(cli_bullets_raw(text, id, class))
 }

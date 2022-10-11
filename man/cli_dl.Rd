@@ -48,9 +48,14 @@ A definition list is a container, see \link{containers}.
   cli_dl(c(foo = "one", bar = "two", baz = "three"))
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> foo: one                                                                        
+#> bar: two                                                                        
+#> baz: three                                                                      
+</pre></div>
+}}
 
-\if{html}{\figure{cli-dl.svg}}
 }
 
 \subsection{Items one by one}{
@@ -62,8 +67,13 @@ fun()
   cli_li(c(baz = "three"))
 \}
 fun()
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> foo: <span style="font-style: italic;">one</span>                                                                        
+#> bar: two                                                                        
+#> baz: three                                                                      
+</pre></div>
+}}
 
-\if{html}{\figure{cli-dl-2.svg}}
 }
 }

@@ -10,7 +10,13 @@ palette_cache <- new.env(parent = emptyenv())
 cache_palette_color <- function(pal, idx, colors = num_ansi_colors()) {
   if (is_string(pal)) {
     if (! pal %in% rownames(ansi_palettes)) {
-      stop("Cannot find cli ANSI palette '", pal, "'.")
+      opt <- options(cli.palette = NULL)
+      defer(options(opt))
+      throw(cli_error(
+        "Cannot find cli ANSI palette {.val {pal}}",
+        "i" = "Know palettes are {.val {rownames(cli::ansi_palettes)}}.",
+        "i" = "Maybe the {.code cli.palette} option is incorrect?"
+      ))
     }
     pal <- ansi_palettes[pal, ]
   }

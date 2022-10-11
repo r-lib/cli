@@ -18,27 +18,19 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  cache = TRUE
-)
-# Turn on ANSI colors
-options(
-  cli.num_colors = 256L
+  cache = TRUE,
+  asciicast_at = "all",
+  asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
 )
 asciicast::init_knitr_engine(
   echo = TRUE,
-  echo_input = FALSE,
-  options = list(
-    asciicast_at = NULL,
-    asciicast_end_wait = 3,
-    asciicast_speed = 1,
-    asciicast_cpp11_linkingto = "[[cpp11::linking_to(\"cli\")]]"
-  )
+  echo_input = FALSE
 )
 ```
 
 # Introduction
 
-```{asciicast, asciicast-tick-time, include = FALSE}
+```{asciicast, asciicast-tick-time, include = FALSE, cache = FALSE}
 set.seed(1)
 Sys.setenv(CLI_TICK_TIME = "100")
 ```
@@ -236,6 +228,7 @@ to show a status message. The `cli_progress_message()` and
 `cli_progress_message()` shows a (potentially templated) message in the
 status bar. For convenience, the progress bar rules still apply here by
 default:
+
 * Status messages are removed when their calling function exits.
 * A status message removes the previous status message or progress bar
   of the same caller function.
@@ -322,7 +315,8 @@ f()
 `cli_progress_step()` automatically handles errors, and styles the
 status message accordingly:
 
-```{asciicast step-error, R.options = list(asciicast_rows = 3)}
+```{asciicast step-error}
+#| asciicast_rows = 3
 f <- function() {
   cli_progress_step("First step, this will succeed")
   Sys.sleep(1)

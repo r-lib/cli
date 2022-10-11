@@ -62,36 +62,48 @@ Alerts are typically short status messages.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{nbld <- 11
 tbld <- prettyunits::pretty_sec(5.6)
 cli_alert_success("Built \{.emph \{nbld\}\} status report\{?s\} in \{tbld\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #859900;">✔</span> Built <span style="font-style: italic;">11</span> status reports in 5.6s.                                              
+</pre></div>
+}}
 
-\if{html}{\figure{alert-success.svg}}
 }
 
 \subsection{Info}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.cache/files/latest.cache"
 cli_alert_info("Updating cache file \{.path \{cfl\}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #2AA198;">ℹ</span> Updating cache file <span style="color: #268BD2;">~/.cache/files/latest.cache</span>.                              
+</pre></div>
+}}
 
-\if{html}{\figure{alert-info.svg}}
 }
 
 \subsection{Warning}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.cache/files/latest.cache"
 cli_alert_warning("Failed to update cache file \{.path \{cfl\}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #B58900;">!</span> Failed to update cache file <span style="color: #268BD2;">~/.cache/files/latest.cache</span>.                      
+</pre></div>
+}}
 
-\if{html}{\figure{alert-warning.svg}}
 }
 
 \subsection{Danger}{
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cfl <- "~/.config/report.yaml"
 cli_alert_danger("Cannot validate config file at \{.path \{cfl\}\}.")
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #DC322F;">✖</span> Cannot validate config file at <span style="color: #268BD2;">~/.config/report.yaml</span>.                         
+</pre></div>
+}}
 
-\if{html}{\figure{alert-danger.svg}}
 }
 
 \subsection{Text wrapping}{
@@ -100,8 +112,14 @@ Alerts are printed without wrapping, unless you set \code{wrap = TRUE}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_alert_info("Data columns: \{.val \{names(mtcars)\}\}.")
 cli_alert_info("Data columns: \{.val \{names(mtcars)\}\}.", wrap = TRUE)
-}\if{html}{\out{</div>}}
+}\if{html}{\out{</div>}}\if{html}{\out{
+<div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
+#> <span style="color: #2AA198;">ℹ</span> Data columns: <span style="color: #268BD2;">"mpg"</span>, <span style="color: #268BD2;">"cyl"</span>, <span style="color: #268BD2;">"disp"</span>, <span style="color: #268BD2;">"hp"</span>, <span style="color: #268BD2;">"drat"</span>, <span style="color: #268BD2;">"wt"</span>, <span style="color: #268BD2;">"qsec"</span>, <span style="color: #268BD2;">"vs"</span>, <span style="color: #268BD2;">"am"</span>, <span style="color: #268BD2;">"g</span>
+#> <span style="color: #268BD2;">ear"</span>, and <span style="color: #268BD2;">"carb"</span>.                                                               
+#> <span style="color: #2AA198;">ℹ</span> Data columns: <span style="color: #268BD2;">"mpg"</span>, <span style="color: #268BD2;">"cyl"</span>, <span style="color: #268BD2;">"disp"</span>, <span style="color: #268BD2;">"hp"</span>, <span style="color: #268BD2;">"drat"</span>, <span style="color: #268BD2;">"wt"</span>, <span style="color: #268BD2;">"qsec"</span>,               
+#> <span style="color: #268BD2;">"vs"</span>, <span style="color: #268BD2;">"am"</span>, <span style="color: #268BD2;">"gear"</span>, and <span style="color: #268BD2;">"carb"</span>.                                                 
+</pre></div>
+}}
 
-\if{html}{\figure{alert-wrap.svg}}
 }
 }

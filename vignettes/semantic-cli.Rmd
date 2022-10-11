@@ -21,14 +21,13 @@ knitr::opts_chunk$set(
   out.width = "100%",
   cache = TRUE
 )
-# Turn on ANSI colors
-options(cli.num_colors = 256L)
 asciicast::init_knitr_engine(
+  echo = TRUE,
+  echo_input = FALSE,
   startup = quote({
     library(cli)
-    set.seed(1) }),
-  echo = TRUE,
-  echo_input = FALSE)
+    set.seed(1) })
+)
 ```
 
 # Introduction
@@ -243,8 +242,8 @@ cli_dl(c("item 1" = "description 1", "item 2" = "description 2",
 Item text is wrapped to the terminal width:
 
 ```{asciicast}
-cli_ul(c("item 1" = cli:::lorem_paragraph(1, 20),
-         "item 2" = cli:::lorem_paragraph(1, 20)))
+cli_ul(c("item 1" = cli:::lorem_paragraph(1, 50),
+         "item 2" = cli:::lorem_paragraph(1, 50)))
 ```
 
 ### Adding list items iteratively
@@ -336,7 +335,9 @@ While the status bar is active, cli can still produce output, as normal.
 This output is created "above" the status bar, which is always kept in the last line of the screen.
 See the following example:
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 30)}
+```{asciicast}
+#| asciicast_at = "all",
+#| asciicast_end_wait = 30
 f <- function() {
   cli_alert_info("About to start downloads.")
   sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
@@ -600,10 +601,12 @@ list_spinners()
 get_spinner("dots")
 ```
 
-```{asciicast, R.options = list(asciicast_at = NULL)}
+```{asciicast}
+#| asciicast_at = "all"
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
-```{asciicast, R.options = list(asciicast_at = NULL)}
+```{asciicast}
+#| asciicast_at = "all"
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```

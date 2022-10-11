@@ -41,7 +41,7 @@ SEXP clic_getppid() {
 
 #else
 
-SEXP clic_getppid() {
+SEXP clic_getppid(void) {
   pid_t pid = getppid();
   return Rf_ScalarInteger(pid);
 }

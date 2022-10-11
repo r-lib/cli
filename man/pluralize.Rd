@@ -22,8 +22,11 @@ pluralize(
 }
 \details{
 See \link{pluralization} and some examples below.
+
+You need to install the glue package to use this function.
 }
 \examples{
+\dontshow{if (requireNamespace("glue", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Regular plurals
 nfile <- 0; pluralize("Found {nfile} file{?s}.")
 nfile <- 1; pluralize("Found {nfile} file{?s}.")
@@ -56,6 +59,7 @@ pluralize("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")
 # Explicit quantities
 nupd <- 3; ntotal <- 10
 cli_text("{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates")
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other pluralization: 

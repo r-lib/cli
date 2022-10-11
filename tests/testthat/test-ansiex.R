@@ -75,13 +75,17 @@ test_that("ansi_nchar wide characters", {
 })
 
 test_that("ansi_substr bad input", {
-  expect_error(
-    ansi_substr("foobar", NULL, 10),
-    "invalid substring arguments"
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("foobar", NULL, 10)
   )
-  expect_error(
-    ansi_substr("foobar", 10, NULL),
-    "invalid substring arguments"
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("foobar", 10, NULL)
+  )
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("foobar", "bad", "bad")
   )
 })
 
@@ -181,10 +185,10 @@ test_that("ansi_substr corner cases", {
 
   # non-numeric arguments cause errors; NOTE: this actually "works"
   # with 'substr' but not implemented in 'ansi_substr'
-  suppressWarnings(
-    expect_error(ansi_substr("abc", "hello", 1), "non-numeric")
+  expect_snapshot(
+    error = TRUE,
+    ansi_substr("abc", "hello", 1)
   )
-
 })
 
 test_that("ansi_substring", {
@@ -324,9 +328,9 @@ test_that("ansi_strsplit edge cases", {
 
 test_that("Weird length 'split'", {
   withr::local_options(list(cli.num_colors = 256L))
-  expect_error(
-    ansi_strsplit(c("ab", "bd"), c("b", "d")),
-    "must be character"
+  expect_snapshot(
+    error = TRUE,
+    ansi_strsplit(c("ab", "bd"), c("b", "d"))
   )
   expect_identical(
     ansi_strsplit("ab", NULL),
@@ -464,7 +468,11 @@ test_that("ansi_strwrap simple", {
 test_that("ansi_strwrap simple styled", {
   cases = list(
     list(col_red("foo"), col_red("foo")),
-    list(col_red(c("foo", "bar")), col_red(c("foo", "bar")))
+    list(col_red(c("foo", "bar")), col_red(c("foo", "bar"))),
+    list(
+      paste0("foo", bg_red("   "), "bar"),
+      paste0("foo", bg_red(" "), "bar")
+    )
   )
 
   for (case in cases) {
@@ -525,7 +533,7 @@ test_that("ansi_strwrap and \f edge cases", {
   )
   expect_equal(
     ansi_strwrap("\033[32m\ffoo\f\033[39m"),
-    ansi_string(c("", "\033[32mfoo\033[39m"))
+    ansi_string(c("", "\033[32mfoo\033[39m", ""))
   )
 })
 
@@ -546,6 +554,30 @@ test_that_cli(configs = c("plain", "ansi"), "ansi_strtrim", {
   )
 
   for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
+})
+
+test_that("ansi_strtrim with zero-length ellipsis", {
+  expect_snapshot({
+    ansi_strtrim("12345", 1, ellipsis = "")
+    ansi_strtrim("12345", 3, ellipsis = "")
+    ansi_strtrim("12345", 5, ellipsis = "")
+  })
+})
+
+test_that("ansi_strtrim errors", {
+  expect_snapshot(
+    error = TRUE,
+    ansi_strtrim("foobar", -1)
+  )
+})
+
+test_that("ansi_strtrim edge cases", {
+  expect_snapshot({
+    ansi_strtrim("foobar", width = 3, ellipsis = "...")
+    ansi_strtrim("foobar", width = 2, ellipsis = "...")
+    ansi_strtrim("foobar", width = 1, ellipsis = "...")
+    ansi_strtrim("foobar", width = 0, ellipsis = "...")
+  })
 })
 
 test_that("ansi_columns", {

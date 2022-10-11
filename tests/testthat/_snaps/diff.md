@@ -229,3 +229,13 @@
     Output
       [42m[30mPRE[39m[49mabcdefg[44m[30mhijklm[39m[49m[42m[30mMIDDLE[39m[49mnopqrstuvwxyz[42m[30mPOST[39m[49m
 
+# max_diff
+
+    ! Diff edit distance is larger than the limit.
+    i The edit distance limit is 0.
+
+---
+
+    ! Diff edit distance is larger than the limit.
+    i The edit distance limit is 1.
+

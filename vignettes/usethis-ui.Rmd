@@ -20,25 +20,23 @@ knitr::opts_chunk$set(
   out.width = "100%",
   cache = TRUE
 )
-# Turn on ANSI colors
-options(cli.num_colors = 256L)
 asciicast::init_knitr_engine(
+  echo = TRUE,
+  echo_input = FALSE,
   startup = quote({
     library(cli)
     library(usethis)
     set.seed(1)
-  }),
-  echo = TRUE,
-  echo_input = FALSE
+  })
 )
 ```
+
+# Introduction
 
 ```{r setup}
 library(cli)
 library(usethis)
 ```
-
-# Introduction
 
 We'll show how to transition from the `usethis::ui_*` functions to cli 2.0.0.
 
@@ -46,14 +44,21 @@ We'll show how to transition from the `usethis::ui_*` functions to cli 2.0.0.
 
 ## `usethis::ui_code()`
 
+### Usage
+
     usethis::ui_code(x)
+
+### Example
 
 ```{asciicast}
 ui_todo("Redocument with {ui_code('devtools::document()')}")
 ```
 
+### With cli 
+
 In general inline code formatting can be done with inline styles in cli.
-The default theme has a `"code"` class, but it also one for functions, so this can be either of:
+The default theme has a `"code"` class, but it also one for functions, so
+this can be either of:
 
 ```{asciicast}
 cli_ul("Redocument with {.code devtools::document()}")
@@ -65,11 +70,17 @@ cli_ul("Redocument with {.fun devtools::document}")
 
 ## `usethis::ui_code_block()`
 
+### Usage
+
     usethis::ui_code_block(x, copy = interactive(), .envir = parent.frame())
 
-```{asciicast}
+### Example
+
+```{asciicast, asciicast_rows = length(format(cli::cli_code)) + 2}
 ui_code_block("{format(cli_code)}")
 ```
+
+### With cli
 
 `cli_code()` produces similar output and it also syntax highlight R code:
 
@@ -77,13 +88,20 @@ ui_code_block("{format(cli_code)}")
 cli_code(format(cli_code))
 ```
 
-However, cli does not copy stuff to the clipboard, so this has to be done separately.
+However, cli does not copy stuff to the clipboard, so this has to be done
+separately.
 
-Another difference is that it also does not run glue substitutions on the code text, so if you want that to happen you'll need to do that before the cli call.
+Another difference is that it also does not run glue substitutions on the
+code text, so if you want that to happen you'll need to do that before the 
+cli call.
 
 ## `usethis::ui_done()`
 
+### Usage
+
     usethis::ui_done(x, .envir = parent.frame())
+
+### Example
 
 ```{asciicast}
 name <- "VignetteBuilder"
@@ -91,15 +109,21 @@ value <- "knitr, rmarkdown"
 ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")
 ```
 
+### With cli
+
 This is probably closest to `cli_alert_success()`:
 
 ```{asciicast}
 cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")
 ```
 
-If you want to handle success and failure, then maybe the `cli_process_*()` functions are a better fit:
+If you want to handle success and failure, then maybe the `cli_process_*()`
+functions are a better fit:
 
-```{asciicast, R.options = list(asciicast_at = NULL, asciicast_end_wait = 5)}
+```{asciicast}
+#| asciicast_at = "all",
+#| asciicast_end_wait = 5,
+#| asciicast_cursor = FALSE
 tryCatch({
     cli_process_start("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")
     Sys.sleep(1) # <- do the task here, we just sleep
@@ -113,7 +137,11 @@ tryCatch({
 
 ## `usethis::ui_field()`
 
+### Usage
+
     usethis::ui_field(x)
+
+### Example
 
 ```{asciicast}
 name <- "VignetteBuilder"
@@ -121,13 +149,16 @@ value <- "knitr, rmarkdown"
 ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")
 ```
 
+### With cli
+
 cli has a `"field"` class for inline styling:
 
 ```{asciicast}
 cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")
 ```
 
-Just like `usethis::ui_field()` and similar usethis functions, cli collapses inline vectors, before styling:
+Just like `usethis::ui_field()` and similar usethis functions, cli collapses
+inline vectors, before styling:
 
 ```{asciicast}
 name <- c("Depends", "Imports", "Suggests")
@@ -147,11 +178,17 @@ cli_alert_success("Setting the {.field {name}} field{?s} in DESCRIPTION")
 
 ## `usethis::ui_info()`
 
+### Usage
+
     usethis::ui_info((x, .envir = parent.frame())
+
+### Example
 
 ```{asciicast}
 ui_info("No labels need renaming")
 ```
+
+### With cli
 
 This is simply `cli_alert_info()`:
 
@@ -161,11 +198,17 @@ cli_alert_info("No labels need renaming")
 
 ## `usethis::ui_line()`
 
+### Usage
+
     usethis::ui_line(x, .envir = parent.frame())
+
+### Example
 
 ```{asciicast}
 ui_line("No matching issues/PRs found.")
 ```
+
+### With cli
 
 This is just a line of text, so `cli_text()` is fine for this.
 One difference is that `cli_text()` will automatically wrap the long lines.
@@ -176,26 +219,41 @@ cli_text("No matching issues/PRs found.")
 
 ## `usethis::ui_nope()`
 
+### Usage
+
     ui_nope(x, .envir = parent.frame())
+
+### With cli
 
 cli does not support user input currently, so this has to stay in usethis.
 
 ## `usethis::ui_oops()`
 
+### Usage
+
     usethis::ui_oops(x, .envir = parent.frame())
+
+### Example
 
 ```{asciicast}
 ui_oops("Can't validate token. Is the network reachable?")
 ```
 
-This is mostly just `cli_alert_danger()`, but for see also the `cli_process_*()` alternatives at `usethis::ui_done()`.
+### With cli
+
+This is mostly just `cli_alert_danger()`, but for see also the
+`cli_process_*()` alternatives at `usethis::ui_done()`.
 
 ## `usethis::ui_path()`
 
+### Usage
+
     usethis::ui_path(x, base = NULL)
 
-`ui_path()` formats paths as relative to the project or the supplied base directory, and also appends a `/` to directories.
-cli does not do any of these, but it does have inline markup for files and paths:
+### Example
+
+`ui_path()` formats paths as relative to the project or the supplied base
+directory, and also appends a `/` to directories.
 
 ```{asciicast}
 logo_path <- file.path("man", "figures", "logo.svg")
@@ -203,20 +261,34 @@ img <- "/tmp/some-image.svg"
 ui_done("Copied {ui_path(img)} to {ui_path(logo_path)}")
 ```
 
+### With cli
+
+cli does not do any of these, but it does have inline markup for files and
+paths:
+
 ```{asciicast}
 cli_alert_success("Copied {.file {img}} to {.file {logo_path}}")
 ```
 
 ## `usethis::ui_stop()`
 
+### Usage
+
     usethis::ui_stop(x, .envir = parent.frame())
 
-`ui_stop()` does glue substitution on the string, and then calls `stop()` to throw an error.
-`cli_abort()` does the same and is formatted using `cli_bullets()`.
+### Example
+
+`ui_stop()` does glue substitution on the string, and then calls `stop()` to
+throw an error.
 
 ```{asciicast}
+#| asciicast_rows = 2
 ui_stop("Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists")
 ```
+
+### With cli
+
+`cli_abort()` does the same and is formatted using `cli_bullets()`.
 
 ```{asciicast}
 cli_abort(
@@ -227,13 +299,20 @@ cli_abort(
 
 ## `usethis::ui_todo()`
 
+### Usage
+
     usethis::ui_todo(x, .envir = parent.frame())
 
-This is a bullet, so either `cli_ul()` or `cli_alert_info()` should be appropriate:
+### Example
 
 ```{asciicast}
 ui_todo("Redocument with {ui_code('devtools::document()')}")
 ```
+
+### With cli
+
+This is a bullet, so either `cli_ul()` or `cli_alert_info()` should be
+appropriate:
 
 ```{asciicast}
 cli_ul("Redocument with {.fun devtools::document}")
@@ -241,9 +320,11 @@ cli_ul("Redocument with {.fun devtools::document}")
 
 ## `usethis::ui_value()`
 
+### Usage
+
     usethis::ui_value(x)
 
-The `"value"` inline class is appropriate for this.
+### Example
 
 ```{asciicast}
 name <- "VignetteBuilder"
@@ -251,20 +332,32 @@ value <- "knitr, rmarkdown"
 ui_done("Setting {ui_field(name)} field in DESCRIPTION to {ui_value(value)}")
 ```
 
+### With cli
+
+The `"value"` inline class is appropriate for this.
+
 ```{asciicast}
 cli_alert_success("Setting {.field {name}} field in DESCRIPTION to {.val {value}}")
 ```
 
 ## `usethis::ui_warn()`
 
+### Usage
+
     usethis::ui_warn(x, .envir = parent.frame())
 
+### Example
+
 `ui_warn()` does glue substitution on the string, and then calls `warning()` to throw a warning.
-`cli_war()` does the same and is formatted using `cli_bullets()`.
 
 ```{asciicast}
+#| asciicast_rows = 2
 ui_warn("Could not copy {ui_path(img)} to  {ui_path(logo_path)}, file already exists")
 ```
+
+### With cli
+
+`cli_warn()` does the same and is formatted using `cli_bullets()`.
 
 ```{asciicast}
 cli_warn(
@@ -275,6 +368,10 @@ cli_warn(
 
 ## `usethis::ui_yeah()`
 
+### Usage
+
     ui_yeah(x, .envir = parent.frame())
+
+### With cli
 
 cli does not support user input currently, so this has to stay in usethis.

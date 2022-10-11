@@ -36,6 +36,11 @@
 #' `NULL`, which includes all possible configurations. It can also be a
 #' character vector, to restrict the tests to some configurations only.
 #' See available configurations below.
+#' @param links Whether to run the code with various hyperlinks allowed.
+#' If `NULL` then hyperlinks are turned off. Otherwise it can be a character
+#' vector with possible hyperlink configurations:
+#'   * `"all"`: turn on all hyperlinks,
+#'   * `"none"`: turn off all hyperlinks.
 #'
 #' @export
 #' @examples
@@ -69,14 +74,29 @@
 #'   }))
 #' })
 
- test_that_cli <- function(desc, code, configs = NULL) {
+test_that_cli <- function(desc, code,
+                          configs = c("plain", "ansi", "unicode", "fancy"),
+                          links = NULL) {
   code <- substitute(code)
 
+  configs <- apply(expand.grid(configs, links %||% ""), 1, paste, collapse = "-")
+  configs <- sub("-$", "", configs)
+
   doconfigs <- list(
-    list(id = "plain",   unicode = FALSE, num_colors =   1, locale = NULL),
-    list(id = "ansi",    unicode = FALSE, num_colors = 256, locale = NULL),
-    list(id = "unicode", unicode = TRUE,  num_colors =   1, locale = NULL),
-    list(id = "fancy",   unicode = TRUE,  num_colors = 256, locale = NULL)
+    list(id = "plain",   unicode = FALSE, num_colors =   1, links = FALSE),
+    list(id = "ansi",    unicode = FALSE, num_colors = 256, links = FALSE),
+    list(id = "unicode", unicode = TRUE,  num_colors =   1, links = FALSE),
+    list(id = "fancy",   unicode = TRUE,  num_colors = 256, links = FALSE),
+
+    list(id = "plain-none",   unicode = FALSE, num_colors =   1, links = FALSE),
+    list(id = "ansi-none",    unicode = FALSE, num_colors = 256, links = FALSE),
+    list(id = "unicode-none", unicode = TRUE,  num_colors =   1, links = FALSE),
+    list(id = "fancy-none",   unicode = TRUE,  num_colors = 256, links = FALSE),
+
+    list(id = "plain-all",   unicode = FALSE, num_colors =   1, links = TRUE),
+    list(id = "ansi-all",    unicode = FALSE, num_colors = 256, links = TRUE),
+    list(id = "unicode-all", unicode = TRUE,  num_colors =   1, links = TRUE),
+    list(id = "fancy-all",   unicode = TRUE,  num_colors = 256, links = TRUE)
   )
 
   parent <- parent.frame()
@@ -87,6 +107,12 @@
         crayon = num_colors > 1,
         unicode = unicode
       )
+      withr::local_options(
+        cli.hyperlink = links,
+        cli.hyperlink_help = links,
+        cli.hyperlink_run = links,
+        cli.hyperlink_vignette = links,
+      )
       code_
     }, c(conf, list(code_ = code)))
     desc2 <- paste0(desc, " [", conf$id, "]")
@@ -96,4 +122,30 @@
     )
     eval(test, envir = parent)
   })
+}
+
+local_clean_cli_context <- function(.local_envir = parent.frame()) {
+  withr::local_options(
+    .local_envir = .local_envir,
+    cli.hyperlink = NULL,
+    cli.hyperlink_run = NULL,
+    cli.hyperlink_help = NULL,
+    cli.hyperlink_vignette = NULL,
+    cli.num_colors = NULL,
+    cli.palette = NULL,
+    crayon.enabled = NULL
+  )
+  withr::local_envvar(
+    .local_envir = .local_envir,
+    R_CLI_HYPERLINKS = NA_character_,
+    RSTUDIO_CLI_HYPERLINKS = NA_character_,
+    R_CLI_NUM_COLORS = NA_character_,
+    NO_COLOR = NA_character_,
+    WT_SESSION = NA_character_,
+    CI = NA_character_,
+    TEAMCITY_VERSION = NA_character_,
+    TERM_PROGRAM = NA_character_,
+    TERM_PROGRAM_VERSION = NA_character_,
+    VTE_VERSION = NA_character_
+  )
 }
