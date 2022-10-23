@@ -81,14 +81,11 @@
 #'   If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
 #'   then cli creates a clickable link. It supports link text.
 #'   See [links] for more about cli hyperlinks.
-#' * `url` for a URL.
-#'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
-#'   then cli creates a clickable link.
-#'   See [links] for more about cli hyperlinks.
 #' * `type` formats the type of an R object in a readable way, and it
 #'   should be used with `{}`, see an example below.
 #' * `url` for a URL. If the terminal supports ANSI hyperlinks (e.g.
 #'   RStudio, iTerm2, etc.), then cli creates a clickable link.
+#'   See [links] for more about cli hyperlinks.
 #' * `var` for a variable name.
 #' * `val` for a generic "value".
 #' * `vignette` is a vignette.
