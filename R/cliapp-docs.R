@@ -451,7 +451,7 @@ NULL
 #'
 #' # Link text
 #'
-#' Before we delve into the various types of hyperlinks, a geneal comment
+#' Before we delve into the various types of hyperlinks, a general comment
 #' about link texts. Some link styles support a custom link text:
 #'
 #' * `.href`
