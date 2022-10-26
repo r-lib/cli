@@ -91,7 +91,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Building a Semantic CLI</h1>
-                        <h4 data-toc-skip class="author">Gábor Csárdi</h4>
+                        <h4 data-toc-skip class="author">Gábor
+Csárdi</h4>
             
             <h4 data-toc-skip class="date">2022-10-26</h4>
       
@@ -104,19 +105,31 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The cli package helps you build a command line interface (CLI) without getting lost in details (colors, wrapping, spacing, etc.) of how each piece of the output is formatted. Instead, you can build command line output from semantic elements: lists, alerts, quotes code blocks, headers, etc. The formatting of each element is specified separately, in one or more cli <em>themes</em>. cli comes with a builtin theme, and if you are satisfied with that, then you never need to worry about formatting. A semantic cli is similar to how HTML and CSS work together to create a web site.</p>
-<p>In this introduction we will go over the functions that create semantic CLI elements, and also some common features of them.</p>
+<p>The cli package helps you build a command line interface (CLI)
+without getting lost in details (colors, wrapping, spacing, etc.) of how
+each piece of the output is formatted. Instead, you can build command
+line output from semantic elements: lists, alerts, quotes code blocks,
+headers, etc. The formatting of each element is specified separately, in
+one or more cli <em>themes</em>. cli comes with a builtin theme, and if
+you are satisfied with that, then you never need to worry about
+formatting. A semantic cli is similar to how HTML and CSS work together
+to create a web site.</p>
+<p>In this introduction we will go over the functions that create
+semantic CLI elements, and also some common features of them.</p>
 </div>
 <div class="section level2">
 <h2 id="building-a-command-line-interface">Building a command line interface<a class="anchor" aria-label="anchor" href="#building-a-command-line-interface"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span></span></code></pre></div>
-<p>To build a CLI, you can simply start using the <code>cli_*</code> functions to create various CLI elements. Their exact formatting depends on the current theme, see ‘Theming’ below.</p>
+<p>To build a CLI, you can simply start using the <code>cli_*</code>
+functions to create various CLI elements. Their exact formatting depends
+on the current theme, see ‘Theming’ below.</p>
 <div class="section level3">
 <h3 id="alerts">Alerts<a class="anchor" aria-label="anchor" href="#alerts"></a>
 </h3>
-<p>Alerts are typically short messages. cli has four types of alerts (success, info, warning, danger) and also a generic alert type:</p>
+<p>Alerts are typically short messages. cli has four types of alerts
+(success, info, warning, danger) and also a generic alert type:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cli_alert.html">cli_alert_success</a></span><span class="op">(</span><span class="st">"Updated database."</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
@@ -172,7 +185,9 @@
 <div class="section level3">
 <h3 id="paragraphs">Paragraphs<a class="anchor" aria-label="anchor" href="#paragraphs"></a>
 </h3>
-<p>Paragraphs break the output. The default theme inserts an empty line before and after paragraphs, but only a single empty line is added between two paragraphs.</p>
+<p>Paragraphs break the output. The default theme inserts an empty line
+before and after paragraphs, but only a single empty line is added
+between two paragraphs.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_par.html">cli_par</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -193,17 +208,25 @@
 #&gt;                                                                                 
 </pre>
 </div>
-<p><code><a href="../reference/cli_end.html">cli_end()</a></code> closes the latest open paragraph (or other open container).</p>
+<p><code><a href="../reference/cli_end.html">cli_end()</a></code> closes the latest open paragraph (or other
+open container).</p>
 </div>
 <div class="section level3">
 <h3 id="auto-closing-containers">Auto-closing containers<a class="anchor" aria-label="anchor" href="#auto-closing-containers"></a>
 </h3>
-<p>If a paragraph (or other container, see ‘Generic containers’ later), is opened within a function, cli automatically closes it at the end of the function, by default. So in the previous example the last <code><a href="../reference/cli_end.html">cli_end()</a></code> call is not needed. Use <code>.auto_close = FALSE</code> in <code><a href="../reference/cli_par.html">cli_par()</a></code> to leave the paragraph open after its calling function returns.</p>
+<p>If a paragraph (or other container, see ‘Generic containers’ later),
+is opened within a function, cli automatically closes it at the end of
+the function, by default. So in the previous example the last
+<code><a href="../reference/cli_end.html">cli_end()</a></code> call is not needed. Use
+<code>.auto_close = FALSE</code> in <code><a href="../reference/cli_par.html">cli_par()</a></code> to leave the
+paragraph open after its calling function returns.</p>
 </div>
 <div class="section level3">
 <h3 id="headings">Headings<a class="anchor" aria-label="anchor" href="#headings"></a>
 </h3>
-<p>cli supports three levels of headings. This is how they look in the default theme. The default theme adds an empty line before headings, and an empty line after <code><a href="../reference/cli_h1.html">cli_h1()</a></code> and <code><a href="../reference/cli_h1.html">cli_h2()</a></code>.</p>
+<p>cli supports three levels of headings. This is how they look in the
+default theme. The default theme adds an empty line before headings, and
+an empty line after <code><a href="../reference/cli_h1.html">cli_h1()</a></code> and <code><a href="../reference/cli_h1.html">cli_h2()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading 1"</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
@@ -231,7 +254,8 @@
 <div class="section level3">
 <h3 id="interpolation">Interpolation<a class="anchor" aria-label="anchor" href="#interpolation"></a>
 </h3>
-<p>All cli text is treated as a glue template, with special formatters available (see the ‘Inline text formatting’ Section):</p>
+<p>All cli text is treated as a glue template, with special formatters
+available (see the ‘Inline text formatting’ Section):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">123143123</span></span>
 <span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fl">1.3454</span></span>
@@ -251,7 +275,10 @@
 <div class="section level3">
 <h3 id="inline-text-formatting">Inline text formatting<a class="anchor" aria-label="anchor" href="#inline-text-formatting"></a>
 </h3>
-<p>To define inline markup, you can use the regular glue braces, and after the opening brace, supply the name of the markup formatter with a leading dot, e.g. for emphasized text, you use <code>.emph</code>. Some examples are below, see <code><a href="../reference/inline-markup.html">?"inline-markup"</a></code> for details.</p>
+<p>To define inline markup, you can use the regular glue braces, and
+after the opening brace, supply the name of the markup formatter with a
+leading dot, e.g. for emphasized text, you use <code>.emph</code>. Some
+examples are below, see <code><a href="../reference/inline-markup.html">?"inline-markup"</a></code> for details.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -283,7 +310,8 @@
 #&gt; • Some <span style="color: #859900;">field</span>                                                                    
 </pre>
 </div>
-<p>To combine inline markup and string interpolation, you need to add another set of braces:</p>
+<p>To combine inline markup and string interpolation, you need to add
+another set of braces:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dlurl</span> <span class="op">&lt;-</span> <span class="st">"https://httpbin.org/status/404"</span></span>
 <span><span class="fu"><a href="../reference/cli_alert.html">cli_alert_danger</a></span><span class="op">(</span><span class="st">"Failed to download {.url {dlurl}}."</span><span class="op">)</span></span></code></pre></div>
@@ -292,7 +320,9 @@
 #&gt; <span style="color: #DC322F;">✖</span> Failed to download <span style="font-style: italic;color: #268BD2;">&lt;https://httpbin.org/status/404&gt;</span>.                          
 </pre>
 </div>
-<p><code>"val"</code> is a special inline style, that in the default theme calls <code><a href="../reference/cli_format.html">cli_format()</a></code> to tailor the conversion of values to strings. The conversion can be themed, see “Theming” below.</p>
+<p><code>"val"</code> is a special inline style, that in the default
+theme calls <code><a href="../reference/cli_format.html">cli_format()</a></code> to tailor the conversion of values
+to strings. The conversion can be themed, see “Theming” below.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>.val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Some random numbers: {.val {runif(4)}}."</span><span class="op">)</span></span>
@@ -306,7 +336,9 @@
 <div class="section level3">
 <h3 id="inline-lists-of-items">Inline lists of items<a class="anchor" aria-label="anchor" href="#inline-lists-of-items"></a>
 </h3>
-<p>When cli performs inline text formatting, it automatically collapses glue substitutions, after formatting. This is handy to create lists of files, packages, etc.</p>
+<p>When cli performs inline text formatting, it automatically collapses
+glue substitutions, after formatting. This is handy to create lists of
+files, packages, etc.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pkgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pkg1"</span>, <span class="st">"pkg2"</span>, <span class="st">"pkg3"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Packages: {pkgs}."</span><span class="op">)</span></span></code></pre></div>
@@ -336,7 +368,10 @@
 <div class="section level3">
 <h3 id="non-breaking-spaces">Non-breaking spaces<a class="anchor" aria-label="anchor" href="#non-breaking-spaces"></a>
 </h3>
-<p>Use <code>\u00a0</code> to create a non-breaking space. E.g. in here we insert some non-breaking spaces, and mark them with an <code>X</code>, so it is easy to see that there are no line breaks at a non-breaking space:</p>
+<p>Use <code>\u00a0</code> to create a non-breaking space. E.g. in here
+we insert some non-breaking spaces, and mark them with an
+<code>X</code>, so it is easy to see that there are no line breaks at a
+non-breaking space:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make some spaces non-breaking, and mark them with X</span></span>
 <span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu">cli</span><span class="fu">:::</span><span class="fu">lorem_ipsum</span><span class="op">(</span><span class="op">)</span></span>
@@ -358,7 +393,9 @@
 <div class="section level3">
 <h3 id="lists">Lists<a class="anchor" aria-label="anchor" href="#lists"></a>
 </h3>
-<p>cli has three types of list: ordered, unordered and definition lists, see <code><a href="../reference/cli_ol.html">cli_ol()</a></code>, <code><a href="../reference/cli_ul.html">cli_ul()</a></code> and <code><a href="../reference/cli_dl.html">cli_dl()</a></code>:</p>
+<p>cli has three types of list: ordered, unordered and definition lists,
+see <code><a href="../reference/cli_ol.html">cli_ol()</a></code>, <code><a href="../reference/cli_ul.html">cli_ul()</a></code> and
+<code><a href="../reference/cli_dl.html">cli_dl()</a></code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cli_ol.html">cli_ol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item 1"</span>, <span class="st">"item 2"</span>, <span class="st">"item 3"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
@@ -420,12 +457,20 @@
 #&gt; • Item 3                                                                        
 </pre>
 </div>
-<p>The <code><a href="../reference/cli_ul.html">cli_ul()</a></code> call creates a list container, and because its items are not specified, it leaves the container open. Then items can be added one by one. (The last <code><a href="../reference/cli_end.html">cli_end()</a></code> is not necessary, because by default containers auto-close when their calling function exits.)</p>
+<p>The <code><a href="../reference/cli_ul.html">cli_ul()</a></code> call creates a list container, and because
+its items are not specified, it leaves the container open. Then items
+can be added one by one. (The last <code><a href="../reference/cli_end.html">cli_end()</a></code> is not
+necessary, because by default containers auto-close when their calling
+function exits.)</p>
 </div>
 <div class="section level4">
 <h4 id="adding-text-to-an-item-iteratively">Adding text to an item iteratively<a class="anchor" aria-label="anchor" href="#adding-text-to-an-item-iteratively"></a>
 </h4>
-<p><code><a href="../reference/cli_li.html">cli_li()</a></code> creates a new container for the list item, within the list container. You can keep adding text to the item, until the container is closed via <code><a href="../reference/cli_end.html">cli_end()</a></code> or a new <code><a href="../reference/cli_li.html">cli_li()</a></code>, which closes the current item container, and creates another one for the new item:</p>
+<p><code><a href="../reference/cli_li.html">cli_li()</a></code> creates a new container for the list item,
+within the list container. You can keep adding text to the item, until
+the container is closed via <code><a href="../reference/cli_end.html">cli_end()</a></code> or a new
+<code><a href="../reference/cli_li.html">cli_li()</a></code>, which closes the current item container, and
+creates another one for the new item:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -466,7 +511,9 @@
 #&gt; 2. Item 2                                                                       
 </pre>
 </div>
-<p>In <code>cli_end(olid)</code>, the <code>olid</code> is necessary, otherwise <code><a href="../reference/cli_end.html">cli_end()</a></code> would only close the container of the list item.</p>
+<p>In <code>cli_end(olid)</code>, the <code>olid</code> is necessary,
+otherwise <code><a href="../reference/cli_end.html">cli_end()</a></code> would only close the container of the
+list item.</p>
 </div>
 </div>
 <div class="section level3">
@@ -480,29 +527,48 @@
 #&gt; ── Compiling <span style="color: #268BD2;">mypackage</span> ─────────────────────────────────────────────────────────
 </pre>
 </div>
-<p>You can use the usual inline markup in the labels of the rule. The rule’s appearance is specified in the current theme. In particular:</p>
+<p>You can use the usual inline markup in the labels of the rule. The
+rule’s appearance is specified in the current theme. In particular:</p>
 <ul>
 <li>
 <code>before</code> is added before the rule.</li>
 <li>
 <code>after</code> is added after the rule.</li>
 <li>
-<code>color</code> is used for the color of the rule <em>and</em> the labels. (Use color within the label text for a different label color.)</li>
+<code>color</code> is used for the color of the rule <em>and</em>
+the labels. (Use color within the label text for a different label
+color.)</li>
 <li>
-<code>background-color</code>: is the background color for the rule and the labels. (Again, you can use a different background color within the label itself.)</li>
+<code>background-color</code>: is the background color for the rule
+and the labels. (Again, you can use a different background color within
+the label itself.)</li>
 <li>
-<code>margin-top</code>, <code>margin-bottom</code> for empty space above and below the rule.</li>
+<code>margin-top</code>, <code>margin-bottom</code> for empty space
+above and below the rule.</li>
 <li>
-<code>line-type</code> specifies the line type of the rule. See <code><a href="../reference/cli_rule.html">?cli_rule</a></code> for line types.</li>
+<code>line-type</code> specifies the line type of the rule. See
+<code><a href="../reference/cli_rule.html">?cli_rule</a></code> for line types.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="the-status-bar">The status bar<a class="anchor" aria-label="anchor" href="#the-status-bar"></a>
 </h3>
-<p>cli supports creating a status bar in the last line of the console, if the terminal supports the carriage return control character to move the cursor to the beginning of the line. This is supported in all terminals, in RStudio, Emacs, RGui, R.app, etc. It is not supported if the output is a file, e.g. typically on CI systems.</p>
-<p><code><a href="../reference/cli_status.html">cli_status()</a></code> creates a new status bar, <code><a href="../reference/cli_status_update.html">cli_status_update()</a></code> updates a status bar, and <code><a href="../reference/cli_status_clear.html">cli_status_clear()</a></code> clears it. <code><a href="../reference/cli_status.html">cli_status()</a></code> returns an id, that can be used in <code><a href="../reference/cli_status_update.html">cli_status_update()</a></code> and <code><a href="../reference/cli_status_clear.html">cli_status_clear()</a></code> to refer to the right status bar.</p>
-<p>While it is possible to create multiple status bars, on a typical terminal only one of them can be shown at any time. cli by default shows the one that was last created or updated.</p>
-<p>While the status bar is active, cli can still produce output, as normal. This output is created “above” the status bar, which is always kept in the last line of the screen. See the following example:</p>
+<p>cli supports creating a status bar in the last line of the console,
+if the terminal supports the carriage return control character to move
+the cursor to the beginning of the line. This is supported in all
+terminals, in RStudio, Emacs, RGui, R.app, etc. It is not supported if
+the output is a file, e.g. typically on CI systems.</p>
+<p><code><a href="../reference/cli_status.html">cli_status()</a></code> creates a new status bar,
+<code><a href="../reference/cli_status_update.html">cli_status_update()</a></code> updates a status bar, and
+<code><a href="../reference/cli_status_clear.html">cli_status_clear()</a></code> clears it. <code><a href="../reference/cli_status.html">cli_status()</a></code>
+returns an id, that can be used in <code><a href="../reference/cli_status_update.html">cli_status_update()</a></code> and
+<code><a href="../reference/cli_status_clear.html">cli_status_clear()</a></code> to refer to the right status bar.</p>
+<p>While it is possible to create multiple status bars, on a typical
+terminal only one of them can be shown at any time. cli by default shows
+the one that was last created or updated.</p>
+<p>While the status bar is active, cli can still produce output, as
+normal. This output is created “above” the status bar, which is always
+kept in the last line of the screen. See the following example:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"About to start downloads."</span><span class="op">)</span></span>
@@ -523,17 +589,28 @@
 <div class="section level2">
 <h2 id="theming">Theming<a class="anchor" aria-label="anchor" href="#theming"></a>
 </h2>
-<p>The looks of the various CLI elements can be changed via themes. The cli package comes with a simple built-in theme, and new themes can be added as well.</p>
+<p>The looks of the various CLI elements can be changed via themes. The
+cli package comes with a simple built-in theme, and new themes can be
+added as well.</p>
 <div class="section level3">
 <h3 id="tags-ids-and-classes">Tags, ids and classes<a class="anchor" aria-label="anchor" href="#tags-ids-and-classes"></a>
 </h3>
-<p>Similarly to HTML document, the elements of a CLI form a tree of nodes. Each node has exactly one tag, at most one id, and optionally a set of classes. E.g. <code><a href="../reference/cli_par.html">cli_par()</a></code> creates a node with a <code>&lt;p&gt;</code> tag, <code><a href="../reference/cli_ol.html">cli_ol()</a></code> creates a node with an <code>&lt;ol&gt;</code> tag, etc. Here is an example CLI tree. It always starts with a <code>&lt;body&gt;</code> tag with id <code>"body"</code>, this is created automatically.</p>
+<p>Similarly to HTML document, the elements of a CLI form a tree of
+nodes. Each node has exactly one tag, at most one id, and optionally a
+set of classes. E.g. <code><a href="../reference/cli_par.html">cli_par()</a></code> creates a node with a
+<code>&lt;p&gt;</code> tag, <code><a href="../reference/cli_ol.html">cli_ol()</a></code> creates a node with an
+<code>&lt;ol&gt;</code> tag, etc. Here is an example CLI tree. It always
+starts with a <code>&lt;body&gt;</code> tag with id <code>"body"</code>,
+this is created automatically.</p>
 <pre><code>&lt;body id="body"&gt;
   &lt;par&gt;
     &lt;ol&gt;
       &lt;it&gt;
         &lt;span class="pkg"&gt;</code></pre>
-<p>A cli theme is a named list, where the names are selectors based on tag names, ids and classes, and the elements of the list are style declarations. For example, the style of <code>&lt;h1&gt;</code> tags looks like this in the built-in theme:</p>
+<p>A cli theme is a named list, where the names are selectors based on
+tag names, ids and classes, and the elements of the list are style
+declarations. For example, the style of <code>&lt;h1&gt;</code> tags
+looks like this in the built-in theme:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/builtin_theme.html">builtin_theme</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">h1</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
@@ -550,17 +627,21 @@
 #&gt; $fmt                                                                            
 #&gt; function (x)                                                                    
 #&gt; cli::rule(x, line_col = "cyan")                                                 
-#&gt; &lt;bytecode: 0x55921874b588&gt;                                                      
-#&gt; &lt;environment: 0x559218fcf510&gt;                                                   
+#&gt; &lt;bytecode: 0x55d79ebd34f0&gt;                                                      
+#&gt; &lt;environment: 0x55d79f4536a8&gt;                                                   
 #&gt;                                                                                 
 </pre>
 </div>
-<p>See also <code><a href="../reference/themes.html">?cli::themes</a></code> for the reference and <code><a href="../reference/simple_theme.html">?cli::simple_theme</a></code> for an example theme.</p>
+<p>See also <code><a href="../reference/themes.html">?cli::themes</a></code> for the reference and
+<code><a href="../reference/simple_theme.html">?cli::simple_theme</a></code> for an example theme.</p>
 </div>
 <div class="section level3">
 <h3 id="generic-containers">Generic containers<a class="anchor" aria-label="anchor" href="#generic-containers"></a>
 </h3>
-<p><code><a href="../reference/cli_div.html">cli_div()</a></code> is a generic container, that does not produce any output, but it can add a new theme. This theme is removed when the <code>&lt;div&gt;</code> node is closed. (Like other containers, <code><a href="../reference/cli_div.html">cli_div()</a></code> auto-closes when the calling function exits.)</p>
+<p><code><a href="../reference/cli_div.html">cli_div()</a></code> is a generic container, that does not produce
+any output, but it can add a new theme. This theme is removed when the
+<code>&lt;div&gt;</code> node is closed. (Like other containers,
+<code><a href="../reference/cli_div.html">cli_div()</a></code> auto-closes when the calling function exits.)</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span> <span class="op">(</span>.alert <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -579,7 +660,8 @@
 <div class="section level3">
 <h3 id="theming-inline-markup">Theming inline markup<a class="anchor" aria-label="anchor" href="#theming-inline-markup"></a>
 </h3>
-<p>The inline markup formatters always use a <code>&lt;span&gt;</code> tag, and add the name of the formatter as a class.</p>
+<p>The inline markup formatters always use a <code>&lt;span&gt;</code>
+tag, and add the name of the formatter as a class.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>span.emph <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -594,7 +676,13 @@
 #&gt; Back to the <span style="font-style: italic;">previous theme</span>                                                      
 </pre>
 </div>
-<p>In addition to adding inline markup explicitly, like <code>.emph</code> here, cli can use the class(es) of the substituted expression to style it automatically. This can be configured as part of the theme, in the form of a mapping from the <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code> of the expression, to the name of the markup formatter. For example, if we have a <code>filename</code> S3 class, we can make sure that it is always shown as a <code>.file</code> in the cli output:</p>
+<p>In addition to adding inline markup explicitly, like
+<code>.emph</code> here, cli can use the class(es) of the substituted
+expression to style it automatically. This can be configured as part of
+the theme, in the form of a mapping from the <code><a href="https://rdrr.io/r/base/class.html" class="external-link">class()</a></code> of the
+expression, to the name of the markup formatter. For example, if we have
+a <code>filename</code> S3 class, we can make sure that it is always
+shown as a <code>.file</code> in the cli output:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_div.html">cli_div</a></span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>body <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"class-map"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"filename"</span> <span class="op">=</span> <span class="st">"file"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -613,13 +701,23 @@
 <div class="section level2">
 <h2 id="cli-messages">CLI messages<a class="anchor" aria-label="anchor" href="#cli-messages"></a>
 </h2>
-<p>All <code>cli_*()</code> functions are implemented using standard R conditions. For example a <code><a href="../reference/cli_alert.html">cli_alert()</a></code> call emits an R condition with class <code>cli_message</code>. These messages can be caught, muffled, transferred from a sub-process to the main R process.</p>
+<p>All <code>cli_*()</code> functions are implemented using standard R
+conditions. For example a <code><a href="../reference/cli_alert.html">cli_alert()</a></code> call emits an R
+condition with class <code>cli_message</code>. These messages can be
+caught, muffled, transferred from a sub-process to the main R
+process.</p>
 <p>When a cli function is called:</p>
 <ol style="list-style-type: decimal">
 <li>cli throws a <code>cli_message</code> condition.</li>
-<li>If this condition is caught and muffled (via the <code>cli_message_handled</code> restart), then nothing else happens.</li>
-<li>Otherwise the <code>cli.default_handler</code> option is checked and if this is a function, then it is called with the message.</li>
-<li>If the <code>cli.default_handler</code> option is not set, or it is not a function, the default cli handler is called, which shows the text, alert, heading, etc. on the screen, using the standard R <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function.</li>
+<li>If this condition is caught and muffled (via the
+<code>cli_message_handled</code> restart), then nothing else
+happens.</li>
+<li>Otherwise the <code>cli.default_handler</code> option is checked and
+if this is a function, then it is called with the message.</li>
+<li>If the <code>cli.default_handler</code> option is not set, or it is
+not a function, the default cli handler is called, which shows the text,
+alert, heading, etc. on the screen, using the standard R
+<code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function.</li>
 </ol>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading"</span><span class="op">)</span>, cli_message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span></span>
@@ -633,7 +731,11 @@
 <div class="section level2">
 <h2 id="sub-processes">Sub-Processes<a class="anchor" aria-label="anchor" href="#sub-processes"></a>
 </h2>
-<p>If <code>cli_*()</code> commands are invoked in a sub-process via <code><a href="https://callr.r-lib.org/reference/r_session.html" class="external-link">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="external-link uri">https://callr.r-lib.org</a>), and the <code>cli.message_class</code> option is set to <code>"callr_message"</code>, then cli messages are automatically copied to the main R process:</p>
+<p>If <code>cli_*()</code> commands are invoked in a sub-process via
+<code><a href="https://callr.r-lib.org/reference/r_session.html" class="external-link">callr::r_session</a></code> (see <a href="https://callr.r-lib.org" class="external-link uri">https://callr.r-lib.org</a>), and the
+<code>cli.message_class</code> option is set to
+<code>"callr_message"</code>, then cli messages are automatically copied
+to the main R process:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rs</span> <span class="op">&lt;-</span> <span class="fu">callr</span><span class="fu">::</span><span class="va"><a href="https://callr.r-lib.org/reference/r_session.html" class="external-link">r_session</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">rs</span><span class="op">$</span><span class="fu">run</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
@@ -644,8 +746,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">rs</span><span class="op">$</span><span class="fu">close</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
 <pre>
-#&gt; This is sub-process <span style="font-style: italic;">19215</span> from <span style="color: #268BD2;">callr</span>                                            
-#&gt; [1] 19215                                                                       
+#&gt; This is sub-process <span style="font-style: italic;">19813</span> from <span style="color: #268BD2;">callr</span>                                            
+#&gt; [1] 19813                                                                       
 </pre>
 </div>
 </div>
@@ -655,8 +757,14 @@
 <div class="section level3">
 <h3 id="ansi-colors">ANSI colors<a class="anchor" aria-label="anchor" href="#ansi-colors"></a>
 </h3>
-<p>cli has functions to create ANSI colored or styled output in the console. <code>col_*</code> functions change the foreground color, <code>bg_*</code> functions change the background color, and <code>style_*</code> functions change the style of the text in some way.</p>
-<p>These functions concatenate their arguments using <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code>, and add the <code>cli_ansi_string</code> class to their result:</p>
+<p>cli has functions to create ANSI colored or styled output in the
+console. <code>col_*</code> functions change the foreground color,
+<code>bg_*</code> functions change the background color, and
+<code>style_*</code> functions change the style of the text in some
+way.</p>
+<p>These functions concatenate their arguments using
+<code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code>, and add the <code>cli_ansi_string</code> class to
+their result:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"This "</span>, <span class="st">"is "</span>, <span class="st">"red."</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
@@ -690,7 +798,8 @@
 #&gt; • <span style="color: #002B36;">grey</span>                                                                          
 </pre>
 </div>
-<p>Note that these might actually look different depending on your terminal theme. Background colors:</p>
+<p>Note that these might actually look different depending on your
+terminal theme. Background colors:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cli_ul.html">cli_ul</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/ansi-styles.html">bg_black</a></span><span class="op">(</span><span class="st">"black background"</span><span class="op">)</span>,</span>
@@ -740,7 +849,8 @@
 #&gt; • <span style="text-decoration: underline;">underline style</span>                                                               
 </pre>
 </div>
-<p>Not all <code>style_*</code> functions are supported by all terminals.</p>
+<p>Not all <code>style_*</code> functions are supported by all
+terminals.</p>
 <p>Colors, background colors and styles can be combined:</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ansi-styles.html">bg_white</a></span><span class="op">(</span><span class="fu"><a href="../reference/ansi-styles.html">style_bold</a></span><span class="op">(</span><span class="fu"><a href="../reference/ansi-styles.html">col_red</a></span><span class="op">(</span><span class="st">"TITLE"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -750,7 +860,9 @@
 #&gt; [1] <span style="font-weight: bold;color: #DC322F;background-color: #EEE8D5;">TITLE</span>                                                                       
 </pre>
 </div>
-<p><code><a href="../reference/make_ansi_style.html">make_ansi_style()</a></code> can create custom colors, assuming your terminal supports them. <code><a href="../reference/combine_ansi_styles.html">combine_ansi_styles()</a></code> combines several styles into a function:</p>
+<p><code><a href="../reference/make_ansi_style.html">make_ansi_style()</a></code> can create custom colors, assuming
+your terminal supports them. <code><a href="../reference/combine_ansi_styles.html">combine_ansi_styles()</a></code> combines
+several styles into a function:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">col_warn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_ansi_styles.html">combine_ansi_styles</a></span><span class="op">(</span><span class="fu"><a href="../reference/make_ansi_style.html">make_ansi_style</a></span><span class="op">(</span><span class="st">"pink"</span><span class="op">)</span>, <span class="va">style_bold</span><span class="op">)</span></span>
 <span><span class="fu">col_warn</span><span class="op">(</span><span class="st">"This is a warning in pink!"</span><span class="op">)</span></span>
@@ -807,7 +919,11 @@
 <div class="section level3">
 <h3 id="unicode-characters">Unicode characters<a class="anchor" aria-label="anchor" href="#unicode-characters"></a>
 </h3>
-<p>The <code>symbol</code> variable includes some Unicode characters that are often useful in CLI messages. They automatically fall back to ASCII symbols if the platform does not support them. You can use these symbols both with the semantic <code>cli_*()</code> functions and directly.</p>
+<p>The <code>symbol</code> variable includes some Unicode characters
+that are often useful in CLI messages. They automatically fall back to
+ASCII symbols if the platform does not support them. You can use these
+symbols both with the semantic <code>cli_*()</code> functions and
+directly.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"{symbol$tick} no errors  |  {symbol$cross} 2 warnings"</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
@@ -860,12 +976,15 @@
 #&gt; ❓fancy_question_mark                                                            
 </pre>
 </div>
-<p>Most symbols were inspired by (and copied from) the awesome <a href="https://github.com/sindresorhus/figures" class="external-link">figures</a> JavaScript project.</p>
+<p>Most symbols were inspired by (and copied from) the awesome <a href="https://github.com/sindresorhus/figures" class="external-link">figures</a> JavaScript
+project.</p>
 </div>
 <div class="section level3">
 <h3 id="spinners">Spinners<a class="anchor" aria-label="anchor" href="#spinners"></a>
 </h3>
-<p>See <code><a href="../reference/list_spinners.html">list_spinners()</a></code> and <code><a href="../reference/get_spinner.html">get_spinner()</a></code>. From the awesome <a href="https://github.com/sindresorhus/cli-spinners#readme" class="external-link">cli-spinners</a> project.</p>
+<p>See <code><a href="../reference/list_spinners.html">list_spinners()</a></code> and <code><a href="../reference/get_spinner.html">get_spinner()</a></code>. From
+the awesome <a href="https://github.com/sindresorhus/cli-spinners#readme" class="external-link">cli-spinners</a>
+project.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/list_spinners.html">list_spinners</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">

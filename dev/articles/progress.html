@@ -91,7 +91,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Introduction to progress bars in cli</h1>
-                        <h4 data-toc-skip class="author">Gábor Csárdi</h4>
+                        <h4 data-toc-skip class="author">Gábor
+Csárdi</h4>
             
             <h4 data-toc-skip class="date">2022-10-26</h4>
       
@@ -108,12 +109,17 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cli.r-lib.org">cli</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>cli.progress_show_after <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>cli.progress_clear <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>This document discusses the structure and simplest uses of the cli progress bar API. For more advanced usage and the C progress bar API, see the ‘Advanced cli progress bars’ article and the manual pages.</p>
-<p>From version 3.0.0 cli provides a set of functions to create progress bars. The main goals of the progress bar API are:</p>
+<p>This document discusses the structure and simplest uses of the cli
+progress bar API. For more advanced usage and the C progress bar API,
+see the ‘Advanced cli progress bars’ article and the manual pages.</p>
+<p>From version 3.0.0 cli provides a set of functions to create progress
+bars. The main goals of the progress bar API are:</p>
 <ul>
 <li>Reduce clutter. Try to avoid verbose syntax, unless necessary.</li>
-<li>Flexibility from R and C/C++ code. Support all cli features in progress bars: glue interpolation, theming, pluralization, etc.</li>
-<li>Predictably small performance penalty. A very small constant penalty per iteration, and a reasonable penalty per second.</li>
+<li>Flexibility from R and C/C++ code. Support all cli features in
+progress bars: glue interpolation, theming, pluralization, etc.</li>
+<li>Predictably small performance penalty. A very small constant penalty
+per iteration, and a reasonable penalty per second.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -121,7 +127,8 @@
 </h2>
 <p>Add a progress bar in three steps:</p>
 <ol style="list-style-type: decimal">
-<li>Call <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code> to add create a progress bar.</li>
+<li>Call <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code> to add create a progress
+bar.</li>
 <li>Call <code><a href="../reference/cli_progress_bar.html">cli_progress_update()</a></code> to update it.</li>
 <li>Call <code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> to terminate it.</li>
 </ol>
@@ -137,13 +144,19 @@
 <span><span class="op">}</span></span>
 <span><span class="fu">clean</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/classic-example.svg" width="100%"></p>
-<p>The traditional API provides full control w.r.t when to create, update and terminate a progress bar.</p>
+<p>The traditional API provides full control w.r.t when to create,
+update and terminate a progress bar.</p>
 </div>
 <div class="section level2">
 <h2 id="the-current-progress-bar">The current progress bar<a class="anchor" aria-label="anchor" href="#the-current-progress-bar"></a>
 </h2>
-<p>For conciseness, the progress bar functions refer to the <em>current progress bar</em> by default. Every function has at most one current progress bar at any time. The current progress bar of a function is terminated when the function creates another progress bar or when the function returns, errors or is interrupted.</p>
-<p>The current progress bar lets us omit the <code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> call:</p>
+<p>For conciseness, the progress bar functions refer to the <em>current
+progress bar</em> by default. Every function has at most one current
+progress bar at any time. The current progress bar of a function is
+terminated when the function creates another progress bar or when the
+function returns, errors or is interrupted.</p>
+<p>The current progress bar lets us omit the
+<code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> call:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Cleaning data #1"</span>, total <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
@@ -164,7 +177,10 @@
 <div class="section level2">
 <h2 id="unknown-total-number-of-units">Unknown total number of units<a class="anchor" aria-label="anchor" href="#unknown-total-number-of-units"></a>
 </h2>
-<p>In some cases the total number of progress units is unknown, so simply omit them from <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code> (or set them to <code>NA</code>). cli uses a different display when <code>total</code> is unknown:</p>
+<p>In some cases the total number of progress units is unknown, so
+simply omit them from <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code> (or set them to
+<code>NA</code>). cli uses a different display when <code>total</code>
+is unknown:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">walk_dirs</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span><span class="st">"Walking directories"</span><span class="op">)</span></span>
@@ -181,18 +197,30 @@
 <div class="section level2">
 <h2 id="quick-loops">Quick loops<a class="anchor" aria-label="anchor" href="#quick-loops"></a>
 </h2>
-<p>By default, cli does not show progress bars that are terminated within two seconds after their creation. The end user can configure this limit with the <code>cli.progress_show_after</code> global option.</p>
-<p>For example, in this document we set the limit to zero seconds, so progress bars are shown at their first update.</p>
+<p>By default, cli does not show progress bars that are terminated
+within two seconds after their creation. The end user can configure this
+limit with the <code>cli.progress_show_after</code> global option.</p>
+<p>For example, in this document we set the limit to zero seconds, so
+progress bars are shown at their first update.</p>
 </div>
 <div class="section level2">
-<h2 id="progress-bars-for-mapping-functions-cli_progress_along">Progress bars for mapping functions: <code>cli_progress_along()</code><a class="anchor" aria-label="anchor" href="#progress-bars-for-mapping-functions-cli_progress_along"></a>
+<h2 id="progress-bars-for-mapping-functions-cli_progress_along">Progress bars for mapping functions:
+<code>cli_progress_along()</code><a class="anchor" aria-label="anchor" href="#progress-bars-for-mapping-functions-cli_progress_along"></a>
 </h2>
 <p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> is currently experimental.</p>
-<p>To add a progress bar to a call to <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or another mapping function, wrap the input sequence into <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code>:</p>
+<p>To add a progress bar to a call to <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> or another
+mapping function, wrap the input sequence into
+<code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, <span class="va">fun</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> works similarly to <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code>, it returns an index vector. If you use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code>, then <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> will pass the <em>indices</em> of the elements in <code>X</code> to <code>fun</code>, instead of the elements themselves.</p>
-<p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> expects that the index vector will be used only once, from beginning to end. It is best to never assign the return value of <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> to a variable.</p>
+<p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> works similarly to
+<code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code>, it returns an index vector. If you use
+<code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code>, then <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> will pass
+the <em>indices</em> of the elements in <code>X</code> to
+<code>fun</code>, instead of the elements themselves.</p>
+<p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> expects that the index vector will
+be used only once, from beginning to end. It is best to never assign the
+return value of <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> to a variable.</p>
 <p>An example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
@@ -206,20 +234,27 @@
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/tickalong.svg" width="100%"></p>
-<p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> uses ALTREP, so it only works from R 3.5.0 and later. On older R versions it is equivalent to <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code> and it does not create a progress bar.</p>
+<p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> uses ALTREP, so it only works from
+R 3.5.0 and later. On older R versions it is equivalent to
+<code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code> and it does not create a progress bar.</p>
 <div class="section level3">
 <h3 id="for-loops">
 <code>for</code> loops<a class="anchor" aria-label="anchor" href="#for-loops"></a>
 </h3>
-<p>You can also use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> in <code>for</code> loops, with the additional complication that if you use <code><a href="https://rdrr.io/r/base/Control.html" class="external-link">break</a></code>, then you might need to terminate the progress bar explicitly:</p>
+<p>You can also use <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> in
+<code>for</code> loops, with the additional complication that if you use
+<code><a href="https://rdrr.io/r/base/Control.html" class="external-link">break</a></code>, then you might need to terminate the progress bar
+explicitly:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">...</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">cond</span><span class="op">)</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw">break</span></span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> always returns <code>TRUE</code> to allow this form.</p>
-<p>Alternatively, you can terminate the progress bar right after loop:</p>
+<p><code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> always returns <code>TRUE</code> to
+allow this form.</p>
+<p>Alternatively, you can terminate the progress bar right after
+loop:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="../reference/cli_progress_along.html">cli_progress_along</a></span><span class="op">(</span><span class="va">seq</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">...</span></span>
@@ -227,17 +262,26 @@
 <span>  <span class="va">...</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>If the function containing the <code>for</code> loop returns after the loop, or you create another progress bar with <code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> or <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code>, then no explicit <code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> is needed.</p>
+<p>If the function containing the <code>for</code> loop returns after
+the loop, or you create another progress bar with
+<code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> or <code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code>,
+then no explicit <code><a href="../reference/cli_progress_bar.html">cli_progress_done()</a></code> is needed.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="simplified-api">Simplified API<a class="anchor" aria-label="anchor" href="#simplified-api"></a>
 </h2>
-<p>Often you don’t need the full power of the progress bar API, and only want to show a status message. The <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> and <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> functions are tailored for this.</p>
-<p><code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> shows a (potentially templated) message in the status bar. For convenience, the progress bar rules still apply here by default:</p>
+<p>Often you don’t need the full power of the progress bar API, and only
+want to show a status message. The <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>
+and <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> functions are tailored for
+this.</p>
+<p><code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code> shows a (potentially templated)
+message in the status bar. For convenience, the progress bar rules still
+apply here by default:</p>
 <ul>
 <li>Status messages are removed when their calling function exits.</li>
-<li>A status message removes the previous status message or progress bar of the same caller function.</li>
+<li>A status message removes the previous status message or progress bar
+of the same caller function.</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
@@ -256,8 +300,14 @@
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_message.svg" width="100%"></p>
-<p>Status messages may use glue interpolation, cli styling and pluralization, as usual. You can call <code><a href="../reference/cli_progress_bar.html">cli_progress_update()</a></code> to update a status message.</p>
-<p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> is slightly different from <code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>: * it adds cli’s alert themes to the status messages (info, success or danger), * prints the duration of each step (by default), and * it keeps the messages on the screen after they are terminated.</p>
+<p>Status messages may use glue interpolation, cli styling and
+pluralization, as usual. You can call <code><a href="../reference/cli_progress_bar.html">cli_progress_update()</a></code>
+to update a status message.</p>
+<p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> is slightly different from
+<code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>: * it adds cli’s alert themes to the
+status messages (info, success or danger), * prints the duration of each
+step (by default), and * it keeps the messages on the screen after they
+are terminated.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Downloading data"</span><span class="op">)</span></span>
@@ -274,7 +324,8 @@
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step_simple.svg" width="100%"></p>
-<p>As usual, you can use <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> to update an existing status message.</p>
+<p>As usual, you can use <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> to update an
+existing status message.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span> <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_alert.html">cli_alert_info</a></span><span class="op">(</span><span class="st">"About to start downloads of {n} file{?s}"</span><span class="op">)</span></span>
@@ -288,7 +339,8 @@
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step.svg" width="100%"></p>
-<p>If you can update the status message frequently enough, then you can also add a spinner to it:</p>
+<p>If you can update the status message frequently enough, then you can
+also add a spinner to it:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Downloading data"</span>, spinner <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -302,7 +354,8 @@
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="progress_files/figure-html/cli_progress_step_spinner.svg" width="100%"></p>
-<p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> automatically handles errors, and styles the status message accordingly:</p>
+<p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> automatically handles errors, and
+styles the status message accordingly:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"First step, this will succeed"</span><span class="op">)</span></span>
