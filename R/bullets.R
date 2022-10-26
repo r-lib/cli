@@ -11,7 +11,7 @@
 #' cli creates a `div` element of class `bullets` for the whole bullet list.
 #' Each item is another `div` element of class `bullet-<name>`, where
 #' `<name>` is the name of the entry in `text`. Entries in `text` without
-#' a name create a `div` element of class `buller-empty`, and if the
+#' a name create a `div` element of class `bullet-empty`, and if the
 #' name is a single space character, the class is `bullet-space`.
 #'
 #' The built-in theme defines the following item types:
