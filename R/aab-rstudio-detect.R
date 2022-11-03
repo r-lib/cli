@@ -209,7 +209,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = FALSE,
       num_colors = 1L,
-      hyperlink = FALSE
+      hyperlink = FALSE,
+      has_canonical_mode = FALSE
     )
   }
 
@@ -220,7 +221,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
       num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
-      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != "",
+      has_canonical_mode = FALSE
     )
   }
 
@@ -237,7 +239,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = FALSE,
       num_colors = 1L,
-      hyperlink = FALSE
+      hyperlink = FALSE,
+      has_canonical_mode = FALSE
     )
   }
 
@@ -248,7 +251,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
       num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
-      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != "",
+      has_canonical_mode = FALSE
     )
   }
 
@@ -259,7 +263,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
       num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
-      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != "",
+      has_canonical_mode = FALSE
     )
   }
 
@@ -270,7 +275,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = FALSE,
       num_colors = 1L,
-      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != ""
+      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != "",
+      has_canonical_mode = FALSE
     )
   }
 
@@ -281,7 +287,8 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = FALSE,
       num_colors = 1L,
-      hyperlink = FALSE
+      hyperlink = FALSE,
+      has_canonical_mode = FALSE
     )
   }
 
