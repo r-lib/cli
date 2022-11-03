@@ -75,11 +75,11 @@ RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 the file in RStudio or with the default app for the file type.
 See \link{links} for more about cli hyperlinks.
 \item \code{fun} for a function name. If it is in the \code{package::function_name}
-form, and the the terminal supports ANSI hyperlinks (e.g. RStudio,
+form, and the terminal supports ANSI hyperlinks (e.g. RStudio,
 iTerm2, etc.), then cli creates a clickable link.
 See \link{links} for more about cli hyperlinks.
 \item \code{help} is a help page of a \emph{function}.
-If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
 See \link{links} for more about cli hyperlinks.
 \item \code{href} creates a hyperlink, potentially with a link text.
@@ -98,21 +98,18 @@ supports ANSI hyperlinks to runnable code (e.g. RStudio).
 It supports link text. See \link{links} for more about cli hyperlinks.
 \item \code{strong} for strong importance.
 \item \code{topic} is a help page of a \emph{ropic}.
-If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
-See \link{links} for more about cli hyperlinks.
-\item \code{url} for a URL.
-If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
-then cli creates a clickable link.
 See \link{links} for more about cli hyperlinks.
 \item \code{type} formats the type of an R object in a readable way, and it
 should be used with \code{{}}, see an example below.
 \item \code{url} for a URL. If the terminal supports ANSI hyperlinks (e.g.
 RStudio, iTerm2, etc.), then cli creates a clickable link.
+See \link{links} for more about cli hyperlinks.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
 \item \code{vignette} is a vignette.
-If the terminal supports ANSI hyperlinks to help paages (e.g. RStudio),
+If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
 See \link{links} for more about cli hyperlinks.
 }

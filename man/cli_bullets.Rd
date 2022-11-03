@@ -26,7 +26,7 @@ Formatting is specified by the names of \code{text}, and can be themed.
 cli creates a \code{div} element of class \code{bullets} for the whole bullet list.
 Each item is another \code{div} element of class \verb{bullet-<name>}, where
 \verb{<name>} is the name of the entry in \code{text}. Entries in \code{text} without
-a name create a \code{div} element of class \code{buller-empty}, and if the
+a name create a \code{div} element of class \code{bullet-empty}, and if the
 name is a single space character, the class is \code{bullet-space}.
 
 The built-in theme defines the following item types:
