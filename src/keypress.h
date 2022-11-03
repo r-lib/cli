@@ -22,8 +22,8 @@
 #define KEYPRESS_END      10
 
 #define KEYPRESS_F1       11
-#define KEYPRESS_F2       13
-#define KEYPRESS_F3       14
+#define KEYPRESS_F2       12
+#define KEYPRESS_F3       13
 #define KEYPRESS_F4       14
 #define KEYPRESS_F5       15
 #define KEYPRESS_F6       16
