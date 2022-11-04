@@ -5,6 +5,7 @@ test_that("control characaters", {
   expect_snapshot(
     for (code in c(1:2, 4:6, 8:14, 16L, 20L, 21L, 23L, 27L, 127L)) {
       p$write_input("cli::keypress()\n")
+      Sys.sleep(0.1)
       p$write_input(as.raw(code))
       p$poll_io(1000)
       cat(p$read_output())
