@@ -214,6 +214,7 @@ is_ansi_tty <- function(stream = "auto") {
 #' @export
 
 ansi_hide_cursor <- function(stream = "auto") {
+  if (Sys.getenv("R_CLI_HIDE_CURSOR") == "false") return()
   stream <- get_real_output(stream)
   if (is_ansi_tty(stream)) cat(ANSI_HIDE_CURSOR, file = stream)
 }
@@ -222,6 +223,7 @@ ansi_hide_cursor <- function(stream = "auto") {
 #' @name ansi_hide_cursor
 
 ansi_show_cursor <- function(stream = "auto") {
+  if (Sys.getenv("R_CLI_HIDE_CURSOR") == "false") return()
   stream <- get_real_output(stream)
   if (is_ansi_tty(stream)) cat(ANSI_SHOW_CURSOR, file = stream)
 }

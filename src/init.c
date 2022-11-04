@@ -1,5 +1,6 @@
 
 #include "cli.h"
+#include "keypress.h"
 #include "cleancall.h"
 
 #include <R_ext/Rdynload.h>
@@ -76,6 +77,8 @@ static const R_CallMethodDef callMethods[]  = {
   { "trim_",               (DL_FUNC) trim_,               1 },
 
   { "clic_vt_output",      (DL_FUNC) clic_vt_output,      3 },
+
+  { "cli_keypress",            (DL_FUNC) cli_keypress,            1 },
 
   { NULL, NULL, 0 }
 };
