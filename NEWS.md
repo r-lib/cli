@@ -13,6 +13,9 @@
 * `ansi_strtrim()` now handles some edge cases better, when `ellipsis` has
   length zero, and when it is wider than `width`.
 
+* New `hash_file_md5()` function to calculate the MD5 hash of one or more
+  files.
+
 # cli 3.4.1
 
 * cli has better error messages now.

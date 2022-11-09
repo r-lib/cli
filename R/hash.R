@@ -121,6 +121,23 @@ hash_obj_md5 <- function(x, serialize_version = 2) {
   hash_raw_md5(sr)
 }
 
+#' @export
+#' @rdname hash_md5
+#' @param paths Character vector of file names.
+#' @details `hash_file_md5()` calcultaes the MD5 hash of one of more
+#' files.
+
+hash_file_md5 <- function(paths) {
+  if (!is.character(paths)) paths <- as.character(paths)
+  paths <- normalizePath(paths, mustWork = FALSE)
+  if (is_windows()) {
+    paths <- enc2utf8(paths)
+  } else {
+    paths <- enc2native(paths)
+  }
+  .Call(clic_md5_file, paths)
+}
+
 #' Emoji hash
 #'
 #' @details
