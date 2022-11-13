@@ -31,7 +31,7 @@ rstudio_r_fix <- 0
   err$onload_hook()
 
   # Try to restore cursor as much as we can
-  if (isatty(stdout())) {
+  if (Sys.getenv("R_CLI_HIDE_CURSOR") != "false" && isatty(stdout())) {
     reg.finalizer(clienv, function(e) cli::ansi_show_cursor(), TRUE)
     task_callback <<- addTaskCallback(
       function(...) { cli::ansi_show_cursor(); TRUE },
