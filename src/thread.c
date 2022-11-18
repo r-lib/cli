@@ -47,6 +47,9 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
   cli__tick_ts.tv_nsec = (cticktime % 1000) * 1000 * 1000;
   int ret = 0;
 
+#ifdef __EMSCRIPTEN__
+  cli__reset = 0;
+#else
   if (! getenv("CLI_NO_THREAD")) {
     ret = pthread_create(
       & tick_thread,
@@ -63,6 +66,7 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
   } else {
     cli__reset = 0;
   }
+#endif
 
   return ret;
 }

@@ -6,6 +6,11 @@
 #include <R_ext/Rdynload.h>
 #include <Rversion.h>
 
+// Compile with `C_VISIBILITY = -fvisibility=hidden` if you link to
+// this library
+#include <R_ext/Visibility.h>
+#define r_export attribute_visible extern
+
 SEXP clic_unload(void) {
   clic_stop_thread();
   return R_NilValue;
@@ -86,6 +91,7 @@ static const R_CallMethodDef callMethods[]  = {
 
 #define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
 
+r_export
 void R_init_cli(DllInfo *dll) {
 #if R_VERSION >= R_Version(3, 5, 0)
   cli_init_altrep(dll);
