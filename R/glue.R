@@ -61,6 +61,7 @@ drop_null <- function(x) {
 
 #' Collapse a vector into a string scalar
 #'
+#' @description
 #' Features:
 #'
 #' - custom separator,
@@ -69,23 +70,23 @@ drop_null <- function(x) {
 #' - uses Unicode ellipsis character on UTF-8 console,
 #' - can collapse "from both ends", with `style = "both-ends"`,
 #' - can consider a limit for the display width of the result, in characters,
-#' - handles ANSI control sequences correctly when measuring dipaly width.
+#' - handles ANSI control sequences correctly when measuring display width.
 #'
 #' @param x Character vector, or an object with an `as.character()` method
 #' to collapse.
 #' @param sep Character string, separator.
 #' @param last Last separator, if there is no truncation. E.g. use
 #' `", and "` for the Oxford comma.
-#' @param trunc MAximum number of elements to show. For `sytle = "head"`
+#' @param trunc Maximum number of elements to show. For `style = "head"`
 #' at least `trunc = 1` is used. For `style = "both-ends"` at least
 #' `trunc = 5` is used, even if a smaller number is specified.
 #' @param width Limit for the display width of the result, in characters.
 #' This is a hard limit, and the output will never exceed it.
 #' This argument is not implemented for the `"both-ends"` style, which
 #' always uses `Inf`, with a warning if a fininte `width` value is set.
-#' @param ellipsis character string to use at the place of the truncation.
-#' By default the Unicode ellipsis character is used if the console is
-#' UTF-8 and three dots otherwise.
+#' @param ellipsis Character string to use at the place of the truncation.
+#' By default, the Unicode ellipsis character is used if the console is
+#' UTF-8, and three dots otherwise.
 #' @param style Truncation style:
 #' * `both-ends`: the default, shows the beginning and end of the vector,
 #'   and skips elements in the middle if needed.
@@ -94,7 +95,7 @@ drop_null <- function(x) {
 #' @return Character scalar. It is `NA_character_` if any elements in the
 #' vector are `NA`.
 #'
-#' @seealso `glue_collapse` in the glue package incpired this function
+#' @seealso `glue_collapse` in the glue package inspired this function
 #' @export
 #' @examples
 #' ansi_collapse(letters)
