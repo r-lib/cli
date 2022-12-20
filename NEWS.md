@@ -1,6 +1,6 @@
 # cli (development version)
 
-* New `keypress()` function to read a single keypress from a terminal.
+* New `keypress()` function to read a single key press from a terminal.
 
 * New function `pretty_print_code()` to print function objects with syntax
   highlighting at the R console.
