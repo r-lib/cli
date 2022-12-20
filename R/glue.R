@@ -61,6 +61,7 @@ drop_null <- function(x) {
 
 #' Collapse a vector into a string scalar
 #'
+#' @description
 #' Features:
 #'
 #' - custom separator,
@@ -69,7 +70,7 @@ drop_null <- function(x) {
 #' - uses Unicode ellipsis character on UTF-8 console,
 #' - can collapse "from both ends", with `style = "both-ends"`,
 #' - can consider a limit for the display width of the result, in characters,
-#' - handles ANSI control sequences correctly when measuring dipaly width.
+#' - handles ANSI control sequences correctly when measuring display width.
 #'
 #' @param x Character vector, or an object with an `as.character()` method
 #' to collapse.
