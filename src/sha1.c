@@ -17,14 +17,14 @@
 
 /**************************** DATA TYPES ****************************/
 typedef unsigned char BYTE;             // 8-bit byte
-typedef unsigned int  WORD;             // 32-bit word, change to "long" for 16-bit machines
+typedef unsigned int  WORD32;             // 32-bit word, change to "long" for 16-bit machines
 
 typedef struct {
 	BYTE data[64];
-	WORD datalen;
+	WORD32 datalen;
 	unsigned long long bitlen;
-	WORD state[5];
-	WORD k[4];
+	WORD32 state[5];
+	WORD32 k[4];
 } SHA1_CTX;
 
 /*********************** FUNCTION DECLARATIONS **********************/
@@ -55,7 +55,7 @@ void sha1_final(SHA1_CTX *ctx, BYTE hash[]);
 /*********************** FUNCTION DEFINITIONS ***********************/
 void sha1_transform(SHA1_CTX *ctx, const BYTE data[])
 {
-	WORD a, b, c, d, e, i, j, t, m[80];
+	WORD32 a, b, c, d, e, i, j, t, m[80];
 
 	for (i = 0, j = 0; i < 16; ++i, j += 4)
 		m[i] = (data[j] << 24) + (data[j + 1] << 16) + (data[j + 2] << 8) + (data[j + 3]);
@@ -142,7 +142,7 @@ void sha1_update(SHA1_CTX *ctx, const BYTE data[], size_t len)
 
 void sha1_final(SHA1_CTX *ctx, BYTE hash[])
 {
-	WORD i;
+	WORD32 i;
 
 	i = ctx->datalen;
 
