@@ -69,6 +69,76 @@ hash_file_sha256 <- function(paths) {
   .Call(clic_sha256_file, paths)
 }
 
+#' SHA-1 hash
+#'
+#' Calculate the SHA-1 hash of each element of a character vector.
+#'
+#' @param x Character vector. If not a character vector, then
+#' [as.character()] is used to try to coerce it into one. `NA` entries
+#' will have an `NA` hash.
+#' @return `hash_sha1()` returns aharacter vector of hexadecimal
+#' SHA-1 hashes.
+
+#' @family hash functions
+#'
+#' @export
+#' @examples
+#' hash_sha1(c("foo", NA, "bar", ""))
+
+hash_sha1 <- function(x) {
+  if (!is.character(x)) x <- as.character(x)
+  na <- is.na(x)
+  x[na] <- NA_character_
+  x[!na] <- .Call(clic_sha1, x[!na])
+  x
+}
+
+#' @export
+#' @rdname hash_sha1
+#' @details `hash_raw_sha1()` calculates the SHA-1 hash of the bytes
+#' of a raw vector.
+#'
+#' @return `hash_raw_sha1()` returns a character scalar.
+
+hash_raw_sha1 <- function(x) {
+  stopifnot(is.raw(x))
+  .Call(clic_sha1_raw, x)
+}
+
+#' @export
+#' @rdname hash_sha1
+#' @param serialize_version Workspace format version to use, see
+#' [base::serialize()].
+#' @details `hash_obj_sha1()` calculates the SHA-1 hash of an R
+#' object. The object is serialized into a binary vector first.
+#'
+#' @return `hash_obj_sha1()` returns a character scalar.
+
+hash_obj_sha1 <- function(x, serialize_version = 2) {
+  sr <- serialize(x, NULL, version = serialize_version)[-(1:14)]
+  hash_raw_sha1(sr)
+}
+
+#' @export
+#' @rdname hash_sha1
+#' @param paths Character vector of file names.
+#' @details `hash_file_sha1()` calculates the SHA-1 hash of one or
+#' more files.
+#'
+#' @return `hash_file_sha1()` returns a character vector of SHA-1
+#' hashes.
+
+hash_file_sha1 <- function(paths) {
+  if (!is.character(paths)) paths <- as.character(paths)
+  paths <- normalizePath(paths, mustWork = FALSE)
+  if (is_windows()) {
+    paths <- enc2utf8(paths)
+  } else {
+    paths <- enc2native(paths)
+  }
+  .Call(clic_sha1_file, paths)
+}
+
 #' MD5 hash
 #'
 #' Calculate the MD5 hash of each element of a character vector.
