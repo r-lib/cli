@@ -85,6 +85,7 @@ the ids package for generating random adjective-animal ids
 Other hash functions: 
 \code{\link{hash_emoji}()},
 \code{\link{hash_md5}()},
+\code{\link{hash_sha1}()},
 \code{\link{hash_sha256}()}
 }
 \concept{hash functions}

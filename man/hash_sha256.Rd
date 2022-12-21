@@ -56,6 +56,7 @@ hash_sha256(c("foo", NA, "bar", ""))
 Other hash functions: 
 \code{\link{hash_animal}()},
 \code{\link{hash_emoji}()},
-\code{\link{hash_md5}()}
+\code{\link{hash_md5}()},
+\code{\link{hash_sha1}()}
 }
 \concept{hash functions}

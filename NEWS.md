@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New `hash_*sha1()` functions to calculate the SHA-1 hash of strings,
+  objects, files.
+
 # cli 3.5.0
 
 * New `keypress()` function to read a single key press from a terminal.
