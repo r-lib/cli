@@ -650,7 +650,7 @@ NULL
 #'
 #' ## Security considerations
 #'
-#' To make `.run` hyperlinks more secure, RStudio with not run code
+#' To make `.run` hyperlinks more secure, RStudio will not run code
 #'
 #' * that is not in the `pkg::fun(args)` form,
 #' * if `args` contains `(`, `)` or `;`,
@@ -658,5 +658,7 @@ NULL
 #' * if it calls a package that is not loaded, and it is not one of
 #'   testthat, devtools, usethis, or rlang, which are explicitly allowed.
 #'
+#' Note that depending on your version of RStudio, the behavior can depends 
+#' and code can be ran or simply pasted to the console.
 #' @name links
 NULL
