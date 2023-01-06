@@ -109,10 +109,12 @@ cli_fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
 #' format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 
 format_inline <- function(..., .envir = parent.frame(), collapse = TRUE) {
+  str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
+  str <- gsub("\n", "\f", str, fixed = TRUE)
   opts <- options(cli.width = Inf)
   on.exit(options(opts), add = TRUE)
   cli_fmt(
-    cli_text(..., .envir = .envir),
+    cli_text(str, .envir = .envir),
     collapse = collapse,
     strip_newline = TRUE
   )
