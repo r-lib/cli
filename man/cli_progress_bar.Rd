@@ -237,13 +237,15 @@ fun()
 
 Updating a progress bar on the screen is costly, so cli tries to avoid
 it for quick loops. By default a progress bar is only shown after two
-seconds. You can change this default with the \code{cli.progress_show_after}
-global option (see \link{cli-config}).
+seconds, or after half of that if less than 50\% of the iterations are
+complete. You can change the two second default with the
+\code{cli.progress_show_after} global option (see \link{cli-config}).
 
 (In the cli documentation we usually set \code{cli.progress_show_after} to
 \code{0} (zero seconds), so progress bars are shown immediately.)
 
-In this example we only show the progress bar after two seconds.
+In this example we only show the progress bar after one second, because
+more than 50\% of the iterations remain after one second.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_alert("Starting now, at \{Sys.time()\}")

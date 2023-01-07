@@ -236,6 +236,8 @@ See \code{\link[=cli_progress_builtin_handlers]{cli_progress_builtin_handlers()}
 
 Delay before showing a progress bar, in seconds.
 Progress bars that finish before this delay are not shown at all.
+cli also shows progress bars that have more than 50\% to go after half of
+this delay has passed.
 }
 
 \subsection{\code{cli.spinner}}{
