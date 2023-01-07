@@ -1,5 +1,8 @@
 # cli (development version)
 
+* The progressr progress handler now reports progress correctly
+  (@HenrikBengtsson, #558).
+
 * New `hash_*sha1()` functions to calculate the SHA-1 hash of strings,
   objects, files.
 
