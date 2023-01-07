@@ -102,15 +102,20 @@ cli_fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
 #' @param .envir Environment to evaluate the expressions in.
 #' @param collapse Whether to collapse the result if it has multiple
 #'   lines, e.g. because of `\f` characters.
+#' @param keep_newlines Whether to keep newlines in the result, or treat
+#'   them as regular space characters.
 #' @return Character scalar, the formatted string.
 #'
 #' @export
 #' @examples
 #' format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 
-format_inline <- function(..., .envir = parent.frame(), collapse = TRUE) {
+format_inline <- function(..., .envir = parent.frame(), collapse = TRUE,
+                          keep_newlines = TRUE) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
-  str <- gsub("\n", "\f", str, fixed = TRUE)
+  if (keep_newlines) {
+    str <- gsub("\n", "\f", str, fixed = TRUE)
+  }
   opts <- options(cli.width = Inf)
   on.exit(options(opts), add = TRUE)
   cli_fmt(

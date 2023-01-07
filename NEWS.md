@@ -11,6 +11,9 @@
   unconditionally, as before.) See the the `cli.progress_show_after`
   option in `?cli-config` for details (#542).
 
+* `format_inline()` now has a new argument `keep_newlines`, and it keeps
+  newline characters by default.
+
 # cli 3.5.0
 
 * New `keypress()` function to read a single key press from a terminal.
