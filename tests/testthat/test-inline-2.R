@@ -181,3 +181,18 @@ test_that("various errors", {
     transform = function(x) sanitize_call(sanitize_srcref(x))
   )
 })
+
+test_that("format_inline and newlines", {
+  expect_snapshot({
+    format_inline("foo\nbar", keep_newlines = TRUE)
+    format_inline("\nfoo\n\nbar\n", keep_newlines = TRUE)
+    format_inline("foo\fbar", keep_newlines = TRUE)
+    format_inline("\ffoo\f\fbar\f", keep_newlines = TRUE)
+  })
+  expect_snapshot({
+    format_inline("foo\nbar", keep_newlines = FALSE)
+    format_inline("\nfoo\n\nbar\n", keep_newlines = FALSE)
+    format_inline("foo\fbar", keep_newlines = FALSE)
+    format_inline("\ffoo\f\fbar\f", keep_newlines = FALSE)
+  })
+})

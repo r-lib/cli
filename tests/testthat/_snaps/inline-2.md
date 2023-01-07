@@ -398,3 +398,41 @@
       Caused by error:
       ! non-numeric argument to binary operator
 
+# format_inline and newlines
+
+    Code
+      format_inline("foo\nbar", keep_newlines = TRUE)
+    Output
+      [1] "foo\nbar"
+    Code
+      format_inline("\nfoo\n\nbar\n", keep_newlines = TRUE)
+    Output
+      [1] "\nfoo\n\nbar\n"
+    Code
+      format_inline("foo\fbar", keep_newlines = TRUE)
+    Output
+      [1] "foo\nbar"
+    Code
+      format_inline("\ffoo\f\fbar\f", keep_newlines = TRUE)
+    Output
+      [1] "\nfoo\n\nbar\n"
+
+---
+
+    Code
+      format_inline("foo\nbar", keep_newlines = FALSE)
+    Output
+      [1] "foo bar"
+    Code
+      format_inline("\nfoo\n\nbar\n", keep_newlines = FALSE)
+    Output
+      [1] "foo\n\nbar"
+    Code
+      format_inline("foo\fbar", keep_newlines = FALSE)
+    Output
+      [1] "foo\nbar"
+    Code
+      format_inline("\ffoo\f\fbar\f", keep_newlines = FALSE)
+    Output
+      [1] "\nfoo\n\nbar\n"
+
