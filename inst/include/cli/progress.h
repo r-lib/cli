@@ -279,7 +279,7 @@ static void cli_progress_done2(SEXP bar) {
 }
 #endif
 
-static R_INLINE void cli_progress_init_timer() {
+static R_INLINE void cli_progress_init_timer(void) {
   static void (*ptr)(vint **) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(vint **)) R_GetCCallable("cli", "cli_progress_init_timer");
@@ -379,7 +379,7 @@ static R_INLINE void cli_progress_add(SEXP bar, double inc) {
   ptr(bar, inc);
 }
 
-static R_INLINE int cli_progress_num() {
+static R_INLINE int cli_progress_num(void) {
   static int (*ptr)(void) = NULL;
   if (ptr == NULL) {
     ptr = (int (*)(void)) R_GetCCallable("cli", "cli_progress_num");
