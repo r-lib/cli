@@ -11,8 +11,8 @@
   unconditionally, as before.) See the the `cli.progress_show_after`
   option in `?cli-config` for details (#542).
 
-* `format_inline()` now has a new argument `keep_newlines`, and it keeps
-  newline characters by default.
+* `format_inline()` now has a new argument `keep_whitespace`, and it keeps
+  whitespace, including newline and form feed characters by default.
 
 # cli 3.5.0
 

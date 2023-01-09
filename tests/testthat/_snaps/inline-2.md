@@ -401,38 +401,38 @@
 # format_inline and newlines
 
     Code
-      format_inline("foo\nbar", keep_newlines = TRUE)
+      format_inline("foo\nbar")
     Output
       [1] "foo\nbar"
     Code
-      format_inline("\nfoo\n\nbar\n", keep_newlines = TRUE)
+      format_inline("\nfoo\n\nbar\n")
     Output
       [1] "\nfoo\n\nbar\n"
     Code
-      format_inline("foo\fbar", keep_newlines = TRUE)
+      format_inline("foo\fbar")
     Output
-      [1] "foo\nbar"
+      [1] "foo\fbar"
     Code
-      format_inline("\ffoo\f\fbar\f", keep_newlines = TRUE)
+      format_inline("\ffoo\f\fbar\f")
     Output
-      [1] "\nfoo\n\nbar\n"
+      [1] "\ffoo\f\fbar\f"
 
 ---
 
     Code
-      format_inline("foo\nbar", keep_newlines = FALSE)
+      format_inline("foo\nbar", keep_whitespace = FALSE)
     Output
       [1] "foo bar"
     Code
-      format_inline("\nfoo\n\nbar\n", keep_newlines = FALSE)
+      format_inline("\nfoo\n\nbar\n", keep_whitespace = FALSE)
     Output
       [1] "foo\n\nbar"
     Code
-      format_inline("foo\fbar", keep_newlines = FALSE)
+      format_inline("foo\fbar", keep_whitespace = FALSE)
     Output
       [1] "foo\nbar"
     Code
-      format_inline("\ffoo\f\fbar\f", keep_newlines = FALSE)
+      format_inline("\ffoo\f\fbar\f", keep_whitespace = FALSE)
     Output
       [1] "\nfoo\n\nbar\n"
 

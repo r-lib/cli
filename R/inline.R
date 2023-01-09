@@ -231,7 +231,8 @@ clii__inline <- function(app, text, .list) {
       .envir = t$values,
       .transformer = inline_transformer,
       .open = paste0("<", t$values$marker),
-      .close = paste0(t$values$marker, ">")
+      .close = paste0(t$values$marker, ">"),
+      .trim = FALSE
     )
   })
   paste(out, collapse = "")
@@ -323,7 +324,7 @@ make_cmd_transformer <- function(values, .call = NULL) {
   }
 }
 
-glue_cmd <- function(..., .envir, .call = sys.call(-1)) {
+glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values, .call = .call)
@@ -331,7 +332,8 @@ glue_cmd <- function(..., .envir, .call = sys.call(-1)) {
     str,
     .envir = .envir,
     .transformer = transformer,
-    .cli = TRUE
+    .cli = TRUE,
+    .trim = .trim
   )
   glue_delay(
     str = post_process_plurals(pstr, values),

@@ -11,7 +11,7 @@
 
 glue <- function(text, .envir = parent.frame(),
                  .transformer = identity_transformer,
-                 .open = "{", .close = "}", .cli = FALSE) {
+                 .open = "{", .close = "}", .cli = FALSE, .trim = TRUE) {
 
   text <- paste0(text, collapse = "")
 
@@ -23,7 +23,9 @@ glue <- function(text, .envir = parent.frame(),
     return(text)
   }
 
-  text <- trim(text)
+  if (.trim) {
+    text <- trim(text)
+  }
 
   f <- function(expr) {
     eval_func <- as.character(.transformer(expr, .envir) %||% character())

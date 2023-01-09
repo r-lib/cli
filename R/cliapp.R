@@ -40,6 +40,10 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_text(app, text),
 
     ## Text, not wrapped
+    inline_text = function(text)
+      clii_inline_text(app, text),
+
+    ## Text, not wrapped, verbatim
     verbatim = function(...)
       clii_verbatim(app, ...),
 
@@ -114,9 +118,9 @@ cliapp <- function(theme = getOption("cli.theme"),
     get_current_style = function()
       utils::tail(app$styles, 1)[[1]],
 
-    xtext = function(text = NULL, .list = NULL, indent = 0, padding = 0)
+    xtext = function(text = NULL, .list = NULL, indent = 0, padding = 0, wrap = TRUE)
       clii__xtext(app, text, .list = .list, indent = indent,
-                  padding = padding),
+                  padding = padding, wrap = wrap),
 
     vspace = function(n = 1)
       clii__vspace(app, n),
@@ -161,6 +165,10 @@ clii_init <- function(app, theme, user_theme, output) {
 
 clii_text <- function(app, text) {
   app$xtext(text)
+}
+
+clii_inline_text <- function(app, text) {
+  app$xtext(text, wrap = FALSE)
 }
 
 clii_verbatim <- function(app, ..., .envir) {

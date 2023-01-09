@@ -8,7 +8,7 @@ format_inline(
   ...,
   .envir = parent.frame(),
   collapse = TRUE,
-  keep_newlines = TRUE
+  keep_whitespace = TRUE
 )
 }
 \arguments{
@@ -19,8 +19,8 @@ format_inline(
 \item{collapse}{Whether to collapse the result if it has multiple
 lines, e.g. because of \verb{\\f} characters.}
 
-\item{keep_newlines}{Whether to keep newlines in the result, or treat
-them as regular space characters.}
+\item{keep_whitespace}{Whether to keep all whitepace (spaces, newlines
+and form feeds) as is in the input.}
 }
 \value{
 Character scalar, the formatted string.

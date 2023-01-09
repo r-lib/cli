@@ -3,7 +3,7 @@ call_if_fun <- function(x) {
   if (is.function(x)) x() else x
 }
 
-clii__xtext <- function(app, text, .list, indent, padding, ln = TRUE) {
+clii__xtext <- function(app, text, .list, indent, padding, ln = TRUE, wrap = TRUE) {
   style <- app$get_current_style()
   text <- app$inline(text, .list = .list)
   exdent <- style$`text-exdent` %||% 0L
@@ -17,11 +17,15 @@ clii__xtext <- function(app, text, .list, indent, padding, ln = TRUE) {
 
   if (!is.null(style$fmt)) text <- style$fmt(text)
 
-  text <- ansi_strwrap(
-    text,
-    exdent = exdent,
-    width = app$get_width(extra = padding)
-  )
+  if (wrap) {
+    text <- ansi_strwrap(
+      text,
+      exdent = exdent,
+      width = app$get_width(extra = padding)
+    )
+  } else {
+    text <- ansi_simplify(text)
+  }
 
   app$cat_ln(text, indent = indent, padding)
   invisible(app)
