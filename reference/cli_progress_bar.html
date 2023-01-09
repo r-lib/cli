@@ -22,7 +22,7 @@ cli_progress_done() terminates a progress bar."><!-- mathjax --><script src="htt
     
     <a class="navbar-brand me-2" href="../index.html">cli</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">3.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">3.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -342,11 +342,13 @@ so users can see how finished progress bars look.)</p>
 
 <p>Updating a progress bar on the screen is costly, so cli tries to avoid
 it for quick loops. By default a progress bar is only shown after two
-seconds. You can change this default with the <code>cli.progress_show_after</code>
-global option (see <a href="cli-config.html">cli-config</a>).</p>
+seconds, or after half of that if less than 50% of the iterations are
+complete. You can change the two second default with the
+<code>cli.progress_show_after</code> global option (see <a href="cli-config.html">cli-config</a>).</p>
 <p>(In the cli documentation we usually set <code>cli.progress_show_after</code> to
 <code>0</code> (zero seconds), so progress bars are shown immediately.)</p>
-<p>In this example we only show the progress bar after two seconds.</p>
+<p>In this example we only show the progress bar after one second, because
+more than 50% of the iterations remain after one second.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"Starting now, at {Sys.time()}"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span></span>
