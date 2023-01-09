@@ -1,4 +1,4 @@
-# cli (development version)
+# cli 3.6.0
 
 * The progressr progress handler now reports progress correctly
   (@HenrikBengtsson, #558).
