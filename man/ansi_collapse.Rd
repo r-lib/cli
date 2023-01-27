@@ -7,6 +7,7 @@
 ansi_collapse(
   x,
   sep = ", ",
+  sep2 = " and ",
   last = ", and ",
   trunc = Inf,
   width = Inf,
@@ -18,10 +19,13 @@ ansi_collapse(
 \item{x}{Character vector, or an object with an \code{as.character()} method
 to collapse.}
 
-\item{sep}{Character string, separator.}
+\item{sep}{Separator. A character string.}
+
+\item{sep2}{Separator for the special case that \code{x} contains only two
+elements. A character string.}
 
 \item{last}{Last separator, if there is no truncation. E.g. use
-\code{", and "} for the Oxford comma.}
+\code{", and "} for the \href{https://en.wikipedia.org/wiki/Serial_comma}{serial comma}. A character string.}
 
 \item{trunc}{Maximum number of elements to show. For \code{style = "head"}
 at least \code{trunc = 1} is used. For \code{style = "both-ends"} at least
@@ -45,14 +49,15 @@ end, if needed.
 }}
 }
 \value{
-Character scalar. It is \code{NA_character_} if any elements in the
-vector are \code{NA}.
+Character scalar. It is \code{NA_character_} if any elements in \code{x}
+are \code{NA}.
 }
 \description{
 Features:
 \itemize{
-\item custom separator,
-\item custom last separator: \code{last} argument,
+\item custom separator (\code{sep}),
+\item custom separator for length-two input (\code{sep2}),
+\item custom last separator (\code{last}),
 \item adds ellipsis to truncated strings,
 \item uses Unicode ellipsis character on UTF-8 console,
 \item can collapse "from both ends", with \code{style = "both-ends"},
@@ -70,5 +75,5 @@ ansi_collapse(letters, trunc = 5)
 ansi_collapse(letters, trunc = 5, style = "head")
 }
 \seealso{
-\code{glue_collapse} in the glue package inspired this function
+\code{glue_collapse} in the glue package inspired this function.
 }
