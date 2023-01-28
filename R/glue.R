@@ -113,6 +113,7 @@ ansi_collapse <- function(x, sep = ", ", last = ", and ", trunc = Inf,
                           style = c("both-ends", "head")) {
 
   # does not make sense to show ... instead of an element
+  trunc <- max(trunc, 1L)
   if (trunc == length(x) - 1L) trunc <- trunc + 1L
 
   style <- match.arg(style)
@@ -146,7 +147,6 @@ collapse_head_notrim <- function(x, trunc, sep, last, ellipsis) {
 collapse_head <- function(x, sep = ", ", last = ", and ", trunc = Inf,
                           width = Inf, ellipsis = symbol$ellipsis) {
 
-  trunc <- max(trunc, 1L)
   x <- as.character(x)
   lnx <- length(x)
 
