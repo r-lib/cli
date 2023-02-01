@@ -7,6 +7,7 @@
   for length-two inputs. It defaults to `" and "` which, in conjunction with
   the other defaults, produces a collapsed string that fully adheres to the
   [serial comma](https://en.wikipedia.org/wiki/Serial_comma) rules.
+  (@salim-b, #569)
 
 * `ansi_string()` is now an exported function (@multimeric, #573).
 
