@@ -70,6 +70,7 @@
 #' @return `cli_progress_builtin_handlers()` returns the names of the
 #' currently supported progress handlers.
 #'
+#' @family progress bar functions
 #' @export
 
 # TODO: examples

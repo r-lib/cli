@@ -25,4 +25,15 @@ bars created in C/C++ code.)
 \code{cli_progress_cleanup()} terminates all active progress bars.
 (It currently ignores progress bars created in the C/C++ code.)
 }
-\concept{progress bar}
+\seealso{
+Other progress bar functions: 
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_bar}()},
+\code{\link{cli_progress_builtin_handlers}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_step}()},
+\code{\link{cli_progress_styles}()},
+\code{\link{progress-variables}}
+}
+\concept{progress bar functions}

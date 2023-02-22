@@ -1,5 +1,9 @@
 
-#' About inline markup in the semantic cli
+#' @title About inline markup in the semantic cli
+#'
+#' @description
+#' To learn how to use cli’s semantic markup, start with the ‘Building
+#' a semantic CLI’ article at <https://cli.r-lib.org>.
 #'
 #' @section Command substitution:
 #'

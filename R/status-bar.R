@@ -43,9 +43,11 @@
 #' @param .auto_result What to do when auto-closing the status bar.
 #' @return The id of the new status bar container element, invisibly.
 #'
+#' @seealso Status bars support [inline markup][inline-markup].
 #' @seealso The [cli_progress_message()] and [cli_progress_step()]
 #'   functions, for a superior API.
 #' @family status bar
+#' @family functions supporting inline markup
 #' @export
 
 cli_status <- function(msg, msg_done = paste(msg, "... done"),
@@ -136,9 +138,11 @@ cli_status_clear <- function(id = NULL, result = c("clear", "done", "failed"),
 #' @param .envir Environment to evaluate the glue expressions in.
 #' @return Id of the status bar container.
 #'
-#' @family status bar
+#' @seealso This function supports [inline markup][inline-markup].
 #' @seealso The [cli_progress_message()] and [cli_progress_step()]
 #'   functions, for a superior API.
+#' @family status bar
+#' @family functions supporting inline markup
 #' @export
 
 cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
@@ -193,9 +197,11 @@ cli_status_update <- function(id = NULL, msg = NULL, msg_done = NULL,
 #' @inheritParams cli_status
 #' @return Id of the status bar container.
 #'
-#' @family status bar
+#' @seealso This function supports [inline markup][inline-markup].
 #' @seealso The [cli_progress_message()] and [cli_progress_step()]
 #'   functions, for a superior API.
+#' @family status bar
+#' @family functions supporting inline markup
 #' @export
 #' @examples
 #'
