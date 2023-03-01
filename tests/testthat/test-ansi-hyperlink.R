@@ -299,11 +299,6 @@ test_that("ansi_has_hyperlink_support", {
     expect_false(ansi_has_hyperlink_support())
   )
 
-  # rstudio env var
-  withr::with_envvar(list(RSTUDIO_CLI_HYPERLINKS = "true"),
-    expect_true(ansi_has_hyperlink_support())
-  )
-
   # are we in rstudio with support?
   mockery::stub(ansi_has_hyperlink_support, "rstudio_detect",
                 list(type = "rstudio_console", hyperlink = TRUE))
