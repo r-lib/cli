@@ -335,10 +335,6 @@ ansi_has_hyperlink_support <- function() {
   if (!is.na(cray_opt) && !cray_opt) return(FALSE)
   if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) return(FALSE)
 
-  ## environment variable used by RStudio
-  enabled <- Sys.getenv("RSTUDIO_CLI_HYPERLINKS", "")
-  if (isTRUE(as.logical(enabled))){ return(TRUE) }
-
   ## Are we in RStudio?
   rstudio <- rstudio_detect()
   if (rstudio$type != "not_rstudio") { return(rstudio$hyperlink) }
