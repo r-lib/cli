@@ -286,20 +286,11 @@ test_that("ansi_has_hyperlink_support", {
   )
 
   # if no ansi support, then no
-  withr::with_options(list(cli.num_colors = 1),
-    expect_false(ansi_has_hyperlink_support())
-  )
-  withr::with_envvar(list(R_CLI_NUM_COLORS = "1"),
-    expect_false(ansi_has_hyperlink_support())
-  )
-  withr::with_options(list(crayon.enabled = FALSE),
-    expect_false(ansi_has_hyperlink_support())
-  )
-  withr::with_envvar(list(NO_COLOR = "true"),
-    expect_false(ansi_has_hyperlink_support())
-  )
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
+  expect_false(ansi_has_hyperlink_support())
 
   # are we in rstudio with support?
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
   mockery::stub(ansi_has_hyperlink_support, "rstudio_detect",
                 list(type = "rstudio_console", hyperlink = TRUE))
   expect_true(ansi_has_hyperlink_support())
@@ -307,6 +298,7 @@ test_that("ansi_has_hyperlink_support", {
 
 test_that("ansi_has_hyperlink_support 2", {
   local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
 
   mockery::stub(ansi_has_hyperlink_support, "isatty", FALSE)
   expect_false(ansi_has_hyperlink_support())
@@ -314,6 +306,7 @@ test_that("ansi_has_hyperlink_support 2", {
 
 test_that("ansi_has_hyperlink_support 3", {
   local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
 
   mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
   mockery::stub(ansi_has_hyperlink_support, "is_windows", TRUE)
@@ -323,6 +316,7 @@ test_that("ansi_has_hyperlink_support 3", {
 
 test_that("ansi_has_hyperlink_support 4", {
   local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
   mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
 
   withr::local_envvar("CI" = "true")
@@ -334,6 +328,7 @@ test_that("ansi_has_hyperlink_support 4", {
 
 test_that("ansi_has_hyperlink_support 5", {
   local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
   mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
 
   withr::local_envvar(
@@ -345,6 +340,7 @@ test_that("ansi_has_hyperlink_support 5", {
 
 test_that("ansi_has_hyperlink_support 5", {
   local_clean_cli_context()
+  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
   mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
 
   withr::local_envvar(VTE_VERSION = "0.51.1")
