@@ -222,8 +222,10 @@ inline_transformer <- function(code, envir) {
 }
 
 clii__inline <- function(app, text, .list) {
-  ## Inject that app, so we can style
-  texts <- c(if (!is.null(text)) list(text), .list)
+  # This is a workaround, so old-style and new-style text
+  # messages are both handled.
+  texts <- c(if (!is.null(text$str)) list(text) else text, .list)
+  # Inject that app, so we can style
   out <- lapply(texts, function(t) {
     t$values$app <- app
     glue(

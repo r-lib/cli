@@ -36,8 +36,8 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_par(app, id, class),
 
     ## Text, wrapped
-    text = function(text)
-      clii_text(app, text),
+    text = function(...)
+      clii_text(app, ...),
 
     ## Text, not wrapped
     inline_text = function(text)
@@ -163,8 +163,9 @@ clii_init <- function(app, theme, user_theme, output) {
 
 ## Text -------------------------------------------------------------
 
-clii_text <- function(app, text) {
-  app$xtext(text)
+clii_text <- function(app, ...) {
+  pieces <- list(...)
+  app$xtext(pieces)
 }
 
 clii_inline_text <- function(app, text) {

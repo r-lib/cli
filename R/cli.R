@@ -206,7 +206,8 @@ format_inline <- function(..., .envir = parent.frame(), collapse = TRUE,
 #' @export
 
 cli_text <- function(..., .envir = parent.frame()) {
-  cli__message("text", list(text = glue_cmd(..., .envir = .envir, .call = sys.call())))
+  cpt <- cpt_text(..., .envir = .envir, .call = sys.call())
+  cpt__emit(cpt)
 }
 
 cli_inline <- function(..., .envir = parent.frame()) {
@@ -247,7 +248,8 @@ cli_inline <- function(..., .envir = parent.frame()) {
 #' @export
 
 cli_verbatim <- function(..., .envir = parent.frame()) {
-  cli__message("verbatim", c(list(...), list(.envir = .envir)))
+  cpt <- cpt_verbatim(..., .envir = .envir, .call = sys.call())
+  cpt__emit(cpt)
 }
 
 #' CLI headings

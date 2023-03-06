@@ -26,3 +26,12 @@ isFALSE <- function (x) {
 get_ppid <- function() {
   .Call(clic_getppid)
 }
+
+# RLE start and stop indices
+
+rle_ivs <- function(parts) {
+  from <- cumsum(c(1L, parts$length))
+  from <- from[-length(from)]
+  to <- from + parts$lengths - 1L
+  list(from = from, to = to)
+}

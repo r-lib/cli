@@ -1,0 +1,64 @@
+---
+title: "cli components"
+author: "Gábor Csárdi"
+description: >
+  Build your UI from components
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+---
+
+# Components
+
+## Which cli functions handle components?
+
+An argument that can be a component can also be a list of components.
+A character vector is a special case of a component, an inline text
+component.
+
+* [ ] `cli_alert*()`: `text` can be a component (or list of components).
+* [ ] `cli_blockquote()`: `quote` and `citation` can be components.
+* [ ] `cli_bullets()`: `text` can be a component.
+* [ ] `cli_code()`: `lines` can be a component, and also `...` can contain
+  components.
+* [x] `cli_div()` does not take text.
+* [ ] `cli_dl()`: `items` can be a component.
+* [ ] `cli_h1()` etc.: `text` can be a component.
+* [ ] `cli_li()`: `items` can be a component.
+* [ ] `cli_ol()`: `items` can be a component.
+* [x] `cli_par()` does not take text currently, so we skip it now.
+  We might have a `cli_pars()` function later, that can create multiple
+  paragraphs.
+* [x] `cli_rule()`: cannot use block components currently, only inline.
+* [ ] `cli_text()`: `...` are components.
+* [ ] `cli_ul()`: `items` can be components.
+* [ ] `cli_verbatim()`: `...` are components.
+
+For these components, subcomponents that are character vectors (as opposed
+to component objects) are combined into a single text component, to preserve
+backward compatibility:
+* `cli_alert*()`,
+* `cli_blockquote()`,
+* `cli_h1()`, etc.,
+* `cli_text()`.
+
+These functions also create their own components.
+All of them create block components.
+(Currently the only way to create an inline component is a character
+vector.)
+
+## Grouping components
+
+`cli_div()` and `cli_par()` can be used to group components together.
+They are very similar, but have some small differences:
+* `cli_div()` may add a new theme;
+* their default theming is different, `cli_div()` does not add any
+  formatting, but `cli_par()` adds an empty line at the bottom.
+
+From cli 4.0.0, `cli_div()` and `cli_par()` have a new argument, the list
+of components to be embedded into the `div` or `par` container they create.
+
+## Components vs containers?
+
+A component is formatted and emitted together.
+
+A container can be opened, and we can add components to it.
