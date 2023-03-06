@@ -53,7 +53,8 @@ cpt_text <- function(..., .envir = parent.frame(), .call = sys.call()) {
             "i" = "Found component type: {.val {cpts[[j]]$type}}."
           ))
         }
-        cpts2[[length(cpts2) + 1L]] <- cpts[[j]]$contents[[1]]
+        cpts2[(length(cpts2) + 1L):(length(cpts2) + length(cpts[[j]]$contents))] <-
+                cpts[[j]]$contents
       }
     } else {
       # merge text into a single component
