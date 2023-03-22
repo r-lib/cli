@@ -1,5 +1,5 @@
 
-new_cpt <- function(type, contents) {
+new_component <- function(type, contents) {
   structure(
     list(structure(
       list(type = type, contents = contents),
@@ -21,8 +21,15 @@ print.cli_component <- function(x, ...) {
   writeLines(format(x, ...))
 }
 
-cpt__emit <- function(cpt) {
-  cli__message(cpt[[1]]$type, cpt[[1]]$contents)
+# Need a better name for this...
+
+cpt__emit <- function(cpt, .auto_close = TRUE, .envir = NULL) {
+  cli__message(
+    cpt[[1]]$type,
+    cpt[[1]]$contents,
+    .auto_close = .auto_close,
+    .envir = .envir
+  )
 }
 
 #' Create a *text* component
@@ -67,7 +74,7 @@ cpt_text <- function(..., .envir = parent.frame(), .call = sys.call()) {
     }
   }
 
-  new_cpt("text", cpts2)
+  new_component("text", cpts2)
 }
 
 #' Create a *verbatim* component
@@ -79,5 +86,5 @@ cpt_text <- function(..., .envir = parent.frame(), .call = sys.call()) {
 
 cpt_verbatim <- function(..., .envir = parent.frame(), .call = sys.call()) {
   contents <- c(list(...), list(.envir = .envir))
-  new_cpt("verbatim", contents)
+  new_component("verbatim", contents)
 }

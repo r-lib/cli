@@ -10,8 +10,6 @@ clii__xtext <- function(app, text, .list, indent, padding, ln = TRUE, wrap = TRU
 
   esc <- function(x) gsub(" ", "\u00a0", x)
 
-  bef <- call_if_fun(style$before)
-  if (!is.null(bef)) text[1] <- paste0(esc(bef), text[1])
   aft <- call_if_fun(style$after)
   if (!is.null(aft)) text[length(text)] <- paste0(text[length(text)], esc(aft))
 

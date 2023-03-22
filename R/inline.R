@@ -10,7 +10,6 @@ inline_generic <- function(app, x, style) {
     x <- gsub_("\n", " ", x, useBytes = TRUE, fixed = TRUE)
   }
 
-  before <- call_if_fun(style$before)
   after <- call_if_fun(style$after)
   transform <- style$transform
   if (is.function(transform)) {
@@ -27,7 +26,7 @@ inline_generic <- function(app, x, style) {
   if (is.function(collapse)) {
     x <- collapse(x)
   }
-  xx <- paste0(before, x, after)
+  xx <- paste0(x, after)
   fmt <- style$fmt
   if (!is.null(fmt) && is.function(fmt)) {
     if (length(formals(fmt)) == 1) {

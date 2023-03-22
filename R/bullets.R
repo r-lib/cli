@@ -51,18 +51,29 @@
 #' @export
 
 cli_bullets <- function(text, id = NULL, class = NULL,
-                     .envir = parent.frame()) {
-  cli__message(
-    "bullets",
-    list(
-      text = structure(
-        lapply(text, glue_cmd, .envir = .envir),
-        names = names(text)
-      ),
-      id = id,
-      class = class
-    )
+                        .envir = parent.frame()) {
+  cpt <- cpt_bullets(text, id = id, class = class, .envir = .envir)
+  cpt__emit(cpt)
+}
+
+#' @export
+
+cpt_bullets <- function(text, id = NULL, class = NULL,
+                        .envir = parent.frame()) {
+
+  contents <- list(
+    text = lapply(text, function(cpt) {
+      if (inherits(cpt, "cli_component")) {
+        cpt
+      } else {
+        new_component("text", glue_cmd(cpt, .envir = .envir))
+      }
+    }),
+    id = id,
+    class = class
   )
+
+  new_component("bullets", contents)
 }
 
 #' List of verbatim items

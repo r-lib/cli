@@ -359,7 +359,7 @@ NULL
 #' * `font-style`: If `"italic"` then the text is printed as cursive.
 #' * `font-weight`: If `"bold"`, then the text is printed in boldface.
 #' * `line-type`: Line type for [cli_rule()].
-#' * `list-style-type`: String literal or functions that returns a string
+#' * `list-style-type`: String literal or function that returns a string
 #'   literal, to be used as a list item marker in un-ordered lists.
 #' * `margin-bottom`, `margin-left`, `margin-right`, `margin-top`: Margins.
 #' * `padding-left`, `padding-right`: This is currently used the same way

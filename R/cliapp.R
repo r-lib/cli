@@ -28,8 +28,8 @@ cliapp <- function(theme = getOption("cli.theme"),
       clii_end(app, id),
 
     ## Generic container
-    div = function(id = NULL, class = NULL, theme = NULL)
-      clii_div(app, id, class, theme),
+    div = function(text = NULL, id = NULL, class = NULL, theme = NULL)
+      clii_div(app, text, id, class, theme),
 
     ## Paragraphs
     par = function(id = NULL, class = NULL)
@@ -175,7 +175,15 @@ clii_inline_text <- function(app, text) {
 clii_verbatim <- function(app, ..., .envir) {
   style <- app$get_current_style()
   text <- unlist(strsplit(unlist(list(...)), "\n", fixed = TRUE))
+  after <- call_if_fun(style$after)
+  text[length(text)] <- paste0(text[length(text)], after)
   if (!is.null(style$fmt)) text <- style$fmt(text)
+
+  exdent <- style$`text-exdent` %||% 0L
+  if (exdent > 0 && length(text) > 1) {
+    text[-1] <- paste0(strrep(" ", exdent), text[-1])
+  }
+
   app$cat_ln(text)
   invisible(app)
 }
@@ -235,11 +243,9 @@ clii_rule <- function(app, left, center, right, id) {
   clii__container_start(app, "rule", id = id)
   on.exit(clii__container_end(app, id), add = TRUE)
   style <- app$get_current_style()
-  before <- call_if_fun(style$before) %||% ""
   after <- call_if_fun(style$after) %||% ""
-  width <- console_width() - ansi_nchar(before) - ansi_nchar(after)
+  width <- console_width() - ansi_nchar(after)
   text <- rule(left, center, right, line = style$`line-type` %||% 1)
-  text[1] <- paste0(before, text[1])
   text[length(text)] <- paste0(text[length(text)], after)
   if (is.function(style$fmt)) text <- style$fmt(text)
   app$cat_ln(text)
@@ -256,11 +262,8 @@ clii_alert <- function(app, type, text, id, class, wrap) {
   } else {
     text <- app$inline(text)
     style <- app$get_current_style()
-    before <- call_if_fun(style$before) %||% ""
     after <- call_if_fun(style$after) %||% ""
-    before <- gsub(" ", "\u00a0", before)
     after <- gsub(" ", "\u00a0", after)
-    text[1] <- paste0(before, text[1])
     text[length(text)] <- paste0(text[length(text)], after)
     if (is.function(style$fmt)) text <- style$fmt(text)
     app$cat_ln(text)
@@ -286,7 +289,11 @@ clii_bullets <- function(app, text, id, class) {
     iid <- new_uuid()
     clii__container_start(app, "div", id = iid, class = cls[i])
     on.exit(clii__container_end(app, iid), add = TRUE)
-    app$text(text[[i]])
+    cpt <- text[[i]]
+    if (inherits(cpt, "cli_component_container")) {
+      cpt <- cpt[[1]]
+    }
+    do.call(app[[cpt$type]], cpt$contents)
   })
 
   invisible()

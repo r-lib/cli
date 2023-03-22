@@ -345,6 +345,8 @@ cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
 #' cli_text("This is not yellow any more")
 #' ```
 #'
+#' @param cpts Subcomponents. Must be a list of cli components. A
+#'   character vector is considered to be a *text* component.
 #' @param id Element id, a string. If `NULL`, then a new id is generated
 #'   and returned.
 #' @param class Class name, sting. Can be used in themes.
@@ -357,10 +359,37 @@ cli_h3 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
 #'
 #' @export
 
-cli_div <- function(id = NULL, class = NULL, theme = NULL,
+cli_div <- function(cpts = NULL, id = NULL, class = NULL, theme = NULL,
                     .auto_close = TRUE, .envir = parent.frame()) {
-  cli__message("div", list(id = id, class = class, theme = theme),
-               .auto_close = .auto_close, .envir = .envir)
+  cpt <- cpt_div(cpts, id = id, class = class, theme = theme, .envir = .envir)
+  cpt__emit(cpt, .auto_close = .auto_close, .envir = .envir)
+}
+
+#' @export
+
+cpt_div <- function(cpts = NULL, id = NULL, class = NULL, theme = NULL,
+                    .envir = parent.frame()) {
+
+  # To stay compotible
+  if (is_string(cpts) && is.null(id)) {
+    id <- cpts
+    cpts <- NULL
+  }
+
+  contents <- list(
+    text = if (!is.null(cpts)) lapply(cpts, function(cpt) {
+      if (inherits(cpt, "cli_component")) {
+        cpt
+      } else {
+        new_component("text", glue_cmd(cpt, .envir = .envir))
+      }
+    }),
+    id = id,
+    class = class,
+    theme = theme
+  )
+
+  new_component("div", contents)
 }
 
 #' CLI paragraph

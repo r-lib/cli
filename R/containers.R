@@ -31,6 +31,10 @@ clii__container_start <- function(app, tag, class = NULL,
   ## Top margin, if any
   app$vspace(new_style$`margin-top` %||% 0)
 
+  ## 'before'
+  before <- call_if_fun(new_style$before)
+  if (!is.null(before)) app$cat(before)
+
   invisible(id)
 }
 
@@ -87,10 +91,22 @@ clii__container_end <- function(app, id) {
 
 ## div --------------------------------------------------------------
 
-clii_div <- function(app, id, class, theme) {
-  theme_id <- app$add_theme(theme)
-  clii__container_start(app, "div", class, id, theme = theme_id)
-  id
+clii_div <- function(app, text, id, class, theme) {
+  if (is.null(text)) {
+    theme_id <- app$add_theme(theme)
+    clii__container_start(app, "div", class, id, theme = theme_id)
+    id
+  } else {
+    theme_id <- app$add_theme(theme)
+    clii__container_start(app, "div", class, id, theme = theme_id)
+    for (i in seq_along(text)) {
+      cpt <- text[[i]]
+      if (inherits(cpt, "cli_component_container")) cpt <- cpt[[1]]
+      do.call(app[[cpt$type]], cpt$contents)
+    }
+    cli_end(id)
+    id
+  }
 }
 
 ## Paragraph --------------------------------------------------------
