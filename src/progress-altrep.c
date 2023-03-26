@@ -10,6 +10,11 @@ SEXP clic_progress_along(SEXP seq, SEXP bar) {
   return R_NilValue;
 }
 
+SEXP clic_progress_along_list(SEXP seq, SEXP bar) {
+  error("internal cli error");
+  return R_NilValue;
+}
+
 SEXP clic_make_timer() { return R_NilValue; }
 
 SEXP clic_update_due() {
@@ -32,6 +37,7 @@ SEXP clic_dataptr(SEXP x) {
 #include <R_ext/Altrep.h>
 
 R_altrep_class_t progress_along_t;
+R_altrep_class_t progress_along_list_t;
 R_altrep_class_t disable_gc_t;
 R_altrep_class_t cli_timer_t;
 
@@ -160,6 +166,69 @@ int progress_along_Is_sorted(SEXP x) {
   return SORTED_INCR;
 }
 
+/* --------------------------------------------------------------------- */
+
+SEXP clic_progress_along_list(SEXP seq, SEXP bar) {
+  SEXP val = R_new_altrep(progress_along_list_t, seq, bar);
+  return val;
+}
+
+R_xlen_t progress_along_list_Length(SEXP x) {
+  SEXP data1 = R_altrep_data1(x);
+  return XLENGTH(data1);
+}
+
+SEXP progress_along_list_Duplicate(SEXP x, Rboolean deep) {
+  SEXP data1 = R_altrep_data1(x);
+  SEXP bar = R_altrep_data2(x);
+  return clic_progress_along_list(data1, bar);
+}
+
+Rboolean progress_along_list_Inspect(SEXP x,
+                                    int pre,
+                                    int deep,
+                                    int pvec,
+                                    void (*inspect_subtree)(SEXP, int, int, int)) {
+
+  Rprintf(" progress_along_list %s\n", type2char(TYPEOF(x)));
+  return FALSE;
+}
+
+void* progress_along_list_Dataptr(SEXP x, Rboolean writeable) {
+  SEXP data1 = R_altrep_data1(x);
+  if (writeable) {
+    /* this will always error */
+    return DATAPTR(data1);
+  } else {
+    return (void*) DATAPTR_RO(data1);
+  }
+}
+
+const void* progress_along_list_Dataptr_or_null(SEXP x) {
+  SEXP data1 = R_altrep_data1(x);
+  return DATAPTR_OR_NULL(data1);
+}
+
+SEXP progress_along_list_Elt(SEXP x, R_xlen_t i) {
+  if (*cli_timer_flag) {
+    if (cli__reset) *cli_timer_flag = 0;
+    SEXP bar = R_altrep_data2(x);
+    double now = clic__get_time();
+    Rf_defineVar(PROTECT(Rf_install("current")), PROTECT(ScalarReal((int) i+1)), bar);
+    cli__current_progress_bar = bar;
+    SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
+    if (now > REAL(show_after)[0]) DATAPTR(cli__disable_gc);
+    UNPROTECT(2);
+  }
+  SEXP data1 = R_altrep_data1(x);
+  return VECTOR_ELT(data1, i);
+}
+
+void progress_along_list_SetElt(SEXP x, R_xlen_t i, SEXP v) {
+  SEXP data1 = R_altrep_data1(x);
+  SET_VECTOR_ELT(data1, i, v);
+}
+
 void cli_init_altrep(DllInfo *dll) {
 
   // -- progress_along_t --------------------------------------------------
@@ -209,6 +278,23 @@ void cli_init_altrep(DllInfo *dll) {
   cli__timer = R_new_altrep(cli_timer_t, R_NilValue, R_NilValue);
   MARK_NOT_MUTABLE(cli__timer);
   R_PreserveObject(cli__timer);
+
+  // -- progress_along_list_t -----------------------------------------
+
+  progress_along_list_t = R_make_altlist_class("progress_along_list_t", "cli", dll);
+
+  // override ALTREP methods
+  R_set_altrep_Duplicate_method(progress_along_list_t, progress_along_list_Duplicate);
+  R_set_altrep_Inspect_method(progress_along_list_t, progress_along_list_Inspect);
+  R_set_altrep_Length_method(progress_along_list_t, progress_along_list_Length);
+
+  // override ALTVEC methods
+  R_set_altvec_Dataptr_method(progress_along_list_t, progress_along_list_Dataptr);
+  R_set_altvec_Dataptr_or_null_method(progress_along_list_t, progress_along_list_Dataptr_or_null);
+
+  // override ALTLIST methods
+  R_set_altlist_Elt_method(progress_along_list_t, progress_along_list_Elt);
+  R_set_altlist_Set_elt_method(progress_along_list_t, progress_along_list_SetElt);
 }
 
 SEXP clic_dataptr(SEXP x) {

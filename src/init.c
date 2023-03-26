@@ -74,7 +74,8 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_make_timer",     (DL_FUNC) clic_make_timer,     0 },
   { "clic_update_due",     (DL_FUNC) clic_update_due,     0 },
 
-  { "clic_progress_along", (DL_FUNC) clic_progress_along, 2 },
+  { "clic_progress_along",      (DL_FUNC) clic_progress_along,       2 },
+  { "clic_progress_along_list", (DL_FUNC) clic_progress_along_list,  2 },
 
   { "clic__find_var",      (DL_FUNC) clic__find_var,      2 },
   { "clic__gcov_flush",    (DL_FUNC) clic__gcov_flush,    0 },

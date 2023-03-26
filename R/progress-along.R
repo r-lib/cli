@@ -154,3 +154,28 @@ progress_altrep_update <- function(pb) {
 
   NULL
 }
+
+#' @export
+
+with_progress <- function(x,
+                          name = NULL,
+                          total = length(x),
+                          ...,
+                          .envir = parent.frame()) {
+
+  if (getRversion() < "4.3.0") return(x)
+
+  if (!is.list(x)) stop("`with_progress()` only works on lists (for now)")
+
+  id <- cli_progress_bar(name = name, total = total, ...,
+                         .auto_close = FALSE, .envir = .envir)
+  closeenv <- sys.frame(-1)
+  if (format(closeenv) != clienv$globalenv) {
+    defer(
+      cli_progress_done(id = id, .envir = .envir, result = "auto"),
+      envir = closeenv
+    )
+  }
+  clienv$progress[[id]]$caller <- .envir
+  .Call(clic_progress_along_list, x, clienv$progress[[id]])
+}
