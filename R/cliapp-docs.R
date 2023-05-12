@@ -203,7 +203,7 @@
 #' ```{asciicast inline-plural}
 #' ndirs <- 1
 #' nfiles <- 13
-#' cli_alert_info("Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}.")
+#' cli_alert_info("Found {ndirs} director{?y/ies} and {nfiles} file{?s}.")
 #' cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
 #' ```
 #'
