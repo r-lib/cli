@@ -72,7 +72,7 @@ f()
 \subsection{Spinner}{
 
 You can add a spinner to some or all steps with \code{spinner = TRUE},
-but not that this will only work if you call \code{\link[=cli_progress_update]{cli_progress_update()}}
+but note that this will only work if you call \code{\link[=cli_progress_update]{cli_progress_update()}}
 regularly.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{f <- function() \{
