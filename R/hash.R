@@ -468,7 +468,7 @@ hash_animal1_transform <- function(md5, n_adj) {
 
 #' @export
 #' @rdname hash_animal
-#' @details `hash_raw_anima()` calculates the adjective-animal hash of
+#' @details `hash_raw_animal()` calculates the adjective-animal hash of
 #' the bytes of a raw vector.
 #'
 #' @return `hash_raw_animal()` and `hash_obj_animal()` return a list
