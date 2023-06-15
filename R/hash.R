@@ -236,7 +236,7 @@ hash_file_md5 <- function(paths) {
 #'
 #' @param x Character vector. `NA` entries will have an `NA` hash.
 #' @param size Number of emojis to use in a hash. Currently it has to
-#'   be between 1 and 4.
+#'   be from 1 through 4.
 #' @return `hash_emoji()` returns a data frame with columns
 #'   * `hash`: the emoji hash, a string of the requested size.
 #'   * `emojis`: list column with the emoji characters in character
@@ -397,7 +397,7 @@ hash_obj_emoji <- function(x, size = 3, serialize_version = 2) {
 #' from <https://gfycat.com>.
 #'
 #' @param x Character vector. `NA` entries will have an `NA` hash.
-#' @param n_adj Number of adjectives to use. It must be between 0 and 3.
+#' @param n_adj Number of adjectives to use. It must be from 0 through 3.
 #' @return A data frame with columns
 #'   * `hash`: the hash value, a string.
 #'   * `words`: list column with the adjectives and the animal name in a
