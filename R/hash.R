@@ -194,7 +194,7 @@ hash_obj_md5 <- function(x, serialize_version = 2) {
 #' @export
 #' @rdname hash_md5
 #' @param paths Character vector of file names.
-#' @details `hash_file_md5()` calcultaes the MD5 hash of one of more
+#' @details `hash_file_md5()` calculates the MD5 hash of one or more
 #' files.
 
 hash_file_md5 <- function(paths) {
