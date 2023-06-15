@@ -378,7 +378,7 @@ hash_obj_emoji <- function(x, size = 3, serialize_version = 2) {
 #' }
 #' ```
 #'
-#' `hash_animals()` uses `r length(gfycat_animals)` animal names and
+#' `hash_animal()` uses `r length(gfycat_animals)` animal names and
 #' `r length(gfycat_adjectives)` different adjectives. The number of
 #' different hashes you can get for different values of `n_adj`:
 #'
