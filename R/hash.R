@@ -6,7 +6,7 @@
 #' @param x Character vector. If not a character vector, then
 #' [as.character()] is used to try to coerce it into one. `NA` entries
 #' will have an `NA` hash.
-#' @return `hash_sha256()` returns aharacter vector of hexadecimal
+#' @return `hash_sha256()` returns a character vector of hexadecimal
 #' SHA-256 hashes.
 
 #' @family hash functions
