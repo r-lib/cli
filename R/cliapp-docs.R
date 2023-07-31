@@ -50,26 +50,26 @@
 #' * `email` for an email address.
 #'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 #'   then cli creates a clickable link.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `emph` for emphasized text.
 #' * `envvar` for the name of an environment variable.
 #' * `field` for a generic field, e.g. in a named list.
 #' * `file` for a file name. If the terminal supports ANSI hyperlinks (e.g.
 #'   RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 #'   the file in RStudio or with the default app for the file type.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `fun` for a function name. If it is in the `package::function_name`
 #'   form, and the terminal supports ANSI hyperlinks (e.g. RStudio,
 #'   iTerm2, etc.), then cli creates a clickable link.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `help` is a help page of a _function_.
 #'   If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 #'   then cli creates a clickable link. It supports link text.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `href` creates a hyperlink, potentially with a link text.
 #'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 #'   then cli creates a clickable link.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `key` for a keyboard key.
 #' * `obj_type_friendly` formats the type of an R object in a readable way,
 #'   and it should be used with `{}`, see an example below.
@@ -79,24 +79,23 @@
 #' * `pkg` for a package name.
 #' * `run` is an R expression, that is potentially clickable if the terminal
 #'   supports ANSI hyperlinks to runnable code (e.g. RStudio).
-#'   It supports link text. See [links] for more about cli hyperlinks.
-#' * `str` for a double quoted string escaped by [base::encodeString()].
-#' * `strong` for strong importance.
+#'   It supports link text. See [links] for more information about cli hyperlinks.
+#' * `str` for a double quoted string escaped by [base::encodeString()].#' * `strong` for strong importance.
 #' * `topic` is a help page of a _topic_.
 #'   If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 #'   then cli creates a clickable link. It supports link text.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `type` formats the type of an R object in a readable way, and it
 #'   should be used with `{}`, see an example below.
 #' * `url` for a URL. If the terminal supports ANSI hyperlinks (e.g.
 #'   RStudio, iTerm2, etc.), then cli creates a clickable link.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #' * `var` for a variable name.
 #' * `val` for a generic "value".
 #' * `vignette` is a vignette.
 #'   If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 #'   then cli creates a clickable link. It supports link text.
-#'   See [links] for more about cli hyperlinks.
+#'   See [links] for more information about cli hyperlinks.
 #'
 #' ```{asciicast inline-examples}
 #' ul <- cli_ul()

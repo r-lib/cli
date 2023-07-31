@@ -85,7 +85,7 @@ drop_null <- function(x) {
 #' @param width Limit for the display width of the result, in characters.
 #' This is a hard limit, and the output will never exceed it.
 #' This argument is not implemented for the `"both-ends"` style, which
-#' always uses `Inf`, with a warning if a fininte `width` value is set.
+#' always uses `Inf`, with a warning if a finite `width` value is set.
 #' @param ellipsis Character string to use at the place of the truncation.
 #' By default, the Unicode ellipsis character is used if the console is
 #' UTF-8, and three dots otherwise.
