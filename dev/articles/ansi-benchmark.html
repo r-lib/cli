@@ -92,7 +92,7 @@
                         <h4 data-toc-skip class="author">Gábor
 Csárdi</h4>
             
-            <h4 data-toc-skip class="date">2023-07-25</h4>
+            <h4 data-toc-skip class="date">2023-07-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/HEAD/vignettes/ansi-benchmark.Rmd" class="external-link"><code>vignettes/ansi-benchmark.Rmd</code></a></small>
       <div class="d-none name"><code>ansi-benchmark.Rmd</code></div>
@@ -105,7 +105,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </style>
 <p>$output function (x, options) { hook.t(x, options[[paste0(“attr.”,
 class)]], options[[paste0(“class.”, class)]]) } &lt;bytecode:
-0x55b0306eeba8&gt; &lt;environment: 0x55b02ba1a5f8&gt;</p>
+0x55b2072e5bc8&gt; &lt;environment: 0x55b2026115f8&gt;</p>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -164,9 +164,9 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 ansi         62.8µs   69.1µs    10536.    97.8KB     12.7</span></span>
-<span><span class="co">#&gt; 2 plain        62.8µs   68.4µs    10842.        0B     12.7</span></span>
-<span><span class="co">#&gt; 3 base         18.1µs   20.2µs    34682.    48.4KB     10.4</span></span></code></pre>
+<span><span class="co">#&gt; 1 ansi         53.3µs   66.5µs    14838.    97.8KB     17.0</span></span>
+<span><span class="co">#&gt; 2 plain        57.9µs   66.5µs    14843.        0B     17.9</span></span>
+<span><span class="co">#&gt; 3 base         16.9µs   19.2µs    51328.    48.4KB     15.4</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
 <span>  ansi  <span class="op">=</span> <span class="fu"><a href="../reference/ansi_align.html">ansi_align</a></span><span class="op">(</span><span class="va">ansi</span>, width <span class="op">=</span> <span class="fl">20</span>, align <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>,</span>
@@ -177,9 +177,9 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 ansi         65.1µs   72.7µs    10218.        0B     15.1</span></span>
-<span><span class="co">#&gt; 2 plain        65.8µs   85.1µs     8551.        0B     10.6</span></span>
-<span><span class="co">#&gt; 3 base         21.1µs     23µs    34246.        0B     13.7</span></span></code></pre>
+<span><span class="co">#&gt; 1 ansi         61.4µs   70.1µs    14090.        0B     19.5</span></span>
+<span><span class="co">#&gt; 2 plain        60.6µs   69.8µs    14175.        0B     17.3</span></span>
+<span><span class="co">#&gt; 3 base         19.3µs   22.1µs    44659.        0B     17.9</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_chartr">
@@ -195,9 +195,9 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 ansi          175µs  185.3µs     5101.   75.11KB    10.6 </span></span>
-<span><span class="co">#&gt; 2 plain       135.8µs  147.2µs     5246.    8.73KB     8.28</span></span>
-<span><span class="co">#&gt; 3 base          3.1µs    3.5µs   164955.        0B    16.5</span></span></code></pre>
+<span><span class="co">#&gt; 1 ansi        162.6µs  181.8µs     5457.   75.11KB     10.5</span></span>
+<span><span class="co">#&gt; 2 plain       113.4µs  139.9µs     7092.    8.73KB     12.6</span></span>
+<span><span class="co">#&gt; 3 base          2.9µs    3.3µs   294250.        0B      0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_columns">
@@ -212,8 +212,8 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 ansi          505µs    551µs     1331.    33.2KB     10.5</span></span>
-<span><span class="co">#&gt; 2 plain         500µs    535µs     1672.    1.09KB     12.7</span></span></code></pre>
+<span><span class="co">#&gt; 1 ansi          473µs    524µs     1894.    33.2KB     15.0</span></span>
+<span><span class="co">#&gt; 2 plain         426µs    520µs     1919.    1.09KB     14.9</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_has_any">
@@ -238,18 +238,18 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi           8.7µs   10.2µs    65636.    8.03KB    13.1 </span></span>
-<span><span class="co">#&gt;  2 fansi_ansi        44.1µs     51µs    13572.    4.18KB    12.9 </span></span>
-<span><span class="co">#&gt;  3 cli_plain          8.7µs   10.2µs    63252.        0B    12.7 </span></span>
-<span><span class="co">#&gt;  4 fansi_plain       44.3µs   53.6µs    12449.      688B    10.7 </span></span>
-<span><span class="co">#&gt;  5 cli_vec_ansi      10.8µs   12.5µs    55295.      448B    11.1 </span></span>
-<span><span class="co">#&gt;  6 fansi_vec_ansi    61.7µs   84.9µs     9014.    5.02KB     8.49</span></span>
-<span><span class="co">#&gt;  7 cli_vec_plain     11.9µs   13.6µs    53797.      448B    10.8 </span></span>
-<span><span class="co">#&gt;  8 fansi_vec_plain   58.6µs   73.4µs    10166.    5.02KB    10.8 </span></span>
-<span><span class="co">#&gt;  9 cli_txt_ansi       8.7µs   10.3µs    65903.        0B    13.2 </span></span>
-<span><span class="co">#&gt; 10 fansi_txt_ansi    44.3µs   52.6µs    13392.      688B    12.9 </span></span>
-<span><span class="co">#&gt; 11 cli_txt_plain      9.8µs   10.9µs    69091.        0B    13.8 </span></span>
-<span><span class="co">#&gt; 12 fansi_txt_plain     58µs     63µs    12855.    5.02KB    10.7</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi           7.8µs    9.2µs   105379.    8.03KB    21.1 </span></span>
+<span><span class="co">#&gt;  2 fansi_ansi        40.8µs   47.1µs    20857.    4.18KB    19.6 </span></span>
+<span><span class="co">#&gt;  3 cli_plain          7.8µs    9.2µs   105700.        0B    21.1 </span></span>
+<span><span class="co">#&gt;  4 fansi_plain       36.8µs   47.1µs    20862.      688B    19.5 </span></span>
+<span><span class="co">#&gt;  5 cli_vec_ansi        10µs   11.6µs    84577.      448B    16.9 </span></span>
+<span><span class="co">#&gt;  6 fansi_vec_ansi    56.8µs   64.2µs    15287.    5.02KB    15.6 </span></span>
+<span><span class="co">#&gt;  7 cli_vec_plain      9.5µs   12.1µs    73532.      448B     7.35</span></span>
+<span><span class="co">#&gt;  8 fansi_vec_plain   52.7µs   59.6µs    16349.    5.02KB     8.42</span></span>
+<span><span class="co">#&gt;  9 cli_txt_ansi       7.8µs    8.9µs   109776.        0B    11.0 </span></span>
+<span><span class="co">#&gt; 10 fansi_txt_ansi    40.3µs   45.2µs    21613.      688B    10.8 </span></span>
+<span><span class="co">#&gt; 11 cli_txt_plain      8.8µs     10µs    97832.        0B     9.78</span></span>
+<span><span class="co">#&gt; 12 fansi_txt_plain   52.4µs   58.9µs    16742.    5.02KB     8.40</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_html">
@@ -265,8 +265,8 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 cli          95.8µs    103µs     8593.    28.8KB     2.02</span></span>
-<span><span class="co">#&gt; 2 fansi       195.8µs    209µs     4327.    55.4KB     2.02</span></span></code></pre>
+<span><span class="co">#&gt; 1 cli          88.3µs   97.1µs    10273.    28.8KB     4.08</span></span>
+<span><span class="co">#&gt; 2 fansi       179.3µs    199µs     4995.    55.4KB     4.08</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_nchar">
@@ -297,24 +297,24 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 18 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi          10.6µs   11.2µs    82283.        0B     8.23</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi       136.1µs    226µs     4090.   31.85KB     4.10</span></span>
-<span><span class="co">#&gt;  3 base_ansi          1.2µs    1.3µs   488545.        0B     0   </span></span>
-<span><span class="co">#&gt;  4 cli_plain         10.5µs   11.6µs    61198.        0B     6.12</span></span>
-<span><span class="co">#&gt;  5 fansi_plain        134µs  223.8µs     4044.      688B     4.09</span></span>
-<span><span class="co">#&gt;  6 base_plain         1.1µs    1.3µs   629912.        0B     0   </span></span>
-<span><span class="co">#&gt;  7 cli_vec_ansi      49.7µs   52.8µs    14482.      448B     2.02</span></span>
-<span><span class="co">#&gt;  8 fansi_vec_ansi   176.1µs  193.2µs     4050.    5.02KB     4.11</span></span>
-<span><span class="co">#&gt;  9 base_vec_ansi     16.7µs   17.2µs    46786.      448B     0   </span></span>
-<span><span class="co">#&gt; 10 cli_vec_plain     44.1µs   45.2µs    21239.      448B     2.12</span></span>
-<span><span class="co">#&gt; 11 fansi_vec_plain  153.5µs  163.1µs     5905.    5.02KB     6.19</span></span>
-<span><span class="co">#&gt; 12 base_vec_plain     9.6µs    9.9µs    97640.      448B     0   </span></span>
-<span><span class="co">#&gt; 13 cli_txt_ansi      49.9µs   51.6µs    15881.        0B     2.03</span></span>
-<span><span class="co">#&gt; 14 fansi_txt_ansi   166.9µs  274.8µs     3413.      688B     4.09</span></span>
-<span><span class="co">#&gt; 15 base_txt_ansi     14.9µs   15.6µs    51348.        0B     0   </span></span>
-<span><span class="co">#&gt; 16 cli_txt_plain     42.3µs   43.5µs    20540.        0B     2.05</span></span>
-<span><span class="co">#&gt; 17 fansi_txt_plain  136.3µs  148.8µs     6274.      688B     6.25</span></span>
-<span><span class="co">#&gt; 18 base_txt_plain     8.5µs    8.8µs    82340.        0B     8.23</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi           9.8µs   11.1µs    87285.        0B     8.73</span></span>
+<span><span class="co">#&gt;  2 fansi_ansi       121.1µs  139.2µs     7132.   31.85KB     6.16</span></span>
+<span><span class="co">#&gt;  3 base_ansi          1.1µs    1.3µs   748703.        0B    74.9 </span></span>
+<span><span class="co">#&gt;  4 cli_plain          8.6µs   10.9µs    90119.        0B     9.01</span></span>
+<span><span class="co">#&gt;  5 fansi_plain      121.2µs  137.3µs     7216.      688B     6.16</span></span>
+<span><span class="co">#&gt;  6 base_plain       999.9ns    1.2µs   797289.        0B     0   </span></span>
+<span><span class="co">#&gt;  7 cli_vec_ansi      40.5µs   50.7µs    19699.      448B     4.08</span></span>
+<span><span class="co">#&gt;  8 fansi_vec_ansi   162.9µs  181.2µs     5479.    5.02KB     4.09</span></span>
+<span><span class="co">#&gt;  9 base_vec_ansi     15.6µs     17µs    58277.      448B     0   </span></span>
+<span><span class="co">#&gt; 10 cli_vec_plain     35.4µs   44.6µs    22377.      448B     4.48</span></span>
+<span><span class="co">#&gt; 11 fansi_vec_plain  142.3µs  159.6µs     6236.    5.02KB     6.21</span></span>
+<span><span class="co">#&gt; 12 base_vec_plain     8.9µs    9.7µs   102039.      448B     0   </span></span>
+<span><span class="co">#&gt; 13 cli_txt_ansi      46.5µs     51µs    19646.        0B     2.02</span></span>
+<span><span class="co">#&gt; 14 fansi_txt_ansi   145.6µs  164.8µs     6026.      688B     6.16</span></span>
+<span><span class="co">#&gt; 15 base_txt_ansi     13.8µs   15.2µs    64356.        0B     0   </span></span>
+<span><span class="co">#&gt; 16 cli_txt_plain       39µs   43.1µs    23077.        0B     2.31</span></span>
+<span><span class="co">#&gt; 17 fansi_txt_plain  119.9µs  141.3µs     7030.      688B     8.28</span></span>
+<span><span class="co">#&gt; 18 base_txt_plain     7.9µs    8.6µs   115268.        0B     0</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
 <span>  cli_ansi        <span class="op">=</span> <span class="fu"><a href="../reference/ansi_nchar.html">ansi_nchar</a></span><span class="op">(</span><span class="va">ansi</span>, type <span class="op">=</span> <span class="st">"width"</span><span class="op">)</span>,</span>
@@ -340,24 +340,24 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 18 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi          13.3µs   14.3µs    63895.        0B     6.39</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi       133.3µs  146.1µs     5286.      688B     6.20</span></span>
-<span><span class="co">#&gt;  3 base_ansi          1.8µs      2µs   378778.        0B     0   </span></span>
-<span><span class="co">#&gt;  4 cli_plain         13.3µs   15.1µs    42543.        0B     8.51</span></span>
-<span><span class="co">#&gt;  5 fansi_plain      137.9µs  236.7µs     3908.      688B     2.02</span></span>
-<span><span class="co">#&gt;  6 base_plain         1.4µs    1.7µs   362440.        0B    36.2 </span></span>
-<span><span class="co">#&gt;  7 cli_vec_ansi      60.7µs   71.4µs    11111.      448B     0   </span></span>
-<span><span class="co">#&gt;  8 fansi_vec_ansi     196µs  312.3µs     2924.    5.02KB     4.12</span></span>
-<span><span class="co">#&gt;  9 base_vec_ansi     69.7µs   71.5µs    10750.      448B     0   </span></span>
-<span><span class="co">#&gt; 10 cli_vec_plain     54.7µs   59.2µs    12762.      448B     2.03</span></span>
-<span><span class="co">#&gt; 11 fansi_vec_plain  169.7µs  181.2µs     4361.    5.02KB     4.09</span></span>
-<span><span class="co">#&gt; 12 base_vec_plain    35.9µs   36.7µs    21739.      448B     0   </span></span>
-<span><span class="co">#&gt; 13 cli_txt_ansi      61.1µs   73.1µs    10873.        0B     2.04</span></span>
-<span><span class="co">#&gt; 14 fansi_txt_ansi   176.3µs    271µs     3051.      688B     4.10</span></span>
-<span><span class="co">#&gt; 15 base_txt_ansi     74.5µs   77.2µs    10004.        0B     0   </span></span>
-<span><span class="co">#&gt; 16 cli_txt_plain     53.5µs   64.1µs    11998.        0B     0   </span></span>
-<span><span class="co">#&gt; 17 fansi_txt_plain  154.5µs  258.5µs     3600.      688B     4.09</span></span>
-<span><span class="co">#&gt; 18 base_txt_plain    38.3µs   38.9µs    22457.        0B     0</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi          12.6µs   14.1µs    69605.        0B    13.9 </span></span>
+<span><span class="co">#&gt;  2 fansi_ansi       120.1µs  138.7µs     7177.      688B     6.16</span></span>
+<span><span class="co">#&gt;  3 base_ansi          1.8µs    1.9µs   491393.        0B     0   </span></span>
+<span><span class="co">#&gt;  4 cli_plain           12µs   13.8µs    70748.        0B    14.2 </span></span>
+<span><span class="co">#&gt;  5 fansi_plain      113.5µs  136.9µs     7275.      688B     6.16</span></span>
+<span><span class="co">#&gt;  6 base_plain         1.3µs    1.5µs   612226.        0B    61.2 </span></span>
+<span><span class="co">#&gt;  7 cli_vec_ansi      55.8µs   61.5µs    16243.      448B     2.02</span></span>
+<span><span class="co">#&gt;  8 fansi_vec_ansi     158µs  195.5µs     5092.    5.02KB     4.09</span></span>
+<span><span class="co">#&gt;  9 base_vec_ansi     64.5µs     70µs    14344.      448B     0   </span></span>
+<span><span class="co">#&gt; 10 cli_vec_plain     50.1µs   55.1µs    18043.      448B     4.15</span></span>
+<span><span class="co">#&gt; 11 fansi_vec_plain    140µs  174.4µs     5689.    5.02KB     4.09</span></span>
+<span><span class="co">#&gt; 12 base_vec_plain    33.2µs   36.2µs    27651.      448B     2.77</span></span>
+<span><span class="co">#&gt; 13 cli_txt_ansi      56.2µs     62µs    16103.        0B     2.02</span></span>
+<span><span class="co">#&gt; 14 fansi_txt_ansi   158.3µs  179.3µs     5562.      688B     6.17</span></span>
+<span><span class="co">#&gt; 15 base_txt_ansi     68.9µs   74.8µs    13513.        0B     0   </span></span>
+<span><span class="co">#&gt; 16 cli_txt_plain     43.2µs   54.1µs    18520.        0B     2.02</span></span>
+<span><span class="co">#&gt; 17 fansi_txt_plain  140.4µs  156.6µs     6278.      688B     6.16</span></span>
+<span><span class="co">#&gt; 18 base_txt_plain    35.4µs   38.5µs    25853.        0B     0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_simplify">
@@ -377,12 +377,12 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
 <span><span class="co">#&gt;   expression         min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt;    &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 cli_ansi        10.5µs   11.2µs    84013.        0B     8.40</span></span>
-<span><span class="co">#&gt; 2 cli_plain        9.9µs   10.5µs    90699.        0B     9.07</span></span>
-<span><span class="co">#&gt; 3 cli_vec_ansi    56.4µs   59.4µs    12483.      848B     0   </span></span>
-<span><span class="co">#&gt; 4 cli_vec_plain   16.6µs   18.5µs    38078.      848B     3.81</span></span>
-<span><span class="co">#&gt; 5 cli_txt_ansi      56µs   63.9µs    12354.        0B     2.03</span></span>
-<span><span class="co">#&gt; 6 cli_txt_plain     11µs   12.5µs    45981.        0B     4.60</span></span></code></pre>
+<span><span class="co">#&gt; 1 cli_ansi         9.8µs   11.1µs    87953.        0B     8.80</span></span>
+<span><span class="co">#&gt; 2 cli_plain          9µs   10.3µs    95209.        0B     9.52</span></span>
+<span><span class="co">#&gt; 3 cli_vec_ansi    52.2µs   57.1µs    17486.      848B     0   </span></span>
+<span><span class="co">#&gt; 4 cli_vec_plain   15.4µs   17.5µs    56359.      848B     5.64</span></span>
+<span><span class="co">#&gt; 5 cli_txt_ansi    51.6µs   56.7µs    17569.        0B     2.02</span></span>
+<span><span class="co">#&gt; 6 cli_txt_plain   10.3µs   11.5µs    85390.        0B     8.54</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_strip">
@@ -407,18 +407,18 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi          17.5µs     19µs    39705.        0B     7.94</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi          41µs   47.2µs    14679.      688B     8.38</span></span>
-<span><span class="co">#&gt;  3 cli_plain         17.2µs   18.7µs    42879.        0B     8.58</span></span>
-<span><span class="co">#&gt;  4 fansi_plain       40.7µs   46.2µs    15073.      688B     6.22</span></span>
-<span><span class="co">#&gt;  5 cli_vec_ansi      31.5µs   33.3µs    25248.      848B     5.05</span></span>
-<span><span class="co">#&gt;  6 fansi_vec_ansi    86.1µs   91.6µs     9757.    5.41KB     6.32</span></span>
-<span><span class="co">#&gt;  7 cli_vec_plain     21.7µs   23.7µs    30201.      848B     6.04</span></span>
-<span><span class="co">#&gt;  8 fansi_vec_plain   56.2µs   59.7µs    15076.    4.59KB     6.25</span></span>
-<span><span class="co">#&gt;  9 cli_txt_ansi      29.6µs   31.1µs    30384.        0B     6.08</span></span>
-<span><span class="co">#&gt; 10 fansi_txt_ansi    70.4µs   76.2µs     9742.    5.12KB     6.23</span></span>
-<span><span class="co">#&gt; 11 cli_txt_plain     18.4µs   19.8µs    40558.        0B     8.11</span></span>
-<span><span class="co">#&gt; 12 fansi_txt_plain   42.5µs   45.7µs    18685.      688B     8.33</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi          16.3µs   18.3µs    53802.        0B    10.8 </span></span>
+<span><span class="co">#&gt;  2 fansi_ansi        37.8µs     43µs    22804.      688B    11.4 </span></span>
+<span><span class="co">#&gt;  3 cli_plain         14.3µs   17.8µs    54990.        0B    11.0 </span></span>
+<span><span class="co">#&gt;  4 fansi_plain       37.1µs   42.5µs    23174.      688B     9.27</span></span>
+<span><span class="co">#&gt;  5 cli_vec_ansi      28.9µs   32.3µs    30552.      848B     9.17</span></span>
+<span><span class="co">#&gt;  6 fansi_vec_ansi    70.4µs     89µs    11147.    5.41KB     4.11</span></span>
+<span><span class="co">#&gt;  7 cli_vec_plain     19.8µs   22.5µs    43778.      848B     8.76</span></span>
+<span><span class="co">#&gt;  8 fansi_vec_plain   45.7µs   58.2µs    16912.    4.59KB     8.52</span></span>
+<span><span class="co">#&gt;  9 cli_txt_ansi      27.5µs   30.9µs    31926.        0B     6.39</span></span>
+<span><span class="co">#&gt; 10 fansi_txt_ansi    64.7µs   73.5µs    13483.    5.12KB     6.19</span></span>
+<span><span class="co">#&gt; 11 cli_txt_plain     16.8µs   19.2µs    51387.        0B    10.3 </span></span>
+<span><span class="co">#&gt; 12 fansi_txt_plain   39.6µs   44.7µs    21970.      688B    11.0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_strsplit">
@@ -449,24 +449,24 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 18 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi         250.4µs  263.5µs    3528.   103.37KB     6.20</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi       199.9µs 340.31µs    2618.   102.16KB     6.26</span></span>
-<span><span class="co">#&gt;  3 base_ansi          8.2µs    9.3µs   60745.       224B     0   </span></span>
-<span><span class="co">#&gt;  4 cli_plain        263.1µs 480.01µs    2010.     8.09KB     4.13</span></span>
-<span><span class="co">#&gt;  5 fansi_plain      192.5µs    364µs    2605.     9.62KB     4.11</span></span>
-<span><span class="co">#&gt;  6 base_plain         7.1µs    7.9µs   85642.         0B     0   </span></span>
-<span><span class="co">#&gt;  7 cli_vec_ansi     10.82ms  17.41ms      59.8  823.77KB     6.90</span></span>
-<span><span class="co">#&gt;  8 fansi_vec_ansi     1.8ms    3.1ms     325.   846.81KB     6.45</span></span>
-<span><span class="co">#&gt;  9 base_vec_ansi    305.2µs 415.61µs    2303.     22.7KB     2.05</span></span>
-<span><span class="co">#&gt; 10 cli_vec_plain    14.64ms  17.51ms      56.0  823.77KB     7.00</span></span>
-<span><span class="co">#&gt; 11 fansi_vec_plain   1.61ms    2.3ms     418.   845.98KB     8.95</span></span>
-<span><span class="co">#&gt; 12 base_vec_plain   203.6µs  217.1µs    4530.       848B     2.02</span></span>
-<span><span class="co">#&gt; 13 cli_txt_ansi      6.39ms   8.36ms     116.     63.6KB     0   </span></span>
-<span><span class="co">#&gt; 14 fansi_txt_ansi     3.5ms   4.04ms     244.    35.05KB     0   </span></span>
-<span><span class="co">#&gt; 15 base_txt_ansi    278.3µs 296.56µs    2904.    18.47KB     0   </span></span>
-<span><span class="co">#&gt; 16 cli_txt_plain     4.07ms   5.39ms     176.     63.6KB     2.05</span></span>
-<span><span class="co">#&gt; 17 fansi_txt_plain 948.21µs   1.33ms     713.     30.6KB     0   </span></span>
-<span><span class="co">#&gt; 18 base_txt_plain   171.4µs  207.4µs    4279.    11.05KB     0</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi        239.11µs 261.31µs    3787.   103.37KB     6.16</span></span>
+<span><span class="co">#&gt;  2 fansi_ansi      179.11µs 199.91µs    4972.   102.16KB     9.96</span></span>
+<span><span class="co">#&gt;  3 base_ansi          7.4µs      8µs  123561.       224B     0   </span></span>
+<span><span class="co">#&gt;  4 cli_plain       228.81µs 250.51µs    3954.     8.09KB     6.16</span></span>
+<span><span class="co">#&gt;  5 fansi_plain     170.71µs 189.31µs    5218.     9.62KB    10.5 </span></span>
+<span><span class="co">#&gt;  6 base_plain           6µs    6.7µs  147009.         0B     0   </span></span>
+<span><span class="co">#&gt;  7 cli_vec_ansi     10.01ms  10.27ms      97.5  823.77KB    11.6 </span></span>
+<span><span class="co">#&gt;  8 fansi_vec_ansi    1.62ms   1.75ms     553.   846.81KB     8.58</span></span>
+<span><span class="co">#&gt;  9 base_vec_ansi   279.51µs 310.01µs    3203.     22.7KB     2.05</span></span>
+<span><span class="co">#&gt; 10 cli_vec_plain    10.19ms   10.3ms      95.9  823.77KB    11.7 </span></span>
+<span><span class="co">#&gt; 11 fansi_vec_plain   1.54ms   1.65ms     606.   845.98KB     8.57</span></span>
+<span><span class="co">#&gt; 12 base_vec_plain  190.01µs 208.81µs    4749.       848B     2.03</span></span>
+<span><span class="co">#&gt; 13 cli_txt_ansi       5.9ms   6.17ms     162.     63.6KB     0   </span></span>
+<span><span class="co">#&gt; 14 fansi_txt_ansi    2.99ms   3.08ms     324.    35.05KB     0   </span></span>
+<span><span class="co">#&gt; 15 base_txt_ansi   256.61µs 287.81µs    3487.    18.47KB     2.02</span></span>
+<span><span class="co">#&gt; 16 cli_txt_plain     3.74ms   4.02ms     249.     63.6KB     0   </span></span>
+<span><span class="co">#&gt; 17 fansi_txt_plain 889.24µs 962.14µs    1040.     30.6KB     2.03</span></span>
+<span><span class="co">#&gt; 18 base_txt_plain  159.71µs 173.51µs    5747.    11.05KB     0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_strtrim">
@@ -497,24 +497,24 @@ benchmarks longer strings and string vectors as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 18 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi         136.8µs  229.3µs     3914.   32.26KB     6.22</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi        76.1µs  116.2µs     7104.   31.45KB     4.11</span></span>
-<span><span class="co">#&gt;  3 base_ansi          1.6µs    1.8µs   395237.     4.2KB    39.5 </span></span>
-<span><span class="co">#&gt;  4 cli_plain          133µs  230.1µs     4024.        0B     4.10</span></span>
-<span><span class="co">#&gt;  5 fansi_plain       75.7µs  114.2µs     7043.      872B     6.23</span></span>
-<span><span class="co">#&gt;  6 base_plain         1.4µs    1.6µs   349577.        0B     0   </span></span>
-<span><span class="co">#&gt;  7 cli_vec_ansi     361.1µs    540µs     1666.   16.73KB     2.03</span></span>
-<span><span class="co">#&gt;  8 fansi_vec_ansi   181.5µs  198.5µs     4000.    5.59KB     4.14</span></span>
-<span><span class="co">#&gt;  9 base_vec_ansi     62.9µs   65.2µs    12004.      848B     0   </span></span>
-<span><span class="co">#&gt; 10 cli_vec_plain    284.9µs  314.7µs     2610.   16.73KB     4.14</span></span>
-<span><span class="co">#&gt; 11 fansi_vec_plain    175µs  182.1µs     4886.    5.59KB     5.67</span></span>
-<span><span class="co">#&gt; 12 base_vec_plain    50.1µs   52.7µs    14526.      848B     0   </span></span>
-<span><span class="co">#&gt; 13 cli_txt_ansi       147µs  174.6µs     4349.        0B     6.25</span></span>
-<span><span class="co">#&gt; 14 fansi_txt_ansi    74.5µs   78.6µs     9415.      872B     6.21</span></span>
-<span><span class="co">#&gt; 15 base_txt_ansi      1.6µs    1.8µs   405157.        0B    40.5 </span></span>
-<span><span class="co">#&gt; 16 cli_txt_plain    135.2µs  243.4µs     3494.        0B     4.09</span></span>
-<span><span class="co">#&gt; 17 fansi_txt_plain     75µs  102.2µs     7647.      872B     6.23</span></span>
-<span><span class="co">#&gt; 18 base_txt_plain     1.5µs    1.6µs   426076.        0B     0</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi         126.8µs  142.2µs     6950.   32.26KB    10.5 </span></span>
+<span><span class="co">#&gt;  2 fansi_ansi        69.6µs   79.4µs    12418.   31.45KB    10.5 </span></span>
+<span><span class="co">#&gt;  3 base_ansi          1.6µs    1.7µs   557157.     4.2KB     0   </span></span>
+<span><span class="co">#&gt;  4 cli_plain          125µs  139.6µs     7072.        0B    10.5 </span></span>
+<span><span class="co">#&gt;  5 fansi_plain       69.3µs   79.4µs    12385.      872B    10.5 </span></span>
+<span><span class="co">#&gt;  6 base_plain         1.4µs    1.5µs   647650.        0B     0   </span></span>
+<span><span class="co">#&gt;  7 cli_vec_ansi     338.3µs  370.9µs     2674.   16.73KB     4.11</span></span>
+<span><span class="co">#&gt;  8 fansi_vec_ansi   168.1µs  186.2µs     5328.    5.59KB     4.10</span></span>
+<span><span class="co">#&gt;  9 base_vec_ansi     58.1µs   63.7µs    15726.      848B     0   </span></span>
+<span><span class="co">#&gt; 10 cli_vec_plain    233.9µs  293.6µs     3394.   16.73KB     6.20</span></span>
+<span><span class="co">#&gt; 11 fansi_vec_plain  162.3µs  179.8µs     5512.    5.59KB     4.09</span></span>
+<span><span class="co">#&gt; 12 base_vec_plain    46.2µs   50.6µs    19701.      848B     0   </span></span>
+<span><span class="co">#&gt; 13 cli_txt_ansi     139.1µs    156µs     6317.        0B     8.53</span></span>
+<span><span class="co">#&gt; 14 fansi_txt_ansi    69.6µs   79.2µs    12423.      872B    10.5 </span></span>
+<span><span class="co">#&gt; 15 base_txt_ansi      1.5µs    1.7µs   550465.        0B     0   </span></span>
+<span><span class="co">#&gt; 16 cli_txt_plain    125.6µs  141.7µs     6970.        0B    10.4 </span></span>
+<span><span class="co">#&gt; 17 fansi_txt_plain     64µs   78.2µs    12593.      872B    10.5 </span></span>
+<span><span class="co">#&gt; 18 base_txt_plain     1.3µs    1.5µs   606035.        0B     0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_strwrap">
@@ -547,24 +547,24 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 18 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi        538.01µs 639.91µs    1209.   266.74KB     6.21</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi         137µs  143.7µs    6312.     10.3KB     8.58</span></span>
-<span><span class="co">#&gt;  3 base_ansi         54.1µs   57.8µs   13824.         0B     6.17</span></span>
-<span><span class="co">#&gt;  4 cli_plain        315.5µs 426.11µs    2095.         0B     6.19</span></span>
-<span><span class="co">#&gt;  5 fansi_plain      135.6µs  148.1µs    5214.       872B     6.20</span></span>
-<span><span class="co">#&gt;  6 base_plain        44.8µs     47µs   20548.         0B    10.4 </span></span>
-<span><span class="co">#&gt;  7 cli_vec_ansi     56.29ms     59ms      15.7    2.48KB     9.44</span></span>
-<span><span class="co">#&gt;  8 fansi_vec_ansi   388.4µs 583.01µs    1648.     7.25KB     2.03</span></span>
-<span><span class="co">#&gt;  9 base_vec_ansi     3.34ms   4.55ms     224.    48.18KB     8.62</span></span>
-<span><span class="co">#&gt; 10 cli_vec_plain    40.75ms  51.62ms      19.0    2.48KB     4.75</span></span>
-<span><span class="co">#&gt; 11 fansi_vec_plain  309.7µs 473.81µs    2003.     6.42KB     4.10</span></span>
-<span><span class="co">#&gt; 12 base_vec_plain    2.42ms    3.5ms     294.     47.4KB     8.58</span></span>
-<span><span class="co">#&gt; 13 cli_txt_ansi      31.7ms  32.43ms      30.5  507.59KB     4.68</span></span>
-<span><span class="co">#&gt; 14 fansi_txt_ansi     357µs 553.41µs    1730.     6.77KB     2.03</span></span>
-<span><span class="co">#&gt; 15 base_txt_ansi     3.04ms   4.28ms     238.   582.06KB     4.22</span></span>
-<span><span class="co">#&gt; 16 cli_txt_plain      2.5ms   3.38ms     294.   369.84KB     4.23</span></span>
-<span><span class="co">#&gt; 17 fansi_txt_plain  269.4µs 328.31µs    2597.     2.51KB     2.03</span></span>
-<span><span class="co">#&gt; 18 base_txt_plain    1.96ms   2.23ms     418.   367.31KB     6.56</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi        510.92µs 562.27µs    1761.   266.74KB     8.39</span></span>
+<span><span class="co">#&gt;  2 fansi_ansi      128.71µs 144.21µs    6808.     10.3KB     8.30</span></span>
+<span><span class="co">#&gt;  3 base_ansi         50.4µs   56.6µs   17269.         0B    10.4 </span></span>
+<span><span class="co">#&gt;  4 cli_plain       290.31µs 322.21µs    3067.         0B     6.16</span></span>
+<span><span class="co">#&gt;  5 fansi_plain     125.21µs 142.31µs    6891.       872B    10.5 </span></span>
+<span><span class="co">#&gt;  6 base_plain        41.4µs   46.6µs   21036.         0B     8.42</span></span>
+<span><span class="co">#&gt;  7 cli_vec_ansi     54.79ms  55.42ms      18.1    2.48KB    14.5 </span></span>
+<span><span class="co">#&gt;  8 fansi_vec_ansi  346.91µs 381.81µs    2593.     7.25KB     4.08</span></span>
+<span><span class="co">#&gt;  9 base_vec_ansi     3.29ms   3.49ms     286.    48.18KB    10.9 </span></span>
+<span><span class="co">#&gt; 10 cli_vec_plain    31.25ms  31.62ms      31.7    2.48KB    10.6 </span></span>
+<span><span class="co">#&gt; 11 fansi_vec_plain 284.61µs 312.06µs    3158.     6.42KB     6.19</span></span>
+<span><span class="co">#&gt; 12 base_vec_plain    2.36ms   2.48ms     400.     47.4KB    10.3 </span></span>
+<span><span class="co">#&gt; 13 cli_txt_ansi      30.8ms  31.18ms      32.1  507.59KB     4.59</span></span>
+<span><span class="co">#&gt; 14 fansi_txt_ansi  324.01µs 354.42µs    2802.     6.77KB     4.08</span></span>
+<span><span class="co">#&gt; 15 base_txt_ansi     2.85ms   3.06ms     326.   582.06KB     4.18</span></span>
+<span><span class="co">#&gt; 16 cli_txt_plain     2.34ms    2.5ms     397.   369.84KB     6.43</span></span>
+<span><span class="co">#&gt; 17 fansi_txt_plain 246.01µs 269.61µs    3674.     2.51KB     4.09</span></span>
+<span><span class="co">#&gt; 18 base_txt_plain    1.81ms   1.98ms     502.   367.31KB     6.35</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_substr">
@@ -595,24 +595,24 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 18 × 6</span></span>
 <span><span class="co">#&gt;    expression           min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;      &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi          10.1µs     12µs    51850.   23.84KB     5.19</span></span>
-<span><span class="co">#&gt;  2 fansi_ansi       110.7µs  120.3µs     6561.   28.48KB     8.41</span></span>
-<span><span class="co">#&gt;  3 base_ansi          1.4µs    1.7µs   411228.        0B     0   </span></span>
-<span><span class="co">#&gt;  4 cli_plain           10µs   11.6µs    57201.        0B     5.72</span></span>
-<span><span class="co">#&gt;  5 fansi_plain      111.1µs  118.7µs     6687.    1.98KB     8.43</span></span>
-<span><span class="co">#&gt;  6 base_plain         1.4µs    1.5µs   615006.        0B     0   </span></span>
-<span><span class="co">#&gt;  7 cli_vec_ansi      45.4µs   47.1µs    19262.     1.7KB     2.03</span></span>
-<span><span class="co">#&gt;  8 fansi_vec_ansi   170.1µs  178.2µs     5213.    8.86KB     6.24</span></span>
-<span><span class="co">#&gt;  9 base_vec_ansi     11.9µs   12.5µs    77365.      848B     0   </span></span>
-<span><span class="co">#&gt; 10 cli_vec_plain     38.2µs   41.3µs    16796.     1.7KB     2.03</span></span>
-<span><span class="co">#&gt; 11 fansi_vec_plain  162.7µs  253.5µs     3636.    8.86KB     4.14</span></span>
-<span><span class="co">#&gt; 12 base_vec_plain    11.2µs   11.8µs    80617.      848B     8.06</span></span>
-<span><span class="co">#&gt; 13 cli_txt_ansi      10.1µs   10.8µs    87895.        0B     8.79</span></span>
-<span><span class="co">#&gt; 14 fansi_txt_ansi   111.1µs    122µs     6105.    1.98KB     6.22</span></span>
-<span><span class="co">#&gt; 15 base_txt_ansi      5.6µs      6µs   122179.        0B     0   </span></span>
-<span><span class="co">#&gt; 16 cli_txt_plain       11µs   12.4µs    53595.        0B    10.7 </span></span>
-<span><span class="co">#&gt; 17 fansi_txt_plain  111.9µs  140.4µs     5186.    1.98KB     6.25</span></span>
-<span><span class="co">#&gt; 18 base_txt_plain       4µs    4.1µs   220694.        0B     0</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi           9.2µs   10.3µs    94978.   23.84KB    19.0 </span></span>
+<span><span class="co">#&gt;  2 fansi_ansi       101.4µs  112.5µs     8702.   28.48KB     8.46</span></span>
+<span><span class="co">#&gt;  3 base_ansi          1.4µs    1.5µs   612604.        0B     0   </span></span>
+<span><span class="co">#&gt;  4 cli_plain          9.1µs   10.4µs    93162.        0B    18.6 </span></span>
+<span><span class="co">#&gt;  5 fansi_plain      101.5µs  114.9µs     8599.    1.98KB     8.33</span></span>
+<span><span class="co">#&gt;  6 base_plain         1.3µs    1.5µs   628197.        0B    62.8 </span></span>
+<span><span class="co">#&gt;  7 cli_vec_ansi      42.5µs   46.6µs    21259.     1.7KB     2.13</span></span>
+<span><span class="co">#&gt;  8 fansi_vec_ansi   163.9µs  181.2µs     5456.    8.86KB     6.23</span></span>
+<span><span class="co">#&gt;  9 base_vec_ansi      9.7µs   12.3µs    81624.      848B     0   </span></span>
+<span><span class="co">#&gt; 10 cli_vec_plain       31µs   39.4µs    25253.     1.7KB     5.05</span></span>
+<span><span class="co">#&gt; 11 fansi_vec_plain  139.1µs  170.1µs     5823.    8.86KB     6.24</span></span>
+<span><span class="co">#&gt; 12 base_vec_plain    10.5µs   11.7µs    85073.      848B     0   </span></span>
+<span><span class="co">#&gt; 13 cli_txt_ansi       9.2µs   10.6µs    91847.        0B     9.19</span></span>
+<span><span class="co">#&gt; 14 fansi_txt_ansi    89.4µs  114.4µs     8636.    1.98KB    10.5 </span></span>
+<span><span class="co">#&gt; 15 base_txt_ansi      4.5µs    5.6µs   178270.        0B     0   </span></span>
+<span><span class="co">#&gt; 16 cli_txt_plain      8.7µs   11.4µs    85920.        0B     8.59</span></span>
+<span><span class="co">#&gt; 17 fansi_txt_plain  101.1µs  113.5µs     8709.    1.98KB    10.5 </span></span>
+<span><span class="co">#&gt; 18 base_txt_plain     3.6µs      4µs   243807.        0B     0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_tolower-ansi_toupper">
@@ -637,18 +637,18 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
 <span><span class="co">#&gt;    expression          min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;     &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi        163.8µs  236.7µs    3720.    11.87KB     4.10</span></span>
-<span><span class="co">#&gt;  2 base_ansi           2µs    2.2µs  447142.         0B     0   </span></span>
-<span><span class="co">#&gt;  3 cli_plain         128µs  175.6µs    4482.     8.73KB     4.11</span></span>
-<span><span class="co">#&gt;  4 base_plain        1.5µs    1.7µs  442167.         0B     0   </span></span>
-<span><span class="co">#&gt;  5 cli_vec_ansi     8.07ms   9.28ms     106.   838.77KB     6.62</span></span>
-<span><span class="co">#&gt;  6 base_vec_ansi   135.8µs  176.6µs    5156.       848B     0   </span></span>
-<span><span class="co">#&gt;  7 cli_vec_plain    4.29ms   5.25ms     184.    816.9KB     8.78</span></span>
-<span><span class="co">#&gt;  8 base_vec_plain     82µs   84.8µs    8972.       848B     0   </span></span>
-<span><span class="co">#&gt;  9 cli_txt_ansi    18.04ms  26.01ms      39.1  114.42KB     2.06</span></span>
-<span><span class="co">#&gt; 10 base_txt_ansi   136.1µs  136.6µs    7090.         0B     0   </span></span>
-<span><span class="co">#&gt; 11 cli_txt_plain  501.81µs 585.51µs    1501.    18.16KB     2.03</span></span>
-<span><span class="co">#&gt; 12 base_txt_plain   79.7µs   82.9µs    9466.         0B     0</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi       149.41µs 168.11µs    5899.    11.87KB     6.18</span></span>
+<span><span class="co">#&gt;  2 base_ansi         1.9µs    2.2µs  444613.         0B     0   </span></span>
+<span><span class="co">#&gt;  3 cli_plain       116.7µs    131µs    7529.     8.73KB     6.17</span></span>
+<span><span class="co">#&gt;  4 base_plain        1.5µs    1.7µs  585806.         0B     0   </span></span>
+<span><span class="co">#&gt;  5 cli_vec_ansi     6.02ms    6.3ms     159.   838.77KB    13.9 </span></span>
+<span><span class="co">#&gt;  6 base_vec_ansi   125.7µs 136.31µs    7322.       848B     0   </span></span>
+<span><span class="co">#&gt;  7 cli_vec_plain    3.48ms   3.66ms     274.    816.9KB    10.9 </span></span>
+<span><span class="co">#&gt;  8 base_vec_plain     76µs   82.6µs   12082.       848B     0   </span></span>
+<span><span class="co">#&gt;  9 cli_txt_ansi    17.16ms   17.5ms      57.2  114.42KB     2.04</span></span>
+<span><span class="co">#&gt; 10 base_txt_ansi  125.91µs 136.41µs    7316.         0B     0   </span></span>
+<span><span class="co">#&gt; 11 cli_txt_plain  489.72µs 508.02µs    1957.    18.16KB     2.02</span></span>
+<span><span class="co">#&gt; 12 base_txt_plain   73.9µs   80.1µs   12459.         0B     0</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="ansi_trimws">
@@ -673,18 +673,18 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 12 × 6</span></span>
 <span><span class="co">#&gt;    expression          min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;    &lt;bch:expr&gt;     &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 cli_ansi        105.1µs  170.3µs     5010.        0B     4.19</span></span>
-<span><span class="co">#&gt;  2 base_ansi        25.4µs   28.3µs    24365.        0B     7.31</span></span>
-<span><span class="co">#&gt;  3 cli_plain         104µs  166.2µs     4991.        0B     4.10</span></span>
-<span><span class="co">#&gt;  4 base_plain       25.2µs   28.2µs    23815.        0B     7.15</span></span>
-<span><span class="co">#&gt;  5 cli_vec_ansi    231.3µs  245.4µs     3310.     7.2KB     4.10</span></span>
-<span><span class="co">#&gt;  6 base_vec_ansi    89.9µs   98.8µs     8343.    1.66KB     2.03</span></span>
-<span><span class="co">#&gt;  7 cli_vec_plain   212.7µs  232.5µs     3474.     7.2KB     2.02</span></span>
-<span><span class="co">#&gt;  8 base_vec_plain     82µs  104.1µs     7791.    1.66KB     2.04</span></span>
-<span><span class="co">#&gt;  9 cli_txt_ansi    187.2µs  294.2µs     3084.        0B     4.13</span></span>
-<span><span class="co">#&gt; 10 base_txt_ansi    56.7µs   58.9µs    13511.        0B     4.08</span></span>
-<span><span class="co">#&gt; 11 cli_txt_plain   161.6µs  177.1µs     4369.        0B     4.08</span></span>
-<span><span class="co">#&gt; 12 base_txt_plain   53.4µs   55.6µs    15628.        0B     2.47</span></span></code></pre>
+<span><span class="co">#&gt;  1 cli_ansi         83.6µs  107.7µs     9225.        0B     8.27</span></span>
+<span><span class="co">#&gt;  2 base_ansi        23.3µs   26.2µs    37616.        0B    11.3 </span></span>
+<span><span class="co">#&gt;  3 cli_plain        95.5µs    108µs     9207.        0B    10.4 </span></span>
+<span><span class="co">#&gt;  4 base_plain       23.3µs   26.2µs    37615.        0B     7.52</span></span>
+<span><span class="co">#&gt;  5 cli_vec_ansi    216.5µs  241.4µs     4087.     7.2KB     4.09</span></span>
+<span><span class="co">#&gt;  6 base_vec_ansi    86.3µs   96.3µs    10344.    1.66KB     2.02</span></span>
+<span><span class="co">#&gt;  7 cli_vec_plain     199µs  220.9µs     4453.     7.2KB     6.22</span></span>
+<span><span class="co">#&gt;  8 base_vec_plain     79µs   89.6µs    11084.    1.66KB     2.02</span></span>
+<span><span class="co">#&gt;  9 cli_txt_ansi    172.4µs  190.2µs     5208.        0B     6.16</span></span>
+<span><span class="co">#&gt; 10 base_txt_ansi    49.2µs   54.8µs    18126.        0B     4.07</span></span>
+<span><span class="co">#&gt; 11 cli_txt_plain   149.3µs  166.3µs     5955.        0B     6.15</span></span>
+<span><span class="co">#&gt; 12 base_txt_plain   46.9µs   51.9µs    19100.        0B     4.07</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -707,12 +707,12 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 cli          12.9µs     14µs    46013.    12.3KB     4.60</span></span>
-<span><span class="co">#&gt; 2 base          1.2µs    1.3µs   712510.        0B     0   </span></span>
-<span><span class="co">#&gt; 3 cli_vec      41.5µs   42.7µs    22504.      448B     2.25</span></span>
-<span><span class="co">#&gt; 4 base_vec     18.7µs   19.1µs    45834.      448B     4.58</span></span>
-<span><span class="co">#&gt; 5 cli_txt      41.2µs   44.8µs    15542.        0B     2.03</span></span>
-<span><span class="co">#&gt; 6 base_txt     20.7µs   21.3µs    33854.        0B     0</span></span></code></pre>
+<span><span class="co">#&gt; 1 cli          12.7µs   13.4µs    73075.    12.3KB     7.31</span></span>
+<span><span class="co">#&gt; 2 base          1.3µs    1.4µs   668111.        0B     0   </span></span>
+<span><span class="co">#&gt; 3 cli_vec      38.3µs   43.2µs    22958.      448B     4.59</span></span>
+<span><span class="co">#&gt; 4 base_vec     17.3µs     19µs    52505.      448B     0   </span></span>
+<span><span class="co">#&gt; 5 cli_txt      38.5µs   42.5µs    23364.        0B     2.34</span></span>
+<span><span class="co">#&gt; 6 base_txt     20.5µs   22.3µs    44628.        0B     0</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
 <span>  cli        <span class="op">=</span> <span class="fu"><a href="../reference/utf8_nchar.html">utf8_nchar</a></span><span class="op">(</span><span class="va">uni</span>, type <span class="op">=</span> <span class="st">"width"</span><span class="op">)</span>,</span>
@@ -726,12 +726,12 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 cli          12.8µs   13.4µs    71935.        0B    14.4 </span></span>
-<span><span class="co">#&gt; 2 base            2µs    2.1µs   451296.        0B     0   </span></span>
-<span><span class="co">#&gt; 3 cli_vec      45.8µs   50.1µs    13720.      448B     2.03</span></span>
-<span><span class="co">#&gt; 4 base_vec     88.6µs   89.8µs     9524.      448B     0   </span></span>
-<span><span class="co">#&gt; 5 cli_txt        46µs   47.3µs    19709.        0B     2.02</span></span>
-<span><span class="co">#&gt; 6 base_txt      151µs    169µs     5112.        0B     0</span></span></code></pre>
+<span><span class="co">#&gt; 1 cli          11.7µs   13.3µs    74013.        0B     7.40</span></span>
+<span><span class="co">#&gt; 2 base          1.9µs    2.2µs   443342.        0B     0   </span></span>
+<span><span class="co">#&gt; 3 cli_vec      42.5µs   47.5µs    20907.      448B     2.09</span></span>
+<span><span class="co">#&gt; 4 base_vec       82µs   89.3µs    11169.      448B     2.02</span></span>
+<span><span class="co">#&gt; 5 cli_txt      42.9µs   47.4µs    20976.        0B     2.10</span></span>
+<span><span class="co">#&gt; 6 base_txt      144µs  156.9µs     6359.        0B     0</span></span></code></pre>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">bench</span><span class="fu">::</span><span class="fu"><a href="http://bench.r-lib.org/reference/mark.html" class="external-link">mark</a></span><span class="op">(</span></span>
 <span>  cli        <span class="op">=</span> <span class="fu"><a href="../reference/utf8_nchar.html">utf8_nchar</a></span><span class="op">(</span><span class="va">uni</span>, type <span class="op">=</span> <span class="st">"codepoints"</span><span class="op">)</span>,</span>
@@ -745,12 +745,12 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 cli          13.9µs   14.7µs    45116.        0B     9.02</span></span>
-<span><span class="co">#&gt; 2 base          1.2µs    1.4µs   456940.        0B     0   </span></span>
-<span><span class="co">#&gt; 3 cli_vec        32µs     33µs    24376.      448B     4.88</span></span>
-<span><span class="co">#&gt; 4 base_vec     18.6µs     19µs    48396.      448B     0   </span></span>
-<span><span class="co">#&gt; 5 cli_txt      33.6µs   34.3µs    24198.        0B     2.42</span></span>
-<span><span class="co">#&gt; 6 base_txt     20.7µs     21µs    46396.        0B     4.64</span></span></code></pre>
+<span><span class="co">#&gt; 1 cli          13.4µs   14.8µs    66246.        0B    13.3 </span></span>
+<span><span class="co">#&gt; 2 base          1.2µs    1.4µs   684244.        0B     0   </span></span>
+<span><span class="co">#&gt; 3 cli_vec      30.2µs   33.2µs    29789.      448B     5.96</span></span>
+<span><span class="co">#&gt; 4 base_vec     18.7µs     19µs    52392.      448B     0   </span></span>
+<span><span class="co">#&gt; 5 cli_txt      31.7µs     36µs    27553.        0B     2.76</span></span>
+<span><span class="co">#&gt; 6 base_txt     20.8µs   22.3µs    44502.        0B     4.45</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="utf8_substr">
@@ -769,12 +769,12 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <pre class="fansi fansi-output"><code><span><span class="co">#&gt; # A tibble: 6 × 6</span></span>
 <span><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 cli           9.4µs    9.9µs    98269.    21.1KB     9.83</span></span>
-<span><span class="co">#&gt; 2 base          1.5µs    1.7µs   561222.        0B     0   </span></span>
-<span><span class="co">#&gt; 3 cli_vec      47.5µs   49.9µs    15322.     1.7KB     2.03</span></span>
-<span><span class="co">#&gt; 4 base_vec       14µs   14.5µs    57395.      848B     5.74</span></span>
-<span><span class="co">#&gt; 5 cli_txt       9.4µs    9.9µs    90657.        0B     9.07</span></span>
-<span><span class="co">#&gt; 6 base_txt       11µs   11.3µs    68245.        0B     0</span></span></code></pre>
+<span><span class="co">#&gt; 1 cli           8.7µs     10µs    96406.    21.1KB     9.64</span></span>
+<span><span class="co">#&gt; 2 base          1.4µs    1.6µs   577801.        0B     0   </span></span>
+<span><span class="co">#&gt; 3 cli_vec      43.2µs   47.7µs    20800.     1.7KB     4.16</span></span>
+<span><span class="co">#&gt; 4 base_vec     12.9µs   14.3µs    68624.      848B     0   </span></span>
+<span><span class="co">#&gt; 5 cli_txt       8.9µs   10.2µs    94417.        0B    18.9 </span></span>
+<span><span class="co">#&gt; 6 base_txt     10.9µs   12.5µs    78972.        0B     0</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -792,7 +792,7 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2023-07-25</span></span>
+<span><span class="co">#&gt;  date     2023-07-31</span></span>
 <span><span class="co">#&gt;  pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ─ Packages ─────────────────────────────────────────────────────────────</span></span>
@@ -800,7 +800,7 @@ for short text in cli, so it makes sense to benchmark that as well.</p>
 <span><span class="co">#&gt;  bench         1.1.3      2023-05-04 [1] RSPM</span></span>
 <span><span class="co">#&gt;  bslib         0.5.0      2023-06-09 [1] RSPM</span></span>
 <span><span class="co">#&gt;  cachem        1.0.8      2023-05-01 [1] RSPM</span></span>
-<span><span class="co">#&gt;  cli         * 3.6.1.9000 2023-07-25 [1] local</span></span>
+<span><span class="co">#&gt;  cli         * 3.6.1.9000 2023-07-31 [1] local</span></span>
 <span><span class="co">#&gt;  codetools     0.2-19     2023-02-01 [3] CRAN (R 4.3.1)</span></span>
 <span><span class="co">#&gt;  desc          1.4.2      2022-09-08 [1] RSPM</span></span>
 <span><span class="co">#&gt;  digest        0.6.33     2023-07-07 [1] RSPM</span></span>
