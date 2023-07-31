@@ -6,7 +6,7 @@
 #' @return `cli_progress_num()` returns an integer scalar.
 #'
 #' @rdname progress-utils
-#' @family progress bar
+#' @family progress bar functions
 #' @export
 
 cli_progress_num <- function() {
@@ -18,7 +18,6 @@ cli_progress_num <- function() {
 #' @return `cli_progress_cleanup() does not return anything.
 #'
 #' @rdname progress-utils
-#' @family progress bar
 #' @export
 
 cli_progress_cleanup <- function() {

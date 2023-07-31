@@ -4,7 +4,8 @@
 \alias{inline-markup}
 \title{About inline markup in the semantic cli}
 \description{
-About inline markup in the semantic cli
+To learn how to use cli’s semantic markup, start with the ‘Building
+a semantic CLI’ article at \url{https://cli.r-lib.org}.
 }
 \section{Command substitution}{
 

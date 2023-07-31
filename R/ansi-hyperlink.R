@@ -327,17 +327,7 @@ ansi_has_hyperlink_support <- function() {
   if (isTRUE(as.logical(enabled))){ return(TRUE) }
 
   ## If ANSI support is off, then this is off as well
-  opt <- as.integer(getOption("cli.num_colors", NULL))[1]
-  if (!is.na(opt) && opt == 1) return(FALSE)
-  env <- as.integer(Sys.getenv("R_CLI_NUM_COLORS", ""))[1]
-  if (!is.na(env) && env == 1) return(FALSE)
-  cray_opt <- as.logical(getOption("crayon.enabled", NULL))[1]
-  if (!is.na(cray_opt) && !cray_opt) return(FALSE)
-  if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) return(FALSE)
-
-  ## environment variable used by RStudio
-  enabled <- Sys.getenv("RSTUDIO_CLI_HYPERLINKS", "")
-  if (isTRUE(as.logical(enabled))){ return(TRUE) }
+  if (num_ansi_colors() == 1) return(FALSE)
 
   ## Are we in RStudio?
   rstudio <- rstudio_detect()

@@ -275,7 +275,7 @@ rstudio <- local({
       ansi_tty = FALSE,
       ansi_color = FALSE,
       num_colors = 1L,
-      hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != "",
+      hyperlink = FALSE,
       has_canonical_mode = FALSE
     )
   }

@@ -1,5 +1,9 @@
 
-#' About inline markup in the semantic cli
+#' @title About inline markup in the semantic cli
+#'
+#' @description
+#' To learn how to use cli’s semantic markup, start with the ‘Building
+#' a semantic CLI’ article at <https://cli.r-lib.org>.
 #'
 #' @section Command substitution:
 #'
@@ -75,9 +79,8 @@
 #' * `pkg` for a package name.
 #' * `run` is an R expression, that is potentially clickable if the terminal
 #'   supports ANSI hyperlinks to runnable code (e.g. RStudio).
-#'   It supports link text. See [links] for more information about cli
-#'   hyperlinks.
-#' * `strong` for strong importance.
+#'   It supports link text. See [links] for more information about cli hyperlinks.
+#' * `str` for a double quoted string escaped by [base::encodeString()].#' * `strong` for strong importance.
 #' * `topic` is a help page of a _topic_.
 #'   If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 #'   then cli creates a clickable link. It supports link text.
@@ -199,7 +202,7 @@
 #' ```{asciicast inline-plural}
 #' ndirs <- 1
 #' nfiles <- 13
-#' cli_alert_info("Found {ndirs} diretor{?y/ies} and {nfiles} file{?s}.")
+#' cli_alert_info("Found {ndirs} director{?y/ies} and {nfiles} file{?s}.")
 #' cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
 #' ```
 #'
