@@ -92,7 +92,7 @@ Default number of ANSI colors. This value is used if the number of colors
 is not already set by
 \itemize{
 \item the \code{cli.num_colors} option,
-\item the \verb{R_CLI_NU<_COLORS} environment variable,
+\item the \code{R_CLI_NUM_COLORS} environment variable,
 \item the \code{crayon.enabled} and \code{crayon.colors} options,
 \item the \code{NO_COLOR} environment variable,
 \item the \code{knitr.in.progress} option,
