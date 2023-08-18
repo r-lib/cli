@@ -192,11 +192,20 @@ takes precedence over <code>cli.width</code>.</p>
 <h3 id="cli-default_num_colors">
 <code>cli.default_num_colors</code><a class="anchor" aria-label="anchor" href="#cli-default_num_colors"></a>
 </h3>
-<p>Default number of ANSI colors. This value is only used if ANSI color
-support is detected. You can set this value to keep relying on
-auto-detection, but to adjust the number of colors when cli detects
-color support. See [num_ansi_colors()]. See also the
-<code>cli.num_colors</code> option.</p>
+<p>Default number of ANSI colors. This value is used if the number of
+colors is not already set by * the <code>cli.num_colors</code> option, *
+the <code>R_CLI_NU&lt;_COLORS</code> environment variable, * the
+<code>crayon.enabled</code> and <code>crayon.colors</code> options, *
+the <code>NO_COLOR</code> environment variable, * the
+<code>knitr.in.progress</code> option, * a <code><a href="https://rdrr.io/r/base/sink.html" class="external-link">sink()</a></code> call for
+the stream.</p>
+<p>You can also use this option if color support is detected correctly,
+but you want to adjust the number of colors. E.g. * if
+<code>crayon.enabled</code> is <code>TRUE</code>, but
+<code>crayon.colors</code> is not, * in Emacs on Windows, * in
+terminals.</p>
+<p>See [num_ansi_colors()]. See also the <code>cli.num_colors</code>
+option.</p>
 </div>
 <div class="section level3">
 <h3 id="cli-dynamic">
