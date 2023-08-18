@@ -26,7 +26,7 @@ will have an \code{NA} hash.}
 \item{paths}{Character vector of file names.}
 }
 \value{
-\code{hash_sha256()} returns aharacter vector of hexadecimal
+\code{hash_sha256()} returns a character vector of hexadecimal
 SHA-256 hashes.
 
 \code{hash_raw_sha256()} returns a character scalar.

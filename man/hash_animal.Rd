@@ -15,7 +15,7 @@ hash_obj_animal(x, n_adj = 2, serialize_version = 2)
 \arguments{
 \item{x}{Character vector. \code{NA} entries will have an \code{NA} hash.}
 
-\item{n_adj}{Number of adjectives to use. It must be between 0 and 3.}
+\item{n_adj}{Number of adjectives to use. It must be from 0 through 3.}
 
 \item{serialize_version}{Workspace format version to use, see
 \code{\link[base:serialize]{base::serialize()}}.}
@@ -44,7 +44,7 @@ hash of the input, and converts them into an adjective-animal form to
 create a human readable hash.
 \subsection{Number of possible hash values}{
 
-\code{hash_animals()} uses 1748 animal names and
+\code{hash_animal()} uses 1748 animal names and
 8946 different adjectives. The number of
 different hashes you can get for different values of \code{n_adj}:\tabular{rr}{
    \code{n_adj} \tab size of the hash table space \cr
@@ -64,7 +64,7 @@ and in turn from
 from \url{https://gfycat.com}.
 }
 
-\code{hash_raw_anima()} calculates the adjective-animal hash of
+\code{hash_raw_animal()} calculates the adjective-animal hash of
 the bytes of a raw vector.
 
 \code{hash_obj_animal()} calculates the adjective-animal hash of

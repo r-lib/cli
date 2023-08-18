@@ -202,6 +202,7 @@
 #' ```{asciicast inline-plural}
 #' ndirs <- 1
 #' nfiles <- 13
+#' pkgs <- c("pkg1", "pkg2", "pkg3")
 #' cli_alert_info("Found {ndirs} director{?y/ies} and {nfiles} file{?s}.")
 #' cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
 #' ```
