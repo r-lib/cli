@@ -617,7 +617,7 @@ NULL
 #' To link to a help topic that is not a function, use `.topic`:
 #'
 #' ```{asciicast links-topic}
-#' cli::cli_text("... the tibble options at {.help tibble::tibble_options}.")
+#' cli::cli_text("... the tibble options at {.topic tibble::tibble_options}.")
 #' ```
 #'
 #' `.topic` support link text.
