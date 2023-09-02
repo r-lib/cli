@@ -43,7 +43,7 @@ of a raw vector.
 \code{hash_obj_md5()} calculates the MD5 hash of an R
 object. The object is serialized into a binary vector first.
 
-\code{hash_file_md5()} calcultaes the MD5 hash of one of more
+\code{hash_file_md5()} calculates the MD5 hash of one or more
 files.
 }
 \examples{

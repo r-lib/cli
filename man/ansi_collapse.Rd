@@ -30,7 +30,7 @@ at least \code{trunc = 1} is used. For \code{style = "both-ends"} at least
 \item{width}{Limit for the display width of the result, in characters.
 This is a hard limit, and the output will never exceed it.
 This argument is not implemented for the \code{"both-ends"} style, which
-always uses \code{Inf}, with a warning if a fininte \code{width} value is set.}
+always uses \code{Inf}, with a warning if a finite \code{width} value is set.}
 
 \item{ellipsis}{Character string to use at the place of the truncation.
 By default, the Unicode ellipsis character is used if the console is

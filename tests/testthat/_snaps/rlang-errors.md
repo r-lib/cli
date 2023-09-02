@@ -369,33 +369,3 @@
     Output
       [32mcolor me interested[39m
 
-# cli_abort() captures correct call and backtrace
-
-    Code
-      print(expect_error(f()))
-    Output
-      <error/rlang_error>
-      Error in `h()`:
-      ! foo
-      ---
-      Backtrace:
-        1. base::print(expect_error(f()))
-        8. cli (local) f()
-        9. cli (local) g()
-       10. cli (local) h()
-
----
-
-    Code
-      print(expect_error(f(list())))
-    Output
-      <error/cli_my_class>
-      Error in `h()`:
-      ! `x` can't be empty.
-      ---
-      Backtrace:
-        1. base::print(expect_error(f(list())))
-        8. cli (local) f(list())
-        9. cli (local) g(x)
-       10. cli (local) h(x)
-
