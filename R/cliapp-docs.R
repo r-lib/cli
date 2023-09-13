@@ -204,6 +204,7 @@
 #' ```{asciicast inline-plural}
 #' ndirs <- 1
 #' nfiles <- 13
+#' pkgs <- c("pkg1", "pkg2", "pkg3")
 #' cli_alert_info("Found {ndirs} director{?y/ies} and {nfiles} file{?s}.")
 #' cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
 #' ```
@@ -618,7 +619,7 @@ NULL
 #' To link to a help topic that is not a function, use `.topic`:
 #'
 #' ```{asciicast links-topic}
-#' cli::cli_text("... the tibble options at {.help tibble::tibble_options}.")
+#' cli::cli_text("... the tibble options at {.topic tibble::tibble_options}.")
 #' ```
 #'
 #' `.topic` support link text.
@@ -656,7 +657,7 @@ NULL
 #'
 #' ## Security considerations
 #'
-#' To make `.run` hyperlinks more secure, RStudio with not run code
+#' To make `.run` hyperlinks more secure, RStudio will not run code
 #'
 #' * that is not in the `pkg::fun(args)` form,
 #' * if `args` contains `(`, `)` or `;`,
@@ -664,5 +665,10 @@ NULL
 #' * if it calls a package that is not loaded, and it is not one of
 #'   testthat, devtools, usethis, or rlang, which are explicitly allowed.
 #'
+#' When RStudio does not run a `.run` hyperlink, then it shows the code
+#' and the user can copy and paste it to the console, if they consider
+#' it safe to run.
+#'
+#' Note that depending on your version of RStudio, the behavior can change.
 #' @name links
 NULL

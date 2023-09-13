@@ -26,7 +26,7 @@ will have an \code{NA} hash.}
 \item{paths}{Character vector of file names.}
 }
 \value{
-\code{hash_sha1()} returns aharacter vector of hexadecimal
+\code{hash_sha1()} returns a character vector of hexadecimal
 SHA-1 hashes.
 
 \code{hash_raw_sha1()} returns a character scalar.
