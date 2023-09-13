@@ -1,5 +1,8 @@
 # cli (development version)
 
+* `ansi_collapse(x, trunc = 1, style = "head")` now indeed show one element
+  if `length(x) == 2`, as documented (@salim-b, #572).
+
 # cli 3.6.0
 
 * The progressr progress handler now reports progress correctly
