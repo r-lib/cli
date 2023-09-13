@@ -253,7 +253,7 @@ The same message without hyperlink support looks like this:
 
 To link to a help topic that is not a function, use \code{.topic}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli::cli_text("... the tibble options at \{.help tibble::tibble_options\}.")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli::cli_text("... the tibble options at \{.topic tibble::tibble_options\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
 #> ... the tibble options at <a href="x-r-help:tibble::tibble_options">tibble::tibble_options</a>.                               
