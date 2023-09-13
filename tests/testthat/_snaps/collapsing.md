@@ -105,7 +105,7 @@
     Code
       cli_text("{v(3,2)}")
     Message
-      1, 2, and 3
+      1, 2, ...
     Code
       cli_text("{v(4,2)}")
     Message
@@ -129,7 +129,7 @@
     Code
       cli_text("{v(4,3)}")
     Message
-      1, 2, 3, and 4
+      1, 2, 3, ...
     Code
       cli_text("{v(0,4)}")
     Message
@@ -263,7 +263,7 @@
     Code
       cli_text("{.val {v(11,10)}}")
     Message
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, and 11
+      1, 2, 3, 4, 5, 6, 7, 8, ..., 10, and 11
 
 # both-ends with formatting [ansi]
 
@@ -314,7 +314,7 @@
     Code
       cli_text("{.val {v(11,10)}}")
     Message
-      [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, [34m6[39m, [34m7[39m, [34m8[39m, [34m9[39m, [34m10[39m, and [34m11[39m
+      [34m1[39m, [34m2[39m, [34m3[39m, [34m4[39m, [34m5[39m, [34m6[39m, [34m7[39m, [34m8[39m, ..., [34m10[39m, and [34m11[39m
 
 # ansi_collapse
 

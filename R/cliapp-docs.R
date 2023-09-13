@@ -58,10 +58,11 @@
 #'   RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 #'   the file in RStudio or with the default app for the file type.
 #'   See [links] for more information about cli hyperlinks.
-#' * `fun` for a function name. If it is in the `package::function_name`
+#' * `fn` for a function name. If it is in the `package::function_name`
 #'   form, and the terminal supports ANSI hyperlinks (e.g. RStudio,
 #'   iTerm2, etc.), then cli creates a clickable link.
 #'   See [links] for more information about cli hyperlinks.
+#' * `fun` same as `fn`.
 #' * `help` is a help page of a _function_.
 #'   If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 #'   then cli creates a clickable link. It supports link text.
@@ -70,7 +71,8 @@
 #'   If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 #'   then cli creates a clickable link.
 #'   See [links] for more information about cli hyperlinks.
-#' * `key` for a keyboard key.
+#' * `kbd` for a keyboard key.
+#' * `key` same as `kbd`.
 #' * `obj_type_friendly` formats the type of an R object in a readable way,
 #'   and it should be used with `{}`, see an example below.
 #' * `or` changes the string that separates the last two elements of
@@ -655,7 +657,7 @@ NULL
 #'
 #' ## Security considerations
 #'
-#' To make `.run` hyperlinks more secure, RStudio with not run code
+#' To make `.run` hyperlinks more secure, RStudio will not run code
 #'
 #' * that is not in the `pkg::fun(args)` form,
 #' * if `args` contains `(`, `)` or `;`,
@@ -663,5 +665,10 @@ NULL
 #' * if it calls a package that is not loaded, and it is not one of
 #'   testthat, devtools, usethis, or rlang, which are explicitly allowed.
 #'
+#' When RStudio does not run a `.run` hyperlink, then it shows the code
+#' and the user can copy and paste it to the console, if they consider
+#' it safe to run.
+#'
+#' Note that depending on your version of RStudio, the behavior can change.
 #' @name links
 NULL

@@ -310,7 +310,7 @@ needs to qualify packages with \code{::}, but you might not want to show this:
 
 \subsection{Security considerations}{
 
-To make \code{.run} hyperlinks more secure, RStudio with not run code
+To make \code{.run} hyperlinks more secure, RStudio will not run code
 \itemize{
 \item that is not in the \code{pkg::fun(args)} form,
 \item if \code{args} contains \code{(}, \verb{)} or \verb{;},
@@ -318,6 +318,12 @@ To make \code{.run} hyperlinks more secure, RStudio with not run code
 \item if it calls a package that is not loaded, and it is not one of
 testthat, devtools, usethis, or rlang, which are explicitly allowed.
 }
+
+When RStudio does not run a \code{.run} hyperlink, then it shows the code
+and the user can copy and paste it to the console, if they consider
+it safe to run.
+
+Note that depending on your version of RStudio, the behavior can change.
 }
 }
 
