@@ -32,6 +32,8 @@
 #' @param .envir Environment to evaluate the glue expressions in.
 #' @inheritParams rlang::abort
 #'
+#' @seealso These functions support [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_abort <- function(message,

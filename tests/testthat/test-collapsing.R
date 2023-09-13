@@ -185,3 +185,8 @@ test_that("ansi_collapse with width trimming", {
     ansi_collapse(l10, width = 10, style = "both-ends")
   })
 })
+
+test_that("ansi_collapse produces consistent truncation results", {
+  expect_equal(ansi_collapse(1:2, trunc = 1, style = "head"),
+               ansi_collapse(1:2, trunc = 0, style = "head"))
+})

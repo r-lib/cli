@@ -15,7 +15,7 @@ glue <- function(text, .envir = parent.frame(),
 
   text <- paste0(text, collapse = "")
 
-  if (length(text) < 1) {
+  if (length(text) < 1L) {
     return(text)
   }
 
@@ -34,8 +34,8 @@ glue <- function(text, .envir = parent.frame(),
   res <- .Call(glue_, text, f, .open, .close, .cli)
 
   res <- drop_null(res)
-  if (any(lengths(res) == 0)) {
-    return(character(0))
+  if (any(lengths(res) == 0L)) {
+    return(character(0L))
   }
 
   res[] <- lapply(res, function(x) replace(x, is.na(x), "NA"))
@@ -44,7 +44,7 @@ glue <- function(text, .envir = parent.frame(),
 }
 
 count_brace_exp <- function(text, .open = "{", .close = "}") {
-  cnt <- 0
+  cnt <- 0L
   trans <- function(text, envir) {
     cnt <<- cnt + 1L
     ""
@@ -53,12 +53,12 @@ count_brace_exp <- function(text, .open = "{", .close = "}") {
   cnt
 }
 
-identity_transformer <- function (text, envir) {
+identity_transformer <- function(text, envir) {
   eval(parse(text = text, keep.source = FALSE), envir)
 }
 
 drop_null <- function(x) {
-  x[!vapply(x, is.null, logical(1))]
+  x[!vapply(x, is.null, logical(1L))]
 }
 
 #' Collapse a vector into a string scalar
@@ -85,7 +85,7 @@ drop_null <- function(x) {
 #' @param width Limit for the display width of the result, in characters.
 #' This is a hard limit, and the output will never exceed it.
 #' This argument is not implemented for the `"both-ends"` style, which
-#' always uses `Inf`, with a warning if a fininte `width` value is set.
+#' always uses `Inf`, with a warning if a finite `width` value is set.
 #' @param ellipsis Character string to use at the place of the truncation.
 #' By default, the Unicode ellipsis character is used if the console is
 #' UTF-8, and three dots otherwise.
@@ -112,9 +112,6 @@ ansi_collapse <- function(x, sep = ", ", last = ", and ", trunc = Inf,
                           width = Inf, ellipsis = symbol$ellipsis,
                           style = c("both-ends", "head")) {
 
-  # does not make sense to show ... instead of an element
-  if (trunc == length(x) - 1L) trunc <- trunc + 1L
-
   style <- match.arg(style)
   switch(
     style,
@@ -125,11 +122,11 @@ ansi_collapse <- function(x, sep = ", ", last = ", and ", trunc = Inf,
 
 collapse_head_notrim <- function(x, trunc, sep, last, ellipsis) {
   lnx <- length(x)
-  if (lnx == 1) return(x)
+  if (lnx == 1L) return(x)
   if (lnx <= trunc) {
     # no truncation
     return(paste0(
-      paste(x[1:(lnx - 1)], collapse = sep),
+      paste(x[1:(lnx - 1L)], collapse = sep),
       last,
       x[lnx]
     ))
@@ -150,8 +147,8 @@ collapse_head <- function(x, sep = ", ", last = ", and ", trunc = Inf,
   x <- as.character(x)
   lnx <- length(x)
 
-  # skepcial cases that do not need trimming
-  if (lnx == 0) {
+  # special cases that do not need trimming
+  if (lnx == 0L) {
     return("")
   } else if (any(is.na(x))) {
     return(NA_character_)
@@ -202,7 +199,7 @@ collapse_head <- function(x, sep = ", ", last = ", and ", trunc = Inf,
   # we need to find the longest possible truncation for the form
   # x[1], x[2], x[trunc], ...
   # each item is wx + wsep wide, so we search how many fits, with ellipsis
-  last <- function(x) if (length(x) >= 1) x[length(x)] else x[NA_integer_]
+  last <- function(x) if (length(x) >= 1L) x[length(x)] else x[NA_integer_]
   trunc <- last(which(cumsum(wx + wsep) + well <= width))
 
   # not even one element fits
@@ -212,10 +209,10 @@ collapse_head <- function(x, sep = ", ", last = ", and ", trunc = Inf,
     } else if (well == width) {
       return(ellipsis)
     } else if (well + wsep >= width) {
-      return(paste0(ansi_strtrim(x[1], width, ellipsis = ""), ellipsis))
+      return(paste0(ansi_strtrim(x[1L], width, ellipsis = ""), ellipsis))
     } else {
       return(paste0(
-        ansi_strtrim(x[1], max(width - well - wsep, 0L), ellipsis = ellipsis),
+        ansi_strtrim(x[1L], max(width - well - wsep, 0L), ellipsis = ellipsis),
         sep,
         ellipsis
       ))
@@ -247,18 +244,18 @@ collapse_both_ends <- function(x, sep = ", ", last = ", and ", trunc = Inf,
     return(collapse_head(x, sep, last, trunc = trunc, width, ellipsis))
   }
 
-  # we have at list six elements in the vector
+  # we have at least six elements in the vector
   # 1, 2, 3, ..., 9, and 10
-  x <- as.character(c(x[1:(trunc-2)], x[length(x)-1], x[length(x)]))
+  x <- as.character(c(x[1:(trunc - 2L)], x[length(x) - 1L], x[length(x)]))
   paste0(
-    c(x[1:(trunc-2)], ellipsis, paste0(x[trunc-1], last, x[trunc])),
+    c(x[1:(trunc - 2L)], ellipsis, paste0(x[trunc - 1L], last, x[trunc])),
     collapse = sep
   )
 }
 
-trim <- function (x) {
+trim <- function(x) {
   has_newline <- function(x) any(grepl("\\n", x))
-  if (length(x) == 0 || !has_newline(x)) {
+  if (length(x) == 0L || !has_newline(x)) {
     return(x)
   }
   .Call(trim_, x)

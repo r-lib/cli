@@ -1,5 +1,12 @@
 # cli (development version)
 
+* `ansi_collapse(x, trunc = 1, style = "head")` now indeed show one element
+  if `length(x) == 2`, as documented (@salim-b, #572).
+
+# cli 3.6.1
+
+* ANSI hyperlinks are now turned off on the RStudio render plane (#581).
+
 # cli 3.6.0
 
 * The progressr progress handler now reports progress correctly
