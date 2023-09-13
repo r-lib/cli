@@ -1,6 +1,8 @@
 
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
+`%&&%` <- function(l, r) if (is.null(l)) NULL else r
+
 new_class <- function(class_name, ...) {
   structure(as.environment(list(...)), class = class_name)
 }
@@ -54,15 +56,15 @@ apply_style <- function(text, style, bg = FALSE) {
   }
 }
 
-vcapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+map_chr <- vcapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
   vapply(X, FUN, FUN.VALUE = character(1), ..., USE.NAMES = USE.NAMES)
 }
 
-viapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+map_int <- viapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
   vapply(X, FUN, FUN.VALUE = integer(1), ..., USE.NAMES = USE.NAMES)
 }
 
-vlapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
+map_lgl <- vlapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
   vapply(X, FUN, FUN.VALUE = logical(1), ..., USE.NAMES = USE.NAMES)
 }
 

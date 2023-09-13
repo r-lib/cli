@@ -161,6 +161,45 @@ clii_init <- function(app, theme, user_theme, output) {
   invisible(app)
 }
 
+
+#' List the currently active themes
+#'
+#' If there is no active app, then it calls [start_app()].
+#'
+#' @return A list of data frames with the active themes.
+#' Each data frame row is a style that applies to selected CLI tree nodes.
+#' Each data frame has columns:
+#' * `selector`: The original CSS-like selector string. See [themes].
+#' * `parsed`: The parsed selector, as used by cli for matching to nodes.
+#' * `style`: The original style.
+#' * `cnt`: The id of the container the style is currently applied to, or
+#'   `NA` if the style is not used.
+#'
+#' @export
+#' @seealso [themes]
+
+cli_list_themes <- function() {
+  app <- default_app() %||% start_app()
+  app$list_themes()
+}
+
+clii_list_themes <- function(app) {
+  app$themes
+}
+
+clii_add_theme <- function(app, theme) {
+  id <- new_uuid()
+  app$themes <-
+    c(app$themes, structure(list(theme_create(theme)), names = id))
+  id
+}
+
+clii_remove_theme <- function(app, id) {
+  if (! id %in% names(app$themes)) return(invisible(FALSE))
+  app$themes[[id]] <- NULL
+  invisible(TRUE)
+}
+
 ## Text -------------------------------------------------------------
 
 clii_text <- function(app, text) {
