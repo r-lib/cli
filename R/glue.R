@@ -112,9 +112,6 @@ ansi_collapse <- function(x, sep = ", ", last = ", and ", trunc = Inf,
                           width = Inf, ellipsis = symbol$ellipsis,
                           style = c("both-ends", "head")) {
 
-  # does not make sense to show ... instead of an element
-  if (trunc == length(x) - 1L) trunc <- trunc + 1L
-
   style <- match.arg(style)
   switch(
     style,
