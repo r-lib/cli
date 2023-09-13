@@ -658,7 +658,10 @@ NULL
 #' * if it calls a package that is not loaded, and it is not one of
 #'   testthat, devtools, usethis, or rlang, which are explicitly allowed.
 #'
-#' Note that depending on your version of RStudio, the behavior can depends 
-#' and code can be ran or simply pasted to the console.
+#' When RStudio does not run a `.run` hyperlink, then it shows the code
+#' and the user can copy and paste it to the console, if they consider
+#' it safe to run.
+#'
+#' Note that depending on your version of RStudio, the behavior can change.
 #' @name links
 NULL
