@@ -32,6 +32,7 @@ ansi_has_any(col_red("foobar"))
 Other low level ANSI functions: 
 \code{\link{ansi_hide_cursor}()},
 \code{\link{ansi_regex}()},
+\code{\link{ansi_string}()},
 \code{\link{ansi_strip}()}
 }
 \concept{low level ANSI functions}
