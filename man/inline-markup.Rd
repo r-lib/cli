@@ -75,10 +75,11 @@ See \link{links} for more information about cli hyperlinks.
 RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 the file in RStudio or with the default app for the file type.
 See \link{links} for more information about cli hyperlinks.
-\item \code{fun} for a function name. If it is in the \code{package::function_name}
+\item \code{fn} for a function name. If it is in the \code{package::function_name}
 form, and the terminal supports ANSI hyperlinks (e.g. RStudio,
 iTerm2, etc.), then cli creates a clickable link.
 See \link{links} for more information about cli hyperlinks.
+\item \code{fun} same as \code{fn}.
 \item \code{help} is a help page of a \emph{function}.
 If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
@@ -87,7 +88,8 @@ See \link{links} for more information about cli hyperlinks.
 If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 then cli creates a clickable link.
 See \link{links} for more information about cli hyperlinks.
-\item \code{key} for a keyboard key.
+\item \code{kbd} for a keyboard key.
+\item \code{key} same as \code{kbd}.
 \item \code{obj_type_friendly} formats the type of an R object in a readable way,
 and it should be used with \code{{}}, see an example below.
 \item \code{or} changes the string that separates the last two elements of

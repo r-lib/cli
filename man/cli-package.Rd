@@ -12,7 +12,7 @@ A suite of tools to build attractive command line interfaces ('CLIs'), from sema
 Useful links:
 \itemize{
   \item \url{https://cli.r-lib.org}
-  \item \url{https://github.com/r-lib/cli#readme}
+  \item \url{https://github.com/r-lib/cli}
   \item Report bugs at \url{https://github.com/r-lib/cli/issues}
 }
 
