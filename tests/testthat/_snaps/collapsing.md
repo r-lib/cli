@@ -81,7 +81,7 @@
     Code
       cli_text("{v(2,1)}")
     Message
-      1, ...
+      1 and 2
     Code
       cli_text("{v(3,1)}")
     Message
