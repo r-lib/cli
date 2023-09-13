@@ -72,7 +72,7 @@ f()
 \subsection{Spinner}{
 
 You can add a spinner to some or all steps with \code{spinner = TRUE},
-but not that this will only work if you call \code{\link[=cli_progress_update]{cli_progress_update()}}
+but note that this will only work if you call \code{\link[=cli_progress_update]{cli_progress_update()}}
 regularly.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{f <- function() \{
@@ -142,3 +142,41 @@ f()
 \if{html}{\figure{progress-step-msg.svg}}
 }
 }
+\seealso{
+This function supports \link[=inline-markup]{inline markup}.
+
+Other progress bar functions: 
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_bar}()},
+\code{\link{cli_progress_builtin_handlers}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_num}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_styles}()},
+\code{\link{progress-variables}}
+
+Other functions supporting inline markup: 
+\code{\link{cli_abort}()},
+\code{\link{cli_alert}()},
+\code{\link{cli_blockquote}()},
+\code{\link{cli_bullets_raw}()},
+\code{\link{cli_bullets}()},
+\code{\link{cli_dl}()},
+\code{\link{cli_h1}()},
+\code{\link{cli_li}()},
+\code{\link{cli_ol}()},
+\code{\link{cli_process_start}()},
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_bar}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_rule}},
+\code{\link{cli_status_update}()},
+\code{\link{cli_status}()},
+\code{\link{cli_text}()},
+\code{\link{cli_ul}()},
+\code{\link{format_error}()},
+\code{\link{format_inline}()}
+}
+\concept{functions supporting inline markup}
+\concept{progress bar functions}

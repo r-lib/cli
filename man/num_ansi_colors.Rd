@@ -62,6 +62,7 @@ be actually used, but there is no easy way to tell that.)
 active sink for it, then 1L is returned.
 (If a sink is active for "output", then R changes the \code{stdout()}
 stream, so this check is not needed.)
+\item If the \code{cli.default_num_colors} option is set, then we use that.
 \item If R is running inside RGui on Windows, or R.app on macOS, then we
 return 1L.
 \item If R is running inside RStudio, with color support, then the

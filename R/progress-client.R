@@ -294,8 +294,11 @@
 #' @return `cli_progress_bar()` returns the id of the new progress bar.
 #' The id is a string constant.
 #'
+#' @seealso These functions support [inline markup][inline-markup].
 #' @seealso [cli_progress_message()] and [cli_progress_step()] for simpler
 #'   progress messages.
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @aliases __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @export
 
@@ -539,6 +542,9 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
 #' @param .envir Environment to use for glue interpolation of `text`.
 #' @return `TRUE`, always.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
@@ -608,8 +614,11 @@ cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
 #'
 #' @return The id of the new progress bar.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
 #' @seealso [cli_progress_bar()] for the complete progress bar API.
 #'   [cli_progress_step()] for a similar display that is styled by default.
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_message <- function(msg,
@@ -664,7 +673,7 @@ cli_progress_message <- function(msg,
 #' ## Spinner
 #'
 #' You can add a spinner to some or all steps with `spinner = TRUE`,
-#' but not that this will only work if you call [cli_progress_update()]
+#' but note that this will only work if you call [cli_progress_update()]
 #' regularly.
 #'
 #' ```{asciicast progress-step-spin}
@@ -757,6 +766,9 @@ cli_progress_message <- function(msg,
 #' @param .envir Passed to [cli_progress_bar()].
 #' @param ... Passed to [cli_progress_bar()].
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_step <- function(msg,

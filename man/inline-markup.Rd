@@ -4,7 +4,8 @@
 \alias{inline-markup}
 \title{About inline markup in the semantic cli}
 \description{
-About inline markup in the semantic cli
+To learn how to use cli’s semantic markup, start with the ‘Building
+a semantic CLI’ article at \url{https://cli.r-lib.org}.
 }
 \section{Command substitution}{
 
@@ -66,26 +67,26 @@ The default theme defines the following inline classes:
 \item \code{email} for an email address.
 If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 then cli creates a clickable link.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{emph} for emphasized text.
 \item \code{envvar} for the name of an environment variable.
 \item \code{field} for a generic field, e.g. in a named list.
 \item \code{file} for a file name. If the terminal supports ANSI hyperlinks (e.g.
 RStudio, iTerm2, etc.), then cli creates a clickable link that opens
 the file in RStudio or with the default app for the file type.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{fun} for a function name. If it is in the \code{package::function_name}
 form, and the terminal supports ANSI hyperlinks (e.g. RStudio,
 iTerm2, etc.), then cli creates a clickable link.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{help} is a help page of a \emph{function}.
 If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{href} creates a hyperlink, potentially with a link text.
 If the terminal supports ANSI hyperlinks (e.g. RStudio, iTerm2, etc.),
 then cli creates a clickable link.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{key} for a keyboard key.
 \item \code{obj_type_friendly} formats the type of an R object in a readable way,
 and it should be used with \code{{}}, see an example below.
@@ -95,23 +96,23 @@ collapsed vectors (see below) from "and" to "or".
 \item \code{pkg} for a package name.
 \item \code{run} is an R expression, that is potentially clickable if the terminal
 supports ANSI hyperlinks to runnable code (e.g. RStudio).
-It supports link text. See \link{links} for more about cli hyperlinks.
-\item \code{strong} for strong importance.
-\item \code{topic} is a help page of a \emph{ropic}.
+It supports link text. See \link{links} for more information about cli hyperlinks.
+\item \code{str} for a double quoted string escaped by \code{\link[base:encodeString]{base::encodeString()}}.#' * \code{strong} for strong importance.
+\item \code{topic} is a help page of a \emph{topic}.
 If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{type} formats the type of an R object in a readable way, and it
 should be used with \code{{}}, see an example below.
 \item \code{url} for a URL. If the terminal supports ANSI hyperlinks (e.g.
 RStudio, iTerm2, etc.), then cli creates a clickable link.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 \item \code{var} for a variable name.
 \item \code{val} for a generic "value".
 \item \code{vignette} is a vignette.
 If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
-See \link{links} for more about cli hyperlinks.
+See \link{links} for more information about cli hyperlinks.
 }
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ul <- cli_ul()
@@ -266,11 +267,12 @@ All cli commands that emit text support pluralization. Some examples:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{ndirs <- 1
 nfiles <- 13
-cli_alert_info("Found \{ndirs\} diretor\{?y/ies\} and \{nfiles\} file\{?s\}.")
+pkgs <- c("pkg1", "pkg2", "pkg3")
+cli_alert_info("Found \{ndirs\} director\{?y/ies\} and \{nfiles\} file\{?s\}.")
 cli_text("Will install \{length(pkgs)\} package\{?s\}: \{.pkg \{pkgs\}\}")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #2AA198;">ℹ</span> Found 1 diretory and 13 files.                                                
+#> <span style="color: #2AA198;">ℹ</span> Found 1 directory and 13 files.                                               
 #> Will install 3 packages: <span style="color: #268BD2;">pkg1</span>, <span style="color: #268BD2;">pkg2</span>, and <span style="color: #268BD2;">pkg3</span>                                   
 </pre></div>
 }}

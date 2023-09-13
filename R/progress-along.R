@@ -91,8 +91,10 @@
 #' @return An index vector from 1 to `length(x)` that triggers progress
 #' updates as you iterate over it.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
 #' @seealso [cli_progress_bar()] and the traditional progress bar API.
-#'
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_along <- function(x,

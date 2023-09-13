@@ -67,6 +67,7 @@ progress_style <- function(x) {
 #' @return A named list with sublists containing elements
 #' `complete`, `incomplete` and potentially `current`.
 #'
+#' @family progress bar functions
 #' @export
 
 cli_progress_styles <- function() {
