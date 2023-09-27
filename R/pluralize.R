@@ -108,6 +108,30 @@ post_process_plurals <- function(str, values) {
   str
 }
 
+post_process_plurals2 <- function(pieces, values) {
+  if (!values$postprocess) return(pieces)
+  if (values$num_subst == 0) {
+    stop("Cannot pluralize without a quantity.")
+  }
+  if (values$num_subst != 1) {
+    stop("Multiple quantities for pluralization.")
+  }
+
+  qty <- make_quantity(values$qty)
+  for (idx in seq_along(pieces)) {
+    if (inherits(pieces[[idx]], "cli_plural_marker")) {
+      pieces[[idx]] <- process_plural(qty, pieces[[idx]]$code)
+    } else if (inherits(pieces[[idx]], "cli_component")) {
+      # it has to be a <span><text> ... </text></span>
+      pieces2 <- pieces[[idx]]$children[[1]]$data$pieces
+      pieces[[idx]]$children[[1]]$data$pieces <-
+        post_process_plurals2(pieces2, values)
+    }
+  }
+
+  pieces
+}
+
 #' String templating with pluralization
 #'
 #' `pluralize()` is similar to [glue::glue()], with two differences:

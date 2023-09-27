@@ -23,8 +23,9 @@ cpt_text_inline <- function(txt, envir, transformer, funname) {
 parse_cli_text <- function(txt, .envir, .call = sys.call(-1)) {
   transformer <- make_text_transformer(.call = .call)
   res <- parse_cli_text_internal(txt, .envir, transformer)
-  if (attr(transformer, "values")$postprocess) {
-    res$pieces <- post_process_plurals2(res$pieces)
+  values <- attr(transformer, "values")
+  if (values$postprocess) {
+    res$pieces <- post_process_plurals2(res$pieces, values)
   }
   res
 }
@@ -44,6 +45,7 @@ make_text_transformer <- function(.call) {
   values <- new.env(parent = emptyenv())
   values$qty <- NA_integer_
   values$postprocess <- FALSE
+  values$num_subst <- 0L
 
   # These are common because of purrr's default argument names, so we
   # hardcode them es exceptions. They are in packages
@@ -114,6 +116,7 @@ make_text_transformer <- function(.call) {
         )
 
       values$qty <- if (length(res) == 0) 0 else res
+      values$num_subst <- values$num_subst + 1L
       structure(list(value = res, code = code), class = "cli_sub")
     }
   }
@@ -139,7 +142,7 @@ format.cli_component_text <- function(x, ...) {
           paste0("</", x[["tag"]], ">")
           )
       } else {
-        stop("Internal error, invalie text piece found: ", class(text))
+        stop("Internal error, invalid text piece found: ", class(text)) # nocov
       }
     }))),
     "</text>"
