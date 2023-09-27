@@ -125,25 +125,61 @@ make_text_transformer <- function(.call) {
   tr
 }
 
+get_text_piece_type <- function(x) {
+  if (is.character(x)) {
+    "plain"
+  } else if (inherits(x, "cli_sub")) {
+    "substitution"
+  } else if (inherits(x, "cli_component")) {
+    "component"
+  } else {
+    stop("Internal error, invalid text piece found: ", class(x)) # nocov
+  }
+}
+
+post_process_plurals2 <- function(pieces, values) {
+  if (!values$postprocess) return(pieces)
+  if (values$num_subst == 0) {
+    stop("Cannot pluralize without a quantity.")
+  }
+  if (values$num_subst != 1) {
+    stop("Multiple quantities for pluralization.")
+  }
+
+  qty <- make_quantity(values$qty)
+  for (idx in seq_along(pieces)) {
+    if (inherits(pieces[[idx]], "cli_plural_marker")) {
+      pieces[[idx]] <- process_plural(qty, pieces[[idx]]$code)
+    } else if (inherits(pieces[[idx]], "cli_component")) {
+      # it has to be a <span><text> ... </text></span>
+      pieces2 <- pieces[[idx]]$children[[1]]$data$pieces
+      pieces[[idx]]$children[[1]]$data$pieces <-
+        post_process_plurals2(pieces2, values)
+    }
+  }
+
+  pieces
+}
+
 #' @export
 
 format.cli_component_text <- function(x, ...) {
   c("<text>",
     paste0("  ", unlist(lapply(x$data$pieces, function(x) {
-      if (is.character(x)) {
-        paste0("txt: ", substr(x, 1, 20), if (nchar(x) > 20) "...")
-      } else if (inherits(x, "cli_sub")) {
-        paste0("sub: ", x$code)
-      } else if (inherits(x, "cli_component")) {
-        class <- x[["attr"]][["class"]]
-        class <- class %&&% paste0(" class=\"", class, "\"")
-        c(paste0("<", x[["tag"]], class, ">"),
-          paste0("  ", unlist(lapply(x[["children"]], format))),
-          paste0("</", x[["tag"]], ">")
+      switch(get_text_piece_type(x),
+        "plain" =
+          paste0("txt: ", substr(x, 1, 20), if (nchar(x) > 20) "..."),
+        "substitution" =
+          paste0("sub: ", x$code),
+        "component" = {
+          class <- x[["attr"]][["class"]]
+          class <- class %&&% paste0(" class=\"", class, "\"")
+          c(paste0("<", x[["tag"]], class, ">"),
+            paste0("  ", unlist(lapply(x[["children"]], format))),
+            paste0("</", x[["tag"]], ">")
           )
-      } else {
-        stop("Internal error, invalid text piece found: ", class(text)) # nocov
-      }
+        }
+      )
     }))),
     "</text>"
   )
