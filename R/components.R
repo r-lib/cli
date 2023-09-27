@@ -15,38 +15,11 @@ new_component <- function(tag, ..., children = NULL, attr = NULL,
 #' @export
 
 format.cli_component <- function(x, ...) {
-  # TODO: syntax highlight with brackets
-  if (x[["tag"]] == "text") {
-    c("<text>",
-      paste0("  ", format_cli_text(x$data$pieces)),
-      "</text>"
-    )
-  } else {
-    id <- x[["attr"]][["id"]] %&&% paste0(" id=\"", x[["attr"]][["id"]], "\"")
-    c(paste0("<", x[["tag"]], id, ">"),
-      paste0("  ", unlist(lapply(x[["children"]], format.cli_component))),
-      paste0("</", x[["tag"]], ">")
-    )
-  }
-}
-
-format_cli_text <- function(text) {
-  unlist(lapply(text, function(x) {
-    if (is.character(x)) {
-      paste0("txt: ", substr(x, 1, 20), if (nchar(x) > 20) "...")
-    } else if (inherits(x, "cli_sub")) {
-      paste0("sub: ", x$code)
-    } else if (inherits(x, "cli_component")) {
-      class <- x[["attr"]][["class"]]
-      class <- class %&&% paste0(" class=\"", class, "\"")
-      c(paste0("<", x[["tag"]], class, ">"),
-        paste0("  ", unlist(lapply(x[["children"]], format.cli_component))),
-        paste0("</", x[["tag"]], ">")
-        )
-    } else {
-      stop("Internal error, invalie text piece found: ", class(text))
-    }
-  }))
+  id <- x[["attr"]][["id"]] %&&% paste0(" id=\"", x[["attr"]][["id"]], "\"")
+  c(paste0("<", x[["tag"]], id, ">"),
+    paste0("  ", unlist(lapply(x[["children"]], format))),
+    paste0("</", x[["tag"]], ">")
+  )
 }
 
 #' @export

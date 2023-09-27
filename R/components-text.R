@@ -8,6 +8,10 @@ cpt_text <- function(txt, .envir = parent.frame()) {
   )
 }
 
+# Create a <span> for inline styles, with the proper class.
+# The span needs to have a text coponent, because only text coponents
+# are allowed to contain plain text.
+
 cpt_text_inline <- function(txt, envir, transformer, funname) {
   embtxt <- new_component(
     "text",
@@ -116,4 +120,28 @@ make_text_transformer <- function(.call) {
 
   attr(tr, "values") <- values
   tr
+}
+
+#' @export
+
+format.cli_component_text <- function(x, ...) {
+  c("<text>",
+    paste0("  ", unlist(lapply(x$data$pieces, function(x) {
+      if (is.character(x)) {
+        paste0("txt: ", substr(x, 1, 20), if (nchar(x) > 20) "...")
+      } else if (inherits(x, "cli_sub")) {
+        paste0("sub: ", x$code)
+      } else if (inherits(x, "cli_component")) {
+        class <- x[["attr"]][["class"]]
+        class <- class %&&% paste0(" class=\"", class, "\"")
+        c(paste0("<", x[["tag"]], class, ">"),
+          paste0("  ", unlist(lapply(x[["children"]], format))),
+          paste0("</", x[["tag"]], ">")
+          )
+      } else {
+        stop("Internal error, invalie text piece found: ", class(text))
+      }
+    }))),
+    "</text>"
+  )
 }
