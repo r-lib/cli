@@ -17,7 +17,7 @@ inline_generic <- function(app, x, style) {
     if (length(formals(transform)) == 1) {
       x <- transform(x)
     } else {
-      x <- transform(x, app = app, style = style)
+      x <- transform(x, style = style)
     }
   }
   collapse <- style$collapse
