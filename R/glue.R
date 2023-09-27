@@ -43,6 +43,36 @@ glue <- function(text, .envir = parent.frame(),
   do.call(paste0, res)
 }
 
+# We allow non-string output here, to be able to parse cli text
+# into a list of components
+
+glue2 <- function(text, .envir = parent.frame(),
+                  .transformer = identity_transformer,
+                  .open = "{", .close = "}", .cli = FALSE, .trim = TRUE) {
+
+  text <- paste0(text, collapse = "")
+
+  if (length(text) < 1L) {
+    return(text)
+  }
+
+  if (is.na(text)) {
+    return(text)
+  }
+
+  if (.trim) {
+    text <- trim(text)
+  }
+
+  f <- function(expr) {
+    eval_func <- .transformer(expr, .envir)
+  }
+
+  res <- .Call(glue_, text, f, .open, .close, .cli)
+  res <- drop_null(res)
+  res
+}
+
 count_brace_exp <- function(text, .open = "{", .close = "}") {
   cnt <- 0L
   trans <- function(text, envir) {

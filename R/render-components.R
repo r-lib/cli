@@ -1,69 +1,57 @@
 
 #' @export
 
-render_cpt <- function(cpt) {
-  if (is_cpt_block(cpt)) {
-    render_cpt_block(cpt)
+render_cpt <- function(cpt, width = console_width()) {
+  lot <- lay_out(cpt, width = width)
+  render_layout(lot)
+}
+
+render_layout <- function(lot) {
+  current_margin <- 0L
+
+  lot
+}
+
+new_queue <- function() {
+  queue <- new.env(parent = emptyenv())
+  queue[["length"]] <- 0L
+  queue
+}
+
+queue_add_text <- function(queue) {
+  queue[["block"]]$text <- paste0(queue[["block"]], cpt$data$str)
+}
+
+queue_add_block <- function(queue) {
+  n <- queue[["length"]]
+  queue[[paste0(n)]] <- queue[["block"]]
+}
+
+lay_out <- function(cpt, width = console_width()) {
+  queue <- new.queue()
+  lay_out_internal(cpt, width = width, queue = queue)
+  queue_add_block(queue)
+  queue
+}
+
+lay_out_internal <- function(cpt, width, queue) {
+  if (cpt[["tag"]] == "text") {
+
+  } else if (cpt[["tag"]] == "span") {
+    style <- cpt[["attr"]][["style"]]
+    list(
+      contents = lapply(cpt[["children"]], lay_out)
+    )
   } else {
-    render_cpt_inline(cpt)
+    style <- cpt[["attr"]][["style"]]
+    list(
+      margins = c(
+        style[["margin-top"]] %||% 0 + style[["padding-top"]] %||% 0,
+        style[["margin-right"]] %||% 0 + style[["padding-right"]] %||% 0,
+        style[["margin-bottom"]] %||% 0 + style[["padding-bottom"]] %||% 0,
+        style[["margin-left"]] %||% 0 + style[["padding-left"]] %||% 0
+      ),
+      contents = lapply(cpt[["children"]], lay_out)
+    )
   }
-}
-
-prerender_cpt <- function(cpt) {
-  if (is_cpt_block(cpt)) {
-    prerender_cpt_block(cpt)
-  } else {
-    prerender_cpt_inline(cpt)
-  }
-}
-
-render_cpt_block <- function(cpt) {
-  blocks <- prerender_cpt_block(cpt)
-  render_prerendered_blocks(blocks)
-}
-
-render_prerendered_blocks <- function(blocks) {
-  # TODO
-  print(blocks)
-}
-
-render_cpt_inline <- function(cpt) {
-  if (!is_cpt_inline(cpt)) stop("Not an inline element: ", cpt[["tag"]])
-
-  switch(
-    cpt[["tag"]],
-    "span" = {
-      style <- cpt[["attr"]][["style"]]
-      render_text_with_style(cpt$str, style)
-    },
-    "text" = cpt$str
-  )
-}
-
-render_text_with_style <- function(text, style) {
-
-}
-
-prerender_cpt_inline <- function(cpt) {
-  list(
-    type = "inline",
-    contents = render_cpt_inline(cpt)
-  )
-}
-
-prerender_cpt_block <- function(cpt) {
-  if (!is_cpt_block(cpt)) stop("Not a block element: ", cpt[["tag"]])
-
-  style <- cpt[["attr"]][["style"]]
-
-  list(
-    type = "block",
-    margins = c(
-      style[["margin-top"]] %||% 0 + style[["padding-top"]] %||% 0,
-      style[["margin-right"]] %||% 0 + style[["padding-right"]] %||% 0,
-      style[["margin-bottom"]] %||% 0 + style[["padding-bottom"]] %||% 0,
-      style[["margin-left"]] %||% 0 + style[["padding-left"]] %||% 0
-    ),
-    contents = lapply(cpt[["children"]], prerender_cpt)
-  )
 }
