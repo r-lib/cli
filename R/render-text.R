@@ -1,5 +1,21 @@
 
-format_text_piece_plain <- function(txt, style = NULL) {
+render_text <- function(cpt) {
+  paste(
+    unlist(lapply(cpt$data$pieces, render_text_piece)),
+    collapse = ""
+  )
+}
+
+render_text_piece <- function(x) {
+  switch(
+    get_text_piece_type(x),
+    "plain" = render_text_piece_plain(x),
+    "substitution" = render_text_piece_substitution(x),
+    "span" = render_text_piece_span(x)
+  )
+}
+
+render_text_piece_plain <- function(txt, style = NULL) {
   style <- utils::modifyList(as.list(attr(txt, "style")), as.list(style))
   txt <- paste(txt, collapse = "")
   # handles backgrond-color, color, fmt, font-style, font-weight,
@@ -8,7 +24,7 @@ format_text_piece_plain <- function(txt, style = NULL) {
   if (!is.null(formatter)) formatter(txt) else txt
 }
 
-format_text_piece_substitution <- function(sub, style = NULL) {
+render_text_piece_substitution <- function(sub, style = NULL) {
   val <- sub$value
   style <- utils::modifyList(as.list(sub$style), as.list(style))
 
@@ -39,7 +55,7 @@ format_text_piece_substitution <- function(sub, style = NULL) {
   val <- paste0(prefix, val, postfix)
 
   # passing on style here is not inheritance, we just pass it to a helper
-  format_text_piece_plain(
+  render_text_piece_plain(
     inline_collapse(val, style = style),
     style = style
   )
@@ -65,6 +81,6 @@ inline_collapse <- function(x, style = list()) {
   )
 }
 
-format_text_piece_span <- function(span, style = NULL) {
-
+render_text_piece_span <- function(span, style = NULL) {
+  TODO
 }

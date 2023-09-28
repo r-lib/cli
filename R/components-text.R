@@ -130,8 +130,8 @@ get_text_piece_type <- function(x) {
     "plain"
   } else if (inherits(x, "cli_sub")) {
     "substitution"
-  } else if (inherits(x, "cli_component")) {
-    "component"
+  } else if (inherits(x, "cli_component_span")) {
+    "span"
   } else {
     stop("Internal error, invalid text piece found: ", class(x)) # nocov
   }
@@ -168,10 +168,16 @@ format.cli_component_text <- function(x, ...) {
     paste0("  ", unlist(lapply(x$data$pieces, function(x) {
       switch(get_text_piece_type(x),
         "plain" =
-          paste0("txt: ", substr(x, 1, 20), if (nchar(x) > 20) "..."),
+          paste0(
+            "txt: ",
+            encodeString(
+              paste0(substr(x, 1, 20), if (nchar(x) > 20) "..."),
+              quote = "\""
+            )
+          ),
         "substitution" =
-          paste0("sub: ", x$code),
-        "component" = {
+          paste0("sub: ", encodeString(x$code, quote = "`")),
+        "span" = {
           class <- x[["attr"]][["class"]]
           class <- class %&&% paste0(" class=\"", class, "\"")
           c(paste0("<", x[["tag"]], class, ">"),
