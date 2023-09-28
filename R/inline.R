@@ -42,12 +42,14 @@ inline_generic <- function(app, x, style) {
   paste0(prefix, xx, postfix)
 }
 
+vec_trunc_default <- 20L
+
 inline_collapse <- function(x, style = list()) {
   sep <- style[["vec-sep"]] %||% style[["vec_sep"]] %||% ", "
   sep2 <- style[["vec-sep2"]] %||% style[["vec_sep2"]] %||% " and "
   last <- style[["vec-last"]] %||% style[["vec_last"]] %||% ", and "
 
-  trunc <- style[["vec-trunc"]] %||% style[["vec_trunc"]] %||% 20L
+  trunc <- style[["vec-trunc"]] %||% style[["vec_trunc"]] %||% vec_trunc_default
   col_style <- style[["vec-trunc-style"]] %||% "both-ends"
 
   ansi_collapse(

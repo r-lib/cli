@@ -36,7 +36,104 @@
 - [x] `font-weight`
 - [x] `text-decoration`
 
+### Styles for substitutions in plain text
+
+- [x] `after`
+- [x] `background-color`
+- [x] `before`
+- [ ] `class-map`
+- [x] `collapse`
+- [x] `color`
+- [ ] `digits`
+- [x] `fmt`
+- [x] `font-style`
+- [x] `font-weight`
+- [ ] `string-quote`
+- [x] `text-decoration`
+- [x] `transform`
+- [x] `vec-last`
+- [x] `vec-sep`
+- [x] `vec-sep2`
+- [x] `vec-trunc`
+- [x] `vec-trunc-style`
+
 ### Styles for inline (span) element
+
+The tricky thing here is that some styles apply to the substitutions
+inside the span, and not the span itself. In fact they might apply to
+the elements of substituted vectors. (Not great, but this is what we need
+to work with at this point.)
+
+```{r}
+fun <- function() {
+  cli::cli_div(theme = list(span = list(after = "|", postfix = ">")))
+  cli_text("foo {.emph bar} baz")
+  cli_text("foo {.emph {1:4}} baz")
+  cli_text("foo {.emph {1:4}, {5:8}} baz")
+  cli_text("foo {.emph {1:4}xyz} baz")
+  cli_text("foo {.emph {1:4}}{.emph xyz} baz")
+}
+fun()
+```
+
+Style inheritence also works differently if there is a single substitution
+inside the span tag: then it is not applied to the tag itself.
+
+So if we want to clear this up, then we need to keep the current styles,
+and create new ones (possibly by qualifying the existing ones), that apply
+either only to the span, or to the substitutions inside the span.
+
+Possibly we need to define a new `expr` tag or qualifyier that we can use
+in themes. With a tag we could have:
+```
+list("span expr" = list(after = ">"))
+```
+and with a new qualifier we could have
+```
+list(span = list("expr::after" = ">"))
+```
+The first one seems more logical, it is just a new tag, after all, no new
+concept to learn, just that `{}` substitutions now create an implicit
+`expr` tag.
+
+We would need to keep the compatibility with the current themes, though, so
+```
+list(span = list(after = ">"))
+```
+would still apply to both the expressions and the tag itself, which is not
+great. With qualifyers we could have
+```
+list(span = list("expr::after" = ">"))
+list(span = list("self::after" = "**"))
+```
+or maybe
+```
+list(span = list("after::expr" = ">"))
+list(span = list("after::self" = "**"))
+```
+where we explicitly choose whether to apply to the expression to the
+substituted expressions (possibly elementwise), or to the tag itself.
+
+
+
+- [ ] `after`
+- [ ] `background-color`
+- [ ] `before`
+- [ ] `class-map`
+- [ ] `collapse`
+- [ ] `color`
+- [ ] `digits`
+- [ ] `fmt`
+- [ ] `font-style`
+- [ ] `font-weight`
+- [ ] `string-quote`
+- [ ] `text-decoration`
+- [ ] `transform`
+- [ ] `vec-last`
+- [ ] `vec-sep`
+- [ ] `vec-sep2`
+- [ ] `vec-trunc`
+- [ ] `vec-trunc-style`
 
 ### Styles for block (div) elements
 

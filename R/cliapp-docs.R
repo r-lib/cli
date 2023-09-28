@@ -380,7 +380,7 @@ NULL
 #' * `vec-sep2`: The separator to use for two elements when collapsing
 #'   vectors. If not set, then `vec-sep` is used for these as well.
 #' * `vec-trunc`: Vectors longer than this will be truncated. Defaults to
-#'   100.
+#'   `r vec_trunc_default`.
 #' * `vec-trunc-style`: Select between two ways of collapsing vectors:
 #'   - `"both-ends"` is the current default and it shows the beginning and
 #'     the end of the vector.
