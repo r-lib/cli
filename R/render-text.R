@@ -1,30 +1,32 @@
 
-render_text <- function(cpt) {
+render_inline_text <- function(cpt, style = NULL) {
   paste(
-    unlist(lapply(cpt$data$pieces, render_text_piece)),
+    unlist(lapply(cpt$data$pieces, render_inline_text_piece)),
     collapse = ""
   )
 }
 
-render_text_piece <- function(x) {
+render_inline_text_piece <- function(x) {
   switch(
     get_text_piece_type(x),
-    "plain" = render_text_piece_plain(x),
-    "substitution" = render_text_piece_substitution(x),
-    "span" = render_text_piece_span(x)
+    "plain" = render_inline_text_piece_plain(x),
+    "substitution" = render_inline_text_piece_substitution(x),
+    "span" = render_inline_text_piece_span(x)
   )
 }
 
-render_text_piece_plain <- function(txt, style = NULL) {
+render_inline_text_piece_plain <- function(txt, style = NULL) {
   style <- utils::modifyList(as.list(attr(txt, "style")), as.list(style))
   txt <- paste(txt, collapse = "")
   # handles backgrond-color, color, fmt, font-style, font-weight,
   # text-decoration
   formatter <- create_formatter(style)[["fmt"]]
-  if (!is.null(formatter)) formatter(txt) else txt
+  if (!is.null(formatter)) txt <- formatter(txt)
+
+  ansi_string(txt)
 }
 
-render_text_piece_substitution <- function(sub, style = NULL) {
+render_inline_text_piece_substitution <- function(sub, style = NULL) {
   val <- sub$value
   style <- utils::modifyList(as.list(sub$style), as.list(style))
 
@@ -47,7 +49,6 @@ render_text_piece_substitution <- function(sub, style = NULL) {
 
   before <- call_if_fun(style$before)
   after <- call_if_fun(style$after)
-
   val <- paste0(before, val, after)
 
   prefix <- call_if_fun(style$prefix)
@@ -55,7 +56,7 @@ render_text_piece_substitution <- function(sub, style = NULL) {
   val <- paste0(prefix, val, postfix)
 
   # passing on style here is not inheritance, we just pass it to a helper
-  render_text_piece_plain(
+  render_inline_text_piece_plain(
     inline_collapse(val, style = style),
     style = style
   )
@@ -81,6 +82,6 @@ inline_collapse <- function(x, style = list()) {
   )
 }
 
-render_text_piece_span <- function(span, style = NULL) {
-  TODO
+render_inline_text_piece_span <- function(span, style = NULL) {
+  render_inline_span(span, style = style)
 }

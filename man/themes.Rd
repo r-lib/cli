@@ -114,7 +114,7 @@ implementing color via ANSI sequences.
 \item \code{vec-sep2}: The separator to use for two elements when collapsing
 vectors. If not set, then \code{vec-sep} is used for these as well.
 \item \code{vec-trunc}: Vectors longer than this will be truncated. Defaults to
-100.
+20.
 \item \code{vec-trunc-style}: Select between two ways of collapsing vectors:
 \itemize{
 \item \code{"both-ends"} is the current default and it shows the beginning and
