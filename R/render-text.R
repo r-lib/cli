@@ -1,5 +1,5 @@
 
-render_inline_text <- function(cpt, style = NULL) {
+render_inline_text <- function(cpt) {
   paste(
     unlist(lapply(cpt$data$pieces, render_inline_text_piece)),
     collapse = ""
@@ -15,8 +15,8 @@ render_inline_text_piece <- function(x) {
   )
 }
 
-render_inline_text_piece_plain <- function(txt, style = NULL) {
-  style <- utils::modifyList(as.list(attr(txt, "style")), as.list(style))
+render_inline_text_piece_plain <- function(txt) {
+  style <- as.list(attr(txt, "style"))
   txt <- paste(txt, collapse = "")
   # handles backgrond-color, color, fmt, font-style, font-weight,
   # text-decoration
@@ -26,9 +26,9 @@ render_inline_text_piece_plain <- function(txt, style = NULL) {
   ansi_string(txt)
 }
 
-render_inline_text_piece_substitution <- function(sub, style = NULL) {
+render_inline_text_piece_substitution <- function(sub) {
   val <- sub$value
-  style <- utils::modifyList(as.list(sub$style), as.list(style))
+  style <- as.list(sub$style)
 
   transform <- style$transform
   if (is.function(transform)) {
@@ -55,11 +55,13 @@ render_inline_text_piece_substitution <- function(sub, style = NULL) {
   postfix <- call_if_fun(style$postfix)
   val <- paste0(prefix, val, postfix)
 
+  # handles backgrond-color, color, fmt, font-style, font-weight,
+  # text-decoration
+  formatter <- create_formatter(style)[["fmt"]]
+  if (!is.null(formatter)) val <- formatter(val)
+
   # passing on style here is not inheritance, we just pass it to a helper
-  render_inline_text_piece_plain(
-    inline_collapse(val, style = style),
-    style = style
-  )
+  ansi_string(inline_collapse(val, style = style))
 }
 
 vec_trunc_default <- 20L
@@ -82,6 +84,6 @@ inline_collapse <- function(x, style = list()) {
   )
 }
 
-render_inline_text_piece_span <- function(span, style = NULL) {
-  render_inline_span(span, style = style)
+render_inline_text_piece_span <- function(span) {
+  render_inline_span(span)
 }

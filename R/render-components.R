@@ -1,16 +1,16 @@
 
-render <- function(cpt, style = NULL, width = console_width()) {
+render <- function(cpt, width = console_width()) {
   switch(
     cpt[["tag"]],
-    "div" = render_div(cpt, style = style, width = width),
-    "text" = render_inline_text(cpt, style = style),
-    "span" = render_inline_span(cpt, style = style),
+    "div" = render_div(cpt, width = width),
+    "text" = render_inline_text(cpt),
+    "span" = render_inline_span(cpt),
     stop("Unknown component type: ", cpt[["tag"]])
   )
 }
 
-render_div <- function(cpt, style = NULL, width = console_width) {
-  style <- utils::modifyList(as.list(cpt$attr$style), as.list(style))
+render_div <- function(cpt, width = console_width) {
+  style <- as.list(cpt$attr$style)
   margin_top <- style[["margin-top"]] %||% 0L
   margin_bottom <- style[["margin-bottom"]] %||% 0L
   margin_left <- style[["margin-left"]] %||% 0L
@@ -48,8 +48,8 @@ render_div <- function(cpt, style = NULL, width = console_width) {
   c(rep("", margin_top), lines, rep("", margin_bottom))
 }
 
-render_inline_span <- function(cpt, style = NULL) {
-  style <- utils::modifyList(as.list(cpt$attr$style), as.list(style))
+render_inline_span <- function(cpt) {
+  style <- as.list(cpt$attr$style)
   val <- paste(unlist(lapply(cpt$children, render)), collapse = "")
 
   # before, after
@@ -82,33 +82,33 @@ render_inline_span <- function(cpt, style = NULL) {
   ansi_string(val)
 }
 
-preview <- function(cpt, style = NULL, width = console_width()) {
+preview <- function(cpt, width = console_width()) {
   switch(
     cpt[["tag"]],
-    "text" = preview_text(cpt, style = style, width = width),
-    "span" = preview_span(cpt, style = style, width = width),
-    preview_generic(cpt, style = style, width = width)
+    "text" = preview_text(cpt, width = width),
+    "span" = preview_span(cpt, width = width),
+    preview_generic(cpt, width = width)
   )
 }
 
-preview_generic <- function(cpt, style = NULL, width = console_width()) {
-  lines <- render(cpt, style = style, width = width)
+preview_generic <- function(cpt, width = console_width()) {
+  lines <- render(cpt, width = width)
   structure(
     list(lines = lines),
     class = "cli_preview"
   )
 }
 
-preview_text <- function(cpt, style = NULL, width = console_width()) {
-  text <- render_inline_text(cpt, style = style)
+preview_text <- function(cpt, width = console_width()) {
+  text <- render_inline_text(cpt)
   structure(
     list(lines = ansi_strwrap(text, width = width)),
     class = "cli_preview"
   )
 }
 
-preview_span <- function(cpt, style = NULL, width = console_width()) {
-  text <- render_inline_span(cpt, style = style)
+preview_span <- function(cpt, width = console_width()) {
+  text <- render_inline_span(cpt)
   structure(
     list(lines = ansi_strwrap(text, width = width)),
     class = "cli_preview"
