@@ -49,4 +49,5 @@ format.cli_preview <- function(x, ...) {
 
 print.cli_preview <- function(x, ...) {
   writeLines(format(x, ...))
+  invisible(x)
 }

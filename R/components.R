@@ -26,6 +26,7 @@ format.cli_component <- function(x, ...) {
 
 print.cli_component <- function(x, ...) {
   writeLines(format(x, ...))
+  invisible(x)
 }
 
 is_cpt_block <- function(x) {
