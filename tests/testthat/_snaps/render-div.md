@@ -170,3 +170,66 @@
       [3] "\033[90mid. Minim in adipisicing esse elit aute\033[39m "
       [4] "\033[90mcillum anim quis officia.\033[39m               "
 
+# render_div children [plain]
+
+    Code
+      writeLines(render_div(cpt_div(cpt_div(cpt_text(txt), attr = list(style = list(
+        color = "magenta"))), attr = list(style = list(`background-color` = "grey",
+        `padding-left` = 2L, `padding-right` = 2L, `padding-top` = 2L,
+        `padding-bottom` = 2L, `margin-left` = 1L, `margin-right` = 1L, `margin-top` = 1L,
+        `margin-bottom` = 1L)))))
+    Output
+      
+                                              
+                                              
+         Labore aliquip deserunt mollit       
+         sint enim commodo cupidatat          
+         officia nulla id. Minim in           
+         adipisicing esse elit aute cillum    
+         anim quis officia.                   
+                                              
+                                              
+      
+
+# render_div children [ansi]
+
+    Code
+      writeLines(render_div(cpt_div(cpt_div(cpt_text(txt), attr = list(style = list(
+        color = "magenta"))), attr = list(style = list(`background-color` = "grey",
+        `padding-left` = 2L, `padding-right` = 2L, `padding-top` = 2L,
+        `padding-bottom` = 2L, `margin-left` = 1L, `margin-right` = 1L, `margin-top` = 1L,
+        `margin-bottom` = 1L)))))
+    Output
+      
+       [47m                                      [49m 
+       [47m                                      [49m 
+       [47m  [35mLabore aliquip deserunt mollit[39m      [49m 
+       [47m  [35msint enim commodo cupidatat[39m         [49m 
+       [47m  [35mofficia nulla id. Minim in[39m          [49m 
+       [47m  [35madipisicing esse elit aute cillum[39m   [49m 
+       [47m  [35manim quis officia.[39m                  [49m 
+       [47m                                      [49m 
+       [47m                                      [49m 
+      
+
+# render_div can turn off bg color [ansi]
+
+    Code
+      writeLines(render_div(cpt_div(cpt_div(cpt_text(txt), attr = list(style = list(
+        color = "magenta", `background-color` = NULL))), attr = list(style = list(
+        `background-color` = "grey", `padding-left` = 2L, `padding-right` = 2L,
+        `padding-top` = 2L, `padding-bottom` = 2L, `margin-left` = 1L,
+        `margin-right` = 1L, `margin-top` = 1L, `margin-bottom` = 1L)))))
+    Output
+      
+       [47m                                      [49m 
+       [47m                                      [49m 
+       [47m  [0m[22m[23m[24m[27m[28m[29m[39m[35mLabore aliquip deserunt mollit[39m    [47m  [49m 
+       [47m  [0m[22m[23m[24m[27m[28m[29m[39m[35msint enim commodo cupidatat[39m       [47m  [49m 
+       [47m  [0m[22m[23m[24m[27m[28m[29m[39m[35mofficia nulla id. Minim in[39m        [47m  [49m 
+       [47m  [0m[22m[23m[24m[27m[28m[29m[39m[35madipisicing esse elit aute cillum[39m [47m  [49m 
+       [47m  [0m[22m[23m[24m[27m[28m[29m[39m[35manim quis officia.[39m                [47m  [49m 
+       [47m                                      [49m 
+       [47m                                      [49m 
+      
+

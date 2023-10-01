@@ -85,22 +85,24 @@ test_that_cli("render_div children", config = c("plain", "ansi"), {
           anim quis officia."
 
   withr::local_options(cli.width = 40L)
-  writeLines(render_div(
-    cpt_div(
-      cpt_div(cpt_text(txt), attr = list(style = list(color = "magenta"))),
-      attr = list(style = list(
-        "background-color" = "grey",
-        "padding-left" = 2L,
-        "padding-right" = 2L,
-        "padding-top" = 2L,
-        "padding-bottom" = 2L,
-        "margin-left" = 1L,
-        "margin-right" = 1L,
-        "margin-top" = 1L,
-        "margin-bottom" = 1L
-      ))
-    )
-  ))
+  expect_snapshot({
+    writeLines(render_div(
+      cpt_div(
+        cpt_div(cpt_text(txt), attr = list(style = list(color = "magenta"))),
+        attr = list(style = list(
+          "background-color" = "grey",
+          "padding-left" = 2L,
+          "padding-right" = 2L,
+          "padding-top" = 2L,
+          "padding-bottom" = 2L,
+          "margin-left" = 1L,
+          "margin-right" = 1L,
+          "margin-top" = 1L,
+          "margin-bottom" = 1L
+        ))
+      )
+    ))
+  })
 })
 
 test_that_cli("render_div can turn off bg color", config = "ansi", {
@@ -109,23 +111,25 @@ test_that_cli("render_div can turn off bg color", config = "ansi", {
           anim quis officia."
 
   withr::local_options(cli.width = 40L)
-  writeLines(render_div(
-    cpt_div(
+  expect_snapshot({
+    writeLines(render_div(
       cpt_div(
-        cpt_text(txt),
-        attr = list(style = list(color = "magenta", "background-color" = NULL))
-      ),
-      attr = list(style = list(
-        "background-color" = "grey",
-        "padding-left" = 2L,
-        "padding-right" = 2L,
-        "padding-top" = 2L,
-        "padding-bottom" = 2L,
-        "margin-left" = 1L,
-        "margin-right" = 1L,
-        "margin-top" = 1L,
-        "margin-bottom" = 1L
-      ))
-    )
-  ))
+        cpt_div(
+          cpt_text(txt),
+          attr = list(style = list(color = "magenta", "background-color" = NULL))
+        ),
+        attr = list(style = list(
+          "background-color" = "grey",
+          "padding-left" = 2L,
+          "padding-right" = 2L,
+          "padding-top" = 2L,
+          "padding-bottom" = 2L,
+          "margin-left" = 1L,
+          "margin-right" = 1L,
+          "margin-top" = 1L,
+          "margin-bottom" = 1L
+        ))
+      )
+    ))
+  })
 })
