@@ -6,15 +6,15 @@
       <cli_ansi_string>
       [1] this is a test
     Code
-      render_inline_text_piece_plain(styled_text("this is a test", list(color = "red")))
-    Output
-      <cli_ansi_string>
-      [1] this is a test
-    Code
       render_inline_text_piece_plain(styled_text("test", list(`background-color` = "cyan")))
     Output
       <cli_ansi_string>
       [1] test
+    Code
+      render_inline_text_piece_plain(styled_text("this is a test", list(color = "red")))
+    Output
+      <cli_ansi_string>
+      [1] this is a test
     Code
       render_inline_text_piece_plain(styled_text("this is a test", list(`font-style` = "italic")))
     Output
@@ -46,15 +46,15 @@
       <cli_ansi_string>
       [1] this is a test
     Code
-      render_inline_text_piece_plain(styled_text("this is a test", list(color = "red")))
-    Output
-      <cli_ansi_string>
-      [1] [31mthis is a test[39m
-    Code
       render_inline_text_piece_plain(styled_text("test", list(`background-color` = "cyan")))
     Output
       <cli_ansi_string>
       [1] [46mtest[49m
+    Code
+      render_inline_text_piece_plain(styled_text("this is a test", list(color = "red")))
+    Output
+      <cli_ansi_string>
+      [1] [31mthis is a test[39m
     Code
       render_inline_text_piece_plain(styled_text("this is a test", list(`font-style` = "italic")))
     Output
@@ -192,4 +192,40 @@
     Output
       <cli_ansi_string>
       [1] 1, 2, 3, 4, 5, ...
+
+---
+
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = 1:10 / 3, style = list(
+        digits = 2, transform = cli_format)))
+    Output
+      <cli_ansi_string>
+      [1] 0.33, 0.67, 1, 1.33, 1.67, 2, 2.33, 2.67, 3, and 3.33
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = 1:10 / 3, style = list(
+        digits = 3, transform = cli_format)))
+    Output
+      <cli_ansi_string>
+      [1] 0.333, 0.667, 1, 1.333, 1.667, 2, 2.333, 2.667, 3, and 3.333
+
+---
+
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = letters[1:10], style = list(
+        `string-quote` = "'")))
+    Output
+      <cli_ansi_string>
+      [1] a, b, c, d, e, f, g, h, i, and j
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = letters[1:10], style = list(
+        `string-quote` = "'", transform = cli_format)))
+    Output
+      <cli_ansi_string>
+      [1] 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', and 'j'
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = letters[1:10], style = list(
+        `string-quote` = "\"", transform = cli_format)))
+    Output
+      <cli_ansi_string>
+      [1] "a", "b", "c", "d", "e", "f", "g", "h", "i", and "j"
 
