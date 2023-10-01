@@ -15,12 +15,12 @@ theme_create <- function(theme) {
   res
 }
 
-create_formatter <- function(x) {
+create_formatter <- function(x, bg = TRUE, fmt = TRUE) {
   is_bold <- identical(x[["font-weight"]], "bold")
   is_italic <- identical(x[["font-style"]], "italic")
   is_underline <- identical(x[["text-decoration"]], "underline")
   is_color <- "color" %in% names(x)
-  is_bg_color <- "background-color" %in% names(x)
+  is_bg_color <- bg && "background-color" %in% names(x)
 
   if (!is_bold && !is_italic && !is_underline && !is_color
       && !is_bg_color) return(x)
@@ -32,7 +32,7 @@ create_formatter <- function(x) {
     x[["background-color"]] <- "none"
   }
 
-  fmt <- c(
+  formatter <- c(
     if (is_bold) list(style_bold),
     if (is_italic) list(style_italic),
     if (is_underline) list(style_underline),
@@ -40,13 +40,13 @@ create_formatter <- function(x) {
     if (is_bg_color) make_ansi_style(x[["background-color"]], bg = TRUE)
   )
 
-  new_fmt <- do.call(combine_ansi_styles, fmt)
+  new_formatter <- do.call(combine_ansi_styles, formatter)
 
-  if (is.null(x[["fmt"]])) {
-    x[["fmt"]] <- new_fmt
+  if (!fmt || is.null(x[["fmt"]])) {
+    x[["fmt"]] <- new_formatter
   } else {
-    orig_fmt <- x[["fmt"]]
-    x[["fmt"]] <- function(x) orig_fmt(new_fmt(x))
+    orig_formatter <- x[["fmt"]]
+    x[["fmt"]] <- function(x) orig_formatter(new_formatter(x))
   }
 
   x
