@@ -1,4 +1,4 @@
-render_div <- function(cpt, width = console_width) {
+render_div <- function(cpt, width = console_width()) {
   style <- as.list(cpt$attr$style)
   margin_top <- style[["margin-top"]] %||% 0L
   margin_bottom <- style[["margin-bottom"]] %||% 0L
@@ -11,8 +11,8 @@ render_div <- function(cpt, width = console_width) {
   padding_right <- style[["padding-right"]] %||% 0L
 
   child_width <- width - margin_left - margin_right -
-    padding_left - padding - right
-  if (child_width <= 0) child_width <- 1L
+    padding_left - padding_right
+  if (child_width <= 0) child_width <- 1L                           # nocov
 
   lines <- character()
   inline <- list()
@@ -56,6 +56,14 @@ render_div <- function(cpt, width = console_width) {
       st <- make_ansi_style(style[["background-color"]], bg = TRUE)
       lines <- st(lines)
     }
+  }
+
+  if (margin_left > 0) {
+    lines <- paste0(strrep("\u00a0", margin_left), lines)
+  }
+
+  if (margin_right > 0) {
+    lines <- paste0(lines, strrep("\u00a0", margin_right))
   }
 
   # TODO: collapse margins
