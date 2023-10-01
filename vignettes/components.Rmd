@@ -1,5 +1,22 @@
 
-## Components implementsed
+```{r setup, include = FALSE}
+pkgload::load_all()
+```
+
+# Components summary
+
+## Text pieces
+
+- [x] plain text
+- [x] substitution
+- [x] `span`
+
+## Inline
+
+- [x] `span`
+- [x] `text`
+
+## Block
 
 - [ ] `blockquote`
 - [x] `div`
@@ -9,14 +26,12 @@
 - [x] ~~`meta`~~ Not needed?
 - [ ] `ol`
 - [ ] `par`
-- [ ] `span`
 - [ ] `rule`
 - [ ] `status` (is this needed here?)
-- [x] `text`
 - [ ] `ul`
 - [ ] `verbatim`
 
-### Composite components:
+## Composite components:
 
 - [ ] `alert`: a `div`
 - [ ] `alert_danger`: a `div`
@@ -25,9 +40,14 @@
 - [ ] `alert_warning`: a `div`
 - [ ] `bullets`: using an `ul`
 
-## Component styling implemented
+# Component details
 
-### Styles for plain text pieces
+## Plain text (text piece)
+
+Plain text piece. It does not have direct styling, but it may have
+inherited styling, as a `style` attribute.
+
+### Styles
 
 - [x] `background-color`
 - [x] `color`
@@ -36,30 +56,349 @@
 - [x] `font-weight`
 - [x] `text-decoration`
 
-### Styles for substitutions in plain text
+## Substitution (text piece)
 
-- [x] `after`
-- [x] `background-color`
-- [x] `before`
-- [ ] `class-map`
-- [x] `collapse`
-- [x] `color`
-- [ ] `digits`
-- [x] `fmt`
-- [x] `font-style`
-- [x] `font-weight`
-- [x] `prefix`
-- [x] `postfix`
-- [ ] `string-quote`
-- [x] `text-decoration`
-- [x] `transform`
+A substitution. It has a `code` entry, the original code, a `value`
+entry, the R object the `code` evaluated to, and a `style` entry that cannot
+be specified directly, but can be inherited.
+
+### Styles
+
+This is the only (sub)component that has vector-formatting and
+collapsing styles.
+
+Most other styles apply elementwise
+
+- [x] `after` (elementwise)
+- [x] `background-color` (elementwise)
+- [x] `before` (elementwise)
+- [x] ~~`class-map`~~ we can deprecate this, and have a better way to
+      define themes for vector classes directly.
+- [x] `collapse` from vector to scalar
+- [x] `color` (elementwise)
+- [x] `digits` This was implemented via a `transform` style and calling
+      `cli_vector()` explicitly.
+- [x] `fmt` (vectorized)
+- [x] `font-style` (elementwise)
+- [x] `font-weight` (elementwise)
+- [x] `prefix` (elementwise)
+- [x] `postfix` (elementwise)
+- [x] `string-quote` This was implemented via a `transform` style and calling
+      `cli_vector()` explicitly.
+- [x] `text-decoration` (elementwise)
+- [x] `transform` (vectorized)
 - [x] `vec-last`
 - [x] `vec-sep`
 - [x] `vec-sep2`
 - [x] `vec-trunc`
 - [x] `vec-trunc-style`
 
-### Styles for inline (span) element
+## `span` (inline and text piece)
+
+### Styles
+
+- [x] `after`
+- [x] `background-color`
+- [x] `before`
+- [x] `color`
+- [x] `fmt`
+- [x] `font-style`
+- [x] `font-weight`
+- [ ] `margin-left` (need collapsing)
+- [ ] `margin-right` (need collapsing)
+- [ ] `padding-left`
+- [ ] `padding-right`
+- [ ] `prefix`
+- [ ] `postfix`
+- [x] `text-decoration`
+
+## `text` (inline)
+
+## `blockquote` (block)
+
+## `div` (block)
+
+### Styles for div elements
+
+- [ ] `after`
+- [ ] `before`
+- [x] `color`
+- [ ] `fmt`
+- [x] `font-style`
+- [x] `font-weight`
+- [ ] `margin-bottom` (need collapsing)
+- [x] `margin-left`
+- [x] `margin-right`
+- [ ] `margin-top` (need collapsing)
+- [x] `padding-bottom`
+- [x] `padding-left`
+- [x] `padding-right`
+- [x] `padding-top`
+- [x] `text-decoration`
+
+## `dl` (block)
+
+## `h1`, `h2`, `h3` (block)
+
+## `li` (block)
+
+## `meta` (block) (?)
+
+## `ol` (block)
+
+## `par` (block)
+
+## `rule` (block)
+
+## `status` (block) (?)
+
+## `ul` (block)
+
+## `verbatim` (block)
+
+## `alert` (block)
+
+## `alert_danger` (block)
+
+## `alert_info` (block)
+
+## `alert_success` (block)
+
+## `alert_warning` (block)
+
+## `bullets` (block)
+
+# Component styling by style
+
+## `after`
+
+- [x] ~~text~~
+- [x] sub
+- [x] span
+- [ ] div
+
+## `background-color`
+
+- [x] text
+- [x] sub
+- [x] span
+- [x] div
+
+## `before`
+
+- [x] ~~text~~
+- [x] sub
+- [x] span
+- [ ] div
+
+## `class-map`
+
+- [x] ~~text~~
+- [ ] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `color`
+
+- [x] text
+- [x] sub
+- [x] span
+- [x] div
+
+## `collapse`
+
+Called right after `transform`, it simplifies collapsing.
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `digits`
+
+- [x] ~~text~~
+- [ ] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `fmt`
+
+- [x] text
+- [x] sub
+- [x] span
+- [x] div
+
+## `font-style`
+
+- [x] text
+- [x] sub
+- [x] span
+- [x] div
+
+## `font-weight`
+
+- [x] text
+- [x] sub
+- [x] span
+- [x] div
+
+## `line-type`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `list-style-type`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `margin-bottom`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [ ] div (need collapsing)
+
+## `margin-left`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [ ] span (need collapsing)
+- [x] div
+
+## `margin-right`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [ ] span (need collapsing)
+- [x] div
+
+## `margin-top`
+
+- [x] ~~text~~
+- [ ] sub
+- [ ] span
+- [ ] div
+
+## `padding-bottom`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [x] div
+
+## `padding-left`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] span
+- [x] div
+
+## `padding-right`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] span
+- [x] div
+
+## `padding-top`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [x] div
+
+## `prefix`
+
+- [x] ~~text~~
+- [x] sub
+- [ ] span
+- [ ] div
+
+## `postfix`
+
+- [x] ~~text~~
+- [x] sub
+- [ ] span
+- [ ] div
+
+## `start`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `string-quote`
+
+- [x] ~~text~~
+- [ ] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `text-decoration`
+
+- [x] text
+- [x] sub
+- [x] span
+- [x] div
+
+## `text-exdent`
+
+- [x] ~~text~~
+- [x] ~~sub~~
+- [x] ~~span~~
+- [ ] div
+
+## `transform`
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `vec-last`
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `vec-sep`
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `vec-sep2`
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `vec-trunc`
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+## `vec-trunc-style`
+
+- [x] ~~text~~
+- [x] sub
+- [x] ~~span~~
+- [x] ~~div~~
+
+# Styles cascading
+
+## Automatic `span` elements and substitution
 
 The tricky thing here is that some styles apply to the substitutions
 inside the span, and not the span itself. In fact they might apply to
@@ -115,69 +454,3 @@ list(span = list("after::self" = "**"))
 ```
 where we explicitly choose whether to apply to the expression to the
 substituted expressions (possibly elementwise), or to the tag itself.
-
-- [x] `after`
-- [x] `background-color`
-- [x] `before`
-- [x] `color`
-- [x] `fmt`
-- [x] `font-style`
-- [x] `font-weight`
-- [ ] `prefix`
-- [ ] `postfix`
-- [x] `text-decoration`
-
-### Styles for block (div) elements
-
-
-
-
-
-
-### Styles for all tags:
-
-- [ ] `background-color`
-- [ ] `color`
-- [ ] `fmt`
-- [ ] `line-type`
-- [ ] `list-style-type`
-- [ ] `margin-left`
-- [ ] `margin-right`
-- [ ] `padding-left`
-- [ ] `padding-right`
-- [ ] `start`
-- [ ] `transform`
-
-### Styles for blocks:
-
-- [ ] `margin-bottom`
-- [ ] `margin-top`
-- [ ] `padding-bottom`
-- [ ] `padding-top`
-
-### Styles for spans:
-
-- [ ] `after`
-- [ ] `before`
-
-### `blockquote`
-
-### `div`
-
-### `dl`
-
-### `h1`, `h2`, `h3`
-
-### `li`
-
-### `ol`
-
-### `par`
-
-### `rule`
-
-### `span`
-
-### `ul`
-
-### `verbatim`
