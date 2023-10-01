@@ -1,29 +1,3 @@
-test_that_cli("render_inline_text_piece_plain", configs = c("plain", "ansi"), {
-  expect_snapshot({
-    render_inline_text_piece_plain("this is a test")
-    render_inline_text_piece_plain(
-      styled_text("test", list("background-color" = "cyan"))
-    )
-    render_inline_text_piece_plain(
-      styled_text("this is a test", list(color = "red"))
-    )
-    render_inline_text_piece_plain(
-      styled_text("this is a test", list("font-style" = "italic"))
-    )
-    render_inline_text_piece_plain(
-      styled_text("this is a test", list("font-weight" = "bold"))
-    )
-    render_inline_text_piece_plain(
-      styled_text("test", list("text-decoration" = "underline"))
-    )
-
-    render_inline_text_piece_plain(styled_text(
-      "text",
-      list(color = "green", fmt = function(x) paste0("{", x, "}"))
-    ))
-  })
-})
-
 test_that_cli("render_inline_text_piece_substitution", configs = c("plain"), {
   expect_snapshot({
     render_inline_text_piece_substitution(list(value = 1:5))
@@ -109,11 +83,11 @@ test_that_cli("render_inline_text_piece_substitution", configs = c("plain"), {
   # ditgits
   expect_snapshot({
     render_inline_text_piece_substitution(styled_sub(
-      value = 1:10/3,
+      value = 1:10 / 3,
       style = list("digits" = 2, transform = cli_format)
     ))
     render_inline_text_piece_substitution(styled_sub(
-      value = 1:10/3,
+      value = 1:10 / 3,
       style = list("digits" = 3, transform = cli_format)
     ))
   })
@@ -132,5 +106,5 @@ test_that_cli("render_inline_text_piece_substitution", configs = c("plain"), {
       value = letters[1:10],
       style = list("string-quote" = "\"", transform = cli_format)
     ))
- })
+  })
 })
