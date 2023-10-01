@@ -149,3 +149,33 @@
       <cli_ansi_string>
       [1] "a", "b", "c", "d", "e", "f", "g", "h", "i", and "j"
 
+# render_inline_text_piece_substitution formatter [plain]
+
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = 1:10, style = list(
+        color = "darkolivegreen")))
+    Output
+      <cli_ansi_string>
+      [1] 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = 1:10, style = list(
+        fmt = function(x) paste0("<", x, ">"))))
+    Output
+      <cli_ansi_string>
+      [1] <1>, <2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>, and <10>
+
+# render_inline_text_piece_substitution formatter [ansi]
+
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = 1:10, style = list(
+        color = "darkolivegreen")))
+    Output
+      <cli_ansi_string>
+      [1] [30m1[39m, [30m2[39m, [30m3[39m, [30m4[39m, [30m5[39m, [30m6[39m, [30m7[39m, [30m8[39m, [30m9[39m, and [30m10[39m
+    Code
+      render_inline_text_piece_substitution(styled_sub(value = 1:10, style = list(
+        fmt = function(x) paste0("<", x, ">"))))
+    Output
+      <cli_ansi_string>
+      [1] <1>, <2>, <3>, <4>, <5>, <6>, <7>, <8>, <9>, and <10>
+

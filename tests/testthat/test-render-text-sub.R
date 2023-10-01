@@ -108,3 +108,19 @@ test_that_cli("render_inline_text_piece_substitution", configs = c("plain"), {
     ))
   })
 })
+
+test_that_cli("render_inline_text_piece_substitution formatter",
+  configs = c("plain", "ansi"),
+  {
+    expect_snapshot({
+      render_inline_text_piece_substitution(styled_sub(
+        value = 1:10,
+        style = list("color" = "darkolivegreen")
+      ))
+      render_inline_text_piece_substitution(styled_sub(
+        value = 1:10,
+        style = list(fmt = function(x) paste0("<", x, ">"))
+      ))
+    })
+  }
+)
