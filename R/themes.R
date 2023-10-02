@@ -15,41 +15,46 @@ theme_create <- function(theme) {
   res
 }
 
-create_formatter <- function(x, bg = TRUE, fmt = TRUE) {
-  is_bold <- identical(x[["font-weight"]], "bold")
-  is_italic <- identical(x[["font-style"]], "italic")
-  is_underline <- identical(x[["text-decoration"]], "underline")
-  is_color <- "color" %in% names(x)
-  is_bg_color <- bg && "background-color" %in% names(x)
+create_formatter <- function(style, bg = TRUE, fmt = TRUE, width = NULL) {
+  force(width)
+  is_bold <- identical(style[["font-weight"]], "bold")
+  is_italic <- identical(style[["font-style"]], "italic")
+  is_underline <- identical(style[["text-decoration"]], "underline")
+  is_color <- "color" %in% names(style)
+  is_bg_color <- bg && "background-color" %in% names(style)
 
   if (!is_bold && !is_italic && !is_underline && !is_color
-      && !is_bg_color) return(x)
+      && !is_bg_color) return(style)
 
-  if (is_color && is.null(x[["color"]])) {
-    x[["color"]] <- "none"
+  if (is_color && is.null(style[["color"]])) {
+    style[["color"]] <- "none"
   }
-  if (is_bg_color && is.null(x[["background-color"]])) {
-    x[["background-color"]] <- "none"
+  if (is_bg_color && is.null(style[["background-color"]])) {
+    style[["background-color"]] <- "none"
   }
 
   formatter <- c(
     if (is_bold) list(style_bold),
     if (is_italic) list(style_italic),
     if (is_underline) list(style_underline),
-    if (is_color) make_ansi_style(x[["color"]]),
-    if (is_bg_color) make_ansi_style(x[["background-color"]], bg = TRUE)
+    if (is_color) make_ansi_style(style[["color"]]),
+    if (is_bg_color) make_ansi_style(style[["background-color"]], bg = TRUE)
   )
 
   new_formatter <- do.call(combine_ansi_styles, formatter)
 
-  if (!fmt || is.null(x[["fmt"]])) {
-    x[["fmt"]] <- new_formatter
+  if (!fmt || is.null(style[["fmt"]])) {
+    style[["fmt"]] <- new_formatter
   } else {
-    orig_formatter <- x[["fmt"]]
-    x[["fmt"]] <- function(x) orig_formatter(new_formatter(x))
+    orig_formatter <- style[["fmt"]]
+    if (length(formals(orig_formatter)) == 1) {
+      style[["fmt"]] <- function(x) orig_formatter(new_formatter(x))
+    } else {
+      style[["fmt"]] <- function(x) orig_formatter(new_formatter(x), style, width)
+    }
   }
 
-  x
+  style
 }
 
 merge_embedded_styles <- function(old, new) {
