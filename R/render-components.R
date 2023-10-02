@@ -1,8 +1,11 @@
 render <- function(cpt, width = console_width()) {
   switch(cpt[["tag"]],
-    "div" = render_div(cpt, width = width),
     "text" = render_inline_text(cpt),
     "span" = render_inline_span(cpt),
+    "h1" = ,
+    "h2 " = ,
+    "h3" = ,
+    "div" = render_div(cpt, width = width),
     stop("Unknown component type: ", cpt[["tag"]])
   )
 }

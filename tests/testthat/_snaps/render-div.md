@@ -233,3 +233,10 @@
        [47m                                      [49m 
       
 
+# render_div with fmt callback
+
+    Code
+      render(div, width = 40)
+    Output
+      [1] "This is a headline                      "
+

@@ -30,11 +30,11 @@ print.cli_component <- function(x, ...) {
 }
 
 is_cpt_block <- function(x) {
-  !is.null(x[["tag"]]) && x[["tag"]] %in% c("div", "span")
+  ! identical(x[["tag"]], "span") && ! identical(x[["tag"]], "text")
 }
 
 is_cpt_inline <- function(x) {
-  !is.null(x[["tag"]]) && x[["tag"]] %in% c("span", "text")
+  identical(x[["tag"]], "span") || identical(x[["tag"]], "text")
 }
 
 #' @export
@@ -48,3 +48,30 @@ cpt_div <- function(..., children = NULL, attr = NULL) {
 cpt_span <- function(..., children = NULL, attr = NULL) {
   new_component("span", ..., children = children, attr = attr)
 }  
+
+#' @export
+
+cpt_h1 <- function(text, attr = NULL, .envir = parent.frame()) {
+  if (is.character(text)) {
+    text <- cpt_text(text, .envir = .envir)
+  }
+  new_component("h1", text, attr = attr)
+}
+
+#' @export
+
+cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
+  if (is.character(text)) {
+    text <- cpt_text(text, .envir = .envir)
+  }
+  new_component("h2", text, attr = attr)
+}
+
+#' @export
+
+cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {
+  if (is.character(text)) {
+    text <- cpt_text(text, .envir = .envir)
+  }
+  new_component("h3", text, attr = attr)
+}

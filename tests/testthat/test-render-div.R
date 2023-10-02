@@ -133,3 +133,12 @@ test_that_cli("render_div can turn off bg color", config = "ansi", {
     ))
   })
 })
+
+test_that("render_div with fmt callback", {
+  headline <- "This is a headline"
+  fmt <- function(x, style, width, ...) {
+    cli::rule(x, width = width)
+  }
+  div <- cpt_div(cpt_text(headline), attr = list(style = list(fmt = fmt)))
+  expect_snapshot(render(div, width = 40))
+})
