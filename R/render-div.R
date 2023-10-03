@@ -32,7 +32,7 @@ render_div <- function(cpt, width = console_width()) {
       div_lines <- render(child, width = child_width)
       lines <- c(lines, div_lines)
     } else {
-      inline <- inline[[length(inline) + 1L]] <- render(child)
+      inline[[length(inline) + 1L]] <- render(child)
     }
   }
   output_inline()
