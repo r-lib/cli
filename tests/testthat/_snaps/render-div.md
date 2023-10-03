@@ -238,5 +238,5 @@
     Code
       render(div, width = 40)
     Output
-      [1] "This is a headline                      "
+      [1] "-- This is a headline ------------------"
 

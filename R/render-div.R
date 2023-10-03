@@ -39,7 +39,7 @@ render_div <- function(cpt, width = console_width()) {
 
   # color, font-style, font-weight, text-decoration
   formatter <- create_formatter(style, bg = FALSE, fmt = FALSE)[["fmt"]]
-  if (!is.null(formatter)) lines <- formatter(lines)
+  if (!is.null(formatter)) lines <- formatter(lines, width = width)
 
   pad_width <- child_width + padding_left + padding_right
   if (padding_left > 0) {

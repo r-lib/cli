@@ -15,8 +15,7 @@ theme_create <- function(theme) {
   res
 }
 
-create_formatter <- function(style, bg = TRUE, fmt = TRUE, width = NULL) {
-  force(width)
+create_formatter <- function(style, bg = TRUE, fmt = TRUE) {
   is_bold <- identical(style[["font-weight"]], "bold")
   is_italic <- identical(style[["font-style"]], "italic")
   is_underline <- identical(style[["text-decoration"]], "underline")
@@ -44,13 +43,13 @@ create_formatter <- function(style, bg = TRUE, fmt = TRUE, width = NULL) {
   new_formatter <- do.call(combine_ansi_styles, formatter)
 
   if (!fmt || is.null(style[["fmt"]])) {
-    style[["fmt"]] <- new_formatter
+    style[["fmt"]] <- function(x, ...) new_formatter(x)
   } else {
     orig_formatter <- style[["fmt"]]
     if (length(formals(orig_formatter)) == 1) {
-      style[["fmt"]] <- function(x) orig_formatter(new_formatter(x))
+      style[["fmt"]] <- function(x, ...) orig_formatter(new_formatter(x))
     } else {
-      style[["fmt"]] <- function(x) orig_formatter(new_formatter(x), style, width)
+      style[["fmt"]] <- function(x, ...) orig_formatter(new_formatter(x), ...)
     }
   }
 
