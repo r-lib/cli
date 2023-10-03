@@ -142,3 +142,19 @@ test_that("render_div with fmt callback", {
   div <- cpt_div(cpt_text(headline), attr = list(style = list(fmt = fmt)))
   expect_snapshot(render(div, width = 40))
 })
+
+test_that("render_div after, before", {
+  txt <- "Labore aliquip deserunt mollit sint enim commodo cupidatat
+          officia nulla id. Minim in adipisicing esse elit aute cillum
+          anim quis officia."
+
+  expect_snapshot({
+    render_div(
+      cpt_div(
+        cpt_text(txt),
+        attr = list(style = list(before = "<<", after = ">>"))
+      ),
+      width = 40
+    )
+  })
+})

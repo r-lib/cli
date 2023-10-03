@@ -26,7 +26,17 @@ render_div <- function(cpt, width = console_width()) {
     }
   }
 
-  for (child in cpt$children) {
+  before <- call_if_fun(style$before)
+  after <- call_if_fun(style$after)
+  children <- cpt$children
+  if (!is.null(before)) {
+    children <- c(list(cpt_text("{before}")), children)
+  }
+  if (!is.null(after)) {
+    children <- c(children, list(cpt_text("{after}")))
+  }
+
+  for (child in children) {
     if (is_cpt_block(child)) {
       output_inline()
       div_lines <- render(child, width = child_width)

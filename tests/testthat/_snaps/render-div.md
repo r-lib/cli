@@ -240,3 +240,14 @@
     Output
       [1] "-- This is a headline ------------------"
 
+# render_div after, before
+
+    Code
+      render_div(cpt_div(cpt_text(txt), attr = list(style = list(before = "<<",
+        after = ">>"))), width = 40)
+    Output
+      [1] "<<Labore aliquip deserunt mollit sint   "
+      [2] "enim commodo cupidatat officia nulla    "
+      [3] "id. Minim in adipisicing esse elit aute "
+      [4] "cillum anim quis officia.>>             "
+
