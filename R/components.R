@@ -15,8 +15,10 @@ new_component <- function(tag, ..., children = NULL, attr = NULL,
 #' @export
 
 format.cli_component <- function(x, ...) {
+  styled <- inherits(x, "cli_styled_component")
+  x <- as_component(x)
   id <- x[["attr"]][["id"]] %&&% paste0(" id=\"", x[["attr"]][["id"]], "\"")
-  c(paste0("<", x[["tag"]], id, ">"),
+  c(paste0("<", x[["tag"]], id, ">", if (styled) " (styled)"),
     paste0("  ", unlist(lapply(x[["children"]], format))),
     paste0("</", x[["tag"]], ">")
   )

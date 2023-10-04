@@ -1,5 +1,6 @@
 render_inline_span <- function(cpt) {
-  style <- as.list(cpt$attr$style)
+  style <- get_style(cpt)
+  cpt <- as_component(cpt)
   val <- paste(unlist(lapply(cpt$children, render)), collapse = "")
 
   # before, after
