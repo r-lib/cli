@@ -1,4 +1,4 @@
-# styled_component
+# new_styled_component
 
     Code
       sdiv

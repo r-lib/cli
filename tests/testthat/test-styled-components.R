@@ -1,12 +1,12 @@
-test_that("styled_component", {
+test_that("new_styled_component", {
   div <- cpt_div(cpt_text("foo"))
-  sdiv <- styled_component(div, list("margin-left" = 2))
+  sdiv <- new_styled_component(div, list("margin-left" = 2))
   expect_snapshot(sdiv)
 })
 
 test_that("as_component", {
   div <- cpt_div(cpt_text("foo"))
-  sdiv <- styled_component(div, list("margin-left" = 2))
+  sdiv <- new_styled_component(div, list("margin-left" = 2))
   expect_equal(div, as_component(div))
   expect_equal(div, as_component(sdiv))
   expect_snapshot(
@@ -17,7 +17,7 @@ test_that("as_component", {
 
 test_that("as_styled_component", {
   div <- cpt_div(cpt_text("foo"))
-  sdiv <- styled_component(div, list("margin-left" = 2))
+  sdiv <- new_styled_component(div, list("margin-left" = 2))
   expect_equal(sdiv, as_styled_component(sdiv))
   expect_equal(div, as_component(as_styled_component(div)))
 

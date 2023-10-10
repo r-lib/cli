@@ -1,4 +1,4 @@
-styled_component <- function(cpt, style) {
+new_styled_component <- function(cpt, style) {
   xcpt <- new.env(parent = emptyenv())
   xcpt[["tag"]] <- cpt[["tag"]]
   xcpt[["component"]] <- cpt
@@ -21,7 +21,7 @@ as_styled_component <- function(cpt) {
   if (inherits(cpt, "cli_styled_component")) {
     cpt
   } else if (inherits(cpt, "cli_component")) {
-    styled_component(cpt, cpt[["attr"]][["style"]])
+    new_styled_component(cpt, cpt[["attr"]][["style"]])
   } else {
     stop("Cannot convert ", class(cpt)[1], " to cli_styled_component")
   }
