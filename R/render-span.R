@@ -1,16 +1,16 @@
 render_inline_span <- function(cpt) {
   style <- get_style(cpt)
   cpt <- as_component(cpt)
-  val <- paste(unlist(lapply(cpt$children, render)), collapse = "")
+  val <- paste(unlist(lapply(cpt[["children"]], render)), collapse = "")
 
   # before, after
-  before <- call_if_fun(style$before)
-  after <- call_if_fun(style$after)
+  before <- call_if_fun(style[["before"]])
+  after <- call_if_fun(style[["after"]])
   val <- paste0(before, val, after)
 
   # prefix, postfix
-  prefix <- call_if_fun(style$prefix)
-  postfix <- call_if_fun(style$postfix)
+  prefix <- call_if_fun(style[["prefix"]])
+  postfix <- call_if_fun(style[["postfix"]])
   val <- paste0(prefix, val, postfix)
 
   # padding

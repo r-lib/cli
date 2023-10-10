@@ -45,7 +45,7 @@ preview_span <- function(cpt, width = console_width()) {
 #' @export
 
 format.cli_preview <- function(x, ...) {
-  x$lines
+  x[["lines"]]
 }
 
 #' @export

@@ -27,9 +27,9 @@ render_div <- function(cpt, width = console_width()) {
     }
   }
 
-  before <- call_if_fun(style$before)
-  after <- call_if_fun(style$after)
-  children <- cpt$children
+  before <- call_if_fun(style[["before"]])
+  after <- call_if_fun(style[["after"]])
+  children <- cpt[["children"]]
   if (!is.null(before)) {
     children <- c(list(cpt_text("{before}")), children)
   }

@@ -1,8 +1,8 @@
 render_inline_text_piece_substitution <- function(sub) {
-  val <- sub$value
-  style <- as.list(sub$style)
+  val <- sub[["value"]]
+  style <- as.list(sub[["style"]])
 
-  transform <- style$transform
+  transform <- style[["transform"]]
   if (is.function(transform)) {
     if (length(formals(transform)) == 1) {
       val <- transform(val)
@@ -11,7 +11,7 @@ render_inline_text_piece_substitution <- function(sub) {
     }
   }
 
-  collapse <- style$collapse
+  collapse <- style[["collapse"]]
   if (is.character(collapse)) {
     val <- paste0(val, collapse = collapse[1])
   }
@@ -19,12 +19,12 @@ render_inline_text_piece_substitution <- function(sub) {
     val <- collapse(val)
   }
 
-  before <- call_if_fun(style$before)
-  after <- call_if_fun(style$after)
+  before <- call_if_fun(style[["before"]])
+  after <- call_if_fun(style[["after"]])
   val <- paste0(before, val, after)
 
-  prefix <- call_if_fun(style$prefix)
-  postfix <- call_if_fun(style$postfix)
+  prefix <- call_if_fun(style[["prefix"]])
+  postfix <- call_if_fun(style[["postfix"]])
   val <- paste0(prefix, val, postfix)
 
   # handles backgrond-color, color, fmt, font-style, font-weight,
