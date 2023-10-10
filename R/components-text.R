@@ -25,7 +25,7 @@ parse_cli_text <- function(txt, .envir, .call = sys.call(-1)) {
   res <- parse_cli_text_internal(txt, .envir, transformer)
   values <- attr(transformer, "values")
   if (values$postprocess) {
-    res$pieces <- post_process_plurals2(res$pieces, values)
+    res <- post_process_plurals2(res, values)
   }
   res
 }
@@ -38,7 +38,7 @@ parse_cli_text_internal <- function(txt, envir, transformer) {
     .cli = TRUE,
     .trim = FALSE
   )
-  list(pieces = pieces)
+  pieces
 }
 
 make_text_transformer <- function(.call) {
@@ -125,6 +125,12 @@ make_text_transformer <- function(.call) {
   tr
 }
 
+is_text_piece <- function(x) {
+  is.character(x) ||
+    inherits(x, "cli_sub") ||
+    inherits(x, "cli_component_span")
+}
+
 get_text_piece_type <- function(x) {
   if (is.character(x)) {
     "plain"
@@ -152,8 +158,8 @@ post_process_plurals2 <- function(pieces, values) {
       pieces[[idx]] <- process_plural(qty, pieces[[idx]]$code)
     } else if (inherits(pieces[[idx]], "cli_component")) {
       # it has to be a <span><text> ... </text></span>
-      pieces2 <- pieces[[idx]]$children[[1]]$children$pieces
-      pieces[[idx]]$children[[1]]$children$pieces <-
+      pieces2 <- pieces[[idx]]$children[[1]]$children
+      pieces[[idx]]$children[[1]]$children <-
         post_process_plurals2(pieces2, values)
     }
   }
@@ -165,7 +171,7 @@ post_process_plurals2 <- function(pieces, values) {
 
 format.cli_component_text <- function(x, ...) {
   c("<text>",
-    paste0("  ", unlist(lapply(x$children$pieces, function(x) {
+    paste0("  ", unlist(lapply(x$children, function(x) {
       switch(get_text_piece_type(x),
         "plain" =
           paste0(

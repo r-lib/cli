@@ -2,6 +2,7 @@
 new_component <- function(tag, ..., children = NULL, attr = NULL) {
   children <- c(list(...), children)
   if (tag == "text") {
+    stopifnot(all(map_lgl(children, is_text_piece)))
   } else {
     stopifnot(all(map_lgl(children, inherits, "cli_component")))
   }
