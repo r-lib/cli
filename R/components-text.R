@@ -4,7 +4,7 @@
 cpt_text <- function(txt, .envir = parent.frame()) {
   new_component(
     "text",
-    data = parse_cli_text(txt, .envir = .envir, .call = call)
+    children = parse_cli_text(txt, .envir = .envir, .call = call)
   )
 }
 
@@ -15,7 +15,7 @@ cpt_text <- function(txt, .envir = parent.frame()) {
 cpt_text_inline <- function(txt, envir, transformer, funname) {
   embtxt <- new_component(
     "text",
-    data = parse_cli_text_internal(txt, envir, transformer)
+    children = parse_cli_text_internal(txt, envir, transformer)
   )
   cpt_span(embtxt, attr = list(class = funname))
 }
@@ -152,8 +152,8 @@ post_process_plurals2 <- function(pieces, values) {
       pieces[[idx]] <- process_plural(qty, pieces[[idx]]$code)
     } else if (inherits(pieces[[idx]], "cli_component")) {
       # it has to be a <span><text> ... </text></span>
-      pieces2 <- pieces[[idx]]$children[[1]]$data$pieces
-      pieces[[idx]]$children[[1]]$data$pieces <-
+      pieces2 <- pieces[[idx]]$children[[1]]$children$pieces
+      pieces[[idx]]$children[[1]]$children$pieces <-
         post_process_plurals2(pieces2, values)
     }
   }
@@ -165,7 +165,7 @@ post_process_plurals2 <- function(pieces, values) {
 
 format.cli_component_text <- function(x, ...) {
   c("<text>",
-    paste0("  ", unlist(lapply(x$data$pieces, function(x) {
+    paste0("  ", unlist(lapply(x$children$pieces, function(x) {
       switch(get_text_piece_type(x),
         "plain" =
           paste0(

@@ -1,6 +1,6 @@
 render_inline_text <- function(cpt) {
   ansi_string(paste(
-    unlist(lapply(cpt$data$pieces, render_inline_text_piece)),
+    unlist(lapply(cpt$children$pieces, render_inline_text_piece)),
     collapse = ""
   ))
 }

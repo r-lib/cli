@@ -1,11 +1,12 @@
 
-new_component <- function(tag, ..., children = NULL, attr = NULL,
-                          data = NULL) {
+new_component <- function(tag, ..., children = NULL, attr = NULL) {
   children <- c(list(...), children)
-  stopifnot(all(map_lgl(children, inherits, "cli_component")))
+  if (tag == "text") {
+  } else {
+    stopifnot(all(map_lgl(children, inherits, "cli_component")))
+  }
   cpt <- new.env(parent = emptyenv())
   cpt[["tag"]] <- tag
-  cpt[["data"]] <- data
   cpt[["children"]] <- children
   cpt[["attr"]] <- attr
   class(cpt) <- c(paste0("cli_component_", tag), "cli_component")
