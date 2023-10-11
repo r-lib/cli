@@ -46,6 +46,67 @@ test_that("parse_selector", {
   }
 })
 
+test_that("parse_selector", {
+  expect_snapshot({
+    parse_selector("tag")
+    parse_selector(".class")
+    parse_selector("#id")
+    parse_selector("tag.class")
+    parse_selector("tag subtag")
+    parse_selector("tag#id")
+    parse_selector("tag1 tag2 tag3")
+    parse_selector("tag1 tag2 tag3.class")
+    parse_selector("tag1 tag2.class tag3")
+    parse_selector("tag1.class tag2 tag3")
+    parse_selector(".class .subclass")
+    parse_selector(".class .subclass .subsubclass")
+    parse_selector("tag.class .subclass")
+    parse_selector(".class subtag.subclass")
+  })
+})
+
+test_that("match_selector_node", {
+  expect_true(match_selector_node(
+    list(tag = "foo"),
+    list(tag = "foo")
+  ))
+  expect_true(match_selector_node(
+    list(tag = "foo"),
+    list(tag = "foo", class = "class")
+  ))
+  expect_true(match_selector_node(
+    list(tag = "foo"),
+    list(tag = "foo", id = "/1")
+  ))
+  expect_true(match_selector_node(
+    list(tag = "foo"),
+    list(tag = "foo", class = "class1", id = "/1")
+  ))
+
+  expect_true(match_selector_node(
+    list(id = "/1"),
+    list(id = "/1", class = "class")
+  ))
+  expect_true(match_selector_node(
+    list(id = "/1"),
+    list(id = "/1", tag = "tag")
+  ))
+  expect_true(match_selector_node(
+    list(id = "/1"),
+    list(id = "/1", class = "class", tag = "tag")
+  ))
+
+  expect_true(match_selector_node(
+    list(tag = "tag", class = "class"),
+    list(class = "class", tag = "tag")
+  ))
+  expect_true(match_selector_node(
+    list(tag = "tag", class = "class"),
+    list(class = c("class", "class2"), tag = "tag")
+  ))
+})
+
+
 test_that("match_selector_node", {
 
   default <- list(tag = "mytag", class = character(), id = "myid")
@@ -77,7 +138,7 @@ test_that("match_selector_node", {
     cnt <- modifyList(default, c[[2]])
     expect_false(match_selector_node(sel, cnt), info = c[[1]])
   }
-  
+
 })
 
 test_that("match_selector", {
@@ -97,7 +158,7 @@ test_that("match_selector", {
     cnts <- lapply(c[[2]], function(x) modifyList(default, x))
     expect_true(match_selector(sels, cnts), info = c[[1]])
   }
-  
+
   neg <- list(
     list("foo bar", list(list(tag = "foo"), list(tag = "ba"))),
     list("foo bar", list(list(tag = "foo"), list(class = "bar"))),

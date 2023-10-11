@@ -43,3 +43,55 @@ print.cli_styled_component <- function(x, ...) {
   writeLines(format(x, ...))
   invisible(x)
 }
+
+inherit_style <- function(x, parent_style) {
+  if (inherits(x, "cli_component")) {
+    inherit_style_component(x, parent_style)
+  } else if (is_text_piece(x)) {
+    inherit_style_text_piece(x, parent_style)
+  } else {
+    stop("Unknown type, cannot inherit style for ", class(x)[1])
+  }
+}
+
+inherit_style_component <- function(x, parent_style) {
+  new <- merge_styles(parent_style, x[["attr"]][["style"]], x[["tag"]])
+  new_styled_component(x, new)
+}
+
+inherit_style_text_piece <- function(x, parent_style) {
+  type <- get_text_piece_type(x)
+  if (type == "plain") {
+    attr(x, "style") <- merge_styles(parent_style, list(), "text-plain")
+  } else if (type == "substitution") {
+    x$style <- merge_styles(parent_style, list(), "text-sub")
+  }
+  x
+}
+
+inherited_styles <- function() {
+  c("class-map", "collapse", "digits", "line-type",
+    "list-style-type", "start", "string-quote",
+    "text-exdent", "transform", "vec-last", "vec-sep",
+    "vec-sep2", "vec-trunc", "vec-trunc-style")
+}
+
+merge_styles <- function(parent, child, tag) {
+  parent <- as.list(parent)
+  child <- as.list(child)
+
+  # merged
+  cm <- utils::modifyList(
+    parent$`class-map` %||% list(),
+    child$`class-map` %||% list()
+  )
+  if (length(cm) > 0) child[["class-map"]] <- cm
+
+  # these are inherited
+  inh <- setdiff(inherited_styles(), "class-map")
+  for (st in inh) {
+    child[[st]] <- child[[st]] %||% parent[[st]]
+  }
+
+  child
+}
