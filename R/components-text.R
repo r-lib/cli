@@ -12,7 +12,7 @@ cpt_text <- function(txt, .envir = parent.frame()) {
 # The span needs to have a text coponent, because only text coponents
 # are allowed to contain plain text.
 
-cpt_text_inline <- function(txt, envir, transformer, funname) {
+cpti_text_inline <- function(txt, envir, transformer, funname) {
   embtxt <- new_component(
     "text",
     children = parse_cli_text_internal(txt, envir, transformer)
@@ -98,7 +98,7 @@ make_text_transformer <- function(.call) {
       funname <- captures[[1]]
       text <- captures[[2]]
 
-      cpt_text_inline(text, envir, sys.function(), funname)
+      cpti_text_inline(text, envir, sys.function(), funname)
 
     } else {
       # {} plain substitution
