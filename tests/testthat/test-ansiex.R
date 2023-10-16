@@ -28,7 +28,12 @@ test_that("ansi_has_any works", {
   expect_false(ansi_has_any("foobar"))
   funcs <- ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")
 
-  for (sym in setdiff(funcs, "style_hyperlink")) {
+  not <- c(
+    "style_hyperlink",
+    "style_component_tree",
+    "style_component_tree_node"
+  )
+  for (sym in setdiff(funcs, not)) {
     fun <- get(sym, envir = asNamespace("cli"))
     expect_true(ansi_has_any(fun("foo", "bar")), label = sym)
   }
@@ -46,8 +51,14 @@ test_that("ansi_strip works", {
     ansi_strip(col_red(style_underline(style_bold("foobar"))))
   )
 
+  not <- c(
+    "style_hyperlink",
+    "style_component_tree",
+    "style_component_tree_node"
+  )
+
   funcs <- ls(asNamespace("cli"), pattern = "^col_|^bg_|^style_")
-  for (sym in setdiff(funcs, "style_hyperlink")) {
+  for (sym in setdiff(funcs, not)) {
     fun <- get(sym, envir = asNamespace("cli"))
     ans <- if (sym == "style_hyperlink") "foo" else "foobar"
     expect_equal(ans, ansi_strip(fun("foo", "bar")))
