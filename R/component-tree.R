@@ -42,14 +42,20 @@ format.cli_component_tree <- function(x, ...) {
 }
 
 format_cli_component_tree <- function(x, root = FALSE, ...) {
-  themed <- if (isTRUE(x[["themed"]])) " (themed)" else ""
+  note <- if (isTRUE(x[["styled"]])) {
+     " (styled)"
+  } else if (isTRUE(x[["themed"]])) {
+    " (themed)"
+  } else {
+    ""
+  }
   if (x[["tag"]] == "text") {
-    c(if (root) paste0("<cli_component_tree>", themed),
+    c(if (root) paste0("<cli_component_tree>", note),
       format(x[["component"]])
     )
   } else {
     id <- x[["id"]] %&&% paste0(" id=\"", x[["id"]], "\"")
-    c(if (root) paste0("<cli_component_tree>", themed),
+    c(if (root) paste0("<cli_component_tree>", note),
       c(paste0("<", x[["tag"]], id, ">"),
         paste0("  ", unlist(lapply(x[["children"]], format_cli_component_tree))),
         paste0("</", x[["tag"]], ">")

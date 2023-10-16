@@ -3,14 +3,14 @@
     Code
       style_component_tree(theme_component_tree(tree))
     Output
-      <cli_component_tree> (themed)
+      <cli_component_tree> (styled)
       <div>
         
       </div>
     Code
       style_component_tree(theme_component_tree(tree2))
     Output
-      <cli_component_tree> (themed)
+      <cli_component_tree> (styled)
       <div>
         <div>
           
@@ -19,7 +19,7 @@
     Code
       style_component_tree(theme_component_tree(tree3))
     Output
-      <cli_component_tree> (themed)
+      <cli_component_tree> (styled)
       <div>
         <text>
           txt: "foo "
