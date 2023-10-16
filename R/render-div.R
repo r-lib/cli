@@ -1,6 +1,11 @@
 render_div <- function(cpt, width = console_width()) {
-  stopifnot(inherits(cpt, "cli_component"))
-  style <- cpt[["attr"]][["style"]]
+  if (inherits(cpt, "cli_component_tree")) {
+    style <- cpt[["style"]] %||% cpt[["prestylr"]] %||% cpt[["component"]][["attr"]][["style"]]
+  } else if (inherits(cpt, "cli_component")) {
+    style <- cpt[["attr"]][["style"]]
+  } else {
+    stop("Cannot render object of class ", class(cpt)[1])
+  }
   margin_top <- style[["margin-top"]] %||% 0L
   margin_bottom <- style[["margin-bottom"]] %||% 0L
   margin_left <- style[["margin-left"]] %||% 0L

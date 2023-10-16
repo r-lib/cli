@@ -1,6 +1,11 @@
 render_inline_span <- function(cpt) {
-  stopifnot(inherits(cpt, "cli_component"))
-  style <- cpt[["attr"]][["style"]]
+  if (inherits(cpt, "cli_component_tree")) {
+    style <- cpt[["style"]] %||% cpt[["prestylr"]] %||% cpt[["component"]][["attr"]][["style"]]
+  } else if (inherits(cpt, "cli_component")) {
+    style <- cpt[["attr"]][["style"]]
+  } else {
+    stop("Cannot render object of class ", class(cpt)[1])
+  }
   val <- paste(unlist(lapply(cpt[["children"]], render)), collapse = "")
 
   # before, after

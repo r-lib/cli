@@ -136,7 +136,8 @@ get_text_piece_type <- function(x) {
     "plain"
   } else if (inherits(x, "cli_sub")) {
     "substitution"
-  } else if (inherits(x, "cli_component_span")) {
+  } else if (inherits(x, "cli_component_span") ||
+             inherits(x[["component"]], "cli_component_span")) {
     "span"
   } else {
     stop("Internal error, invalid text piece found: ", class(x)) # nocov
