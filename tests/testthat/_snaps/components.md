@@ -4,14 +4,12 @@
       cpt_div()
     Output
       <div>
-        
       </div>
     Code
       cpt_div(cpt_div())
     Output
       <div>
         <div>
-          
         </div>
       </div>
     Code
@@ -19,10 +17,8 @@
     Output
       <div>
         <div>
-          
         </div>
         <div>
-          
         </div>
       </div>
 
@@ -32,14 +28,12 @@
       cpt_span()
     Output
       <span>
-        
       </span>
     Code
       cpt_span(cpt_span())
     Output
       <span>
         <span>
-          
         </span>
       </span>
     Code
@@ -47,10 +41,8 @@
     Output
       <span>
         <span>
-          
         </span>
         <span>
-          
         </span>
       </span>
     Code
@@ -85,7 +77,6 @@
     Output
       <h1>
         <span>
-          
         </span>
       </h1>
 
@@ -112,7 +103,6 @@
     Output
       <h2>
         <span>
-          
         </span>
       </h2>
 
@@ -139,7 +129,6 @@
     Output
       <h3>
         <span>
-          
         </span>
       </h3>
 

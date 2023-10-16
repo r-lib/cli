@@ -19,7 +19,9 @@ new_component <- function(tag, ..., children = NULL, attr = NULL) {
 format.cli_component <- function(x, ...) {
   id <- x[["attr"]][["id"]] %&&% paste0(" id=\"", x[["attr"]][["id"]], "\"")
   c(paste0("<", x[["tag"]], id, ">"),
-    paste0("  ", unlist(lapply(x[["children"]], format))),
+    if (length(x[["children"]])) {
+      paste0("  ", unlist(lapply(x[["children"]], format)))
+    },
     paste0("</", x[["tag"]], ">")
   )
 }
