@@ -1,27 +1,26 @@
 map_component_tree <- function(cpt, parent = list()) {
-  stopifnot(inherits(cpt, "cli_component"))
+  if (!inherits(cpt, "cli_component")) {
+    # non-component text piece
+    if (is_text_piece(cpt)) return(cpt)
+    stop("`cpt` must be a `cli_component` in `map_component_tree()`")
+  }
+
   node <- list()
   node[["component"]] <- cpt
   node[["tag"]] <- cpt[["tag"]]
   node[["id"]] <- cpt[["attr"]][["id"]]
   node[["class"]] <- parse_class_attr(cpt[["attr"]][["class"]])
-  node[["path"]] <- c(parent, list(
+  node[["path"]] <- c(parent, list(list(
     tag = node[["tag"]],
     class = node[["class"]],
     id = node[["id"]]
-  ))
+  )))
 
-  if (node[["tag"]] == "text") {
-    # TODO: need to handle embedded spans
-    node[["children"]] <- cpt[["children"]]
-  } else {
-
-    node[["children"]] <- lapply(
-      cpt[["children"]],
-      map_component_tree,
-      parent = node[["path"]]
-    )
-  }
+  node[["children"]] <- lapply(
+    cpt[["children"]],
+    map_component_tree,
+    parent = node[["path"]]
+  )
 
   class(node) <- "cli_component_tree"
   node
@@ -65,29 +64,29 @@ print.cli_component_tree <- function(x, ...) {
   invisible(x)
 }
 
-theme_component_tree <- function(x, theme = list()) {
-  stopifnot(inherits(x, "cli_component_tree"))
+theme_component_tree <- function(node, theme = list()) {
+  if (!inherits(node, "cli_component_tree")) {
+    # non-component text piece
+    if (is_text_piece(node)) return(node)
+    stop("`node` must be a `cli_component_tree` in `theme_component_tree()`")
+  }
   parsed_sels <- lapply(as.character(names(theme)), parse_selector)
-  x[["style"]] <- x[["component"]][["attr"]][["style"]]
+  node[["prestyle"]] <- node[["component"]][["attr"]][["style"]]
   for (i in seq_along(parsed_sels)) {
-    if (match_selector(parsed_sels[[i]], x[["path"]])) {
-      x[["style"]] <- apply_theme_to_style(theme[[i]], x[["style"]])
+    if (match_selector(parsed_sels[[i]], node[["path"]])) {
+      node[["prestyle"]] <- apply_theme_to_style(node[["prestyle"]], theme[[i]])
     }
   }
-  x[["themed"]] <- TRUE
+  node[["themed"]] <- TRUE
 
-  if (x[["tag"]] == "text") {
-    # TODO: handle embedded spans
 
-  } else {
-    x[["children"]] <- lapply(
-      x[["children"]],
-      theme_component_tree,
-      theme = theme
-    )
-  }
+  node[["children"]] <- lapply(
+    node[["children"]],
+    theme_component_tree,
+    theme = theme
+  )
 
-  x
+  node
 }
 
 apply_theme_to_style <- function(style, theme) {
@@ -102,4 +101,67 @@ apply_theme_to_style <- function(style, theme) {
   merged <- modifyList(theme, style)
   if (length(cm)) merged[["class-map"]] <- cm
   merged
+}
+
+style_component_tree <- function(node) {
+  style_component_tree_node(node, parent_style = list())
+}
+
+style_component_tree_node <- function(node, parent_style) {
+  is_cpt <- inherits(node, "cli_component_tree")
+  is_tp <- is_text_piece(node)
+
+  if (!is_cpt && !is_tp) {
+    stop("`node` must be a `cli_component_tree` in `style_component_tree()`")
+  }
+  if (is_cpt && !isTRUE(node[["themed"]])) {
+    stop("`node` is not themed yet, call `theme_component_tree()` first")
+  }
+
+  if (ic_cpt) {
+    node[["style"]] <- inherit_styles(parent_style, node[["prestyle"]], node[["tag"]])
+    node[["styled"]] <- TRUE
+    node[["children"]] <- lapply(
+      node[["children"]],
+      style_component_tree_node,
+      parent_style = node[["style"]]
+    )
+
+  } else {
+    type <- text_piece_type(node)
+    if (type == "plain") {
+      attr(node, "style") <- inherit_styles(parent_style, list(), "text-plain")
+    } else { # substitution
+      node[["style"]] <- inherit_styles(parent_style, list(), "text-sub")
+    }
+  }
+
+  node
+}
+
+inherit_styles <- function(parent, child, tag) {
+  parent <- as.list(parent)
+  child <- as.list(child)
+
+  # merged
+  cm <- utils::modifyList(
+    parent$`class-map` %||% list(),
+    child$`class-map` %||% list()
+  )
+  if (length(cm) > 0) child[["class-map"]] <- cm
+
+  # these are inherited
+  inh <- setdiff(inherited_styles(), "class-map")
+  for (st in inh) {
+    child[[st]] <- child[[st]] %||% parent[[st]]
+  }
+
+  child
+}
+
+inherited_styles <- function() {
+  c("class-map", "collapse", "digits", "line-type",
+    "list-style-type", "start", "string-quote",
+    "text-exdent", "transform", "vec-last", "vec-sep",
+    "vec-sep2", "vec-trunc", "vec-trunc-style")
 }

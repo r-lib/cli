@@ -1,6 +1,6 @@
 render_div <- function(cpt, width = console_width()) {
-  style <- get_style(cpt)
-  cpt <- as_component(cpt)
+  stopifnot(inherits(cpt, "cli_component"))
+  style <- cpt[["attr"]][["style"]]
   margin_top <- style[["margin-top"]] %||% 0L
   margin_bottom <- style[["margin-bottom"]] %||% 0L
   margin_left <- style[["margin-left"]] %||% 0L
