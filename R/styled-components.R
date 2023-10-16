@@ -54,9 +54,15 @@ inherit_style <- function(x, parent_style) {
   }
 }
 
-inherit_style_component <- function(x, parent_style) {
-  new <- merge_styles(parent_style, x[["attr"]][["style"]], x[["tag"]])
-  new_styled_component(x, new)
+inherit_style_component <- function(x, parent_style, child_style = NULL) {
+  child_style <- child_style %||% x[["attr"]][["style"]]
+  new <- merge_styles(parent_style, child_style, x[["tag"]])
+  if (inherits(x, "cli_styled_component")) {
+    x[["style"]] <- new
+    x
+  } else {
+    new_styled_component(x, new)
+  }
 }
 
 inherit_style_text_piece <- function(x, parent_style) {
