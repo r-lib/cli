@@ -3,7 +3,124 @@
 pkgload::load_all()
 ```
 
-# Components summary
+# How components work in cli 4?
+
+## Creating components
+
+* `cpt_*` functions create components.
+   ```{r}
+   c1 <- cpt_div()
+   c1
+   ```
+
+* Some components are block components, other are inline components.
+  The current inline components are `cpt_span()` and `cpt_text()`.
+
+* Components may embed other components. Not all types of components are
+  allowed to embed all types of components.
+   ```{r}
+   c2 <- cpt_div(cpt_div())
+   c2
+   ```
+
+* Inline components are only allowed to embed other inline components.
+
+* `cpt_text()` is a special inline component, that may embed text pieces
+  and `cpt_span()` components.
+
+* Subcomponents of `cpt_text()` are created automatically, from a template
+  representation that supports interpreted string literals. The notation
+  extends that of the glue package.
+   ```{r}
+   cpt_text("Some numbers: {1:5}.")
+   ```
+
+* In addition to the glue-style braced R expressions, cli supports
+  pluralizatiion and styling:
+   ```{r}
+   n <- 1; cpt_text("Some letters{?s}: {letters[1:n]}.")
+   n <- 5; cpt_text("Some letters{?s}: {letters[1:n]}.")
+   ```
+
+* You can add style information to a component, except for `cpt_text()`:
+   ```{r}
+   cpt_div(cpt_text("RED ALERT"), attr = list(style = list(color = "red")))
+   ```
+
+* You can add one or more classes to a component (but not for `cpt_text()):
+   ```{r}
+   cpt_div(cpt_text("..."), attr = list(class = "divclass"))
+   ```
+
+* You can add an id to a component:
+   ```{r}
+   cpt_div(cpt_text("..."), attr = list(id = "cpt1"))
+   ```
+
+## Component trees
+
+* The first step to render a component is to create a component tree:
+   ```{r}
+   txt <- "Labore aliquip deserunt mollit sint enim commodo cupidatat
+           officia nulla id. Minim in adipisicing esse elit aute cillum
+           anim quis officia."
+   c1 <- cpt_div(
+     cpt_text(txt),
+     attr = list(style = list("font-style" = "italic"))
+   )
+   t1 <- map_component_tree(c1)
+   t1
+   ```
+
+## Themes and styling
+
+* The next step is to add a theme to the component tree:
+   ```{r}
+   t1t <- theme_component_tree(t1, theme = list(div = list(color = "green")))
+   t1t
+   ```
+
+* Then you "style" the tree, i.e. calculate the final styles according to
+  the style inheritance rules:
+  ```{r}
+  t1s <- style_component_tree(t1t)
+  t1s
+  ```
+
+## Rendering
+
+* Call `render()` to render a component into a character vector, or
+  `preview()` to render it to the screen:
+  ```{r}
+  render(t1s, width = 40)
+  ```
+
+  ```{r}
+  preview(t1s, width = 40)
+  ```
+
+## Compatibility
+
+The aim is to implement the existing `cli_*` functions using the new
+`cpt_*` componnents and rendering algorithms in a way that is 100%
+backwards compatible. It is possible that slight modifications are needed
+in custom themes to keep the output unchanged.
+
+## Using components with the old `cli_*` functions
+
+The old `cli_*` functions (`cli_bullets()`, etc.) will be able to
+take `cpt_*` components as arguments. E.g. to create a bullet list with
+components, you can use
+
+```r
+cli_bullets(c(
+  x = cpt_div(...),
+  i = "Regular text",
+  i = cpt_div(...)
+))
+```
+
+# Component types
 
 ## Text pieces
 
