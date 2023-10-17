@@ -1,4 +1,3 @@
-
 ```{r setup, include = FALSE}
 pkgload::load_all()
 ```
@@ -7,112 +6,113 @@ pkgload::load_all()
 
 ## Creating components
 
-* `cpt_*` functions create components.
-   ```{r}
-   c1 <- cpt_div()
-   c1
-   ```
+`cpt_*` functions create components.
 
-* Some components are block components, other are inline components.
-  The current inline components are `cpt_span()` and `cpt_text()`.
+```{r}
+c1 <- cpt_div()
+c1
+```
 
-* Components may embed other components. Not all types of components are
-  allowed to embed all types of components.
-   ```{r}
-   c2 <- cpt_div(cpt_div())
-   c2
-   ```
+Some components are block components, other are inline components. The current inline components are `cpt_span()` and `cpt_text()`.
 
-* Inline components are only allowed to embed other inline components.
+Components may embed other components. Not all types of components are allowed to embed all types of components.
 
-* `cpt_text()` is a special inline component, that may embed text pieces
-  and `cpt_span()` components.
+```{r}
+c2 <- cpt_div(cpt_div())
+c2
+```
 
-* Subcomponents of `cpt_text()` are created automatically, from a template
-  representation that supports interpreted string literals. The notation
-  extends that of the glue package.
-   ```{r}
-   cpt_text("Some numbers: {1:5}.")
-   ```
+Inline components are only allowed to embed other inline components.
 
-* In addition to the glue-style braced R expressions, cli supports
-  pluralizatiion and styling:
-   ```{r}
-   n <- 1; cpt_text("Some letters{?s}: {letters[1:n]}.")
-   n <- 5; cpt_text("Some letters{?s}: {letters[1:n]}.")
-   ```
+`cpt_text()` is a special inline component, that may embed text pieces and `cpt_span()` components.
 
-* You can add style information to a component, except for `cpt_text()`:
-   ```{r}
-   cpt_div(cpt_text("RED ALERT"), attr = list(style = list(color = "red")))
-   ```
+Subcomponents of `cpt_text()` are created automatically, from a template representation that supports interpreted string literals. The notation extends that of the glue package.
 
-* You can add one or more classes to a component (but not for `cpt_text()):
-   ```{r}
-   cpt_div(cpt_text("..."), attr = list(class = "divclass"))
-   ```
+```{r}
+cpt_text("Some numbers: {1:5}.")
+```
 
-* You can add an id to a component:
-   ```{r}
-   cpt_div(cpt_text("..."), attr = list(id = "cpt1"))
-   ```
+In addition to the glue-style braced R expressions, cli supports pluralizatiion and styling:
+
+```{r}
+n <- 1; cpt_text("Some letters{?s}: {letters[1:n]}.")
+n <- 5; cpt_text("Some letters{?s}: {letters[1:n]}.")
+```
+
+You can add style information to a component, except for `cpt_text()`:
+
+```{r}
+cpt_div(cpt_text("RED ALERT"), attr = list(style = list(color = "red")))
+```
+
+You can add one or more classes to a component (but not for \`cpt_text()):
+
+```{r}
+cpt_div(cpt_text("..."), attr = list(class = "divclass"))
+```
+
+You can add an id to a component:
+
+```{r}
+cpt_div(cpt_text("..."), attr = list(id = "cpt1"))
+```
 
 ## Component trees
 
-* The first step to render a component is to create a component tree:
-   ```{r}
-   txt <- "Labore aliquip deserunt mollit sint enim commodo cupidatat
-           officia nulla id. Minim in adipisicing esse elit aute cillum
-           anim quis officia."
-   c1 <- cpt_div(
-     cpt_text(txt),
-     attr = list(style = list("font-style" = "italic"))
-   )
-   t1 <- map_component_tree(c1)
-   t1
-   ```
+The first step to render a component is to create a component tree:
+
+```{r}
+txt <- "Labore aliquip deserunt mollit sint enim commodo cupidatat
+        officia nulla id. Minim in adipisicing esse elit aute cillum
+        anim quis officia."
+c1 <- cpt_div(
+  cpt_text(txt),
+  attr = list(style = list("font-style" = "italic"))
+)
+t1 <- map_component_tree(c1)
+t1
+```
 
 ## Themes and styling
 
-* The next step is to add a theme to the component tree:
-   ```{r}
-   t1t <- theme_component_tree(t1, theme = list(div = list(color = "green")))
-   t1t
-   ```
+The next step is to add a theme to the component tree:
 
-* Then you "style" the tree, i.e. calculate the final styles according to
-  the style inheritance rules:
-  ```{r}
-  t1s <- style_component_tree(t1t)
-  t1s
-  ```
+```{r}
+t1t <- theme_component_tree(
+  t1, 
+  theme = list(div = list(color = "green"))
+)
+t1t
+```
+
+Then you "style" the tree, i.e. calculate the final styles according to the style inheritance rules:
+
+```{r}
+t1s <- style_component_tree(t1t)
+t1s
+```
 
 ## Rendering
 
-* Call `render()` to render a component into a character vector, or
-  `preview()` to render it to the screen:
-  ```{r}
-  render(t1s, width = 40)
-  ```
+Call `render()` to render a component into a character vector, or `preview()` to render it to the screen:
 
-  ```{r}
-  preview(t1s, width = 40)
-  ```
+```{r}
+render(t1s, width = 40)
+```
+
+```{r}
+preview(t1s, width = 40)
+```
 
 ## Compatibility
 
-The aim is to implement the existing `cli_*` functions using the new
-`cpt_*` componnents and rendering algorithms in a way that is 100%
-backwards compatible. It is possible that slight modifications are needed
-in custom themes to keep the output unchanged.
+The aim is to implement the existing `cli_*` functions using the new `cpt_*` componnents and rendering algorithms in a way that is 100% backwards compatible. It is possible that slight modifications are needed in custom themes to keep the output unchanged.
 
 ## Using components with the old `cli_*` functions
 
-The old `cli_*` functions (`cli_bullets()`, etc.) will be able to
-take `cpt_*` components as arguments. E.g. to create a bullet list with
-components, you can use
+The old `cli_*` functions (`cli_bullets()`, etc.) will be able to take `cpt_*` components as arguments. E.g. to create a bullet list with components, you can use
 
-```r
+``` r
 cli_bullets(c(
   x = cpt_div(...),
   i = "Regular text",
@@ -124,110 +124,103 @@ cli_bullets(c(
 
 ## Text pieces
 
-- [x] plain text
-- [x] substitution
-- [x] `span`
+-   [x] plain text
+-   [x] substitution
+-   [x] `span`
 
 ## Inline
 
-- [x] `span`
-- [x] `text`
+-   [x] `span`
+-   [x] `text`
 
 ## Block
 
-- [ ] `blockquote`
-- [x] `div`
-- [ ] `dl`
-- [ ] `h1`, `h2`, `h3`
-- [ ] `li`
-- [x] ~~`meta`~~ Not needed?
-- [ ] `ol`
-- [ ] `par`
-- [ ] `rule`
-- [ ] `status` (is this needed here?)
-- [ ] `ul`
-- [ ] `verbatim`
+-   [ ] `blockquote`
+-   [x] `div`
+-   [ ] `dl`
+-   [ ] `h1`, `h2`, `h3`
+-   [ ] `li`
+-   [x] ~~`meta`~~ Not needed?
+-   [ ] `ol`
+-   [ ] `par`
+-   [ ] `rule`
+-   [ ] `status` (is this needed here?)
+-   [ ] `ul`
+-   [ ] `verbatim`
 
 ## Composite components:
 
-- [ ] `alert`: a `div`
-- [ ] `alert_danger`: a `div`
-- [ ] `alert_info`: a `div`
-- [ ] `alert_success`: a `div`
-- [ ] `alert_warning`: a `div`
-- [ ] `bullets`: using an `ul`
+-   [ ] `alert`: a `div`
+-   [ ] `alert_danger`: a `div`
+-   [ ] `alert_info`: a `div`
+-   [ ] `alert_success`: a `div`
+-   [ ] `alert_warning`: a `div`
+-   [ ] `bullets`: using an `ul`
 
 # Component details
 
 ## Plain text (text piece)
 
-Plain text piece. It does not have direct styling, but it may have
-inherited styling, as a `style` attribute.
+Plain text piece. It does not have direct styling, but it may have inherited styling, as a `style` attribute.
 
 ### Styles
 
-- [x] `background-color`
-- [x] `color`
-- [x] `fmt`
-- [x] `font-style`
-- [x] `font-weight`
-- [x] `text-decoration`
+-   [x] `background-color`
+-   [x] `color`
+-   [x] `fmt`
+-   [x] `font-style`
+-   [x] `font-weight`
+-   [x] `text-decoration`
 
 ## Substitution (text piece)
 
-A substitution. It has a `code` entry, the original code, a `value`
-entry, the R object the `code` evaluated to, and a `style` entry that cannot
-be specified directly, but can be inherited.
+A substitution. It has a `code` entry, the original code, a `value` entry, the R object the `code` evaluated to, and a `style` entry that cannot be specified directly, but can be inherited.
 
 ### Styles
 
-This is the only (sub)component that has vector-formatting and
-collapsing styles.
+This is the only (sub)component that has vector-formatting and collapsing styles.
 
 Most other styles apply elementwise
 
-- [x] `after` (elementwise)
-- [x] `background-color` (elementwise)
-- [x] `before` (elementwise)
-- [x] ~~`class-map`~~ we can deprecate this, and have a better way to
-      define themes for vector classes directly.
-- [x] `collapse` from vector to scalar
-- [x] `color` (elementwise)
-- [x] `digits` This was implemented via a `transform` style and calling
-      `cli_vector()` explicitly.
-- [x] `fmt` (vectorized)
-- [x] `font-style` (elementwise)
-- [x] `font-weight` (elementwise)
-- [x] `prefix` (elementwise)
-- [x] `postfix` (elementwise)
-- [x] `string-quote` This was implemented via a `transform` style and calling
-      `cli_vector()` explicitly.
-- [x] `text-decoration` (elementwise)
-- [x] `transform` (vectorized)
-- [x] `vec-last`
-- [x] `vec-sep`
-- [x] `vec-sep2`
-- [x] `vec-trunc`
-- [x] `vec-trunc-style`
+-   [x] `after` (elementwise)
+-   [x] `background-color` (elementwise)
+-   [x] `before` (elementwise)
+-   [x] ~~`class-map`~~ we can deprecate this, and have a better way to define themes for vector classes directly.
+-   [x] `collapse` from vector to scalar
+-   [x] `color` (elementwise)
+-   [x] `digits` This was implemented via a `transform` style and calling `cli_vector()` explicitly.
+-   [x] `fmt` (vectorized)
+-   [x] `font-style` (elementwise)
+-   [x] `font-weight` (elementwise)
+-   [x] `prefix` (elementwise)
+-   [x] `postfix` (elementwise)
+-   [x] `string-quote` This was implemented via a `transform` style and calling `cli_vector()` explicitly.
+-   [x] `text-decoration` (elementwise)
+-   [x] `transform` (vectorized)
+-   [x] `vec-last`
+-   [x] `vec-sep`
+-   [x] `vec-sep2`
+-   [x] `vec-trunc`
+-   [x] `vec-trunc-style`
 
 ## `span` (inline and text piece)
 
 ### Styles
 
-- [x] `after`
-- [x] `background-color`
-- [x] `before`
-- [x] `color`
-- [x] `fmt`
-- [x] `font-style`
-- [x] `font-weight`
-- [ ] `margin-left` (need collapsing)
-- [ ] `margin-right` (need collapsing)
-- [x] `padding-left`
-- [x] `padding-right`
-- [ ] `prefix`
-- [ ] `postfix`
-- [x] `text-decoration`
+-   [x] `after`
+-   [x] `background-color`
+-   [x] `before`
+-   [x] `color`
+-   [x] `fmt`
+-   [x] `font-style`
+-   [x] `font-weight`
+-   [ ] `margin-left` (need collapsing)
+-   [ ] `margin-right` (need collapsing)
+-   [x] `padding-left`
+-   [x] `padding-right`
+-   [ ] `prefix`
+-   [ ] `postfix`
+-   [x] `text-decoration`
 
 ## `text` (inline)
 
@@ -239,21 +232,21 @@ This is styled piece-wise, inline.
 
 ### Styles for div elements
 
-- [x] `after`
-- [x] `before`
-- [x] `color`
-- [x] `fmt`
-- [x] `font-style`
-- [x] `font-weight`
-- [ ] `margin-bottom` (need collapsing)
-- [x] `margin-left`
-- [x] `margin-right`
-- [ ] `margin-top` (need collapsing)
-- [x] `padding-bottom`
-- [x] `padding-left`
-- [x] `padding-right`
-- [x] `padding-top`
-- [x] `text-decoration`
+-   [x] `after`
+-   [x] `before`
+-   [x] `color`
+-   [x] `fmt`
+-   [x] `font-style`
+-   [x] `font-weight`
+-   [ ] `margin-bottom` (need collapsing)
+-   [x] `margin-left`
+-   [x] `margin-right`
+-   [ ] `margin-top` (need collapsing)
+-   [x] `padding-bottom`
+-   [x] `padding-left`
+-   [x] `padding-right`
+-   [x] `padding-top`
+-   [x] `text-decoration`
 
 ## `dl` (block)
 
@@ -291,370 +284,367 @@ This is styled piece-wise, inline.
 
 ## `after`
 
-- [x] ~~text~~
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `background-color`
 
-- [x] text
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] text
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `before`
 
-- [x] ~~text~~
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `class-map`
 
-- [x] ~~text~~
-- [ ] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [ ] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited, merged
+-   [ ] inherited, merged
 
 ## `color`
 
-- [x] text
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] text
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `collapse`
 
 Called right after `transform`, it simplifies collapsing.
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `digits`
 
-- [x] ~~text~~
-- [ ] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [ ] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `fmt`
 
-- [x] text
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] text
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `font-style`
 
-- [x] text
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] text
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `font-weight`
 
-- [x] text
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] text
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `line-type`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [ ] rule
-- [x] ~~other block components~~
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [ ] rule
+-   [x] ~~other block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `list-style-type`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [ ] ul (?)
-- [ ] li (?)
-- [x] ~~other block components~~
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [ ] ul (?)
+-   [ ] li (?)
+-   [x] ~~other block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `margin-bottom`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [ ] div, h1, h2, h3 (need collapsing)
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [ ] div, h1, h2, h3 (need collapsing)
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `margin-left`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [ ] span (need collapsing)
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [ ] span (need collapsing)
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `margin-right`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [ ] span (need collapsing)
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [ ] span (need collapsing)
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `margin-top`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [ ] div, h1, h2, h3 (need collapsing)
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [ ] div, h1, h2, h3 (need collapsing)
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `padding-bottom`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `padding-left`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `padding-right`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `padding-top`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [x] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `prefix`
 
-- [x] ~~text~~
-- [x] sub
-- [ ] span
-- [ ] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] sub
+-   [ ] span
+-   [ ] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `postfix`
 
-- [x] ~~text~~
-- [x] sub
-- [ ] span
-- [ ] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] sub
+-   [ ] span
+-   [ ] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `start`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [ ] ol
-- [x] ~~other block components~~
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [ ] ol
+-   [x] ~~other block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `string-quote`
 
-- [x] ~~text~~
-- [ ] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [ ] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `text-decoration`
 
-- [x] text
-- [x] sub
-- [x] span
-- [x] div, h1, h2, h3
+-   [x] text
+-   [x] sub
+-   [x] span
+-   [x] div, h1, h2, h3
 
 Features:
 
-- [x] ~~inherited~~
+-   [x] ~~inherited~~
 
 ## `text-exdent`
 
-- [x] ~~text~~
-- [x] ~~sub~~
-- [x] ~~span~~
-- [ ] div, h1, h2, h3
+-   [x] ~~text~~
+-   [x] ~~sub~~
+-   [x] ~~span~~
+-   [ ] div, h1, h2, h3
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `transform`
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `vec-last`
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `vec-sep`
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `vec-sep2`
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `vec-trunc`
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 ## `vec-trunc-style`
 
-- [x] ~~text~~
-- [x] sub
-- [x] ~~span~~
-- [x] ~~block components~~
+-   [x] ~~text~~
+-   [x] sub
+-   [x] ~~span~~
+-   [x] ~~block components~~
 
 Features:
 
-- [ ] inherited
+-   [ ] inherited
 
 # Styles cascading
 
 ## Automatic `span` elements and substitution
 
-The tricky thing here is that some styles apply to the substitutions
-inside the span, and not the span itself. In fact they might apply to
-the elements of substituted vectors. (Not great, but this is what we need
-to work with at this point.)
+The tricky thing here is that some styles apply to the substitutions inside the span, and not the span itself. In fact they might apply to the elements of substituted vectors. (Not great, but this is what we need to work with at this point.)
 
 ```{r}
 fun <- function() {
@@ -668,40 +658,43 @@ fun <- function() {
 fun()
 ```
 
-Style inheritence also works differently if there is a single substitution
-inside the span tag: then it is not applied to the tag itself.
+Style inheritence also works differently if there is a single substitution inside the span tag: then it is not applied to the tag itself.
 
-So if we want to clear this up, then we need to keep the current styles,
-and create new ones (possibly by qualifying the existing ones), that apply
-either only to the span, or to the substitutions inside the span.
+So if we want to clear this up, then we need to keep the current styles, and create new ones (possibly by qualifying the existing ones), that apply either only to the span, or to the substitutions inside the span.
 
-Possibly we need to define a new `expr` tag or qualifyier that we can use
-in themes. With a tag we could have:
-```
+Possibly we need to define a new `expr` tag or qualifyier that we can use in themes. With a tag we could have:
+
+```         
 list("span expr" = list(after = ">"))
 ```
+
 and with a new qualifier we could have
-```
+
+```         
 list(span = list("expr::after" = ">"))
 ```
-The first one seems more logical, it is just a new tag, after all, no new
-concept to learn, just that `{}` substitutions now create an implicit
-`expr` tag.
+
+The first one seems more logical, it is just a new tag, after all, no new concept to learn, just that `{}` substitutions now create an implicit `expr` tag.
 
 We would need to keep the compatibility with the current themes, though, so
-```
+
+```         
 list(span = list(after = ">"))
 ```
-would still apply to both the expressions and the tag itself, which is not
-great. With qualifyers we could have
-```
+
+would still apply to both the expressions and the tag itself, which is not great. With qualifyers we could have
+
+```         
 list(span = list("expr::after" = ">"))
 list(span = list("self::after" = "**"))
 ```
+
 or maybe
-```
+
+```         
 list(span = list("after::expr" = ">"))
 list(span = list("after::self" = "**"))
 ```
-where we explicitly choose whether to apply to the expression to the
-substituted expressions (possibly elementwise), or to the tag itself.
+
+where we explicitly choose whether to apply to the expression to the substituted expressions (possibly elementwise), or to the tag itself.
+
