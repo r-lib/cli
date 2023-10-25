@@ -88,9 +88,25 @@ See \url{https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1}
 
 \subsection{\code{cli.default_num_colors}}{
 
-Default number of ANSI colors. This value is only used if ANSI color support
-is detected. You can set this value to keep relying on auto-detection,
-but to adjust the number of colors when cli detects color support.
+Default number of ANSI colors. This value is used if the number of colors
+is not already set by
+\itemize{
+\item the \code{cli.num_colors} option,
+\item the \code{R_CLI_NUM_COLORS} environment variable,
+\item the \code{crayon.enabled} and \code{crayon.colors} options,
+\item the \code{NO_COLOR} environment variable,
+\item the \code{knitr.in.progress} option,
+\item a \code{sink()} call for the stream.
+}
+
+You can also use this option if color support is detected correctly, but
+you want to adjust the number of colors. E.g.
+\itemize{
+\item if \code{crayon.enabled} is \code{TRUE}, but \code{crayon.colors} is not,
+\item in Emacs on Windows,
+\item in terminals.
+}
+
 See \code{\link[=num_ansi_colors]{num_ansi_colors()}}. See also the \code{cli.num_colors} option.
 }
 
@@ -236,6 +252,8 @@ See \code{\link[=cli_progress_builtin_handlers]{cli_progress_builtin_handlers()}
 
 Delay before showing a progress bar, in seconds.
 Progress bars that finish before this delay are not shown at all.
+cli also shows progress bars that have more than 50\% to go after half of
+this delay has passed.
 }
 
 \subsection{\code{cli.spinner}}{

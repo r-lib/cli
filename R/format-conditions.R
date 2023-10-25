@@ -27,6 +27,8 @@
 #' @param message It is formatted via a call to [cli_bullets()].
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
+#' @seealso These functions support [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 format_error <- function(message, .envir = parent.frame()) {

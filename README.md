@@ -26,16 +26,16 @@ styles.
 
 # Features
 
--   Build a CLI using semantic elements: headings, lists, alerts,
-    paragraphs.
--   Theming via a CSS-like language.
--   Terminal colors and font styles.
--   All cli text can contain interpreted string literals, via the
-    [glue](https://github.com/tidyverse/glue) package.
--   Progress bars from R and C code.
--   Error and warning messages with rich text formatting.
--   Support for pluralized messages.
--   ANSI styled string manipulation.
+- Build a CLI using semantic elements: headings, lists, alerts,
+  paragraphs.
+- Theming via a CSS-like language.
+- Terminal colors and font styles.
+- All cli text can contain interpreted string literals, via the
+  [glue](https://github.com/tidyverse/glue) package.
+- Progress bars from R and C code.
+- Error and warning messages with rich text formatting.
+- Support for pluralized messages.
+- ANSI styled string manipulation.
 
 # Installation
 
@@ -58,32 +58,45 @@ pkgs <- c("foo", "bar", "foobar")
 cli_alert_success("Downloaded {length(pkgs)} packages.")
 ```
 
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/alert-success-dark.svg">
 <img src="man/figures/README/alert-success.svg" width="100%" />
+</picture>
 
 ``` r
 db_url <- "example.com:port"
 cli_alert_info("Reopened database {.url {db_url}}.")
 ```
 
-<img src="man/figures/README/alert-info.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/alert-info-dark.svg">
+<img src="man/figures/README/alert-info.svg" width="100%" /> </picture>
 
 ``` r
 cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
 
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/alert-warning-dark.svg">
 <img src="man/figures/README/alert-warning.svg" width="100%" />
+</picture>
 
 ``` r
 cli_alert_danger("Failed to connect to database.")
 ```
 
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/alert-danger-dark.svg">
 <img src="man/figures/README/alert-danger.svg" width="100%" />
+</picture>
 
 ``` r
 cli_alert("A generic alert")
 ```
 
-<img src="man/figures/README/alert.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/alert-dark.svg">
+<img src="man/figures/README/alert.svg" width="100%" /> </picture>
 
 ## Headings
 
@@ -93,19 +106,25 @@ Three levels of headings.
 cli_h1("Heading 1")
 ```
 
-<img src="man/figures/README/h1.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/h1-dark.svg">
+<img src="man/figures/README/h1.svg" width="100%" /> </picture>
 
 ``` r
 cli_h2("Heading 2")
 ```
 
-<img src="man/figures/README/h2.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/h2-dark.svg">
+<img src="man/figures/README/h2.svg" width="100%" /> </picture>
 
 ``` r
 cli_h3("Heading 3")
 ```
 
-<img src="man/figures/README/h3.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/h3-dark.svg">
+<img src="man/figures/README/h3.svg" width="100%" /> </picture>
 
 ## Lists
 
@@ -125,7 +144,9 @@ fun <- function() {
 fun()
 ```
 
-<img src="man/figures/README/lists.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/lists-dark.svg">
+<img src="man/figures/README/lists.svg" width="100%" /> </picture>
 
 ## Themes
 
@@ -141,7 +162,9 @@ fun <- function() {
 fun()
 ```
 
-<img src="man/figures/README/themes.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/themes-dark.svg">
+<img src="man/figures/README/themes.svg" width="100%" /> </picture>
 
 ## Command substitution
 
@@ -156,7 +179,9 @@ cli_alert_info(c(
   "{prettyunits::pretty_sec(dt)}"))
 ```
 
-<img src="man/figures/README/glue.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/glue-dark.svg">
+<img src="man/figures/README/glue.svg" width="100%" /> </picture>
 
 ## Pluralization
 
@@ -168,7 +193,9 @@ ndirs <- 1
 cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
 ```
 
-<img src="man/figures/README/plurals.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/plurals-dark.svg">
+<img src="man/figures/README/plurals.svg" width="100%" /> </picture>
 
 ## Progress bars
 
@@ -183,7 +210,9 @@ clean <- function() {
 clean()
 ```
 
-<img src="man/figures/README/progress.svg" width="100%" />
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README/progress-dark.svg">
+<img src="man/figures/README/progress.svg" width="100%" /> </picture>
 
 # Documentation
 

@@ -43,3 +43,15 @@ options(cli.progress_var_style = NULL)
 </pre></div>
 }}
 }
+\seealso{
+Other progress bar functions: 
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_bar}()},
+\code{\link{cli_progress_builtin_handlers}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_num}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_step}()},
+\code{\link{progress-variables}}
+}
+\concept{progress bar functions}

@@ -109,13 +109,15 @@
 #'
 #' Updating a progress bar on the screen is costly, so cli tries to avoid
 #' it for quick loops. By default a progress bar is only shown after two
-#' seconds. You can change this default with the `cli.progress_show_after`
-#' global option (see [cli-config]).
+#' seconds, or after half of that if less than 50% of the iterations are
+#' complete. You can change the two second default with the
+#' `cli.progress_show_after` global option (see [cli-config]).
 #'
 #' (In the cli documentation we usually set `cli.progress_show_after` to
 #' `0` (zero seconds), so progress bars are shown immediately.)
 #'
-#' In this example we only show the progress bar after two seconds.
+#' In this example we only show the progress bar after one second, because
+#' more than 50% of the iterations remain after one second.
 #'
 #' ```{asciicast progress-after}
 #' #| asciicast_at = "all",
@@ -292,8 +294,11 @@
 #' @return `cli_progress_bar()` returns the id of the new progress bar.
 #' The id is a string constant.
 #'
+#' @seealso These functions support [inline markup][inline-markup].
 #' @seealso [cli_progress_message()] and [cli_progress_step()] for simpler
 #'   progress messages.
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @aliases __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @export
 
@@ -328,6 +333,7 @@ cli_progress_bar <- function(name = NULL,
   bar$type <- match.arg(type)
   bar$total <- total
   bar$show_after <- start + getOption("cli.progress_show_after", 2)
+  bar$show_50 <- start + getOption("cli.progress_show_after", 2) / 2
   bar$format_orig <- bar$format <- format
   bar$format_done_orig <- bar$format_done <- format_done %||% format
   bar$format_failed_orig <- bar$format_failed <- format_failed %||% format
@@ -428,7 +434,8 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
 
   now <- .Call(clic_get_time)
   upd <- .Call(clic_update_due)
-  if (force || (upd && now > pb$show_after)) {
+  if (force || (upd && now > pb$show_after) ||
+      (!is.na(pb$total) && upd && now > pb$show_50 && pb$current <= pb$total / 2)) {
     if (upd) cli_tick_reset()
     pb$tick <- pb$tick + 1L
 
@@ -535,6 +542,9 @@ cli_progress_done <- function(id = NULL, .envir = parent.frame(),
 #' @param .envir Environment to use for glue interpolation of `text`.
 #' @return `TRUE`, always.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
@@ -604,8 +614,11 @@ cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
 #'
 #' @return The id of the new progress bar.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
 #' @seealso [cli_progress_bar()] for the complete progress bar API.
 #'   [cli_progress_step()] for a similar display that is styled by default.
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_message <- function(msg,
@@ -660,7 +673,7 @@ cli_progress_message <- function(msg,
 #' ## Spinner
 #'
 #' You can add a spinner to some or all steps with `spinner = TRUE`,
-#' but not that this will only work if you call [cli_progress_update()]
+#' but note that this will only work if you call [cli_progress_update()]
 #' regularly.
 #'
 #' ```{asciicast progress-step-spin}
@@ -753,6 +766,9 @@ cli_progress_message <- function(msg,
 #' @param .envir Passed to [cli_progress_bar()].
 #' @param ... Passed to [cli_progress_bar()].
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family progress bar functions
+#' @family functions supporting inline markup
 #' @export
 
 cli_progress_step <- function(msg,

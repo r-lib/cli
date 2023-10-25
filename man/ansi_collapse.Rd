@@ -23,18 +23,18 @@ to collapse.}
 \item{last}{Last separator, if there is no truncation. E.g. use
 \code{", and "} for the Oxford comma.}
 
-\item{trunc}{MAximum number of elements to show. For \code{sytle = "head"}
+\item{trunc}{Maximum number of elements to show. For \code{style = "head"}
 at least \code{trunc = 1} is used. For \code{style = "both-ends"} at least
 \code{trunc = 5} is used, even if a smaller number is specified.}
 
 \item{width}{Limit for the display width of the result, in characters.
 This is a hard limit, and the output will never exceed it.
 This argument is not implemented for the \code{"both-ends"} style, which
-always uses \code{Inf}, with a warning if a fininte \code{width} value is set.}
+always uses \code{Inf}, with a warning if a finite \code{width} value is set.}
 
-\item{ellipsis}{character string to use at the place of the truncation.
-By default the Unicode ellipsis character is used if the console is
-UTF-8 and three dots otherwise.}
+\item{ellipsis}{Character string to use at the place of the truncation.
+By default, the Unicode ellipsis character is used if the console is
+UTF-8, and three dots otherwise.}
 
 \item{style}{Truncation style:
 \itemize{
@@ -50,8 +50,6 @@ vector are \code{NA}.
 }
 \description{
 Features:
-}
-\details{
 \itemize{
 \item custom separator,
 \item custom last separator: \code{last} argument,
@@ -59,7 +57,7 @@ Features:
 \item uses Unicode ellipsis character on UTF-8 console,
 \item can collapse "from both ends", with \code{style = "both-ends"},
 \item can consider a limit for the display width of the result, in characters,
-\item handles ANSI control sequences correctly when measuring dipaly width.
+\item handles ANSI control sequences correctly when measuring display width.
 }
 }
 \examples{
@@ -72,5 +70,5 @@ ansi_collapse(letters, trunc = 5)
 ansi_collapse(letters, trunc = 5, style = "head")
 }
 \seealso{
-\code{glue_collapse} in the glue package incpired this function
+\code{glue_collapse} in the glue package inspired this function
 }

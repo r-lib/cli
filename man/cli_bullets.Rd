@@ -26,7 +26,7 @@ Formatting is specified by the names of \code{text}, and can be themed.
 cli creates a \code{div} element of class \code{bullets} for the whole bullet list.
 Each item is another \code{div} element of class \verb{bullet-<name>}, where
 \verb{<name>} is the name of the entry in \code{text}. Entries in \code{text} without
-a name create a \code{div} element of class \code{buller-empty}, and if the
+a name create a \code{div} element of class \code{bullet-empty}, and if the
 name is a single space character, the class is \code{bullet-space}.
 
 The built-in theme defines the following item types:
@@ -67,3 +67,30 @@ corresponding \verb{bullet-<name>} classes.
 </pre></div>
 }}
 }
+\seealso{
+This function supports \link[=inline-markup]{inline markup}.
+
+Other functions supporting inline markup: 
+\code{\link{cli_abort}()},
+\code{\link{cli_alert}()},
+\code{\link{cli_blockquote}()},
+\code{\link{cli_bullets_raw}()},
+\code{\link{cli_dl}()},
+\code{\link{cli_h1}()},
+\code{\link{cli_li}()},
+\code{\link{cli_ol}()},
+\code{\link{cli_process_start}()},
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_bar}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_step}()},
+\code{\link{cli_rule}},
+\code{\link{cli_status_update}()},
+\code{\link{cli_status}()},
+\code{\link{cli_text}()},
+\code{\link{cli_ul}()},
+\code{\link{format_error}()},
+\code{\link{format_inline}()}
+}
+\concept{functions supporting inline markup}

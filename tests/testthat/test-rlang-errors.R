@@ -133,6 +133,7 @@ test_that_cli(config = "ansi", "update_rstudio_color", {
 })
 
 test_that("cli_abort() captures correct call and backtrace", {
+  skip_on_cran()
   rlang::local_options(
     rlang_trace_top_env = environment(),
     rlang_trace_format_srcrefs = FALSE
@@ -144,7 +145,7 @@ test_that("cli_abort() captures correct call and backtrace", {
 
   expect_snapshot({
     print(expect_error(f()))
-  })
+  }, variant = paste0("rlang-", packageVersion("rlang")))
 
   classed_stop <- function(message, env = parent.frame()) {
     cli::cli_abort(
@@ -164,10 +165,11 @@ test_that("cli_abort() captures correct call and backtrace", {
 
   expect_snapshot({
     print(expect_error(f(list())))
-  })
+  }, variant = paste0("rlang-", packageVersion("rlang")))
 })
 
 test_that("cli_abort(.internal = TRUE) reports the correct function (r-lib/rlang#1386)", {
+  skip_on_cran()
   fn <- function() {
     cli::cli_abort("Message.", .internal = TRUE)
   }
@@ -176,5 +178,5 @@ test_that("cli_abort(.internal = TRUE) reports the correct function (r-lib/rlang
   # Should mention an internal error in the `base` package
   expect_snapshot({
     (expect_error(fn()))
-  }, variant = as.character(packageVersion("rlang")))
+  }, variant = paste0("rlang-", packageVersion("rlang")))
 })

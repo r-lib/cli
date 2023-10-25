@@ -139,6 +139,26 @@
 # * Use a `procsrcref` column for processed source references.
 #   Otherwise testthat (and probably other rlang based packages), will
 #   pick up the `srcref` column, and they expect an `srcref` object there.
+#
+# ### 3.1.0 -- 2022-10-04
+#
+# * Add ANSI hyperlinks to stack traces, if we have a recent enough
+#   cli package that supports this.
+#
+# ### 3.1.1 -- 2022-11-17
+#
+# * Use `[[` instead of `$` to fix some partial matches.
+# * Use fully qualified `base::stop()` to enable overriding `stop()`
+#   in a package. (Makes sense if compat files use `stop()`.
+# * The `is_interactive()` function is now exported.
+#
+# ### 3.1.2 -- 2022-11-18
+#
+# * The `parent` condition can now be an interrupt.
+#
+# ### 3.1.3 -- 2023-01-15
+#
+# * Now we do not load packages when walking the trace.
 
 err <- local({
 
@@ -212,10 +232,10 @@ err <- local({
       throw(new_error("Parent condition must be a condition object"))
     }
 
-    if (isTRUE(cond$call)) {
-      cond$call <- sys.call(-1) %||% sys.call()
-    } else if (identical(cond$call, FALSE)) {
-      cond$call <- NULL
+    if (isTRUE(cond[["call"]])) {
+      cond[["call"]] <- sys.call(-1) %||% sys.call()
+    } else if (identical(cond[["call"]], FALSE)) {
+      cond[["call"]] <- NULL
     }
 
     cond <- process_call(cond)
@@ -294,7 +314,7 @@ err <- local({
     opts <- options(show.error.messages = FALSE)
     on.exit(options(opts), add = TRUE)
 
-    stop(cond)
+    base::stop(cond)
   }
 
   # -- rethrow with parent -----------------------------------------------
@@ -350,7 +370,7 @@ err <- local({
         .hide_from_trace <- 0:1
         e$srcref <- srcref
         e$procsrcref <- NULL
-        e$call <- call
+        e[["call"]] <- call
         name <- native_name(.NAME)
         err <- new_error("Native call to `", name, "` failed", call. = call1)
         cerror <- if (inherits(e, "simpleError")) "c_error"
@@ -385,7 +405,7 @@ err <- local({
         .hide_from_trace <- 0:1
         e$srcref <- srcref
         e$procsrcref <- NULL
-        e$call <- call
+        e[["call"]] <- call
         name <- native_name(.NAME)
         err <- new_error("Native call to `", name, "` failed", call. = call1)
         cerror <- if (inherits(e, "simpleError")) "c_error"
@@ -531,6 +551,7 @@ err <- local({
     if (ns == "base") return("::")
     if (! ns %in% loadedNamespaces()) return("")
     name <- call_name(call)
+    if (! ns %in% loadedNamespaces()) return("::")
     nsenv <- asNamespace(ns)$.__NAMESPACE__.
     if (is.null(nsenv)) return("::")
     if (is.null(nsenv$exports)) return(":::")
@@ -558,7 +579,7 @@ err <- local({
       procsrcref = procsrcrefs,
       pid = pids
     )
-    trace$call <- calls
+    trace[["call"]] <- calls
 
     class(trace) <- c("rlib_trace_3_0", "rlib_trace", "tbl", "data.frame")
     trace
@@ -691,12 +712,20 @@ err <- local({
 
   # -- condition message with cli ---------------------------------------
 
+  cnd_message_robust <- function(cond) {
+    class(cond) <- setdiff(class(cond), "rlib_error_3_0")
+    conditionMessage(cond) %||%
+      (if (inherits(cond, "interrupt")) "interrupt") %||%
+      ""
+  }
+
   cnd_message_cli <- function(cond, full = FALSE) {
     exp <- paste0(cli::col_yellow("!"), " ")
     add_exp <- is.null(names(cond$message))
+    msg <- cnd_message_robust(cond)
 
     c(
-      paste0(if (add_exp) exp, cond$message),
+      paste0(if (add_exp) exp, msg),
       if (inherits(cond$parent, "condition")) {
         msg <- if (full && inherits(cond$parent, "rlib_error_3_0")) {
           format(cond$parent,
@@ -706,6 +735,8 @@ err <- local({
                  header = FALSE,
                  advice = FALSE
           )
+        } else if (inherits(cond$parent, "interrupt")) {
+          "interrupt"
         } else {
           conditionMessage(cond$parent)
         }
@@ -724,7 +755,7 @@ err <- local({
     exp <- "! "
     add_exp <- is.null(names(cond$message))
     c(
-      paste0(if (add_exp) exp, cond$message),
+      paste0(if (add_exp) exp, cnd_message_robust(cond)),
       if (inherits(cond$parent, "condition")) {
         msg <- if (full && inherits(cond$parent, "rlib_error_3_0")) {
           format(cond$parent,
@@ -734,6 +765,8 @@ err <- local({
                  header = FALSE,
                  advice = FALSE
           )
+        } else if (inherits(cond$parent, "interrupt")) {
+          "interrupt"
         } else {
           conditionMessage(cond$parent)
         }
@@ -777,7 +810,7 @@ err <- local({
 
   format_header_line_cli <- function(x, prefix = NULL) {
     p_error <- format_error_heading_cli(x, prefix)
-    p_call <- format_call_cli(x$call)
+    p_call <- format_call_cli(x[["call"]])
     p_srcref <- format_srcref_cli(conditionCall(x), x$procsrcref %||% x$srcref)
     paste0(p_error, p_call, p_srcref, if (!is.null(conditionCall(x))) ":")
   }
@@ -859,11 +892,11 @@ err <- local({
     srcref <- if ("srcref" %in% names(x) || "procsrcref" %in% names(x)) {
       vapply(
         seq_len(nrow(x)),
-        function(i) format_srcref_cli(x$call[[i]], x$procsrcref[[i]] %||% x$srcref[[i]]),
+        function(i) format_srcref_cli(x[["call"]][[i]], x$procsrcref[[i]] %||% x$srcref[[i]]),
         character(1)
       )
     } else {
-      unname(vapply(x$call, format_srcref_cli, character(1)))
+      unname(vapply(x[["call"]], format_srcref_cli, character(1)))
     }
 
     lines <- paste0(
@@ -885,7 +918,10 @@ err <- local({
   }
 
   format_trace_call_cli <- function(call, ns = "") {
-    envir <- tryCatch(asNamespace(ns), error = function(e) .GlobalEnv)
+    envir <- tryCatch({
+      if (!ns %in% loadedNamespaces()) stop("no")
+      asNamespace(ns)
+    }, error = function(e) .GlobalEnv)
     cl <- trimws(format(call))
     if (length(cl) > 1) { cl <- paste0(cl[1], " ", cli::symbol$ellipsis) }
     # Older cli does not have 'envir'.
@@ -935,18 +971,18 @@ err <- local({
     srcref <- if ("srcref" %in% names(x) || "procsrfref" %in% names(x)) {
       vapply(
         seq_len(nrow(x)),
-        function(i) format_srcref_plain(x$call[[i]], x$procsrcref[[i]] %||% x$srcref[[i]]),
+        function(i) format_srcref_plain(x[["call"]][[i]], x$procsrcref[[i]] %||% x$srcref[[i]]),
         character(1)
       )
     } else {
-      unname(vapply(x$call, format_srcref_plain, character(1)))
+      unname(vapply(x[["call"]], format_srcref_plain, character(1)))
     }
 
     lines <- paste0(
       paste0(format(x$num), ". "),
       ifelse (visible, "", "| "),
       scope,
-      vapply(x$call, format_trace_call_plain, character(1)),
+      vapply(x[["call"]], format_trace_call_plain, character(1)),
       srcref
     )
 
@@ -959,7 +995,7 @@ err <- local({
 
   format_header_line_plain <- function(x, prefix = NULL) {
     p_error <- format_error_heading_plain(x, prefix)
-    p_call <- format_call_plain(x$call)
+    p_call <- format_call_plain(x[["call"]])
     p_srcref <- format_srcref_plain(conditionCall(x), x$procsrcref %||% x$srcref)
     paste0(p_error, p_call, p_srcref, if (!is.null(conditionCall(x))) ":")
   }
@@ -1026,15 +1062,15 @@ err <- local({
 
   process_call <- function(cond) {
     cond[c("call", "srcref", "procsrcref")] <- list(
-      call = if (is.null(cond$call)) {
+      call = if (is.null(cond[["call"]])) {
         NULL
-      } else if (is.character(cond$call)) {
-        cond$call
+      } else if (is.character(cond[["call"]])) {
+        cond[["call"]]
       } else {
-        deparse(cond$call, nlines = 2)
+        deparse(cond[["call"]], nlines = 2)
       },
       srcref = NULL,
-      procsrcref = get_srcref(cond$call, cond$procsrcref %||% cond$srcref)
+      procsrcref = get_srcref(cond[["call"]], cond$procsrcref %||% cond$srcref)
     )
     cond
   }
@@ -1139,6 +1175,7 @@ err <- local({
       add_trace_back   = add_trace_back,
       process_call     = process_call,
       onload_hook      = onload_hook,
+      is_interactive   = is_interactive,
       format = list(
         advice        = format_advice,
         call          = format_call,

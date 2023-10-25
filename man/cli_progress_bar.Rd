@@ -237,13 +237,15 @@ fun()
 
 Updating a progress bar on the screen is costly, so cli tries to avoid
 it for quick loops. By default a progress bar is only shown after two
-seconds. You can change this default with the \code{cli.progress_show_after}
-global option (see \link{cli-config}).
+seconds, or after half of that if less than 50\% of the iterations are
+complete. You can change the two second default with the
+\code{cli.progress_show_after} global option (see \link{cli-config}).
 
 (In the cli documentation we usually set \code{cli.progress_show_after} to
 \code{0} (zero seconds), so progress bars are shown immediately.)
 
-In this example we only show the progress bar after two seconds.
+In this example we only show the progress bar after one second, because
+more than 50\% of the iterations remain after one second.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function() \{
   cli_alert("Starting now, at \{Sys.time()\}")
@@ -359,6 +361,43 @@ fun(paste0("https://acme.com/data-", 1:10, ".zip"))
 }
 }
 \seealso{
+These functions support \link[=inline-markup]{inline markup}.
+
 \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}} for simpler
 progress messages.
+
+Other progress bar functions: 
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_builtin_handlers}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_num}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_step}()},
+\code{\link{cli_progress_styles}()},
+\code{\link{progress-variables}}
+
+Other functions supporting inline markup: 
+\code{\link{cli_abort}()},
+\code{\link{cli_alert}()},
+\code{\link{cli_blockquote}()},
+\code{\link{cli_bullets_raw}()},
+\code{\link{cli_bullets}()},
+\code{\link{cli_dl}()},
+\code{\link{cli_h1}()},
+\code{\link{cli_li}()},
+\code{\link{cli_ol}()},
+\code{\link{cli_process_start}()},
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_step}()},
+\code{\link{cli_rule}},
+\code{\link{cli_status_update}()},
+\code{\link{cli_status}()},
+\code{\link{cli_text}()},
+\code{\link{cli_ul}()},
+\code{\link{format_error}()},
+\code{\link{format_inline}()}
 }
+\concept{functions supporting inline markup}
+\concept{progress bar functions}

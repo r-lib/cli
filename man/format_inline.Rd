@@ -4,7 +4,12 @@
 \alias{format_inline}
 \title{Format and returns a line of text}
 \usage{
-format_inline(..., .envir = parent.frame(), collapse = TRUE)
+format_inline(
+  ...,
+  .envir = parent.frame(),
+  collapse = TRUE,
+  keep_whitespace = TRUE
+)
 }
 \arguments{
 \item{...}{Passed to \code{\link[=cli_text]{cli_text()}}.}
@@ -13,6 +18,9 @@ format_inline(..., .envir = parent.frame(), collapse = TRUE)
 
 \item{collapse}{Whether to collapse the result if it has multiple
 lines, e.g. because of \verb{\\f} characters.}
+
+\item{keep_whitespace}{Whether to keep all whitepace (spaces, newlines
+and form feeds) as is in the input.}
 }
 \value{
 Character scalar, the formatted string.
@@ -27,3 +35,30 @@ it to the screen. It uses \code{\link[=cli_text]{cli_text()}} internally.
 \examples{
 format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 }
+\seealso{
+This function supports \link[=inline-markup]{inline markup}.
+
+Other functions supporting inline markup: 
+\code{\link{cli_abort}()},
+\code{\link{cli_alert}()},
+\code{\link{cli_blockquote}()},
+\code{\link{cli_bullets_raw}()},
+\code{\link{cli_bullets}()},
+\code{\link{cli_dl}()},
+\code{\link{cli_h1}()},
+\code{\link{cli_li}()},
+\code{\link{cli_ol}()},
+\code{\link{cli_process_start}()},
+\code{\link{cli_progress_along}()},
+\code{\link{cli_progress_bar}()},
+\code{\link{cli_progress_message}()},
+\code{\link{cli_progress_output}()},
+\code{\link{cli_progress_step}()},
+\code{\link{cli_rule}},
+\code{\link{cli_status_update}()},
+\code{\link{cli_status}()},
+\code{\link{cli_text}()},
+\code{\link{cli_ul}()},
+\code{\link{format_error}()}
+}
+\concept{functions supporting inline markup}

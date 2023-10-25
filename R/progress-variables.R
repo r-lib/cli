@@ -11,6 +11,7 @@
 #' Similarly, in R scripts, you can use `pb_bar` after `library(cli)`,
 #' or `cli::pb_bar` if you do not attach the cli package.
 #'
+#' @family progress bar functions
 #' @name progress-variables
 NULL
 

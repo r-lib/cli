@@ -102,17 +102,23 @@ cli_fmt <- function(expr, collapse = FALSE, strip_newline = FALSE) {
 #' @param .envir Environment to evaluate the expressions in.
 #' @param collapse Whether to collapse the result if it has multiple
 #'   lines, e.g. because of `\f` characters.
+#' @param keep_whitespace Whether to keep all whitepace (spaces, newlines
+#'   and form feeds) as is in the input.
 #' @return Character scalar, the formatted string.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 #' @examples
 #' format_inline("A message for {.emph later}, thanks {.fn format_inline}.")
 
-format_inline <- function(..., .envir = parent.frame(), collapse = TRUE) {
+format_inline <- function(..., .envir = parent.frame(), collapse = TRUE,
+                          keep_whitespace = TRUE) {
   opts <- options(cli.width = Inf)
   on.exit(options(opts), add = TRUE)
+  fun <- if (keep_whitespace) cli_inline else cli_text
   cli_fmt(
-    cli_text(..., .envir = .envir),
+    fun(..., .envir = .envir),
     collapse = collapse,
     strip_newline = TRUE
   )
@@ -195,10 +201,21 @@ format_inline <- function(..., .envir = parent.frame(), collapse = TRUE) {
 #'   concatenated into a single string. Newlines are _not_ preserved.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_text <- function(..., .envir = parent.frame()) {
   cli__message("text", list(text = glue_cmd(..., .envir = .envir, .call = sys.call())))
+}
+
+cli_inline <- function(..., .envir = parent.frame()) {
+  cli__message(
+    "inline_text",
+    list(
+      text = glue_cmd(..., .envir = .envir, .call = sys.call(), .trim = FALSE)
+    )
+  )
 }
 
 #' CLI verbatim text
@@ -253,6 +270,8 @@ cli_verbatim <- function(..., .envir = parent.frame()) {
 #'   themes.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
+#' @seealso These functions supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_h1 <- function(text, id = NULL, class = NULL, .envir = parent.frame()) {
@@ -477,6 +496,8 @@ cli_end <- function(id = NULL) {
 #' @inheritParams cli_div
 #' @return The id of the new container element, invisibly.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 
@@ -542,6 +563,8 @@ cli_ul <- function(items = NULL, id = NULL, class = NULL,
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_ol <- function(items = NULL, id = NULL, class = NULL,
@@ -592,6 +615,8 @@ cli_ol <- function(items = NULL, id = NULL, class = NULL,
 #' @inheritParams cli_ul
 #' @return The id of the new container element, invisibly.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_dl <- function(items = NULL, labels = names(items), id = NULL,
@@ -645,6 +670,8 @@ cli_dl <- function(items = NULL, labels = names(items), id = NULL,
 #' @inheritParams cli_div
 #' @return The id of the new container element, invisibly.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_li <- function(items = NULL, labels = names(items), id = NULL,
@@ -712,6 +739,8 @@ cli_li <- function(items = NULL, labels = names(items), id = NULL,
 #' @param wrap Whether to auto-wrap the text of the alert.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
+#' @seealso These functions supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_alert <- function(text, id = NULL, class = NULL, wrap = FALSE,
@@ -827,6 +856,8 @@ cli_alert_info <- function(text, id = NULL, class = NULL, wrap = FALSE,
 #' @inheritParams rule
 #' @inheritParams cli_div
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_rule <- function(left = "", center = "", right = "", id = NULL,
@@ -852,11 +883,14 @@ cli_rule <- function(left = "", center = "", right = "", id = NULL,
 #' cli_blockquote(evil, citation = "Donald Ervin Knuth")
 #' ```
 #'
-#' @export
 #' @param quote Text of the quotation.
 #' @param citation Source of the quotation, typically a link or the name
 #'   of a person.
 #' @inheritParams cli_div
+#'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
+#' @export
 
 cli_blockquote <- function(quote, citation = NULL, id = NULL,
                            class = NULL, .envir = parent.frame()) {

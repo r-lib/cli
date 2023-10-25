@@ -1,9 +1,15 @@
 
 #include "cli.h"
+#include "keypress.h"
 #include "cleancall.h"
 
 #include <R_ext/Rdynload.h>
 #include <Rversion.h>
+
+// Compile with `C_VISIBILITY = -fvisibility=hidden` if you link to
+// this library
+#include <R_ext/Visibility.h>
+#define r_export attribute_visible extern
 
 SEXP clic_unload(void) {
   clic_stop_thread();
@@ -36,9 +42,13 @@ static const R_CallMethodDef callMethods[]  = {
   { "clic_getppid",        (DL_FUNC) clic_getppid,        0 },
   { "clic_md5",            (DL_FUNC) clic_md5,            1 },
   { "clic_md5_raw",        (DL_FUNC) clic_md5_raw,        1 },
+  { "clic_md5_file",       (DL_FUNC) clic_md5_file,       1 },
   { "clic_sha256",         (DL_FUNC) clic_sha256,         1 },
   { "clic_sha256_raw",     (DL_FUNC) clic_sha256_raw,     1 },
   { "clic_sha256_file",    (DL_FUNC) clic_sha256_file,    1 },
+  { "clic_sha1",           (DL_FUNC) clic_sha1,           1 },
+  { "clic_sha1_raw",       (DL_FUNC) clic_sha1_raw,       1 },
+  { "clic_sha1_file",      (DL_FUNC) clic_sha1_file,      1 },
   { "clic_tty_size",       (DL_FUNC) clic_tty_size,       0 },
   { "clic_ansi_simplify",  (DL_FUNC) clic_ansi_simplify,  2 },
   { "clic_ansi_substr",    (DL_FUNC) clic_ansi_substr,    3 },
@@ -77,11 +87,14 @@ static const R_CallMethodDef callMethods[]  = {
 
   { "clic_vt_output",      (DL_FUNC) clic_vt_output,      3 },
 
+  { "cli_keypress",            (DL_FUNC) cli_keypress,            1 },
+
   { NULL, NULL, 0 }
 };
 
 #define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
 
+r_export
 void R_init_cli(DllInfo *dll) {
 #if R_VERSION >= R_Version(3, 5, 0)
   cli_init_altrep(dll);

@@ -194,3 +194,31 @@ sanitize_srcref <- function(x) {
 sanitize_call <- function(x) {
   gsub(" in `.*`", "", x)
 }
+
+r_pty <- function(.envir = parent.frame()) {
+  skip_on_cran()
+  # TODO: why does this fail on the CI, in covr
+  if (Sys.getenv("R_COVR") == "true" &&
+      isTRUE(as.logical(Sys.getenv("CI")))) {
+    skip("fails on CI in covr")
+  }
+  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux")) skip("Needs Linux or macOS")
+
+  r <- file.path(R.home("bin"), "R")
+  p <- processx::process$new(
+    r,
+    c("-q", "--slave", "--vanilla"),
+    pty = TRUE,
+    env = c("current", R_CLI_HIDE_CURSOR = "false", R_LIBS = .libPaths()[1])
+  )
+
+  defer({
+    close(p$get_input_connection())
+    p$wait(1000)
+    p$kill()
+  }, envir = .envir)
+
+  p$poll_io(1000)
+  p$read_output()
+  p
+}

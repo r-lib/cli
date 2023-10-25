@@ -26,7 +26,7 @@ will have an \code{NA} hash.}
 \item{paths}{Character vector of file names.}
 }
 \value{
-\code{hash_sha256()} returns aharacter vector of hexadecimal
+\code{hash_sha256()} returns a character vector of hexadecimal
 SHA-256 hashes.
 
 \code{hash_raw_sha256()} returns a character scalar.
@@ -56,6 +56,7 @@ hash_sha256(c("foo", NA, "bar", ""))
 Other hash functions: 
 \code{\link{hash_animal}()},
 \code{\link{hash_emoji}()},
-\code{\link{hash_md5}()}
+\code{\link{hash_md5}()},
+\code{\link{hash_sha1}()}
 }
 \concept{hash functions}

@@ -158,6 +158,7 @@ SEXP cli_progress_bar(vint **ptr, double total, SEXP config) {
   Rf_defineVar(P(Rf_install("type")),           P(Rf_mkString("iterator")), bar);
   Rf_defineVar(P(Rf_install("total")),          P(Rf_ScalarReal(total)),    bar);
   Rf_defineVar(P(Rf_install("show_after")),     P(Rf_ScalarReal(now + sa)), bar);
+  Rf_defineVar(P(Rf_install("show_50")),        P(Rf_ScalarReal(now + sa/2)), bar);
   Rf_defineVar(P(Rf_install("format")),         R_NilValue,                 bar);
   Rf_defineVar(P(Rf_install("format_done")),    R_NilValue,                 bar);
   Rf_defineVar(P(Rf_install("format_failed")),  R_NilValue,                 bar);
@@ -170,7 +171,7 @@ SEXP cli_progress_bar(vint **ptr, double total, SEXP config) {
   Rf_defineVar(P(Rf_install("tick")),           P(Rf_ScalarReal(0)),        bar);
   Rf_defineVar(P(Rf_install("extra")),          R_NilValue,                 bar);
 
-  UNPROTECT(28);
+  UNPROTECT(30);
 
   if (!config || Rf_isNull(config)) {
     /* NULL pointer or R NULL, use defaults */
@@ -267,7 +268,18 @@ void cli_progress_set(SEXP bar, double set) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) cli__progress_update(bar);
+    if (now > REAL(show_after)[0]) {
+      cli__progress_update(bar);
+    } else {
+      SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));
+      SEXP total = PROTECT(clic__find_var(bar, PROTECT(Rf_install("total"))));
+      if (now > REAL(show_50)[0] &&
+          REAL(total)[0] != NA_REAL &&
+          set <= REAL(total)[0] / 2) {
+        cli__progress_update(bar);
+      }
+      UNPROTECT(4);
+    }
     UNPROTECT(2);
   }
   UNPROTECT(3);
@@ -286,7 +298,18 @@ void cli_progress_add(SEXP bar, double inc) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) cli__progress_update(bar);
+    if (now > REAL(show_after)[0]) {
+      cli__progress_update(bar);
+    } else {
+      SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));
+      SEXP total = PROTECT(clic__find_var(bar, PROTECT(Rf_install("total"))));
+      if (now > REAL(show_50)[0] &&
+          REAL(total)[0] != NA_REAL &&
+          crnt + inc <= REAL(total)[0] / 2) {
+        cli__progress_update(bar);
+      }
+      UNPROTECT(4);
+    }
     UNPROTECT(2);
   }
   UNPROTECT(4);
@@ -330,6 +353,7 @@ void cli_progress_sleep(int s, long ns) {
 }
 
 void cli_progress_update(SEXP bar, double set, double inc, int force) {
+  double crnt = 0;
   PROTECT(bar);
   if (isNull(bar)) {
     UNPROTECT(1);
@@ -337,12 +361,14 @@ void cli_progress_update(SEXP bar, double set, double inc, int force) {
   }
   SEXP current = PROTECT(Rf_install("current"));
   if (set >= 0) {
+    crnt = set;
     Rf_defineVar(current, PROTECT(ScalarReal(set)), bar);
     UNPROTECT(1);
   } else {
-    double crnt = REAL(PROTECT(clic__find_var(bar, current)))[0];
+    crnt = REAL(PROTECT(clic__find_var(bar, current)))[0];
     if (inc != 0) {
-      Rf_defineVar(current, PROTECT(ScalarReal(crnt + inc)), bar);
+      crnt = crnt + inc;
+      Rf_defineVar(current, PROTECT(ScalarReal(crnt)), bar);
       UNPROTECT(1);
     }
     UNPROTECT(1);
@@ -353,7 +379,19 @@ void cli_progress_update(SEXP bar, double set, double inc, int force) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) cli__progress_update(bar);
+    if (now > REAL(show_after)[0]) {
+      cli__progress_update(bar);
+    } else {
+      SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));
+      SEXP total = PROTECT(clic__find_var(bar, PROTECT(Rf_install("total"))));
+      if (now > REAL(show_50)[0] &&
+          REAL(total)[0] != NA_REAL &&
+          crnt <= REAL(total)[0] / 2) {
+        cli__progress_update(bar);
+      }
+      UNPROTECT(4);
+
+    }
     UNPROTECT(2);
   }
 

@@ -42,7 +42,7 @@
 #'
 #' ### `rstudio`
 #'
-#' Use [RStudio's job panel](https://www.rstudio.com/blog/rstudio-1-2-jobs/)
+#' Use [RStudio's job panel](https://posit.co/blog/rstudio-1-2-jobs/)
 #' to show the progress bars. This handler is available at the RStudio console,
 #' in recent versions of RStudio.
 #'
@@ -70,6 +70,7 @@
 #' @return `cli_progress_builtin_handlers()` returns the names of the
 #' currently supported progress handlers.
 #'
+#' @family progress bar functions
 #' @export
 
 # TODO: examples
@@ -150,7 +151,6 @@ builtin_handler_cli <- list(
 builtin_handler_progressr <- list(
   add = function(bar, .envir) {
     steps <- if (is.na(bar$total)) 0 else bar$total
-    bar$progressr_last <- 0L
     bar$progressr_progressor <- asNamespace("progressr")$progressor(
       steps,
       auto_finish = FALSE,
@@ -161,18 +161,14 @@ builtin_handler_progressr <- list(
   },
 
   set = function(bar, .envir) {
-    amount <- bar$current - bar$progressr_last
-    bar$last <- bar$current
-    if (!is.null(bar$progressr_progressor) && amount > 0) {
-      bar$progressr_progressor(amount = amount)
+    if (!is.null(bar$progressr_progressor)) {
+      bar$progressr_progressor(step = bar$current)
     }
   },
 
   complete = function(bar, .envir, result) {
-    amount <- bar$current - bar$progressr_last
-    bar$last <- bar$current
-    if (!is.null(bar$progressr_progressor) && amount > 0) {
-      bar$progressr_progressor(amount = amount, type = "finish")
+    if (!is.null(bar$progressr_progressor)) {
+      bar$progressr_progressor(step = bar$current, type = "finish")
     }
   },
 

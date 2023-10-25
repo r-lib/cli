@@ -16,7 +16,7 @@ hash_obj_emoji(x, size = 3, serialize_version = 2)
 \item{x}{Character vector. \code{NA} entries will have an \code{NA} hash.}
 
 \item{size}{Number of emojis to use in a hash. Currently it has to
-be between 1 and 4.}
+be from 1 through 4.}
 
 \item{serialize_version}{Workspace format version to use, see
 \code{\link[base:serialize]{base::serialize()}}.}
@@ -83,6 +83,7 @@ the emoji package for a comprehensive list of emojis
 Other hash functions: 
 \code{\link{hash_animal}()},
 \code{\link{hash_md5}()},
+\code{\link{hash_sha1}()},
 \code{\link{hash_sha256}()}
 }
 \concept{hash functions}

@@ -11,7 +11,7 @@
 #' cli creates a `div` element of class `bullets` for the whole bullet list.
 #' Each item is another `div` element of class `bullet-<name>`, where
 #' `<name>` is the name of the entry in `text`. Entries in `text` without
-#' a name create a `div` element of class `buller-empty`, and if the
+#' a name create a `div` element of class `bullet-empty`, and if the
 #' name is a single space character, the class is `bullet-space`.
 #'
 #' The built-in theme defines the following item types:
@@ -46,6 +46,8 @@
 #' @param class Optional additional class(es) for the `div.bullets` element.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
+#' @seealso This function supports [inline markup][inline-markup].
+#' @family functions supporting inline markup
 #' @export
 
 cli_bullets <- function(text, id = NULL, class = NULL,
@@ -75,7 +77,9 @@ cli_bullets <- function(text, id = NULL, class = NULL,
 #' @param id Optional id of the `div.bullets` element, can be used in themes.
 #' @param class Optional additional class(es) for the `div.bullets` element.
 #'
+#' @seealso These functions support [inline markup][inline-markup].
 #' @seealso See [cli_bullets()] for examples.
+#' @family functions supporting inline markup
 #' @export
 
 cli_bullets_raw <- function(text, id = NULL, class = NULL) {

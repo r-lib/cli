@@ -123,6 +123,21 @@ test_that("hash_obj_md5", {
   }
 })
 
+test_that("hash_file_md5", {
+  dig <- function(x) {
+    digest::digest(file = x, algo = "md5")
+  }
+
+  f <- test_path("test-hash.R")
+  expect_equal(
+    hash_file_md5(character()),
+    character()
+  )
+
+  expect_equal(hash_file_md5(f), dig(f))
+  expect_equal(hash_file_md5(c(f, f)), c(dig(f), dig(f)))
+})
+
 test_that("hash_emoji", {
   expect_snapshot({
     hash_emoji(character())$names

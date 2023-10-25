@@ -105,7 +105,7 @@ static R_INLINE void cli_progress_done(SEXP bar);
 //'
 //' Initialize the cli timer without creating a progress bar.
 
-static R_INLINE void cli_progress_init_timer();
+static R_INLINE void cli_progress_init_timer(void);
 
 //' ### `cli_progress_num()`
 //'
@@ -115,7 +115,7 @@ static R_INLINE void cli_progress_init_timer();
 //'
 //' Returns the number of currently active progress bars.
 
-static R_INLINE int cli_progress_num();
+static R_INLINE int cli_progress_num(void);
 
 //' ### `cli_progress_set()`
 //'
@@ -279,7 +279,7 @@ static void cli_progress_done2(SEXP bar) {
 }
 #endif
 
-static R_INLINE void cli_progress_init_timer() {
+static R_INLINE void cli_progress_init_timer(void) {
   static void (*ptr)(vint **) = NULL;
   if (ptr == NULL) {
     ptr = (void (*)(vint **)) R_GetCCallable("cli", "cli_progress_init_timer");
@@ -379,10 +379,10 @@ static R_INLINE void cli_progress_add(SEXP bar, double inc) {
   ptr(bar, inc);
 }
 
-static R_INLINE int cli_progress_num() {
-  static int (*ptr)() = NULL;
+static R_INLINE int cli_progress_num(void) {
+  static int (*ptr)(void) = NULL;
   if (ptr == NULL) {
-    ptr = (int (*)()) R_GetCCallable("cli", "cli_progress_num");
+    ptr = (int (*)(void)) R_GetCCallable("cli", "cli_progress_num");
   }
   return ptr();
 }
