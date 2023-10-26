@@ -6,8 +6,20 @@ render_div <- function(cpt, width = console_width()) {
   } else {
     stop("Cannot render object of class ", class(cpt)[1])
   }
+
+  lines <- render_text_box(
+    cpt[["children"]],
+    width = width,
+    style = style
+  )
+
+  # TODO: collapse margins
   margin_top <- style[["margin-top"]] %||% 0L
   margin_bottom <- style[["margin-bottom"]] %||% 0L
+  c(rep("", margin_top), lines, rep("", margin_bottom))
+}
+
+render_text_box <- function(children, width, style = NULL) {
   margin_left <- style[["margin-left"]] %||% 0L
   margin_right <- style[["margin-right"]] %||% 0L
 
@@ -34,7 +46,7 @@ render_div <- function(cpt, width = console_width()) {
 
   before <- call_if_fun(style[["before"]])
   after <- call_if_fun(style[["after"]])
-  children <- cpt[["children"]]
+
   if (!is.null(before)) {
     children <- c(list(cpt_text("{before}")), children)
   }
@@ -55,7 +67,7 @@ render_div <- function(cpt, width = console_width()) {
 
   # color, font-style, font-weight, text-decoration
   formatter <- create_formatter(style, bg = FALSE, fmt = FALSE)[["fmt"]]
-  if (!is.null(formatter)) lines <- formatter(lines, width = width)
+  if (!is.null(formatter)) lines <- formatter(lines, width = child_width)
 
   pad_width <- child_width + padding_left + padding_right
   if (padding_left > 0) {
@@ -82,6 +94,5 @@ render_div <- function(cpt, width = console_width()) {
     lines <- paste0(lines, strrep("\u00a0", margin_right))
   }
 
-  # TODO: collapse margins
-  c(rep("", margin_top), lines, rep("", margin_bottom))
+  lines
 }

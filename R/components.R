@@ -51,7 +51,7 @@ cpt_div <- function(..., children = NULL, attr = NULL) {
 
 cpt_span <- function(..., children = NULL, attr = NULL) {
   new_component("span", ..., children = children, attr = attr)
-}  
+}
 
 #' @export
 
@@ -78,4 +78,56 @@ cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {
     text <- cpt_text(text, .envir = .envir)
   }
   new_component("h3", text, attr = attr)
+}
+
+#' @export
+
+cpt_ul <- function(items, ..., attr = NULL, .envir = parent.frame()) {
+  if (inherits(items, "cli_component_li")) {
+    items <- list(items)
+  }
+  items <- c(items, list(...))
+  items <- lapply(items, function(item) {
+    if (is.character(item)) {
+      cpt_li(cpt_text(item, .envir = parent.frame()))
+    } else {
+      if (!inherits(item, "cli_component_li")) {
+        stop(
+          "An `ul` component must only contain `li` components, not ",
+          class(item)[1]
+        )
+      }
+      item
+    }
+  })
+  new_component("ul", children = items, attr = attr)
+}
+
+#' @export
+
+cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
+  if (inherits(items, "cli_component_li")) {
+    items <- list(items)
+  }
+  items <- c(items, list(...))
+  items <- lapply(items, function(item) {
+    if (is.character(item)) {
+      cpt_li(cpt_text(item, .envir = parent.frame()))
+    } else {
+      if (!inherits(item, "cli_component_li")) {
+        stop(
+          "An `ol` component must only contain `li` components, not ",
+          class(item)[1]
+        )
+      }
+      item
+    }
+  })
+  new_component("ol", children = items, attr = attr)
+}
+
+#' @export
+
+cpt_li <- function(..., children = NULL, attr = NULL) {
+  new_component("li", ..., children = children, attr = attr)
 }

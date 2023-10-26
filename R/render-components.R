@@ -6,6 +6,8 @@ render <- function(cpt, width = console_width()) {
     "h2 " = ,
     "h3" = ,
     "div" = render_div(cpt, width = width),
+    "ul" = render_ul(cpt, width = width),
+    "li" = render_li(cpt, width = width),
     stop("Unknown component type: ", cpt[["tag"]])
   )
 }
