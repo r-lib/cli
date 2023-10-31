@@ -663,7 +663,7 @@ NULL
 #' * if `args` contains `(`, `)` or `;`,
 #' * if it calls a core package (base, stats, etc.),
 #' * if it calls a package that is not loaded, and it is not one of
-#'   testthat, devtools, usethis, or rlang, which are explicitly allowed.
+#'   testthat, devtools, usethis, rlang, pkgload, or pkgdown which are explicitly allowed.
 #'
 #' When RStudio does not run a `.run` hyperlink, then it shows the code
 #' and the user can copy and paste it to the console, if they consider
