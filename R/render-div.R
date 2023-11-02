@@ -57,10 +57,10 @@ render_text_box <- function(children, width, style = NULL) {
   for (child in children) {
     if (is_cpt_block(child)) {
       output_inline()
-      div_lines <- render(child, width = child_width)
+      div_lines <- render_styled(child, width = child_width)
       lines <- c(lines, div_lines)
     } else {
-      inline[[length(inline) + 1L]] <- render(child)
+      inline[[length(inline) + 1L]] <- render_styled(child)
     }
   }
   output_inline()

@@ -236,7 +236,7 @@
 # render_div with fmt callback
 
     Code
-      render(div, width = 40)
+      render(div, width = 40, theme = list())
     Output
       [1] "-- This is a headline ------------------"
 

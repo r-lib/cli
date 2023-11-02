@@ -1,21 +1,21 @@
 # render
 
     Code
-      render(cpt_div(cpt_text(txt)), width = 40)
+      render(cpt_div(cpt_text(txt)), width = 40, theme = list())
     Output
       [1] "Labore aliquip deserunt mollit sint     "
       [2] "enim commodo cupidatat officia nulla    "
       [3] "id. Minim in adipisicing esse elit aute "
       [4] "cillum anim quis officia.               "
     Code
-      render(cpt_span(cpt_text(txt)))
+      render(cpt_span(cpt_text(txt)), theme = list())
     Output
       <cli_ansi_string>
       [1] Labore aliquip deserunt mollit sint enim commodo cupidatat
                 officia nulla id. Minim in adipisicing esse elit aute cillum
                 anim quis officia.
     Code
-      render(cpt_text(txt))
+      render(cpt_text(txt), theme = list())
     Output
       <cli_ansi_string>
       [1] Labore aliquip deserunt mollit sint enim commodo cupidatat
@@ -25,29 +25,29 @@
 ---
 
     Code
-      render(cpt)
+      render(cpt, theme = list())
     Condition
-      Error in `render()`:
+      Error in `render_styled()`:
       ! Unknown component type: foobar
 
 # preview
 
     Code
-      preview(cpt_div(cpt_text(txt)), width = 40)
+      preview(cpt_div(cpt_text(txt)), width = 40, theme = list())
     Output
       Labore aliquip deserunt mollit sint     
       enim commodo cupidatat officia nulla    
       id. Minim in adipisicing esse elit aute 
       cillum anim quis officia.               
     Code
-      preview(cpt_span(cpt_text(txt)), width = 40)
+      preview(cpt_span(cpt_text(txt)), width = 40, theme = list())
     Output
       Labore aliquip deserunt mollit sint
       enim commodo cupidatat officia nulla
       id. Minim in adipisicing esse elit aute
       cillum anim quis officia.
     Code
-      preview(cpt_text(txt), width = 40)
+      preview(cpt_text(txt), width = 40, theme = list())
     Output
       Labore aliquip deserunt mollit sint
       enim commodo cupidatat officia nulla
@@ -57,7 +57,7 @@
 # preview_generic
 
     Code
-      preview_generic(cpt_div(cpt_text(txt)), width = 40)
+      preview_generic(cpt_div(cpt_text(txt)), width = 40, theme = list())
     Output
       Labore aliquip deserunt mollit sint     
       enim commodo cupidatat officia nulla    
@@ -67,7 +67,7 @@
 # preview_text
 
     Code
-      preview_text(cpt_text(txt), width = 40)
+      preview_text(cpt_text(txt), width = 40, theme = list())
     Output
       Labore aliquip deserunt mollit sint
       enim commodo cupidatat officia nulla
@@ -77,7 +77,7 @@
 # preview_span
 
     Code
-      preview_span(cpt_span(cpt_text(txt)), width = 40)
+      preview_span(cpt_span(cpt_text(txt)), width = 40, theme = list())
     Output
       Labore aliquip deserunt mollit sint
       enim commodo cupidatat officia nulla
