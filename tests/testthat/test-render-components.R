@@ -3,14 +3,14 @@ test_that("render", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    render(cpt_div(cpt_text(txt)), width = 40, theme = list())
-    render(cpt_span(cpt_text(txt)), theme = list())
-    render(cpt_text(txt), theme = list())
+    format(preview(cpt_div(cpt_text(txt)), width = 40, theme = list()))
+    format(preview(cpt_span(cpt_text(txt)), theme = list()))
+    format(preview(cpt_text(txt), theme = list()))
   })
 
   cpt <- cpt_div()
   cpt[["tag"]] <- "foobar"
-  expect_snapshot(error = TRUE, render(cpt, theme = list()))
+  expect_snapshot(error = TRUE, format(preview(cpt, theme = list())))
 })
 
 test_that("preview", {
@@ -29,7 +29,7 @@ test_that("preview_generic", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview_generic(cpt_div(cpt_text(txt)), width = 40, theme = list())
+    preview(cpt_div(cpt_text(txt)), width = 40, theme = list())
   })
 })
 
@@ -38,7 +38,7 @@ test_that("preview_text", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview_text(cpt_text(txt), width = 40, theme = list())
+    preview(cpt_text(txt), width = 40, theme = list())
   })
 })
 
@@ -47,6 +47,6 @@ test_that("preview_span", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview_span(cpt_span(cpt_text(txt)), width = 40, theme = list())
+    preview(cpt_span(cpt_text(txt)), width = 40, theme = list())
   })
 })

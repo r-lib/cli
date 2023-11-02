@@ -6,7 +6,7 @@ render_inline_span <- function(cpt) {
   } else {
     stop("Cannot render object of class ", class(cpt)[1])
   }
-  val <- paste(unlist(lapply(cpt[["children"]], render)), collapse = "")
+  val <- paste(unlist(lapply(cpt[["children"]], render_styled)), collapse = "")
 
   # before, after
   before <- call_if_fun(style[["before"]])

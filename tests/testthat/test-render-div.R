@@ -140,7 +140,7 @@ test_that("render_div with fmt callback", {
     cli::rule(x, width = width)
   }
   div <- cpt_div(cpt_text(headline), attr = list(style = list(fmt = fmt)))
-  expect_snapshot(render(div, width = 40, theme = list()))
+  expect_snapshot(format(preview(div, width = 40, theme = list())))
 })
 
 test_that("render_div after, before", {
