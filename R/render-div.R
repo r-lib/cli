@@ -7,7 +7,7 @@ render_div <- function(cpt, width = console_width()) {
     stop("Cannot render object of class ", class(cpt)[1])
   }
 
-  lines <- render_text_box(
+  lines <- render_block(
     cpt[["children"]],
     width = width,
     style = style
@@ -19,7 +19,7 @@ render_div <- function(cpt, width = console_width()) {
   c(rep("", margin_top), lines, rep("", margin_bottom))
 }
 
-render_text_box <- function(children, width, style = NULL) {
+render_block <- function(children, width, style = NULL) {
   margin_left <- style[["margin-left"]] %||% 0L
   margin_right <- style[["margin-right"]] %||% 0L
 

@@ -20,7 +20,7 @@ render_li <- function(
     width = margin_left - 1L
   )
 
-  item_lines <- render_text_box(
+  item_lines <- render_block(
     cpt[["children"]],
     width = width,
     style = style
