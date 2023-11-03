@@ -24,7 +24,7 @@ Other contributors:
   \item Hadley Wickham [contributor]
   \item Kirill Müller [contributor]
   \item Salim Brüggemann \email{salim-b@pm.me} (\href{https://orcid.org/0000-0002-5329-5987}{ORCID}) [contributor]
-  \item RStudio [copyright holder, funder]
+  \item Posit Software, PBC [copyright holder, funder]
 }
 
 }
