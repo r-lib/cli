@@ -7,22 +7,24 @@
 preview(cpt, width = console_width(), theme = NULL)
 }
 \arguments{
-\item{cpt}{Component to preview. It can also be a mapped, themed or styled
-component tree. If it is an inline component, then we put it into a
-\code{\link[=cpt_div]{cpt_div()}} component to render it.}
+\item{cpt}{Component to preview. It can also be a mapped, themed or
+styled component tree. If it is an inline component, then we put it
+into a \code{\link[=cpt_div]{cpt_div()}} component to render it.}
 
-\item{width}{Console width, auto-detected by default using \code{\link[=console_width]{console_width()}}.}
+\item{width}{Console width, auto-detected by default using
+\code{\link[=console_width]{console_width()}}.}
 
-\item{theme}{Theme to use. Set it to \code{list()} for an empty theme. If it is
-\code{NULL}, then it uses the built-in theme (see \code{\link[=builtin_theme]{builtin_theme()}}), the
-\code{cli.theme} option, and the \code{cli.user_theme} option. The user theme has the
-highest priority, then \code{cli.theme}, then the built-in theme.}
+\item{theme}{Theme to use. Set it to \code{list()} for an empty theme. If it
+is \code{NULL}, then it uses the built-in theme (see \code{\link[=builtin_theme]{builtin_theme()}}),
+the \code{cli.theme} option, and the \code{cli.user_theme} option. The user
+theme has the highest priority, then \code{cli.theme}, then the built-in
+theme.}
 }
 \value{
-Lines of rendered component, with a \code{cli_preview} class, that has a
-\code{print()} method.
+Lines of rendered component, with a \code{cli_preview} class, that
+has a \code{print()} method.
 }
 \description{
-This function is primarily aimed at developers, to see how cli components are
-rendered.
+This function is primarily aimed at developers, to see how cli
+components are rendered.
 }

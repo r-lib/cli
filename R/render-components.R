@@ -1,18 +1,20 @@
 #' Preview the rendering of a cli component
 #'
-#' This function is primarily aimed at developers, to see how cli components are
-#' rendered.
+#' This function is primarily aimed at developers, to see how cli
+#' components are rendered.
 #'
-#' @param cpt Component to preview. It can also be a mapped, themed or styled
-#'   component tree. If it is an inline component, then we put it into a
-#'   [cpt_div()] component to render it.
-#' @param width Console width, auto-detected by default using [console_width()].
-#' @param theme Theme to use. Set it to `list()` for an empty theme. If it is
-#'   `NULL`, then it uses the built-in theme (see [builtin_theme()]), the
-#'   `cli.theme` option, and the `cli.user_theme` option. The user theme has the
-#'   highest priority, then `cli.theme`, then the built-in theme.
-#' @return Lines of rendered component, with a `cli_preview` class, that has a
-#'   `print()` method.
+#' @param cpt Component to preview. It can also be a mapped, themed or
+#'   styled component tree. If it is an inline component, then we put it
+#'    into a [cpt_div()] component to render it.
+#' @param width Console width, auto-detected by default using
+#'   [console_width()].
+#' @param theme Theme to use. Set it to `list()` for an empty theme. If it
+#'   is `NULL`, then it uses the built-in theme (see [builtin_theme()]),
+#'   the `cli.theme` option, and the `cli.user_theme` option. The user
+#'   theme has the highest priority, then `cli.theme`, then the built-in
+#'   theme.
+#' @return Lines of rendered component, with a `cli_preview` class, that
+#'   has a `print()` method.
 #'
 #' @export
 
@@ -20,7 +22,7 @@ preview <- function(cpt, width = console_width(), theme = NULL) {
   if (!is_cpt_block(cpt)) {
     cpt <- cpt_div(cpt)
   }
-  tree <- style_tree(cpt, theme = theme)
+  tree <- make_styled_tree(cpt, theme = theme)
   lines <- render_styled(tree, width = width)
 
   structure(
@@ -31,16 +33,18 @@ preview <- function(cpt, width = console_width(), theme = NULL) {
 
 #' Create a styled component tree from a component or a component tree
 #'
-#' @param cpt Block component, or (mapped, themed or styled) component tree.
-#' @param theme Theme. `NULL` for the current theme, `list()` for no theme.
+#' @param cpt Block component, or (mapped, themed or styled) component
+#'    tree.
+#' @param theme Theme. `NULL` for the current theme, `list()` for no
+#'   theme.
 #' @return Styled component tree.
 #'
-#' This is a helper function that makes [preview()] work with any block compoennt
-#' or component tree.
+#' This is a helper function that makes [preview()] work with any block
+#' compoennt or component tree.
 #'
 #' @noRd
 
-style_tree <- function(cpt, theme = NULL) {
+make_styled_tree <- function(cpt, theme = NULL) {
   mapped <- inherits(cpt, "cli_component_tree")
   themed <- mapped && isTRUE(cpt$themed)
   styled <- themed && isTRUE(cpt$styled)
@@ -50,7 +54,9 @@ style_tree <- function(cpt, theme = NULL) {
   }
   if (!themed) {
     theme <- theme %||% c(
-      if (Sys.getenv("CLI_NO_BUILTIN_THEME", "") != "true") builtin_theme(),
+      if (Sys.getenv("CLI_NO_BUILTIN_THEME", "") != "true") {
+        builtin_theme()
+      },
       getOption("cli.theme"),
       getOption("cli.user.theme")
     )
