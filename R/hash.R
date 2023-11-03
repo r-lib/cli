@@ -394,7 +394,7 @@ hash_obj_emoji <- function(x, size = 3, serialize_version = 2) {
 #' The list of adjectives and animals comes from the ids package,
 #' and in turn from
 #' <https://github.com/a-type/adjective-adjective-animal>, and
-#' from <https://gfycat.com>.
+#' from `https://gfycat.com` (now gone).
 #'
 #' @param x Character vector. `NA` entries will have an `NA` hash.
 #' @param n_adj Number of adjectives to use. It must be from 0 through 3.

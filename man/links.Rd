@@ -316,7 +316,7 @@ To make \code{.run} hyperlinks more secure, RStudio will not run code
 \item if \code{args} contains \code{(}, \verb{)} or \verb{;},
 \item if it calls a core package (base, stats, etc.),
 \item if it calls a package that is not loaded, and it is not one of
-testthat, devtools, usethis, or rlang, which are explicitly allowed.
+testthat, devtools, usethis, rlang, pkgload, or pkgdown which are explicitly allowed.
 }
 
 When RStudio does not run a \code{.run} hyperlink, then it shows the code

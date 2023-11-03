@@ -61,7 +61,7 @@ different hashes you can get for different values of \code{n_adj}:\tabular{rr}{
 The list of adjectives and animals comes from the ids package,
 and in turn from
 \url{https://github.com/a-type/adjective-adjective-animal}, and
-from \url{https://gfycat.com}.
+from \verb{https://gfycat.com} (now gone).
 }
 
 \code{hash_raw_animal()} calculates the adjective-animal hash of
