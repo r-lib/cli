@@ -62,7 +62,7 @@ apply_theme_to_style <- function(cpt_styles, thm_styles) {
   thm_styles <- as.list(thm_styles)
 
   cm <- utils::modifyList(
-    thm_Styles$`class-map` %||% list(),
+    thm_styles$`class-map` %||% list(),
     cpt_styles$`class-map` %||% list()
   )
 
