@@ -1,3 +1,24 @@
+#' Theme a component tree
+#'
+#' Theming a component tree is part of the
+#' [rendering process][component-trees].
+#'
+#' For each node in the tree, we find the matching selectors in the theme,
+#' and add the styles of the matching selectors to the node.
+#' The style of the node (that was specified when the corrsponding
+#' component was created) takes precedence over the theme, see
+#' [apply_theme_to_style()].
+#'
+#' @param node A (mapped) component tree, the output of
+#'   [map_component_tree()].
+#' @param theme Theme to apply to the tree. Note that this internal
+#'   function does **not** use the `cli.theme` or `cli.user_theme`
+#'   options of the built-in theme. It only uses the `theme` argument.
+#' @return A themed component tree.
+#'
+#' @family component trees
+#' @keywords internal
+
 theme_component_tree <- function(node, theme = list()) {
   if (!inherits(node, "cli_component_tree")) {
     # non-component text piece
@@ -13,7 +34,6 @@ theme_component_tree <- function(node, theme = list()) {
   }
   node[["themed"]] <- TRUE
 
-
   node[["children"]] <- lapply(
     node[["children"]],
     theme_component_tree,
@@ -23,16 +43,30 @@ theme_component_tree <- function(node, theme = list()) {
   node
 }
 
-apply_theme_to_style <- function(style, theme) {
-  style <- as.list(style)
-  theme <- as.list(theme)
+#' Apply a theme to a component style
+#'
+#' This is a helper function of [theme_component_tree()], to merge
+#' component styles and a theme.
+#'
+#' The component style takes precedence over the theme, except
+#' for the `class-map` style, which is merged elementwise, again, with
+#' the component style having a higher precedence.
+#'
+#' @param cpt_styles Component styles, a named list.
+#' @param thm_styles Theme styles, a named list.
+#'
+#' @keywords internal
+
+apply_theme_to_style <- function(cpt_styles, thm_styles) {
+  cpt_styles <- as.list(cpt_styles)
+  thm_styles <- as.list(thm_styles)
 
   cm <- utils::modifyList(
-    theme$`class-map` %||% list(),
-    style$`class-map` %||% list()
+    thm_Styles$`class-map` %||% list(),
+    cpt_styles$`class-map` %||% list()
   )
 
-  merged <- modifyList(theme, style)
+  merged <- modifyList(thm_styles, cpt_styles)
   if (length(cm)) merged[["class-map"]] <- cm
   merged
 }

@@ -1,3 +1,39 @@
+#' Component trees
+#'
+#' Component trees are used to calculate the final appearance of a
+#' component and its subcomponents.
+#'
+#' Rendering a component has the following steps:
+#'
+#' 1. Mapping with [map_component_tree()]. It calculates the paths of the
+#'    component and its subcomponents. The paths are needed for theming.
+#' 2. Theming with [theme_component_tree()]. Styles from a theme are added
+#'    to the nodes of the component tree, according to the theme selectors.
+#' 3. Styling with [style_component_tree()]. Styles are inherited
+#'    according to the style inheritance rules.
+#'
+#' @family component trees
+#' @keywords internal
+#' @name component-trees
+#' @aliases component-tree component_tree component_trees
+NULL
+
+#' Map a component tree
+#'
+#' We need to walk the subcomponents of the input component, and during the
+#' walk we assign a `path` element to every node of the component tree.
+#'
+#' @param cpt Component.
+#' @param parent Parent components, if any. A list where each element
+#'   represents a parent node. Each element is a named list of elements:
+#'   - `tag`: componnent tag,
+#'   - `id`: component id, from the `id` attribute,
+#'   - `class`: compoennt class or classes, from the `class` attribute.
+#' @return A mapped component tree, a `cli_component_tree` object.
+#'
+#' @family component trees
+#' @keywords internal
+
 map_component_tree <- function(cpt, parent = list()) {
   if (!inherits(cpt, "cli_component")) {
     # non-component text piece

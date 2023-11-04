@@ -48,7 +48,7 @@ cpt_h1 <- function(text, attr = NULL, .envir = parent.frame()) {
   new_component("h1", text, attr = attr)
 }
 
-#' @describeIn cpt_h1
+#' @rdname cpt_h1
 #' @export
 
 cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
@@ -58,7 +58,7 @@ cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
   new_component("h2", text, attr = attr)
 }
 
-#' @describeIn cpt_h1
+#' @rdname cpt_h1
 #' @export
 
 cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {

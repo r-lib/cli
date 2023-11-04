@@ -1,3 +1,25 @@
+#' Style a component tree: inherit styles to child nodes
+#'
+#' Styling a component tree is part of the
+#' [rendering process][component-trees].
+#'
+#' We walk the component tree and inheerit styles from parent nodes to
+#' their child nodes, according to the style inhertance rules.
+#' This is performed by the [inherit_styles()] helper function, and each
+#' style may have its own inheritance rules.
+#'
+#' Text pieces are special, because they cannot be themed, so they don't
+#' have any style *before* this function.
+#' But they can have styles *after* this function, if styles are inherited
+#' from parant elements.
+#'
+#' @param node A themed component tree, the outout of
+#'   [theme_component_tree()].
+#' @return A styled component tree.
+#'
+#' @family component trees
+#' @keywords internal
+
 style_component_tree <- function(node) {
   style_component_tree_node(node, parent_style = list())
 }
@@ -14,6 +36,7 @@ style_component_tree_node <- function(node, parent_style) {
   }
 
   if (is_cpt) {
+    # `span` elements are also included here!
     node[["style"]] <- inherit_styles(parent_style, node[["prestyle"]], node[["tag"]])
     node[["styled"]] <- TRUE
     node[["children"]] <- lapply(
@@ -23,6 +46,8 @@ style_component_tree_node <- function(node, parent_style) {
     )
 
   } else {
+    # text pieces are a bit special, in that they have a special tag,
+    # and plain text pieces have the style information as an attribute
     type <- get_text_piece_type(node)
     if (type == "plain") {
       attr(node, "style") <- inherit_styles(parent_style, list(), "text-plain")
@@ -33,6 +58,23 @@ style_component_tree_node <- function(node, parent_style) {
 
   node
 }
+
+#' Style inhertance rules
+#'
+#' All style inheritance rules are implemented here.
+#'
+#' * All styles in `inherited_styles()` are inherited.
+#' * `class-map` is inherited specially, in that the parent's map
+#'   is merged with the child's map, with the child's map taking
+#'   precedence.
+#' * Other styles are not inherited.
+#'
+#' @param parent Parent styles, a named list.
+#' @param child Child styles, a named list.
+#' @param tag Tag name of the *child* node, a string.
+#' @return Merged styles, a named list.
+#'
+#' @keywords internal
 
 inherit_styles <- function(parent, child, tag) {
   parent <- as.list(parent)
