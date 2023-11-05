@@ -2,9 +2,12 @@
 % Please edit documentation in R/components.R
 \name{cpt_li}
 \alias{cpt_li}
+\alias{li}
 \title{Lite item component}
 \usage{
 cpt_li(..., children = NULL, attr = NULL)
+
+li(..., children = NULL, attr = NULL)
 }
 \arguments{
 \item{...}{Child components.}

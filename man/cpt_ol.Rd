@@ -2,9 +2,12 @@
 % Please edit documentation in R/components.R
 \name{cpt_ol}
 \alias{cpt_ol}
+\alias{ol}
 \title{Ordered list component}
 \usage{
 cpt_ol(items, ..., attr = NULL, .envir = parent.frame())
+
+ol(items, ..., attr = NULL, .envir = parent.frame())
 }
 \arguments{
 \item{items, ...}{List items, a list or a a character vector. Elements

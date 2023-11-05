@@ -15,6 +15,10 @@ cpt_div <- function(..., children = NULL, attr = NULL) {
   new_component("div", ..., children = children, attr = attr)
 }
 
+#' @rdname cpt_div
+#' @export
+div <- cpt_div
+
 # -------------------------------------------------------------------------
 
 #' Create a generic inline component
@@ -33,6 +37,10 @@ cpt_div <- function(..., children = NULL, attr = NULL) {
 cpt_span <- function(..., children = NULL, attr = NULL) {
   new_component("span", ..., children = children, attr = attr)
 }
+
+#' @rdname cpt_span
+#' @export
+span <- cpt_span
 
 # -------------------------------------------------------------------------
 
@@ -54,6 +62,10 @@ cpt_h1 <- function(text, attr = NULL, .envir = parent.frame()) {
 
 #' @rdname cpt_h1
 #' @export
+h1 <- cpt_h1
+
+#' @rdname cpt_h1
+#' @export
 
 cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
   if (is.character(text)) {
@@ -64,6 +76,10 @@ cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
 
 #' @rdname cpt_h1
 #' @export
+h2 <- cpt_h2
+
+#' @rdname cpt_h1
+#' @export
 
 cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {
   if (is.character(text)) {
@@ -71,6 +87,10 @@ cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {
   }
   new_component("h3", text, attr = attr)
 }
+
+#' @rdname cpt_h1
+#' @export
+h3 <- cpt_h3
 
 # -------------------------------------------------------------------------
 
@@ -110,6 +130,10 @@ cpt_ul <- function(items, ..., attr = NULL, .envir = parent.frame()) {
   new_component("ul", children = items, attr = attr)
 }
 
+#' @rdname cpt_ul
+#' @export
+ul <- cpt_ul
+
 #' Ordered list component
 #'
 #' List items are numbered using decimals by default.
@@ -146,6 +170,10 @@ cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
   new_component("ol", children = items, attr = attr)
 }
 
+#' @rdname cpt_ol
+#' @export
+ol <- cpt_ol
+
 #' Lite item component
 #'
 #' Creates a list item component.
@@ -161,6 +189,10 @@ cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
 cpt_li <- function(..., children = NULL, attr = NULL) {
   new_component("li", ..., children = children, attr = attr)
 }
+
+#' @rdname cpt_li
+#' @export
+li <- cpt_li
 
 # -------------------------------------------------------------------------
 # S3 methods

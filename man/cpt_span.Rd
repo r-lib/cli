@@ -2,9 +2,12 @@
 % Please edit documentation in R/components.R
 \name{cpt_span}
 \alias{cpt_span}
+\alias{span}
 \title{Create a generic inline component}
 \usage{
 cpt_span(..., children = NULL, attr = NULL)
+
+span(..., children = NULL, attr = NULL)
 }
 \arguments{
 \item{...}{Subcomponents to add to the new component.}

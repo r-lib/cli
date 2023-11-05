@@ -2,15 +2,24 @@
 % Please edit documentation in R/components.R
 \name{cpt_h1}
 \alias{cpt_h1}
+\alias{h1}
 \alias{cpt_h2}
+\alias{h2}
 \alias{cpt_h3}
+\alias{h3}
 \title{Create headers}
 \usage{
 cpt_h1(text, attr = NULL, .envir = parent.frame())
 
+h1(text, attr = NULL, .envir = parent.frame())
+
 cpt_h2(text, attr = NULL, .envir = parent.frame())
 
+h2(text, attr = NULL, .envir = parent.frame())
+
 cpt_h3(text, attr = NULL, .envir = parent.frame())
+
+h3(text, attr = NULL, .envir = parent.frame())
 }
 \arguments{
 \item{text}{Header text.}

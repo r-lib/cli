@@ -13,6 +13,10 @@ cpt_txt <- function(txt, .envir = parent.frame()) {
   )
 }
 
+#' @rdname cpt_txt
+#' @export
+txt <- cpt_txt
+
 # Create a <span> for inline styles, with the proper class.
 # The span needs to have a text coponent, because only text coponents
 # are allowed to contain plain text.

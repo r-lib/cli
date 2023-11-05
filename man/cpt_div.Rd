@@ -2,9 +2,12 @@
 % Please edit documentation in R/components.R
 \name{cpt_div}
 \alias{cpt_div}
+\alias{div}
 \title{Create a generic block component}
 \usage{
 cpt_div(..., children = NULL, attr = NULL)
+
+div(..., children = NULL, attr = NULL)
 }
 \arguments{
 \item{...}{Subcomponents to add to the new component.}

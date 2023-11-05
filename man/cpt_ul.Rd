@@ -2,9 +2,12 @@
 % Please edit documentation in R/components.R
 \name{cpt_ul}
 \alias{cpt_ul}
+\alias{ul}
 \title{Unordered list component}
 \usage{
 cpt_ul(items, ..., attr = NULL, .envir = parent.frame())
+
+ul(items, ..., attr = NULL, .envir = parent.frame())
 }
 \arguments{
 \item{items, ...}{List items, a list or a a character vector. Elements

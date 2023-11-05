@@ -2,9 +2,12 @@
 % Please edit documentation in R/components-text.R
 \name{cpt_txt}
 \alias{cpt_txt}
+\alias{txt}
 \title{Text component}
 \usage{
 cpt_txt(txt, .envir = parent.frame())
+
+txt(txt, .envir = parent.frame())
 }
 \arguments{
 \item{txt}{Character vector. May contain interpreted \code{{}} literals.}
