@@ -46,7 +46,7 @@
         </span>
       </span>
     Code
-      cpt_span(cpt_text("foobar"))
+      cpt_span(cpt_txt("foobar"))
     Output
       <span>
         <text>
@@ -65,7 +65,7 @@
         </text>
       </h1>
     Code
-      cpt_h1(cpt_text("foo"))
+      cpt_h1(cpt_txt("foo"))
     Output
       <h1>
         <text>
@@ -91,7 +91,7 @@
         </text>
       </h2>
     Code
-      cpt_h2(cpt_text("foo"))
+      cpt_h2(cpt_txt("foo"))
     Output
       <h2>
         <text>
@@ -117,7 +117,7 @@
         </text>
       </h3>
     Code
-      cpt_h3(cpt_text("foo"))
+      cpt_h3(cpt_txt("foo"))
     Output
       <h3>
         <text>

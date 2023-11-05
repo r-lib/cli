@@ -1,13 +1,13 @@
 # parsing and formatting
 
     Code
-      cpt_text("plain text")
+      cpt_txt("plain text")
     Output
       <text>
         txt: "plain text"
       </text>
     Code
-      cpt_text("subs {1:6} titution")
+      cpt_txt("subs {1:6} titution")
     Output
       <text>
         txt: "subs "
@@ -15,7 +15,7 @@
         txt: " titution"
       </text>
     Code
-      cpt_text("sty{.emph li}ng")
+      cpt_txt("sty{.emph li}ng")
     Output
       <text>
         txt: "sty"
@@ -27,7 +27,7 @@
         txt: "ng"
       </text>
     Code
-      cpt_text("styling {.plus {1:10}} subst")
+      cpt_txt("styling {.plus {1:10}} subst")
     Output
       <text>
         txt: "styling "
@@ -39,7 +39,7 @@
         txt: " subst"
       </text>
     Code
-      cpt_text("f {1:2}{4:5} {.bar plain}o{.foo {.bar {3:4}}}o")
+      cpt_txt("f {1:2}{4:5} {.bar plain}o{.foo {.bar {3:4}}}o")
     Output
       <text>
         txt: "f "
@@ -67,7 +67,7 @@
 # plurals
 
     Code
-      cpt_text("Loaded {0} file{?s}.")
+      cpt_txt("Loaded {0} file{?s}.")
     Output
       <text>
         txt: "Loaded "
@@ -77,7 +77,7 @@
         txt: "."
       </text>
     Code
-      cpt_text("Loaded {1} file{?s}.")
+      cpt_txt("Loaded {1} file{?s}.")
     Output
       <text>
         txt: "Loaded "
@@ -87,7 +87,7 @@
         txt: "."
       </text>
     Code
-      cpt_text("Loaded {2} file{?s}.")
+      cpt_txt("Loaded {2} file{?s}.")
     Output
       <text>
         txt: "Loaded "
@@ -100,7 +100,7 @@
 # plurals postprocessing
 
     Code
-      cpt_text("File{?s} loaded: {0}")
+      cpt_txt("File{?s} loaded: {0}")
     Output
       <text>
         txt: "File"
@@ -109,7 +109,7 @@
         sub: `0`
       </text>
     Code
-      cpt_text("File{?s} loaded: {1}")
+      cpt_txt("File{?s} loaded: {1}")
     Output
       <text>
         txt: "File"
@@ -118,7 +118,7 @@
         sub: `1`
       </text>
     Code
-      cpt_text("File{?s} loaded: {2}")
+      cpt_txt("File{?s} loaded: {2}")
     Output
       <text>
         txt: "File"
@@ -130,7 +130,7 @@
 # inline styling errors
 
     Code
-      cpt_text("foo {.not+this} bar")
+      cpt_txt("foo {.not+this} bar")
     Condition
       Error:
       ! Invalid cli literal: `{.not+this}` starts with a dot.

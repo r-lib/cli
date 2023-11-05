@@ -47,7 +47,7 @@ cpt_span <- function(..., children = NULL, attr = NULL) {
 
 cpt_h1 <- function(text, attr = NULL, .envir = parent.frame()) {
   if (is.character(text)) {
-    text <- cpt_text(text, .envir = .envir)
+    text <- cpt_txt(text, .envir = .envir)
   }
   new_component("h1", text, attr = attr)
 }
@@ -57,7 +57,7 @@ cpt_h1 <- function(text, attr = NULL, .envir = parent.frame()) {
 
 cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
   if (is.character(text)) {
-    text <- cpt_text(text, .envir = .envir)
+    text <- cpt_txt(text, .envir = .envir)
   }
   new_component("h2", text, attr = attr)
 }
@@ -67,7 +67,7 @@ cpt_h2 <- function(text, attr = NULL, .envir = parent.frame()) {
 
 cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {
   if (is.character(text)) {
-    text <- cpt_text(text, .envir = .envir)
+    text <- cpt_txt(text, .envir = .envir)
   }
   new_component("h3", text, attr = attr)
 }
@@ -96,7 +96,7 @@ cpt_ul <- function(items, ..., attr = NULL, .envir = parent.frame()) {
   items <- c(items, list(...))
   items <- lapply(items, function(item) {
     if (is.character(item)) {
-      cpt_li(cpt_text(item, .envir = parent.frame()))
+      cpt_li(cpt_txt(item, .envir = parent.frame()))
     } else {
       if (!inherits(item, "cli_component_li")) {
         stop(
@@ -132,7 +132,7 @@ cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
   items <- c(items, list(...))
   items <- lapply(items, function(item) {
     if (is.character(item)) {
-      cpt_li(cpt_text(item, .envir = parent.frame()))
+      cpt_li(cpt_txt(item, .envir = parent.frame()))
     } else {
       if (!inherits(item, "cli_component_li")) {
         stop(

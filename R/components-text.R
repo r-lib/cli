@@ -6,7 +6,7 @@
 #' @return A text component, with class `cli_component_text`.
 #' @export
 
-cpt_text <- function(txt, .envir = parent.frame()) {
+cpt_txt <- function(txt, .envir = parent.frame()) {
   new_component(
     "text",
     children = parse_cli_text(txt, .envir = .envir, .call = call)

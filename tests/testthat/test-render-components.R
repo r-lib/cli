@@ -3,9 +3,9 @@ test_that("render", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    format(preview(cpt_div(cpt_text(txt)), width = 40, theme = list()))
-    format(preview(cpt_span(cpt_text(txt)), theme = list()))
-    format(preview(cpt_text(txt), theme = list()))
+    format(preview(cpt_div(cpt_txt(txt)), width = 40, theme = list()))
+    format(preview(cpt_span(cpt_txt(txt)), theme = list()))
+    format(preview(cpt_txt(txt), theme = list()))
   })
 
   cpt <- cpt_div()
@@ -18,9 +18,9 @@ test_that("preview", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview(cpt_div(cpt_text(txt)), width = 40, theme = list())
-    preview(cpt_span(cpt_text(txt)), width = 40, theme = list())
-    preview(cpt_text(txt), width = 40, theme = list())
+    preview(cpt_div(cpt_txt(txt)), width = 40, theme = list())
+    preview(cpt_span(cpt_txt(txt)), width = 40, theme = list())
+    preview(cpt_txt(txt), width = 40, theme = list())
   })
 })
 
@@ -29,7 +29,7 @@ test_that("preview_generic", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview(cpt_div(cpt_text(txt)), width = 40, theme = list())
+    preview(cpt_div(cpt_txt(txt)), width = 40, theme = list())
   })
 })
 
@@ -38,7 +38,7 @@ test_that("preview_text", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview(cpt_text(txt), width = 40, theme = list())
+    preview(cpt_txt(txt), width = 40, theme = list())
   })
 })
 
@@ -47,6 +47,6 @@ test_that("preview_span", {
           officia nulla id. Minim in adipisicing esse elit aute cillum
           anim quis officia."
   expect_snapshot({
-    preview(cpt_span(cpt_text(txt)), width = 40, theme = list())
+    preview(cpt_span(cpt_txt(txt)), width = 40, theme = list())
   })
 })

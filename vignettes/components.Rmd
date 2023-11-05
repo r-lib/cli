@@ -13,7 +13,7 @@ c1 <- cpt_div()
 c1
 ```
 
-Some components are block components, other are inline components. The current inline components are `cpt_span()` and `cpt_text()`.
+Some components are block components, other are inline components. The current inline components are `cpt_span()` and `cpt_txt()`.
 
 Components may embed other components. Not all types of components are allowed to embed all types of components.
 
@@ -24,37 +24,37 @@ c2
 
 Inline components are only allowed to embed other inline components.
 
-`cpt_text()` is a special inline component, that may embed text pieces and `cpt_span()` components.
+`cpt_txt()` is a special inline component, that may embed text pieces and `cpt_span()` components.
 
-Subcomponents of `cpt_text()` are created automatically, from a template representation that supports interpreted string literals. The notation extends that of the glue package.
+Subcomponents of `cpt_txt()` are created automatically, from a template representation that supports interpreted string literals. The notation extends that of the glue package.
 
 ```{r}
-cpt_text("Some numbers: {1:5}.")
+cpt_txt("Some numbers: {1:5}.")
 ```
 
 In addition to the glue-style braced R expressions, cli supports pluralizatiion and styling:
 
 ```{r}
-n <- 1; cpt_text("Some letters{?s}: {letters[1:n]}.")
-n <- 5; cpt_text("Some letters{?s}: {letters[1:n]}.")
+n <- 1; cpt_txt("Some letters{?s}: {letters[1:n]}.")
+n <- 5; cpt_txt("Some letters{?s}: {letters[1:n]}.")
 ```
 
-You can add style information to a component, except for `cpt_text()`:
+You can add style information to a component, except for `cpt_txt()`:
 
 ```{r}
-cpt_div(cpt_text("RED ALERT"), attr = list(style = list(color = "red")))
+cpt_div(cpt_txt("RED ALERT"), attr = list(style = list(color = "red")))
 ```
 
-You can add one or more classes to a component (but not for \`cpt_text()):
+You can add one or more classes to a component (but not for \`cpt_txt()):
 
 ```{r}
-cpt_div(cpt_text("..."), attr = list(class = "divclass"))
+cpt_div(cpt_txt("..."), attr = list(class = "divclass"))
 ```
 
 You can add an id to a component:
 
 ```{r}
-cpt_div(cpt_text("..."), attr = list(id = "cpt1"))
+cpt_div(cpt_txt("..."), attr = list(id = "cpt1"))
 ```
 
 ## Component trees
@@ -66,7 +66,7 @@ txt <- "Labore aliquip deserunt mollit sint enim commodo cupidatat
         officia nulla id. Minim in adipisicing esse elit aute cillum
         anim quis officia."
 c1 <- cpt_div(
-  cpt_text(txt),
+  cpt_txt(txt),
   attr = list(style = list("font-style" = "italic"))
 )
 t1 <- map_component_tree(c1)

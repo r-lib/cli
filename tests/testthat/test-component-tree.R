@@ -1,7 +1,7 @@
 test_that("map_component_tree", {
   cpt <- cpt_div()
   cpt2 <- cpt_div(cpt_div())
-  cpt3 <- cpt_div(cpt_text("foo {.emph bar} {.val {1:5}} end"))
+  cpt3 <- cpt_div(cpt_txt("foo {.emph bar} {.val {1:5}} end"))
   expect_snapshot({
     map_component_tree(cpt)
     map_component_tree(cpt2)

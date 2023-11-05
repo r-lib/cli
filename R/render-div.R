@@ -48,10 +48,10 @@ render_block <- function(children, width, style = NULL) {
   after <- call_if_fun(style[["after"]])
 
   if (!is.null(before)) {
-    children <- c(list(cpt_text("{before}")), children)
+    children <- c(list(cpt_txt("{before}")), children)
   }
   if (!is.null(after)) {
-    children <- c(children, list(cpt_text("{after}")))
+    children <- c(children, list(cpt_txt("{after}")))
   }
 
   for (child in children) {

@@ -1,7 +1,7 @@
 test_that("theme_component_tree basic", {
   cpt <- cpt_div()
   cpt2 <- cpt_div(cpt_div())
-  cpt3 <- cpt_div(cpt_text("foo {.emph bar} {.val {1:5}} end"))
+  cpt3 <- cpt_div(cpt_txt("foo {.emph bar} {.val {1:5}} end"))
   tree <- map_component_tree(cpt)
   tree2 <- map_component_tree(cpt2)
   tree3 <- map_component_tree(cpt3)
@@ -33,7 +33,7 @@ test_that("theme_component_tree classes", {
   cpt <- cpt_div(attr = list(class = "cl"))
   cpt2 <- cpt_div(cpt_div(), attr = list(class = "cl"))
   cpt3 <- cpt_div(
-    cpt_text("foo {.emph bar} {.val {1:5}} end"),
+    cpt_txt("foo {.emph bar} {.val {1:5}} end"),
     attr = list(class = "cl")
   )
   tree <- map_component_tree(cpt)
@@ -67,15 +67,15 @@ test_that("theme_component_tree styles", {
     )
   )
   cpt3 <- cpt_div(
-    cpt_text("foo {.emph bar} "),
+    cpt_txt("foo {.emph bar} "),
     cpt_span(
-      cpt_text("1:5"),
+      cpt_txt("1:5"),
       attr = list(
         class = "val",
         style = list("class-map" = list("rclass" = "cliclass"), digits = 10)
       )
     ),
-    cpt_text(" end"),
+    cpt_txt(" end"),
     attr = list(class = "cl")
   )
   tree <- map_component_tree(cpt)

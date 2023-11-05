@@ -4,33 +4,33 @@ test_that_cli("render_div", config = c("plain", "ansi"), {
           anim quis officia."
   expect_snapshot({
     render_div(
-      cpt_div(cpt_text(txt)),
+      cpt_div(cpt_txt(txt)),
       width = 40
     )
 
     render_div(
-      cpt_div(cpt_text(txt), attr = list(style = list("margin-top" = 1))),
+      cpt_div(cpt_txt(txt), attr = list(style = list("margin-top" = 1))),
       width = 40
     )
 
     render_div(
-      cpt_div(cpt_text(txt), attr = list(style = list("margin-bottom" = 1))),
+      cpt_div(cpt_txt(txt), attr = list(style = list("margin-bottom" = 1))),
       width = 40
     )
 
     render_div(
-      cpt_div(cpt_text(txt), attr = list(style = list("margin-left" = 2))),
+      cpt_div(cpt_txt(txt), attr = list(style = list("margin-left" = 2))),
       width = 40
     )
 
     render_div(
-      cpt_div(cpt_text(txt), attr = list(style = list("margin-right" = 2))),
+      cpt_div(cpt_txt(txt), attr = list(style = list("margin-right" = 2))),
       width = 40
     )
 
     render_div(
       cpt_div(
-        cpt_text(txt),
+        cpt_txt(txt),
         attr = list(style = list(
           "padding-top" = 1,
           "background-color" = "grey"
@@ -41,7 +41,7 @@ test_that_cli("render_div", config = c("plain", "ansi"), {
 
     render_div(
       cpt_div(
-        cpt_text(txt),
+        cpt_txt(txt),
         attr = list(style = list(
           "padding-bottom" = 1,
           "background-color" = "grey"
@@ -52,7 +52,7 @@ test_that_cli("render_div", config = c("plain", "ansi"), {
 
     render_div(
       cpt_div(
-        cpt_text(txt),
+        cpt_txt(txt),
         attr = list(style = list(
           "padding-left" = 1,
           "background-color" = "grey"
@@ -63,7 +63,7 @@ test_that_cli("render_div", config = c("plain", "ansi"), {
 
     render_div(
       cpt_div(
-        cpt_text(txt),
+        cpt_txt(txt),
         attr = list(style = list(
           "padding-right" = 1,
           "background-color" = "grey"
@@ -73,7 +73,7 @@ test_that_cli("render_div", config = c("plain", "ansi"), {
     )
 
     render_div(
-      cpt_div(cpt_text(txt), attr = list(style = list("color" = "grey"))),
+      cpt_div(cpt_txt(txt), attr = list(style = list("color" = "grey"))),
       width = 40
     )
   })
@@ -88,7 +88,7 @@ test_that_cli("render_div children", config = c("plain", "ansi"), {
   expect_snapshot({
     writeLines(render_div(
       cpt_div(
-        cpt_div(cpt_text(txt), attr = list(style = list(color = "magenta"))),
+        cpt_div(cpt_txt(txt), attr = list(style = list(color = "magenta"))),
         attr = list(style = list(
           "background-color" = "grey",
           "padding-left" = 2L,
@@ -115,7 +115,7 @@ test_that_cli("render_div can turn off bg color", config = "ansi", {
     writeLines(render_div(
       cpt_div(
         cpt_div(
-          cpt_text(txt),
+          cpt_txt(txt),
           attr = list(style = list(color = "magenta", "background-color" = NULL))
         ),
         attr = list(style = list(
@@ -139,7 +139,7 @@ test_that("render_div with fmt callback", {
   fmt <- function(x, style, width, ...) {
     cli::rule(x, width = width)
   }
-  div <- cpt_div(cpt_text(headline), attr = list(style = list(fmt = fmt)))
+  div <- cpt_div(cpt_txt(headline), attr = list(style = list(fmt = fmt)))
   expect_snapshot(format(preview(div, width = 40, theme = list())))
 })
 
@@ -151,7 +151,7 @@ test_that("render_div after, before", {
   expect_snapshot({
     render_div(
       cpt_div(
-        cpt_text(txt),
+        cpt_txt(txt),
         attr = list(style = list(before = "<<", after = ">>"))
       ),
       width = 40
