@@ -79,7 +79,7 @@ The next step is to add a theme to the component tree:
 
 ```{r}
 t1t <- theme_component_tree(
-  t1, 
+  t1,
   theme = list(div = list(color = "green"))
 )
 t1t
@@ -138,14 +138,14 @@ cli_bullets(c(
 -   [ ] `blockquote`
 -   [x] `div`
 -   [ ] `dl`
--   [ ] `h1`, `h2`, `h3`
+-   [x] `h1`, `h2`, `h3`
 -   [ ] `li`
 -   [x] ~~`meta`~~ Not needed?
--   [ ] `ol`
+-   [x] `ol`
 -   [ ] `par`
 -   [ ] `rule`
 -   [ ] `status` (is this needed here?)
--   [ ] `ul`
+-   [x] `ul`
 -   [ ] `verbatim`
 
 ## Composite components:
@@ -664,13 +664,13 @@ So if we want to clear this up, then we need to keep the current styles, and cre
 
 Possibly we need to define a new `expr` tag or qualifyier that we can use in themes. With a tag we could have:
 
-```         
+```
 list("span expr" = list(after = ">"))
 ```
 
 and with a new qualifier we could have
 
-```         
+```
 list(span = list("expr::after" = ">"))
 ```
 
@@ -678,23 +678,22 @@ The first one seems more logical, it is just a new tag, after all, no new concep
 
 We would need to keep the compatibility with the current themes, though, so
 
-```         
+```
 list(span = list(after = ">"))
 ```
 
 would still apply to both the expressions and the tag itself, which is not great. With qualifyers we could have
 
-```         
+```
 list(span = list("expr::after" = ">"))
 list(span = list("self::after" = "**"))
 ```
 
 or maybe
 
-```         
+```
 list(span = list("after::expr" = ">"))
 list(span = list("after::self" = "**"))
 ```
 
 where we explicitly choose whether to apply to the expression to the substituted expressions (possibly elementwise), or to the tag itself.
-

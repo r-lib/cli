@@ -85,7 +85,7 @@ render_styled <- function(cpt, width = console_width()) {
     "text" = render_inline_text(cpt),
     "span" = render_inline_span(cpt),
     "h1" = ,
-    "h2 " = ,
+    "h2" = ,
     "h3" = ,
     "div" = render_div(cpt, width = width),
     "ol" = ,
