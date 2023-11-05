@@ -66,7 +66,7 @@ apply_theme_to_style <- function(cpt_styles, thm_styles) {
     cpt_styles$`class-map` %||% list()
   )
 
-  merged <- modifyList(thm_styles, cpt_styles)
+  merged <- utils::modifyList(thm_styles, cpt_styles)
   if (length(cm)) merged[["class-map"]] <- cm
   merged
 }
