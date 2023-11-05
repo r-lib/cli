@@ -174,7 +174,7 @@ cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
 #' @export
 ol <- cpt_ol
 
-#' Lite item component
+#' List item component
 #'
 #' Creates a list item component.
 #' It can be used in [unordered][cpt_ul] or [ordered][cpt_ol] lists.

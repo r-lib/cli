@@ -3,7 +3,7 @@
 \name{cpt_li}
 \alias{cpt_li}
 \alias{li}
-\title{Lite item component}
+\title{List item component}
 \usage{
 cpt_li(..., children = NULL, attr = NULL)
 
