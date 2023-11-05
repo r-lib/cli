@@ -1,4 +1,9 @@
 
+#' Text component
+#'
+#' @param txt Character vector. May contain interpreted `{}` literals.
+#' @param .envir Environment to evaluate the interpreted literals in.
+#' @return A text component, with class `cli_component_text`.
 #' @export
 
 cpt_text <- function(txt, .envir = parent.frame()) {

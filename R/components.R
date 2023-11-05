@@ -15,6 +15,8 @@ cpt_div <- function(..., children = NULL, attr = NULL) {
   new_component("div", ..., children = children, attr = attr)
 }
 
+# -------------------------------------------------------------------------
+
 #' Create a generic inline component
 #'
 #' Generic components are useful for styling, and for collecting
@@ -31,6 +33,8 @@ cpt_div <- function(..., children = NULL, attr = NULL) {
 cpt_span <- function(..., children = NULL, attr = NULL) {
   new_component("span", ..., children = children, attr = attr)
 }
+
+# -------------------------------------------------------------------------
 
 #' Create headers
 #'
@@ -68,7 +72,20 @@ cpt_h3 <- function(text, attr = NULL, .envir = parent.frame()) {
   new_component("h3", text, attr = attr)
 }
 
+# -------------------------------------------------------------------------
+
 #' Unordered list component
+#'
+#' It creates a bulleted list by default.
+#' This can be customized with the `list-style-type` style.
+#'
+#' @param items,... List items, a list or a a character vector. Elements
+#'   must be strings or [list item components][cpt_li]. Character strings
+#'   can have interpreted `{}` literals.
+#' @param attr Attributes.
+#' @param .envir Environment to evaluate the interpreted `{}` literals in
+#'   items in.
+#' @return An unordered list component, with class `cli_component_ul`.
 #'
 #' @export
 
@@ -93,6 +110,19 @@ cpt_ul <- function(items, ..., attr = NULL, .envir = parent.frame()) {
   new_component("ul", children = items, attr = attr)
 }
 
+#' Ordered list component
+#'
+#' List items are numbered using decimals by default.
+#' This can be customized with the `list-style-type` style.
+#'
+#' @param items,... List items, a list or a a character vector. Elements
+#'   must be strings or [list item components][cpt_li]. Character strings
+#'   can have interpreted `{}` literals.
+#' @param attr Attributes.
+#' @param .envir Environment to evaluate the interpreted `{}` literals in
+#'   items in.
+#' @return An unordered list component, with class `cli_component_ul`.
+#'
 #' @export
 
 cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
@@ -116,6 +146,16 @@ cpt_ol <- function(items, ..., attr = NULL, .envir = parent.frame()) {
   new_component("ol", children = items, attr = attr)
 }
 
+#' Lite item component
+#'
+#' Creates a list item component.
+#' It can be used in [unordered][cpt_ul] or [ordered][cpt_ol] lists.
+#'
+#' @param ... Child components.
+#' @param children More child components, in a list.
+#' @param attr Attributes.
+#' @return A list item component, with class `cli_component_li`.
+#'
 #' @export
 
 cpt_li <- function(..., children = NULL, attr = NULL) {
