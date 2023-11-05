@@ -37,7 +37,11 @@ render_ul <- function(cpt, width = console_width()) {
   }
 
   start <- style[["start"]] %||% 1L
-  markers <- extract_list_bullets(cpt[["children"]], start = start)
+  markers <- extract_list_bullets(
+    cpt[["children"]],
+     start = start,
+     type = cpt[["tag"]]
+  )
   marker_width <- max(c(0L, ansi_nchar(markers, type = "width")))
   marker_width <- min(c(list_merker_width_limit, marker_width))
   markers <- format_list_markers(markers, marker_width)
@@ -89,12 +93,13 @@ render_ul <- function(cpt, width = console_width()) {
   c(rep("", margin_top), lines, rep("", margin_bottom))
 }
 
-extract_list_bullets <- function(cpts, start) {
+extract_list_bullets <- function(cpts, start, type) {
+  default_bullet <- if (type == "ul") "*" else "decimal"
   lst <- vcapply(cpts, function(cpt) {
     x <- cpt[["style"]][["list-style-type"]]
     x <- call_if_fun(x)
     if (!is_string(x)) x <- NULL
-    x <- x %||% "*"
+    x <- x %||% default_bullet
   })
 
   res <- lst
