@@ -55,7 +55,7 @@ make_styled_tree <- function(cpt, theme = NULL) {
   if (!themed) {
     theme <- theme %||% c(
       if (Sys.getenv("CLI_NO_BUILTIN_THEME", "") != "true") {
-        builtin_theme()
+        builtin_theme2()
       },
       getOption("cli.theme"),
       getOption("cli.user.theme")

@@ -44,7 +44,7 @@ bullets <- cpt_bullets
 
 bullet_name_to_style <- function(nm) {
   if (is.na(nm)) nm <- ""
-  if (nm %in% c("", " ", "v", "x", "!", "i", "*", "->")) {
+  if (nm %in% c("", " ", "v", "x", "!", "i", "*", ">")) {
     list("list-style-type" = paste0("bullet:", nm))
   } else {
     list("list-style-type" = nm)
