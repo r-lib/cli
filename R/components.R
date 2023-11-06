@@ -169,7 +169,7 @@ cpt_ul <- function(
   items <- c(items, list(...))
   items <- lapply(items, function(item) {
     if (is.character(item)) {
-      cpt_li(cpt_txt(item, .envir = parent.frame()))
+      cpt_li(cpt_txt(item, .envir = .envir))
     } else {
       if (!inherits(item, "cli_component_li")) {
         stop(
@@ -224,7 +224,7 @@ cpt_ol <- function(
   items <- c(items, list(...))
   items <- lapply(items, function(item) {
     if (is.character(item)) {
-      cpt_li(cpt_txt(item, .envir = parent.frame()))
+      cpt_li(cpt_txt(item, .envir = .envir))
     } else {
       if (!inherits(item, "cli_component_li")) {
         stop(
@@ -344,4 +344,12 @@ is_cpt_block <- function(x) {
 
 is_cpt_inline <- function(x) {
   identical(x[["tag"]], "span") || identical(x[["tag"]], "text")
+}
+
+cpt_get_style <- function(cpt, style) {
+  cpt[["attr]"]][["style"]][[style]]
+}
+
+cpt_add_style <- function(cpt, styles) {
+  cpt[["attr"]][["style"]][names(styles)] <- styles
 }

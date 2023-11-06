@@ -113,7 +113,15 @@ extract_list_bullets <- function(cpts, start, type) {
     disc = symbol$bullet,
     circle = symbol$cicle,
     none = "",
-    square = symbol$square_small_filled
+    square = symbol$square_small_filled,
+    "bullet:" = "",
+    "bullet: " = " ",
+    "bullet:v" = col_green(symbol$tick),
+    "bullet:x" = col_red(symbol$cross),
+    "bullet:!" = col_yellow("!"),
+    "bullet:i" = col_cyan(symbol$info),
+    "bullet:*" = col_cyan(symbol$bullet),
+    ".bullet->" = symbol$arrow_right
   )
   res[!raw] <- lst_names[lst[!raw]]
 
