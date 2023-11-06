@@ -5,14 +5,32 @@
 \alias{ul}
 \title{Unordered list component}
 \usage{
-cpt_ul(items, ..., attr = NULL, .envir = parent.frame())
+cpt_ul(
+  items,
+  ...,
+  class = NULL,
+  style = NULL,
+  attr = NULL,
+  .envir = parent.frame()
+)
 
-ul(items, ..., attr = NULL, .envir = parent.frame())
+ul(
+  items,
+  ...,
+  class = NULL,
+  style = NULL,
+  attr = NULL,
+  .envir = parent.frame()
+)
 }
 \arguments{
 \item{items, ...}{List items, a list or a a character vector. Elements
 must be strings or \link[=cpt_li]{list item components}. Character strings
 can have interpreted \code{{}} literals.}
+
+\item{class}{Classes.}
+
+\item{style}{Styles.}
 
 \item{attr}{Attributes.}
 

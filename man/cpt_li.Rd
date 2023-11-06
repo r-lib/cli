@@ -5,14 +5,18 @@
 \alias{li}
 \title{List item component}
 \usage{
-cpt_li(..., children = NULL, attr = NULL)
+cpt_li(..., children = NULL, class = NULL, style = NULL, attr = NULL)
 
-li(..., children = NULL, attr = NULL)
+li(..., children = NULL, class = NULL, style = NULL, attr = NULL)
 }
 \arguments{
 \item{...}{Child components.}
 
 \item{children}{More child components, in a list.}
+
+\item{class}{Classes.}
+
+\item{style}{Styles.}
 
 \item{attr}{Attributes.}
 }

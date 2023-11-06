@@ -5,15 +5,19 @@
 \alias{div}
 \title{Create a generic block component}
 \usage{
-cpt_div(..., children = NULL, attr = NULL)
+cpt_div(..., children = NULL, class = NULL, style = NULL, attr = NULL)
 
-div(..., children = NULL, attr = NULL)
+div(..., children = NULL, class = NULL, style = NULL, attr = NULL)
 }
 \arguments{
 \item{...}{Subcomponents to add to the new component.}
 
 \item{children}{A list of subcomponents to add to the new component,
 they are added after the ones in \code{...}.}
+
+\item{class}{Classes.}
+
+\item{style}{Styles.}
 
 \item{attr}{Attributes.}
 }

@@ -5,15 +5,19 @@
 \alias{span}
 \title{Create a generic inline component}
 \usage{
-cpt_span(..., children = NULL, attr = NULL)
+cpt_span(..., children = NULL, class = NULL, style = NULL, attr = NULL)
 
-span(..., children = NULL, attr = NULL)
+span(..., children = NULL, class = NULL, style = NULL, attr = NULL)
 }
 \arguments{
 \item{...}{Subcomponents to add to the new component.}
 
 \item{children}{A list of subcomponents to add to the new component,
 they are added after the ones in \code{...}.}
+
+\item{class}{Classes.}
+
+\item{style}{Styles.}
 
 \item{attr}{Attributes.}
 }

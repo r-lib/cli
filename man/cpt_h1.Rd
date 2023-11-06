@@ -9,13 +9,13 @@
 \alias{h3}
 \title{Create headers}
 \usage{
-cpt_h1(text, attr = NULL, .envir = parent.frame())
+cpt_h1(text, class = NULL, style = NULL, attr = NULL, .envir = parent.frame())
 
-h1(text, attr = NULL, .envir = parent.frame())
+h1(text, class = NULL, style = NULL, attr = NULL, .envir = parent.frame())
 
-cpt_h2(text, attr = NULL, .envir = parent.frame())
+cpt_h2(text, class = NULL, style = NULL, attr = NULL, .envir = parent.frame())
 
-h2(text, attr = NULL, .envir = parent.frame())
+h2(text, class = NULL, style = NULL, attr = NULL, .envir = parent.frame())
 
 cpt_h3(text, attr = NULL, .envir = parent.frame())
 
@@ -23,6 +23,10 @@ h3(text, attr = NULL, .envir = parent.frame())
 }
 \arguments{
 \item{text}{Header text.}
+
+\item{class}{Classes.}
+
+\item{style}{Styles.}
 
 \item{attr}{Attributes.}
 
