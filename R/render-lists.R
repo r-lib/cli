@@ -137,32 +137,32 @@ extract_list_bullets <- function(cpts, start, type) {
 format_numbered_items <- function(res, type, offset) {
   if (!anyNA(res)) return(res)
 
-  dcm <- type[is.na(res)] == "decimal"
+  dcm <- is.na(res) & type == "decimal"
   if (any(dcm)) {
     res[dcm] <- paste0(seq_along(res) + offset, ".")[dcm]
   }
 
-  dcm0 <- type[is.na(res)] == "decimal-leading-zero"
+  dcm0 <- is.na(res) & type == "decimal-leading-zero"
   if (any(dcm0)) {
     res[dcm0] <- seq_leading_zero(length(res), offset)[dcm0]
   }
 
-  llat <- type[is.na(res)] %in% c("lower-alpha", "lower-latin")
+  llat <- is.na(res) & type %in% c("lower-alpha", "lower-latin")
   if (any(llat)) {
     res[llat] <- seq_lower_alpha(length(res), offset)[llat]
   }
 
-  lrom <- type[is.na(res)] == "lower-roman"
+  lrom <- is.na(res) & type == "lower-roman"
   if (any(lrom)) {
     res[lrom] <- seq_lower_roman(length(res), offset)[lrom]
   }
 
-  ulat <- type[is.na(res)] %in% c("upper-alpha", "upper-latin")
+  ulat <- is.na(res) & type %in% c("upper-alpha", "upper-latin")
   if (any(ulat)) {
     res[ulat] <- seq_upper_alpha(length(res), offset)[ulat]
   }
 
-  urom <- type[is.na(res)] == "upper-roman"
+  urom <- is.na(res) & type == "upper-roman"
   if (any(urom)) {
     res[urom] <- seq_upper_roman(length(res), offset)[urom]
   }
