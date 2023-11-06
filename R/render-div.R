@@ -35,10 +35,18 @@ render_block <- function(children, width, style = NULL) {
   lines <- character()
   inline <- list()
 
+  white_space <- style[["white-space"]] %||% "normal"
+
   output_inline <- function() {
     if (length(inline) > 0) {
       text <- paste(inline, collapse = "")
-      wtext <- ansi_strwrap(text, width = child_width)
+      wtext <- if (white_space == "normal") {
+        ansi_strwrap(text, width = child_width)
+      } else if (white_space == "pre") {
+        unlist(strsplit(text, "\n", fixed = TRUE))
+      } else {
+        stop("Unimplemented `white-space` style: ", white_space)
+      }
       lines <<- c(lines, wtext)
       inline <<- list()
     }

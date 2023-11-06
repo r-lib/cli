@@ -91,6 +91,7 @@ render_styled <- function(cpt, width = console_width()) {
     "ol" = ,
     "ul" = render_ul(cpt, width = width),
     "li" = render_li(cpt, width = width),
+    "pre" = render_pre(cpt, width = width),
     stop("Unknown component type: ", cpt[["tag"]])
   )
 }

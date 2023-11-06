@@ -121,7 +121,7 @@ extract_list_bullets <- function(cpts, start, type) {
     "bullet:!" = col_yellow("!"),
     "bullet:i" = col_cyan(symbol$info),
     "bullet:*" = col_cyan(symbol$bullet),
-    ".bullet->" = symbol$arrow_right
+    "bullet:>" = symbol$arrow_right
   )
   res[!raw] <- lst_names[lst[!raw]]
 

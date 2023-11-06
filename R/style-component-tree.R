@@ -100,5 +100,5 @@ inherited_styles <- function() {
   c("class-map", "collapse", "digits", "line-type",
     "list-style-type", "start", "string-quote",
     "text-exdent", "transform", "vec-last", "vec-sep",
-    "vec-sep2", "vec-trunc", "vec-trunc-style")
+    "vec-sep2", "vec-trunc", "vec-trunc-style", "white-space")
 }

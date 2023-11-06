@@ -86,7 +86,7 @@
        [1] "class-map"       "collapse"        "digits"          "line-type"      
        [5] "list-style-type" "start"           "string-quote"    "text-exdent"    
        [9] "transform"       "vec-last"        "vec-sep"         "vec-sep2"       
-      [13] "vec-trunc"       "vec-trunc-style"
+      [13] "vec-trunc"       "vec-trunc-style" "white-space"    
 
 # inherit_styles
 

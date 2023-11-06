@@ -9,7 +9,7 @@
 cpt_txt <- function(txt, .envir = parent.frame()) {
   new_component(
     "text",
-    children = parse_cli_text(txt, .envir = .envir, .call = call)
+    children = parse_cli_text(txt, .envir = .envir)
   )
 }
 
