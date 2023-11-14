@@ -234,4 +234,4 @@ contributing to this project, you agree to abide by its terms.
 
 # License
 
-MIT © RStudio
+MIT © Posit Software, PBC
