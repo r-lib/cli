@@ -1,7 +1,7 @@
 # cli (development version)
 
-* `ansi_collapse(x, trunc = 1, style = "head")` now indeed show one element
-  if `length(x) == 2`, as documented (@salim-b, #572).
+* `ansi_collapse(x, trunc = 1, style = "head")` now indeed shows one
+  element if `length(x) == 2`, as documented (@salim-b, #572).
 
 * `ansi_collapse()` gains a `sep2` argument to specify a seperate separator
   for length-two inputs. It defaults to `" and "` which, in conjunction with
