@@ -1,3 +1,5 @@
+# cli (development version)
+
 # cli 3.6.2
 
 * `ansi_collapse(x, trunc = 1, style = "head")` now indeed shows one
