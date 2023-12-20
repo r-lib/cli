@@ -59,7 +59,7 @@ test_that_cli("format_message", {
   }))
 })
 
-test_that_cli(config = "ansi", "color in RStudio", {
+test_that_cli(configs = "ansi", "color in RStudio", {
   mockery::stub(
     get_rstudio_fg_color0,
     "rstudio_detect",
@@ -90,7 +90,7 @@ test_that_cli(config = "ansi", "color in RStudio", {
   expect_null(get_rstudio_fg_color0())
 })
 
-test_that_cli(config = "ansi", "update_rstudio_color", {
+test_that_cli(configs = "ansi", "update_rstudio_color", {
   mockery::stub(
     update_rstudio_color,
     "get_rstudio_fg_color",

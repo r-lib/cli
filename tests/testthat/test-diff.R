@@ -41,7 +41,7 @@ test_that("format.cli_diff_chr context", {
   expect_snapshot(print(d2, context = Inf))
 })
 
-test_that_cli(config = c("plain", "ansi"), "diff_str", {
+test_that_cli(configs = c("plain", "ansi"), "diff_str", {
   str1 <- "abcdefghijklmnopqrstuvwxyz"
   str2 <- "PREabcdefgMIDDLEnopqrstuvwxyzPOST"
   d <- diff_str(str1, str2)

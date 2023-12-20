@@ -4,7 +4,7 @@ withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
 start_app()
 on.exit(stop_app(), add = TRUE)
 
-test_that_cli(config = c("plain", "ansi"), "inline classes", {
+test_that_cli(configs = c("plain", "ansi"), "inline classes", {
   classes <- c(
     "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
     "email", "url", "var", "envvar", "cls")
