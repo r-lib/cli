@@ -1,7 +1,7 @@
 
 # -- {.email} -------------------------------------------------------------
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
               "{.email}", {
 
   expect_snapshot({
@@ -9,7 +9,7 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
   })
 })
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
               "{.email} vectors", {
 
   expect_snapshot({
@@ -20,7 +20,7 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
 
 # -- {.file} and {.path} --------------------------------------------------
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
               "{.file} and {.path}", {
 
   withr::local_envvar(R_CLI_HYPERLINK_STYLE = NA_character_)
@@ -114,7 +114,7 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
 
 # -- {.fun} ---------------------------------------------------------------
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.fun}", {
 
   expect_snapshot({
@@ -128,7 +128,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
   })
 })
 
-test_that_cli(config = "plain", links = "all", "turning off help", {
+test_that_cli(configs = "plain", links = "all", "turning off help", {
   withr::local_options(cli.hyperlink_help = FALSE)
   expect_snapshot({
     cli_text("{.fun pkg::func}")
@@ -137,7 +137,7 @@ test_that_cli(config = "plain", links = "all", "turning off help", {
 
 # -- {.help} --------------------------------------------------------------
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.help}", {
 
   expect_snapshot({
@@ -153,7 +153,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
 # -- {.href} --------------------------------------------------------------
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.href}", {
   expect_snapshot({
     cli_text("{.href https://cli.r-lib.org}")
@@ -162,7 +162,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
   })
 })
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.href} vectors", {
   expect_snapshot({
     url <- paste0("https://cli.r-lib.org/", 1:3)
@@ -172,7 +172,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
 # -- {.run} ---------------------------------------------------------------
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.run}", {
   expect_snapshot({
     cli_text("{.run pkg::fun(param)}")
@@ -180,7 +180,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
   })
 })
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.run} vectors", {
   expect_snapshot({
     codes <- paste0("pkg::fun", 1:3, "()")
@@ -190,7 +190,7 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
 # -- {.topic} -------------------------------------------------------------
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.topic}", {
 
   expect_snapshot({
@@ -206,14 +206,14 @@ test_that_cli(config = "plain", links = c("all", "none"),
 
 # -- {.url} ---------------------------------------------------------------
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
               "{.url}", {
   expect_snapshot({
     cli_text("{.url https://cli.r-lib.org}")
   })
 })
 
-test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
+test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
               "{.url} vector", {
   expect_snapshot({
     urls <- paste0("https://cli.r-lib.org/", 1:3)
@@ -221,7 +221,7 @@ test_that_cli(config = c("plain", "fancy"), links = c("all", "none"),
   })
 })
 
-test_that_cli(config = "plain", links = "all", "linked {.url}", {
+test_that_cli(configs = "plain", links = "all", "linked {.url}", {
   expect_snapshot({
     link <- c(
       "https://cli.r-lib.org",
@@ -239,7 +239,7 @@ test_that("make_link_url", {
 
 # -- {.vignette} ----------------------------------------------------------
 
-test_that_cli(config = "plain", links = c("all", "none"),
+test_that_cli(configs = "plain", links = c("all", "none"),
               "{.vignette}", {
 
   expect_snapshot({

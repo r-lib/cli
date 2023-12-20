@@ -18,7 +18,7 @@ test_that_cli(
   }
 )
 
-test_that_cli(config = c("plain", "ansi"), "quoting weird names, still", {
+test_that_cli(configs = c("plain", "ansi"), "quoting weird names, still", {
   nb <- function(x) gsub("\u00a0", " ", x, fixed = TRUE)
   expect_snapshot(local({
     cat_line(nb(quote_weird_name("good")))
@@ -28,7 +28,7 @@ test_that_cli(config = c("plain", "ansi"), "quoting weird names, still", {
   }))
 })
 
-test_that_cli(config = c("ansi"), "~/ files are not weird", {
+test_that_cli(configs = c("ansi"), "~/ files are not weird", {
   nb <- function(x) gsub("\u00a0", " ", x, fixed = TRUE)
   expect_snapshot(local({
     cat_line(nb(quote_weird_name("~/good")))
@@ -106,7 +106,7 @@ test_that("line breaks", {
   expect_snapshot(ansi_strwrap(txt2, width = 60))
 })
 
-test_that_cli(config = "ansi", "double ticks", {
+test_that_cli(configs = "ansi", "double ticks", {
   x <- c("a", "`x`", "b")
   cli_div(theme = list(
     .code = list(color = "red"),
@@ -127,13 +127,13 @@ test_that("do not inherit 'transform' issue #422", {
   })
 })
 
-test_that_cli(config = c("ansi", "plain"), "no inherit color, issue #474", {
+test_that_cli(configs = c("ansi", "plain"), "no inherit color, issue #474", {
   expect_snapshot({
     cli::cli_text("pre {.val x {'foo'} y} post")
   })
 })
 
-test_that_cli(config = c("ansi", "plain"), "\\f at the end, issue #491", {
+test_that_cli(configs = c("ansi", "plain"), "\\f at the end, issue #491", {
   expect_snapshot({
     cli_fmt(cli::cli_text("{.val a}{.val b}"))
     cli_fmt(cli::cli_text("\f{.val a}{.val b}"))
@@ -152,7 +152,7 @@ test_that("truncate vectors at 20", {
   )
 })
 
-test_that_cli(config = "ansi", "brace expresssion edge cases", {
+test_that_cli(configs = "ansi", "brace expresssion edge cases", {
   foo <- "foo"
   bar <- "bar"
   expect_snapshot({

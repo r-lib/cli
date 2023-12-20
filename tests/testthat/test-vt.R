@@ -35,7 +35,7 @@ test_that("scroll up", {
   )
 })
 
-test_that_cli(config = "ansi", "ANSI SGR", {
+test_that_cli(configs = "ansi", "ANSI SGR", {
   expect_snapshot(
     vt_output("12\033[31m34\033[1m56\033[39m78\033[21m90", width = 20, height = 2)
   )

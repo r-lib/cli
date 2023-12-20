@@ -115,7 +115,7 @@ test_that("both-ends", {
   })
 })
 
-test_that_cli(config = c("plain", "ansi"), "both-ends with formatting", {
+test_that_cli(configs = c("plain", "ansi"), "both-ends with formatting", {
   v <- function(n, t = 5) {
     cli_vec(
       seq_len(n),
