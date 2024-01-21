@@ -284,16 +284,7 @@ code_theme_default_rstudio <- function() {
 }
 
 code_theme_default_term <- function() {
-  list(
-    reserved = "red",
-    number   = "blue",
-    null     = c("blue", "bold"),
-    operator = "green",
-    call     = "cyan",
-    string   = "yellow",
-    comment  = c("#a9a9a9", "italic"),
-    bracket  = list("yellow", "blue", "cyan")
-  )
+  "Solarized Dark"
 }
 
 #' Syntax highlighting themes
