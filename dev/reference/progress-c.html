@@ -89,7 +89,7 @@ call <code>cli_progress_init_timer()</code> or create a progress bar with
 <h3 id="cli-progress-add-"><code>cli_progress_add()</code><a class="anchor" aria-label="anchor" href="#cli-progress-add-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_add<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">double</span> inc<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_add<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">double</span> inc<span class="op">);</span></span></code></pre><p></p></div>
 <p>Add a number of progress units to the progress bar. It will also
 trigger an update if an update is due.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
 <li><p><code>inc</code>: progress increment.</p></li>
@@ -99,7 +99,7 @@ trigger an update if an update is due.</p><ul><li><p><code>bar</code>: progress 
 <h3 id="cli-progress-bar-"><code><a href="cli_progress_bar.html">cli_progress_bar()</a></code><a class="anchor" aria-label="anchor" href="#cli-progress-bar-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SEXP cli_progress_bar<span class="op">(</span><span class="dt">double</span> total<span class="op">,</span> SEXP config<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>SEXP cli_progress_bar<span class="op">(</span><span class="dt">double</span> total<span class="op">,</span> SEXP config<span class="op">);</span></span></code></pre><p></p></div>
 <p>Create a new progress bar object. The returned progress bar object
 must be <code>PROTECT()</code>-ed.</p><ul><li><p><code>total</code>: Total number of progress units. Use <code>NA_REAL</code> if it is not
 known.</p></li>
@@ -122,18 +122,18 @@ number of current units equals the number of total progress units.</p></li>
 <h4 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a></h4>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cli/progress.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>SEXP progress_test1<span class="op">()</span> <span class="op">{</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> i<span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  SEXP bar <span class="op">=</span> PROTECT<span class="op">(</span>cli_progress_bar<span class="op">(</span><span class="dv">1000</span><span class="op">,</span> NULL<span class="op">));</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1000</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    cli_progress_sleep<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">4</span> <span class="op">*</span> <span class="dv">1000</span> <span class="op">*</span> <span class="dv">1000</span><span class="op">);</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>CLI_SHOULD_TICK<span class="op">)</span> cli_progress_set<span class="op">(</span>bar<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  cli_progress_done<span class="op">(</span>bar<span class="op">);</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  UNPROTECT<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Rf_ScalarInteger<span class="op">(</span>i<span class="op">);</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cli/progress.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>SEXP progress_test1<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  SEXP bar <span class="op">=</span> PROTECT<span class="op">(</span>cli_progress_bar<span class="op">(</span><span class="dv">1000</span><span class="op">,</span> NULL<span class="op">));</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">1000</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    cli_progress_sleep<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">4</span> <span class="op">*</span> <span class="dv">1000</span> <span class="op">*</span> <span class="dv">1000</span><span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>CLI_SHOULD_TICK<span class="op">)</span> cli_progress_set<span class="op">(</span>bar<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  cli_progress_done<span class="op">(</span>bar<span class="op">);</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  UNPROTECT<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="cf">return</span> Rf_ScalarInteger<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="op">}</span></span></code></pre><p></p></div>
 </div>
 
 
@@ -143,7 +143,7 @@ number of current units equals the number of total progress units.</p></li>
 <h3 id="cli-progress-done-"><code><a href="cli_progress_bar.html">cli_progress_done()</a></code><a class="anchor" aria-label="anchor" href="#cli-progress-done-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_done<span class="op">(</span>SEXP bar<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_done<span class="op">(</span>SEXP bar<span class="op">);</span></span></code></pre><p></p></div>
 <p>Terminate the progress bar.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
 </ul></div>
 
@@ -151,7 +151,7 @@ number of current units equals the number of total progress units.</p></li>
 <h3 id="cli-progress-init-timer-"><code>cli_progress_init_timer()</code><a class="anchor" aria-label="anchor" href="#cli-progress-init-timer-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_init_timer<span class="op">();</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_init_timer<span class="op">();</span></span></code></pre><p></p></div>
 <p>Initialize the cli timer without creating a progress bar.</p>
 </div>
 
@@ -159,7 +159,7 @@ number of current units equals the number of total progress units.</p></li>
 <h3 id="cli-progress-num-"><code><a href="progress-utils.html">cli_progress_num()</a></code><a class="anchor" aria-label="anchor" href="#cli-progress-num-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> cli_progress_num<span class="op">();</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">int</span> cli_progress_num<span class="op">();</span></span></code></pre><p></p></div>
 <p>Returns the number of currently active progress bars.</p>
 </div>
 
@@ -167,7 +167,7 @@ number of current units equals the number of total progress units.</p></li>
 <h3 id="cli-progress-set-"><code>cli_progress_set()</code><a class="anchor" aria-label="anchor" href="#cli-progress-set-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_set<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">double</span> set<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_set<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">double</span> set<span class="op">);</span></span></code></pre><p></p></div>
 <p>Set the progress bar to the specified number of progress units.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
 <li><p><code>set</code>: number of current progress progress units.</p></li>
 </ul></div>
@@ -176,7 +176,7 @@ number of current units equals the number of total progress units.</p></li>
 <h3 id="cli-progress-set-clear-"><code>cli_progress_set_clear()</code><a class="anchor" aria-label="anchor" href="#cli-progress-set-clear-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_clear<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">int</span> clear<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_clear<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">int</span> clear<span class="op">);</span></span></code></pre><p></p></div>
 <p>Set whether to remove the progress bar from the screen. You can call
 this any time before <code><a href="cli_progress_bar.html">cli_progress_done()</a></code> is called.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
 <li><p><code>clear</code>: whether to remove the progress bar from the screen, zero or
@@ -187,7 +187,7 @@ one.</p></li>
 <h3 id="cli-progress-set-format-"><code>cli_progress_set_format()</code><a class="anchor" aria-label="anchor" href="#cli-progress-set-format-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_format<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>format<span class="op">,</span> <span class="op">...);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_format<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>format<span class="op">,</span> <span class="op">...);</span></span></code></pre><p></p></div>
 <p>Set a custom format string for the progress bar. This call does not
 try to update the progress bar. If you want to request an update,
 call <code>cli_progress_add()</code>, <code>cli_progress_set()</code> or
@@ -205,7 +205,7 @@ styling.</p>
 <h3 id="cli-progress-set-name-"><code>cli_progress_set_name()</code><a class="anchor" aria-label="anchor" href="#cli-progress-set-name-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_name<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_name<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>name<span class="op">);</span></span></code></pre><p></p></div>
 <p>Set the name of the progress bar.</p><ul><li><p><code>bar</code>; progress bar object.</p></li>
 <li><p><code>name</code>: progress bar name.</p></li>
 </ul></div>
@@ -214,7 +214,7 @@ styling.</p>
 <h3 id="cli-progress-set-status-"><code>cli_progress_set_status()</code><a class="anchor" aria-label="anchor" href="#cli-progress-set-status-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_status<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>status<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_status<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>status<span class="op">);</span></span></code></pre><p></p></div>
 <p>Set the status of the progress bar.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
 <li><p><code>status </code>: progress bar status.</p></li>
 </ul></div>
@@ -223,7 +223,7 @@ styling.</p>
 <h3 id="cli-progress-set-type-"><code>cli_progress_set_type()</code><a class="anchor" aria-label="anchor" href="#cli-progress-set-type-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_type<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>type<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_set_type<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>type<span class="op">);</span></span></code></pre><p></p></div>
 <p>Set the progress bar type. Call this function right after creating
 the progress bar with <code><a href="cli_progress_bar.html">cli_progress_bar()</a></code>. Otherwise the behavior is
 undefined.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
@@ -235,7 +235,7 @@ undefined.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
 <h3 id="cli-progress-update-"><code><a href="cli_progress_bar.html">cli_progress_update()</a></code><a class="anchor" aria-label="anchor" href="#cli-progress-update-"></a></h3>
 
 
-<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> cli_progress_update<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">double</span> set<span class="op">,</span> <span class="dt">double</span> inc<span class="op">,</span> <span class="dt">int</span> force<span class="op">);</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode c"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">void</span> cli_progress_update<span class="op">(</span>SEXP bar<span class="op">,</span> <span class="dt">double</span> set<span class="op">,</span> <span class="dt">double</span> inc<span class="op">,</span> <span class="dt">int</span> force<span class="op">);</span></span></code></pre><p></p></div>
 <p>Update the progress bar. Unlike the simpler <code>cli_progress_add()</code> and
 <code>cli_progress_set()</code> function, it can force an update if <code>force</code> is
 set to 1.</p><ul><li><p><code>bar</code>: progress bar object.</p></li>
