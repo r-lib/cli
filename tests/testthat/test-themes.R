@@ -1,13 +1,13 @@
 
-start_app()
-on.exit(stop_app(), add = TRUE)
+start_app(.auto_close = TRUE)
 
 test_that_cli("add/remove/list themes", {
   withr::local_rng_version("3.3.0")
   set.seed(24)
 
+  start_app(.auto_close = TRUE)
+
   id <- default_app()$add_theme(list(".green" = list(color = "green")))
-  on.exit(default_app()$remove_theme(id), add = TRUE)
   expect_true(id %in% names(default_app()$list_themes()))
 
   expect_snapshot({
