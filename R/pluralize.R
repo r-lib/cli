@@ -23,6 +23,19 @@ make_quantity <- function(object) {
 #'   an expression that sets the pluralization quantity without printing
 #'   anything. See examples below.
 #'
+#' @examples
+#' nfile <- 0; cli_text("Found {no(nfile)} file{?s}.")
+#'
+#' #> Found no files.
+#'
+#' nfile <- 1; cli_text("Found {no(nfile)} file{?s}.")
+#'
+#' #> Found 1 file.
+#'
+#' nfile <- 2; cli_text("Found {no(nfile)} file{?s}.")
+#'
+#' #> Found 2 files.
+#'
 #' @export
 #' @family pluralization
 
