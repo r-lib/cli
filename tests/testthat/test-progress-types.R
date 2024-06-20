@@ -28,6 +28,7 @@ test_that("iterator", {
 })
 
 test_that("tasks", {
+  skip_on_cran()
   withr::local_options(
     cli.dynamic = TRUE,
     cli.ansi = TRUE,
