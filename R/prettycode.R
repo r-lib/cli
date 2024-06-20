@@ -240,12 +240,14 @@ code_theme_default <- function() {
   if (rs$type %in% c("rstudio_console", "rstudio_console_starting")) {
     opt <- code_theme_opt("cli.code_theme_rstudio")
     if (!is.null(opt)) return(opt)
-    code_theme_default_rstudio()
-  } else {
-    opt <- code_theme_opt("cli.code_theme_terminal")
-    if (!is.null(opt)) return(opt)
-    code_theme_default_term()
+    if (requireNamespace("rstudioapi", quietly = TRUE)) {
+      return(code_theme_default_rstudio())
+    }
   }
+
+  opt <- code_theme_opt("cli.code_theme_terminal")
+  if (!is.null(opt)) return(opt)
+  code_theme_default_term()
 }
 
 code_theme_opt <- function(option) {

@@ -8,6 +8,9 @@
 * The `{.obj_type_friendly}` inline style now only shows the first class
   name (#669 @olivroy).
 
+* Syntax highlighting now does not fail in RStudio if the rstudioapi
+  package is not installed (#697).
+
 # cli 3.6.2
 
 * `ansi_collapse(x, trunc = 1, style = "head")` now indeed shows one
