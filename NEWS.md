@@ -1,5 +1,13 @@
 # cli (development version)
 
+* cli now builds on ARM Windows.
+
+* "Solarized Dark" is now the default syntax highlighting theme in
+  terminals.
+
+* The `{.obj_type_friendly}` inline style now only shows the first class
+  name (#669 @olivroy).
+
 # cli 3.6.2
 
 * `ansi_collapse(x, trunc = 1, style = "head")` now indeed shows one
