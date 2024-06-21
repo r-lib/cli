@@ -1,4 +1,4 @@
-# cli (development version)
+# cli 3.6.3
 
 * cli now builds on ARM Windows.
 
