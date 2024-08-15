@@ -187,7 +187,9 @@ collapse_head <- function(x, sep, sep2, last, trunc, width, ellipsis) {
     nlast <- if (lnx > 2L) 1L else 0L
     wtot  <- sum(wx) + nsep * wsep + nsep2 * wsep2 + nlast * wlast
     if (wtot <= width) {
-      if (lnx == 2L) {
+      if (lnx == 1L) {
+        return(x)
+      } else if (lnx == 2L) {
         return(paste0(x, collapse = sep2))
       } else {
         return(paste0(
