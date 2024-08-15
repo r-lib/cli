@@ -103,3 +103,44 @@ test_that("issue 158", {
     print(pluralize("{9} word{?A/B/}"))
   })
 })
+
+test_that("issue 701", {
+  expect_snapshot({
+    # Should not be pluralized
+    print(pluralize("{NA} file{?s} expected"))
+    print(pluralize("{NA_character_} file{?s} expected"))
+
+    # Should be pluralized
+    print(pluralize("{NA_real_} file{?s} expected"))
+    print(pluralize("{NA_integer_} file{?s} expected"))
+    print(pluralize("{NaN} file{?s} expected"))
+    print(pluralize("{Inf} file{?s} expected"))
+    print(pluralize("{-Inf} file{?s} expected"))
+  })
+
+  expect_snapshot({
+    # Should not be pluralized
+    print(pluralize("Found {NA} director{?y/ies}."))
+    print(pluralize("Found {NA_character_} director{?y/ies}."))
+
+    # Should be pluralized
+    print(pluralize("Found {NA_real_} director{?y/ies}."))
+    print(pluralize("Found {NA_integer_} director{?y/ies}."))
+    print(pluralize("Found {NaN} director{?y/ies}."))
+    print(pluralize("Found {Inf} director{?y/ies}."))
+    print(pluralize("Found {-Inf} director{?y/ies}."))
+  })
+
+  expect_snapshot({
+    # Should not be pluralized
+    print(pluralize("Will remove {?no/the/the} {NA} package{?s}."))
+    print(pluralize("Will remove {?no/the/the} {NA_character_} package{?s}."))
+
+    # Should be pluralized
+    print(pluralize("Will remove {?no/the/the} {NA_real_} package{?s}."))
+    print(pluralize("Will remove {?no/the/the} {NA_integer_} package{?s}."))
+    print(pluralize("Will remove {?no/the/the} {NaN} package{?s}."))
+    print(pluralize("Will remove {?no/the/the} {Inf} package{?s}."))
+    print(pluralize("Will remove {?no/the/the} {-Inf} package{?s}."))
+  })
+})

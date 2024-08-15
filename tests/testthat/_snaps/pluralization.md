@@ -176,3 +176,96 @@
     Output
       9 word
 
+# issue 701
+
+    Code
+      print(pluralize("{NA} file{?s} expected"))
+    Output
+      NA file expected
+    Code
+      print(pluralize("{NA_character_} file{?s} expected"))
+    Output
+      NA file expected
+    Code
+      print(pluralize("{NA_real_} file{?s} expected"))
+    Output
+      NA files expected
+    Code
+      print(pluralize("{NA_integer_} file{?s} expected"))
+    Output
+      NA files expected
+    Code
+      print(pluralize("{NaN} file{?s} expected"))
+    Output
+      NaN files expected
+    Code
+      print(pluralize("{Inf} file{?s} expected"))
+    Output
+      Inf files expected
+    Code
+      print(pluralize("{-Inf} file{?s} expected"))
+    Output
+      -Inf files expected
+
+---
+
+    Code
+      print(pluralize("Found {NA} director{?y/ies}."))
+    Output
+      Found NA directory.
+    Code
+      print(pluralize("Found {NA_character_} director{?y/ies}."))
+    Output
+      Found NA directory.
+    Code
+      print(pluralize("Found {NA_real_} director{?y/ies}."))
+    Output
+      Found NA directories.
+    Code
+      print(pluralize("Found {NA_integer_} director{?y/ies}."))
+    Output
+      Found NA directories.
+    Code
+      print(pluralize("Found {NaN} director{?y/ies}."))
+    Output
+      Found NaN directories.
+    Code
+      print(pluralize("Found {Inf} director{?y/ies}."))
+    Output
+      Found Inf directories.
+    Code
+      print(pluralize("Found {-Inf} director{?y/ies}."))
+    Output
+      Found -Inf directories.
+
+---
+
+    Code
+      print(pluralize("Will remove {?no/the/the} {NA} package{?s}."))
+    Output
+      Will remove the NA package.
+    Code
+      print(pluralize("Will remove {?no/the/the} {NA_character_} package{?s}."))
+    Output
+      Will remove the NA package.
+    Code
+      print(pluralize("Will remove {?no/the/the} {NA_real_} package{?s}."))
+    Output
+      Will remove the NA packages.
+    Code
+      print(pluralize("Will remove {?no/the/the} {NA_integer_} package{?s}."))
+    Output
+      Will remove the NA packages.
+    Code
+      print(pluralize("Will remove {?no/the/the} {NaN} package{?s}."))
+    Output
+      Will remove the NaN packages.
+    Code
+      print(pluralize("Will remove {?no/the/the} {Inf} package{?s}."))
+    Output
+      Will remove the Inf packages.
+    Code
+      print(pluralize("Will remove {?no/the/the} {-Inf} package{?s}."))
+    Output
+      Will remove the -Inf packages.
+

@@ -9,7 +9,11 @@ NULL
 make_quantity <- function(object) {
   val <- if (is.numeric(object)) {
     stopifnot(length(object) == 1)
-    as.integer(object)
+
+    if (is.finite(object))
+      as.integer(object)
+    else
+      object
   } else {
     length(object)
   }
@@ -87,13 +91,16 @@ process_plural <- function(qty, code) {
   parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
   if (last_character(code) == "/") parts <- c(parts, "")
   if (length(parts) == 1) {
-    if (qty != 1) parts[1] else ""
+    if (is.finite(qty) & qty == 1) "" else parts[1]
   } else if (length(parts) == 2) {
-    if (qty == 1) parts[1] else parts[2]
-  } else if (length(parts) == 3) {
-    if (qty == 0) {
+    if (is.finite(qty) & qty == 1)
       parts[1]
-    } else if (qty == 1) {
+    else
+      parts[2]
+  } else if (length(parts) == 3) {
+    if (is.finite(qty) & qty == 0) {
+      parts[1]
+    } else if (is.finite(qty) & qty == 1) {
       parts[2]
     } else {
       parts[3]
