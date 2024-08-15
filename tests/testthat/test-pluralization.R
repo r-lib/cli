@@ -104,7 +104,7 @@ test_that("issue 158", {
   })
 })
 
-test_that("issue 701", {
+test_that("Edge cases for pluralize() (#701)", {
   expect_snapshot({
     # Should not be pluralized
     print(pluralize("{NA} file{?s} expected"))
