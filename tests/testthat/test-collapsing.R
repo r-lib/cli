@@ -197,3 +197,30 @@ test_that("ansi_collapse uses `sep2` for length-two inputs", {
   expect_equal(ansi_collapse(1:2, trunc = 2, style = "head"),
                "1 and 2")
 })
+
+
+test_that("Issue #681", {
+  expect_equal(ansi_collapse(1:2, last = " or "), "1 or 2")
+  expect_equal(ansi_collapse(1:2, sep2 = " and ", last = " or "), "1 or 2")
+  expect_equal(ansi_collapse(1:2, sep2 = " xor ", last = " or "), "1 xor 2")
+
+  expect_snapshot({
+    v <- cli::cli_vec(
+      c("foo", "bar", "foobar"),
+      style = list("vec-last" = ", or ")
+    )
+    cli::cli_text("Must be one of: {v}.")
+
+    v <- cli::cli_vec(
+      c("foo", "bar"),
+      style = list("vec-last" = " or ")
+    )
+    cli::cli_text("Must be one of: {v}.")
+
+    v <- cli::cli_vec(
+      c("foo", "bar"),
+      style = list("vec-last" = " or ", "vec-sep2" = " xor ")
+    )
+    cli::cli_text("Must be one of: {v}.")
+  })
+})

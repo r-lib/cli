@@ -455,3 +455,22 @@
     Output
       [1] "a, b, c, d, e, f, g, h, i, and j"
 
+# Issue #681
+
+    Code
+      v <- cli::cli_vec(c("foo", "bar", "foobar"), style = list(`vec-last` = ", or "))
+      cli::cli_text("Must be one of: {v}.")
+    Message
+      Must be one of: foo, bar, or foobar.
+    Code
+      v <- cli::cli_vec(c("foo", "bar"), style = list(`vec-last` = " or "))
+      cli::cli_text("Must be one of: {v}.")
+    Message
+      Must be one of: foo or bar.
+    Code
+      v <- cli::cli_vec(c("foo", "bar"), style = list(`vec-last` = " or ",
+        `vec-sep2` = " xor "))
+      cli::cli_text("Must be one of: {v}.")
+    Message
+      Must be one of: foo xor bar.
+

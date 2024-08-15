@@ -130,8 +130,15 @@ collapse_head_notrim <- function(x, trunc, sep, sep2, last, ellipsis) {
 
   lnx <- length(x)
 
-  if (lnx == 1L) return(x)
-  if (lnx == 2L) return(paste0(x, collapse = sep2))
+  if (lnx == 1L)
+    return(x)
+  if (lnx == 2L) {
+    # Handle the case where last is changed and sep2 is not
+    if (sep2 == " and " & last != ", and ")
+      return(paste0(x, collapse = last))
+    else
+      return(paste0(x, collapse = sep2))
+  }
   if (lnx <= trunc) {
     # no truncation
     return(paste0(
