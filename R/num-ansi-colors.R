@@ -310,6 +310,10 @@ emacs_version <- function() {
   if (ver == "") return(NA_integer_)
 
   ver <- gsub("'", "", ver)
+
+  if (!grepl("^\\d+\\.\\d+",ver)) # check for malformed version #689
+    return(NA_integer_)
+
   ver <- strsplit(ver, ",", fixed = TRUE)[[1]]
   ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
   as.numeric(ver)
