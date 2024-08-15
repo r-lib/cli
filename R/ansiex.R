@@ -568,7 +568,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
 
   # First we need to remove the multiple spaces, to make it easier to
   # map the strings later on. We do this per paragraph, to keep paragraphs.
-  pars <- strsplit(x, "\n[ \t\n]*\n", perl = TRUE)
+  pars <- strsplit(x, "\n[ \r\t\n]*\n", perl = TRUE)
   pars <- lapply(pars, ansi_trimws)
 
   # Within paragraphs, replace multiple spaces with one, except when there
@@ -577,11 +577,11 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
   # some is outside, but for now, we'll live with this limitation.
   pars <- lapply(pars, function(s) {
     # First replace multiple spaces that are not at the end of a sentence
-    s <- gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
+    s <- gsub("(?<![.!?])[ \r\t\n][ \r\t\n]*", " ", s, perl = TRUE)
     # Handle multiple spaces at the end of a sentence
-    s <- gsub("(?<=[.!?])[ \t\n][ \t\n][ \t\n]*", "  ", s, perl = TRUE)
+    s <- gsub("(?<=[.!?])[ \r\t\n][ \r\t\n][ \r\t\n]*", "  ", s, perl = TRUE)
     # Handle simple space at the end of a sentence
-    gsub("(?<=[.!?])[ \t\n]", " ", s, perl = TRUE)
+    gsub("(?<=[.!?])[ \r\t\n]", " ", s, perl = TRUE)
   })
 
   # Put them back together
@@ -611,7 +611,7 @@ ansi_strwrap <- function(x, width = console_width(), indent = 0,
     } else if (xsc == xwc) {
       xsidx <- xsidx + 1L
       xwidx[2] <- xwidx[2] + 1L
-    } else if (xsc %in% c(" ", "\n", "\t")) {
+    } else if (xsc %in% c(" ", "\r", "\n", "\t")) {
       drop <- c(drop, xsidx)
       xsidx <- xsidx + 1L
     } else if (xwc == " ") {

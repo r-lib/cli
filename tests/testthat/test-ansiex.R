@@ -630,3 +630,26 @@ test_that_cli(configs = c("plain", "ansi"), "ansi_chartr", {
     cat_line(ansi_chartr(" R_", "-r*", x))
   }))
 })
+
+
+test_that("test handling of \\r in ansi_strwrap (#667) ", {
+  expect_equal(
+    ansi_strwrap(cli::col_red("foobar \r |")),
+    ansi_string(cli::col_red("foobar |"))
+  )
+
+  expect_equal(
+    ansi_strwrap(cli::col_red("foobar \n |")),
+    ansi_string(cli::col_red("foobar |"))
+  )
+
+  expect_equal(
+    ansi_strwrap(cli::col_red("foobar \r\n |")),
+    ansi_string(cli::col_red("foobar |"))
+  )
+
+  expect_equal(
+    ansi_strwrap(cli::col_red("foobar \r\n\r |")),
+    ansi_string(cli::col_red("foobar |"))
+  )
+})
