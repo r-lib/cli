@@ -1,5 +1,7 @@
 # cli (development version)
 
+* `cli_progress_bar()` now accepts `total` = Inf or -Inf which mimics the behavior    of when `total` is NA.
+
 # cli 3.6.3
 
 * cli now builds on ARM Windows.
