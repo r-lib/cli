@@ -200,9 +200,13 @@ test_that("ansi_collapse uses `sep2` for length-two inputs", {
 
 
 test_that("Issue #681", {
-  expect_equal(ansi_collapse(1:2, last = " or "), "1 or 2")
-  expect_equal(ansi_collapse(1:2, sep2 = " and ", last = " or "), "1 or 2")
+  # sep2 takes precedence
+  expect_equal(ansi_collapse(1:2, sep2 = " and ", last = " or "), "1 and 2")
   expect_equal(ansi_collapse(1:2, sep2 = " xor ", last = " or "), "1 xor 2")
+  # default for sep2 is last without the Oxford comma
+  expect_equal(ansi_collapse(1:3, last = ", or "), "1, 2, or 3")
+  expect_equal(ansi_collapse(1:2, last = ", or "), "1 or 2")
+  expect_equal(ansi_collapse(1:2, last = " or "), "1 or 2")
 
   expect_snapshot({
     v <- cli::cli_vec(
