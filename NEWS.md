@@ -1,5 +1,8 @@
 # cli (development version)
 
+* `num_ansi_colors()` now does not warn in Emacs if the `INSIDE_EMACS`
+  environment variable is not a proper version number (@rundel, #689).
+
 # cli 3.6.3
 
 * cli now builds on ARM Windows.
