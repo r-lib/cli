@@ -205,3 +205,33 @@ test_that("Avoid duplication of length 1 vecs when width set (#590)", {
   expect_equal(ansi_collapse(1, style = "head", last = " and again "), "1")
   expect_equal(ansi_collapse(1, style = "head", width = 70, last = " and again "), "1")
 })
+
+test_that("Issue #681", {
+  # sep2 takes precedence
+  expect_equal(ansi_collapse(1:2, sep2 = " and ", last = " or "), "1 and 2")
+  expect_equal(ansi_collapse(1:2, sep2 = " xor ", last = " or "), "1 xor 2")
+  # default for sep2 is last without the Oxford comma
+  expect_equal(ansi_collapse(1:3, last = ", or "), "1, 2, or 3")
+  expect_equal(ansi_collapse(1:2, last = ", or "), "1 or 2")
+  expect_equal(ansi_collapse(1:2, last = " or "), "1 or 2")
+
+  expect_snapshot({
+    v <- cli::cli_vec(
+      c("foo", "bar", "foobar"),
+      style = list("vec-last" = ", or ")
+    )
+    cli::cli_text("Must be one of: {v}.")
+
+    v <- cli::cli_vec(
+      c("foo", "bar"),
+      style = list("vec-last" = " or ")
+    )
+    cli::cli_text("Must be one of: {v}.")
+
+    v <- cli::cli_vec(
+      c("foo", "bar"),
+      style = list("vec-last" = " or ", "vec-sep2" = " xor ")
+    )
+    cli::cli_text("Must be one of: {v}.")
+  })
+})
