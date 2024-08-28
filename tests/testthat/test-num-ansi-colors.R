@@ -180,3 +180,19 @@ test_that("ESS_BACKGROUND_MODE", {
   withr::local_envvar(ESS_BACKGROUND_MODE = "dark")
   expect_true(detect_dark_theme("auto"))
 })
+
+test_that("emacs_version", {
+  withr::local_envvar(INSIDE_EMACS = "")
+  expect_true(is.na(emacs_version()))
+  withr::local_envvar(INSIDE_EMACS = "foobar")
+  expect_true(is.na(emacs_version()))
+
+  withr::local_envvar(INSIDE_EMACS = "23.2.3")
+  expect_equal(emacs_version(), c(23, 2, 3))
+  withr::local_envvar(INSIDE_EMACS = "23.2.3,foobar")
+  expect_equal(emacs_version(), c(23, 2, 3))
+  withr::local_envvar(INSIDE_EMACS = "'23.2.3'")
+  expect_equal(emacs_version(), c(23, 2, 3))
+  withr::local_envvar(INSIDE_EMACS = "'23.2.3',foobar")
+  expect_equal(emacs_version(), c(23, 2, 3))
+})
