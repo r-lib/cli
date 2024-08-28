@@ -4,6 +4,9 @@
   (without the serial comma) for two-element vectors if `sep2` is not
   given (@rundel, #681).
 
+* `ansi_collapse()` is now correct for length-1 vectors with style "head"
+  if width is specified (@rundel, #590).
+
 # cli 3.6.3
 
 * cli now builds on ARM Windows.
