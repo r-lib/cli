@@ -198,6 +198,13 @@ test_that("ansi_collapse uses `sep2` for length-two inputs", {
                "1 and 2")
 })
 
+test_that("Avoid duplication of length 1 vecs when width set (#590)", {
+  expect_equal(ansi_collapse(1), "1")
+  expect_equal(ansi_collapse(1, style = "head"), "1")
+  expect_equal(ansi_collapse(1, style = "head", width = 70), "1")
+  expect_equal(ansi_collapse(1, style = "head", last = " and again "), "1")
+  expect_equal(ansi_collapse(1, style = "head", width = 70, last = " and again "), "1")
+})
 
 test_that("Issue #681", {
   # sep2 takes precedence
