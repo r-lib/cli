@@ -50,7 +50,7 @@ test_that("update errors if no progress bar", {
     cli_progress_output("boo")
   }
   expect_error(fun(), "Cannot find current progress bar")
-  
+
   envkey <- NULL
   fun <- function() {
     envkey <<- format(environment())
@@ -164,5 +164,19 @@ test_that("cli_progress_output", {
   expect_snapshot(capture_cli_messages(fun()))
 
   withr::local_options(cli.dynamic = TRUE, cli.ansi = FALSE)
-  expect_snapshot(capture_cli_messages(fun()))  
+  expect_snapshot(capture_cli_messages(fun()))
+})
+
+test_that("cli_progress_bar handles Inf like NA", {
+  withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
+  fun <- function(total) {
+    bar <- cli_progress_bar(
+      name = "name",
+      format = "{cli::pb_name}{cli::pb_current}",
+      total = total
+    )
+    cli_progress_update(force = TRUE)
+    cli_progress_done(id = bar)
+  }
+  expect_equal(capture_cli_messages(fun(total = NA)), capture_cli_messages(fun(total = Inf)))
 })
