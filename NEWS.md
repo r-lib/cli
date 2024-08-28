@@ -1,5 +1,9 @@
 # cli (development version)
 
+* `ansi_collapse()` and inline collapsing now uses `last` as the separator
+  (without the serial comma) for two-element vectors if `sep2` is not
+  given (@rundel, #681).
+
 # cli 3.6.3
 
 * cli now builds on ARM Windows.

@@ -50,8 +50,8 @@ Other ANSI string operations:
 \code{\link{ansi_nchar}()},
 \code{\link{ansi_strsplit}()},
 \code{\link{ansi_strtrim}()},
-\code{\link{ansi_substring}()},
 \code{\link{ansi_substr}()},
+\code{\link{ansi_substring}()},
 \code{\link{ansi_toupper}()},
 \code{\link{ansi_trimws}()}
 }
