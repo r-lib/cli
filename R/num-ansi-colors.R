@@ -310,9 +310,10 @@ emacs_version <- function() {
   if (ver == "") return(NA_integer_)
 
   ver <- gsub("'", "", ver)
+
   ver <- strsplit(ver, ",", fixed = TRUE)[[1]]
   ver <- strsplit(ver, ".", fixed = TRUE)[[1]]
-  as.numeric(ver)
+  suppressWarnings(as.numeric(ver))
 }
 
 win10_build <- function() {
