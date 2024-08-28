@@ -99,7 +99,8 @@ collapsed vectors (see below) from "and" to "or".
 \item \code{run} is an R expression, that is potentially clickable if the terminal
 supports ANSI hyperlinks to runnable code (e.g. RStudio).
 It supports link text. See \link{links} for more information about cli hyperlinks.
-\item \code{str} for a double quoted string escaped by \code{\link[base:encodeString]{base::encodeString()}}.#' * \code{strong} for strong importance.
+\item \code{str} for a double quoted string escaped by \code{\link[base:encodeString]{base::encodeString()}}.
+\item \code{strong} for strong importance.
 \item \code{topic} is a help page of a \emph{topic}.
 If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
