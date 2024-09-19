@@ -176,7 +176,7 @@
     Output
       9 word
 
-# issue 701
+# Edge cases for pluralize() (#701)
 
     Code
       print(pluralize("{NA} file{?s} expected"))
