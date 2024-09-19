@@ -210,6 +210,7 @@ test_that("str_trim", {
 })
 
 test_that("leading_space", {
+  testthat::local_reproducible_output(unicode = TRUE)
   expect_snapshot({
     paste0("-", leading_space("foo"), "-")
     paste0("-", leading_space("  foo"), "-")
@@ -221,6 +222,7 @@ test_that("leading_space", {
 })
 
 test_that("trailing_space", {
+  testthat::local_reproducible_output(unicode = TRUE)
   expect_snapshot({
     paste0("-", trailing_space("foo"), "-")
     paste0("-", trailing_space("foo  "), "-")
