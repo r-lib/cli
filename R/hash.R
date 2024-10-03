@@ -301,7 +301,7 @@ hash_emoji1 <- function(x, size = 3) {
 
 hash_emoji1_transform <- function(md5, size) {
   md513 <- substr(md5, 1, 13)
-  mdint <- as.integer(as.hexmode(strsplit(md513, "")[[1]]))
+  mdint <- as.integer(as.hexmode(strsplit(md513, "", fixed = TRUE)[[1]]))
   hash <- sum(mdint * 16^(0:12))
 
   base <- nrow(emojis)
@@ -444,7 +444,7 @@ hash_animal1 <- function(x, n_adj = 2) {
 
 hash_animal1_transform <- function(md5, n_adj) {
   md513 <- substr(md5, 1, 13)
-  mdint <- as.integer(as.hexmode(strsplit(md513, "")[[1]]))
+  mdint <- as.integer(as.hexmode(strsplit(md513, "", fixed = TRUE)[[1]]))
   hash <- sum(mdint * 16^(0:12))
 
   len_ani <- length(gfycat_animals)

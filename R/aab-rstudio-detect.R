@@ -164,7 +164,7 @@ rstudio <- local({
       "rstudio_build_pane"
 
     } else if (new$envs[["RSTUDIOAPI_IPC_REQUESTS_FILE"]] != "" &&
-               grepl("rstudio", new$envs[["XPC_SERVICE_NAME"]])) {
+               grepl("rstudio", new$envs[["XPC_SERVICE_NAME"]], fixed = TRUE)) {
       # RStudio job, XPC_SERVICE_NAME=0 in the subprocess of a job
       # process. Hopefully this is reliable.
       "rstudio_job"
