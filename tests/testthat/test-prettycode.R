@@ -177,16 +177,14 @@ test_that("code themes", {
   withr::local_options(cli.code_theme_terminal = "solarized_light")
   expect_equal(code_theme_default()$reserved, "#859900")
 
-  mockery::stub(
-    code_theme_default,
-    "rstudio_detect",
-    list(type = "rstudio_console")
+  local_mocked_bindings(
+    rstudio_detect = function() list(type = "rstudio_console")
   )
   withr::local_options(cli.code_theme_rstudio = "Xcode")
   expect_equal(code_theme_default()$reserved, "#C800A4")
 
   withr::local_options(cli.code_theme_rstudio = NULL)
-  mockery::stub(code_theme_default, "code_theme_default_rstudio", "foo")
+  local_mocked_bindings(code_theme_default_rstudio = function() "foo")
   expect_equal(code_theme_default(), "foo")
 })
 
@@ -199,17 +197,13 @@ test_that("code themes 2", {
 })
 
 test_that("code_theme_default_rstudio", {
-  mockery::stub(
-    code_theme_default_rstudio,
-    "get_rstudio_theme",
-    list(editor = "Solarized Dark")
+  local_mocked_bindings(
+    get_rstudio_theme = function() list(editor = "Solarized Dark")
   )
   expect_equal(code_theme_default_rstudio()$reserved, "#859900")
 
-  mockery::stub(
-    code_theme_default_rstudio,
-    "get_rstudio_theme",
-    list(editor = "Not really")
+  local_mocked_bindings(
+    get_rstudio_theme = function() list(editor = "Not really")
   )
   expect_warning(
     cth <- code_theme_default_rstudio(),
