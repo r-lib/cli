@@ -187,6 +187,7 @@ test_that("code themes", {
 
   withr::local_options(cli.code_theme_rstudio = NULL)
   mockery::stub(code_theme_default, "code_theme_default_rstudio", "foo")
+  skip_if_not_installed("rstudioapi")
   expect_equal(code_theme_default(), "foo")
 })
 
