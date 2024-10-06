@@ -105,7 +105,7 @@ test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
     cli_text("{.file {paths}}")
   }, transform = function(x) sanitize_home(sanitize_wd(x)))
 
-  mockery::stub(abs_path1, "is_windows", TRUE)
+  local_mocked_bindings(is_windows = function() TRUE)
   expect_equal(
     abs_path1("c:/foo/bar"),
     "file://c:/foo/bar"

@@ -17,7 +17,7 @@ test_that("say_out", {
 
 test_that("say_update", {
   withr::local_options(cli.progress_say_frequency = 1e-9)
-  mockery::stub(say_update, "say_out", function(text) text)
+  local_mocked_bindings(say_out = function(text) text)
   bar <- new.env(parent = emptyenv())
   bar$current <- 10
   bar$total <- NA
