@@ -184,6 +184,7 @@ test_that("code themes", {
   expect_equal(code_theme_default()$reserved, "#C800A4")
 
   withr::local_options(cli.code_theme_rstudio = NULL)
+  skip_if_not_installed("rstudioapi")
   local_mocked_bindings(code_theme_default_rstudio = function() "foo")
   expect_equal(code_theme_default(), "foo")
 })
