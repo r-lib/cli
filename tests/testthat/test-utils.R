@@ -80,8 +80,8 @@ test_that("is_latex_output", {
   local_mocked_bindings(loadedNamespaces = function() "foobar")
   expect_false(is_latex_output())
 
-  local_mocked_bindings(loadedNamespaces = function() "knitr")
   local_mocked_bindings(
+    loadedNamespaces = function() "knitr",
     get = function(x, ...) {
       if (x == "is_latex_output") {
         function() TRUE
