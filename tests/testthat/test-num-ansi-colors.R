@@ -48,9 +48,11 @@ test_that("cli.default_num_colors #2", {
     cli.default_num_colors = NULL
   )
 
-  local_mocked_bindings(os_type = function() "windows")
-  local_mocked_bindings(commandArgs = function() "--ess")
-  local_mocked_bindings(is_emacs_with_color = function() TRUE)
+  local_mocked_bindings(
+    os_type = function() "windows",
+    commandArgs = function() "--ess",
+    is_emacs_with_color = function() TRUE
+  )
 
   expect_equal(num_ansi_colors(), 8L)
 
@@ -75,8 +77,10 @@ test_that("cli.default_num_colors #4", {
   # Unix emacs with color
   withr::local_envvar(COLORTERM = NA_character_)
 
-  local_mocked_bindings(os_type = function() "unix")
-  local_mocked_bindings(is_emacs_with_color = function() TRUE)
+  local_mocked_bindings(
+    os_type = function() "unix",
+    is_emacs_with_color = function() TRUE
+  )
 
   withr::local_options(cli.default_num_colors = NULL)
 
@@ -91,12 +95,12 @@ test_that("cli.default_num_colors #5", {
   # rstudio terminal on Windows
   withr::local_envvar(COLORTERM = NA_character_)
 
-  local_mocked_bindings(os_type = function() "windows")
-  local_mocked_bindings(win10_build = function() 10586)
   local_mocked_bindings(
-    rstudio_detect = function() list(type = "rstudio_terminal")
+    os_type = function() "windows",
+    win10_build = function() 10586,
+    rstudio_detect = function() list(type = "rstudio_terminal"),
+    system2 = function(...) TRUE
   )
-  local_mocked_bindings(system2 = function(...) TRUE)
 
   withr::local_options(cli.default_num_colors = NULL)
   expect_equal(detect_tty_colors(), 8L)
@@ -111,12 +115,12 @@ test_that("cli.default_num_colors #6", {
   withr::local_envvar(COLORTERM = NA_character_)
   withr::local_options(cli.default_num_colors = NULL)
 
-  local_mocked_bindings(os_type = function() "windows")
-  local_mocked_bindings(win10_build = function() 10586)
   local_mocked_bindings(
-    rstudio_detect = function() list(type = "not_rstudio")
+    os_type = function() "windows",
+    win10_build = function() 10586,
+    rstudio_detect = function() list(type = "not_rstudio"),
+    system2 = function(...) TRUE
   )
-  local_mocked_bindings(system2 = function(...) TRUE)
   expect_equal(detect_tty_colors(), 256L)
 
   local_mocked_bindings(win10_build = function() 14931)
@@ -134,8 +138,10 @@ test_that("cli.default_num_colors #7", {
     ConEmuANSI = "ON"
   )
   withr::local_options(cli.default_num_colors = NULL)
-  local_mocked_bindings(os_type = function() "windows")
-  local_mocked_bindings(win10_build = function() 1)
+  local_mocked_bindings(
+    os_type = function() "windows",
+    win10_build = function() 1
+  )
 
   expect_equal(detect_tty_colors(), 8L)
   withr::local_options(cli.default_num_colors = 123L)
@@ -150,9 +156,11 @@ test_that("cli.default_num_colors #8", {
     TERM = "xterm"
   )
 
-  local_mocked_bindings(os_type = function() "unix")
-  local_mocked_bindings(is_emacs_with_color = function() FALSE)
-  local_mocked_bindings(system = function(...) "8")
+  local_mocked_bindings(
+    os_type = function() "unix",
+    is_emacs_with_color = function() FALSE,
+    system = function(...) "8"
+  )
 
   withr::local_options(cli.default_num_colors = NULL)
   expect_equal(detect_tty_colors(), 256L)
@@ -167,8 +175,10 @@ test_that("ESS_BACKGROUND_MODE", {
     ESS_BACKGROUND_MODE = NA_character_
   )
 
-  local_mocked_bindings(is_iterm = function() FALSE)
-  local_mocked_bindings(is_emacs = function() TRUE)
+  local_mocked_bindings(
+    is_iterm = function() FALSE,
+    is_emacs = function() TRUE
+  )
 
   expect_false(detect_dark_theme("auto"))
 
