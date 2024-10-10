@@ -576,7 +576,7 @@ NULL
 #' link <- style_hyperlink(
 #'   text = "R profile at line 5",
 #'   url = "file://~/.Rprofile",
-#'   params = list(line = 5, col = 1)
+#'   params = c(line = 5, col = 1)
 #' )
 #' cli_text("... see {link}")
 #' ```
