@@ -36,7 +36,7 @@ rstudio <- local({
     if (d$api) {
       ns <- asNamespace("rstudioapi")
       d$ver <- if (d$api) ns$getVersion()
-      new_api <- getNamespaceVersion(ns) >= "0.17.0"
+      new_api <- package_version(getNamespaceVersion(ns)) >= "0.17.0"
       d$desktop <- if (new_api) ns$getMode() else ns$versionInfo()$mode
     }
 
