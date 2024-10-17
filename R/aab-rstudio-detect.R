@@ -36,11 +36,7 @@ rstudio <- local({
     if (d$api) {
       ns <- asNamespace("rstudioapi")
       d$ver <- if (d$api) ns$getVersion()
-
-      # Pull version from namespace rather than via `utils::packageVersion()`
-      # to avoid slowdown (see https://github.com/r-lib/rlang/pull/1657 and
-      # https://github.com/r-lib/rlang/issues/1422)
-      new_api <- ns[[".__NAMESPACE__."]][["spec"]][["version"]] >= "0.17.0"
+      new_api <- getNamespaceVersion(ns) >= "0.17.0"
       d$desktop <- if (new_api) ns$getMode() else ns$versionInfo()$mode
     }
 
