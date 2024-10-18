@@ -240,3 +240,32 @@ test_that_cli(configs = "ansi", "new language features, lambda functions", {
     cat(code_highlight('\\(x) x * 2', list(reserved = "bold")))
   )
 })
+
+test_that("code_highlight() works on long strings and symbols", {
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("foo('", strrep("-", 1000), "')"))
+    )
+  )
+
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("foo(`", strrep("-", 1000), "`)"))
+    )
+  )
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("a$`", strrep("-", 1000), "`"))
+    )
+  )
+
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("`", strrep("-", 1000), "`$a"))
+    )
+  )
+})
