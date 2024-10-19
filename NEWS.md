@@ -12,6 +12,9 @@
 * `ansi_collapse()` is now correct for length-1 vectors with style "head"
   if width is specified (@rundel, #590).
 
+* New `hash_xxhash()` etc. functions to calculate the xxHash of strings,
+  raw vectors, objects, files.
+
 # cli 3.6.3
 
 * cli now builds on ARM Windows.

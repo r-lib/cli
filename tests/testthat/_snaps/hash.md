@@ -164,3 +164,49 @@
     Output
       [1] "novice"             "flushed"            "australianshelduck"
 
+# hash_xxhash
+
+    Code
+      hash_xxhash(letters[1:5])
+    Output
+      [1] "a96faf705af16834e6c632b61e964e1f" "4b2212e31ac97fd4575a0b1c44d8843f"
+      [3] "12d8bdd17f74de858c40219a46b9f81b" "56a841f9102d5ff745f80274c9c7a7ca"
+      [5] "2d97a8f9e2edaaefe5e72e5e3bec4a78"
+    Code
+      hash_xxhash(c("a", NA, "b"))
+    Output
+      [1] "a96faf705af16834e6c632b61e964e1f" NA                                
+      [3] "4b2212e31ac97fd4575a0b1c44d8843f"
+    Code
+      hash_xxhash64(letters[1:5])
+    Output
+      [1] "e6c632b61e964e1f" "575a0b1c44d8843f" "8c40219a46b9f81b" "45f80274c9c7a7ca"
+      [5] "e5e72e5e3bec4a78"
+    Code
+      hash_raw_xxhash(charToRaw("a"))
+    Output
+      [1] "a96faf705af16834e6c632b61e964e1f"
+    Code
+      hash_raw_xxhash64(charToRaw("a"))
+    Output
+      [1] "e6c632b61e964e1f"
+    Code
+      hash_obj_xxhash(raw(0))
+    Output
+      [1] "64f55f347c3e13113cde6a6f033766e3"
+    Code
+      hash_obj_xxhash64(raw(0))
+    Output
+      [1] "0c9b74982308d8fd"
+
+---
+
+    Code
+      hash_file_xxhash(tmp)
+    Output
+      [1] "a96faf705af16834e6c632b61e964e1f"
+    Code
+      hash_file_xxhash64(tmp)
+    Output
+      [1] "e6c632b61e964e1f"
+
