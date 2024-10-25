@@ -1,7 +1,7 @@
 # spark_bar [plain]
 
     Code
-      spark_bar(seq(0, 1, length = 8))
+      spark_bar(seq(0, 1, length.out = 8))
     Output
       __,,**##
     Code
@@ -12,7 +12,7 @@
 # spark_bar [unicode]
 
     Code
-      spark_bar(seq(0, 1, length = 8))
+      spark_bar(seq(0, 1, length.out = 8))
     Output
       ▁▂▃▄▅▆▇█
     Code
@@ -23,14 +23,14 @@
 # spark_line [plain]
 
     Code
-      spark_line(seq(0, 1, length = 10))
+      spark_line(seq(0, 1, length.out = 10))
     Output
       _,,-^
 
 # spark_line [unicode]
 
     Code
-      spark_line(seq(0, 1, length = 10))
+      spark_line(seq(0, 1, length.out = 10))
     Output
       ⣀⡠⠔⠊⠉
 

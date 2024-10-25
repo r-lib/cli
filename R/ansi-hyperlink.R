@@ -409,7 +409,7 @@ ansi_hyperlink_types <- function() {
       vignette = FALSE
     )
 
-  } else if (rs$hyperlink) {
+  } else if (isTRUE(rs$hyperlink)) {
     list(
       href = TRUE,
       run = structure(run, type = "rstudio"),
