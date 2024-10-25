@@ -193,20 +193,32 @@ make_link_href <- function(txt) {
 make_link_run <- function(txt) {
   mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
   text <- ifelse(is.na(mch$text), txt, mch$text)
-  url <- ifelse(is.na(mch$url), txt, mch$url)
+  code <- ifelse(is.na(mch$url), txt, mch$url)
 
+  #browser()
   sprt <- ansi_hyperlink_types()$run
-  if (sprt) {
-    scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
-      "ide:run"
-    } else {
-      "x-r-run"
-    }
-    style_hyperlink(text = text, url = paste0(scheme, ":", url))
-
-  } else {
-    vcapply(text, function(url1) format_inline("{.code {url1}}"))
+  if (!sprt) {
+    return(vcapply(text, function(code1) format_inline("{.code {code1}}")))
   }
+
+  custom_fmt <- get_config_chr("hyperlink_run_url_format")
+  if (is.null(custom_fmt)) {
+    if (identical(attr(sprt, "type"), "rstudio")) {
+      fmt_type <- "rstudio"
+    } else {
+      fmt_type <- "standard"
+    }
+  } else {
+    fmt_type <- "custom"
+  }
+
+  fmt <- switch(
+    fmt_type,
+    custom = custom_fmt,
+    rstudio = "ide:run:{code}",
+    standard = "x-r-run:{code}"
+  )
+  style_hyperlink(text = text, url = glue(fmt))
 }
 
 # -- {.topic} -------------------------------------------------------------
@@ -425,4 +437,17 @@ ansi_hyperlink_types <- function() {
       vignette = structure(vgn, type = "standard")
     )
   }
+}
+
+get_config_chr <- function(x, default = NULL) {
+  opt <- getOption(paste0("cli.", tolower(x)))
+  if (!is.null(opt)) {
+    stopifnot(is_string(opt))
+    return(opt)
+  }
+
+  env <- Sys.getenv(paste0("R_CLI_", toupper(x)), NA_character_)
+  if (!is.na(env)) return(env)
+
+  default
 }
