@@ -195,7 +195,6 @@ make_link_run <- function(txt) {
   text <- ifelse(is.na(mch$text), txt, mch$text)
   code <- ifelse(is.na(mch$url), txt, mch$url)
 
-  #browser()
   sprt <- ansi_hyperlink_types()$run
   if (!sprt) {
     return(vcapply(text, function(code1) format_inline("{.code {code1}}")))
