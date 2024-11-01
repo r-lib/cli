@@ -240,6 +240,7 @@ test_that("iterm file links", {
 })
 
 test_that("rstudio links", {
+  local_clean_cli_context()
   withr::local_envvar(
     RSTUDIO = "1",
     RSTUDIO_SESSION_PID = Sys.getpid(),
@@ -252,6 +253,7 @@ test_that("rstudio links", {
     cli.hyperlink_run = TRUE,
     cli.hyperlink_vignette = TRUE
   )
+
   expect_snapshot(
     cli::cli_text("{.fun pkg::fun}")
   )
