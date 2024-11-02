@@ -371,3 +371,23 @@ test_that("ansi_hyperlink_types", {
   )
   expect_true(ansi_hyperlink_types()[["run"]])
 })
+
+test_that("get_config_chr() consults option, env var, then its default", {
+  local_clean_cli_context()
+
+  key <- "hyperlink_TYPE_url_format"
+
+  expect_null(get_config_chr(key))
+
+  withr::local_envvar(R_CLI_HYPERLINK_TYPE_URL_FORMAT = "envvar")
+  expect_equal(get_config_chr(key), "envvar")
+
+  withr::local_options(cli.hyperlink_type_url_format = "option")
+  expect_equal(get_config_chr(key), "option")
+})
+
+test_that("get_config_chr() errors if option is not NULL or string", {
+  withr::local_options(cli.something = FALSE)
+
+  expect_error(get_config_chr("something"), "is_string")
+})
