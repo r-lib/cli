@@ -253,7 +253,6 @@ test_that("rstudio links", {
     cli.hyperlink_run = TRUE,
     cli.hyperlink_vignette = TRUE
   )
-
   expect_snapshot(
     cli::cli_text("{.fun pkg::fun}")
   )
