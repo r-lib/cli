@@ -193,23 +193,7 @@ make_link_run <- function(txt) {
     return(vcapply(text, function(code1) format_inline("{.code {code1}}")))
   }
 
-  custom_fmt <- get_config_chr("hyperlink_run_url_format")
-  if (is.null(custom_fmt)) {
-    if (identical(attr(sprt, "type"), "rstudio")) {
-      fmt_type <- "rstudio"
-    } else {
-      fmt_type <- "standard"
-    }
-  } else {
-    fmt_type <- "custom"
-  }
-
-  fmt <- switch(
-    fmt_type,
-    custom = custom_fmt,
-    rstudio = "ide:run:{code}",
-    standard = "x-r-run:{code}"
-  )
+  fmt <- get_hyperlink_format("run")
   style_hyperlink(text = text, url = glue(fmt))
 }
 
