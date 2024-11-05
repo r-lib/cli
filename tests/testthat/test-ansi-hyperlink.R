@@ -391,3 +391,34 @@ test_that("get_config_chr() errors if option is not NULL or string", {
 
   expect_error(get_config_chr("something"), "is_string")
 })
+
+test_that("get_hyperlink_format() delivers custom format", {
+  local_clean_cli_context()
+
+  withr::local_options(
+    cli.hyperlink_run = TRUE,
+    cli.hyperlink_help = TRUE,
+    cli.hyperlink_vignette = TRUE
+  )
+
+  # env var is consulted after option, so start with env var
+  withr::local_envvar(
+    R_CLI_HYPERLINK_RUN_URL_FORMAT = "envvar{code}",
+    R_CLI_HYPERLINK_HELP_URL_FORMAT = "envvar{topic}",
+    R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT = "envvar{vignette}"
+  )
+
+  expect_equal(get_hyperlink_format("run"), "envvar{code}")
+  expect_equal(get_hyperlink_format("help"), "envvar{topic}")
+  expect_equal(get_hyperlink_format("vignette"), "envvar{vignette}")
+
+  withr::local_options(
+    cli.hyperlink_run_url_format = "option{code}",
+    cli.hyperlink_help_url_format = "option{topic}",
+    cli.hyperlink_vignette_url_format = "option{vignette}"
+  )
+
+  expect_equal(get_hyperlink_format("run"), "option{code}")
+  expect_equal(get_hyperlink_format("help"), "option{topic}")
+  expect_equal(get_hyperlink_format("vignette"), "option{vignette}")
+})
