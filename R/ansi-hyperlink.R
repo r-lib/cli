@@ -228,21 +228,16 @@ make_link_url <- function(txt) {
 make_link_vignette <- function(txt) {
   mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
   text <- ifelse(is.na(mch$text), txt, mch$text)
-  url <- ifelse(is.na(mch$url), txt, mch$url)
+  vignette <- ifelse(is.na(mch$url), txt, mch$url)
 
   sprt <- ansi_hyperlink_types()$vignette
-  if (sprt) {
-    scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
-      "ide:vignette"
-    } else {
-      "x-r-vignette"
-    }
-    style_hyperlink(text = text, url = paste0(scheme, ":", url))
-
-  } else {
-    url2 <- vcapply(url, function(url1) format_inline("{.code vignette({url1})}"))
-    ifelse(text == url, url2, paste0(text, " (", url2, ")"))
+  if (!sprt) {
+    vignette2 <- vcapply(vignette, function(x) format_inline("{.code vignette({x})}"))
+    return(ifelse(text == vignette, vignette2, paste0(text, " (", vignette2, ")")))
   }
+
+  fmt <- get_hyperlink_format("vignette")
+  style_hyperlink(text = text, url = glue(fmt))
 }
 
 #' Terminal Hyperlinks
