@@ -135,6 +135,13 @@ test_that_cli(configs = "plain", links = "all", "turning off help", {
   })
 })
 
+test_that_cli(configs = "plain", links = "all", ".fun with custom format", {
+  withr::local_options(cli.hyperlink_help_url_format = "aaa-{topic}-zzz")
+  expect_snapshot({
+    cli_text("{.fun pkg::func}")
+  })
+})
+
 # -- {.help} --------------------------------------------------------------
 
 test_that_cli(configs = "plain", links = c("all", "none"),
@@ -148,6 +155,13 @@ test_that_cli(configs = "plain", links = c("all", "none"),
   expect_snapshot({
     funcs <- paste0("pkg::fun", 1:3)
     cli_text("{.help {funcs}}")
+  })
+})
+
+test_that_cli(configs = "plain", links = "all", ".help with custom format", {
+  withr::local_options(cli.hyperlink_help_url_format = "aaa-{topic}-zzz")
+  expect_snapshot({
+    cli_text("{.help pkg::fun}")
   })
 })
 
@@ -188,6 +202,13 @@ test_that_cli(configs = "plain", links = c("all", "none"),
   })
 })
 
+test_that_cli(configs = "plain", links = "all", ".run with custom format", {
+  withr::local_options(cli.hyperlink_run_url_format = "aaa-{code}-zzz")
+  expect_snapshot({
+    cli_text("{.run devtools::document()}")
+  })
+})
+
 # -- {.topic} -------------------------------------------------------------
 
 test_that_cli(configs = "plain", links = c("all", "none"),
@@ -201,6 +222,13 @@ test_that_cli(configs = "plain", links = c("all", "none"),
   expect_snapshot({
     topics <- paste0("pkg::topic", 1:3)
     cli_text("{.topic {topics}}")
+  })
+})
+
+test_that_cli(configs = "plain", links = "all", ".topic with custom format", {
+  withr::local_options(cli.hyperlink_help_url_format = "aaa-{topic}-zzz")
+  expect_snapshot({
+    cli_text("{.topic pkg::fun}")
   })
 })
 
@@ -250,5 +278,12 @@ test_that_cli(configs = "plain", links = c("all", "none"),
   expect_snapshot({
     vignettes <- paste0("pkg::topic", 1:3)
     cli_text("{.vignette {vignettes}}")
+  })
+})
+
+test_that_cli(configs = "plain", links = "all", ".vignette with custom format", {
+  withr::local_options(cli.hyperlink_vignette_url_format = "aaa-{vignette}-zzz")
+  expect_snapshot({
+    cli_text("{.vignette pkgdown::accessibility}")
   })
 })
