@@ -9,7 +9,7 @@ editor_options:
     wrap: sentence
 ---
 
-These are environment variables and options that uses may set, to modify
+These are environment variables and options that users may set, to modify
 the behavior of cli.
 
 ## User facing environment variables
@@ -45,10 +45,60 @@ See [num_ansi_colors()].
 
 ### `R_CLI_HYPERLINKS`
 
+THE "S" AT THE END HERE IS REGRETTABLE, IN TERMS OF CONSISTENCY WITH RELATED CONFIG.
+
 Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
 ANSI hyperlinks.
 Set to anything else to assume no hyperlink support.
 See [style_hyperlink()].
+If the option `cli.hyperlink` is defined, it takes priority over this env var.
+
+### `R_CLI_HYPERLINK_RUN`, `R_CLI_HYPERLINK_HELP`, `R_CLI_HYPERLINK_VIGNETTE`
+
+Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
+that specific type of specialized hyperlink.
+Set to anything else to signal a lack of support.
+The `R_CLI_HYPERLINKS` env var indicates that the terminal supports a certain type of hyperlink syntax, whereas these env vars signal that the environment also knows how to execute R code or open documentation.
+
+Here is the relationship between these env vars and the classes applied via inline markup:
+
+* `R_CLI_HYPERLINK_RUN` enables links such as:
+  - `{.run testthat::snapshot_review()}`
+* `R_CLI_HYPERLINK_HELP` enables links such as:
+  - `{.fun stats::lm}`
+  - `{.topic tibble::tibble_options}`
+  - `{.help [{.fun lm}](stats::lm)}`
+* `R_CLI_HYPERLINK_VIGNETTE` enables links such as:
+  - `{.vignette tibble::types}`
+
+If defined, the options `cli.hyperlink_run`, `cli.hyperlink_help` and `cli.hyperlink_vignette` take priority over these env var counterparts.
+
+### `R_CLI_HYPERLINK_RUN_URL_FORMAT`, `R_CLI_HYPERLINK_HELP_URL_FORMAT`, `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT`
+
+cli uses [OSC 8 hyperlinks](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda) that have this syntax:
+
+```
+OSC 8 ; {OPTIONAL PARAMS } ; {URI} ST {LINK TEXT} OSC 8 ; ; ST
+```
+
+These env vars relate to the form of the `URI` for these specialized hyperlinks.
+These are the current default formats:
+
+* `x-r-run:{code}`
+* `x-r-help:{topic}`
+* `x-r-vignette:{vignette}`
+
+(For backwards compatibility with older versions of RStudio, in some contexts, a legacy format is used, e.g. `ide:run:{code}`.)
+
+These `R_CLI_HYPERLINK_*_URL_FORMAT` env vars allow an environment to provide a custom format to cli.
+A format must be a glue-like template with the relevant placeholder in curly braces (`code`, `topic` or `vignette`).
+Example of a custom URI format for runnable code in an integrated Positron terminal:
+
+```
+positron://positron.positron-r/cli?command=x-r-run:{code}
+```
+
+If defined, the options `cli.hyperlink_run_url_format`, `cli.hyperlink_help_url_format` and `cli.hyperlink_vignette_url_format` take priority over these env var counterparts.
 
 ## User facing options
 
