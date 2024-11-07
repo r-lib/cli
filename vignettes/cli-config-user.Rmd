@@ -163,6 +163,54 @@ Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
 ANSI hyperlinks.
 Set to anything else to assume no hyperlink support.
 See [style_hyperlink()].
+The same result can be achieved with the `R_CLI_HYPERLINKS` env var, however this option takes precedence.
+
+### `cli.hyperlink_run`, `cli.hyperlink_help`, `cli.hyperlink_vignette`
+
+Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
+that specific type of specialized hyperlink.
+Set to anything else to signal a lack of support.
+The `cli.hyperlink` option indicates that the terminal supports a certain type of hyperlink syntax, whereas these options signal that the environment also knows how to execute R code or open documentation.
+
+Here is the relationship between these options and the classes applied via inline markup:
+
+* `cli.hyperlink_run` enables links such as:
+  - `{.run testthat::snapshot_review()}`
+* `cli.hyperlink_help` enables links such as:
+  - `{.fun stats::lm}`
+  - `{.topic tibble::tibble_options}`
+  - `{.help [{.fun lm}](stats::lm)}`
+* `cli.hyperlink_vignette` enables links such as:
+  - `{.vignette tibble::types}`
+
+The same result can be achieved with the env vars `R_CLI_HYPERLINK_RUN`, `R_CLI_HYPERLINK_HELP`, and `R_CLI_HYPERLINK_VIGNETTE`, however these options take precedence.
+
+### `cli.hyperlink_run_url_format`, `cli.hyperlink_help_url_format`, `cli.hyperlink_vignette_url_format`
+
+cli uses [OSC 8 hyperlinks](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda) that have this syntax:
+
+```
+OSC 8 ; {OPTIONAL PARAMS } ; {URI} ST {LINK TEXT} OSC 8 ; ; ST
+```
+
+These options relate to the form of the `URI` for these specialized hyperlinks.
+These are the current default formats:
+
+* `x-r-run:{code}`
+* `x-r-help:{topic}`
+* `x-r-vignette:{vignette}`
+
+(For backwards compatibility with older versions of RStudio, in some contexts, a legacy format is used, e.g. `ide:run:{code}`.)
+
+These `cli.hyperlink_*_url_format` options allow an environment to provide a custom format to cli.
+A format must be a glue-like template with the relevant placeholder in curly braces (`code`, `topic` or `vignette`).
+Example of a custom URI format for runnable code in an integrated Positron terminal:
+
+```
+positron://positron.positron-r/cli?command=x-r-run:{code}
+```
+
+This configuration can also be communicated via the env vars `R_CLI_HYPERLINK_RUN_URL_FORMAT`, `R_CLI_HYPERLINK_HELP_URL_FORMAT`, and `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT`, however these options take precedence.
 
 ### `cli.ignore_unknown_rstudio_theme`
 
