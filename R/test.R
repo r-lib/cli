@@ -114,16 +114,12 @@ test_that_cli <- function(desc, code,
         cli.hyperlink_vignette = links,
         cli.hyperlink_run_url_format = NULL,
         cli.hyperlink_help_url_format = NULL,
-        cli.hyperlink_vignette_url_format = NULL,
+        cli.hyperlink_vignette_url_format = NULL
       )
       withr::local_envvar(
-        R_CLI_HYPERLINKS = NA_character_,
-        R_CLI_HYPERLINK_RUN = NA_character_,
-        R_CLI_HYPERLINK_HELP = NA_character_,
-        R_CLI_HYPERLINK_VIGNETTE = NA_character_,
         R_CLI_HYPERLINK_RUN_URL_FORMAT = NA_character_,
         R_CLI_HYPERLINK_HELP_URL_FORMAT = NA_character_,
-        R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT = NA_character_,
+        R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT = NA_character_
       )
       code_
     }, c(conf, list(code_ = code)))
