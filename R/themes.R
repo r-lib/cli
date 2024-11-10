@@ -252,7 +252,13 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       transform = function(x) format_inline(typename(x))
     ),
     span.or = list("vec-sep2" = " or ", "vec-last" = ", or "),
-    span.timestamp = list(before = "[", after = "]", color = "grey")
+    span.timestamp = list(before = "[", after = "]", color = "grey"),
+    span.bytes = list(
+      transform = function(x) format_bytes$pretty_bytes(x)
+    ),
+    span.num = list(
+      transform = function(x) format_num$pretty_num(x)
+    )
   )
 }
 
