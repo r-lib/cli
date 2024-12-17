@@ -85,7 +85,7 @@ make_link_file <- function(txt) {
 }
 
 parse_file_link_params <- function(txt) {
-  pattern <- "^(?<path>.*?)(?::(?<line>\\d+))?(?::(?<column>\\d+))?$"
+  pattern <- "^(?<path>.*?)(?::(?<line>\\d*))?(?::(?<column>\\d*))?$"
   matches <- re_match(txt, pattern)
   ret <- as.list(matches)
   ret[!nzchar(ret)] <- list(NULL)
@@ -113,6 +113,7 @@ interpolate_parts <- function(fmt, params) {
 # interpolate a part, if possible
 # remove those bits of the template, otherwise
 interpolate_part <- function(fmt, part = c("column", "line", "path"), value = NULL) {
+  part <- match.arg(part)
   re <- glue(
     "^(?<before>.*)(?<part>\\{<<<part>>>\\})(?<after>.*?)$",
     .open = "<<<", .close = ">>>"

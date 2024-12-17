@@ -422,3 +422,88 @@ test_that("get_hyperlink_format() delivers custom format", {
   expect_equal(get_hyperlink_format("help"), "option{topic}")
   expect_equal(get_hyperlink_format("vignette"), "option{vignette}")
 })
+
+test_that("parse_file_link_params(), typical input", {
+  expect_equal(
+    parse_file_link_params("some/path.ext"),
+    list(
+      path = "some/path.ext",
+      line = NULL,
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext:14"),
+    list(
+      path = "some/path.ext",
+      line = "14",
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext:14:23"),
+    list(
+      path = "some/path.ext",
+      line = "14",
+      column = "23"
+    )
+  )
+})
+
+test_that("parse_file_link_params(), weird trailing colons", {
+  expect_equal(
+    parse_file_link_params("some/path.ext:"),
+    list(
+      path = "some/path.ext",
+      line = NULL,
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext::"),
+    list(
+      path = "some/path.ext",
+      line = NULL,
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext:14:"),
+    list(
+      path = "some/path.ext",
+      line = "14",
+      column = NULL
+    )
+  )
+})
+
+test_that("interpolate_parts()", {
+  fmt <- "whatever/{path}#@${line}^&*{column}"
+  params <- list(path = "some/path.ext", line = "14", column = "23")
+
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext#@$14^&*23"
+  )
+
+  params <- list(path = "some/path.ext", line = "14", column = NULL)
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext#@$14"
+  )
+
+  params <- list(path = "some/path.ext", line = NULL, column = NULL)
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext"
+  )
+})
+
+test_that("interpolate_parts(), format only has `path`", {
+  fmt <- "whatever/{path}"
+  params <- list(path = "some/path.ext", line = "14", column = "23")
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext"
+  )
+})
