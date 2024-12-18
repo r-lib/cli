@@ -136,19 +136,20 @@ interpolate_part <- function(fmt, part = c("column", "line", "path"), value = NU
 construct_file_link_OG <- function(params) {
   params$path <- abs_path(params$path)
 
- if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
-  fmt <- "{path}#{line}:{column}"
-  res <- interpolate_parts(fmt, params)
-  return(list(url = res))
-}
+  if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
+    fmt <- "{path}#{line}:{column}"
+    res <- interpolate_parts(fmt, params)
+    return(list(url = res))
+  }
 
-# RStudio takes line and column via params
-loc <- if (is.null(params$line)) {
-  NULL
-} else {
-  list(line = params$line, col = params$column %||% 1)
-}
- return(list(url = params$path, params = loc))
+  # RStudio takes line and column via params
+  loc <- if (is.null(params$line)) {
+    NULL
+  } else {
+    list(line = params$line, col = params$column %||% 1)
+  }
+
+  list(url = params$path, params = loc)
 }
 
 abs_path <- function(x) {
