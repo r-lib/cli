@@ -99,7 +99,18 @@ construct_file_link <- function(params) {
     return(construct_file_link_OG(params))
   }
 
-  params$path <- normalizePath(params$path, mustWork = FALSE)
+  params$path <- sub("^file://", "", params$path)
+  params$path <- path.expand(params$path)
+  looks_absolute <-
+    grepl("^/", params$path) || (is_windows() && grepl("^[a-zA-Z]:", params$path))
+  if (looks_absolute) {
+    if (is_windows()) {
+      params$path <- paste0("/", params$path)
+    }
+  } else {
+    params$path <- file.path(getwd(), params$path)
+  }
+
   res <- interpolate_parts(fmt, params)
   list(url = res)
 }

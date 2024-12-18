@@ -477,7 +477,7 @@ test_that("parse_file_link_params(), weird trailing colons", {
   )
 })
 
-test_that("interpolate_parts()", {
+test_that("interpolate_parts(), more or less data in `params`", {
   fmt <- "whatever/{path}#@${line}^&*{column}"
   params <- list(path = "some/path.ext", line = "14", column = "23")
 
@@ -505,5 +505,95 @@ test_that("interpolate_parts(), format only has `path`", {
   expect_equal(
     interpolate_parts(fmt, params),
     "whatever/some/path.ext"
+  )
+})
+
+test_that("construct_file_link() works with custom format and an absolute path", {
+  withr::local_options(
+    "cli.hyperlink_file_url_format" = "positron://file{path}:{line}:{column}"
+  )
+
+  expect_equal(
+    construct_file_link(list(path = "/absolute/path")),
+    list(url = "positron://file/absolute/path")
+  )
+  expect_equal(
+    construct_file_link(list(path = "/absolute/path", line = "12")),
+    list(url = "positron://file/absolute/path:12")
+  )
+  expect_equal(
+    construct_file_link(list(path = "/absolute/path", line = "12", column = "5")),
+    list(url = "positron://file/absolute/path:12:5")
+  )
+
+  local_mocked_bindings(is_windows = function() TRUE)
+  expect_equal(
+    construct_file_link(list(path = "c:/absolute/path")),
+    list(url = "positron://file/c:/absolute/path")
+  )
+})
+
+test_that("construct_file_link() works with custom format and a relative path", {
+  withr::local_options(
+    "cli.hyperlink_file_url_format" = "positron://file{path}:{line}:{column}"
+  )
+
+  # inspired by test helpers `sanitize_wd()` and `sanitize_home()`, but these
+  # don't prefix the pattern-to-replace with `file://`
+  # (and also process the `url` element of `x`)
+  sanitize_wd2 <- function(x) {
+    sub(getwd(), "/working/directory", x$url, fixed = TRUE)
+  }
+  sanitize_home2 <- function(x) {
+    sub(path.expand("~"), "/my/home", x$url, fixed = TRUE)
+  }
+
+  expect_equal(
+    sanitize_wd2(construct_file_link(list(path = "relative/path"))),
+    "positron://file/working/directory/relative/path"
+  )
+  expect_equal(
+    sanitize_wd2(construct_file_link(list(path = "relative/path:12"))),
+    "positron://file/working/directory/relative/path:12"
+  )
+  expect_equal(
+    sanitize_wd2(construct_file_link(list(path = "relative/path:12:5"))),
+    "positron://file/working/directory/relative/path:12:5"
+  )
+
+  # FAILING, what do I want to do here?
+  # expect_equal(
+  #   sanitize_wd2(construct_file_link(list(path = "./relative/path"))),
+  #   "positron://file/working/directory/relative/path"
+  # )
+  # line
+  # line and column
+
+  expect_equal(
+    sanitize_home2(construct_file_link(list(path = "~/relative/path"))),
+    "positron://file/my/home/relative/path"
+  )
+  expect_equal(
+    sanitize_home2(construct_file_link(list(path = "~/relative/path:17"))),
+    "positron://file/my/home/relative/path:17"
+  )
+  expect_equal(
+    sanitize_home2(construct_file_link(list(path = "~/relative/path:17:22"))),
+    "positron://file/my/home/relative/path:17:22"
+  )
+})
+
+test_that("construct_file_link() works with custom format and input starting with 'file://'", {
+  withr::local_options(
+    "cli.hyperlink_file_url_format" = "positron://file{path}:{line}:{column}"
+  )
+
+  expect_equal(
+    construct_file_link(list(path = "file:///absolute/path")),
+    list(url = "positron://file/absolute/path")
+  )
+  expect_equal(
+    construct_file_link(list(path = "file:///absolute/path", line = "12", column = "5")),
+    list(url = "positron://file/absolute/path:12:5")
   )
 })
