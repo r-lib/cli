@@ -101,12 +101,15 @@ construct_file_link <- function(params) {
 
   params$path <- sub("^file://", "", params$path)
   params$path <- path.expand(params$path)
-  if (is_windows() && grepl("^[a-zA-Z]:", params$path)) {
-    params$path <- paste0("/", params$path)
+  
+  looks_absolute <- function(path) {
+    grepl("^/", params$path) || (is_windows() && grepl("^[a-zA-Z]:", params$path))
   }
-  looks_absolute <- grepl("^/", params$path)
-  if (!looks_absolute) {
+  if (!looks_absolute(params$path)) {
     params$path <- file.path(getwd(), params$path)
+  }
+  if (!grepl("^/", params$path)) {
+    params$path <- paste0("/", params$path)
   }
 
   res <- interpolate_parts(fmt, params)

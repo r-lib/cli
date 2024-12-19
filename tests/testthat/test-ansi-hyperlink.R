@@ -541,23 +541,26 @@ test_that("construct_file_link() works with custom format and a relative path", 
   # inspired by test helpers `sanitize_wd()` and `sanitize_home()`, but these
   # don't prefix the pattern-to-replace with `file://`
   # (and also process the `url` element of `x`)
-  sanitize_wd2 <- function(x) {
-    sub(getwd(), "/working/directory", x$url, fixed = TRUE)
-  }
-  sanitize_home2 <- function(x) {
-    sub(path.expand("~"), "/my/home", x$url, fixed = TRUE)
+  sanitize_dir <- function(x, what = c("wd", "home")) {
+    what <- match.arg(what)
+    pattern <- switch(what, wd = getwd(), home = path.expand("~"))
+    if (is_windows()) {
+      pattern <- paste0("/", pattern)
+    }
+    replacement <- switch(what, wd = "/working/directory", home = "/my/home")
+    sub(pattern, replacement, x$url, fixed = TRUE)
   }
 
   expect_equal(
-    sanitize_wd2(construct_file_link(list(path = "relative/path"))),
+    sanitize_dir(construct_file_link(list(path = "relative/path")), what = "wd"),
     "positron://file/working/directory/relative/path"
   )
   expect_equal(
-    sanitize_wd2(construct_file_link(list(path = "relative/path:12"))),
+    sanitize_dir(construct_file_link(list(path = "relative/path:12")), what = "wd"),
     "positron://file/working/directory/relative/path:12"
   )
   expect_equal(
-    sanitize_wd2(construct_file_link(list(path = "relative/path:12:5"))),
+    sanitize_dir(construct_file_link(list(path = "relative/path:12:5")), what = "wd"),
     "positron://file/working/directory/relative/path:12:5"
   )
 
@@ -570,15 +573,15 @@ test_that("construct_file_link() works with custom format and a relative path", 
   # line and column
 
   expect_equal(
-    sanitize_home2(construct_file_link(list(path = "~/relative/path"))),
+    sanitize_dir(construct_file_link(list(path = "~/relative/path")), what = "home"),
     "positron://file/my/home/relative/path"
   )
   expect_equal(
-    sanitize_home2(construct_file_link(list(path = "~/relative/path:17"))),
+    sanitize_dir(construct_file_link(list(path = "~/relative/path:17")), what = "home"),
     "positron://file/my/home/relative/path:17"
   )
   expect_equal(
-    sanitize_home2(construct_file_link(list(path = "~/relative/path:17:22"))),
+    sanitize_dir(construct_file_link(list(path = "~/relative/path:17:22")), what = "home"),
     "positron://file/my/home/relative/path:17:22"
   )
 })
