@@ -116,6 +116,9 @@ construct_file_link <- function(params) {
   list(url = res)
 }
 
+# the order of operations is very intentional and important:
+# column, then line, then path
+# relates to how interpolate_part() works
 interpolate_parts <- function(fmt, params) {
   res <- interpolate_part(fmt, "column", params$column)
   res <- interpolate_part(res, "line", params$line)
@@ -123,7 +126,8 @@ interpolate_parts <- function(fmt, params) {
 }
 
 # interpolate a part, if possible
-# remove those bits of the template, otherwise
+# if no placeholder for part, this is a no-op
+# if placeholder exists, but no value to fill, remove placeholder (and everything after it!)
 interpolate_part <- function(fmt, part = c("column", "line", "path"), value = NULL) {
   part <- match.arg(part)
   re <- glue(
@@ -154,7 +158,7 @@ construct_file_link_OG <- function(params) {
     return(list(url = res))
   }
 
-  # RStudio takes line and column via params
+  # RStudio takes line and col via params
   loc <- if (is.null(params$line)) {
     NULL
   } else {

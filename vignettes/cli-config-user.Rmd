@@ -37,12 +37,13 @@ after that it will be removed.
 Set this option or env var to `true`, `TRUE` or `True` to tell cli that the terminal supports ANSI hyperlinks.
 Leave this configuration unset (or set to anything else) when there is no hyperlink support.
 Specifically, this configuration indicates the support for URL and file hyperlinks, requested via markup like `{.href url}` or `{.file path/file}`.
+(Below we describe the configuration that indicates support for even more specialized types of hyperlinks.)
 
 The option `cli.hyperlink` takes precedence over the `R_CLI_HYPERLINKS` env var.
 
 ### `cli.hyperlink_*` options and `R_CLI_HYPERLINK_*` env vars
 
-cli supports a few special types of hyperlink that don't just point to, e.g., a webpage or a file.
+cli supports a few special types of hyperlink that go beyond pointing to, e.g., a webpage or a file.
 These specialized hyperlinks cause R-specific actions to happen, such as executing a bit of R code or opening specific documentation.
 
 Set the relevant option or env var to `true`, `TRUE`, or `True` to tell cli that the terminal is capable of implementing these specialized behaviours.
@@ -84,7 +85,7 @@ positron://positron.positron-r/cli?command=x-r-run:{code}
 
 (For backwards compatibility with older versions of RStudio, in some contexts, a legacy format is used, e.g. `ide:run:{code}`.)
 
-The default handling for file hyperlinks is geared towards the expectations of RStudio and can't really be expressed as a URI format, but it's approximately `file://{path}`, plus possibly passing `line` and `column` in the `OPTIONAL PARAMS` part of the OSC 8 hyperlink.
+The default handling for file hyperlinks is geared towards the expectations of RStudio and can't really be expressed as a URI format, but it's approximately `file://{path}`, plus possibly passing `line` and `col` (yes, it really is `col`, not `column`) in the `OPTIONAL PARAMS` part of the OSC 8 hyperlink.
 
 A custom format can be provided for file hyperlinks and the relevant placeholders are `path`, `line`, and `column`.
 Examples of custom file hyperlink formats:

@@ -540,7 +540,6 @@ test_that("construct_file_link() works with custom format and a relative path", 
 
   # inspired by test helpers `sanitize_wd()` and `sanitize_home()`, but these
   # don't prefix the pattern-to-replace with `file://`
-  # (and also process the `url` element of `x`)
   sanitize_dir <- function(x, what = c("wd", "home")) {
     what <- match.arg(what)
     pattern <- switch(what, wd = getwd(), home = path.expand("~"))
