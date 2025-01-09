@@ -1,7 +1,7 @@
 # cli (development version)
 
-* The format of the URI part of "run", "help" and "vignette" hyperlinks can now
-  be configured via options and env vars (@jennybc, #739).
+* The URI generated for `.file`, `.run`, `.help` and `.vignette` hyperlinks can
+  now be configured via options and env vars (@jennybc, #739, #744).
 
 * `cli_progress_bar()` now accepts `total` = Inf or -Inf which mimics the behavior    of when `total` is NA.
 
