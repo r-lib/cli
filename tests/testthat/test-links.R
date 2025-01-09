@@ -24,6 +24,7 @@ test_that_cli(configs = c("plain", "fancy"), links = c("all", "none"),
               "{.file} and {.path}", {
 
   withr::local_envvar(R_CLI_HYPERLINK_STYLE = NA_character_)
+  withr::local_envvar(R_CLI_HYPERLINK_FILE_URL_FORMAT = NA_character_)
 
   # absolute path
   expect_snapshot({

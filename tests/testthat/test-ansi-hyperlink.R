@@ -232,6 +232,7 @@ test_that("unknown hyperlink type", {
 
 test_that("iterm file links", {
   withr::local_envvar(R_CLI_HYPERLINK_STYLE = "iterm")
+  withr::local_envvar(R_CLI_HYPERLINK_FILE_URL_FORMAT = NA_character_)
   withr::local_options(cli.hyperlink = TRUE)
   expect_snapshot({
     cli::cli_text("{.file /path/to/file:10}")
