@@ -74,39 +74,98 @@ make_link_file <- function(txt) {
   linked <- grepl("\007|\033\\\\", txt)
   ret[!linked] <- vcapply(which(!linked), function(i) {
     params <- parse_file_link_params(txt[i])
+    link <- construct_file_link(params)
     style_hyperlink(
       txt[i],
-      paste0(abs_path(params$path), params$suffix),
-      params = params$params
+      link$url,
+      params = link$params
     )
   })
   ret
 }
 
 parse_file_link_params <- function(txt) {
-  if (grepl(":[0-9]+:[0-9]+$", txt)) {
-    # path:line:col
-    path <- sub("^(.*):[0-9]+:[0-9]+$", "\\1", txt)
-    num <- strsplit(sub("^.*:([0-9]+:[0-9]+)$", "\\1", txt), ":", fixed = TRUE)[[1]]
-    if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
-      list(path = path, params = NULL, suffix = paste0("#", num[1], ":", num[2]))
-    } else {
-      list(path = path, params = c(line = num[1], col = num[2]))
-    }
+  pattern <- "^(?<path>.*?)(?::(?<line>\\d*))?(?::(?<column>\\d*))?$"
+  matches <- re_match(txt, pattern)
+  ret <- as.list(matches)
+  ret[!nzchar(ret)] <- list(NULL)
+  ret
+}
 
-  } else if (grepl(":[0-9]+$", txt)) {
-    # path:line
-    path <- sub("^(.*):[0-9]+$", "\\1", txt)
-    num <- sub("^.*:([0-9]+$)", "\\1", txt)
-    if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
-      list(path = path, params = NULL, suffix = paste0("#", num))
-    } else {
-      list(path = path, params = c(line = num, col = "1"))
-    }
+construct_file_link <- function(params) {
+  fmt <- get_config_chr("hyperlink_file_url_format")
 
-  } else {
-    list(path = txt, params = NULL)
+  if (is.null(fmt)) {
+    return(construct_file_link_OG(params))
   }
+
+  params$path <- sub("^file://", "", params$path)
+  params$path <- path.expand(params$path)
+
+  looks_absolute <- function(path) {
+    grepl("^/", params$path) || (is_windows() && grepl("^[a-zA-Z]:", params$path))
+  }
+  if (!looks_absolute(params$path)) {
+    params$path <- file.path(getwd(), params$path)
+  }
+  if (!grepl("^/", params$path)) {
+    params$path <- paste0("/", params$path)
+  }
+
+  res <- interpolate_parts(fmt, params)
+  list(url = res)
+}
+
+# the order of operations is very intentional and important:
+# column, then line, then path
+# relates to how interpolate_part() works
+interpolate_parts <- function(fmt, params) {
+  res <- interpolate_part(fmt, "column", params$column)
+  res <- interpolate_part(res, "line", params$line)
+  interpolate_part(res, "path", params$path)
+}
+
+# interpolate a part, if possible
+# if no placeholder for part, this is a no-op
+# if placeholder exists, but no value to fill, remove placeholder (and everything after it!)
+interpolate_part <- function(fmt, part = c("column", "line", "path"), value = NULL) {
+  part <- match.arg(part)
+  re <- glue(
+    "^(?<before>.*)(?<part>\\{<<<part>>>\\})(?<after>.*?)$",
+    .open = "<<<", .close = ">>>"
+  )
+  m <- re_match(fmt, re)
+
+  if (is.na(m$part) || !nzchar(m$part)) {
+    return(fmt)
+  }
+
+  if (is.null(value) || !nzchar(value)) {
+    return(sub("}[^}]*$", "}", m$before))
+  }
+
+  paste0(m$before, value, m$after)
+}
+
+# handle the iterm and RStudio cases, which predated the notion of configuring
+# the file hyperlink format
+construct_file_link_OG <- function(params) {
+  params$path <- abs_path(params$path)
+
+  if (Sys.getenv("R_CLI_HYPERLINK_STYLE") == "iterm") {
+    fmt <- "{path}#{line}:{column}"
+    res <- interpolate_parts(fmt, params)
+    return(list(url = res))
+  }
+
+  # RStudio takes line and col via params
+  loc <- if (is.null(params$line)) {
+    NULL
+  } else {
+    list(line = params$line, col = params$column %||% 1)
+  }
+
+  list(url = params$path, params = loc)
 }
 
 abs_path <- function(x) {

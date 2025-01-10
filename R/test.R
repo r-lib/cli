@@ -112,11 +112,13 @@ test_that_cli <- function(desc, code,
         cli.hyperlink_help = links,
         cli.hyperlink_run = links,
         cli.hyperlink_vignette = links,
+        cli.hyperlink_file_url_format = NULL,
         cli.hyperlink_run_url_format = NULL,
         cli.hyperlink_help_url_format = NULL,
         cli.hyperlink_vignette_url_format = NULL
       )
       withr::local_envvar(
+        R_CLI_HYPERLINK_FILE_URL_FORMAT = NA_character_,
         R_CLI_HYPERLINK_RUN_URL_FORMAT = NA_character_,
         R_CLI_HYPERLINK_HELP_URL_FORMAT = NA_character_,
         R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT = NA_character_
@@ -139,6 +141,7 @@ local_clean_cli_context <- function(.local_envir = parent.frame()) {
     cli.hyperlink_run = NULL,
     cli.hyperlink_help = NULL,
     cli.hyperlink_vignette = NULL,
+    cli.hyperlink_file_url_format = NULL,
     cli.hyperlink_run_url_format = NULL,
     cli.hyperlink_help_url_format = NULL,
     cli.hyperlink_vignette_url_format = NULL,
@@ -152,6 +155,7 @@ local_clean_cli_context <- function(.local_envir = parent.frame()) {
     R_CLI_HYPERLINK_RUN = NA_character_,
     R_CLI_HYPERLINK_HELP = NA_character_,
     R_CLI_HYPERLINK_VIGNETTE = NA_character_,
+    R_CLI_HYPERLINK_FILE_URL_FORMAT = NA_character_,
     R_CLI_HYPERLINK_RUN_URL_FORMAT = NA_character_,
     R_CLI_HYPERLINK_HELP_URL_FORMAT = NA_character_,
     R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT = NA_character_,

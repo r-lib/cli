@@ -36,13 +36,15 @@ after that it will be removed.
 
 Set this option or env var to `true`, `TRUE` or `True` to tell cli that the terminal supports ANSI hyperlinks.
 Leave this configuration unset (or set to anything else) when there is no hyperlink support.
+Specifically, this configuration indicates the support for URL and file hyperlinks, requested via markup like `{.href url}` or `{.file path/file}`.
+(Below we describe the configuration that indicates support for even more specialized types of hyperlinks.)
 
 The option `cli.hyperlink` takes precedence over the `R_CLI_HYPERLINKS` env var.
 
 ### `cli.hyperlink_*` options and `R_CLI_HYPERLINK_*` env vars
 
-cli supports a few special types of hyperlink that don't just point to, e.g., a webpage or a file.
-These specialized hyperlinks cause R-specific actions to happen, such executing a bit of R code or opening specific documentation.
+cli supports a few special types of hyperlink that go beyond pointing to, e.g., a webpage or a file.
+These specialized hyperlinks cause R-specific actions to happen, such as executing a bit of R code or opening specific documentation.
 
 Set the relevant option or env var to `true`, `TRUE`, or `True` to tell cli that the terminal is capable of implementing these specialized behaviours.
 Leave this configuration unset (or set to anything else) when there is no support for a specific type of hyperlink.
@@ -68,6 +70,7 @@ If defined, the option takes priority over the env var.
 
 | Action            | Default URI format        | Customize via option                | Customize via env var                 |
 |-------------------|---------------------------|-------------------------------------|---------------------------------------|
+|       Open a file | (see below)               | `cli.hyperlink_file_url_format`     | `R_CLI_HYPERLINK_FILE_URL_FORMAT`     |
 |        Run R code | `x-r-run:{code}`          | `cli.hyperlink_run_url_format`      | `R_CLI_HYPERLINK_RUN_URL_FORMAT`      |
 | Open a help topic | `x-r-help:{topic}`        | `cli.hyperlink_help_url_format`     | `R_CLI_HYPERLINK_HELP_URL_FORMAT`     |
 | Open a vignette   | `x-r-vignette:{vignette}` | `cli.hyperlink_vignette_url_format` | `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT` |
@@ -81,6 +84,19 @@ positron://positron.positron-r/cli?command=x-r-run:{code}
 ```
 
 (For backwards compatibility with older versions of RStudio, in some contexts, a legacy format is used, e.g. `ide:run:{code}`.)
+
+The default handling for file hyperlinks is geared towards the expectations of RStudio and can't really be expressed as a URI format, but it's approximately `file://{path}`, plus possibly passing `line` and `col` (yes, it really is `col`, not `column`) in the `OPTIONAL PARAMS` part of the OSC 8 hyperlink.
+
+A custom format can be provided for file hyperlinks and the relevant placeholders are `path`, `line`, and `column`.
+Examples of custom file hyperlink formats:
+
+```
+positron://file{path}:{line}:{column}
+vscode://file{path}:{line}:{column}
+txmt://open?url=file://{path}&line={line}&column={column}
+```
+
+It's OK if the format includes only `path`.
 
 ## User facing environment variables
 
