@@ -564,13 +564,18 @@ test_that("construct_file_link() works with custom format and a relative path", 
     "positron://file/working/directory/relative/path:12:5"
   )
 
-  # FAILING, what do I want to do here?
-  # expect_equal(
-  #   sanitize_wd2(construct_file_link(list(path = "./relative/path"))),
-  #   "positron://file/working/directory/relative/path"
-  # )
-  # line
-  # line and column
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "./relative/path")), what = "wd"),
+    "positron://file/working/directory/./relative/path"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "./relative/path:12")), what = "wd"),
+    "positron://file/working/directory/./relative/path:12"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "./relative/path:12:5")), what = "wd"),
+    "positron://file/working/directory/./relative/path:12:5"
+  )
 
   expect_equal(
     sanitize_dir(construct_file_link(list(path = "~/relative/path")), what = "home"),

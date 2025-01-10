@@ -101,7 +101,7 @@ construct_file_link <- function(params) {
 
   params$path <- sub("^file://", "", params$path)
   params$path <- path.expand(params$path)
-  
+
   looks_absolute <- function(path) {
     grepl("^/", params$path) || (is_windows() && grepl("^[a-zA-Z]:", params$path))
   }
