@@ -10,8 +10,8 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Configuration">
 <meta name="robots" content="noindex">
 <script defer data-domain="cli.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cli</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">3.6.3.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">3.6.3.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,11 @@ env var<a class="anchor" aria-label="anchor" href="#cli-hyperlink-option-and-r_c
 <p>Set this option or env var to <code>true</code>, <code>TRUE</code> or
 <code>True</code> to tell cli that the terminal supports ANSI
 hyperlinks. Leave this configuration unset (or set to anything else)
-when there is no hyperlink support.</p>
+when there is no hyperlink support. Specifically, this configuration
+indicates the support for URL and file hyperlinks, requested via markup
+like <code>{.href url}</code> or <code>{.file path/file}</code>. (Below
+we describe the configuration that indicates support for even more
+specialized types of hyperlinks.)</p>
 <p>The option <code>cli.hyperlink</code> takes precedence over the
 <code>R_CLI_HYPERLINKS</code> env var.</p>
 </div>
@@ -121,10 +125,10 @@ when there is no hyperlink support.</p>
 <code>cli.hyperlink_*</code> options and
 <code>R_CLI_HYPERLINK_*</code> env vars<a class="anchor" aria-label="anchor" href="#cli-hyperlink_-options-and-r_cli_hyperlink_-env-vars"></a>
 </h3>
-<p>cli supports a few special types of hyperlink that don’t just point
+<p>cli supports a few special types of hyperlink that go beyond pointing
 to, e.g., a webpage or a file. These specialized hyperlinks cause
-R-specific actions to happen, such executing a bit of R code or opening
-specific documentation.</p>
+R-specific actions to happen, such as executing a bit of R code or
+opening specific documentation.</p>
 <p>Set the relevant option or env var to <code>true</code>,
 <code>TRUE</code>, or <code>True</code> to tell cli that the terminal is
 capable of implementing these specialized behaviours. Leave this
@@ -197,18 +201,24 @@ var.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td>Open a file</td>
+<td>(see below)</td>
+<td><code>cli.hyperlink_file_url_format</code></td>
+<td><code>R_CLI_HYPERLINK_FILE_URL_FORMAT</code></td>
+</tr>
+<tr class="even">
 <td>Run R code</td>
 <td><code>x-r-run:{code}</code></td>
 <td><code>cli.hyperlink_run_url_format</code></td>
 <td><code>R_CLI_HYPERLINK_RUN_URL_FORMAT</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Open a help topic</td>
 <td><code>x-r-help:{topic}</code></td>
 <td><code>cli.hyperlink_help_url_format</code></td>
 <td><code>R_CLI_HYPERLINK_HELP_URL_FORMAT</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Open a vignette</td>
 <td><code>x-r-vignette:{vignette}</code></td>
 <td><code>cli.hyperlink_vignette_url_format</code></td>
@@ -225,6 +235,19 @@ useful in an integrated Positron terminal:</p>
 <p>(For backwards compatibility with older versions of RStudio, in some
 contexts, a legacy format is used,
 e.g. <code>ide:run:{code}</code>.)</p>
+<p>The default handling for file hyperlinks is geared towards the
+expectations of RStudio and can’t really be expressed as a URI format,
+but it’s approximately <code>file://{path}</code>, plus possibly passing
+<code>line</code> and <code>col</code> (yes, it really is
+<code>col</code>, not <code>column</code>) in the
+<code>OPTIONAL PARAMS</code> part of the OSC 8 hyperlink.</p>
+<p>A custom format can be provided for file hyperlinks and the relevant
+placeholders are <code>path</code>, <code>line</code>, and
+<code>column</code>. Examples of custom file hyperlink formats:</p>
+<pre><code>positron://file{path}:{line}:{column}
+vscode://file{path}:{line}:{column}
+txmt://open?url=file://{path}&amp;line={line}&amp;column={column}</code></pre>
+<p>It’s OK if the format includes only <code>path</code>.</p>
 </div>
 </div>
 <div class="section level2">
