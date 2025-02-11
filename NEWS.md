@@ -1,4 +1,4 @@
-# cli (development version)
+# cli 3.6.4
 
 * Pluralization now handles edge cases (`NA`, `NaN`, `Inf` and `-Inf`)
   better (@rundel, #716).
