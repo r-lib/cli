@@ -89,6 +89,7 @@ parse_file_link_params <- function(txt) {
   matches <- re_match(txt, pattern)
   ret <- as.list(matches)
   ret[!nzchar(ret)] <- list(NULL)
+  if (is.null(ret[["path"]])) ret[["path"]] <- ""
   ret
 }
 
