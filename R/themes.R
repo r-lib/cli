@@ -252,7 +252,13 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       transform = function(x) format_inline(typename(x))
     ),
     span.or = list("vec-sep2" = " or ", "vec-last" = ", or "),
-    span.timestamp = list(before = "[", after = "]", color = "grey")
+    span.timestamp = list(before = "[", after = "]", color = "grey"),
+    span.bytes = list(
+      transform = function(x) format_pretty(x, "bytes")
+    ),
+    span.num = list(
+      transform = function(x) format_pretty(x, "num")
+    )
   )
 }
 
@@ -378,6 +384,19 @@ format_code <- function(dark) {
   function(x) {
     unlist(strsplit(x, "\n", fixed = TRUE))
   }
+}
+
+format_pretty <- function(x, type = c("num", "bytes")) {
+  if (!requireNamespace("prettyunits", quietly = TRUE)) {
+    throw(cli_error(
+      "{.pgk prettyunits} is required for formatting numbers and bytes."
+    ))
+  }
+  type <- match.arg(type)
+  switch(type,
+    num = prettyunits::pretty_num(x),
+    bytes = prettyunits::pretty_bytes(x)
+  )
 }
 
 theme_create <- function(theme) {
