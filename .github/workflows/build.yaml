@@ -1,0 +1,18 @@
+name: Build cli
+
+on:
+  workflow_dispatch:
+  push:
+  workflow_call: {}
+
+jobs:
+  build:
+    name: Build cli
+    permissions:
+      checks: write
+      contents: read
+    uses: Displayr/nixr-public/.github/workflows/build-flake-installable.yaml@DPI-2964-add-package-ci
+    with:
+      installable-path: pkgs.x86_64-linux.rPackages.cli
+      build-args: --override-input displayr-cli .
+    secrets: inherit
