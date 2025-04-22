@@ -1,4 +1,4 @@
-# cli (development version)
+# cli 3.6.5
 
 * `code_highlight()` supports long strings and symbols
   (#727 @moodymudskipper).
