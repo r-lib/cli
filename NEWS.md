@@ -1,5 +1,7 @@
 # cli (development version)
 
+* `code_highlight()` supports long strings and symbols (#727 @moodymudskipper)
+
 # cli 3.6.4
 
 * Pluralization now handles edge cases (`NA`, `NaN`, `Inf` and `-Inf`)
