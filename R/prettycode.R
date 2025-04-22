@@ -130,29 +130,28 @@ get_parse_data <- function(x) {
   data <- getParseData(x, includeText = FALSE)
   data$text <- character(nrow(data))
 
-  # inlining utils:::substr_with_tabs() used in utils::getParseText()
-  substr_with_tabs <- function (x, start, stop, tabsize = 8)
-  {
+  substr_with_tabs <- function (x, start, stop, tabsize = 8) {
     widths <- rep_len(1, nchar(x))
     tabs <- which(strsplit(x, "")[[1]] == "\t")
     for (i in tabs) {
       cols <- cumsum(widths)
-      widths[i] <- tabsize - (cols[i] - 1)%%tabsize
+      widths[i] <- tabsize - (cols[i] - 1) %% tabsize
     }
     cols <- cumsum(widths)
     start <- which(cols >= start)
-    if (!length(start))
+    if (!length(start)) {
       return("")
+    }
     start <- start[1]
     stop <- which(cols <= stop)
     if (length(stop)) {
       stop <- stop[length(stop)]
       substr(x, start, stop)
+    } else {
+      ""
     }
-    else ""
   }
 
-  # adapted from utils::getParseText()
   srcfile <- attr(data, "srcfile")
   terminal <- which(data$terminal)
   for (i in terminal) {
