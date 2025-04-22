@@ -81,15 +81,15 @@ cli_end(show)
 #> Time intervals: <span style="color: #b8b8b8;">[3.4s]</span>                                                          
 #> <span style="font-style: italic;">Emphasis</span> and <span style="font-weight: bold;font-style: italic;">strong emphasis</span>                                                    
 #> This is a piece of code: `sum(x) / length(x)`                                   
-#> Function names: <span style="color: #292929;background-color: #f5f5f5;">`cli::simple_theme()`()</span>                                         
-#> Files: <span style="color: #268BD2;">/usr/bin/env</span>                                                             
-#> URLs: <span style="font-style: italic;color: #268BD2;">&lt;https://r-project.org&gt;</span>                                                   
+#> Function names: <span style="color: #292929;background-color: #f5f5f5;">`</span><span style="color: #292929;background-color: #f5f5f5;"><a href="x-r-help:cli::simple_theme">cli::simple_theme</a></span><span style="color: #292929;background-color: #f5f5f5;">()`()</span>                                         
+#> Files: <span style="color: #268BD2;"><a href="file:///usr/bin/env">/usr/bin/env</a></span>                                                             
+#> URLs: <span style="font-style: italic;color: #268BD2;">&lt;</span><span style="font-style: italic;color: #268BD2;"><a href="https://r-project.org">https://r-project.org</a></span><span style="font-style: italic;color: #268BD2;">&gt;</span>                                                   
 #>                                                                                 
 #> ─ <span style="font-weight: bold;color: #2AA198;">Longer code chunk</span> ──                                                          
-#> <span style="font-style: italic;color: #a3a3a3;"># window functions are useful for grouped mutates</span>                               
-#> mtcars <span style="color: #859900;">&#37;&gt;&#37;</span>                                                                      
-#>   <span style="color: #2AA198;">group_by</span><span style="color: #B58900;">(</span>cyl<span style="color: #B58900;">)</span> <span style="color: #859900;">&#37;&gt;&#37;</span>                                                             
-#>   <span style="color: #2AA198;">mutate</span><span style="color: #B58900;">(</span>rank = <span style="color: #2AA198;">min_rank</span><span style="color: #268BD2;">(</span><span style="color: #2AA198;">desc(</span>mpg<span style="color: #2AA198;">)</span><span style="color: #268BD2;">)</span><span style="color: #B58900;">)</span>                                            
+#> <span style="color: #666699;"># window functions are useful for grouped mutates</span>                               
+#> mtcars <span style="color: #cc9900;">&#37;&gt;&#37;</span>                                                                      
+#>   <span style="font-weight: bold;">group_by</span><span style="color: #cc9900;">(</span>cyl<span style="color: #cc9900;">)</span> <span style="color: #cc9900;">&#37;&gt;&#37;</span>                                                             
+#>   <span style="font-weight: bold;">mutate</span><span style="color: #cc9900;">(</span>rank = <span style="font-weight: bold;">min_rank</span><span style="color: #B58900;">(</span><span style="font-weight: bold;">desc</span><span style="color: #268BD2;">(</span>mpg<span style="color: #268BD2;">)</span><span style="color: #B58900;">)</span><span style="color: #cc9900;">)</span>                                            
 #>                                                                                 
 </pre></div>
 }}

@@ -145,10 +145,10 @@ The \code{.file} style now automatically creates a \verb{file:} hyperlink.
 Because \verb{file:} hyperlinks must contain an absolute path, cli tries to
 convert relative paths, and paths starting with \code{~} to aboslute path.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("... edit your \{.file ~/.Rprofile\} file.\}")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("... edit your \{.file ~/.Rprofile\} file.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> ... edit your <span style="color: #268BD2;"><a href="file:///Users/gaborcsardi/.Rprofile">~/.Rprofile</a></span> file.\}                                                
+#> ... edit your <span style="color: #268BD2;"><a href="file:///Users/gaborcsardi/.Rprofile">~/.Rprofile</a></span> file.                                                 
 </pre></div>
 }}
 
