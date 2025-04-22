@@ -9,7 +9,8 @@ test_that("iterator", {
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_iterator = NULL,
-    cli.progress_format_iterator_nototal= NULL
+    cli.progress_format_iterator_nototal= NULL,
+    cli.width = Inf
   )
 
   fun <- function() {
@@ -28,13 +29,15 @@ test_that("iterator", {
 })
 
 test_that("tasks", {
+  skip_on_cran()
   withr::local_options(
     cli.dynamic = TRUE,
     cli.ansi = TRUE,
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_tasks = NULL,
-    cli.progress_format_tasks_nototal= NULL
+    cli.progress_format_tasks_nototal= NULL,
+    cli.width = Inf
   )
 
   fun <- function() {

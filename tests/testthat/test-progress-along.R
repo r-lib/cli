@@ -78,7 +78,7 @@ test_that("old R is just seq_along", {
   # It is tricky to check that we get seq_along(), because
   # identical(cli_progress_along(1:10), seq_along(1:10)) holds,
   # so we just check that no progress bar is created.
-  mockery::stub(cli_progress_along, "getRversion", package_version("3.4.0"))
+  local_mocked_bindings(getRversion = function() package_version("3.4.0"))
   snapshot <- names(clienv$progress)
   it <- cli_progress_along(1:10)
   expect_identical(snapshot, names(clienv$progress))

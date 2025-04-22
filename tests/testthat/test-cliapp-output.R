@@ -6,7 +6,7 @@ test_that("cliapp output auto", {
   skip_on_cran()
 
   txt <- "Stay calm. This is a test."
-  script <- tempfile(fileext = ".R")
+  script <- tempfile("clitest1-", fileext = ".R")
   on.exit(unlink(script, recursive = TRUE), add = TRUE)
 
   # stderr if not interactive ----------------
@@ -57,7 +57,7 @@ test_that("can also use a connection", {
   skip_on_cran()
 
   txt <- "Stay calm. This is a test."
-  script <- tempfile(fileext = ".R")
+  script <- tempfile("clitest2-", fileext = ".R")
   on.exit(unlink(script, recursive = TRUE), add = TRUE)
 
   code <- substitute(env = list(txt = txt), {
@@ -81,7 +81,7 @@ test_that("message if there is a sink", {
   msgs <- NULL
   tmp <- NULL
   fun <- function() {
-    sink(tmp <<- tempfile())
+    sink(tmp <<- tempfile("clisinktest-"))
     on.exit(sink(NULL), add = TRUE)
     cli_text("Hola")
   }
@@ -97,8 +97,9 @@ test_that("message if there is a sink", {
 
   # if there is a message sink, non-interactive
   msgs <- NULL
-  tmp <- tempfile()
+  tmp <- tempfile("clisinktest2-")
   con <- file(tmp, open = "w+")
+  on.exit(close(con), add = TRUE)
   fun <- function() {
     sink(con, type = "message")
     on.exit(sink(NULL, type = "message"), add = TRUE)
@@ -121,7 +122,7 @@ test_that("message if there is a sink", {
   msgs <- NULL
   tmp <- NULL
   fun <- function() {
-    sink(tmp <<- tempfile())
+    sink(tmp <<- tempfile("clisinktest3-"))
     on.exit(sink(NULL), add = TRUE)
     cli_text("Hola")
   }
@@ -137,10 +138,11 @@ test_that("message if there is a sink", {
 
   # if there is a message sink, interactive
   msgs <- NULL
-  tmp <- tempfile()
-  con <- file(tmp, open = "w+")
+  tmp <- tempfile("clisinktest4-")
+  con2 <- file(tmp, open = "w+")
+  on.exit(close(con2), add = TRUE)
   fun <- function() {
-    sink(con, type = "message")
+    sink(con2, type = "message")
     on.exit(sink(NULL, type = "message"), add = TRUE)
     cat("this\n", file = stderr())
     cli_text("Hola")

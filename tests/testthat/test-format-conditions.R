@@ -60,41 +60,27 @@ test_that_cli("format_message", {
 })
 
 test_that_cli(configs = "ansi", "color in RStudio", {
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "rstudio_detect",
-    list(type = "rstudio_console", num_colors = 256)
-  )
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "get_rstudio_theme",
-    list(foreground = "rgb(0, 0, 0)")
+  local_mocked_bindings(
+    rstudio_detect = function() list(type = "rstudio_console", num_colors = 256),
+    get_rstudio_theme = function() list(foreground = "rgb(0, 0, 0)")
   )
   expect_snapshot({
     col <- get_rstudio_fg_color0()
     cat(col("this is the new color"))
   })
 
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "get_rstudio_theme",
-    list()
-  )
+  local_mocked_bindings(get_rstudio_theme = function() list())
   expect_null(get_rstudio_fg_color0())
 
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "rstudio_detect",
-    list(type = "rstudio_console", num_colors = 1)
-    )
+  local_mocked_bindings(
+    rstudio_detect = function() list(type = "rstudio_console", num_colors = 1)
+  )
   expect_null(get_rstudio_fg_color0())
 })
 
 test_that_cli(configs = "ansi", "update_rstudio_color", {
-  mockery::stub(
-    update_rstudio_color,
-    "get_rstudio_fg_color",
-    function() make_ansi_style("#008800")
+  local_mocked_bindings(
+    get_rstudio_fg_color = function() make_ansi_style("#008800")
   )
   expect_snapshot(cat(update_rstudio_color("color me interested")))
 })

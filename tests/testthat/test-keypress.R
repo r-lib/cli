@@ -1,5 +1,6 @@
 
 test_that("control characaters", {
+  skip_on_cran()
   p <- r_pty()
 
   expect_snapshot(
@@ -14,6 +15,7 @@ test_that("control characaters", {
 })
 
 test_that("write ahead", {
+  skip_on_cran()
   p <- r_pty()
   expect_snapshot({
     p$write_input("{ Sys.sleep(0.5); cli::keypress() }\nX")
@@ -23,6 +25,7 @@ test_that("write ahead", {
 })
 
 test_that("arrows, etc", {
+  skip_on_cran()
   p <- r_pty()
   keys <- paste0("\033", c(
     "[A", "[C", "[D", "[F", "[H", "-",
@@ -47,6 +50,7 @@ test_that("arrows, etc", {
 })
 
 test_that("nonblocking", {
+  skip_on_cran()
   p <- r_pty()
   expect_snapshot({
     p$write_input("cli::keypress(block = FALSE)\n")

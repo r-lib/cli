@@ -544,7 +544,7 @@ NULL
 #' convert relative paths, and paths starting with `~` to aboslute path.
 #'
 #' ```{asciicast links-file-1}
-#' cli_text("... edit your {.file ~/.Rprofile} file.}")
+#' cli_text("... edit your {.file ~/.Rprofile} file.")
 #' ```
 #'
 #' ## Link text

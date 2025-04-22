@@ -9,17 +9,96 @@ editor_options:
     wrap: sentence
 ---
 
-These are environment variables and options that uses may set, to modify
+These are environment variables and options that users may set, to modify
 the behavior of cli.
 
-## User facing environment variables
+## Hyperlinks
+
+cli uses ANSI escape sequences to create hyperlinks.
+Specifically, cli creates [OSC 8 hyperlinks](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda) that have this syntax:
+
+```
+OSC 8 ; {OPTIONAL PARAMS } ; {URI} ST {LINK TEXT} OSC 8 ; ; ST
+```
+
+Under the hood, [style_hyperlink()] is the helper that forms these links, but it is more common to request them indirectly via inline markup (documented in `help("links")`).
 
 ### `R_CLI_HYPERLINK_MODE`
 
 Set to `posix` to force generating POSIX compatible ANSI hyperlinks.
+This is about the specific operating system command (OSC) and string terminator (ST) used in hyperlinks.
+
 If not set, then RStudio compatible links are generated. This is a
 temporary crutch until RStudio handles POSIX hyperlinks correctly, and
 after that it will be removed.
+
+### `cli.hyperlink` option and `R_CLI_HYPERLINKS` env var
+
+Set this option or env var to `true`, `TRUE` or `True` to tell cli that the terminal supports ANSI hyperlinks.
+Leave this configuration unset (or set to anything else) when there is no hyperlink support.
+Specifically, this configuration indicates the support for URL and file hyperlinks, requested via markup like `{.href url}` or `{.file path/file}`.
+(Below we describe the configuration that indicates support for even more specialized types of hyperlinks.)
+
+The option `cli.hyperlink` takes precedence over the `R_CLI_HYPERLINKS` env var.
+
+### `cli.hyperlink_*` options and `R_CLI_HYPERLINK_*` env vars
+
+cli supports a few special types of hyperlink that go beyond pointing to, e.g., a webpage or a file.
+These specialized hyperlinks cause R-specific actions to happen, such as executing a bit of R code or opening specific documentation.
+
+Set the relevant option or env var to `true`, `TRUE`, or `True` to tell cli that the terminal is capable of implementing these specialized behaviours.
+Leave this configuration unset (or set to anything else) when there is no support for a specific type of hyperlink.
+
+| Action            | Example inline markup                                                                 | Option                   | Env var                    |
+|-------------------|---------------------------------------------------------------------------------------|--------------------------|----------------------------|
+|        Run R code | `{.run testthat::snapshot_review()}`                                                  | `cli.hyperlink_run`      | `R_CLI_HYPERLINK_RUN`      |
+| Open a help topic | `{.fun stats::lm}` `{.topic tibble::tibble_options}` `{.help [{.fun lm}](stats::lm)}` | `cli.hyperlink_help`     | `R_CLI_HYPERLINK_HELP`     |
+| Open a vignette   | `{.vignette tibble::types}`                                                           | `cli.hyperlink_vignette` | `R_CLI_HYPERLINK_VIGNETTE` |
+
+In all cases, the option takes priority over the corresponding env var.
+
+### `cli.hyperlink_*_url_format` options and `R_CLI_HYPERLINK_*_URL_FORMAT` env vars
+
+Recall the overall structure of cli's hyperlinks:
+
+```
+OSC 8 ; {OPTIONAL PARAMS } ; {URI} ST {LINK TEXT} OSC 8 ; ; ST
+```
+
+The `URI` part has a default format for each type of hyperlink, but it is possible to provide a custom format via an option or an env var.
+If defined, the option takes priority over the env var.
+
+| Action            | Default URI format        | Customize via option                | Customize via env var                 |
+|-------------------|---------------------------|-------------------------------------|---------------------------------------|
+|       Open a file | (see below)               | `cli.hyperlink_file_url_format`     | `R_CLI_HYPERLINK_FILE_URL_FORMAT`     |
+|        Run R code | `x-r-run:{code}`          | `cli.hyperlink_run_url_format`      | `R_CLI_HYPERLINK_RUN_URL_FORMAT`      |
+| Open a help topic | `x-r-help:{topic}`        | `cli.hyperlink_help_url_format`     | `R_CLI_HYPERLINK_HELP_URL_FORMAT`     |
+| Open a vignette   | `x-r-vignette:{vignette}` | `cli.hyperlink_vignette_url_format` | `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT` |
+
+A format must be a glue-like template with the relevant placeholder in curly braces (`code`, `topic` or `vignette`).
+
+Here's an example of a custom URI format for runnable code, which is useful in an integrated Positron terminal:
+
+```
+positron://positron.positron-r/cli?command=x-r-run:{code}
+```
+
+(For backwards compatibility with older versions of RStudio, in some contexts, a legacy format is used, e.g. `ide:run:{code}`.)
+
+The default handling for file hyperlinks is geared towards the expectations of RStudio and can't really be expressed as a URI format, but it's approximately `file://{path}`, plus possibly passing `line` and `col` (yes, it really is `col`, not `column`) in the `OPTIONAL PARAMS` part of the OSC 8 hyperlink.
+
+A custom format can be provided for file hyperlinks and the relevant placeholders are `path`, `line`, and `column`.
+Examples of custom file hyperlink formats:
+
+```
+positron://file{path}:{line}:{column}
+vscode://file{path}:{line}:{column}
+txmt://open?url=file://{path}&line={line}&column={column}
+```
+
+It's OK if the format includes only `path`.
+
+## User facing environment variables
 
 ### `NO_COLOR`
 
@@ -42,13 +121,6 @@ See [is_dynamic_tty()].
 
 Set to a positive integer to assume a given number of colors.
 See [num_ansi_colors()].
-
-### `R_CLI_HYPERLINKS`
-
-Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
-ANSI hyperlinks.
-Set to anything else to assume no hyperlink support.
-See [style_hyperlink()].
 
 ## User facing options
 
@@ -106,13 +178,6 @@ See [is_dynamic_tty()].
 
 Whether the cli status bar should try to hide the cursor on terminals.
 Set the `FALSE` if the hidden cursor causes issues.
-
-### `cli.hyperlink`
-
-Set to `true`, `TRUE` or `True` to tell cli that the terminal supports
-ANSI hyperlinks.
-Set to anything else to assume no hyperlink support.
-See [style_hyperlink()].
 
 ### `cli.ignore_unknown_rstudio_theme`
 

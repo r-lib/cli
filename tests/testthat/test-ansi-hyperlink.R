@@ -232,6 +232,7 @@ test_that("unknown hyperlink type", {
 
 test_that("iterm file links", {
   withr::local_envvar(R_CLI_HYPERLINK_STYLE = "iterm")
+  withr::local_envvar(R_CLI_HYPERLINK_FILE_URL_FORMAT = NA_character_)
   withr::local_options(cli.hyperlink = TRUE)
   expect_snapshot({
     cli::cli_text("{.file /path/to/file:10}")
@@ -240,6 +241,7 @@ test_that("iterm file links", {
 })
 
 test_that("rstudio links", {
+  local_clean_cli_context()
   withr::local_envvar(
     RSTUDIO = "1",
     RSTUDIO_SESSION_PID = Sys.getpid(),
@@ -286,38 +288,43 @@ test_that("ansi_has_hyperlink_support", {
   )
 
   # if no ansi support, then no
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
+  local_mocked_bindings(num_ansi_colors = function() 256L)
   expect_false(ansi_has_hyperlink_support())
 
   # are we in rstudio with support?
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
-  mockery::stub(ansi_has_hyperlink_support, "rstudio_detect",
-                list(type = "rstudio_console", hyperlink = TRUE))
+  local_mocked_bindings(
+    num_ansi_colors = function() 257L,
+    rstudio_detect = function() list(type = "rstudio_console", hyperlink = TRUE)
+  )
   expect_true(ansi_has_hyperlink_support())
 })
 
 test_that("ansi_has_hyperlink_support 2", {
   local_clean_cli_context()
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
-
-  mockery::stub(ansi_has_hyperlink_support, "isatty", FALSE)
+  local_mocked_bindings(
+    num_ansi_colors = function() 256L,
+    isatty = function(...) FALSE
+  )
   expect_false(ansi_has_hyperlink_support())
 })
 
 test_that("ansi_has_hyperlink_support 3", {
   local_clean_cli_context()
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
-
-  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
-  mockery::stub(ansi_has_hyperlink_support, "is_windows", TRUE)
+  local_mocked_bindings(
+    num_ansi_colors = function() 256L,
+    isatty = function(...) TRUE,
+    is_windows = function() TRUE
+  )
   withr::local_envvar(WT_SESSION = "4c464723-f51f-4612-83f7-31e1c75abd83")
   expect_true(ansi_has_hyperlink_support())
 })
 
 test_that("ansi_has_hyperlink_support 4", {
   local_clean_cli_context()
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
-  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
+  local_mocked_bindings(
+    num_ansi_colors = function() 256L,
+    isatty = function(...) TRUE
+  )
 
   withr::local_envvar("CI" = "true")
   expect_false(ansi_has_hyperlink_support())
@@ -328,8 +335,10 @@ test_that("ansi_has_hyperlink_support 4", {
 
 test_that("ansi_has_hyperlink_support 5", {
   local_clean_cli_context()
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
-  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
+  local_mocked_bindings(
+    num_ansi_colors = function() 256L,
+    isatty = function(...) TRUE
+  )
 
   withr::local_envvar(
     TERM_PROGRAM = "iTerm.app",
@@ -340,8 +349,10 @@ test_that("ansi_has_hyperlink_support 5", {
 
 test_that("ansi_has_hyperlink_support 5", {
   local_clean_cli_context()
-  mockery::stub(ansi_has_hyperlink_support, "num_ansi_colors", 256L)
-  mockery::stub(ansi_has_hyperlink_support, "isatty", TRUE)
+  local_mocked_bindings(
+    num_ansi_colors = function() 256L,
+    isatty = function(...) TRUE
+  )
 
   withr::local_envvar(VTE_VERSION = "0.51.1")
   expect_true(ansi_has_hyperlink_support())
@@ -360,4 +371,237 @@ test_that("ansi_hyperlink_types", {
     R_CLI_HYPERLINK_RUN = "true"
   )
   expect_true(ansi_hyperlink_types()[["run"]])
+})
+
+test_that("get_config_chr() consults option, env var, then its default", {
+  local_clean_cli_context()
+
+  key <- "hyperlink_TYPE_url_format"
+
+  expect_null(get_config_chr(key))
+
+  withr::local_envvar(R_CLI_HYPERLINK_TYPE_URL_FORMAT = "envvar")
+  expect_equal(get_config_chr(key), "envvar")
+
+  withr::local_options(cli.hyperlink_type_url_format = "option")
+  expect_equal(get_config_chr(key), "option")
+})
+
+test_that("get_config_chr() errors if option is not NULL or string", {
+  withr::local_options(cli.something = FALSE)
+
+  expect_error(get_config_chr("something"), "is_string")
+})
+
+test_that("get_hyperlink_format() delivers custom format", {
+  local_clean_cli_context()
+
+  withr::local_options(
+    cli.hyperlink_run = TRUE,
+    cli.hyperlink_help = TRUE,
+    cli.hyperlink_vignette = TRUE
+  )
+
+  # env var is consulted after option, so start with env var
+  withr::local_envvar(
+    R_CLI_HYPERLINK_RUN_URL_FORMAT = "envvar{code}",
+    R_CLI_HYPERLINK_HELP_URL_FORMAT = "envvar{topic}",
+    R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT = "envvar{vignette}"
+  )
+
+  expect_equal(get_hyperlink_format("run"), "envvar{code}")
+  expect_equal(get_hyperlink_format("help"), "envvar{topic}")
+  expect_equal(get_hyperlink_format("vignette"), "envvar{vignette}")
+
+  withr::local_options(
+    cli.hyperlink_run_url_format = "option{code}",
+    cli.hyperlink_help_url_format = "option{topic}",
+    cli.hyperlink_vignette_url_format = "option{vignette}"
+  )
+
+  expect_equal(get_hyperlink_format("run"), "option{code}")
+  expect_equal(get_hyperlink_format("help"), "option{topic}")
+  expect_equal(get_hyperlink_format("vignette"), "option{vignette}")
+})
+
+test_that("parse_file_link_params(), typical input", {
+  expect_equal(
+    parse_file_link_params("some/path.ext"),
+    list(
+      path = "some/path.ext",
+      line = NULL,
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext:14"),
+    list(
+      path = "some/path.ext",
+      line = "14",
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext:14:23"),
+    list(
+      path = "some/path.ext",
+      line = "14",
+      column = "23"
+    )
+  )
+})
+
+test_that("parse_file_link_params(), weird trailing colons", {
+  expect_equal(
+    parse_file_link_params("some/path.ext:"),
+    list(
+      path = "some/path.ext",
+      line = NULL,
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext::"),
+    list(
+      path = "some/path.ext",
+      line = NULL,
+      column = NULL
+    )
+  )
+  expect_equal(
+    parse_file_link_params("some/path.ext:14:"),
+    list(
+      path = "some/path.ext",
+      line = "14",
+      column = NULL
+    )
+  )
+})
+
+test_that("interpolate_parts(), more or less data in `params`", {
+  fmt <- "whatever/{path}#@${line}^&*{column}"
+  params <- list(path = "some/path.ext", line = "14", column = "23")
+
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext#@$14^&*23"
+  )
+
+  params <- list(path = "some/path.ext", line = "14", column = NULL)
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext#@$14"
+  )
+
+  params <- list(path = "some/path.ext", line = NULL, column = NULL)
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext"
+  )
+})
+
+test_that("interpolate_parts(), format only has `path`", {
+  fmt <- "whatever/{path}"
+  params <- list(path = "some/path.ext", line = "14", column = "23")
+  expect_equal(
+    interpolate_parts(fmt, params),
+    "whatever/some/path.ext"
+  )
+})
+
+test_that("construct_file_link() works with custom format and an absolute path", {
+  withr::local_options(
+    "cli.hyperlink_file_url_format" = "positron://file{path}:{line}:{column}"
+  )
+
+  expect_equal(
+    construct_file_link(list(path = "/absolute/path")),
+    list(url = "positron://file/absolute/path")
+  )
+  expect_equal(
+    construct_file_link(list(path = "/absolute/path", line = "12")),
+    list(url = "positron://file/absolute/path:12")
+  )
+  expect_equal(
+    construct_file_link(list(path = "/absolute/path", line = "12", column = "5")),
+    list(url = "positron://file/absolute/path:12:5")
+  )
+
+  local_mocked_bindings(is_windows = function() TRUE)
+  expect_equal(
+    construct_file_link(list(path = "c:/absolute/path")),
+    list(url = "positron://file/c:/absolute/path")
+  )
+})
+
+test_that("construct_file_link() works with custom format and a relative path", {
+  withr::local_options(
+    "cli.hyperlink_file_url_format" = "positron://file{path}:{line}:{column}"
+  )
+
+  # inspired by test helpers `sanitize_wd()` and `sanitize_home()`, but these
+  # don't prefix the pattern-to-replace with `file://`
+  sanitize_dir <- function(x, what = c("wd", "home")) {
+    what <- match.arg(what)
+    pattern <- switch(what, wd = getwd(), home = path.expand("~"))
+    if (is_windows()) {
+      pattern <- paste0("/", pattern)
+    }
+    replacement <- switch(what, wd = "/working/directory", home = "/my/home")
+    sub(pattern, replacement, x$url, fixed = TRUE)
+  }
+
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "relative/path")), what = "wd"),
+    "positron://file/working/directory/relative/path"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "relative/path:12")), what = "wd"),
+    "positron://file/working/directory/relative/path:12"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "relative/path:12:5")), what = "wd"),
+    "positron://file/working/directory/relative/path:12:5"
+  )
+
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "./relative/path")), what = "wd"),
+    "positron://file/working/directory/./relative/path"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "./relative/path:12")), what = "wd"),
+    "positron://file/working/directory/./relative/path:12"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "./relative/path:12:5")), what = "wd"),
+    "positron://file/working/directory/./relative/path:12:5"
+  )
+
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "~/relative/path")), what = "home"),
+    "positron://file/my/home/relative/path"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "~/relative/path:17")), what = "home"),
+    "positron://file/my/home/relative/path:17"
+  )
+  expect_equal(
+    sanitize_dir(construct_file_link(list(path = "~/relative/path:17:22")), what = "home"),
+    "positron://file/my/home/relative/path:17:22"
+  )
+})
+
+test_that("construct_file_link() works with custom format and input starting with 'file://'", {
+  withr::local_options(
+    "cli.hyperlink_file_url_format" = "positron://file{path}:{line}:{column}"
+  )
+
+  expect_equal(
+    construct_file_link(list(path = "file:///absolute/path")),
+    list(url = "positron://file/absolute/path")
+  )
+  expect_equal(
+    construct_file_link(list(path = "file:///absolute/path", line = "12", column = "5")),
+    list(url = "positron://file/absolute/path:12:5")
+  )
 })

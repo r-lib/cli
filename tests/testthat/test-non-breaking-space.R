@@ -1,5 +1,6 @@
 
 test_that("does not break", {
+  testthat::local_reproducible_output(unicode = TRUE)
   expect_snapshot(local({
     withr::local_options(cli.width = 40)
     str30 <- "123456789 123456789 1234567890"

@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Gábor Csárdi \email{csardi.gabor@gmail.com}
+\strong{Maintainer}: Gábor Csárdi \email{gabor@posit.co}
 
 Other contributors:
 \itemize{

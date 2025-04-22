@@ -1,5 +1,6 @@
 
 test_that("events are properly generated", {
+  skip_on_cran()
   ## This needs callr >= 3.0.0.90001, which is not yet on CRAN
   if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
 
@@ -39,6 +40,7 @@ test_that("events are properly generated", {
 })
 
 test_that("subprocess with default handler", {
+  skip_on_cran()
   ## This needs callr >= 3.0.0.90001, which is not yet on CRAN
   if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
 
@@ -74,6 +76,7 @@ test_that("subprocess with default handler", {
 })
 
 test_that("output in child process", {
+  skip_on_cran()
   ## This needs callr >= 3.0.0.90001, which is not yet on CRAN
   if (packageVersion("callr") < "3.0.0.9001") skip("Need newer callr")
 
@@ -133,7 +136,7 @@ test_that("output in child process", {
 })
 
 test_that("substitution in child process", {
-
+  skip_on_cran()
   do <- function() {
     options(cli.message_class = "callr_message")
     cli::cli_text("This is process {Sys.getpid()}.")
