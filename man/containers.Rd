@@ -67,7 +67,7 @@ fun()
 #> &lt;cli document&gt;                                                                  
 #> &lt;body id="body"&gt;                                                                
 #> &lt;div id="mydiv"&gt; +theme                                                         
-#> &lt;par id="cli-82040-226" class="myclass"&gt;                                        
+#> &lt;par id="cli-40403-226" class="myclass"&gt;                                        
 </pre></div>
 }}
 

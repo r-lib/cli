@@ -58,18 +58,16 @@ test_that("lpad", {
 
 test_that("is_utf8_output", {
 
-  mockery::stub(
-    is_utf8_output, "l10n_info",
-    list(MBCS = TRUE, `UTF-8` = TRUE, `Latin-1` = FALSE)
+  local_mocked_bindings(
+    l10n_info = function() list(MBCS = TRUE, `UTF-8` = TRUE, `Latin-1` = FALSE)
   )
   withr::with_options(
     list(cli.unicode = NULL),
     expect_true(is_utf8_output())
   )
 
-  mockery::stub(
-    is_utf8_output, "l10n_info",
-    list(MBCS = FALSE, `UTF-8` = FALSE, `Latin-1` = TRUE)
+  local_mocked_bindings(
+    l10n_info = function() list(MBCS = FALSE, `UTF-8` = FALSE, `Latin-1` = TRUE)
   )
   withr::with_options(
     list(cli.unicode = NULL),
@@ -79,13 +77,12 @@ test_that("is_utf8_output", {
 
 test_that("is_latex_output", {
 
-  mockery::stub(is_latex_output, "loadedNamespaces", "foobar")
+  local_mocked_bindings(loadedNamespaces = function() "foobar")
   expect_false(is_latex_output())
 
-  mockery::stub(is_latex_output, "loadedNamespaces", "knitr")
-  mockery::stub(
-    is_latex_output, "get",
-    function(x, ...) {
+  local_mocked_bindings(
+    loadedNamespaces = function() "knitr",
+    get = function(x, ...) {
       if (x == "is_latex_output") {
         function() TRUE
       } else {
@@ -180,10 +177,8 @@ test_that("na.omit", {
 })
 
 test_that("get_rstudio_theme", {
-  mockery::stub(
-    get_rstudio_theme,
-    "rstudioapi::getThemeInfo",
-    function(...) warning("just a word")
+  local_mocked_bindings(
+    getThemeInfo = function() function(...) warning("just a word"), .package = "rstudioapi"
   )
   expect_silent(get_rstudio_theme())
 })

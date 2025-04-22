@@ -1,21 +1,20 @@
 test_that("win10_build works for different osVersion", {
-    mockery::stub(
-        win10_build, "utils::sessionInfo",
-        list(running = NULL)
-    )
-    expect_identical(win10_build(), 0L)
+  local_mocked_bindings(
+    sessionInfo = function() list(running = NULL), .package = "utils"
+  )
+  expect_identical(win10_build(), 0L)
 
-    mockery::stub(
-        win10_build, "utils::sessionInfo",
-        list(running = "Debian GNU/Linux 11 (bullseye)")
-    )
-    expect_identical(win10_build(), 0L)
+  local_mocked_bindings(
+    sessionInfo = function() list(running = "Debian GNU/Linux 11 (bullseye)"),
+    .package = "utils"
+  )
+  expect_identical(win10_build(), 0L)
 
-    mockery::stub(
-        win10_build, "utils::sessionInfo",
-        list(running = "Windows 10 x64 (build 16299)")
-    )
-    expect_identical(win10_build(), 16299L)
+  local_mocked_bindings(
+    sessionInfo = function() list(running = "Windows 10 x64 (build 16299)"),
+    .package = "utils"
+  )
+  expect_identical(win10_build(), 16299L)
 })
 
 test_that("cli.default_num_colors #1", {
@@ -49,9 +48,11 @@ test_that("cli.default_num_colors #2", {
     cli.default_num_colors = NULL
   )
 
-  mockery::stub(num_ansi_colors, "os_type", "windows")
-  mockery::stub(num_ansi_colors, "commandArgs", "--ess")
-  mockery::stub(num_ansi_colors, "is_emacs_with_color", TRUE)
+  local_mocked_bindings(
+    os_type = function() "windows",
+    commandArgs = function() "--ess",
+    is_emacs_with_color = function() TRUE
+  )
 
   expect_equal(num_ansi_colors(), 8L)
 
@@ -76,8 +77,10 @@ test_that("cli.default_num_colors #4", {
   # Unix emacs with color
   withr::local_envvar(COLORTERM = NA_character_)
 
-  mockery::stub(detect_tty_colors, "os_type", "unix")
-  mockery::stub(detect_tty_colors, "is_emacs_with_color", TRUE)
+  local_mocked_bindings(
+    os_type = function() "unix",
+    is_emacs_with_color = function() TRUE
+  )
 
   withr::local_options(cli.default_num_colors = NULL)
 
@@ -92,14 +95,12 @@ test_that("cli.default_num_colors #5", {
   # rstudio terminal on Windows
   withr::local_envvar(COLORTERM = NA_character_)
 
-  mockery::stub(detect_tty_colors, "os_type", "windows")
-  mockery::stub(detect_tty_colors, "win10_build", 10586)
-  mockery::stub(
-    detect_tty_colors,
-    "rstudio_detect",
-    list(type = "rstudio_terminal")
+  local_mocked_bindings(
+    os_type = function() "windows",
+    win10_build = function() 10586,
+    rstudio_detect = function() list(type = "rstudio_terminal"),
+    system2 = function(...) TRUE
   )
-  mockery::stub(detect_tty_colors, "system2", TRUE)
 
   withr::local_options(cli.default_num_colors = NULL)
   expect_equal(detect_tty_colors(), 8L)
@@ -114,17 +115,15 @@ test_that("cli.default_num_colors #6", {
   withr::local_envvar(COLORTERM = NA_character_)
   withr::local_options(cli.default_num_colors = NULL)
 
-  mockery::stub(detect_tty_colors, "os_type", "windows")
-  mockery::stub(detect_tty_colors, "win10_build", 10586)
-  mockery::stub(
-    detect_tty_colors,
-    "rstudio_detect",
-    list(type = "not_rstudio")
+  local_mocked_bindings(
+    os_type = function() "windows",
+    win10_build = function() 10586,
+    rstudio_detect = function() list(type = "not_rstudio"),
+    system2 = function(...) TRUE
   )
-  mockery::stub(detect_tty_colors, "system2", TRUE)
   expect_equal(detect_tty_colors(), 256L)
 
-  mockery::stub(detect_tty_colors, "win10_build", 14931)
+  local_mocked_bindings(win10_build = function() 14931)
   expect_equal(detect_tty_colors(), truecolor)
 
   withr::local_options(cli.default_num_colors = 123L)
@@ -139,8 +138,10 @@ test_that("cli.default_num_colors #7", {
     ConEmuANSI = "ON"
   )
   withr::local_options(cli.default_num_colors = NULL)
-  mockery::stub(detect_tty_colors, "os_type", "windows")
-  mockery::stub(detect_tty_colors, "win10_build", 1)
+  local_mocked_bindings(
+    os_type = function() "windows",
+    win10_build = function() 1
+  )
 
   expect_equal(detect_tty_colors(), 8L)
   withr::local_options(cli.default_num_colors = 123L)
@@ -155,9 +156,11 @@ test_that("cli.default_num_colors #8", {
     TERM = "xterm"
   )
 
-  mockery::stub(detect_tty_colors, "os_type", "unix")
-  mockery::stub(detect_tty_colors, "is_emacs_with_color", FALSE)
-  mockery::stub(detect_tty_colors, "system", "8")
+  local_mocked_bindings(
+    os_type = function() "unix",
+    is_emacs_with_color = function() FALSE,
+    system = function(...) "8"
+  )
 
   withr::local_options(cli.default_num_colors = NULL)
   expect_equal(detect_tty_colors(), 256L)
@@ -172,8 +175,10 @@ test_that("ESS_BACKGROUND_MODE", {
     ESS_BACKGROUND_MODE = NA_character_
   )
 
-  mockery::stub(detect_dark_theme, "is_iterm", FALSE)
-  mockery::stub(detect_dark_theme, "is_emacs", TRUE)
+  local_mocked_bindings(
+    is_iterm = function() FALSE,
+    is_emacs = function() TRUE
+  )
 
   expect_false(detect_dark_theme("auto"))
 

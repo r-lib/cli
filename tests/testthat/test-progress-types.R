@@ -9,7 +9,8 @@ test_that("iterator", {
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_iterator = NULL,
-    cli.progress_format_iterator_nototal= NULL
+    cli.progress_format_iterator_nototal= NULL,
+    cli.width = Inf
   )
 
   fun <- function() {
@@ -35,7 +36,8 @@ test_that("tasks", {
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_tasks = NULL,
-    cli.progress_format_tasks_nototal= NULL
+    cli.progress_format_tasks_nototal= NULL,
+    cli.width = Inf
   )
 
   fun <- function() {

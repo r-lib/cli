@@ -32,7 +32,7 @@ test_that("cli_progress_select_handlers #2", {
     baz = list(),
     forced = list()
   )
-  mockery::stub(cli_progress_select_handlers, "builtin_handlers", fake)
+  local_mocked_bindings(builtin_handlers = function() fake)
   expect_equal(cli_progress_select_handlers(), fake["bar"])
 })
 
@@ -49,7 +49,7 @@ test_that("cli_progress_select_handlers #3", {
     baz = list(),
     forced = list()
   )
-  mockery::stub(cli_progress_select_handlers, "builtin_handlers", fake)
+  local_mocked_bindings(builtin_handlers = function() fake)
   expect_equal(cli_progress_select_handlers(), fake[c("bar", "forced")])
 })
 

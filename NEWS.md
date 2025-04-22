@@ -1,6 +1,17 @@
 # cli (development version)
 
-* `cli_progress_bar()` now accepts `total` = Inf or -Inf which mimics the behavior    of when `total` is NA.
+* `code_highlight()` supports long strings and symbols (#727 @moodymudskipper)
+
+# cli 3.6.4
+
+* Pluralization now handles edge cases (`NA`, `NaN`, `Inf` and `-Inf`)
+  better (@rundel, #716).
+
+* The URI generated for `.file`, `.run`, `.help` and `.vignette` hyperlinks
+  can now be configured via options and env vars (@jennybc, #739, #744).
+
+* `cli_progress_bar()` now accepts `total` = Inf or -Inf which mimics the
+  behavior of when `total` is NA (@LouisMPenrod, #630).
 
 * `num_ansi_colors()` now does not warn in Emacs if the `INSIDE_EMACS`
   environment variable is not a proper version number (@rundel, #689).
@@ -12,7 +23,8 @@
 * `ansi_collapse()` is now correct for length-1 vectors with style "head"
   if width is specified (@rundel, #590).
 
-* `code_highlight()` supports long strings and symbols (#727 @moodymudskipper)
+* New `hash_xxhash()` etc. functions to calculate the xxHash of strings,
+  raw vectors, objects, files.
 
 # cli 3.6.3
 

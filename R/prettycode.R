@@ -301,7 +301,7 @@ code_theme_make <- function(theme) {
   if (is.list(theme)) return(theme)
   if (is_string(theme)) {
     if (theme %in% names(rstudio_themes)) return(rstudio_themes[[theme]])
-    lcs <- gsub(" ", "_", tolower(names(rstudio_themes)))
+    lcs <- gsub(" ", "_", tolower(names(rstudio_themes)), fixed = TRUE)
     if (theme %in% lcs) return(rstudio_themes[[ match(theme, lcs)[1] ]])
     warning("Unknown cli code theme: `", theme, "`.")
     return(NULL)
@@ -452,13 +452,13 @@ find_function_symbol <- function(name, envir = .GlobalEnv) {
   while (!identical(envir, empty)) {
     if (exists(name, envir = envir, inherits = FALSE, mode = "function")) {
       env_name <- environmentName(envir)
-      if (grepl("package:", env_name)) {
+      if (grepl("package:", env_name, fixed = TRUE)) {
         env_name <- sub("^package:", "", env_name)
       }
-      if (grepl("imports:", env_name)) {
+      if (grepl("imports:", env_name, fixed = TRUE)) {
         env_name <- environmentName(environment(get(name, envir)))
       }
-      if (grepl("package:", env_name)) {
+      if (grepl("package:", env_name, fixed = TRUE)) {
         env_name <- sub("^package:", "", env_name)
       }
       if (env_name %in% c("", "R_GlobalEnv")) {

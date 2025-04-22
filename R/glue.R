@@ -159,7 +159,7 @@ collapse_head <- function(x, sep, sep2, last, trunc, width, ellipsis) {
   # special cases that do not need trimming
   if (lnx == 0L) {
     return("")
-  } else if (any(is.na(x))) {
+  } else if (anyNA(x)) {
     return(NA_character_)
   }
 
