@@ -61,7 +61,7 @@ cli_abort(c(
 #> <span style="font-weight: bold;color: #B58900;">Error</span><span style="font-weight: bold;">:</span>                                                                          
 #> <span style="color: #B58900;">!</span> `n` must be a numeric vector                                                  
 #> <span style="color: #DC322F;">✖</span> You've supplied a <span style="color: #268BD2;">&lt;character&gt;</span> vector.                                         
-#> <span style="color: #002B36;">Run `rlang::last_error()` to see where the error occurred.</span>                      
+#> <span style="color: #525252;">Run `</span><span style="color: #525252;"><a href="x-r-run:rlang::last_trace()">rlang::last_trace()</a></span><span style="color: #525252;">` to see where the error occurred.</span>                      
 </pre></div>
 }}
 
@@ -79,7 +79,7 @@ cli_abort(c(
 #> <span style="color: #B58900;">!</span> Must index an existing element:                                               
 #> <span style="color: #2AA198;">ℹ</span> There are 26 elements.                                                        
 #> <span style="color: #DC322F;">✖</span> You've tried to subset element 100.                                           
-#> <span style="color: #002B36;">Run `rlang::last_error()` to see where the error occurred.</span>                      
+#> <span style="color: #525252;">Run `</span><span style="color: #525252;"><a href="x-r-run:rlang::last_trace()">rlang::last_trace()</a></span><span style="color: #525252;">` to see where the error occurred.</span>                      
 </pre></div>
 }}
 }

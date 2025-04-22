@@ -9,17 +9,96 @@ cli environment variables and options
 \section{User facing configuration}{
 
 
-These are environment variables and options that uses may set, to modify
+These are environment variables and options that users may set, to modify
 the behavior of cli.
-\subsection{User facing environment variables}{
+\subsection{Hyperlinks}{
+
+cli uses ANSI escape sequences to create hyperlinks.
+Specifically, cli creates \href{https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda}{OSC 8 hyperlinks} that have this syntax:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{OSC 8 ; \{OPTIONAL PARAMS \} ; \{URI\} ST \{LINK TEXT\} OSC 8 ; ; ST
+}\if{html}{\out{</div>}}
+
+Under the hood, \code{\link[=style_hyperlink]{style_hyperlink()}} is the helper that forms these links, but it is more common to request them indirectly via inline markup (documented in \code{help("links")}).
 \subsection{\code{R_CLI_HYPERLINK_MODE}}{
 
 Set to \code{posix} to force generating POSIX compatible ANSI hyperlinks.
+This is about the specific operating system command (OSC) and string terminator (ST) used in hyperlinks.
+
 If not set, then RStudio compatible links are generated. This is a
 temporary crutch until RStudio handles POSIX hyperlinks correctly, and
 after that it will be removed.
 }
 
+\subsection{\code{cli.hyperlink} option and \code{R_CLI_HYPERLINKS} env var}{
+
+Set this option or env var to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal supports ANSI hyperlinks.
+Leave this configuration unset (or set to anything else) when there is no hyperlink support.
+Specifically, this configuration indicates the support for URL and file hyperlinks, requested via markup like \verb{\{.href url\}} or \verb{\{.file path/file\}}.
+(Below we describe the configuration that indicates support for even more specialized types of hyperlinks.)
+
+The option \code{cli.hyperlink} takes precedence over the \code{R_CLI_HYPERLINKS} env var.
+}
+
+\subsection{\verb{cli.hyperlink_*} options and \verb{R_CLI_HYPERLINK_*} env vars}{
+
+cli supports a few special types of hyperlink that go beyond pointing to, e.g., a webpage or a file.
+These specialized hyperlinks cause R-specific actions to happen, such as executing a bit of R code or opening specific documentation.
+
+Set the relevant option or env var to \code{true}, \code{TRUE}, or \code{True} to tell cli that the terminal is capable of implementing these specialized behaviours.
+Leave this configuration unset (or set to anything else) when there is no support for a specific type of hyperlink.\tabular{llll}{
+   Action \tab Example inline markup \tab Option \tab Env var \cr
+   Run R code \tab \verb{\{.run testthat::snapshot_review()\}} \tab \code{cli.hyperlink_run} \tab \code{R_CLI_HYPERLINK_RUN} \cr
+   Open a help topic \tab \verb{\{.fun stats::lm\}} \verb{\{.topic tibble::tibble_options\}} \verb{\{.help [\{.fun lm\}](stats::lm)\}} \tab \code{cli.hyperlink_help} \tab \code{R_CLI_HYPERLINK_HELP} \cr
+   Open a vignette \tab \verb{\{.vignette tibble::types\}} \tab \code{cli.hyperlink_vignette} \tab \code{R_CLI_HYPERLINK_VIGNETTE} \cr
+}
+
+
+In all cases, the option takes priority over the corresponding env var.
+}
+
+\subsection{\verb{cli.hyperlink_*_url_format} options and \verb{R_CLI_HYPERLINK_*_URL_FORMAT} env vars}{
+
+Recall the overall structure of cli's hyperlinks:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{OSC 8 ; \{OPTIONAL PARAMS \} ; \{URI\} ST \{LINK TEXT\} OSC 8 ; ; ST
+}\if{html}{\out{</div>}}
+
+The \code{URI} part has a default format for each type of hyperlink, but it is possible to provide a custom format via an option or an env var.
+If defined, the option takes priority over the env var.\tabular{llll}{
+   Action \tab Default URI format \tab Customize via option \tab Customize via env var \cr
+   Open a file \tab (see below) \tab \code{cli.hyperlink_file_url_format} \tab \code{R_CLI_HYPERLINK_FILE_URL_FORMAT} \cr
+   Run R code \tab \code{x-r-run:{code}} \tab \code{cli.hyperlink_run_url_format} \tab \code{R_CLI_HYPERLINK_RUN_URL_FORMAT} \cr
+   Open a help topic \tab \code{x-r-help:{topic}} \tab \code{cli.hyperlink_help_url_format} \tab \code{R_CLI_HYPERLINK_HELP_URL_FORMAT} \cr
+   Open a vignette \tab \code{x-r-vignette:{vignette}} \tab \code{cli.hyperlink_vignette_url_format} \tab \code{R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT} \cr
+}
+
+
+A format must be a glue-like template with the relevant placeholder in curly braces (\code{code}, \code{topic} or \code{vignette}).
+
+Here's an example of a custom URI format for runnable code, which is useful in an integrated Positron terminal:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{positron://positron.positron-r/cli?command=x-r-run:\{code\}
+}\if{html}{\out{</div>}}
+
+(For backwards compatibility with older versions of RStudio, in some contexts, a legacy format is used, e.g. \code{ide:run:{code}}.)
+
+The default handling for file hyperlinks is geared towards the expectations of RStudio and can't really be expressed as a URI format, but it's approximately \verb{file://\{path\}}, plus possibly passing \code{line} and \code{col} (yes, it really is \code{col}, not \code{column}) in the \verb{OPTIONAL PARAMS} part of the OSC 8 hyperlink.
+
+A custom format can be provided for file hyperlinks and the relevant placeholders are \code{path}, \code{line}, and \code{column}.
+Examples of custom file hyperlink formats:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{positron://file\{path\}:\{line\}:\{column\}
+vscode://file\{path\}:\{line\}:\{column\}
+txmt://open?url=file://\{path\}&line=\{line\}&column=\{column\}
+}\if{html}{\out{</div>}}
+
+It's OK if the format includes only \code{path}.
+}
+
+}
+
+\subsection{User facing environment variables}{
 \subsection{\code{NO_COLOR}}{
 
 Set to a nonempty value to turn off ANSI colors.
@@ -44,14 +123,6 @@ See \code{\link[=is_dynamic_tty]{is_dynamic_tty()}}.
 
 Set to a positive integer to assume a given number of colors.
 See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
-}
-
-\subsection{\code{R_CLI_HYPERLINKS}}{
-
-Set to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal supports
-ANSI hyperlinks.
-Set to anything else to assume no hyperlink support.
-See \code{\link[=style_hyperlink]{style_hyperlink()}}.
 }
 
 }
@@ -121,14 +192,6 @@ See \code{\link[=is_dynamic_tty]{is_dynamic_tty()}}.
 
 Whether the cli status bar should try to hide the cursor on terminals.
 Set the \code{FALSE} if the hidden cursor causes issues.
-}
-
-\subsection{\code{cli.hyperlink}}{
-
-Set to \code{true}, \code{TRUE} or \code{True} to tell cli that the terminal supports
-ANSI hyperlinks.
-Set to anything else to assume no hyperlink support.
-See \code{\link[=style_hyperlink]{style_hyperlink()}}.
 }
 
 \subsection{\code{cli.ignore_unknown_rstudio_theme}}{
@@ -330,7 +393,7 @@ This is used on some platforms, if \code{cli.width} is not set.
 \section{Internal configuration}{
 
 
-These are environment variables and options are for cli developers, users
+These environment variables and options are for cli developers. Users
 should not rely on them as they may change between cli releases.
 \subsection{Internal environment variables}{
 \subsection{\code{ASCIICAST}}{
