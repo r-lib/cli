@@ -436,3 +436,25 @@
     Output
       [1] "\nfoo\n\nbar\n"
 
+# .bytes
+
+    Code
+      format_inline("--- {.bytes 123123123} ---")
+    Output
+      [1] "--- 123.12 MB ---"
+    Code
+      format_inline("--- {.bytes {1:4 * 10000}} ---")
+    Output
+      [1] "--- 10 kB, 20 kB, 30 kB, and 40 kB ---"
+
+# .num
+
+    Code
+      format_inline("--- {.num 123123123} ---")
+    Output
+      [1] "--- 123.12 M ---"
+    Code
+      format_inline("--- {.num {1:4 * 10000}} ---")
+    Output
+      [1] "--- 10 k, 20 k, 30 k, and 40 k ---"
+
