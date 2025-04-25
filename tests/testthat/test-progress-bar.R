@@ -1,4 +1,3 @@
-
 test_that_cli("make_progress_bar", {
   withr::local_options(
     cli.progress_bar_style = NULL,

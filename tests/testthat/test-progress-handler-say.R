@@ -1,4 +1,3 @@
-
 test_that("say_out", {
   px <- asNamespace("processx")$get_tool("px")
   tmp <- tempfile("cli-test-")

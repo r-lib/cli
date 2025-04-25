@@ -1,4 +1,3 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 
@@ -26,7 +25,8 @@ test_that("multiple substitutions", {
 test_that("multiple quantities", {
   expect_snapshot({
     for (m in 0:2) for (n in 0:2) cli_text("{m} package{?s} and {n} folder{?s}")
-    for (m in 0:2) for (n in 0:2) print(pluralize("{m} package{?s} and {n} folder{?s}"))
+    for (m in 0:2)
+      for (n in 0:2) print(pluralize("{m} package{?s} and {n} folder{?s}"))
   })
 })
 

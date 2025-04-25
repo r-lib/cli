@@ -1,10 +1,9 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 
 test_that_cli("bullets", {
   expect_snapshot(cli_bullets(c(
-          "noindent",
+    "noindent",
     " " = "space",
     "v" = "success",
     "x" = "danger",
@@ -17,7 +16,7 @@ test_that_cli("bullets", {
 
 test_that_cli("bullets glue", {
   expect_snapshot(cli_bullets(c(
-          "noindent {.key {1:3}}",
+    "noindent {.key {1:3}}",
     " " = "space {.key {1:3}}",
     "v" = "success {.key {1:3}}",
     "x" = "danger {.key {1:3}}",

@@ -1,4 +1,3 @@
-
 #' SHA-256 hash
 #'
 #' Calculate the SHA-256 hash of each element of a character vector.
@@ -305,10 +304,10 @@ hash_emoji1_transform <- function(md5, size) {
   hash <- sum(mdint * 16^(0:12))
 
   base <- nrow(emojis)
-  ehash <- hash %% (base ** size)
+  ehash <- hash %% (base**size)
   digits <- integer()
   while (ehash > 0) {
-    digits <-  c(digits, ehash %% base)
+    digits <- c(digits, ehash %% base)
     ehash <- ehash %/% base
   }
   digits <- c(digits, rep(0, 10))[1:size]
@@ -449,7 +448,7 @@ hash_animal1_transform <- function(md5, n_adj) {
 
   len_ani <- length(gfycat_animals)
   len_adj <- length(gfycat_adjectives)
-  ehash <- hash %% (len_adj ** n_adj * len_ani)
+  ehash <- hash %% (len_adj**n_adj * len_ani)
   digits <- ehash %% len_ani
   ehash <- ehash %/% len_ani
 

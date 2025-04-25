@@ -1,4 +1,3 @@
-
 test_that("events are properly generated", {
   skip_on_cran()
   ## This needs callr >= 3.0.0.90001, which is not yet on CRAN
@@ -27,7 +26,8 @@ test_that("events are properly generated", {
 
   withCallingHandlers(
     rs$run(do),
-    cli_message = handler)
+    cli_message = handler
+  )
 
   expect_equal(length(msgs), 4)
   lapply(msgs, expect_s3_class, "cli_message")
@@ -55,13 +55,15 @@ test_that("subprocess with default handler", {
   on.exit(rs$kill(), add = TRUE)
 
   msgs <- list()
-  withr::with_options(list(
-    cli.default_handler = function(msg)  {
-      msgs <<- c(msgs, list(msg))
-      if (!is.null(findRestart("cli_message_handled"))) {
-        invokeRestart("cli_message_handled")
+  withr::with_options(
+    list(
+      cli.default_handler = function(msg) {
+        msgs <<- c(msgs, list(msg))
+        if (!is.null(findRestart("cli_message_handled"))) {
+          invokeRestart("cli_message_handled")
+        }
       }
-    }),
+    ),
     rs$run(do)
   )
 
@@ -88,20 +90,24 @@ test_that("output in child process", {
 
   do <- function() {
     options(cli.num_colors = 256)
-    withCallingHandlers({
+    withCallingHandlers(
+      {
         cli::start_app(theme = cli::simple_theme())
         cli::cli_h1("Title")
         cli::cli_text("This is generated in the {.emph subprocess}.")
         "foobar"
       },
       cli_message = function(msg) {
-        withCallingHandlers({
-          cli:::cli_server_default(msg)
-          invokeRestart("cli_message_handled") },
+        withCallingHandlers(
+          {
+            cli:::cli_server_default(msg)
+            invokeRestart("cli_message_handled")
+          },
           message = function(mmsg) {
             class(mmsg) <- c("callr_message", "message", "condition")
             signalCondition(mmsg)
-        })
+          }
+        )
       }
     )
   }

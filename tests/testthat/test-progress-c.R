@@ -1,4 +1,3 @@
-
 test_that("c api #1", {
   skip_on_cran()
   withr::local_options(cli.ansi = TRUE, cli.dynamic = TRUE)

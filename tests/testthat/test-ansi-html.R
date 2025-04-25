@@ -1,4 +1,3 @@
-
 test_that("ansi_html", {
   str <- c(
     "\033[1mbold\033[22m",

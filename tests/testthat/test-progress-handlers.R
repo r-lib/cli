@@ -1,4 +1,3 @@
-
 test_that("cli_progress_builtin_handlers", {
   expect_true(is.character(cli_progress_builtin_handlers()))
   expect_true(all(

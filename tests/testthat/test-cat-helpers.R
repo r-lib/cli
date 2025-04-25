@@ -1,4 +1,3 @@
-
 test_that("cat_line", {
   expect_snapshot(
     cat_line("This is ", "a ", "line of text.")

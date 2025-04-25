@@ -1,4 +1,3 @@
-
 test_that("cat_line appends to file", {
   tmp <- tempfile()
   cat_line("a", file = tmp)

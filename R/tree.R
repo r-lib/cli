@@ -1,4 +1,3 @@
-
 #' Draw a tree
 #'
 #' Draw a tree using box drawing characters. Unicode characters are
@@ -115,11 +114,16 @@
 #'
 #' @export
 
-
-tree <- function(data, root = data[[1]][[1]], style = NULL,
-                 width = console_width(), trim = FALSE) {
+tree <- function(
+  data,
+  root = data[[1]][[1]],
+  style = NULL,
+  width = console_width(),
+  trim = FALSE
+) {
   stopifnot(
-    is.data.frame(data), ncol(data) >= 2,
+    is.data.frame(data),
+    ncol(data) >= 2,
     is_string(root),
     is.null(style) || (is_tree_style(style)),
     is_count(width)
@@ -134,7 +138,6 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
   res <- character()
 
   pt <- function(root, n = integer(), mx = integer(), used = character()) {
-
     num_root <- match(root, data[[1]])
     if (is.na(num_root)) return()
 
@@ -154,15 +157,18 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
     })
 
     root_seen <- root %in% seen
-    root_lab <- if (trim && root_seen) trimlabs[[num_root]] else labels[[num_root]]
+    root_lab <- if (trim && root_seen) trimlabs[[num_root]] else
+      labels[[num_root]]
     res <<- c(res, paste0(paste(prefix, collapse = ""), root_lab))
 
     # Detect infinite loops
     if (!trim && root %in% used) {
-      warning(call. = FALSE,
-              "Endless loop found in tree: ",
-              paste0(c(used, root), collapse = " -> "))
-    } else if (! trim || ! root_seen) {
+      warning(
+        call. = FALSE,
+        "Endless loop found in tree: ",
+        paste0(c(used, root), collapse = " -> ")
+      )
+    } else if (!trim || !root_seen) {
       seen <<- c(seen, root)
       children <- data[[2]][[num_root]]
       for (d in seq_along(children)) {
@@ -182,17 +188,17 @@ tree <- function(data, root = data[[1]][[1]], style = NULL,
 box_chars <- function() {
   if (is_utf8_output()) {
     list(
-      "h" = "\u2500",                   # horizontal
-      "v" = "\u2502",                   # vertical
-      "l" = "\u2514",                   # leaf
-      "j" = "\u251C"                    # junction
+      "h" = "\u2500", # horizontal
+      "v" = "\u2502", # vertical
+      "l" = "\u2514", # leaf
+      "j" = "\u251C" # junction
     )
   } else {
     list(
-      "h" = "-",                        # horizontal
-      "v" = "|",                        # vertical
-      "l" = "\\",                       # leaf
-      "j" = "+"                         # junction
+      "h" = "-", # horizontal
+      "v" = "|", # vertical
+      "l" = "\\", # leaf
+      "j" = "+" # junction
     )
   }
 }

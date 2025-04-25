@@ -1,4 +1,3 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 
@@ -9,7 +8,7 @@ test_that("iterator", {
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_iterator = NULL,
-    cli.progress_format_iterator_nototal= NULL,
+    cli.progress_format_iterator_nototal = NULL,
     cli.width = Inf
   )
 
@@ -36,7 +35,7 @@ test_that("tasks", {
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_tasks = NULL,
-    cli.progress_format_tasks_nototal= NULL,
+    cli.progress_format_tasks_nototal = NULL,
     cli.width = Inf
   )
 
@@ -62,7 +61,7 @@ test_that("download", {
     cli.spinner = NULL,
     cli.spinner_unicode = NULL,
     cli.progress_format_download = NULL,
-    cli.progress_format_download_nototal= NULL
+    cli.progress_format_download_nototal = NULL
   )
 
   fun <- function() {
@@ -141,13 +140,21 @@ test_that("customize with options, download", {
     cli_progress_update(set = set, force = TRUE)
   }
 
-  expect_snapshot(capture_cli_messages(fun("download", 1024 * 1024, 512 * 1024)))
+  expect_snapshot(capture_cli_messages(fun(
+    "download",
+    1024 * 1024,
+    512 * 1024
+  )))
   expect_snapshot(capture_cli_messages(fun("download", NA, 512 * 1024)))
 
   withr::local_options(
     cli.progress_format_download_nototal = "new too {cli::pb_current_bytes}"
   )
 
-  expect_snapshot(capture_cli_messages(fun("download", 1024 * 1024, 512 * 1024)))
+  expect_snapshot(capture_cli_messages(fun(
+    "download",
+    1024 * 1024,
+    512 * 1024
+  )))
   expect_snapshot(capture_cli_messages(fun("download", NA, 512 * 1024)))
 })

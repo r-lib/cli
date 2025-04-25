@@ -1,4 +1,3 @@
-
 test_that_cli(configs = c("plain", "unicode"), "spark_bar", {
   expect_snapshot({
     spark_bar(seq(0, 1, length.out = 8))

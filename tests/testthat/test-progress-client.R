@@ -1,4 +1,3 @@
-
 test_that("cli_progress_bar", {
   withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
   fun <- function() {
@@ -20,9 +19,17 @@ test_that("custom format needs a format string", {
 test_that("removes previous progress bar", {
   withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
   fun <- function() {
-    bar <- cli_progress_bar(format = "first", format_done = "first done", clear = FALSE)
+    bar <- cli_progress_bar(
+      format = "first",
+      format_done = "first done",
+      clear = FALSE
+    )
     cli_progress_update(force = TRUE)
-    bar2 <- cli_progress_bar(format = "second", format_done = "second done", clear = FALSE)
+    bar2 <- cli_progress_bar(
+      format = "second",
+      format_done = "second done",
+      clear = FALSE
+    )
     cli_progress_update(force = TRUE)
   }
 
@@ -133,11 +140,20 @@ test_that("format changes if we (un)learn total", {
 test_that("auto-terminate", {
   withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
   fun <- function() {
-    bar <- cli_progress_bar(total = 10, format = "first", format_done = "first done", clear = FALSE)
+    bar <- cli_progress_bar(
+      total = 10,
+      format = "first",
+      format_done = "first done",
+      clear = FALSE
+    )
     cli_progress_update(force = TRUE)
     cli_progress_update(force = TRUE, set = 10)
     cli_text("First is done by now.\n")
-    bar2 <- cli_progress_bar(format = "second", format_done = "second done", clear = FALSE)
+    bar2 <- cli_progress_bar(
+      format = "second",
+      format_done = "second done",
+      clear = FALSE
+    )
     cli_progress_update(force = TRUE)
   }
 
@@ -178,5 +194,8 @@ test_that("cli_progress_bar handles Inf like NA", {
     cli_progress_update(force = TRUE)
     cli_progress_done(id = bar)
   }
-  expect_equal(capture_cli_messages(fun(total = NA)), capture_cli_messages(fun(total = Inf)))
+  expect_equal(
+    capture_cli_messages(fun(total = NA)),
+    capture_cli_messages(fun(total = Inf))
+  )
 })

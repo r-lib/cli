@@ -1,4 +1,3 @@
-
 test_that("empty input", {
   expect_snapshot(
     vt_output("", width = 20, height = 2)$segment
@@ -37,7 +36,11 @@ test_that("scroll up", {
 
 test_that_cli(configs = "ansi", "ANSI SGR", {
   expect_snapshot(
-    vt_output("12\033[31m34\033[1m56\033[39m78\033[21m90", width = 20, height = 2)
+    vt_output(
+      "12\033[31m34\033[1m56\033[39m78\033[21m90",
+      width = 20,
+      height = 2
+    )
   )
 
   expect_snapshot(
@@ -84,11 +87,31 @@ test_that("erase in line", {
 
 test_that("erase in screen", {
   expect_snapshot({
-    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[J", width = 10, height = 4)$segment
-    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[0J", width = 10, height = 4)$segment
-    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[1J", width = 10, height = 4)$segment
-    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[2Jx", width = 10, height = 4)$segment
-    vt_output("foo\nfoobar\nfoobar2\033[A\033[4D\033[3Jx", width = 10, height = 4)$segment
+    vt_output(
+      "foo\nfoobar\nfoobar2\033[A\033[4D\033[J",
+      width = 10,
+      height = 4
+    )$segment
+    vt_output(
+      "foo\nfoobar\nfoobar2\033[A\033[4D\033[0J",
+      width = 10,
+      height = 4
+    )$segment
+    vt_output(
+      "foo\nfoobar\nfoobar2\033[A\033[4D\033[1J",
+      width = 10,
+      height = 4
+    )$segment
+    vt_output(
+      "foo\nfoobar\nfoobar2\033[A\033[4D\033[2Jx",
+      width = 10,
+      height = 4
+    )$segment
+    vt_output(
+      "foo\nfoobar\nfoobar2\033[A\033[4D\033[3Jx",
+      width = 10,
+      height = 4
+    )$segment
   })
 })
 
@@ -104,8 +127,14 @@ test_that("colors", {
   expect_equal(vt_output("\033[107mcolored\033[39m")$background_color[1], "15")
 
   expect_equal(vt_output("\033[38;5;100mcolored\033[39m")$color[1], "100")
-  expect_equal(vt_output("\033[48;5;110mcolored\033[39m")$background_color[1], "110")
+  expect_equal(
+    vt_output("\033[48;5;110mcolored\033[39m")$background_color[1],
+    "110"
+  )
 
   expect_equal(vt_output("\033[38;2;1;2;3mcolored\033[39m")$color[1], "#010203")
-  expect_equal(vt_output("\033[48;2;4;5;6mcolored\033[39m")$background_color[1], "#040506")
+  expect_equal(
+    vt_output("\033[48;2;4;5;6mcolored\033[39m")$background_color[1],
+    "#040506"
+  )
 })

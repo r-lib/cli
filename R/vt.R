@@ -1,4 +1,3 @@
-
 #' Simulate (a subset of) a VT-5xx ANSI terminal
 #'
 #' This is utility function that calculates the state of a VT-5xx screen
@@ -68,9 +67,9 @@ vt_output <- function(output, width = 80L, height = 25L) {
       utf8_substr(line, s + 1, e)
     })
 
-    fg <- re_match(lgs$values, "fg:([0-9]+|#[0-9a-f]+);")[,1]
-    bg <- re_match(lgs$values, "bg:([0-9]+|#[0-9a-f]+);")[,1]
-    linkno <- as.integer(re_match(lgs$values, "link:([0-9]+);")[,1])
+    fg <- re_match(lgs$values, "fg:([0-9]+|#[0-9a-f]+);")[, 1]
+    bg <- re_match(lgs$values, "bg:([0-9]+|#[0-9a-f]+);")[, 1]
+    linkno <- as.integer(re_match(lgs$values, "link:([0-9]+);")[, 1])
     link <- links[linkno]
     link_params <- links_params[linkno]
 

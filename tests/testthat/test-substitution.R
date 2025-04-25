@@ -1,4 +1,3 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 

@@ -1,4 +1,3 @@
-
 test_that("ansi_align", {
   txt0 <- "\033]8;;https://ex.com\007te\033]8;;\007"
   txt1 <- st_from_bel(txt0)
@@ -283,7 +282,8 @@ test_that("ansi_has_hyperlink_support", {
   local_clean_cli_context()
 
   # force with env var
-  withr::with_envvar(list(R_CLI_HYPERLINKS = "true"),
+  withr::with_envvar(
+    list(R_CLI_HYPERLINKS = "true"),
     expect_true(ansi_has_hyperlink_support())
   )
 
@@ -523,7 +523,11 @@ test_that("construct_file_link() works with custom format and an absolute path",
     list(url = "positron://file/absolute/path:12")
   )
   expect_equal(
-    construct_file_link(list(path = "/absolute/path", line = "12", column = "5")),
+    construct_file_link(list(
+      path = "/absolute/path",
+      line = "12",
+      column = "5"
+    )),
     list(url = "positron://file/absolute/path:12:5")
   )
 
@@ -552,41 +556,68 @@ test_that("construct_file_link() works with custom format and a relative path", 
   }
 
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "relative/path")), what = "wd"),
+    sanitize_dir(
+      construct_file_link(list(path = "relative/path")),
+      what = "wd"
+    ),
     "positron://file/working/directory/relative/path"
   )
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "relative/path:12")), what = "wd"),
+    sanitize_dir(
+      construct_file_link(list(path = "relative/path:12")),
+      what = "wd"
+    ),
     "positron://file/working/directory/relative/path:12"
   )
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "relative/path:12:5")), what = "wd"),
+    sanitize_dir(
+      construct_file_link(list(path = "relative/path:12:5")),
+      what = "wd"
+    ),
     "positron://file/working/directory/relative/path:12:5"
   )
 
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "./relative/path")), what = "wd"),
+    sanitize_dir(
+      construct_file_link(list(path = "./relative/path")),
+      what = "wd"
+    ),
     "positron://file/working/directory/./relative/path"
   )
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "./relative/path:12")), what = "wd"),
+    sanitize_dir(
+      construct_file_link(list(path = "./relative/path:12")),
+      what = "wd"
+    ),
     "positron://file/working/directory/./relative/path:12"
   )
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "./relative/path:12:5")), what = "wd"),
+    sanitize_dir(
+      construct_file_link(list(path = "./relative/path:12:5")),
+      what = "wd"
+    ),
     "positron://file/working/directory/./relative/path:12:5"
   )
 
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "~/relative/path")), what = "home"),
+    sanitize_dir(
+      construct_file_link(list(path = "~/relative/path")),
+      what = "home"
+    ),
     "positron://file/my/home/relative/path"
   )
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "~/relative/path:17")), what = "home"),
+    sanitize_dir(
+      construct_file_link(list(path = "~/relative/path:17")),
+      what = "home"
+    ),
     "positron://file/my/home/relative/path:17"
   )
   expect_equal(
-    sanitize_dir(construct_file_link(list(path = "~/relative/path:17:22")), what = "home"),
+    sanitize_dir(
+      construct_file_link(list(path = "~/relative/path:17:22")),
+      what = "home"
+    ),
     "positron://file/my/home/relative/path:17:22"
   )
 })
@@ -601,7 +632,11 @@ test_that("construct_file_link() works with custom format and input starting wit
     list(url = "positron://file/absolute/path")
   )
   expect_equal(
-    construct_file_link(list(path = "file:///absolute/path", line = "12", column = "5")),
+    construct_file_link(list(
+      path = "file:///absolute/path",
+      line = "12",
+      column = "5"
+    )),
     list(url = "positron://file/absolute/path:12:5")
   )
 })

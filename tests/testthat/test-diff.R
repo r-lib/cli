@@ -1,8 +1,7 @@
-
 test_that("diff_chr", {
   # Something simple first
-  a <- as.character(c(1,1,1,1,1,1,1,2,3,4,4,4,4,4,4,4,5))
-  b <- as.character(c(1,1,1,1,1,1,1,2,10,4,4,4,4,4,4,4,6,7,5))
+  a <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5))
+  b <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 10, 4, 4, 4, 4, 4, 4, 4, 6, 7, 5))
   d <- diff_chr(a, b)
   expect_snapshot(d$lcs)
   d <- diff_chr(b, a)
@@ -11,8 +10,8 @@ test_that("diff_chr", {
 
 test_that_cli(configs = c("plain", "ansi"), "diff_chr", {
   # Something simple first
-  a <- as.character(c(1,1,1,1,1,1,1,2,3,4,4,4,4,4,4,4,5))
-  b <- as.character(c(1,1,1,1,1,1,1,2,10,4,4,4,4,4,4,4,6,7,5))
+  a <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5))
+  b <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 10, 4, 4, 4, 4, 4, 4, 4, 6, 7, 5))
   d <- diff_chr(a, b)
   expect_snapshot(d)
   expect_snapshot(d$lcs)
@@ -31,8 +30,8 @@ test_that("diff_chr edge cases", {
 
 test_that("format.cli_diff_chr context", {
   # Something simple first
-  a <- as.character(c(1,1,1,1,1,1,1,2,3,4,4,4,4,4,4,4,5))
-  b <- as.character(c(1,1,1,1,1,1,1,2,10,4,4,4,4,4,4,4,6,7,5))
+  a <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5))
+  b <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 10, 4, 4, 4, 4, 4, 4, 4, 6, 7, 5))
   d <- diff_chr(a, b)
   expect_snapshot(print(d, context = 1))
   expect_snapshot(print(d, context = 0))

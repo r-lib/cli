@@ -1,4 +1,3 @@
-
 test_that("errors", {
   withr::local_options(cli.width = letters)
   expect_snapshot_error(

@@ -1,6 +1,8 @@
-
 rule_class <- function(x) {
-  structure(x, class = c("cli_rule", "rule", "cli_ansi_string", "ansi_string", "character"))
+  structure(
+    x,
+    class = c("cli_rule", "rule", "cli_ansi_string", "ansi_string", "character")
+  )
 }
 
 capture_msgs <- function(expr) {
@@ -8,7 +10,8 @@ capture_msgs <- function(expr) {
   i <- 0
   suppressMessages(withCallingHandlers(
     expr,
-    message = function(e) msgs[[i <<- i + 1]] <<- conditionMessage(e)))
+    message = function(e) msgs[[i <<- i + 1]] <<- conditionMessage(e)
+  ))
   paste0(msgs, collapse = "")
 }
 
@@ -31,12 +34,16 @@ capt <- function(expr, print_it = TRUE) {
 
 capt0 <- function(expr, strip_style = FALSE) {
   out <- capture_msgs(expr)
-  if  (strip_style) ansi_strip(out) else out
+  if (strip_style) ansi_strip(out) else out
 }
 
-local_cli_config <- function(unicode = FALSE, dynamic = FALSE,
-                             ansi = FALSE, num_colors = 1,
-                             .local_envir = parent.frame()) {
+local_cli_config <- function(
+  unicode = FALSE,
+  dynamic = FALSE,
+  ansi = FALSE,
+  num_colors = 1,
+  .local_envir = parent.frame()
+) {
   withr::local_options(
     cli.dynamic = dynamic,
     cli.ansi = ansi,
@@ -58,14 +65,17 @@ test_style <- function() {
       "font-weight" = "bold",
       "font-style" = "italic",
       "margin-top" = 1,
-      "margin-bottom" = 1),
+      "margin-bottom" = 1
+    ),
     ".testcli h2" = list(
       "font-weight" = "bold",
       "margin-top" = 1,
-      "margin-bottom" = 1),
+      "margin-bottom" = 1
+    ),
     ".testcli h3" = list(
       "text-decoration" = "underline",
-      "margin-top" = 1)
+      "margin-top" = 1
+    )
   )
 }
 
@@ -90,13 +100,15 @@ fix_logger_output <- function(lines) {
   )
 }
 
-make_c_function <- function(file = NULL,
-                            code = NULL,
-                            args = character(),
-                            type = c(".c", ".cpp"),
-                            header = NULL,
-                            linkingto = packageName(),
-                            quiet = Sys.getenv("TESTTHAT") == "true") {
+make_c_function <- function(
+  file = NULL,
+  code = NULL,
+  args = character(),
+  type = c(".c", ".cpp"),
+  header = NULL,
+  linkingto = packageName(),
+  quiet = Sys.getenv("TESTTHAT") == "true"
+) {
   type <- match.arg(type)
 
   # Create source file
@@ -147,7 +159,7 @@ create_c_function_call <- function(code, args, header = NULL) {
   )
 }
 
-win2unix <- function (str) {
+win2unix <- function(str) {
   gsub("\r\n", "\n", str, fixed = TRUE, useBytes = TRUE)
 }
 
@@ -162,15 +174,18 @@ st_to_bel <- function(x) {
 test_package_root <- function() {
   x <- tryCatch(
     rprojroot::find_package_root_file(),
-    error = function(e) NULL)
+    error = function(e) NULL
+  )
 
   if (!is.null(x)) return(x)
 
   pkg <- testthat::testing_package()
   x <- tryCatch(
     rprojroot::find_package_root_file(
-      path = file.path("..", "..", "00_pkg_src", pkg)),
-    error = function(e) NULL)
+      path = file.path("..", "..", "00_pkg_src", pkg)
+    ),
+    error = function(e) NULL
+  )
 
   if (!is.null(x)) return(x)
 
@@ -198,11 +213,14 @@ sanitize_call <- function(x) {
 r_pty <- function(.envir = parent.frame()) {
   skip_on_cran()
   # TODO: why does this fail on the CI, in covr
-  if (Sys.getenv("R_COVR") == "true" &&
-      isTRUE(as.logical(Sys.getenv("CI")))) {
+  if (
+    Sys.getenv("R_COVR") == "true" &&
+      isTRUE(as.logical(Sys.getenv("CI")))
+  ) {
     skip("fails on CI in covr")
   }
-  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux")) skip("Needs Linux or macOS")
+  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux"))
+    skip("Needs Linux or macOS")
 
   r <- file.path(R.home("bin"), "R")
   p <- processx::process$new(
@@ -212,11 +230,14 @@ r_pty <- function(.envir = parent.frame()) {
     env = c("current", R_CLI_HIDE_CURSOR = "false", R_LIBS = .libPaths()[1])
   )
 
-  defer({
-    close(p$get_input_connection())
-    p$wait(1000)
-    p$kill()
-  }, envir = .envir)
+  defer(
+    {
+      close(p$get_input_connection())
+      p$wait(1000)
+      p$kill()
+    },
+    envir = .envir
+  )
 
   p$poll_io(1000)
   p$read_output()

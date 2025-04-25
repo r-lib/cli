@@ -1,4 +1,3 @@
-
 test_that("cli_progress_message", {
   withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
   fun <- function() {

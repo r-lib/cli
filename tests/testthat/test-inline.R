@@ -1,4 +1,3 @@
-
 withr::local_envvar(CLI_NO_BUILTIN_THEME = "true")
 withr::local_options(cli.theme = NULL, cli.user_theme = NULL)
 start_app()
@@ -6,16 +5,29 @@ on.exit(stop_app(), add = TRUE)
 
 test_that_cli(configs = c("plain", "ansi"), "inline classes", {
   classes <- c(
-    "emph", "strong", "code", "pkg", "fun", "arg", "key", "file", "path",
-    "email", "url", "var", "envvar", "cls")
+    "emph",
+    "strong",
+    "code",
+    "pkg",
+    "fun",
+    "arg",
+    "key",
+    "file",
+    "path",
+    "email",
+    "url",
+    "var",
+    "envvar",
+    "cls"
+  )
 
   do <- function(class) {
-
     special_style <- structure(
       list(
         list(color = "cyan"),
         list(before = "<<<"),
-        list(after =">>>")),
+        list(after = ">>>")
+      ),
       names = c(
         paste0("span.", class),
         paste0("span.", class),
@@ -24,8 +36,7 @@ test_that_cli(configs = c("plain", "ansi"), "inline classes", {
     )
 
     cli_div(theme = special_style)
-    txt <- glue::glue("This is {.<class> it} really",
-                      .open = "<", .close = ">")
+    txt <- glue::glue("This is {.<class> it} really", .open = "<", .close = ">")
     cli_text(txt)
   }
 
@@ -60,7 +71,8 @@ test_that("S3 class is used for styling", {
     cli_div(
       theme = list(
         div = list("class-map" = list("foo" = "bar")),
-        ".bar" = list(before = "::"))
+        ".bar" = list(before = "::")
+      )
     )
     obj <- structure("yep", class = "foo")
     cli_text("This is {obj}.")

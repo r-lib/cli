@@ -1,4 +1,3 @@
-
 #' @title About inline markup in the semantic cli
 #'
 #' @description
