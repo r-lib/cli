@@ -1,4 +1,3 @@
-
 #' @useDynLib progresstest, .registration = TRUE, .fixes = "c_"
 NULL
 

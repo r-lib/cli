@@ -1,4 +1,3 @@
-
 test_that("one style", {
   testthat::skip_on_covr() # because we are comparing functions
   expect_equal(

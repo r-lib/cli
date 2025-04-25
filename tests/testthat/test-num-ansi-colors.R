@@ -1,6 +1,7 @@
 test_that("win10_build works for different osVersion", {
   local_mocked_bindings(
-    sessionInfo = function() list(running = NULL), .package = "utils"
+    sessionInfo = function() list(running = NULL),
+    .package = "utils"
   )
   expect_identical(win10_build(), 0L)
 
@@ -18,7 +19,6 @@ test_that("win10_build works for different osVersion", {
 })
 
 test_that("cli.default_num_colors #1", {
-
   # crayon.enabled
   withr::local_envvar(R_CLI_NUM_COLORS = NA_character_)
   withr::local_options(
@@ -35,7 +35,6 @@ test_that("cli.default_num_colors #1", {
 })
 
 test_that("cli.default_num_colors #2", {
-
   # Windows emacs
   withr::local_envvar(
     R_CLI_NUM_COLORS = NA_character_,
@@ -61,7 +60,6 @@ test_that("cli.default_num_colors #2", {
 })
 
 test_that("cli.default_num_colors #3", {
-
   # non-truecolor COLORMAP
   withr::local_envvar(COLORTERM = "other")
   withr::local_options(cli.default_num_colors = NULL)
@@ -73,7 +71,6 @@ test_that("cli.default_num_colors #3", {
 })
 
 test_that("cli.default_num_colors #4", {
-
   # Unix emacs with color
   withr::local_envvar(COLORTERM = NA_character_)
 
@@ -91,7 +88,6 @@ test_that("cli.default_num_colors #4", {
 })
 
 test_that("cli.default_num_colors #5", {
-
   # rstudio terminal on Windows
   withr::local_envvar(COLORTERM = NA_character_)
 
@@ -110,7 +106,6 @@ test_that("cli.default_num_colors #5", {
 })
 
 test_that("cli.default_num_colors #6", {
-
   # Windows 10 terminal
   withr::local_envvar(COLORTERM = NA_character_)
   withr::local_options(cli.default_num_colors = NULL)
@@ -131,7 +126,6 @@ test_that("cli.default_num_colors #6", {
 })
 
 test_that("cli.default_num_colors #7", {
-
   # conemu or cmder
   withr::local_envvar(
     COLORTERM = NA_character_,
@@ -149,7 +143,6 @@ test_that("cli.default_num_colors #7", {
 })
 
 test_that("cli.default_num_colors #8", {
-
   # unix terminal, xterm
   withr::local_envvar(
     COLORTERM = NA_character_,

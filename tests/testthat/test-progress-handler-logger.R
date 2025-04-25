@@ -1,4 +1,3 @@
-
 test_that("loggerr_out", {
   bar <- new.env(parent = emptyenv())
   bar$id <- "id"

@@ -1,4 +1,3 @@
-
 start_app(.auto_close = TRUE)
 
 test_that_cli("add/remove/list themes", {
@@ -21,18 +20,23 @@ test_that_cli("add/remove/list themes", {
 })
 
 test_that("default theme is valid", {
-  expect_error({
-    id <- default_app()$add_theme(builtin_theme())
-    default_app()$remove_theme(id)
-  }, NA)
+  expect_error(
+    {
+      id <- default_app()$add_theme(builtin_theme())
+      default_app()$remove_theme(id)
+    },
+    NA
+  )
 })
 
 test_that("explicit formatter is used, and combined", {
   id <- default_app()$add_theme(list(
     "span.emph" = list(
       fmt = function(x) paste0("(((", x, ")))"),
-      before = "<<", after = ">>")
-    ))
+      before = "<<",
+      after = ">>"
+    )
+  ))
   on.exit(default_app()$remove_theme(id), add = TRUE)
   expect_snapshot(
     cli_text("this is {.emph it}, really")

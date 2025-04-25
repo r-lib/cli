@@ -1,4 +1,3 @@
-
 test_that("does not break", {
   testthat::local_reproducible_output(unicode = TRUE)
   expect_snapshot(local({

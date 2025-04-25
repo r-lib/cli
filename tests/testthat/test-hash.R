@@ -1,4 +1,3 @@
-
 test_that("hash_sha256", {
   dig <- function(x) {
     digest::digest(x, serialize = FALSE, algo = "sha256")

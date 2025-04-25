@@ -1,4 +1,3 @@
-
 test_that("cli_progress_num", {
   withr::local_options(cli.progress_handlers_only = "cli")
   fun <- function() {

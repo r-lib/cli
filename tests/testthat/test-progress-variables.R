@@ -1,4 +1,3 @@
-
 test_that("cli_progress_demo", {
   withr::local_options(cli.ansi = TRUE)
   out <- cli_progress_demo(live = FALSE, at = 50)
@@ -91,7 +90,9 @@ test_that("pb_eta", {
   expect_equal(cli__pb_eta(NULL), "")
   local_mocked_bindings(cli__pb_eta_raw = function(...) NA_real_)
   expect_snapshot(cli__pb_eta(list()))
-  local_mocked_bindings(cli__pb_eta_raw = function(...) as.difftime(12, units = "secs"))
+  local_mocked_bindings(
+    cli__pb_eta_raw = function(...) as.difftime(12, units = "secs")
+  )
   expect_snapshot(cli__pb_eta(list()))
 })
 
@@ -175,7 +176,7 @@ test_that("pb_rate_raw", {
   this <- 1
   expect_equal(cli__pb_rate_raw(list(current = 23)), 23)
   this <- 10
-  expect_equal(cli__pb_rate_raw(list(current = 1)), 1/10)
+  expect_equal(cli__pb_rate_raw(list(current = 1)), 1 / 10)
 })
 
 test_that("pb_rate_bytes", {
@@ -219,10 +220,13 @@ test_that("pb_timestamp", {
   expect_snapshot(cli__pb_timestamp(list()))
 
   backup <- mget(c("load_time", "speed_time"), clienv)
-  on.exit({
-    clienv$load_time <- backup$load_time
-    clienv$speed_time <- backup$speed_time
-  }, add = TRUE)
+  on.exit(
+    {
+      clienv$load_time <- backup$load_time
+      clienv$speed_time <- backup$speed_time
+    },
+    add = TRUE
+  )
 
   clienv$load_time <- fake - 10
   clienv$speed_time <- 3.0

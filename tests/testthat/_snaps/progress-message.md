@@ -8,10 +8,30 @@
 # cli_progress_message error
 
     Code
+      callr::r(fun, stdout = outfile, stderr = outfile)
+    Condition
+      Error:
+      ! in callr subprocess.
+      Caused by error:
+      ! oopsie
+
+---
+
+    Code
       readLines(outfile)
     Output
       [1] "Simplest progress 'bar', `fn()` 2 twos"
       [2] "Error in (function ()  : oopsie"       
+
+---
+
+    Code
+      callr::r(fun2, stdout = outfile, stderr = outfile)
+    Condition
+      Error:
+      ! in callr subprocess.
+      Caused by error:
+      ! oopsie
 
 ---
 
@@ -30,6 +50,16 @@
       [5] "\rv Second step [1s]\033[K\r" "\n"                          
 
 # cli_progress_step error
+
+    Code
+      callr::r(fun, stdout = outfile, stderr = "2>&1")
+    Condition
+      Error:
+      ! in callr subprocess.
+      Caused by error:
+      ! oopsie
+
+---
 
     Code
       win2unix(out)

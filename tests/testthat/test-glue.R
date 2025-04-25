@@ -1,4 +1,3 @@
-
 # https://github.com/r-lib/cli/issues/370
 
 test_that("glue quotes and comments", {

@@ -1,4 +1,3 @@
-
 #' cli progress bars
 #'
 #' @description
@@ -302,21 +301,21 @@
 #' @aliases __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @export
 
-cli_progress_bar <- function(name = NULL,
-                             status = NULL,
-                             type = c("iterator", "tasks", "download",
-                                      "custom"),
-                             total = NA,
-                             format = NULL,
-                             format_done = NULL,
-                             format_failed = NULL,
-                             clear = getOption("cli.progress_clear", TRUE),
-                             current = TRUE,
-                             auto_terminate = type != "download",
-                             extra = NULL,
-                             .auto_close = TRUE,
-                             .envir = parent.frame()) {
-
+cli_progress_bar <- function(
+  name = NULL,
+  status = NULL,
+  type = c("iterator", "tasks", "download", "custom"),
+  total = NA,
+  format = NULL,
+  format_done = NULL,
+  format_failed = NULL,
+  clear = getOption("cli.progress_clear", TRUE),
+  current = TRUE,
+  auto_terminate = type != "download",
+  extra = NULL,
+  .auto_close = TRUE,
+  .envir = parent.frame()
+) {
   start <- .Call(clic_get_time)
   id <- new_uuid()
   envkey <- format(.envir)
@@ -352,7 +351,11 @@ cli_progress_bar <- function(name = NULL,
   clienv$progress[[id]] <- bar
   if (current) {
     if (!is.null(clienv$progress_ids[[envkey]])) {
-      cli_progress_done(clienv$progress_ids[[envkey]], .envir = .envir, result = "done")
+      cli_progress_done(
+        clienv$progress_ids[[envkey]],
+        .envir = .envir,
+        result = "done"
+      )
     }
     clienv$progress_ids[[envkey]] <- id
   }
@@ -396,11 +399,16 @@ cli_progress_bar <- function(name = NULL,
 #' @name cli_progress_bar
 #' @export
 
-cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
-                                status = NULL, extra = NULL,
-                                id = NULL, force = FALSE,
-                                .envir = parent.frame()) {
-
+cli_progress_update <- function(
+  inc = NULL,
+  set = NULL,
+  total = NULL,
+  status = NULL,
+  extra = NULL,
+  id = NULL,
+  force = FALSE,
+  .envir = parent.frame()
+) {
   id <- id %||% clienv$progress_ids[[format(.envir)]]
   if (is.null(id)) {
     envkey <- format(.envir)
@@ -421,8 +429,10 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
   }
 
   if (!is.null(total)) {
-    if (is.na(pb$total) != is.na(total) ||
-        (!is.na(total) && pb$total != total)) {
+    if (
+      is.na(pb$total) != is.na(total) ||
+        (!is.na(total) && pb$total != total)
+    ) {
       pb$total <- total
       if (!is.null(pb$format) && is.null(pb$format_orig)) {
         pb$format <- pb__default_format(pb$type, pb$total)
@@ -439,8 +449,14 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
 
   now <- .Call(clic_get_time)
   upd <- .Call(clic_update_due)
-  if (force || (upd && now > pb$show_after) ||
-      (!is.na(pb$total) && upd && now > pb$show_50 && pb$current <= pb$total / 2)) {
+  if (
+    force ||
+      (upd && now > pb$show_after) ||
+      (!is.na(pb$total) &&
+        upd &&
+        now > pb$show_50 &&
+        pb$current <= pb$total / 2)
+  ) {
     if (upd) cli_tick_reset()
     pb$tick <- pb$tick + 1L
 
@@ -481,8 +497,11 @@ cli_progress_update <- function(inc = NULL, set = NULL, total = NULL,
 #' @name cli_progress_bar
 #' @export
 
-cli_progress_done <- function(id = NULL, .envir = parent.frame(),
-                              result = "done") {
+cli_progress_done <- function(
+  id = NULL,
+  .envir = parent.frame(),
+  result = "done"
+) {
   envkey <- format(.envir)
   id <- id %||% clienv$progress_ids[[envkey]]
   if (is.null(id)) return(invisible(TRUE))
@@ -626,12 +645,13 @@ cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
 #' @family functions supporting inline markup
 #' @export
 
-cli_progress_message <- function(msg,
-                                 current = TRUE,
-                                 .auto_close = TRUE,
-                                 .envir = parent.frame(),
-                                 ...) {
-
+cli_progress_message <- function(
+  msg,
+  current = TRUE,
+  .auto_close = TRUE,
+  .envir = parent.frame(),
+  ...
+) {
   id <- cli_progress_bar(
     type = "custom",
     format = msg,
@@ -776,16 +796,17 @@ cli_progress_message <- function(msg,
 #' @family functions supporting inline markup
 #' @export
 
-cli_progress_step <- function(msg,
-                              msg_done = msg,
-                              msg_failed = msg,
-                              spinner = FALSE,
-                              class = if (!spinner) ".alert-info",
-                              current = TRUE,
-                              .auto_close = TRUE,
-                              .envir = parent.frame(),
-                              ...) {
-
+cli_progress_step <- function(
+  msg,
+  msg_done = msg,
+  msg_failed = msg,
+  spinner = FALSE,
+  class = if (!spinner) ".alert-info",
+  current = TRUE,
+  .auto_close = TRUE,
+  .envir = parent.frame(),
+  ...
+) {
   format <- paste0(
     if (!is.null(class)) paste0("{", class, " "),
     if (spinner) "{cli::pb_spin} ",
@@ -835,7 +856,6 @@ pb__default_format <- function(type, total) {
         "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
       )
     }
-
   } else if (type == "tasks") {
     if (!is.na(total)) {
       opt <- getOption("cli.progress_format_tasks")
@@ -853,7 +873,6 @@ pb__default_format <- function(type, total) {
         "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
       )
     }
-
   } else if (type == "download") {
     if (!is.na(total)) {
       opt <- getOption("cli.progress_format_download")

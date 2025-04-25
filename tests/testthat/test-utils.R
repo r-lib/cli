@@ -1,4 +1,3 @@
-
 test_that("is_windows", {
   expect_equal(is_windows(), .Platform$OS.type == "windows")
 })
@@ -10,10 +9,7 @@ test_that("make_space", {
 })
 
 test_that("apply_style", {
-  expect_error(
-    apply_style("text", raw(0)),
-    "must be a color name or an ANSI style function"
-  )
+  expect_snapshot(error = TRUE, apply_style("text", raw(0)))
   expect_equal(
     apply_style("foo", function(x) toupper(x)),
     "FOO"
@@ -57,7 +53,6 @@ test_that("lpad", {
 })
 
 test_that("is_utf8_output", {
-
   local_mocked_bindings(
     l10n_info = function() list(MBCS = TRUE, `UTF-8` = TRUE, `Latin-1` = FALSE)
   )
@@ -76,7 +71,6 @@ test_that("is_utf8_output", {
 })
 
 test_that("is_latex_output", {
-
   local_mocked_bindings(loadedNamespaces = function() "foobar")
   expect_false(is_latex_output())
 
@@ -170,15 +164,16 @@ test_that("na.omit", {
     na.omit(character())
     na.omit(integer())
     na.omit(1:5)
-    na.omit(c(1,NA,2,NA))
+    na.omit(c(1, NA, 2, NA))
     na.omit(c(NA_integer_, NA_integer_))
-    na.omit(list(1,2,3))
+    na.omit(list(1, 2, 3))
   })
 })
 
 test_that("get_rstudio_theme", {
   local_mocked_bindings(
-    getThemeInfo = function() function(...) warning("just a word"), .package = "rstudioapi"
+    getThemeInfo = function() function(...) warning("just a word"),
+    .package = "rstudioapi"
   )
   expect_silent(get_rstudio_theme())
 })

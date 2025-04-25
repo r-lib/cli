@@ -1,6 +1,4 @@
-
 test_that("parse_selector_node", {
-
   empty <- list(tag = character(), class = character(), id = character())
 
   cases <- list(
@@ -25,19 +23,25 @@ test_that("parse_selector_node", {
 })
 
 test_that("parse_selector", {
-
   empty <- list(tag = character(), class = character(), id = character())
 
   cases <- list(
     list("", list()),
     list("foo", list(list(tag = "foo"))),
     list("foo bar", list(list(tag = "foo"), list(tag = "bar"))),
-    list("foo.c1 bar.c2",
-         list(list(tag = "foo", class = "c1"),
-              list(tag = "bar", class = "c2"))),
-    list("#i1 tag #i2 .cl",
-         list(list(id = "i1"), list(tag = "tag"), list(id = "i2"),
-              list(class = "cl")))
+    list(
+      "foo.c1 bar.c2",
+      list(list(tag = "foo", class = "c1"), list(tag = "bar", class = "c2"))
+    ),
+    list(
+      "#i1 tag #i2 .cl",
+      list(
+        list(id = "i1"),
+        list(tag = "tag"),
+        list(id = "i2"),
+        list(class = "cl")
+      )
+    )
   )
 
   for (c in cases) {
@@ -47,7 +51,6 @@ test_that("parse_selector", {
 })
 
 test_that("match_selector_node", {
-
   default <- list(tag = "mytag", class = character(), id = "myid")
 
   pos <- list(
@@ -77,19 +80,16 @@ test_that("match_selector_node", {
     cnt <- modifyList(default, c[[2]])
     expect_false(match_selector_node(sel, cnt), info = c[[1]])
   }
-  
 })
 
 test_that("match_selector", {
-
   default <- list(tag = "mytag", class = character(), id = "myid")
 
   pos <- list(
     list("foo bar", list(list(tag = "foo"), list(tag = "bar"))),
     list("bar", list(list(tag = "foo"), list(tag = "bar"))),
     list(".class", list(list(tag = "x"), list(class = "class"))),
-    list(".c1",
-         list(list(tag = "x"), list(class = "c"), list(class = "c1")))
+    list(".c1", list(list(tag = "x"), list(class = "c"), list(class = "c1")))
   )
 
   for (c in pos) {
@@ -97,7 +97,7 @@ test_that("match_selector", {
     cnts <- lapply(c[[2]], function(x) modifyList(default, x))
     expect_true(match_selector(sels, cnts), info = c[[1]])
   }
-  
+
   neg <- list(
     list("foo bar", list(list(tag = "foo"), list(tag = "ba"))),
     list("foo bar", list(list(tag = "foo"), list(class = "bar"))),

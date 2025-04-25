@@ -1,4 +1,3 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 
@@ -42,16 +41,20 @@ test_that("collapsing a cli_vec", {
   })
 })
 
-test_that_cli(configs = c("plain", "ansi"), "collapsing a cli_vec with styling", {
-  expect_snapshot(local({
-    cli_div(theme = list(body = list("vec-sep" = " ... ")))
-    pkgs <- cli_vec(
-      paste0("pkg", 1:5),
-      style = list("vec-sep" = " & ", "vec-last" = " & ", color = "blue")
-    )
-    cli_text("Packages: {pkgs}.")
-  }))
-})
+test_that_cli(
+  configs = c("plain", "ansi"),
+  "collapsing a cli_vec with styling",
+  {
+    expect_snapshot(local({
+      cli_div(theme = list(body = list("vec-sep" = " ... ")))
+      pkgs <- cli_vec(
+        paste0("pkg", 1:5),
+        style = list("vec-sep" = " & ", "vec-last" = " & ", color = "blue")
+      )
+      cli_text("Packages: {pkgs}.")
+    }))
+  }
+)
 
 test_that("head", {
   v <- function(n, t = 5) {
@@ -187,15 +190,15 @@ test_that("ansi_collapse with width trimming", {
 })
 
 test_that("ansi_collapse produces consistent truncation results", {
-  expect_equal(ansi_collapse(1:2, trunc = 1, style = "head"),
-               ansi_collapse(1:2, trunc = 0, style = "head"))
+  expect_equal(
+    ansi_collapse(1:2, trunc = 1, style = "head"),
+    ansi_collapse(1:2, trunc = 0, style = "head")
+  )
 })
 
 test_that("ansi_collapse uses `sep2` for length-two inputs", {
-  expect_equal(ansi_collapse(1:2),
-               "1 and 2")
-  expect_equal(ansi_collapse(1:2, trunc = 2, style = "head"),
-               "1 and 2")
+  expect_equal(ansi_collapse(1:2), "1 and 2")
+  expect_equal(ansi_collapse(1:2, trunc = 2, style = "head"), "1 and 2")
 })
 
 test_that("Avoid duplication of length 1 vecs when width set (#590)", {
@@ -203,7 +206,10 @@ test_that("Avoid duplication of length 1 vecs when width set (#590)", {
   expect_equal(ansi_collapse(1, style = "head"), "1")
   expect_equal(ansi_collapse(1, style = "head", width = 70), "1")
   expect_equal(ansi_collapse(1, style = "head", last = " and again "), "1")
-  expect_equal(ansi_collapse(1, style = "head", width = 70, last = " and again "), "1")
+  expect_equal(
+    ansi_collapse(1, style = "head", width = 70, last = " and again "),
+    "1"
+  )
 })
 
 test_that("Issue #681", {

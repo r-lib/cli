@@ -1,4 +1,3 @@
-
 test_that("errors", {
   fun <- function() {
     defer(1 + "")

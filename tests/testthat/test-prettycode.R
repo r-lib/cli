@@ -1,22 +1,35 @@
-
-col_seq <- list(function(x)
-  paste0("1", x),
-  function(x)
-    paste0("2", x),
-  function(x)
-    paste0("3", x))
+col_seq <- list(
+  function(x) paste0("1", x),
+  function(x) paste0("2", x),
+  function(x) paste0("3", x)
+)
 
 test_that("bracket highlighting", {
   # [](){}
-  expect_equal(color_brackets(c("[", "]", "(", ")", "{", "}"), col_seq),
-               c("1[", "1]", "1(", "1)", "1{", "1}"))
-  
+  expect_equal(
+    color_brackets(c("[", "]", "(", ")", "{", "}"), col_seq),
+    c("1[", "1]", "1(", "1)", "1{", "1}")
+  )
+
   # [({[({})]})]
   expect_equal(
-    color_brackets(c(
-      "[", "(", "{", "[", "(", "{", "}", ")", "]", "}", ")", "]"
+    color_brackets(
+      c(
+        "[",
+        "(",
+        "{",
+        "[",
+        "(",
+        "{",
+        "}",
+        ")",
+        "]",
+        "}",
+        ")",
+        "]"
+      ),
+      col_seq
     ),
-    col_seq),
     c(
       "1[",
       "2(",
@@ -32,7 +45,7 @@ test_that("bracket highlighting", {
       "1]"
     )
   )
-  
+
   # [[ [] ]][[ ()() ]]
   expect_equal(
     color_brackets(
@@ -85,7 +98,6 @@ test_that_cli(configs = c("plain", "ansi"), "null", {
 })
 
 test_that_cli(configs = c("plain", "ansi"), "operator", {
-
   expect_snapshot({
     cat(code_highlight("~ ! 1 - 2 + 3:4 * 5 / 6 ^ 7", list(operator = "bold")))
     cat(code_highlight(
@@ -154,12 +166,14 @@ test_that("replace_in_place corner cases", {
 
 test_that_cli(configs = c("plain", "ansi"), "parse errors", {
   expect_equal(
-    code_highlight("not good!!!"), "not good!!!"
+    code_highlight("not good!!!"),
+    "not good!!!"
   )
   cnd <- NULL
   withCallingHandlers(
     expect_equal(
-      code_highlight("not good!!!"), "not good!!!"
+      code_highlight("not good!!!"),
+      "not good!!!"
     ),
     cli_parse_failure = function(e) cnd <<- e
   )
@@ -218,7 +232,10 @@ test_that("code_theme_list", {
 })
 
 test_that_cli(configs = "ansi", "new language features, raw strings", {
-  if (getRversion() < "4.0.1") { expect_true(TRUE); return() }
+  if (getRversion() < "4.0.1") {
+    expect_true(TRUE)
+    return()
+  }
   expect_snapshot(
     cat(code_highlight(
       '"old" + r"("new""")"',
@@ -228,14 +245,20 @@ test_that_cli(configs = "ansi", "new language features, raw strings", {
 })
 
 test_that_cli(configs = "ansi", "new language features, pipe", {
-  if (getRversion() < "4.1.0") { expect_true(TRUE); return() }
+  if (getRversion() < "4.1.0") {
+    expect_true(TRUE)
+    return()
+  }
   expect_snapshot(
     cat(code_highlight('dir() |> toupper()', list(operator = "bold")))
   )
 })
 
 test_that_cli(configs = "ansi", "new language features, lambda functions", {
-  if (getRversion() < "4.1.0") { expect_true(TRUE); return() }
+  if (getRversion() < "4.1.0") {
+    expect_true(TRUE)
+    return()
+  }
   expect_snapshot(
     cat(code_highlight('\\(x) x * 2', list(reserved = "bold")))
   )

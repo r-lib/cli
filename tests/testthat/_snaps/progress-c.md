@@ -26,6 +26,22 @@
 ---
 
     Code
+      .Call(dll$clitest__progress_crud, list(123))
+    Condition
+      Error:
+      ! Invalid cli progress bar configuration, list elements must be named.
+
+---
+
+    Code
+      .Call(dll$clitest__progress_crud, 100L)
+    Condition
+      Error:
+      ! Unknown cli progress bar configuation, see manual.
+
+---
+
+    Code
       out
     Output
        [1] "\rme llama 1\033[K\r" "\rme llama 2\033[K\r" "\rme llama 3\033[K\r"
@@ -105,4 +121,20 @@
        [7] "\r7/10\033[K\r"               "\r8/10\033[K\r"              
        [9] "\r9/10\033[K\r"               "\rJust did 10 steps.\033[K\r"
       [11] "\n"                          
+
+# clic__find_var
+
+    Code
+      .Call(clic__find_var, env, as.symbol("x"))
+    Condition
+      Error:
+      ! Cannot find variable `x`.
+
+---
+
+    Code
+      .Call(clic__find_var, environment(), as.symbol(basename(tempfile())))
+    Condition
+      Error:
+      ! Cannot find variable `<tmpfile>`.
 
