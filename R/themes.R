@@ -72,8 +72,8 @@ clii_remove_theme <- function(app, id) {
 #' cli_par(class = "code R")
 #' cli_verbatim(
 #'   '# window functions are useful for grouped mutates',
-#'   'mtcars %>%',
-#'   '  group_by(cyl) %>%',
+#'   'mtcars |>',
+#'   '  group_by(cyl) |>',
 #'   '  mutate(rank = min_rank(desc(mpg)))')
 #' ```
 #'

@@ -48,8 +48,8 @@ cli_h2("Longer code chunk")
 cli_par(class = "code R")
 cli_verbatim(
   '# window functions are useful for grouped mutates',
-  'mtcars \%>\%',
-  '  group_by(cyl) \%>\%',
+  'mtcars |>',
+  '  group_by(cyl) |>',
   '  mutate(rank = min_rank(desc(mpg)))')
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
@@ -75,8 +75,8 @@ cli_verbatim(
 #> ── <span style="font-weight: bold;">Longer code chunk</span> ──                                                         
 #>                                                                                 
 #> <span style="color: #666699;"># window functions are useful for grouped mutates</span>                               
-#> mtcars <span style="color: #cc9900;">&#37;&gt;&#37;</span>                                                                      
-#>   <span style="font-weight: bold;">group_by</span><span style="color: #cc9900;">(</span>cyl<span style="color: #cc9900;">)</span> <span style="color: #cc9900;">&#37;&gt;&#37;</span>                                                             
+#> mtcars <span style="color: #cc9900;">|&gt;</span>                                                                       
+#>   <span style="font-weight: bold;">group_by</span><span style="color: #cc9900;">(</span>cyl<span style="color: #cc9900;">)</span> <span style="color: #cc9900;">|&gt;</span>                                                              
 #>   <span style="font-weight: bold;">mutate</span><span style="color: #cc9900;">(</span>rank = <span style="font-weight: bold;">min_rank</span><span style="color: #B58900;">(</span><span style="font-weight: bold;">desc</span><span style="color: #268BD2;">(</span>mpg<span style="color: #268BD2;">)</span><span style="color: #B58900;">)</span><span style="color: #cc9900;">)</span>                                            
 </pre></div>
 }}
