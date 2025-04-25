@@ -1,12 +1,12 @@
 # cli (development version)
 
+* New `{.num}` and `{.bytes}` inline styles to format numbers
+  and bytes (@m-muecke, #644, #588, #643).
+
 # cli 3.6.5
 
 * `code_highlight()` supports long strings and symbols
   (#727 @moodymudskipper).
-
-* New `{.num}` and `{.bytes}` inline styles to format numbers
-  and bytes (@m-muecke, #644, #588, #643).
 
 # cli 3.6.4
 
