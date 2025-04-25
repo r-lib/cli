@@ -11,7 +11,10 @@ editor_options:
     wrap: sentence
 ---
 
-```{r, setup, include = FALSE, cache = FALSE}
+```{r}
+#| label: setup
+#| include: false
+#| cache: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -24,7 +27,9 @@ knitr::opts_chunk$set(
 
 We make sure that the timer is not `TRUE`, by setting it to ten hours.
 
-```{r library, cache = FALSE}
+```{r}
+#| label: library
+#| cache: false
 library(cli)
 # 10 hours
 cli:::cli_tick_set(10 * 60 * 60 * 1000)
@@ -36,7 +41,8 @@ cli_tick_reset()
 
 ## The timer
 
-```{r timer}
+```{r}
+#| label: timer
 fun <- function() NULL
 ben_st <- bench::mark(
   `__cli_update_due`,
@@ -48,7 +54,8 @@ ben_st <- bench::mark(
 ben_st
 ```
 
-```{r timer2}
+```{r}
+#| label: timer2
 ben_st2 <- bench::mark(
   if (`__cli_update_due`) foobar()
 )
@@ -57,7 +64,8 @@ ben_st2
 
 ## `cli_progress_along()`
 
-```{r tick-along}
+```{r}
+#| label: tick-along
 seq <- 1:100000
 ta <- cli_progress_along(seq)
 bench::mark(seq[[1]], ta[[1]])
@@ -67,7 +75,8 @@ bench::mark(seq[[1]], ta[[1]])
 
 This is the baseline:
 
-```{r tick-along-for-f0}
+```{r}
+#| label: tick-along-for-f0
 f0 <- function(n = 1e5) {
   x <- 0
   seq <- 1:n
@@ -80,7 +89,8 @@ f0 <- function(n = 1e5) {
 
 With progress bars:
 
-```{r tick-along-for-f}
+```{r}
+#| label: tick-along-for-f
 fp <- function(n = 1e5) {
   x <- 0
   seq <- 1:n
@@ -94,25 +104,29 @@ fp <- function(n = 1e5) {
 Overhead per iteration:
 
 
-```{r tick-along-for-bench}
+```{r}
+#| label: tick-along-for-bench
 ben_taf <- bench::mark(f0(), fp())
 ben_taf
 (ben_taf$median[2] - ben_taf$median[1]) / 1e5
 ```
 
-```{r tick-along-for-bench2}
+```{r}
+#| label: tick-along-for-bench2
 ben_taf2 <- bench::mark(f0(1e6), fp(1e6))
 ben_taf2
 (ben_taf2$median[2] - ben_taf2$median[1]) / 1e6
 ```
 
-```{r tick-along-for-bench3}
+```{r}
+#| label: tick-along-for-bench3
 ben_taf3 <- bench::mark(f0(1e7), fp(1e7))
 ben_taf3
 (ben_taf3$median[2] - ben_taf3$median[1]) / 1e7
 ```
 
-```{r tick-along-for-bench4}
+```{r}
+#| label: tick-along-for-bench4
 ben_taf4 <- bench::mark(f0(1e8), fp(1e8))
 ben_taf4
 (ben_taf4$median[2] - ben_taf4$median[1]) / 1e8
@@ -122,7 +136,8 @@ ben_taf4
 
 This is the baseline:
 
-```{r tick-along-map-f0}
+```{r}
+#| label: tick-along-map-f0
 f0 <- function(n = 1e5) {
   seq <- 1:n
   ret <- lapply(seq, function(x) {
@@ -134,7 +149,8 @@ f0 <- function(n = 1e5) {
 
 With an index vector:
 
-```{r tick-along-map-f01}
+```{r}
+#| label: tick-along-map-f01
 f01 <- function(n = 1e5) {
   seq <- 1:n
   ret <- lapply(seq_along(seq), function(i) {
@@ -146,7 +162,8 @@ f01 <- function(n = 1e5) {
 
 With progress bars:
 
-```{r tick-along-map-f}
+```{r}
+#| label: tick-along-map-f
 fp <- function(n = 1e5) {
   seq <- 1:n
   ret <- lapply(cli_progress_along(seq), function(i) {
@@ -157,13 +174,15 @@ fp <- function(n = 1e5) {
 ```
 Overhead per iteration:
 
-```{r tick-along-map-bench}
+```{r}
+#| label: tick-along-map-bench
 ben_tam <- bench::mark(f0(), f01(), fp())
 ben_tam
 (ben_tam$median[3] - ben_tam$median[1]) / 1e5
 ```
 
-```{r tick-along-map-bench2}
+```{r}
+#| label: tick-along-map-bench2
 ben_tam2 <- bench::mark(f0(1e6), f01(1e6), fp(1e6))
 ben_tam2
 (ben_tam2$median[3] - ben_tam2$median[1]) / 1e6
@@ -174,7 +193,8 @@ ben_tam2
 
 This is the baseline:
 
-```{r tick-along-purrr-f0}
+```{r}
+#| label: tick-along-purrr-f0
 f0 <- function(n = 1e5) {
   seq <- 1:n
   ret <- purrr::map(seq, function(x) {
@@ -186,7 +206,8 @@ f0 <- function(n = 1e5) {
 
 With index vector:
 
-```{r tick-along-purrr-f01}
+```{r}
+#| label: tick-along-purrr-f01
 f01 <- function(n = 1e5) {
   seq <- 1:n
   ret <- purrr::map(seq_along(seq), function(i) {
@@ -198,7 +219,8 @@ f01 <- function(n = 1e5) {
 
 With progress bars:
 
-```{r tick-along-purrr-f}
+```{r}
+#| label: tick-along-purrr-f
 fp <- function(n = 1e5) {
   seq <- 1:n
   ret <- purrr::map(cli_progress_along(seq), function(i) {
@@ -210,14 +232,16 @@ fp <- function(n = 1e5) {
 
 Overhead per iteration:
 
-```{r tick-along-purrr-bench}
+```{r}
+#| label: tick-along-purrr-bench
 ben_pur <- bench::mark(f0(), f01(), fp())
 ben_pur
 (ben_pur$median[3] - ben_pur$median[1]) / 1e5
 (ben_pur$median[3] - ben_pur$median[2]) / 1e5
 ```
 
-```{r tick-along-purrr-bench2}
+```{r}
+#| label: tick-along-purrr-bench2
 ben_pur2 <- bench::mark(f0(1e6), f01(1e6), fp(1e6))
 ben_pur2
 (ben_pur2$median[3] - ben_pur2$median[1]) / 1e6
@@ -226,7 +250,8 @@ ben_pur2
 
 ## `ticking()`
 
-```{r ticking-f0}
+```{r}
+#| label: ticking-f0
 f0 <- function(n = 1e5) {
   i <- 0
   x <- 0 
@@ -238,7 +263,8 @@ f0 <- function(n = 1e5) {
 }
 ```
 
-```{r ticking-fp}
+```{r}
+#| label: ticking-fp
 fp <- function(n = 1e5) {
   i <- 0
   x <- 0 
@@ -250,7 +276,8 @@ fp <- function(n = 1e5) {
 }
 ```
 
-```{r ticking}
+```{r}
+#| label: ticking
 ben_tk <- bench::mark(f0(), fp())
 ben_tk
 (ben_tk$median[2] - ben_tk$median[1]) / 1e5
@@ -258,7 +285,8 @@ ben_tk
 
 ## Traditional API
 
-```{r api-f0}
+```{r}
+#| label: api-f0
 f0 <- function(n = 1e5) {
   x <- 0
   for (i in 1:n) {
@@ -268,7 +296,8 @@ f0 <- function(n = 1e5) {
 }
 ```
 
-```{r api-fp}
+```{r}
+#| label: api-fp
 fp <- function(n = 1e5) {
   cli_progress_bar(total = n)
   x <- 0
@@ -280,7 +309,8 @@ fp <- function(n = 1e5) {
 }
 ```
 
-```{r api-fpfast}
+```{r}
+#| label: api-fpfast
 ff <- function(n = 1e5) {
   cli_progress_bar(total = n)
   x <- 0
@@ -292,14 +322,16 @@ ff <- function(n = 1e5) {
 }
 ```
 
-```{r api}
+```{r}
+#| label: api
 ben_api <- bench::mark(f0(), ff(), fp())
 ben_api
 (ben_api$median[3] - ben_api$median[1]) / 1e5
 (ben_api$median[2] - ben_api$median[1]) / 1e5
 ```
 
-```{r api2}
+```{r}
+#| label: api2
 ben_api2 <- bench::mark(f0(1e6), ff(1e6), fp(1e6))
 ben_api2
 (ben_api2$median[3] - ben_api2$median[1]) / 1e6
@@ -372,7 +404,8 @@ SEXP test_cli_unroll() {
 }
 ```
 
-```{r capi}
+```{r}
+#| label: capi
 library(progresstest)
 ben_c <- bench::mark(
   test_baseline(),
@@ -393,7 +426,8 @@ Let's measure how long a single update takes.
 
 ## Iterator with a bar
 
-```{r update-prep-total}
+```{r}
+#| label: update-prep-total
 cli_progress_bar(total = 100000)
 bench::mark(cli_progress_update(force = TRUE), max_iterations = 10000)
 cli_progress_done()
@@ -401,7 +435,8 @@ cli_progress_done()
 
 ## Iterator without a bar
 
-```{r update-prep-nototal}
+```{r}
+#| label: update-prep-nototal
 cli_progress_bar(total = NA)
 bench::mark(cli_progress_update(force = TRUE), max_iterations = 10000)
 cli_progress_done()

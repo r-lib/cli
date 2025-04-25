@@ -13,7 +13,10 @@ editor_options:
     wrap: sentence
 ---
 
-```{r, asciicast-setup, include = FALSE, cache = FALSE}
+```{r}
+#| label: asciicast-setup
+#| include: false
+#| cache: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -30,12 +33,18 @@ asciicast::init_knitr_engine(
 
 # Introduction
 
-```{asciicast, asciicast-tick-time, include = FALSE, cache = FALSE}
+```{asciicast}
+#| label: asciicast-tick-time
+#| include: false
+#| cache: false
 set.seed(1)
 Sys.setenv(CLI_TICK_TIME = "100")
 ```
 
-```{asciicast, progress-setup setup, cache = FALSE, include = FALSE}
+```{asciicast}
+#| label: progress-setup setup
+#| cache: false
+#| include: false
 library(cli)
 options(cli.progress_show_after = 0)
 options(cli.progress_clear = FALSE)
@@ -76,7 +85,8 @@ Add a progress bar in three steps:
 
 For example:
 
-```{asciicast classic-example}
+```{asciicast}
+#| label: classic-example
 clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {
@@ -101,7 +111,8 @@ or is interrupted.
 
 The current progress bar lets us omit the `cli_progress_done()` call:
 
-```{asciicast current}
+```{asciicast}
+#| label: current
 clean <- function() {
   cli_progress_bar("Cleaning data #1", total = 100)
   for (i in 1:100) {
@@ -124,11 +135,15 @@ In some cases the total number of progress units is unknown, so simply
 omit them from `cli_progress_bar()` (or set them to `NA`). cli uses a
 different display when `total` is unknown:
 
-```{asciicast unknown-total-seed, include = FALSE, cache = FALSE}
+```{asciicast}
+#| label: unknown-total-seed
+#| include: false
+#| cache: false
 set.seed(1)
 ```
 
-```{asciicast unknown-total}
+```{asciicast}
+#| label: unknown-total
 walk_dirs <- function() {
   cli_progress_bar("Walking directories")
   while (TRUE) {
@@ -171,7 +186,8 @@ from beginning to end. It is best to never assign the return value of
 
 An example:
 
-```{asciicast, tickalong}
+```{asciicast}
+#| label: tickalong
 f <- function() {
   rawabc <- lapply(
     cli_progress_along(letters),
@@ -233,7 +249,8 @@ default:
 * A status message removes the previous status message or progress bar
   of the same caller function.
 
-```{asciicast cli_progress_message}
+```{asciicast}
+#| label: cli_progress_message
 f <- function() {
   cli_progress_message("Task one is running...")
   Sys.sleep(2)
@@ -261,7 +278,8 @@ as usual. You can call `cli_progress_update()` to update a status message.
 * prints the duration of each step (by default), and
 * it keeps the messages on the screen after they are terminated.
 
-```{asciicast cli_progress_step_simple}
+```{asciicast}
+#| label: cli_progress_step_simple
 f <- function() {
   cli_progress_step("Downloading data")
   Sys.sleep(2)
@@ -281,7 +299,8 @@ f()
 As usual, you can use `cli_progress_step()` to update an existing status
 message.
 
-```{asciicast cli_progress_step}
+```{asciicast}
+#| label: cli_progress_step
 f <- function(n = 10) {
   cli_alert_info("About to start downloads of {n} file{?s}")
   i <- 0
@@ -298,7 +317,8 @@ f()
 If you can update the status message frequently enough, then you can also
 add a spinner to it:
 
-```{asciicast cli_progress_step_spinner}
+```{asciicast}
+#| label: cli_progress_step_spinner
 f <- function() {
   cli_progress_step("Downloading data", spinner = TRUE)
   for (i in 1:100) { cli_progress_update(); Sys.sleep(2/100) }
@@ -315,8 +335,9 @@ f()
 `cli_progress_step()` automatically handles errors, and styles the
 status message accordingly:
 
-```{asciicast step-error}
-#| asciicast_rows = 3
+```{asciicast}
+#| label: step-error
+#| asciicast_rows: 3
 f <- function() {
   cli_progress_step("First step, this will succeed")
   Sys.sleep(1)
