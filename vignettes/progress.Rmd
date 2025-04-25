@@ -87,6 +87,7 @@ For example:
 
 ```{asciicast}
 #| label: classic-example
+#| fig-alt: "Progress bar, that contains, from left to right, the specified label, the bar with green squares, the progress percentage, and the ETA."
 clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {
@@ -113,6 +114,7 @@ The current progress bar lets us omit the `cli_progress_done()` call:
 
 ```{asciicast}
 #| label: current
+#| fig-alt: "Two progress bars, after the first finishes, the second starts and then finishes as well."
 clean <- function() {
   cli_progress_bar("Cleaning data #1", total = 100)
   for (i in 1:100) {
@@ -144,6 +146,7 @@ set.seed(1)
 
 ```{asciicast}
 #| label: unknown-total
+#| fig-alt: "Example progress bar where the total number of units is unknown. It has a spinner, the specified label, shows how many units are done, how many units are completed per second and the elapsed time."
 walk_dirs <- function() {
   cli_progress_bar("Walking directories")
   while (TRUE) {
@@ -188,6 +191,7 @@ An example:
 
 ```{asciicast}
 #| label: tickalong
+#| fig-alt: "Progress bar with green squares, that also shows the progress percentage and the ETA."
 f <- function() {
   rawabc <- lapply(
     cli_progress_along(letters),
@@ -251,6 +255,7 @@ default:
 
 ```{asciicast}
 #| label: cli_progress_message
+#| fig-alt: "The three messages are shown, each on its own line, the third one is iterated over 5 steps."
 f <- function() {
   cli_progress_message("Task one is running...")
   Sys.sleep(2)
@@ -280,6 +285,7 @@ as usual. You can call `cli_progress_update()` to update a status message.
 
 ```{asciicast}
 #| label: cli_progress_step_simple
+#| fig-alt: "Four progress steps are shown, each on its own line. Each steps show up as an 'i' (info) step first, and stays like that while it is running. When it is done, the 'i' is turned into a tick mark, and the running time of the step is added to the line at the end, in grey."
 f <- function() {
   cli_progress_step("Downloading data")
   Sys.sleep(2)
@@ -301,6 +307,7 @@ message.
 
 ```{asciicast}
 #| label: cli_progress_step
+#| fig-alt: "First the 'About to start..'. message is shown in its own line. Then a progress bar starts on the next line. The progress bar takes 10 steps. After the fifth step, the progress bar is overwritten with the 'Already half way!' message and the progress bar is moved down to the third line."
 f <- function(n = 10) {
   cli_alert_info("About to start downloads of {n} file{?s}")
   i <- 0
@@ -319,6 +326,7 @@ add a spinner to it:
 
 ```{asciicast}
 #| label: cli_progress_step_spinner
+#| fig-alt: "Four steps are shown, each on its own line. While each step is running, its line has a spinner. Once it is done, the spinner turns into a tick mark and the running time of the step is added to its line at the end."
 f <- function() {
   cli_progress_step("Downloading data", spinner = TRUE)
   for (i in 1:100) { cli_progress_update(); Sys.sleep(2/100) }
@@ -337,6 +345,7 @@ status message accordingly:
 
 ```{asciicast}
 #| label: step-error
+#| fig-alt: "Two steps are shown, each in its own line. While a step is running its line is an 'i' (info) line. The first step finishes successfully and its 'i' mark is turned into a tick mark. The second step fails with an error and its line is overwritten with the error message, and moved down to the third line, and marked with an 'x' (error) mark."
 #| asciicast_rows: 3
 f <- function() {
   cli_progress_step("First step, this will succeed")
