@@ -390,7 +390,7 @@ test_that("get_config_chr() consults option, env var, then its default", {
 test_that("get_config_chr() errors if option is not NULL or string", {
   withr::local_options(cli.something = FALSE)
 
-  expect_error(get_config_chr("something"), "is_string")
+  expect_snapshot(error = TRUE, get_config_chr("something"))
 })
 
 test_that("get_hyperlink_format() delivers custom format", {

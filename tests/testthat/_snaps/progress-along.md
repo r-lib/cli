@@ -28,6 +28,16 @@
 # cli_progress_along error
 
     Code
+      callr::r(fun, stdout = outfile, stderr = outfile)
+    Condition
+      Error:
+      ! in callr subprocess.
+      Caused by error:
+      ! oops
+
+---
+
+    Code
       lines
     Output
       [1] "2021-06-18T00:09:14+00:00 cli-36434-1 0/10 created"            

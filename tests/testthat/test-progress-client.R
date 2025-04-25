@@ -13,7 +13,9 @@ test_that("cli_progress_bar", {
 })
 
 test_that("custom format needs a format string", {
-  expect_error(cli_progress_bar(type = "custom"), "Need to specify format")
+  expect_snapshot(error = TRUE, {
+    cli_progress_bar(type = "custom")
+  })
 })
 
 test_that("removes previous progress bar", {
@@ -51,12 +53,16 @@ test_that("update errors if no progress bar", {
   fun <- function() {
     cli_progress_update()
   }
-  expect_error(fun(), "Cannot find current progress bar")
+  expect_snapshot(
+    error = TRUE,
+    fun(),
+    transform = transform_env
+  )
 
   fun <- function() {
     cli_progress_output("boo")
   }
-  expect_error(fun(), "Cannot find current progress bar")
+  expect_snapshot(error = TRUE, fun(), transform = transform_env)
 
   envkey <- NULL
   fun <- function() {
@@ -64,7 +70,7 @@ test_that("update errors if no progress bar", {
     clienv$progress_ids[[envkey]] <- "foobar"
     cli_progress_update()
   }
-  expect_error(fun(), "Cannot find progress bar")
+  expect_snapshot(error = TRUE, fun())
 
   envkey <- NULL
   fun <- function() {
@@ -72,7 +78,7 @@ test_that("update errors if no progress bar", {
     clienv$progress_ids[[envkey]] <- "foobar"
     cli_progress_output("booboo")
   }
-  expect_error(fun(), "Cannot find progress bar")
+  expect_snapshot(error = TRUE, fun())
 
   clienv$progress_ids[[envkey]] <- NULL
 })

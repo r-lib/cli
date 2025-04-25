@@ -69,7 +69,7 @@ test_that("cli_progress_along error", {
   }
 
   outfile <- tempfile()
-  expect_error(callr::r(fun, stdout = outfile, stderr = outfile))
+  expect_snapshot(error = TRUE, callr::r(fun, stdout = outfile, stderr = outfile))
 
   lines <- fix_logger_output(readLines(outfile))
   expect_snapshot(lines)

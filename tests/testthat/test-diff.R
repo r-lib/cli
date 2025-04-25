@@ -48,19 +48,12 @@ test_that_cli(configs = c("plain", "ansi"), "diff_str", {
 })
 
 test_that("warnings and errors", {
-  expect_error(diff_chr(1:10, 1:10), "is.character")
-  expect_error(
-    format(diff_chr("foo", "bar"), context = -1),
-    "is_count"
-  )
-  expect_warning(
-    format(diff_chr("foo", "bar"), what = 1, is = 2, this = 3),
-    "Extra arguments"
-  )
-  expect_warning(
-    format(diff_str("foo", "bar"), what = 1, is = 2, this = 3),
-    "Extra arguments"
-  )
+  expect_snapshot(error = TRUE, {
+    diff_chr(1:10, 1:10)
+    format(diff_chr("foo", "bar"), context = -1)
+    format(diff_chr("foo", "bar"), what = 1, is = 2, this = 3)
+    format(diff_str("foo", "bar"), what = 1, is = 2, this = 3)
+  })
 })
 
 test_that("max_diff", {

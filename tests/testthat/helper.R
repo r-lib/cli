@@ -243,3 +243,7 @@ r_pty <- function(.envir = parent.frame()) {
   p$read_output()
   p
 }
+
+transform_env <- function(x) {
+  sub("environment: 0x[0-9a-f]+", "environment: <addr>", x)
+}

@@ -78,22 +78,12 @@ test_that("post-processing", {
 })
 
 test_that("post-processing errors", {
-  expect_error(
-    cli_text("package{?s}"),
-    "Cannot pluralize without a quantity"
-  )
-  expect_error(
-    pluralize("package{?s}"),
-    "Cannot pluralize without a quantity"
-  )
-  expect_error(
-    cli_text("package{?s} {5} {10}"),
-    "Multiple quantities for pluralization"
-  )
-  expect_error(
-    pluralize("package{?s} {5} {10}"),
-    "Multiple quantities for pluralization"
-  )
+  expect_snapshot(error = TRUE, {
+    cli_text("package{?s}")
+    pluralize("package{?s}")
+    cli_text("package{?s} {5} {10}")
+    pluralize("package{?s} {5} {10}")
+  })
 })
 
 test_that("issue 158", {

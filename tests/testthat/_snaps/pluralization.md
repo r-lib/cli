@@ -161,6 +161,29 @@
       Package: pkg1
       Packages: pkg1 and pkg2
 
+# post-processing errors
+
+    Code
+      cli_text("package{?s}")
+    Condition
+      Error in `post_process_plurals()`:
+      ! Cannot pluralize without a quantity
+    Code
+      pluralize("package{?s}")
+    Condition
+      Error in `post_process_plurals()`:
+      ! Cannot pluralize without a quantity
+    Code
+      cli_text("package{?s} {5} {10}")
+    Condition
+      Error in `post_process_plurals()`:
+      ! Multiple quantities for pluralization
+    Code
+      pluralize("package{?s} {5} {10}")
+    Condition
+      Error in `post_process_plurals()`:
+      ! Multiple quantities for pluralization
+
 # issue 158
 
     Code

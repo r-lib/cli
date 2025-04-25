@@ -20,7 +20,9 @@ test_that("cli_progress_message error", {
 
   outfile <- tempfile()
   on.exit(unlink(outfile), add = TRUE)
-  expect_error(callr::r(fun, stdout = outfile, stderr = outfile), "oopsie")
+  expect_snapshot(error = TRUE, {
+    callr::r(fun, stdout = outfile, stderr = outfile)
+  })
   expect_snapshot(readLines(outfile))
 
   # we need the env var as well, because the on.exit handler of the progress
@@ -36,7 +38,9 @@ test_that("cli_progress_message error", {
 
   outfile <- tempfile()
   on.exit(unlink(outfile), add = TRUE)
-  expect_error(callr::r(fun2, stdout = outfile, stderr = outfile), "oopsie")
+  expect_snapshot(error = TRUE, {
+    callr::r(fun2, stdout = outfile, stderr = outfile)
+  })
   out <- rawToChar(readBin(outfile, "raw", 1000))
   expect_snapshot(win2unix(out))
 })
@@ -73,7 +77,9 @@ test_that("cli_progress_step error", {
 
   outfile <- tempfile()
   on.exit(unlink(outfile), add = TRUE)
-  expect_error(callr::r(fun, stdout = outfile, stderr = "2>&1"), "oopsie")
+  expect_snapshot(error = TRUE, {
+    callr::r(fun, stdout = outfile, stderr = "2>&1")
+  })
   out <- fix_times(rawToChar(readBin(outfile, "raw", 1000)))
   expect_snapshot(win2unix(out))
 })

@@ -17,11 +17,7 @@ test_that("is_string", {
 
   for (n in not_strings) {
     expect_false(is_string(n))
-    expect_error(
-      stopifnot(is_string(n)),
-      "is_string(n) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_string(n)))
   }
 })
 
@@ -30,11 +26,7 @@ test_that("is_border_style", {
   expect_false(is_border_style("blahblahxxx"))
 
   expect_silent(stopifnot(is_border_style(rownames(box_styles())[1])))
-  expect_error(
-    stopifnot(is_border_style("blahblahxxx")),
-    "is_border_style(\"blahblahxxx\") is not TRUE",
-    fixed = TRUE
-  )
+  expect_snapshot(error = TRUE, stopifnot(is_border_style("blahblahxxx")))
 })
 
 test_that("is_padding_or_margin", {
@@ -60,11 +52,7 @@ test_that("is_padding_or_margin", {
   }
   for (b in bad) {
     expect_false(is_padding_or_margin(b))
-    expect_error(
-      stopifnot(is_padding_or_margin(b)),
-      "is_padding_or_margin(b) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_padding_or_margin(b)))
   }
 })
 
@@ -78,11 +66,7 @@ test_that("is_col", {
   }
   for (b in bad) {
     expect_false(is_col(b))
-    expect_error(
-      stopifnot(is_col(b)),
-      "is_col(b) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_col(b)))
   }
 })
 
@@ -106,11 +90,7 @@ test_that("is_count", {
 
   for (n in not_counts) {
     expect_false(is_count(n))
-    expect_error(
-      stopifnot(is_count(n)),
-      "is_count(n) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_count(n)))
   }
 })
 

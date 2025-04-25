@@ -30,14 +30,12 @@ test_that("c api #1", {
   expect_snapshot(out)
 
   # config must be a named list
-  expect_error(
-    .Call(dll$clitest__progress_crud, list(123)),
-    "list elements must be named"
-  )
-  expect_error(
-    .Call(dll$clitest__progress_crud, 100L),
-    "Unknown cli progress bar configuation"
-  )
+  expect_snapshot(error = TRUE, {
+    .Call(dll$clitest__progress_crud, list(123))
+  })
+  expect_snapshot(error = TRUE, {
+    .Call(dll$clitest__progress_crud, 100L)
+  })
 
   # config can be a progress bar name
   withr::local_options(
@@ -122,14 +120,12 @@ test_that("clic__find_var", {
   expect_equal(.Call(clic__find_var, environment(), as.symbol("x")), 10)
   # not inherit
   env <- new.env(parent = environment())
-  expect_error(
-    .Call(clic__find_var, env, as.symbol("x")),
-    "Cannot find variable"
-  )
-  expect_error(
-    .Call(clic__find_var, environment(), as.symbol(basename(tempfile()))),
-    "Cannot find variable"
-  )
+  expect_snapshot(error = TRUE, {
+    .Call(clic__find_var, env, as.symbol("x"))
+  })
+  expect_snapshot(error = TRUE, {
+    .Call(clic__find_var, environment(), as.symbol(basename(tempfile())))
+  }, transform = function(x) sub("`file.*`", "`<tmpfile>`", x))
 })
 
 test_that("unloading stops the thread", {
