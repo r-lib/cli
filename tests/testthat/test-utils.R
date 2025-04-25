@@ -9,10 +9,7 @@ test_that("make_space", {
 })
 
 test_that("apply_style", {
-  expect_error(
-    apply_style("text", raw(0)),
-    "must be a color name or an ANSI style function"
-  )
+  expect_snapshot(error = TRUE, apply_style("text", raw(0)))
   expect_equal(
     apply_style("foo", function(x) toupper(x)),
     "FOO"

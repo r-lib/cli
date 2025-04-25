@@ -42,14 +42,10 @@ test_that("left label", {
 })
 
 test_that("centered label", {
-  expect_error(
-    rule(left = "label", center = "label"),
-    "cannot be specified"
-  )
-  expect_error(
-    rule(center = "label", right = "label"),
-    "cannot be specified"
-  )
+  expect_snapshot(error = TRUE, {
+    rule(left = "label", center = "label")
+    rule(center = "label", right = "label")
+  })
 
   expect_equal(
     rule(center = "label", width = 13, line = "-"),
