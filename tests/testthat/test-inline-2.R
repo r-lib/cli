@@ -197,3 +197,17 @@ test_that("format_inline and newlines", {
     format_inline("\ffoo\f\fbar\f", keep_whitespace = FALSE)
   })
 })
+
+test_that(".bytes", {
+  expect_snapshot({
+    format_inline("--- {.bytes 123123123} ---")
+    format_inline("--- {.bytes {1:4 * 10000}} ---")
+  })
+})
+
+test_that(".num", {
+  expect_snapshot({
+    format_inline("--- {.num 123123123} ---")
+    format_inline("--- {.num {1:4 * 10000}} ---")
+  })
+})
