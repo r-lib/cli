@@ -74,7 +74,7 @@ inline_collapse <- function(x, style = list()) {
 #'   ```
 #'   The `before` and `after`, etc. style attributes should not be applied
 #'   to `{n}`.
-#' * While making sure that the inlide style's non-interited style is
+#' * While making sure that the inline style's non-inherited style is
 #'   applied to brace expressions. I.e. in
 #'   ```r
 #'   cli_text("{.fun {x}}")

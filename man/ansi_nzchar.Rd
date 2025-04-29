@@ -7,7 +7,7 @@
 ansi_nzchar(x, ...)
 }
 \arguments{
-\item{x}{Charcater vector. Other objects are coarced using
+\item{x}{Character vector. Other objects are coerced using
 \code{\link[base:character]{base::as.character()}}.}
 
 \item{...}{Passed to \code{\link[base:nchar]{base::nzchar()}}.}

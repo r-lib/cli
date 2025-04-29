@@ -359,7 +359,7 @@
       Some letters: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, ..., y, and
       z
 
-# brace expresssion edge cases [ansi]
+# brace expression edge cases [ansi]
 
     Code
       cli_text("{.code {foo} and {bar}}")

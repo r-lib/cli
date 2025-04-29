@@ -35,7 +35,7 @@ utf8_nchar(emo, "bytes")
 utf8_nchar(emo, "width")
 utf8_nchar(emo, "codepoints")
 
-# For comparision, the output for width depends on the R version used:
+# For comparison, the output for width depends on the R version used:
 nchar(emo, "chars")
 nchar(emo, "bytes")
 nchar(emo, "width")

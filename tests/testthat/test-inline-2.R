@@ -153,7 +153,7 @@ test_that("truncate vectors at 20", {
   )
 })
 
-test_that_cli(configs = "ansi", "brace expresssion edge cases", {
+test_that_cli(configs = "ansi", "brace expression edge cases", {
   foo <- "foo"
   bar <- "bar"
   expect_snapshot({

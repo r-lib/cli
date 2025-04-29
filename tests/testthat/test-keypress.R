@@ -1,4 +1,4 @@
-test_that("control characaters", {
+test_that("control characters", {
   skip_on_cran()
   p <- r_pty()
 

@@ -37,7 +37,7 @@
       .Call(dll$clitest__progress_crud, 100L)
     Condition
       Error:
-      ! Unknown cli progress bar configuation, see manual.
+      ! Unknown cli progress bar configuration, see manual.
 
 ---
 

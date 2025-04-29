@@ -41,7 +41,7 @@ rstudio_theme_url_template <- paste0(
 
 ## A set of operator colors to use, for each theme. Should match the name
 ## of the theme file in ace.
-## We need to explicity set themes that should be overridden with the default
+## We need to explicitly set themes that should be overridden with the default
 ## vaue to NULL
 operator_theme_map <- list(
   "solarized_light" = "#93A1A1",

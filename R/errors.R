@@ -828,7 +828,7 @@ err <- local({
 
   # Error parts:
   # - "Error:" or "Error in " prefix, the latter if the error has a call
-  # - the call, possibly syntax highlightedm possibly trimmed (?)
+  # - the call, possibly syntax highlighted possibly trimmed (?)
   # - source ref, with link to the file, potentially in a new line in cli
   # - error message, just `conditionMessage()`
   # - advice about .Last.error and/or .Last.error.trace

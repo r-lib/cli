@@ -540,7 +540,7 @@ NULL
 #'
 #' The `.file` style now automatically creates a `file:` hyperlink.
 #' Because `file:` hyperlinks must contain an absolute path, cli tries to
-#' convert relative paths, and paths starting with `~` to aboslute path.
+#' convert relative paths, and paths starting with `~` to absolute path.
 #'
 #' ```{asciicast links-file-1}
 #' cli_text("... edit your {.file ~/.Rprofile} file.")

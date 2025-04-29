@@ -8,7 +8,7 @@ vt_output(output, width = 80L, height = 25L)
 }
 \arguments{
 \item{output}{Character vector or raw vector. Character vectors are
-collapsed (without a separater), and converted to a raw vector using
+collapsed (without a separator), and converted to a raw vector using
 \code{\link[base:rawConversion]{base::charToRaw()}}.}
 
 \item{width}{Terminal width.}
@@ -44,6 +44,6 @@ correctly.
 }
 }
 \note{
-This function is experimental, and the virtual temrinal API will
+This function is experimental, and the virtual terminal API will
 likely change in future versions of cli.
 }

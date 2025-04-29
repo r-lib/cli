@@ -568,7 +568,7 @@ hash_file_xxhash <- function(paths) {
 
 #' @export
 #' @rdname hash_xxhash
-#' @details The `64` functions caculate the 64 bit variant
+#' @details The `64` functions calculate the 64 bit variant
 #' of xxHash. Otherwise they work the same.
 
 hash_xxhash64 <- function(x) {

@@ -204,7 +204,7 @@ SEXP cli_progress_bar(vint **ptr, double total, SEXP config) {
     Rf_defineVar(Rf_install("name"), config, bar);
 
   } else {
-    error("Unknown cli progress bar configuation, see manual.");
+    error("Unknown cli progress bar configuration, see manual.");
   }
 
   UNPROTECT(3);

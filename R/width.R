@@ -31,7 +31,7 @@
 #' console_width()
 
 console_width <- function() {
-  # cli.width option always takes priotity
+  # cli.width option always takes priority
   cwopt <- getOption("cli.width")
   if (!is.null(cwopt)) {
     if (!is.numeric(cwopt) || length(cwopt) != 1) {
