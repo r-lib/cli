@@ -393,7 +393,7 @@ ansi_strsplit <- function(x, split, ...) {
 #' @family ANSI string operations
 #' @export
 
-# TODO: show wide Unicode charadcters, once they work in asciicast
+# TODO: show wide Unicode characters, once they work in asciicast
 
 ansi_align <- function(
   text,
@@ -572,7 +572,7 @@ ansi_strwrap <- function(
         xs <- xs[-1]
       }
       # At this point, we have as many marks as many newlines we need
-      # But (except for the begnning) we need one less empty lines than
+      # But (except for the beginning) we need one less empty lines than
       # newlines, because an empty line corresponds to two newlines at
       # the end of a non-empty line.
       del <- which(xs[-1] == mark & xs[-length(xs)] != mark) + 1L
@@ -1120,7 +1120,7 @@ ansi_grep_internal <- function(fun, pattern, x, ...) {
 
 #' Like [base::nzchar()], but for ANSI strings
 #'
-#' @param x Charcater vector. Other objects are coarced using
+#' @param x Character vector. Other objects are coerced using
 #'   [base::as.character()].
 #' @param ... Passed to [base::nzchar()].
 #' @export

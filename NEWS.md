@@ -50,7 +50,7 @@
 * `ansi_collapse(x, trunc = 1, style = "head")` now indeed shows one
   element if `length(x) == 2`, as documented (@salim-b, #572).
 
-* `ansi_collapse()` gains a `sep2` argument to specify a seperate separator
+* `ansi_collapse()` gains a `sep2` argument to specify a separate separator
   for length-two inputs. It defaults to `" and "` which, in conjunction with
   the other defaults, produces a collapsed string that fully adheres to the
   [serial comma](https://en.wikipedia.org/wiki/Serial_comma) rules.
@@ -147,7 +147,7 @@
 * cli exit handlers are now compatible again with the withr package (#437).
 
 * cli functions now keep trailing `\f` characters as newlines.
-  They also keep multiple consecutive `\f` as multiple newlinees (#491).
+  They also keep multiple consecutive `\f` as multiple newlines (#491).
 
 * `{}` substitutions within inline styles are now formatted correctly.
   E.g. `{.code download({url})}` will not add backticks to `url`, and

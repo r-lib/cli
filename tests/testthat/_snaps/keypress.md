@@ -1,4 +1,4 @@
-# control characaters
+# control characters
 
     Code
       for (code in c(1:2, 4:6, 8:14, 16L, 20L, 21L, 23L, 27L, 127L)) {

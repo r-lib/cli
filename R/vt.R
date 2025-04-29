@@ -21,7 +21,7 @@
 #' - Unicode graphemes.
 #'
 #' @param output Character vector or raw vector. Character vectors are
-#' collapsed (without a separater), and converted to a raw vector using
+#' collapsed (without a separator), and converted to a raw vector using
 #' [base::charToRaw()].
 #' @param width Terminal width.
 #' @param height Terminal height.
@@ -29,7 +29,7 @@
 #' `attributes`.
 #'
 #' @note
-#' This function is experimental, and the virtual temrinal API will
+#' This function is experimental, and the virtual terminal API will
 #' likely change in future versions of cli.
 #'
 #' @export

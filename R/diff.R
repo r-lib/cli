@@ -185,7 +185,7 @@ get_diff_chunks <- function(lcs, context = 3L) {
 
   # change to include context chunks
   if (context > 0) {
-    # calculae the end before updating the begin
+    # calculate the end before updating the begin
     op_end <- chunks$op_begin + chunks$op_length - 1 + 1
     op_end[op_end > nrow(lcs)] <- nrow(lcs)
     chunks$op_begin <- chunks$op_begin - 1

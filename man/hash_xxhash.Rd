@@ -61,7 +61,7 @@ object. The object is serialized into a binary vector first.
 \code{hash_file_xxhash()} calculates the xxHash hash of one or
 more files.
 
-The \code{64} functions caculate the 64 bit variant
+The \code{64} functions calculate the 64 bit variant
 of xxHash. Otherwise they work the same.
 }
 \examples{

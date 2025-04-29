@@ -97,7 +97,7 @@ parse_arguments <- function() {
 Options:
   -n num        Show the last 'n' releases [default: 10].
   --day         Show releases in the last 24 hours
-  --week        Show relaases in the last 7 * 24 hours
+  --week        Show releases in the last 7 * 24 hours
   --since date  Show releases since 'date'
   -r --reverse  Reverse the order, show older on top
   -h --help     Print this help message
