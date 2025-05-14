@@ -392,10 +392,10 @@ code_theme_default_term <- function() {
 #' * If `cli.code_theme` is set, it is used.
 #' * Otherwise if R is running in RStudio and `cli.code_theme_rstudio` is
 #'   set, then it is used.
-#' * Otherwise if T is not running in RStudio and `cli.code_theme_terminal`
+#' * Otherwise if R is not running in RStudio and `cli.code_theme_terminal`
 #'   is set, then it is used.
 #'
-#' You can set these options to the name of a built-in theme, or to list
+#' You can set these options to the name of a built-in theme, or to a list
 #' that specifies a custom theme. See [code_theme_list()] for the list
 #' of the built-in themes.
 #'
