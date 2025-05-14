@@ -37,11 +37,11 @@ You can use three options to customize the code theme:
 \item If \code{cli.code_theme} is set, it is used.
 \item Otherwise if R is running in RStudio and \code{cli.code_theme_rstudio} is
 set, then it is used.
-\item Otherwise if T is not running in RStudio and \code{cli.code_theme_terminal}
+\item Otherwise if R is not running in RStudio and \code{cli.code_theme_terminal}
 is set, then it is used.
 }
 
-You can set these options to the name of a built-in theme, or to list
+You can set these options to the name of a built-in theme, or to a list
 that specifies a custom theme. See \code{\link[=code_theme_list]{code_theme_list()}} for the list
 of the built-in themes.
 }
