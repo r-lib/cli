@@ -22,6 +22,25 @@
       \-rprojroot
         \-backports
 
+---
+
+    Code
+      tree(data, root = "callr")
+    Output
+      callr
+      +-processx
+      | +-assertthat
+      | | still going
+      | | third row
+      | +-crayon
+      | | and some more
+      | +-debugme
+      | | more debug
+      | | \-crayon
+      | |   and some more
+      | \-R6
+      \-R6
+
 # tree [ansi]
 
     Code
@@ -45,6 +64,25 @@
       +-crayon
       \-rprojroot
         \-backports
+
+---
+
+    Code
+      tree(data, root = "callr")
+    Output
+      callr
+      +-processx
+      | +-assertthat
+      | | still going
+      | | third row
+      | +-[31mcrayon[39m
+      | | [31mand some more[39m
+      | +-debugme
+      | | more debug
+      | | \-[31mcrayon[39m
+      | |   [31mand some more[39m
+      | \-R6
+      \-R6
 
 # tree [unicode]
 
@@ -70,6 +108,25 @@
       └─rprojroot
         └─backports
 
+---
+
+    Code
+      tree(data, root = "callr")
+    Output
+      callr
+      ├─processx
+      │ ├─assertthat
+      │ │ still going
+      │ │ third row
+      │ ├─crayon
+      │ │ and some more
+      │ ├─debugme
+      │ │ more debug
+      │ │ └─crayon
+      │ │   and some more
+      │ └─R6
+      └─R6
+
 # tree [fancy]
 
     Code
@@ -93,6 +150,25 @@
       ├─crayon
       └─rprojroot
         └─backports
+
+---
+
+    Code
+      tree(data, root = "callr")
+    Output
+      callr
+      ├─processx
+      │ ├─assertthat
+      │ │ still going
+      │ │ third row
+      │ ├─[31mcrayon[39m
+      │ │ [31mand some more[39m
+      │ ├─debugme
+      │ │ more debug
+      │ │ └─[31mcrayon[39m
+      │ │   [31mand some more[39m
+      │ └─R6
+      └─R6
 
 # trimming [plain]
 

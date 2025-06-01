@@ -61,6 +61,14 @@ test_that_cli("tree", {
 
   expect_snapshot(tree(data, root = "desc"))
 
+  # multi-line labels
+  data$label <- data$package
+  data$label[3] <- "assertthat\nstill going\nthird row"
+  data$label[13] <- col_red("crayon\nand some more")
+  data$label[14] <- "debugme\nmore debug"
+
+  expect_snapshot(tree(data, root = "callr"))
+
   # Check that trees with apparent circularity error nicely
   data <- data.frame(
     stringsAsFactors = FALSE,

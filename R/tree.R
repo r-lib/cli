@@ -141,7 +141,6 @@ tree <- function(
     num_root <- match(root, data[[1]])
     if (is.na(num_root)) return()
 
-    level <- length(n) - 1
     prefix <- vcapply(seq_along(n), function(i) {
       if (n[i] < mx[i]) {
         if (i == length(n)) {
@@ -159,7 +158,37 @@ tree <- function(
     root_seen <- root %in% seen
     root_lab <- if (trim && root_seen) trimlabs[[num_root]] else
       labels[[num_root]]
-    res <<- c(res, paste0(paste(prefix, collapse = ""), root_lab))
+
+    # multi-line labels
+    prefix2 <- if (grepl("\n", root_lab, fixed = TRUE)) {
+      root_lab <- ansi_strsplit(root_lab, "\n", fixed = TRUE)[[1]]
+      vcapply(seq_along(n), function(i) {
+        if (n[i] < mx[i]) {
+          if (i == length(n)) {
+            paste0(style$v, " ")
+          } else {
+            paste0(style$v, " ")
+          }
+        } else if (n[i] == mx[i] && i == length(n)) {
+          "  "
+        } else {
+          "  "
+        }
+      })
+    }
+
+    res <<- c(
+      res,
+      paste0(
+        c(
+          paste(prefix, collapse = ""),
+          if (length(root_lab) > 1) {
+            rep(paste(prefix2, collapse = ""), length(root_lab) - 1)
+          }
+        ),
+        root_lab
+      )
+    )
 
     # Detect infinite loops
     if (!trim && root %in% used) {
