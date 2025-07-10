@@ -422,7 +422,7 @@ NULL
 #'
 #' # Note: hyperlinks are currently experimental
 #'
-#' The details of the styles that create hyperlinks will prrobably change
+#' The details of the styles that create hyperlinks will probably change
 #' in the near future, based on user feedback.
 #'
 #' # About the links in this manual page
