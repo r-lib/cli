@@ -22,6 +22,8 @@
 #' * `x`: Item with a ref cross, like [cli_alert_danger()].
 #' * `!`: Item with a yellow exclamation mark, like [cli_alert_warning()].
 #' * `i`: Info item, like [cli_alert_info()].
+#' * `[]`: TODO item.
+#' * `?`: Question item.
 #'
 #' You can define new item type by simply defining theming for the
 #' corresponding `bullet-<name>` classes.
@@ -35,7 +37,9 @@
 #'   "v" = "success",
 #'   "x" = "danger",
 #'   "!" = "warning",
-#'   "i" = "info"
+#'   "i" = "info",
+#'   "[]"= "TODO",
+#'   "?" = "question
 #' ))
 #' ```
 #'
