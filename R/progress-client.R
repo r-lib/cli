@@ -229,7 +229,7 @@
 #'     format_done = paste0(
 #'       "{col_green(symbol$tick)} Downloaded {pb_total} files ",
 #'       "in {pb_elapsed}."
-#'     ),,
+#'     ),
 #'     total = length(urls)
 #'   )
 #'   for (url in urls) {
