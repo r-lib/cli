@@ -347,6 +347,7 @@ variables in the calling function:
       "\{col_green(symbol$tick)\} Downloaded \{pb_total\} files ",
       "in \{pb_elapsed\}."
     ),
+    clear = FALSE,
     total = length(urls)
   )
   for (url in urls) \{
