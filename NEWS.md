@@ -2,6 +2,9 @@
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
+  
+* New bullet styles for TODOs ("[]") and questions ("?") 
+  (@jameslairdsmith, #779).
 
 # cli 3.6.5
 
