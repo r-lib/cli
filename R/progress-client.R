@@ -789,7 +789,8 @@ cli_progress_message <- function(
 #' @param current Passed to [cli_progress_bar()].
 #' @param .auto_close Passed to [cli_progress_bar()].
 #' @param .envir Passed to [cli_progress_bar()].
-#' @param ... Passed to [cli_progress_bar()].
+#' @param ... Passed to [cli_progress_bar()] (with the exclusion of `clear`,
+#'   which is always `FALSE`).
 #'
 #' @seealso This function supports [inline markup][inline-markup].
 #' @family progress bar functions
@@ -819,18 +820,20 @@ cli_progress_step <- function(
 
   opt <- options(cli.progress_show_after = 0)
   on.exit(options(opt), add = TRUE)
-  id <- cli_progress_bar(
-    type = "custom",
-    format = format,
-    format_done = format_done,
-    format_failed = format_failed,
-    clear = FALSE,
-    current = current,
-    .auto_close = .auto_close,
-    .envir = .envir,
-    ...
-  )
-
+  cli_progress_bar_strip_clear <- function(..., clear) {
+    cli_progress_bar(
+        type = "custom",
+        format = format,
+        format_done = format_done,
+        format_failed = format_failed,
+        clear = FALSE,
+        current = current,
+        .auto_close = .auto_close,
+        .envir = .envir,
+        ...
+    )
+  }
+  id <- cli_progress_bar_strip_clear(...)
   cli_progress_update(id = id, force = TRUE, .envir = .envir)
 
   invisible(id)

@@ -59,6 +59,17 @@ test_that("cli_progress_step", {
   expect_snapshot(msgs)
 })
 
+test_that("cli_progress_step ignores clear", {
+  withr::local_options(cli.dynamic = TRUE, cli.ansi = TRUE)
+  suppressWarnings(testthat::local_reproducible_output())
+  fun <- function() {
+    cli_progress_step("First step", clear = TRUE)
+    cli_progress_step("Second step", clear = FALSE)
+  }
+  msgs <- fix_times(capture_cli_messages(fun()))
+  expect_snapshot(msgs)
+})
+
 test_that("cli_progress_step error", {
   if (getRversion() < "3.5.0") skip("Needs R 3.5.0")
   fun <- function() {
