@@ -3,6 +3,8 @@
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
 
+* `code_highlight()` handles tab characters (`\t`) correctly (@mcol, #783).
+
 # cli 3.6.5
 
 * `code_highlight()` supports long strings and symbols
