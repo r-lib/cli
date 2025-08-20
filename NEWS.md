@@ -3,6 +3,9 @@
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
 
+* Silently ignore the `clear` argument if used in `cli_progress_step()`
+  (@mcol, #785).
+
 # cli 3.6.5
 
 * `code_highlight()` supports long strings and symbols
