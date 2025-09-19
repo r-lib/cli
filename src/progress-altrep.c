@@ -123,7 +123,15 @@ int progress_along_Elt(SEXP x, R_xlen_t i) {
     Rf_defineVar(PROTECT(Rf_install("current")), PROTECT(ScalarReal((int) i)), bar);
     cli__current_progress_bar = bar;
     SEXP show_after = clic__find_var(bar, Rf_install("show_after"));
-    if (now > REAL(show_after)[0]) DATAPTR(cli__disable_gc);
+
+    SEXP last_shown = Rf_findVarInFrame(bar, Rf_install("last_shown"));
+    if (last_shown == R_UnboundValue) {
+      last_shown = Rf_ScalarReal(R_NegInf);
+    }
+
+    if (now > REAL(show_after)[0] + REAL(last_shown)[0]) {
+      DATAPTR(cli__disable_gc);
+    }
     UNPROTECT(2);
   }
   return (int) (i + 1);
