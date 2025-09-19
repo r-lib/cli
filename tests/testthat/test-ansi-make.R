@@ -1,16 +1,32 @@
-
 test_that("make_style without name", {
   pink <- make_ansi_style("pink")
   expect_true(inherits(pink, "cli_ansi_style"))
 })
 
 test_that("hexa color regex works", {
-  positive <- c("#000000", "#ffffff", "#0f0f0f", "#f0f0f0",
-                "#00000000", "#ffffffff", "#0f0f0f00", "#f0f0f055")
+  positive <- c(
+    "#000000",
+    "#ffffff",
+    "#0f0f0f",
+    "#f0f0f0",
+    "#00000000",
+    "#ffffffff",
+    "#0f0f0f00",
+    "#f0f0f055"
+  )
 
-  negative <- c("", "#12345", "123456", "1234567", "12345678",
-                "#1234567", "#1234ffg", "#gggggx", "foo#123456",
-                "foo#123456bar")
+  negative <- c(
+    "",
+    "#12345",
+    "123456",
+    "1234567",
+    "12345678",
+    "#1234567",
+    "#1234ffg",
+    "#gggggx",
+    "foo#123456",
+    "foo#123456bar"
+  )
 
   for (color in positive) {
     expect_true(grepl(hash_color_regex, color))
@@ -84,5 +100,5 @@ test_that("make_ansi_style", {
   expect_snapshot(
     error = TRUE,
     make_ansi_style("foobar")
-  )  
+  )
 })

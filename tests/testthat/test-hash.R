@@ -1,4 +1,3 @@
-
 test_that("hash_sha256", {
   dig <- function(x) {
     digest::digest(x, serialize = FALSE, algo = "sha256")
@@ -191,5 +190,24 @@ test_that("hash_obj_animal", {
     hash_obj_animal(raw(0))$words
     hash_obj_animal(1:10)$words
     hash_obj_animal(mtcars)$words
+  })
+})
+
+test_that("hash_xxhash", {
+  expect_snapshot({
+    hash_xxhash(letters[1:5])
+    hash_xxhash(c("a", NA, "b"))
+    hash_xxhash64(letters[1:5])
+    hash_raw_xxhash(charToRaw("a"))
+    hash_raw_xxhash64(charToRaw("a"))
+    hash_obj_xxhash(raw(0))
+    hash_obj_xxhash64(raw(0))
+  })
+  tmp <- tempfile()
+  on.exit(unlink(tmp), add = TRUE)
+  writeBin(charToRaw("a"), tmp)
+  expect_snapshot({
+    hash_file_xxhash(tmp)
+    hash_file_xxhash64(tmp)
   })
 })

@@ -1,4 +1,3 @@
-
 test_that("suppress output", {
   if (getRversion() >= "4.0.0") {
     cnd <- NULL

@@ -1,4 +1,3 @@
-
 test_that("very long strings", {
   withr::local_options(cli.num_colors = 256)
   str <- strrep("1234 ", 1000)
@@ -44,14 +43,14 @@ test_that("0m closing tag", {
 
 test_that("various tags", {
   cases <- list(
-    list("\033[1m\033[22m\033[1mfoo",   "\033[1mfoo\033[22m"),
-    list("\033[2m\033[22m\033[2mfoo",   "\033[2mfoo\033[22m"),
-    list("\033[3m\033[23m\033[3mfoo",   "\033[3mfoo\033[23m"),
-    list("\033[4m\033[24m\033[4mfoo",   "\033[4mfoo\033[24m"),
-    list("\033[5m\033[25m\033[5mfoo",   "\033[5mfoo\033[25m"),
-    list("\033[7m\033[27m\033[7mfoo",   "\033[7mfoo\033[27m"),
-    list("\033[8m\033[28m\033[8mfoo",   "\033[8mfoo\033[28m"),
-    list("\033[9m\033[29m\033[9mfoo",   "\033[9mfoo\033[29m"),
+    list("\033[1m\033[22m\033[1mfoo", "\033[1mfoo\033[22m"),
+    list("\033[2m\033[22m\033[2mfoo", "\033[2mfoo\033[22m"),
+    list("\033[3m\033[23m\033[3mfoo", "\033[3mfoo\033[23m"),
+    list("\033[4m\033[24m\033[4mfoo", "\033[4mfoo\033[24m"),
+    list("\033[5m\033[25m\033[5mfoo", "\033[5mfoo\033[25m"),
+    list("\033[7m\033[27m\033[7mfoo", "\033[7mfoo\033[27m"),
+    list("\033[8m\033[28m\033[8mfoo", "\033[8mfoo\033[28m"),
+    list("\033[9m\033[29m\033[9mfoo", "\033[9mfoo\033[29m"),
     list("\033[30m\033[39m\033[30mfoo", "\033[30mfoo\033[39m"),
     list("\033[31m\033[39m\033[31mfoo", "\033[31mfoo\033[39m"),
     list("\033[32m\033[39m\033[32mfoo", "\033[32mfoo\033[39m"),
@@ -139,21 +138,21 @@ test_that("CSI sequences", {
 test_that("ansi_has_any", {
   T <- TRUE
   F <- FALSE
-  expect_false(ansi_has_any("foobar",                sgr = T, csi = T))
-  expect_true (ansi_has_any("\033[1mfoobar",         sgr = T, csi = T))
-  expect_true (ansi_has_any("\033[10Afoobar",        sgr = T, csi = T))
-  expect_true (ansi_has_any("\033[10A\033[1mfoobar", sgr = T, csi = T))
-  expect_false(ansi_has_any("foobar",                sgr = T, csi = F))
-  expect_true (ansi_has_any("\033[1mfoobar",         sgr = T, csi = F))
-  expect_false(ansi_has_any("\033[10Afoobar",        sgr = T, csi = F))
-  expect_true (ansi_has_any("\033[10A\033[1mfoobar", sgr = T, csi = F))
-  expect_false(ansi_has_any("foobar",                sgr = F, csi = T))
-  expect_false(ansi_has_any("\033[1mfoobar",         sgr = F, csi = T))
-  expect_true (ansi_has_any("\033[10Afoobar",        sgr = F, csi = T))
-  expect_true (ansi_has_any("\033[10A\033[1mfoobar", sgr = F, csi = T))
-  expect_false(ansi_has_any("foobar",                sgr = F, csi = F))
-  expect_false(ansi_has_any("\033[1mfoobar",         sgr = F, csi = F))
-  expect_false(ansi_has_any("\033[10Afoobar",        sgr = F, csi = F))
+  expect_false(ansi_has_any("foobar", sgr = T, csi = T))
+  expect_true(ansi_has_any("\033[1mfoobar", sgr = T, csi = T))
+  expect_true(ansi_has_any("\033[10Afoobar", sgr = T, csi = T))
+  expect_true(ansi_has_any("\033[10A\033[1mfoobar", sgr = T, csi = T))
+  expect_false(ansi_has_any("foobar", sgr = T, csi = F))
+  expect_true(ansi_has_any("\033[1mfoobar", sgr = T, csi = F))
+  expect_false(ansi_has_any("\033[10Afoobar", sgr = T, csi = F))
+  expect_true(ansi_has_any("\033[10A\033[1mfoobar", sgr = T, csi = F))
+  expect_false(ansi_has_any("foobar", sgr = F, csi = T))
+  expect_false(ansi_has_any("\033[1mfoobar", sgr = F, csi = T))
+  expect_true(ansi_has_any("\033[10Afoobar", sgr = F, csi = T))
+  expect_true(ansi_has_any("\033[10A\033[1mfoobar", sgr = F, csi = T))
+  expect_false(ansi_has_any("foobar", sgr = F, csi = F))
+  expect_false(ansi_has_any("\033[1mfoobar", sgr = F, csi = F))
+  expect_false(ansi_has_any("\033[10Afoobar", sgr = F, csi = F))
   expect_false(ansi_has_any("\033[10A\033[1mfoobar", sgr = F, csi = F))
 })
 

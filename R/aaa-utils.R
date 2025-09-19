@@ -1,4 +1,3 @@
-
 `%||%` <- function(l, r) if (is.null(l)) r else l
 
 new_class <- function(class_name, ...) {
@@ -32,13 +31,12 @@ is_latex_output <- function() {
   get("is_latex_output", asNamespace("knitr"))()
 }
 
-is_windows <-  function() {
+is_windows <- function() {
   .Platform$OS.type == "windows"
 }
 
 apply_style <- function(text, style, bg = FALSE) {
-  if (identical(text, ""))
-    return(text)
+  if (identical(text, "")) return(text)
 
   if (is.function(style)) {
     style(text)
@@ -85,7 +83,7 @@ tail_na <- function(x, n = 1) {
 }
 
 dedent <- function(x, n = 2) {
-  first_n_char <- strsplit(ansi_substr(x, 1, n), "")[[1]]
+  first_n_char <- strsplit(ansi_substr(x, 1, n), "", fixed = TRUE)[[1]]
   n_space <- cumsum(first_n_char == " ")
   d_n_space <- diff(c(0, n_space))
   first_not_space <- utils::head(c(which(d_n_space == 0), n + 1), 1)

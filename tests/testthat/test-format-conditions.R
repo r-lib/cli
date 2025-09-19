@@ -1,29 +1,34 @@
-
 test_that_cli("format_error", {
-  expect_snapshot(error = TRUE, local({
-    n <- "boo"
-    stop(format_error(c(
-            "{.var n} must be a numeric vector",
-      "x" = "You've supplied a {.cls {class(n)}} vector."
-    )))
-  }))
+  expect_snapshot(
+    error = TRUE,
+    local({
+      n <- "boo"
+      stop(format_error(c(
+        "{.var n} must be a numeric vector",
+        "x" = "You've supplied a {.cls {class(n)}} vector."
+      )))
+    })
+  )
 
-  expect_snapshot(error = TRUE, local({
-    len <- 26
-    idx <- 100
-    stop(format_error(c(
-            "Must index an existing element:",
-      "i" = "There {?is/are} {len} element{?s}.",
-      "x" = "You've tried to subset element {idx}."
-    )))
-  }))
+  expect_snapshot(
+    error = TRUE,
+    local({
+      len <- 26
+      idx <- 100
+      stop(format_error(c(
+        "Must index an existing element:",
+        "i" = "There {?is/are} {len} element{?s}.",
+        "x" = "You've tried to subset element {idx}."
+      )))
+    })
+  )
 })
 
 test_that_cli("format_warning", {
   expect_snapshot({
     n <- "boo"
     warning(format_warning(c(
-            "{.var n} must be a numeric vector",
+      "{.var n} must be a numeric vector",
       "x" = "You've supplied a {.cls {class(n)}} vector."
     )))
   })
@@ -32,7 +37,7 @@ test_that_cli("format_warning", {
     len <- 26
     idx <- 100
     warning(format_warning(c(
-            "Must index an existing element:",
+      "Must index an existing element:",
       "i" = "There {?is/are} {len} element{?s}.",
       "x" = "You've tried to subset element {idx}."
     )))
@@ -43,7 +48,7 @@ test_that_cli("format_message", {
   expect_snapshot({
     n <- "boo"
     message(format_message(c(
-            "{.var n} must be a numeric vector",
+      "{.var n} must be a numeric vector",
       "x" = "You've supplied a {.cls {class(n)}} vector."
     )))
   })
@@ -52,7 +57,7 @@ test_that_cli("format_message", {
     len <- 26
     idx <- 100
     message(format_message(c(
-            "Must index an existing element:",
+      "Must index an existing element:",
       "i" = "There {?is/are} {len} element{?s}.",
       "x" = "You've tried to subset element {idx}."
     )))
@@ -60,41 +65,28 @@ test_that_cli("format_message", {
 })
 
 test_that_cli(configs = "ansi", "color in RStudio", {
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "rstudio_detect",
-    list(type = "rstudio_console", num_colors = 256)
-  )
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "get_rstudio_theme",
-    list(foreground = "rgb(0, 0, 0)")
+  local_mocked_bindings(
+    rstudio_detect = function()
+      list(type = "rstudio_console", num_colors = 256),
+    get_rstudio_theme = function() list(foreground = "rgb(0, 0, 0)")
   )
   expect_snapshot({
     col <- get_rstudio_fg_color0()
     cat(col("this is the new color"))
   })
 
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "get_rstudio_theme",
-    list()
-  )
+  local_mocked_bindings(get_rstudio_theme = function() list())
   expect_null(get_rstudio_fg_color0())
 
-  mockery::stub(
-    get_rstudio_fg_color0,
-    "rstudio_detect",
-    list(type = "rstudio_console", num_colors = 1)
-    )
+  local_mocked_bindings(
+    rstudio_detect = function() list(type = "rstudio_console", num_colors = 1)
+  )
   expect_null(get_rstudio_fg_color0())
 })
 
 test_that_cli(configs = "ansi", "update_rstudio_color", {
-  mockery::stub(
-    update_rstudio_color,
-    "get_rstudio_fg_color",
-    function() make_ansi_style("#008800")
+  local_mocked_bindings(
+    get_rstudio_fg_color = function() make_ansi_style("#008800")
   )
   expect_snapshot(cat(update_rstudio_color("color me interested")))
 })
@@ -110,11 +102,14 @@ test_that("named first element", {
 
 test_that("no cli conditions are thrown", {
   cnd <- NULL
-  withCallingHandlers({
-    format_error("error")
-    format_warning("warning")
-    format_message("message")
-  }, cli_message = function(cnd_) cnd <<- cnd_)
+  withCallingHandlers(
+    {
+      format_error("error")
+      format_warning("warning")
+      format_message("message")
+    },
+    cli_message = function(cnd_) cnd <<- cnd_
+  )
 
   expect_null(cnd)
 })
@@ -138,17 +133,20 @@ test_that("cli.condition_width", {
 
 test_that_cli("suppressing Unicode bullets", {
   withr::local_options(cli.condition_unicode_bullets = FALSE)
-  expect_snapshot(error = TRUE, local({
-    n <- "boo"
-    stop(format_error(c(
-            "{.var n} must be a numeric vector",
-      "x" = "You've supplied a {.cls {class(n)}} vector.",
-      "v" = "Success.",
-      "i" = "Info.",
-      "*" = "Bullet",
-      ">" = "Arrow"
-    )))
-  }))
+  expect_snapshot(
+    error = TRUE,
+    local({
+      n <- "boo"
+      stop(format_error(c(
+        "{.var n} must be a numeric vector",
+        "x" = "You've supplied a {.cls {class(n)}} vector.",
+        "v" = "Success.",
+        "i" = "Info.",
+        "*" = "Bullet",
+        ">" = "Arrow"
+      )))
+    })
+  )
 })
 
 test_that("edge cases", {

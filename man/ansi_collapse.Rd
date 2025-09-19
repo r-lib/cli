@@ -7,7 +7,7 @@
 ansi_collapse(
   x,
   sep = ", ",
-  sep2 = " and ",
+  sep2 = sub("^,", "", last),
   last = ", and ",
   trunc = Inf,
   width = Inf,
@@ -22,7 +22,8 @@ to collapse.}
 \item{sep}{Separator. A character string.}
 
 \item{sep2}{Separator for the special case that \code{x} contains only two
-elements. A character string.}
+elements. A character string. Defaults to the value of \code{last} without the
+serial comma.}
 
 \item{last}{Last separator, if there is no truncation. E.g. use
 \code{", and "} for the \href{https://en.wikipedia.org/wiki/Serial_comma}{serial comma}. A character string.}

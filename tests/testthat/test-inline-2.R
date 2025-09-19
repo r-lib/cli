@@ -1,11 +1,10 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 
 test_that_cli(
-  config = c("plain", "ansi"),
-  "quoting phrases that don't start or end with letter or number", {
-
+  configs = c("plain", "ansi"),
+  "quoting phrases that don't start or end with letter or number",
+  {
     expect_snapshot(local({
       x0 <- "good-name"
       cli_text("The name is {.file {x0}}.")
@@ -67,7 +66,7 @@ test_that_cli(configs = c("plain", "ansi"), "transform", {
 
 test_that("cli_format", {
   expect_snapshot(
-    cli_format(1:4/7, list(digits = 2))
+    cli_format(1:4 / 7, list(digits = 2))
   )
 })
 
@@ -108,10 +107,12 @@ test_that("line breaks", {
 
 test_that_cli(configs = "ansi", "double ticks", {
   x <- c("a", "`x`", "b")
-  cli_div(theme = list(
-    .code = list(color = "red"),
-    .fun = list(color = "red")
-  ))
+  cli_div(
+    theme = list(
+      .code = list(color = "red"),
+      .fun = list(color = "red")
+    )
+  )
   expect_snapshot(format_inline("{.code {x}}"))
   expect_snapshot(format_inline("{.fun {x}}"))
 })
@@ -152,7 +153,7 @@ test_that("truncate vectors at 20", {
   )
 })
 
-test_that_cli(configs = "ansi", "brace expresssion edge cases", {
+test_that_cli(configs = "ansi", "brace expression edge cases", {
   foo <- "foo"
   bar <- "bar"
   expect_snapshot({
@@ -195,5 +196,19 @@ test_that("format_inline and newlines", {
     format_inline("\nfoo\n\nbar\n", keep_whitespace = FALSE)
     format_inline("foo\fbar", keep_whitespace = FALSE)
     format_inline("\ffoo\f\fbar\f", keep_whitespace = FALSE)
+  })
+})
+
+test_that(".bytes", {
+  expect_snapshot({
+    format_inline("--- {.bytes 123123123} ---")
+    format_inline("--- {.bytes {1:4 * 10000}} ---")
+  })
+})
+
+test_that(".num", {
+  expect_snapshot({
+    format_inline("--- {.num 123123123} ---")
+    format_inline("--- {.num {1:4 * 10000}} ---")
   })
 })

@@ -1,9 +1,12 @@
-
 test_that("custom handler works", {
   conds <- list()
   withr::with_options(
     list(cli.default_handler = function(msg) conds <<- c(conds, list(msg))),
-    { cli_h1("title"); cli_h2("subtitle"); cli_text("text") }
+    {
+      cli_h1("title")
+      cli_h2("subtitle")
+      cli_text("text")
+    }
   )
   expect_equal(length(conds), 3)
   lapply(conds, expect_s3_class, "cli_message")

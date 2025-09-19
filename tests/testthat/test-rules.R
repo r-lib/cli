@@ -1,6 +1,4 @@
-
 test_that_cli("make_line", {
-
   expect_equal(make_line(1, "-"), "-")
   expect_equal(make_line(0, "-"), "")
   expect_equal(make_line(2, "-"), "--")
@@ -21,7 +19,6 @@ test_that("width option", {
 })
 
 test_that("left label", {
-
   expect_equal(
     rule("label", width = 12, line = "-"),
     rule_class("-- label ---")
@@ -45,15 +42,10 @@ test_that("left label", {
 })
 
 test_that("centered label", {
-
-  expect_error(
-    rule(left = "label", center = "label"),
-    "cannot be specified"
-  )
-  expect_error(
-    rule(center = "label", right = "label"),
-    "cannot be specified"
-  )
+  expect_snapshot(error = TRUE, {
+    rule(left = "label", center = "label")
+    rule(center = "label", right = "label")
+  })
 
   expect_equal(
     rule(center = "label", width = 13, line = "-"),
@@ -109,9 +101,9 @@ test_that("right label", {
 })
 
 test_that("line_col", {
-
   withr::with_options(
-    list(cli.num_colors = 256L), {
+    list(cli.num_colors = 256L),
+    {
       expect_true(ansi_has_any(
         rule(line_col = "red")
       ))

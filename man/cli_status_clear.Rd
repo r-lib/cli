@@ -45,7 +45,7 @@ functions, for a superior API.
 
 Other status bar: 
 \code{\link{cli_process_start}()},
-\code{\link{cli_status_update}()},
-\code{\link{cli_status}()}
+\code{\link{cli_status}()},
+\code{\link{cli_status_update}()}
 }
 \concept{status bar}

@@ -99,7 +99,8 @@ collapsed vectors (see below) from "and" to "or".
 \item \code{run} is an R expression, that is potentially clickable if the terminal
 supports ANSI hyperlinks to runnable code (e.g. RStudio).
 It supports link text. See \link{links} for more information about cli hyperlinks.
-\item \code{str} for a double quoted string escaped by \code{\link[base:encodeString]{base::encodeString()}}.#' * \code{strong} for strong importance.
+\item \code{str} for a double quoted string escaped by \code{\link[base:encodeString]{base::encodeString()}}.
+\item \code{strong} for strong importance.
 \item \code{topic} is a help page of a \emph{topic}.
 If the terminal supports ANSI hyperlinks to help pages (e.g. RStudio),
 then cli creates a clickable link. It supports link text.
@@ -132,7 +133,7 @@ cli_li("`mtcars` is \{.obj_type_friendly \{mtcars\}\}")
 cli_end(ul)
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> • <span style="font-style: italic;">Emphasized</span> text.                                                              
+#> • <span style="font-style: italic;color: #DC322F;">Emphasized</span> text.                                                              
 #> • <span style="font-weight: bold;">Strong</span> importance.                                                            
 #> • A piece of code: `sum(a) / length(a)`.                                        
 #> • A package name: <span style="color: #268BD2;">cli</span>.                                                          

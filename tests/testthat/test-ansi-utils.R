@@ -1,4 +1,3 @@
-
 test_that("re_table", {
   withr::local_options(
     cli.num_colors = 256,

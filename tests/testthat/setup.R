@@ -1,4 +1,3 @@
-
 unlink(dir(
   file.path(dirname(dirname(normalizePath(test_path()))), "src"),
   pattern = "[.]gcda$",

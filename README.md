@@ -12,7 +12,7 @@ cli
 [![CRAN RStudio mirror
 downloads](https://cranlogs.r-pkg.org/badges/cli)](https://www.r-pkg.org/pkg/cli)
 [![Codecov test
-coverage](https://codecov.io/gh/r-lib/cli/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/cli?branch=main)
+coverage](https://codecov.io/gh/r-lib/cli/graph/badge.svg)](https://app.codecov.io/gh/r-lib/cli)
 <!-- badges: end -->
 
 A suite of tools to build attractive command line interfaces (CLIs),

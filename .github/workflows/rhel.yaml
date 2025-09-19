@@ -1,0 +1,53 @@
+on:
+  workflow_dispatch:
+
+name: rhel.yaml
+
+permissions: read-all
+
+jobs:
+  rhel:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          # cannot run the nodejs actions because RHEL7 cannot run node20
+          # - { os: rhel7, r: release, key: REDHAT_ACTIVATION_KEY_RHEL7 }
+          - { os: rhel8, r: release, key: REDHAT_ACTIVATION_KEY_RHEL8 }
+          - { os: rhel9, r: release, key: REDHAT_ACTIVATION_KEY_RHEL9 }
+    container:
+      image: ghcr.io/r-hub/containers/${{ matrix.config.os }}:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Register
+        run: |
+          subscription-manager register \
+            --org ${{ secrets.REDHAT_ORG }} \
+            --activationkey ${{ secrets[matrix.config.key] }}
+        shell: bash
+
+      - name: Install R
+        if: ${{ matrix.config.r != 'release' }}
+        run: |
+          rig add ${{ matrix.config.r }}
+        shell: bash
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+        env:
+          NOT_CRAN: true
+
+      - name: Unregister
+        if: always()
+        run: |
+          subscription-manager unregister || true

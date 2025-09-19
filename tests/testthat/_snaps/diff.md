@@ -229,6 +229,33 @@
     Output
       [42m[30mPRE[39m[49mabcdefg[44m[30mhijklm[39m[49m[42m[30mMIDDLE[39m[49mnopqrstuvwxyz[42m[30mPOST[39m[49m
 
+# warnings and errors
+
+    Code
+      diff_chr(1:10, 1:10)
+    Condition
+      Error in `diff_chr()`:
+      ! is.character(old) is not TRUE
+    Code
+      format(diff_chr("foo", "bar"), context = -1)
+    Condition
+      Error in `format.cli_diff_chr()`:
+      ! context == Inf || is_count(context) is not TRUE
+    Code
+      format(diff_chr("foo", "bar"), what = 1, is = 2, this = 3)
+    Condition
+      Warning in `format.cli_diff_chr()`:
+      Extra arguments were ignored in `format.cli_diff_chr()`.
+    Output
+      [1] "@@ -1 +1 @@" "-foo"        "+bar"       
+    Code
+      format(diff_str("foo", "bar"), what = 1, is = 2, this = 3)
+    Condition
+      Warning in `format.cli_diff_str()`:
+      Extra arguments were ignored in `format.cli_diff_chr()`.
+    Output
+      [1] "[-foo-]{+bar+}"
+
 # max_diff
 
     ! Diff edit distance is larger than the limit.

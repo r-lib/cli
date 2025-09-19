@@ -1,4 +1,3 @@
-
 # We need an UTF-8 platform or a recent R version on Windows
 
 utf8 <- l10n_info()$`UTF-8`

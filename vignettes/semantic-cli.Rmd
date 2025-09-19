@@ -14,7 +14,9 @@ editor_options:
     wrap: sentence
 ---
 
-```{r, include = FALSE, cache = FALSE}
+```{r}
+#| include: false
+#| cache: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -49,7 +51,8 @@ CLI elements, and also some common features of them.
 
 # Building a command line interface
 
-```{r, setup}
+```{r}
+#| label: setup
 library(cli)
 ```
 
@@ -336,8 +339,10 @@ This output is created "above" the status bar, which is always kept in the last 
 See the following example:
 
 ```{asciicast}
-#| asciicast_at = "all",
-#| asciicast_end_wait = 30
+#| label: status-bar
+#| asciicast_at: "all"
+#| asciicast_end_wait: 30
+#| fig-alt: "First the info message is shown. Then a dynamic status line is shown that shows the number of downloaded and the number of downloading files. After 5 files, this is replaced by the 'Already half-way!' message and the status line is moved down. At the end the status line is overwritten by the 'Downloads done.' message."
 f <- function() {
   cli_alert_info("About to start downloads.")
   sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
@@ -602,11 +607,15 @@ get_spinner("dots")
 ```
 
 ```{asciicast}
-#| asciicast_at = "all"
+#| label: spinner-dots
+#| fig-alt: "Animation of a spinner made out of Braille characters."
+#| asciicast_at: "all"
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
 ```{asciicast}
-#| asciicast_at = "all"
+#| label: spinner-clock
+#| fig-alt: "Animation of a spinner that is a Unicode clock glyph where the small arm of the clock is spinning around."
+#| asciicast_at: "all"
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```

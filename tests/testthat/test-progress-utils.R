@@ -1,4 +1,3 @@
-
 test_that("cli_progress_num", {
   withr::local_options(cli.progress_handlers_only = "cli")
   fun <- function() {
@@ -31,7 +30,7 @@ test_that("should_run_progress_examples", {
   withr::local_envvar(NOT_CRAN = "true")
   expect_true(should_run_progress_examples())
 
-  mockery::stub(should_run_progress_examples, "is_rcmd_check", TRUE)
+  local_mocked_bindings(is_rcmd_check = function() TRUE)
   expect_false(should_run_progress_examples())
 })
 

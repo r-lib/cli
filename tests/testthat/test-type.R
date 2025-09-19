@@ -1,4 +1,3 @@
-
 test_that("type style", {
   expect_snapshot({
     # objects

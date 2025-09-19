@@ -1,4 +1,3 @@
-
 test_that("sitrep runs", {
   expect_true(is.list(cli_sitrep()))
   expect_true(is.character(format(cli_sitrep())))

@@ -118,16 +118,16 @@ The \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[
 functions, for a superior API.
 
 Other status bar: 
+\code{\link{cli_status}()},
 \code{\link{cli_status_clear}()},
-\code{\link{cli_status_update}()},
-\code{\link{cli_status}()}
+\code{\link{cli_status_update}()}
 
 Other functions supporting inline markup: 
 \code{\link{cli_abort}()},
 \code{\link{cli_alert}()},
 \code{\link{cli_blockquote}()},
-\code{\link{cli_bullets_raw}()},
 \code{\link{cli_bullets}()},
+\code{\link{cli_bullets_raw}()},
 \code{\link{cli_dl}()},
 \code{\link{cli_h1}()},
 \code{\link{cli_li}()},
@@ -138,8 +138,8 @@ Other functions supporting inline markup:
 \code{\link{cli_progress_output}()},
 \code{\link{cli_progress_step}()},
 \code{\link{cli_rule}},
-\code{\link{cli_status_update}()},
 \code{\link{cli_status}()},
+\code{\link{cli_status_update}()},
 \code{\link{cli_text}()},
 \code{\link{cli_ul}()},
 \code{\link{format_error}()},

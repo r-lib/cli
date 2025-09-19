@@ -57,6 +57,7 @@ Other hash functions:
 \code{\link{hash_animal}()},
 \code{\link{hash_emoji}()},
 \code{\link{hash_md5}()},
-\code{\link{hash_sha1}()}
+\code{\link{hash_sha1}()},
+\code{\link{hash_xxhash}()}
 }
 \concept{hash functions}

@@ -1,4 +1,3 @@
-
 test_that("ansi_palette_show", {
   local_clean_cli_context()
   expect_snapshot(

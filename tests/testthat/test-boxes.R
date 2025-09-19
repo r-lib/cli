@@ -1,4 +1,3 @@
-
 test_that_cli(configs = c("plain", "unicode"), "empty label", {
   expect_snapshot(boxx(""))
 })
@@ -21,15 +20,15 @@ test_that_cli(configs = c("plain", "unicode"), "border style", {
 
 test_that_cli(configs = c("plain", "unicode"), "padding", {
   expect_snapshot(boxx("label", padding = 2))
-  expect_snapshot(boxx("label", padding = c(1,2,1,2)))
-  expect_snapshot(boxx("label", padding = c(1,2,0,2)))
-  expect_snapshot(boxx("label", padding = c(1,2,0,0)))
+  expect_snapshot(boxx("label", padding = c(1, 2, 1, 2)))
+  expect_snapshot(boxx("label", padding = c(1, 2, 0, 2)))
+  expect_snapshot(boxx("label", padding = c(1, 2, 0, 0)))
 })
 
 test_that_cli(configs = c("plain", "unicode"), "margin", {
   expect_snapshot(boxx("label", margin = 1))
-  expect_snapshot(boxx("label", margin = c(1,2,3,4)))
-  expect_snapshot(boxx("label", margin = c(0,1,2,0)))
+  expect_snapshot(boxx("label", margin = c(1, 2, 3, 4)))
+  expect_snapshot(boxx("label", margin = c(0, 1, 2, 0)))
 })
 
 test_that_cli(configs = c("plain", "unicode"), "float", {

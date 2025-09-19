@@ -103,7 +103,7 @@ Rboolean progress_along_Inspect(SEXP x,
 void* progress_along_Dataptr(SEXP x, Rboolean writeable) {
   SEXP data1 = R_altrep_data1(x);
   if (writeable) {
-    return DATAPTR(data1);
+    return (void*) INTEGER(data1);
   } else {
     return (void*) DATAPTR_RO(data1);
   }

@@ -5,6 +5,14 @@
     Output
       [1] "\\ name status 1\n"
 
+# custom format needs a format string
+
+    Code
+      cli_progress_bar(type = "custom")
+    Condition
+      Error in `cli_progress_bar()`:
+      ! Need to specify format if `type == "custom"
+
 # removes previous progress bar
 
     Code
@@ -12,6 +20,38 @@
     Output
       [1] "first\n"       "first done\n"  "\n"            "second\n"     
       [5] "second done\n" "\n"           
+
+# update errors if no progress bar
+
+    Code
+      fun()
+    Condition
+      Error in `cli_progress_update()`:
+      ! Cannot find current progress bar for `<environment: <addr>>`
+
+---
+
+    Code
+      fun()
+    Condition
+      Error in `cli_progress_output()`:
+      ! Cannot find current progress bar for `<environment: <addr>>`
+
+---
+
+    Code
+      fun()
+    Condition
+      Error in `cli_progress_update()`:
+      ! Cannot find progress bar `foobar`
+
+---
+
+    Code
+      fun()
+    Condition
+      Error in `cli_progress_output()`:
+      ! Cannot find progress bar `foobar`
 
 # cli_progress_update can update status
 

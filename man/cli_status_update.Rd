@@ -45,15 +45,15 @@ functions, for a superior API.
 
 Other status bar: 
 \code{\link{cli_process_start}()},
-\code{\link{cli_status_clear}()},
-\code{\link{cli_status}()}
+\code{\link{cli_status}()},
+\code{\link{cli_status_clear}()}
 
 Other functions supporting inline markup: 
 \code{\link{cli_abort}()},
 \code{\link{cli_alert}()},
 \code{\link{cli_blockquote}()},
-\code{\link{cli_bullets_raw}()},
 \code{\link{cli_bullets}()},
+\code{\link{cli_bullets_raw}()},
 \code{\link{cli_dl}()},
 \code{\link{cli_h1}()},
 \code{\link{cli_li}()},

@@ -1,5 +1,37 @@
 # cli (development version)
 
+* New `{.num}` and `{.bytes}` inline styles to format numbers
+  and bytes (@m-muecke, #644, #588, #643).
+
+# cli 3.6.5
+
+* `code_highlight()` supports long strings and symbols
+  (#727 @moodymudskipper).
+
+# cli 3.6.4
+
+* Pluralization now handles edge cases (`NA`, `NaN`, `Inf` and `-Inf`)
+  better (@rundel, #716).
+
+* The URI generated for `.file`, `.run`, `.help` and `.vignette` hyperlinks
+  can now be configured via options and env vars (@jennybc, #739, #744).
+
+* `cli_progress_bar()` now accepts `total` = Inf or -Inf which mimics the
+  behavior of when `total` is NA (@LouisMPenrod, #630).
+
+* `num_ansi_colors()` now does not warn in Emacs if the `INSIDE_EMACS`
+  environment variable is not a proper version number (@rundel, #689).
+
+* `ansi_collapse()` and inline collapsing now uses `last` as the separator
+  (without the serial comma) for two-element vectors if `sep2` is not
+  given (@rundel, #681).
+
+* `ansi_collapse()` is now correct for length-1 vectors with style "head"
+  if width is specified (@rundel, #590).
+
+* New `hash_xxhash()` etc. functions to calculate the xxHash of strings,
+  raw vectors, objects, files.
+
 # cli 3.6.3
 
 * cli now builds on ARM Windows.
@@ -18,7 +50,7 @@
 * `ansi_collapse(x, trunc = 1, style = "head")` now indeed shows one
   element if `length(x) == 2`, as documented (@salim-b, #572).
 
-* `ansi_collapse()` gains a `sep2` argument to specify a seperate separator
+* `ansi_collapse()` gains a `sep2` argument to specify a separate separator
   for length-two inputs. It defaults to `" and "` which, in conjunction with
   the other defaults, produces a collapsed string that fully adheres to the
   [serial comma](https://en.wikipedia.org/wiki/Serial_comma) rules.
@@ -41,7 +73,7 @@
 * cli now shows progress bars after one second by default, if they
   are less than half way at the point. (Or after two seconds,
   unconditionally, as before.) See the the `cli.progress_show_after`
-  option in `?cli-config` for details (#542).
+  option in `?"cli-config"` for details (#542).
 
 * `format_inline()` now has a new argument `keep_whitespace`, and it keeps
   whitespace, including newline and form feed characters by default.
@@ -115,7 +147,7 @@
 * cli exit handlers are now compatible again with the withr package (#437).
 
 * cli functions now keep trailing `\f` characters as newlines.
-  They also keep multiple consecutive `\f` as multiple newlinees (#491).
+  They also keep multiple consecutive `\f` as multiple newlines (#491).
 
 * `{}` substitutions within inline styles are now formatted correctly.
   E.g. `{.code download({url})}` will not add backticks to `url`, and

@@ -1,4 +1,3 @@
-
 start_app()
 on.exit(stop_app(), add = TRUE)
 
@@ -102,8 +101,9 @@ test_that("before and after work properly", {
   expect_snapshot(local({
     cli_div(
       theme = list(
-        "div.alert-success" = list(before ="!!!")
-      ))
+        "div.alert-success" = list(before = "!!!")
+      )
+    )
     cli_alert_success("{.pkg foobar} is good")
   }))
 })

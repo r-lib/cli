@@ -1,22 +1,35 @@
-
-col_seq <- list(function(x)
-  paste0("1", x),
-  function(x)
-    paste0("2", x),
-  function(x)
-    paste0("3", x))
+col_seq <- list(
+  function(x) paste0("1", x),
+  function(x) paste0("2", x),
+  function(x) paste0("3", x)
+)
 
 test_that("bracket highlighting", {
   # [](){}
-  expect_equal(color_brackets(c("[", "]", "(", ")", "{", "}"), col_seq),
-               c("1[", "1]", "1(", "1)", "1{", "1}"))
-  
+  expect_equal(
+    color_brackets(c("[", "]", "(", ")", "{", "}"), col_seq),
+    c("1[", "1]", "1(", "1)", "1{", "1}")
+  )
+
   # [({[({})]})]
   expect_equal(
-    color_brackets(c(
-      "[", "(", "{", "[", "(", "{", "}", ")", "]", "}", ")", "]"
+    color_brackets(
+      c(
+        "[",
+        "(",
+        "{",
+        "[",
+        "(",
+        "{",
+        "}",
+        ")",
+        "]",
+        "}",
+        ")",
+        "]"
+      ),
+      col_seq
     ),
-    col_seq),
     c(
       "1[",
       "2(",
@@ -32,7 +45,7 @@ test_that("bracket highlighting", {
       "1]"
     )
   )
-  
+
   # [[ [] ]][[ ()() ]]
   expect_equal(
     color_brackets(
@@ -85,7 +98,6 @@ test_that_cli(configs = c("plain", "ansi"), "null", {
 })
 
 test_that_cli(configs = c("plain", "ansi"), "operator", {
-
   expect_snapshot({
     cat(code_highlight("~ ! 1 - 2 + 3:4 * 5 / 6 ^ 7", list(operator = "bold")))
     cat(code_highlight(
@@ -154,12 +166,14 @@ test_that("replace_in_place corner cases", {
 
 test_that_cli(configs = c("plain", "ansi"), "parse errors", {
   expect_equal(
-    code_highlight("not good!!!"), "not good!!!"
+    code_highlight("not good!!!"),
+    "not good!!!"
   )
   cnd <- NULL
   withCallingHandlers(
     expect_equal(
-      code_highlight("not good!!!"), "not good!!!"
+      code_highlight("not good!!!"),
+      "not good!!!"
     ),
     cli_parse_failure = function(e) cnd <<- e
   )
@@ -177,16 +191,15 @@ test_that("code themes", {
   withr::local_options(cli.code_theme_terminal = "solarized_light")
   expect_equal(code_theme_default()$reserved, "#859900")
 
-  mockery::stub(
-    code_theme_default,
-    "rstudio_detect",
-    list(type = "rstudio_console")
+  local_mocked_bindings(
+    rstudio_detect = function() list(type = "rstudio_console")
   )
   withr::local_options(cli.code_theme_rstudio = "Xcode")
   expect_equal(code_theme_default()$reserved, "#C800A4")
 
   withr::local_options(cli.code_theme_rstudio = NULL)
-  mockery::stub(code_theme_default, "code_theme_default_rstudio", "foo")
+  skip_if_not_installed("rstudioapi")
+  local_mocked_bindings(code_theme_default_rstudio = function() "foo")
   expect_equal(code_theme_default(), "foo")
 })
 
@@ -199,17 +212,13 @@ test_that("code themes 2", {
 })
 
 test_that("code_theme_default_rstudio", {
-  mockery::stub(
-    code_theme_default_rstudio,
-    "get_rstudio_theme",
-    list(editor = "Solarized Dark")
+  local_mocked_bindings(
+    get_rstudio_theme = function() list(editor = "Solarized Dark")
   )
   expect_equal(code_theme_default_rstudio()$reserved, "#859900")
 
-  mockery::stub(
-    code_theme_default_rstudio,
-    "get_rstudio_theme",
-    list(editor = "Not really")
+  local_mocked_bindings(
+    get_rstudio_theme = function() list(editor = "Not really")
   )
   expect_warning(
     cth <- code_theme_default_rstudio(),
@@ -223,7 +232,10 @@ test_that("code_theme_list", {
 })
 
 test_that_cli(configs = "ansi", "new language features, raw strings", {
-  if (getRversion() < "4.0.1") { expect_true(TRUE); return() }
+  if (getRversion() < "4.0.1") {
+    expect_true(TRUE)
+    return()
+  }
   expect_snapshot(
     cat(code_highlight(
       '"old" + r"("new""")"',
@@ -233,15 +245,50 @@ test_that_cli(configs = "ansi", "new language features, raw strings", {
 })
 
 test_that_cli(configs = "ansi", "new language features, pipe", {
-  if (getRversion() < "4.1.0") { expect_true(TRUE); return() }
+  if (getRversion() < "4.1.0") {
+    expect_true(TRUE)
+    return()
+  }
   expect_snapshot(
     cat(code_highlight('dir() |> toupper()', list(operator = "bold")))
   )
 })
 
 test_that_cli(configs = "ansi", "new language features, lambda functions", {
-  if (getRversion() < "4.1.0") { expect_true(TRUE); return() }
+  if (getRversion() < "4.1.0") {
+    expect_true(TRUE)
+    return()
+  }
   expect_snapshot(
     cat(code_highlight('\\(x) x * 2', list(reserved = "bold")))
+  )
+})
+
+test_that("code_highlight() works on long strings and symbols", {
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("foo('", strrep("-", 1000), "')"))
+    )
+  )
+
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("foo(`", strrep("-", 1000), "`)"))
+    )
+  )
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("a$`", strrep("-", 1000), "`"))
+    )
+  )
+
+  expect_true(
+    grepl(
+      strrep("-", 1000),
+      code_highlight(paste0("`", strrep("-", 1000), "`$a"))
+    )
   )
 })

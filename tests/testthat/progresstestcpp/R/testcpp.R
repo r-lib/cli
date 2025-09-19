@@ -1,4 +1,3 @@
-
 #' @useDynLib progresstestcpp, .registration = TRUE
 NULL
 

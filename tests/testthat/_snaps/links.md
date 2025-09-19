@@ -819,6 +819,13 @@
     Message
       `pkg::func()`
 
+# .fun with custom format [plain-all]
+
+    Code
+      cli_text("{.fun pkg::func}")
+    Message
+      `]8;;aaa-pkg::func-zzzpkg::func]8;;()`
+
 # {.help} [plain-none]
 
     Code
@@ -856,6 +863,13 @@
       cli_text("{.help {funcs}}")
     Message
       ]8;;x-r-help:pkg::fun1pkg::fun1]8;;, ]8;;x-r-help:pkg::fun2pkg::fun2]8;;, and ]8;;x-r-help:pkg::fun3pkg::fun3]8;;
+
+# .help with custom format [plain-all]
+
+    Code
+      cli_text("{.help pkg::fun}")
+    Message
+      ]8;;aaa-pkg::fun-zzzpkg::fun]8;;
 
 # {.href} [plain-none]
 
@@ -943,6 +957,13 @@
     Message
       ]8;;x-r-run:pkg::fun1()pkg::fun1()]8;;, ]8;;x-r-run:pkg::fun2()pkg::fun2()]8;;, and ]8;;x-r-run:pkg::fun3()pkg::fun3()]8;;
 
+# .run with custom format [plain-all]
+
+    Code
+      cli_text("{.run devtools::document()}")
+    Message
+      ]8;;aaa-devtools::document()-zzzdevtools::document()]8;;
+
 # {.topic} [plain-none]
 
     Code
@@ -980,6 +1001,13 @@
       cli_text("{.topic {topics}}")
     Message
       ]8;;x-r-help:pkg::topic1pkg::topic1]8;;, ]8;;x-r-help:pkg::topic2pkg::topic2]8;;, and ]8;;x-r-help:pkg::topic3pkg::topic3]8;;
+
+# .topic with custom format [plain-all]
+
+    Code
+      cli_text("{.topic pkg::fun}")
+    Message
+      ]8;;aaa-pkg::fun-zzzpkg::fun]8;;
 
 # {.url} [plain-none]
 
@@ -1091,4 +1119,11 @@
       cli_text("{.vignette {vignettes}}")
     Message
       ]8;;x-r-vignette:pkg::topic1pkg::topic1]8;;, ]8;;x-r-vignette:pkg::topic2pkg::topic2]8;;, and ]8;;x-r-vignette:pkg::topic3pkg::topic3]8;;
+
+# .vignette with custom format [plain-all]
+
+    Code
+      cli_text("{.vignette pkgdown::accessibility}")
+    Message
+      ]8;;aaa-pkgdown::accessibility-zzzpkgdown::accessibility]8;;
 

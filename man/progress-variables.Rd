@@ -70,7 +70,7 @@ is unknown, then it will return an empty string.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Fitting model <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37;                             
+#> Fitting model <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37;                             
 </pre></div>
 }}
 
@@ -120,7 +120,7 @@ or similar.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; [5s]                                      
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37; [5s]                                      
 </pre></div>
 }}
 
@@ -136,7 +136,7 @@ The elapsed time, in \verb{hh::mm::ss} format.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; [00:00:05]                                
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37; [00:00:05]                                
 </pre></div>
 }}
 
@@ -152,7 +152,7 @@ The number of seconds since the start of the progress bar.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; [5s]                                      
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37; [5s]                                      
 </pre></div>
 }}
 
@@ -169,7 +169,7 @@ in human readable form.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s                                
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s                                
 </pre></div>
 }}
 
@@ -187,7 +187,7 @@ bar, in seconds. This is useful if you want to adjust the default
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA: 3s                                 
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA: 3s                                 
 </pre></div>
 }}
 
@@ -205,7 +205,7 @@ estimated, otherwise it is the empty string.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s                                
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37; | ETA:  3s                                
 </pre></div>
 }}
 
@@ -243,7 +243,7 @@ This is useful for debugging progress bars.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Progress bar 'cli-82040-1814' is at 64                                          
+#> Progress bar 'cli-40403-1860' is at 64                                          
 </pre></div>
 }}
 
@@ -262,7 +262,7 @@ is added to non-empty names.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Loading training data  <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37;                    
+#> Loading training data  <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37;                    
 </pre></div>
 }}
 
@@ -280,7 +280,7 @@ units is unknown, then it is \code{" NA\%"}.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> <span style="color: #859900;">█████████████████████</span><span style="color: #002B36;">██████████</span><span style="color: #859900;"> </span>  66&#37;                                           
+#> <span style="color: #859900;">█████████████████████</span><span style="color: #525252;">██████████</span><span style="color: #859900;"> </span>  66&#37;                                           
 </pre></div>
 }}
 
@@ -382,7 +382,7 @@ A time stamp for the current time in ISO 8601 format.
   format = "\{pb_timestamp\} \{pb_current\} (\{pb_rate\})"
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> 2022-09-07T11:27:50+00:00 125 (25/s)                                            
+#> 2025-04-22T12:27:16+00:00 125 (25/s)                                            
 </pre></div>
 }}
 

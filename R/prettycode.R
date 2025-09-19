@@ -1,15 +1,46 @@
-
 operator_tokens <- function() {
   c(
-    "'-'", "'+'", "'!'", "'~'", "'?'", "':'", "'*'", "'/'", "'^'",
-    "SPECIAL", "LT", "GT", "EQ", "GE", "LE", "AND", "AND2", "OR", "OR2",
-    "LEFT_ASSIGN", "RIGHT_ASSIGN", "'$'", "'@'", "EQ_ASSIGN", "PIPE"
+    "'-'",
+    "'+'",
+    "'!'",
+    "'~'",
+    "'?'",
+    "':'",
+    "'*'",
+    "'/'",
+    "'^'",
+    "SPECIAL",
+    "LT",
+    "GT",
+    "EQ",
+    "GE",
+    "LE",
+    "AND",
+    "AND2",
+    "OR",
+    "OR2",
+    "LEFT_ASSIGN",
+    "RIGHT_ASSIGN",
+    "'$'",
+    "'@'",
+    "EQ_ASSIGN",
+    "PIPE"
   )
 }
 
 reserved_words <- function() {
-  c("FUNCTION", "'\\\\'", "IF", "ELSE",
-    "REPEAT", "WHILE", "FOR", "IN", "NEXT", "BREAK")
+  c(
+    "FUNCTION",
+    "'\\\\'",
+    "IF",
+    "ELSE",
+    "REPEAT",
+    "WHILE",
+    "FOR",
+    "IN",
+    "NEXT",
+    "BREAK"
+  )
 }
 
 
@@ -37,7 +68,6 @@ reserved_words <- function() {
 #' cat(code_highlight(deparse(ls)), sep = "\n")
 
 code_highlight <- function(code, code_theme = NULL, envir = NULL) {
-
   code_theme <- code_theme %||% code_theme_default()
 
   parsed <- tryCatch(
@@ -55,7 +85,7 @@ code_highlight <- function(code, code_theme = NULL, envir = NULL) {
   }
 
   theme <- code_theme_make(code_theme)
-  data <- getParseData(parsed, includeText = NA)
+  data <- get_parse_data(parsed)
 
   hitext <- data$text
 
@@ -105,7 +135,11 @@ code_highlight <- function(code, code_theme = NULL, envir = NULL) {
     raw <- substr(data$text[string], 1, 1) == "r"
     hitext[string][raw] <- paste0(
       rep(reserved("r"), sum(raw)),
-      theme$string(substr(data$text[string][raw], 2, nchar(data$text[string][raw])))
+      theme$string(substr(
+        data$text[string][raw],
+        2,
+        nchar(data$text[string][raw])
+      ))
     )
     hitext[string][!raw] <- theme$string(data$text[string][!raw])
   }
@@ -125,13 +159,52 @@ code_highlight <- function(code, code_theme = NULL, envir = NULL) {
   do_subst(code, data, hitext)
 }
 
-do_subst <- function(code, pdata, hitext) {
+get_parse_data <- function(x) {
+  # getParseData(x, includeText = NA) would trim long strings and symbols
+  data <- getParseData(x, includeText = FALSE)
+  data$text <- character(nrow(data))
 
+  substr_with_tabs <- function(x, start, stop, tabsize = 8) {
+    widths <- rep_len(1, nchar(x))
+    tabs <- which(strsplit(x, "")[[1]] == "\t")
+    for (i in tabs) {
+      cols <- cumsum(widths)
+      widths[i] <- tabsize - (cols[i] - 1) %% tabsize
+    }
+    cols <- cumsum(widths)
+    start <- which(cols >= start)
+    if (!length(start)) {
+      return("")
+    }
+    start <- start[1]
+    stop <- which(cols <= stop)
+    if (length(stop)) {
+      stop <- stop[length(stop)]
+      substr(x, start, stop)
+    } else {
+      ""
+    }
+  }
+
+  srcfile <- attr(data, "srcfile")
+  terminal <- which(data$terminal)
+  for (i in terminal) {
+    lines <- getSrcLines(srcfile, data$line1[i], data$line2[i])
+    n <- length(lines)
+    lines[n] <- substr_with_tabs(lines[n], 1, data$col2[i])
+    lines[1] <- substr_with_tabs(lines[1], data$col1[i], Inf)
+    data$text[i] <- paste(lines, collapse = "\n")
+  }
+
+  data
+}
+
+do_subst <- function(code, pdata, hitext) {
   pdata$hitext <- hitext
 
   ## Need to do this line by line. TODO: multiline stuff might be broken
   vapply(seq_along(code), FUN.VALUE = character(1), function(no) {
-    my <- pdata[pdata$line1 == no & pdata$line2 == no,, drop = FALSE]
+    my <- pdata[pdata$line1 == no & pdata$line2 == no, , drop = FALSE]
     replace_in_place(code[no], my$col1, my$col2, my$hitext)
   })
 }
@@ -140,7 +213,7 @@ open_brackets <- function() {
   c("(", "{", "[")
 }
 
-close_brackets <- function(){
+close_brackets <- function() {
   c(")", "}", "]")
 }
 
@@ -149,7 +222,7 @@ bracket_tokens <- function() {
   c(paste0("'", s, "'"), "LBB")
 }
 
-apply_color <- function(x, lvl, l){
+apply_color <- function(x, lvl, l) {
   k <- (lvl - 1) %% length(l) + 1
   l[[k]](x)
 }
@@ -186,14 +259,16 @@ apply_color <- function(x, lvl, l){
 #'
 #' @noRd
 
-color_brackets <- function(x, color_seq = list(col_yellow, col_blue, col_cyan)) {
+color_brackets <- function(
+  x,
+  color_seq = list(col_yellow, col_blue, col_cyan)
+) {
   stopifnot(vapply(color_seq, is.function, logical(1)))
   open <- c(open_brackets(), "[[")
   o <- character()
   lvl <- 0
   i <- 1
   while (i <= length(x)) {
-
     if (x[i] %in% open) {
       o[length(o) + 1] <- x[i]
       lvl <- lvl + 1
@@ -213,7 +288,6 @@ color_brackets <- function(x, color_seq = list(col_yellow, col_blue, col_cyan)) 
 }
 
 replace_in_place <- function(str, start, end, replacement) {
-
   stopifnot(
     length(str) == 1,
     length(start) == length(end),
@@ -261,8 +335,8 @@ code_theme_make <- function(theme) {
   if (is.list(theme)) return(theme)
   if (is_string(theme)) {
     if (theme %in% names(rstudio_themes)) return(rstudio_themes[[theme]])
-    lcs <- gsub(" ", "_", tolower(names(rstudio_themes)))
-    if (theme %in% lcs) return(rstudio_themes[[ match(theme, lcs)[1] ]])
+    lcs <- gsub(" ", "_", tolower(names(rstudio_themes)), fixed = TRUE)
+    if (theme %in% lcs) return(rstudio_themes[[match(theme, lcs)[1]]])
     warning("Unknown cli code theme: `", theme, "`.")
     return(NULL)
   }
@@ -272,10 +346,12 @@ code_theme_make <- function(theme) {
 
 code_theme_default_rstudio <- function() {
   theme <- get_rstudio_theme()$editor
-  if (! theme %in% names(rstudio_themes)) {
+  if (!theme %in% names(rstudio_themes)) {
     if (!getOption("cli.ignore_unknown_rstudio_theme", FALSE)) {
       warning(
-        "cli does not know this RStudio theme: '", theme, "'.",
+        "cli does not know this RStudio theme: '",
+        theme,
+        "'.",
         "\nSet `options(cli.ignore_unknown_rstudio_theme = TRUE)` ",
         "to suppress this warning"
       )
@@ -316,10 +392,10 @@ code_theme_default_term <- function() {
 #' * If `cli.code_theme` is set, it is used.
 #' * Otherwise if R is running in RStudio and `cli.code_theme_rstudio` is
 #'   set, then it is used.
-#' * Otherwise if T is not running in RStudio and `cli.code_theme_terminal`
+#' * Otherwise if R is not running in RStudio and `cli.code_theme_terminal`
 #'   is set, then it is used.
 #'
-#' You can set these options to the name of a built-in theme, or to list
+#' You can set these options to the name of a built-in theme, or to a list
 #' that specifies a custom theme. See [code_theme_list()] for the list
 #' of the built-in themes.
 #'
@@ -339,7 +415,7 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
   if (num_ansi_colors() == 1L) return(base::print.function(x, useSource))
 
   srcref <- getSrcref(x)
-  src <- if (useSource && ! is.null(srcref)) {
+  src <- if (useSource && !is.null(srcref)) {
     as.character(srcref)
   } else {
     deparse(x)
@@ -348,7 +424,8 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
   err <- FALSE
   hisrc <- tryCatch(
     code_highlight(src, code_theme = code_theme, envir = environment(x)),
-    error = function(e) err <<- TRUE)
+    error = function(e) err <<- TRUE
+  )
   if (err) return(base::print.function(x, useSource))
 
   ## Environment of the function
@@ -369,7 +446,12 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
 #' @export
 
 pretty_print_code <- function() {
-  registerS3method("print", "function", pretty_print_function, asNamespace("cli"))
+  registerS3method(
+    "print",
+    "function",
+    pretty_print_function,
+    asNamespace("cli")
+  )
   cli::cli_alert_success("Registered pretty printing function method")
 }
 
@@ -377,7 +459,7 @@ pretty_fun_link <- function(data, fun_call, envir) {
   sprt <- ansi_hyperlink_types()$help
   wch <- which(fun_call)
   txt <- data$text[wch]
-  if (! sprt || length(wch) == 0) return(txt)
+  if (!sprt || length(wch) == 0) return(txt)
 
   scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
     "ide:help"
@@ -389,8 +471,11 @@ pretty_fun_link <- function(data, fun_call, envir) {
     prt <- data$parent[idx]
     sgs <- which(data$parent == prt)
     # not a pkg::fun call?
-    if (length(sgs) != 3 || data$token[sgs[1]] != "SYMBOL_PACKAGE" ||
-        data$token[sgs[2]] != "NS_GET") {
+    if (
+      length(sgs) != 3 ||
+        data$token[sgs[1]] != "SYMBOL_PACKAGE" ||
+        data$token[sgs[2]] != "NS_GET"
+    ) {
       # note: we do not process ::: which would be NS_GET_INT
       find_function_symbol(data$text[idx], envir %||% .GlobalEnv)
     } else {
@@ -412,13 +497,13 @@ find_function_symbol <- function(name, envir = .GlobalEnv) {
   while (!identical(envir, empty)) {
     if (exists(name, envir = envir, inherits = FALSE, mode = "function")) {
       env_name <- environmentName(envir)
-      if (grepl("package:", env_name)) {
+      if (grepl("package:", env_name, fixed = TRUE)) {
         env_name <- sub("^package:", "", env_name)
       }
-      if (grepl("imports:", env_name)) {
+      if (grepl("imports:", env_name, fixed = TRUE)) {
         env_name <- environmentName(environment(get(name, envir)))
       }
-      if (grepl("package:", env_name)) {
+      if (grepl("package:", env_name, fixed = TRUE)) {
         env_name <- sub("^package:", "", env_name)
       }
       if (env_name %in% c("", "R_GlobalEnv")) {

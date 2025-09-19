@@ -1,9 +1,14 @@
-
 test_that("is_string", {
-
   strings <- list("foo", "", "111", "1", "-", "NA")
-  not_strings <- list(1, character(), NA_character_, NA,
-                      c("foo", NA), c("1", "2"), NULL)
+  not_strings <- list(
+    1,
+    character(),
+    NA_character_,
+    NA,
+    c("foo", NA),
+    c("1", "2"),
+    NULL
+  )
 
   for (p in strings) {
     expect_true(is_string(p))
@@ -12,11 +17,7 @@ test_that("is_string", {
 
   for (n in not_strings) {
     expect_false(is_string(n))
-    expect_error(
-      stopifnot(is_string(n)),
-      "is_string(n) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_string(n)))
   }
 })
 
@@ -25,18 +26,25 @@ test_that("is_border_style", {
   expect_false(is_border_style("blahblahxxx"))
 
   expect_silent(stopifnot(is_border_style(rownames(box_styles())[1])))
-  expect_error(
-    stopifnot(is_border_style("blahblahxxx")),
-    "is_border_style(\"blahblahxxx\") is not TRUE",
-    fixed = TRUE
-  )
+  expect_snapshot(error = TRUE, stopifnot(is_border_style("blahblahxxx")))
 })
 
 test_that("is_padding_or_margin", {
-  good <- list(1, 0, 0L, 1L, 237, c(1,2,3,4), c(0,0,0,0), rep(1L, 4))
-  bad <- list(numeric(), integer(), c(1,2), c(1L, 2L, 3L), 1:5,
-              "1", c("1", "2", "3", "1"), NA, NA_real_, NA_integer_,
-              c(1,2,NA,1), c(1L,NA,3L))
+  good <- list(1, 0, 0L, 1L, 237, c(1, 2, 3, 4), c(0, 0, 0, 0), rep(1L, 4))
+  bad <- list(
+    numeric(),
+    integer(),
+    c(1, 2),
+    c(1L, 2L, 3L),
+    1:5,
+    "1",
+    c("1", "2", "3", "1"),
+    NA,
+    NA_real_,
+    NA_integer_,
+    c(1, 2, NA, 1),
+    c(1L, NA, 3L)
+  )
 
   for (g in good) {
     expect_true(is_padding_or_margin(g))
@@ -44,11 +52,7 @@ test_that("is_padding_or_margin", {
   }
   for (b in bad) {
     expect_false(is_padding_or_margin(b))
-    expect_error(
-      stopifnot(is_padding_or_margin(b)),
-      "is_padding_or_margin(b) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_padding_or_margin(b)))
   }
 })
 
@@ -62,19 +66,22 @@ test_that("is_col", {
   }
   for (b in bad) {
     expect_false(is_col(b))
-    expect_error(
-      stopifnot(is_col(b)),
-      "is_col(b) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_col(b)))
   }
 })
 
 test_that("is_count", {
-
   counts <- list(1, 1L, 0, 0L, 42, 42L)
-  not_counts <- list(c(1, 2), numeric(), NA_integer_, NA_real_, NA, 1.1,
-                     NULL, "1")
+  not_counts <- list(
+    c(1, 2),
+    numeric(),
+    NA_integer_,
+    NA_real_,
+    NA,
+    1.1,
+    NULL,
+    "1"
+  )
 
   for (c in counts) {
     expect_true(is_count(c))
@@ -83,11 +90,7 @@ test_that("is_count", {
 
   for (n in not_counts) {
     expect_false(is_count(n))
-    expect_error(
-      stopifnot(is_count(n)),
-      "is_count(n) is not TRUE",
-      fixed = TRUE
-    )
+    expect_snapshot(error = TRUE, stopifnot(is_count(n)))
   }
 })
 
@@ -108,6 +111,6 @@ test_that("is_tree_style", {
     list("1", "2", "3", "4")
   )
 
-  for (x in good) expect_true (is_tree_style(x))
-  for (x in bad ) expect_false(is_tree_style(x))
+  for (x in good) expect_true(is_tree_style(x))
+  for (x in bad) expect_false(is_tree_style(x))
 })

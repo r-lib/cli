@@ -59,3 +59,11 @@
     Output
       ]8;;https://example.com\text]8;;\
 
+# get_config_chr() errors if option is not NULL or string
+
+    Code
+      get_config_chr("something")
+    Condition
+      Error in `get_config_chr()`:
+      ! is_string(opt) is not TRUE
+

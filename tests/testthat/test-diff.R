@@ -1,8 +1,7 @@
-
 test_that("diff_chr", {
   # Something simple first
-  a <- as.character(c(1,1,1,1,1,1,1,2,3,4,4,4,4,4,4,4,5))
-  b <- as.character(c(1,1,1,1,1,1,1,2,10,4,4,4,4,4,4,4,6,7,5))
+  a <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5))
+  b <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 10, 4, 4, 4, 4, 4, 4, 4, 6, 7, 5))
   d <- diff_chr(a, b)
   expect_snapshot(d$lcs)
   d <- diff_chr(b, a)
@@ -11,8 +10,8 @@ test_that("diff_chr", {
 
 test_that_cli(configs = c("plain", "ansi"), "diff_chr", {
   # Something simple first
-  a <- as.character(c(1,1,1,1,1,1,1,2,3,4,4,4,4,4,4,4,5))
-  b <- as.character(c(1,1,1,1,1,1,1,2,10,4,4,4,4,4,4,4,6,7,5))
+  a <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5))
+  b <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 10, 4, 4, 4, 4, 4, 4, 4, 6, 7, 5))
   d <- diff_chr(a, b)
   expect_snapshot(d)
   expect_snapshot(d$lcs)
@@ -31,8 +30,8 @@ test_that("diff_chr edge cases", {
 
 test_that("format.cli_diff_chr context", {
   # Something simple first
-  a <- as.character(c(1,1,1,1,1,1,1,2,3,4,4,4,4,4,4,4,5))
-  b <- as.character(c(1,1,1,1,1,1,1,2,10,4,4,4,4,4,4,4,6,7,5))
+  a <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5))
+  b <- as.character(c(1, 1, 1, 1, 1, 1, 1, 2, 10, 4, 4, 4, 4, 4, 4, 4, 6, 7, 5))
   d <- diff_chr(a, b)
   expect_snapshot(print(d, context = 1))
   expect_snapshot(print(d, context = 0))
@@ -49,19 +48,12 @@ test_that_cli(configs = c("plain", "ansi"), "diff_str", {
 })
 
 test_that("warnings and errors", {
-  expect_error(diff_chr(1:10, 1:10), "is.character")
-  expect_error(
-    format(diff_chr("foo", "bar"), context = -1),
-    "is_count"
-  )
-  expect_warning(
-    format(diff_chr("foo", "bar"), what = 1, is = 2, this = 3),
-    "Extra arguments"
-  )
-  expect_warning(
-    format(diff_str("foo", "bar"), what = 1, is = 2, this = 3),
-    "Extra arguments"
-  )
+  expect_snapshot(error = TRUE, {
+    diff_chr(1:10, 1:10)
+    format(diff_chr("foo", "bar"), context = -1)
+    format(diff_chr("foo", "bar"), what = 1, is = 2, this = 3)
+    format(diff_str("foo", "bar"), what = 1, is = 2, this = 3)
+  })
 })
 
 test_that("max_diff", {

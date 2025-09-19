@@ -10,8 +10,9 @@ cli_vec(x, style = list())
 \item{x}{Vector that will be collapsed by cli.}
 
 \item{style}{Style to apply to the vector. It is used as a theme on
-a \code{span} element that is created for the vector. You can set \code{vec-sep}
-and \code{vec-last} to modify the separator and the last separator.}
+a \code{span} element that is created for the vector. You can set \code{vec-sep},
+\code{vec-sep2}, and \code{vec-last} to modify the general separator,
+the 2-item separator, and the last separator.}
 }
 \description{
 Add custom cli style to a vector
