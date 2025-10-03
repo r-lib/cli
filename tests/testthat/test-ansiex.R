@@ -547,6 +547,11 @@ test_that("ansi_strwrap newlines", {
     ansi_strwrap("\033[32mv\033[39m hello world.\nxxx"),
     ansi_string("\033[32mv\033[39m hello world. xxx")
   )
+  # Reprex for issue #667 about using \r
+  expect_equal(
+    ansi_strwrap("\033[36m•\033[39m x \r y"),
+    ansi_string("\033[36m•\033[39m x y")
+  )
 })
 
 test_that("ansi_strwrap and \f edge cases", {
