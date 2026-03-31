@@ -4,7 +4,7 @@
       apply_style("text", raw(0))
     Condition
       Error:
-      ! `style` must be a color name or an ANSI style function
+      ! ! `style` must be a color name or an ANSI style function
       i `style` is
 
 # ruler

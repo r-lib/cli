@@ -31,8 +31,8 @@
       callr::r(fun, stdout = outfile, stderr = outfile)
     Condition
       Error:
-      ! in callr subprocess.
-      Caused by error:
+      ! ! in callr subprocess.
+      Caused by error in `FUN(X[[i]], ...)`:
       ! oops
 
 ---
