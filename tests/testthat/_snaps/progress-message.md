@@ -11,8 +11,8 @@
       callr::r(fun, stdout = outfile, stderr = outfile)
     Condition
       Error:
-      ! in callr subprocess.
-      Caused by error:
+      ! ! in callr subprocess.
+      Caused by error in `(function () ...`:
       ! oopsie
 
 ---
@@ -29,8 +29,8 @@
       callr::r(fun2, stdout = outfile, stderr = outfile)
     Condition
       Error:
-      ! in callr subprocess.
-      Caused by error:
+      ! ! in callr subprocess.
+      Caused by error in `(function () ...`:
       ! oopsie
 
 ---
@@ -64,8 +64,8 @@
       callr::r(fun, stdout = outfile, stderr = "2>&1")
     Condition
       Error:
-      ! in callr subprocess.
-      Caused by error:
+      ! ! in callr subprocess.
+      Caused by error in `(function () ...`:
       ! oopsie
 
 ---

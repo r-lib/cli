@@ -56,7 +56,6 @@
         cli_h2("{xx}. header: {x}")
       })
     Message
-      
       HEADER
       
       Header
@@ -93,7 +92,6 @@
     Code
       cli_h1("one {1} two {2} three {3}")
     Message
-      
       -- one 1 two 2 three 3 ---------------------------------------------------------
     Code
       cli_h2("one {1} two {2} three {3}")

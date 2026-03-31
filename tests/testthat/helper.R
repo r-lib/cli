@@ -247,3 +247,11 @@ r_pty <- function(.envir = parent.frame()) {
 transform_env <- function(x) {
   sub("environment: 0x[0-9a-f]+", "environment: <addr>", x)
 }
+
+skip_if_no_srcrefs <- function() {
+  if (!asNamespace("pkgload")$is_dev_package("cli") &&
+      Sys.getenv("R_KEEP_PKG_SOURCE") != "yes")
+  {
+    skip("no srcrefs")
+  }
+}
