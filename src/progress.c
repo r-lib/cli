@@ -96,6 +96,7 @@ SEXP clic_get_time(void) {
   return Rf_ScalarReal(ts);
 }
 
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
 SEXP clic__find_var(SEXP rho, SEXP symbol) {
   SEXP ret = Rf_findVarInFrame(rho, symbol);
   if (ret == R_UnboundValue) {
@@ -111,6 +112,25 @@ SEXP clic__find_var(SEXP rho, SEXP symbol) {
     return ret;
   }
 }
+#else
+SEXP clic__find_var(SEXP rho, SEXP symbol) {
+  Rboolean ex = R_existsVarInFrame(rho, symbol);
+  if (!ex) {
+    error("Cannot find variable `%s`.", CHAR(PRINTNAME(symbol)));
+  }
+
+  SEXP ret = R_getVar(symbol, rho, TRUE);
+  if (TYPEOF(ret) == PROMSXP) {
+    PROTECT(ret);
+    SEXP ret2 = Rf_eval(ret, rho);
+    UNPROTECT(1);
+    return(ret2);
+
+  } else {
+    return ret;
+  }
+}
+#endif
 
 static int cli__counter = 0;
 
