@@ -352,9 +352,7 @@ void cli_progress_done(SEXP bar) {
 
 int cli_progress_num(void) {
   SEXP clienv = PROTECT(clic__find_var(cli_pkgenv, Rf_install("clienv")));
-  if (clienv == R_UnboundValue) error("Cannot find 'clienv'");
   SEXP bars = PROTECT(clic__find_var(clienv, Rf_install("progress")));
-  if (bars == R_UnboundValue) error("Cannot find 'clienv$progress'");
   UNPROTECT(2);
   return LENGTH(bars);
 }
