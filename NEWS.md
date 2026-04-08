@@ -1,4 +1,4 @@
-# cli (development version)
+# cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
