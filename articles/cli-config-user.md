@@ -1,0 +1,343 @@
+# Configuration
+
+These are environment variables and options that users may set, to
+modify the behavior of cli.
+
+## Hyperlinks
+
+cli uses ANSI escape sequences to create hyperlinks. Specifically, cli
+creates [OSC 8
+hyperlinks](https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda)
+that have this syntax:
+
+    OSC 8 ; {OPTIONAL PARAMS } ; {URI} ST {LINK TEXT} OSC 8 ; ; ST
+
+Under the hood, \[style_hyperlink()\] is the helper that forms these
+links, but it is more common to request them indirectly via inline
+markup (documented in
+[`help("links")`](https://cli.r-lib.org/reference/links.md)).
+
+### `R_CLI_HYPERLINK_MODE`
+
+Set to `posix` to force generating POSIX compatible ANSI hyperlinks.
+This is about the specific operating system command (OSC) and string
+terminator (ST) used in hyperlinks.
+
+If not set, then RStudio compatible links are generated. This is a
+temporary crutch until RStudio handles POSIX hyperlinks correctly, and
+after that it will be removed.
+
+### `cli.hyperlink` option and `R_CLI_HYPERLINKS` env var
+
+Set this option or env var to `true`, `TRUE` or `True` to tell cli that
+the terminal supports ANSI hyperlinks. Leave this configuration unset
+(or set to anything else) when there is no hyperlink support.
+Specifically, this configuration indicates the support for URL and file
+hyperlinks, requested via markup like `{.href url}` or
+`{.file path/file}`. (Below we describe the configuration that indicates
+support for even more specialized types of hyperlinks.)
+
+The option `cli.hyperlink` takes precedence over the `R_CLI_HYPERLINKS`
+env var.
+
+### `cli.hyperlink_*` options and `R_CLI_HYPERLINK_*` env vars
+
+cli supports a few special types of hyperlink that go beyond pointing
+to, e.g., a webpage or a file. These specialized hyperlinks cause
+R-specific actions to happen, such as executing a bit of R code or
+opening specific documentation.
+
+Set the relevant option or env var to `true`, `TRUE`, or `True` to tell
+cli that the terminal is capable of implementing these specialized
+behaviours. Leave this configuration unset (or set to anything else)
+when there is no support for a specific type of hyperlink.
+
+| Action            | Example inline markup                                                                 | Option                   | Env var                    |
+|-------------------|---------------------------------------------------------------------------------------|--------------------------|----------------------------|
+| Run R code        | `{.run testthat::snapshot_review()}`                                                  | `cli.hyperlink_run`      | `R_CLI_HYPERLINK_RUN`      |
+| Open a help topic | `{.fun stats::lm}` `{.topic tibble::tibble_options}` `{.help [{.fun lm}](stats::lm)}` | `cli.hyperlink_help`     | `R_CLI_HYPERLINK_HELP`     |
+| Open a vignette   | `{.vignette tibble::types}`                                                           | `cli.hyperlink_vignette` | `R_CLI_HYPERLINK_VIGNETTE` |
+
+In all cases, the option takes priority over the corresponding env var.
+
+### `cli.hyperlink_*_url_format` options and `R_CLI_HYPERLINK_*_URL_FORMAT` env vars
+
+Recall the overall structure of cli’s hyperlinks:
+
+    OSC 8 ; {OPTIONAL PARAMS } ; {URI} ST {LINK TEXT} OSC 8 ; ; ST
+
+The `URI` part has a default format for each type of hyperlink, but it
+is possible to provide a custom format via an option or an env var. If
+defined, the option takes priority over the env var.
+
+| Action            | Default URI format        | Customize via option                | Customize via env var                 |
+|-------------------|---------------------------|-------------------------------------|---------------------------------------|
+| Open a file       | (see below)               | `cli.hyperlink_file_url_format`     | `R_CLI_HYPERLINK_FILE_URL_FORMAT`     |
+| Run R code        | `x-r-run:{code}`          | `cli.hyperlink_run_url_format`      | `R_CLI_HYPERLINK_RUN_URL_FORMAT`      |
+| Open a help topic | `x-r-help:{topic}`        | `cli.hyperlink_help_url_format`     | `R_CLI_HYPERLINK_HELP_URL_FORMAT`     |
+| Open a vignette   | `x-r-vignette:{vignette}` | `cli.hyperlink_vignette_url_format` | `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT` |
+
+A format must be a glue-like template with the relevant placeholder in
+curly braces (`code`, `topic` or `vignette`).
+
+Here’s an example of a custom URI format for runnable code, which is
+useful in an integrated Positron terminal:
+
+    positron://positron.positron-r/cli?command=x-r-run:{code}
+
+(For backwards compatibility with older versions of RStudio, in some
+contexts, a legacy format is used, e.g. `ide:run:{code}`.)
+
+The default handling for file hyperlinks is geared towards the
+expectations of RStudio and can’t really be expressed as a URI format,
+but it’s approximately `file://{path}`, plus possibly passing `line` and
+`col` (yes, it really is `col`, not `column`) in the `OPTIONAL PARAMS`
+part of the OSC 8 hyperlink.
+
+A custom format can be provided for file hyperlinks and the relevant
+placeholders are `path`, `line`, and `column`. Examples of custom file
+hyperlink formats:
+
+    positron://file{path}:{line}:{column}
+    vscode://file{path}:{line}:{column}
+    txmt://open?url=file://{path}&line={line}&column={column}
+
+It’s OK if the format includes only `path`.
+
+## User facing environment variables
+
+### `NO_COLOR`
+
+Set to a nonempty value to turn off ANSI colors. See
+\[num_ansi_colors()\].
+
+### `ESS_BACKGROUND_MODE`
+
+Set this environment variable to `light` or `dark` to indicate dark mode
+in Emacs. Once <https://github.com/emacs-ess/ESS/pull/1178> is merged,
+ESS will set this automatically.
+
+### `R_CLI_DYNAMIC`
+
+Set to `true`, `TRUE` or `True` to assume a dynamic terminal, that
+supports `\r`. Set to anything else to assume a non-dynamic terminal.
+See \[is_dynamic_tty()\].
+
+### `R_CLI_NUM_COLORS`
+
+Set to a positive integer to assume a given number of colors. See
+\[num_ansi_colors()\].
+
+## User facing options
+
+### `cli.ansi`
+
+Set to `true`, `TRUE` or `True` to assume a terminal that supports ANSI
+control sequences. Set to anything else to assume a non-ANSI terminal.
+See \[is_ansi_tty()\].
+
+### `cli.condition_unicode_bullets`
+
+`TRUE` or `FALSE` to force turn on or off the Unicode symbols when
+printing conditions. E.g. in
+[`format_error()`](https://cli.r-lib.org/reference/format_error.md),
+[`format_warning()`](https://cli.r-lib.org/reference/format_error.md),
+[`format_message()`](https://cli.r-lib.org/reference/format_error.md)
+and also in
+[`cli_abort()`](https://cli.r-lib.org/reference/cli_abort.md),
+[`cli_warn()`](https://cli.r-lib.org/reference/cli_abort.md) and
+[`cli_inform()`](https://cli.r-lib.org/reference/cli_abort.md).
+
+### `cli.condition_width`
+
+Integer scalar (or `Inf`) to set the console width when cli is
+formatting errors, warnings or messages in
+[`format_error()`](https://cli.r-lib.org/reference/format_error.md),
+[`format_warning()`](https://cli.r-lib.org/reference/format_error.md)
+and
+[`format_message()`](https://cli.r-lib.org/reference/format_error.md).
+When formatting conditions this option takes precedence over
+`cli.width`.
+
+### `cli.default_handler`
+
+General handler function for all cli conditions. See
+<https://cli.r-lib.org/articles/semantic-cli.html#cli-messages-1>
+
+### `cli.default_num_colors`
+
+Default number of ANSI colors. This value is used if the number of
+colors is not already set by \* the `cli.num_colors` option, \* the
+`R_CLI_NUM_COLORS` environment variable, \* the `crayon.enabled` and
+`crayon.colors` options, \* the `NO_COLOR` environment variable, \* the
+`knitr.in.progress` option, \* a
+[`sink()`](https://rdrr.io/r/base/sink.html) call for the stream.
+
+You can also use this option if color support is detected correctly, but
+you want to adjust the number of colors. E.g. \* if `crayon.enabled` is
+`TRUE`, but `crayon.colors` is not, \* in Emacs on Windows, \* in
+terminals.
+
+See \[num_ansi_colors()\]. See also the `cli.num_colors` option.
+
+### `cli.dynamic`
+
+Set to `TRUE` to assume a dynamic terminal, that supports `\r`. Set to
+anything else to assume a non-dynamic terminal. See
+\[is_dynamic_tty()\].
+
+### `cli.hide_cursor`
+
+Whether the cli status bar should try to hide the cursor on terminals.
+Set the `FALSE` if the hidden cursor causes issues.
+
+### `cli.ignore_unknown_rstudio_theme`
+
+Set to `TRUE` to omit a warning for an unknown RStudio theme in
+[`code_highlight()`](https://cli.r-lib.org/reference/code_highlight.md).
+
+### `cli.num_colors`
+
+Number of ANSI colors. See \[num_ansi_colors()\]. See also the
+`cli.default_num_colors` option.
+
+### `cli.message_class`
+
+Character vector of classes to add to cli’s conditions.
+
+### `cli.progress_bar_style`
+
+Progress bar style. See \[cli_progress_styles()\].
+
+### `cli.progress_bar_style_ascii`
+
+Progress bar style on ASCII consoles. See \[cli_progress_styles()\].
+
+### `cli.progress_bar_style_unicode`
+
+Progress bar style on Unicode (UTF-8) consoles; See
+\[cli_progress_styles()\].
+
+### `cli.progress_clear`
+
+Whether to clear terminated progress bar from the screen on dynamic
+terminals. See \[cli_progress_bar()\].
+
+### `cli.progress_demo_live`
+
+Whether
+[`cli_progress_demo()`](https://cli.r-lib.org/reference/cli_progress_demo.md)
+should show a live demo, or just record the progress bar frames.
+
+### `cli.progress_format_download`
+
+Default format string for `download` progress bars.
+
+### `cli.progress_format_download_nototal`
+
+Default format string for `download` progress bars with unknown totals.
+
+### `cli.progress_format_iterator`
+
+Default format string for `iterator` progress bars.
+
+### `cli.progress_format_iterator_nototal`
+
+Default format string for `iterator` progress bars with unknown total
+number of progress units.
+
+### `cli.progress_format_tasks`
+
+Default format string for `tasks` progress bars.
+
+### `cli.progress_format_tasks_nototal`
+
+Default format string for `tasks` progress bars with unknown totals.
+
+### `cli.progress_handlers`
+
+Progress handlers to try. See \[cli_progress_builtin_handlers()\].
+
+### `cli.progress_handlers_force`
+
+Progress handlers that will always be used, even if another handler was
+already selected. See \[cli_progress_builtin_handlers()\].
+
+### `cli.progress_handlers_only`
+
+Progress handlers to force, ignoring handlers set in
+`cli.progress_handlers` and `cli.progress_handlers_force`. See
+\[cli_progress_builtin_handlers()\].
+
+### `cli.progress_say_args`
+
+Command line arguments for the `say` progress handlers. See
+\[cli_progress_builtin_handlers()\].
+
+### `cli.progress_say_command`
+
+External command to use in the `say` progress handler. See
+\[cli_progress_builtin_handlers()\].
+
+### `cli.progress_say_frequency`
+
+Minimum delay between `say` calls in the `say` progress handler. `say`
+ignores very frequent updates, to keep the speech comprehensible. See
+\[cli_progress_builtin_handlers()\].
+
+### `cli.progress_show_after`
+
+Delay before showing a progress bar, in seconds. Progress bars that
+finish before this delay are not shown at all. cli also shows progress
+bars that have more than 50% to go after half of this delay has passed.
+
+### `cli.spinner`
+
+Default spinner to use, see \[get_spinner()\].
+
+### `cli.spinner_ascii`
+
+Default spinner to use on ASCII terminals, see \[get_spinner()\].
+
+### `cli.spinner_unicode`
+
+Default spinner to use on Unicode terminals, see \[get_spinner()\].
+
+### `cli.theme`
+
+Default cli theme, in addition to the built-in theme. This option in
+intended for the package developers. See \[themes\] and \[start_app()\].
+
+### `cli.theme_dark`
+
+Whether cli should assume a dark theme for the builtin theme. See
+\[builtin_theme()\].
+
+### `cli.unicode`
+
+Whether to assume a Unicode terminal. If not set, then it is
+auto-detected. See \[is_utf8_output()\].
+
+### `cli.user_theme`
+
+cli user theme. This option is intended for end users. See \[themes\].
+
+### `cli.warn_inline_newlines`
+
+Whether to emit a warning when cli replaces newline characters with
+spaces within a `{.class }` inline style. Defaults to `FALSE`.
+
+### `cli.width`
+
+Terminal width to assume. If not set, then it is auto-detected. See
+\[console_width()\].
+
+### `rlib_interactive`
+
+Whether to assume an interactive R session. If not set, then it is
+auto-detected.
+
+### `width`
+
+Terminal width. This is used on some platforms, if `cli.width` is not
+set.

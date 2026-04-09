@@ -17,7 +17,7 @@
 ">
 <meta property="og:description" content="Add progress bars to your loops and mapping functions.
 ">
-<script defer data-domain="cli.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="cli.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">cli</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">3.6.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">3.6.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
                         <h4 data-toc-skip class="author">Gábor
 Csárdi</h4>
             
-            <h4 data-toc-skip class="date">2025-04-24</h4>
+            <h4 data-toc-skip class="date">2026-04-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/main/vignettes/progress.Rmd" class="external-link"><code>vignettes/progress.Rmd</code></a></small>
       <div class="d-none name"><code>progress.Rmd</code></div>
@@ -128,7 +128,7 @@ bar.</li>
 <span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_done</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">clean</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/classic-example.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/classic-example.svg" class="r-plt" alt="Progress bar, that contains, from left to right, the specified label, the bar with green squares, the progress percentage, and the ETA." width="100%"></p>
 <p>The traditional API provides full control w.r.t when to create,
 update and terminate a progress bar.</p>
 </div>
@@ -157,7 +157,7 @@ function returns, errors or is interrupted.</p>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">clean</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/current.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/current.svg" class="r-plt" alt="Two progress bars, after the first finishes, the second starts and then finishes as well." width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="unknown-total-number-of-units">Unknown total number of units<a class="anchor" aria-label="anchor" href="#unknown-total-number-of-units"></a>
@@ -177,7 +177,7 @@ is unknown:</p>
 <span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span>force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">walk_dirs</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/unknown-total.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/unknown-total.svg" class="r-plt" alt="Example progress bar where the total number of units is unknown. It has a spinner, the specified label, shows how many units are done, how many units are completed per second and the elapsed time." width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="quick-loops">Quick loops<a class="anchor" aria-label="anchor" href="#quick-loops"></a>
@@ -218,7 +218,7 @@ return value of <code><a href="../reference/cli_progress_along.html">cli_progres
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/tickalong.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/tickalong.svg" class="r-plt" alt="Progress bar with green squares, that also shows the progress percentage and the ETA." width="100%"></p>
 <p><code><a href="../reference/cli_progress_along.html">cli_progress_along()</a></code> uses ALTREP, so it only works from
 R 3.5.0 and later. On older R versions it is equivalent to
 <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along()</a></code> and it does not create a progress bar.</p>
@@ -284,15 +284,18 @@ of the same caller function.</li>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/cli_progress_message.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/cli_progress_message.svg" class="r-plt" alt="The three messages are shown, each on its own line, the third one is iterated over 5 steps." width="100%"></p>
 <p>Status messages may use glue interpolation, cli styling and
 pluralization, as usual. You can call <code><a href="../reference/cli_progress_bar.html">cli_progress_update()</a></code>
 to update a status message.</p>
 <p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> is slightly different from
-<code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>: * it adds cli’s alert themes to the
-status messages (info, success or danger), * prints the duration of each
-step (by default), and * it keeps the messages on the screen after they
-are terminated.</p>
+<code><a href="../reference/cli_progress_message.html">cli_progress_message()</a></code>:</p>
+<ul>
+<li>it adds cli’s alert themes to the status messages (info, success or
+danger),</li>
+<li>prints the duration of each step (by default), and</li>
+<li>it keeps the messages on the screen after they are terminated.</li>
+</ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_step.html">cli_progress_step</a></span><span class="op">(</span><span class="st">"Downloading data"</span><span class="op">)</span></span>
@@ -308,7 +311,7 @@ are terminated.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/cli_progress_step_simple.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/cli_progress_step_simple.svg" class="r-plt" alt="Four progress steps are shown, each on its own line. Each steps show up as an 'i' (info) step first, and stays like that while it is running. When it is done, the 'i' is turned into a tick mark, and the running time of the step is added to the line at the end, in grey." width="100%"></p>
 <p>As usual, you can use <code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> to update an
 existing status message.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -323,7 +326,7 @@ existing status message.</p>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/cli_progress_step.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/cli_progress_step.svg" class="r-plt" alt="First the 'About to start..'. message is shown in its own line. Then a progress bar starts on the next line. The progress bar takes 10 steps. After the fifth step, the progress bar is overwritten with the 'Already half way!' message and the progress bar is moved down to the third line." width="100%"></p>
 <p>If you can update the status message frequently enough, then you can
 also add a spinner to it:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -338,7 +341,7 @@ also add a spinner to it:</p>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_update</a></span><span class="op">(</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/cli_progress_step_spinner.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/cli_progress_step_spinner.svg" class="r-plt" alt="Four steps are shown, each on its own line. While each step is running, its line has a spinner. Once it is done, the spinner turns into a tick mark and the running time of the step is added to its line at the end." width="100%"></p>
 <p><code><a href="../reference/cli_progress_step.html">cli_progress_step()</a></code> automatically handles errors, and
 styles the status message accordingly:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -350,7 +353,7 @@ styles the status message accordingly:</p>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"Something is wrong here"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="progress_files/figure-html/step-error.svg" width="100%"></p>
+<p><img src="progress_files/figure-html/step-error.svg" class="r-plt" alt="Two steps are shown, each in its own line. While a step is running its line is an 'i' (info) line. The first step finishes successfully and its 'i' mark is turned into a tick mark. The second step fails with an error and its line is overwritten with the error message, and moved down to the third line, and marked with an 'x' (error) mark." width="100%"></p>
 <!-- # Downloads -->
 <!-- ## Downloads with httr -->
 <!-- TODO -->
@@ -370,7 +373,7 @@ styles the status message accordingly:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer>
