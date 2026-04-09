@@ -9,7 +9,9 @@ test_that("deep lists ul", {
     }
   }
   expect_snapshot(
-    for (i in 1:4) test_ul(i)
+    for (i in 1:4) {
+      test_ul(i)
+    }
   )
 })
 
@@ -21,7 +23,9 @@ test_that("deep lists ol", {
     }
   }
   expect_snapshot(
-    for (i in 1:4) test_ol(i)
+    for (i in 1:4) {
+      test_ol(i)
+    }
   )
 })
 
@@ -36,7 +40,9 @@ test_that("deep lists ol ul", {
     }
   }
   expect_snapshot(
-    for (i in 1:4) test_ol_ul(i)
+    for (i in 1:4) {
+      test_ol_ul(i)
+    }
   )
 })
 
@@ -51,6 +57,8 @@ test_that("deep lists ul ol", {
     }
   }
   expect_snapshot(
-    for (i in 1:4) test_ul_ol(i)
+    for (i in 1:4) {
+      test_ul_ol(i)
+    }
   )
 })

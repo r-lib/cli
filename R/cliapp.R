@@ -6,8 +6,9 @@ cliapp <- function(
   app <- new_class(
     "cliapp",
 
-    new = function(theme, user_theme, output)
-      clii_init(app, theme, user_theme, output),
+    new = function(theme, user_theme, output) {
+      clii_init(app, theme, user_theme, output)
+    },
 
     ## Meta
     meta = function(...) {
@@ -29,8 +30,9 @@ cliapp <- function(
     end = function(id = NULL) clii_end(app, id),
 
     ## Generic container
-    div = function(id = NULL, class = NULL, theme = NULL)
-      clii_div(app, id, class, theme),
+    div = function(id = NULL, class = NULL, theme = NULL) {
+      clii_div(app, id, class, theme)
+    },
 
     ## Paragraphs
     par = function(id = NULL, class = NULL) clii_par(app, id, class),
@@ -53,47 +55,61 @@ cliapp <- function(
     h3 = function(text, id = NULL, class = NULL) clii_h3(app, text, id, class),
 
     ## Block quote
-    blockquote = function(quote, citation = NULL, id, class = NULL)
-      clii_blockquote(app, quote, citation, id, class),
+    blockquote = function(quote, citation = NULL, id, class = NULL) {
+      clii_blockquote(app, quote, citation, id, class)
+    },
 
     ## Lists
-    ul = function(items = NULL, id = NULL, class = NULL, .close = TRUE)
-      clii_ul(app, items, id, class, .close),
-    ol = function(items = NULL, id = NULL, class = NULL, .close = TRUE)
-      clii_ol(app, items, id, class, .close),
+    ul = function(items = NULL, id = NULL, class = NULL, .close = TRUE) {
+      clii_ul(app, items, id, class, .close)
+    },
+    ol = function(items = NULL, id = NULL, class = NULL, .close = TRUE) {
+      clii_ol(app, items, id, class, .close)
+    },
     dl = function(
       items = NULL,
       labels = NULL,
       id = NULL,
       class = NULL,
       .close = TRUE
-    ) clii_dl(app, items, labels, id, class, .close),
-    li = function(items = NULL, labels = NULL, id = NULL, class = NULL)
-      clii_li(app, items, labels, id, class),
+    ) {
+      clii_dl(app, items, labels, id, class, .close)
+    },
+    li = function(items = NULL, labels = NULL, id = NULL, class = NULL) {
+      clii_li(app, items, labels, id, class)
+    },
 
     ## Tables
-    table = function(cells, id = NULL, class = NULL)
-      clii_table(app, cells, class),
+    table = function(cells, id = NULL, class = NULL) {
+      clii_table(app, cells, class)
+    },
 
     ## Alerts
-    alert = function(text, id = NULL, class = NULL, wrap = FALSE)
-      clii_alert(app, "alert", text, id, class, wrap),
-    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE)
-      clii_alert(app, "alert-success", text, id, class, wrap),
-    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE)
-      clii_alert(app, "alert-danger", text, id, class, wrap),
-    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE)
-      clii_alert(app, "alert-warning", text, id, class, wrap),
-    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE)
-      clii_alert(app, "alert-info", text, id, class, wrap),
+    alert = function(text, id = NULL, class = NULL, wrap = FALSE) {
+      clii_alert(app, "alert", text, id, class, wrap)
+    },
+    alert_success = function(text, id = NULL, class = NULL, wrap = FALSE) {
+      clii_alert(app, "alert-success", text, id, class, wrap)
+    },
+    alert_danger = function(text, id = NULL, class = NULL, wrap = FALSE) {
+      clii_alert(app, "alert-danger", text, id, class, wrap)
+    },
+    alert_warning = function(text, id = NULL, class = NULL, wrap = FALSE) {
+      clii_alert(app, "alert-warning", text, id, class, wrap)
+    },
+    alert_info = function(text, id = NULL, class = NULL, wrap = FALSE) {
+      clii_alert(app, "alert-info", text, id, class, wrap)
+    },
 
     ## Bullets
-    bullets = function(text, id = NULL, class = NULL)
-      clii_bullets(app, text, id, class),
+    bullets = function(text, id = NULL, class = NULL) {
+      clii_bullets(app, text, id, class)
+    },
 
     ## Horizontal rule
-    rule = function(left, center, right, id = NULL)
-      clii_rule(app, left, center, right, id),
+    rule = function(left, center, right, id = NULL) {
+      clii_rule(app, left, center, right, id)
+    },
 
     ## Status bar
     status = function(
@@ -104,7 +120,7 @@ cliapp <- function(
       keep = FALSE,
       auto_result = "clear",
       globalenv = FALSE
-    )
+    ) {
       clii_status(
         app,
         id,
@@ -114,15 +130,24 @@ cliapp <- function(
         keep,
         auto_result,
         globalenv
-      ),
+      )
+    },
     status_clear = function(
       id = NULL,
       result,
       msg_done = NULL,
       msg_failed = NULL
-    ) clii_status_clear(app, id, result, msg_done, msg_failed),
-    status_update = function(id = NULL, msg, msg_done = NULL, msg_failed = NULL)
-      clii_status_update(app, id, msg, msg_done, msg_failed),
+    ) {
+      clii_status_clear(app, id, result, msg_done, msg_failed)
+    },
+    status_update = function(
+      id = NULL,
+      msg,
+      msg_done = NULL,
+      msg_failed = NULL
+    ) {
+      clii_status_update(app, id, msg, msg_done, msg_failed)
+    },
 
     doc = NULL,
     themes = NULL,
@@ -141,7 +166,7 @@ cliapp <- function(
       indent = 0,
       padding = 0,
       wrap = TRUE
-    )
+    ) {
       clii__xtext(
         app,
         text,
@@ -149,23 +174,29 @@ cliapp <- function(
         indent = indent,
         padding = padding,
         wrap = wrap
-      ),
+      )
+    },
 
     vspace = function(n = 1) clii__vspace(app, n),
 
-    inline = function(text = NULL, .list = NULL)
-      clii__inline(app, text, .list = .list),
+    inline = function(text = NULL, .list = NULL) {
+      clii__inline(app, text, .list = .list)
+    },
 
-    item_text = function(type, name, cnt_id, items = list(), .list = NULL)
-      clii__item_text(app, type, name, cnt_id, items, .list = .list),
+    item_text = function(type, name, cnt_id, items = list(), .list = NULL) {
+      clii__item_text(app, type, name, cnt_id, items, .list = .list)
+    },
 
     get_width = function(extra = 0) clii__get_width(app, extra),
     cat = function(lines) clii__cat(app, lines),
-    cat_ln = function(lines, indent = 0, padding = 0)
+    cat_ln = function(lines, indent = 0, padding = 0) {
       clii__cat_ln(app, lines, indent, padding)
+    }
   )
 
-  if (!inherits(output, "connection")) output <- match.arg(output)
+  if (!inherits(output, "connection")) {
+    output <- match.arg(output)
+  }
   app$new(theme, user_theme, output)
 
   app
@@ -200,7 +231,9 @@ clii_inline_text <- function(app, text) {
 clii_verbatim <- function(app, ..., .envir) {
   style <- app$get_current_style()
   text <- unlist(strsplit(unlist(list(...)), "\n", fixed = TRUE))
-  if (!is.null(style$fmt)) text <- style$fmt(text)
+  if (!is.null(style$fmt)) {
+    text <- style$fmt(text)
+  }
   app$cat_ln(text)
   invisible(app)
 }
@@ -229,7 +262,9 @@ clii__heading <- function(app, type, text, id, class) {
   on.exit(clii__container_end(app, id), add = TRUE)
   text <- app$inline(text)
   style <- app$get_current_style()
-  if (is.function(style$fmt)) text <- style$fmt(text)
+  if (is.function(style$fmt)) {
+    text <- style$fmt(text)
+  }
   app$cat_ln(text)
   invisible(app)
 }
@@ -266,7 +301,9 @@ clii_rule <- function(app, left, center, right, id) {
   text <- rule(left, center, right, line = style$`line-type` %||% 1)
   text[1] <- paste0(before, text[1])
   text[length(text)] <- paste0(text[length(text)], after)
-  if (is.function(style$fmt)) text <- style$fmt(text)
+  if (is.function(style$fmt)) {
+    text <- style$fmt(text)
+  }
   app$cat_ln(text)
 }
 
@@ -291,7 +328,9 @@ clii_alert <- function(app, type, text, id, class, wrap) {
     after <- gsub(" ", "\u00a0", after, fixed = TRUE)
     text[1] <- paste0(before, text[1])
     text[length(text)] <- paste0(text[length(text)], after)
-    if (is.function(style$fmt)) text <- style$fmt(text)
+    if (is.function(style$fmt)) {
+      text <- style$fmt(text)
+    }
     app$cat_ln(text)
   }
 }

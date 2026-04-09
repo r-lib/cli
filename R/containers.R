@@ -10,7 +10,9 @@ clii__container_start <- function(
   theme = NULL
 ) {
   id <- id %||% new_uuid()
-  if (!length(class)) class <- ""
+  if (!length(class)) {
+    class <- ""
+  }
   class <- setdiff(unique(strsplit(class, " ", fixed = TRUE)[[1]]), "")
 
   app$doc <- add_child(app$doc, tag, id = id, class = class, theme = theme)
@@ -40,18 +42,24 @@ clii__container_end <- function(app, id) {
   debug <- is_yes(Sys.getenv("CLI_DEBUG_BAD_END", ""))
 
   ## Defaults to last container
-  if (is.null(id) || is.na(id)) id <- last(app$doc)$id
+  if (is.null(id) || is.na(id)) {
+    id <- last(app$doc)$id
+  }
 
   ## Do not remove the <body>
   if (id == "body") {
-    if (debug) warning("No cli container to close")
+    if (debug) {
+      warning("No cli container to close")
+    }
     return(invisible(app))
   }
 
   ## Do we have 'id' at all?
   wh <- which(vlapply(app$doc, function(x) identical(x$id, id)))[1]
   if (is.na(wh)) {
-    if (debug) warning("Can't find cli container '", id, "' to close")
+    if (debug) {
+      warning("Can't find cli container '", id, "' to close")
+    }
     return(invisible(app))
   }
 

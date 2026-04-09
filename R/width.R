@@ -102,7 +102,9 @@ tty_size <- function() {
 }
 
 terminal_width <- function() {
-  if (isTRUE(clienv$notaconsole)) return(NULL)
+  if (isTRUE(clienv$notaconsole)) {
+    return(NULL)
+  }
   w <- tryCatch(
     tty_size()[["width"]],
     error = function(e) {
@@ -112,7 +114,9 @@ terminal_width <- function() {
   )
 
   # this is probably a pty that does not set the width, use st sensible
-  if (!is.null(w) && w == 0) w <- 80L
+  if (!is.null(w) && w == 0) {
+    w <- 80L
+  }
   w
 }
 

@@ -177,7 +177,9 @@ test_package_root <- function() {
     error = function(e) NULL
   )
 
-  if (!is.null(x)) return(x)
+  if (!is.null(x)) {
+    return(x)
+  }
 
   pkg <- testthat::testing_package()
   x <- tryCatch(
@@ -187,7 +189,9 @@ test_package_root <- function() {
     error = function(e) NULL
   )
 
-  if (!is.null(x)) return(x)
+  if (!is.null(x)) {
+    return(x)
+  }
 
   stop("Cannot find package root")
 }
@@ -219,8 +223,9 @@ r_pty <- function(.envir = parent.frame()) {
   ) {
     skip("fails on CI in covr")
   }
-  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux"))
+  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux")) {
     skip("Needs Linux or macOS")
+  }
 
   r <- file.path(R.home("bin"), "R")
   p <- processx::process$new(
@@ -253,9 +258,10 @@ transform_column_number <- function(x) {
 }
 
 skip_if_no_srcrefs <- function() {
-  if (!asNamespace("pkgload")$is_dev_package("cli") &&
-      Sys.getenv("R_KEEP_PKG_SOURCE") != "yes")
-  {
+  if (
+    !asNamespace("pkgload")$is_dev_package("cli") &&
+      Sys.getenv("R_KEEP_PKG_SOURCE") != "yes"
+  ) {
     skip("no srcrefs")
   }
 }

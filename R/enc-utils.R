@@ -3,14 +3,18 @@
 sub_ <- function(pattern, replacement, x, ...) {
   enc <- Encoding(x)
   ret <- sub(pattern, replacement, x, ...)
-  if (length(ret)) Encoding(ret) <- enc
+  if (length(ret)) {
+    Encoding(ret) <- enc
+  }
   ret
 }
 
 gsub_ <- function(pattern, replacement, x, ...) {
   enc <- Encoding(x)
   ret <- gsub(pattern, replacement, x, ...)
-  if (length(ret)) Encoding(ret) <- enc
+  if (length(ret)) {
+    Encoding(ret) <- enc
+  }
   ret
 }
 

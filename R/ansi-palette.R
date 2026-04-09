@@ -1,6 +1,8 @@
 get_palette_color <- function(style, colors = num_ansi_colors()) {
   opt <- getOption("cli.palette")
-  if (is.null(opt) || colors < 256) return(style)
+  if (is.null(opt) || colors < 256) {
+    return(style)
+  }
   cache_palette_color(opt, style$palette, colors)
 }
 

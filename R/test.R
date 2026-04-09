@@ -108,7 +108,9 @@ test_that_cli <- function(
 
   parent <- parent.frame()
   lapply(doconfigs, function(conf) {
-    if (!is.null(configs) && !conf$id %in% configs) return()
+    if (!is.null(configs) && !conf$id %in% configs) {
+      return()
+    }
     code2 <- substitute(
       {
         testthat::local_reproducible_output(

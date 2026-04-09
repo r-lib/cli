@@ -78,8 +78,9 @@ simple_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       "margin-top" = 1,
       "margin-bottom" = 0,
       color = "cyan",
-      fmt = function(x)
+      fmt = function(x) {
         paste0(symbol$line, " ", x, " ", symbol$line, symbol$line)
+      }
     ),
 
     h3 = list(

@@ -18,11 +18,17 @@ clii__xtext <- function(
   esc <- function(x) gsub(" ", "\u00a0", x, fixed = TRUE)
 
   bef <- call_if_fun(style$before)
-  if (!is.null(bef)) text[1] <- paste0(esc(bef), text[1])
+  if (!is.null(bef)) {
+    text[1] <- paste0(esc(bef), text[1])
+  }
   aft <- call_if_fun(style$after)
-  if (!is.null(aft)) text[length(text)] <- paste0(text[length(text)], esc(aft))
+  if (!is.null(aft)) {
+    text[length(text)] <- paste0(text[length(text)], esc(aft))
+  }
 
-  if (!is.null(style$fmt)) text <- style$fmt(text)
+  if (!is.null(style$fmt)) {
+    text <- style$fmt(text)
+  }
 
   if (wrap) {
     text <- ansi_strwrap(
@@ -64,7 +70,9 @@ clii__cat_ln <- function(app, lines, indent, padding) {
 
   ## left margin
   left <- padding + (style$`margin-left` %||% 0) + (style$`padding-left` %||% 0)
-  if (length(lines) && left) lines <- paste0(strrep(" ", left), lines)
+  if (length(lines) && left) {
+    lines <- paste0(strrep(" ", left), lines)
+  }
 
   ## indent or negative indent
   if (length(lines)) {
@@ -79,7 +87,9 @@ clii__cat_ln <- function(app, lines, indent, padding) {
   app$margin <- 0
 
   signal <- !identical(app$signal, FALSE)
-  if (signal && length(app$status_bar)) clii__clear_status_bar(app)
+  if (signal && length(app$status_bar)) {
+    clii__clear_status_bar(app)
+  }
   app$cat(paste0(paste0(lines, "\n"), collapse = ""))
   if (signal && length(app$status_bar)) {
     app$cat(paste0(app$status_bar[[1]]$content, "\r"))
@@ -90,7 +100,9 @@ clii__vspace <- function(app, n) {
   if (app$margin < n) {
     sp <- strrep("\n", n - app$margin)
     signal <- !identical(app$signal, FALSE)
-    if (signal && length(app$status_bar)) clii__clear_status_bar(app)
+    if (signal && length(app$status_bar)) {
+      clii__clear_status_bar(app)
+    }
     clii__message(
       sp,
       appendLF = FALSE,

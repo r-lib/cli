@@ -84,14 +84,18 @@ cli_progress_select_handlers <- function(bar, .envir) {
   onl <- getOption("cli.progress_handlers_only")
 
   bin <- builtin_handlers()
-  if (!is.null(onl)) return(bin[onl])
+  if (!is.null(onl)) {
+    return(bin[onl])
+  }
 
   hnd_imp <- bin[hnd]
   hnd_able <- Filter(
     function(h) is.null(h$able) || h$able(bar, .envir),
     hnd_imp
   )
-  if (length(hnd_able) > 1) hnd_able <- hnd_able[1]
+  if (length(hnd_able) > 1) {
+    hnd_able <- hnd_able[1]
+  }
 
   c(hnd_able, bin[frc])
 }
@@ -132,7 +136,9 @@ builtin_handler_cli <- list(
         }
         cli_status_clear(bar$cli_statusbar, result = "clear", .envir = .envir)
       } else {
-        if (result == "done" && !is.na(bar$total)) bar$current <- bar$total
+        if (result == "done" && !is.na(bar$total)) {
+          bar$current <- bar$total
+        }
         cli_status_clear(
           bar$cli_statusbar,
           result = result,
@@ -243,7 +249,9 @@ say_update <- function(bar) {
 
 builtin_handler_say <- list(
   able = function(bar, .envir) {
-    if (!is.null(getOption("cli.progress_say_command"))) return(TRUE)
+    if (!is.null(getOption("cli.progress_say_command"))) {
+      return(TRUE)
+    }
     Sys.info()[["sysname"]] == "Darwin" && Sys.which("say") != ""
   },
 
@@ -284,7 +292,9 @@ builtin_handler_rstudio <- list(
       show = FALSE
     )
     # so the name is not duplicated in the format string as well
-    if (is.na(bar$total)) bar$name <- NULL
+    if (is.na(bar$total)) {
+      bar$name <- NULL
+    }
     bar$rstudio_id <- rstudio_id
     bar$rstudio_status <- bar$status
   },

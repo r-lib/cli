@@ -40,12 +40,19 @@ news <- function(
   load_packages()
   setup_app()
 
-  result <- if (day) news_day() else if (week) news_week() else if (
-    !is.null(since)
-  )
-    news_since(since) else news_n(as.numeric(n))
+  result <- if (day) {
+    news_day()
+  } else if (week) {
+    news_week()
+  } else if (!is.null(since)) {
+    news_since(since)
+  } else {
+    news_n(as.numeric(n))
+  }
 
-  if (reverse) result <- rev(result)
+  if (reverse) {
+    result <- rev(result)
+  }
 
   format_results(result)
   invisible()

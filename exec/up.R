@@ -35,8 +35,11 @@ up <- function(urls, timeout = 5) {
         cli_alert_danger("{.url {url}} (HTTP {res$status_code})")
       }
     })$catch(error = function(err) {
-      e <- if (grepl("timed out", err$message, fixed = TRUE)) "timed out" else
+      e <- if (grepl("timed out", err$message, fixed = TRUE)) {
+        "timed out"
+      } else {
         "error"
+      }
       cli_alert_danger("{.url {url}} ({e})")
     })
   })

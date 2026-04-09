@@ -66,8 +66,9 @@ test_that_cli("format_message", {
 
 test_that_cli(configs = "ansi", "color in RStudio", {
   local_mocked_bindings(
-    rstudio_detect = function()
-      list(type = "rstudio_console", num_colors = 256),
+    rstudio_detect = function() {
+      list(type = "rstudio_console", num_colors = 256)
+    },
     get_rstudio_theme = function() list(foreground = "rgb(0, 0, 0)")
   )
   expect_snapshot({

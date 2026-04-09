@@ -15,7 +15,9 @@
 #' hash_sha256(c("foo", NA, "bar", ""))
 
 hash_sha256 <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   na <- is.na(x)
   x[na] <- NA_character_
   x[!na] <- .Call(clic_sha256, x[!na])
@@ -58,7 +60,9 @@ hash_obj_sha256 <- function(x, serialize_version = 2) {
 #' hashes.
 
 hash_file_sha256 <- function(paths) {
-  if (!is.character(paths)) paths <- as.character(paths)
+  if (!is.character(paths)) {
+    paths <- as.character(paths)
+  }
   paths <- normalizePath(paths, mustWork = FALSE)
   if (is_windows()) {
     paths <- enc2utf8(paths)
@@ -85,7 +89,9 @@ hash_file_sha256 <- function(paths) {
 #' hash_sha1(c("foo", NA, "bar", ""))
 
 hash_sha1 <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   na <- is.na(x)
   x[na] <- NA_character_
   x[!na] <- .Call(clic_sha1, x[!na])
@@ -128,7 +134,9 @@ hash_obj_sha1 <- function(x, serialize_version = 2) {
 #' hashes.
 
 hash_file_sha1 <- function(paths) {
-  if (!is.character(paths)) paths <- as.character(paths)
+  if (!is.character(paths)) {
+    paths <- as.character(paths)
+  }
   paths <- normalizePath(paths, mustWork = FALSE)
   if (is_windows()) {
     paths <- enc2utf8(paths)
@@ -157,7 +165,9 @@ hash_file_sha1 <- function(paths) {
 #' hash_md5(c("foo", NA, "bar", ""))
 
 hash_md5 <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   na <- is.na(x)
   x[na] <- NA_character_
   x[!na] <- .Call(clic_md5, x[!na])
@@ -197,7 +207,9 @@ hash_obj_md5 <- function(x, serialize_version = 2) {
 #' files.
 
 hash_file_md5 <- function(paths) {
-  if (!is.character(paths)) paths <- as.character(paths)
+  if (!is.character(paths)) {
+    paths <- as.character(paths)
+  }
   paths <- normalizePath(paths, mustWork = FALSE)
   if (is_windows()) {
     paths <- enc2utf8(paths)
@@ -258,7 +270,9 @@ hash_file_md5 <- function(paths) {
 
 hash_emoji <- function(x, size = 3) {
   # our integer arithmetic does not work if size > 4
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   stopifnot(
     is.character(x),
     is_count(size),
@@ -416,7 +430,9 @@ hash_obj_emoji <- function(x, size = 3, serialize_version = 2) {
 #' hash_animal("cli package", 3)$hash
 
 hash_animal <- function(x, n_adj = 2) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   stopifnot(
     is.character(x),
     is_count(n_adj),
@@ -515,7 +531,9 @@ hash_obj_animal <- function(x, n_adj = 2, serialize_version = 2) {
 #' hash_xxhash(c("foo", NA, "bar", ""))
 
 hash_xxhash <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   na <- is.na(x)
   x[na] <- NA_character_
   x[!na] <- .Call(clic_xxhash, x[!na])
@@ -556,7 +574,9 @@ hash_obj_xxhash <- function(x, serialize_version = 2) {
 #' hashes.
 
 hash_file_xxhash <- function(paths) {
-  if (!is.character(paths)) paths <- as.character(paths)
+  if (!is.character(paths)) {
+    paths <- as.character(paths)
+  }
   paths <- normalizePath(paths, mustWork = FALSE)
   if (is_windows()) {
     paths <- enc2utf8(paths)
@@ -572,7 +592,9 @@ hash_file_xxhash <- function(paths) {
 #' of xxHash. Otherwise they work the same.
 
 hash_xxhash64 <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   na <- is.na(x)
   x[na] <- NA_character_
   x[!na] <- .Call(clic_xxhash64, x[!na])
@@ -599,7 +621,9 @@ hash_obj_xxhash64 <- function(x, serialize_version = 2) {
 #' @rdname hash_xxhash
 
 hash_file_xxhash64 <- function(paths) {
-  if (!is.character(paths)) paths <- as.character(paths)
+  if (!is.character(paths)) {
+    paths <- as.character(paths)
+  }
   paths <- normalizePath(paths, mustWork = FALSE)
   if (is_windows()) {
     paths <- enc2utf8(paths)

@@ -219,7 +219,9 @@ test_that("auto close wtih failure", {
   f <- function() {
     cli_text("out1")
     sb <- cli_status("status1", .auto_result = "failed")
-    if (is_interactive()) Sys.sleep(2)
+    if (is_interactive()) {
+      Sys.sleep(2)
+    }
     cli_text("out2")
     if (is_interactive()) Sys.sleep(2)
   }
@@ -244,7 +246,9 @@ test_that("auto close with styling", {
       msg_failed = "{.alert-danger status1 ... failed}",
       .auto_result = "failed"
     )
-    if (is_interactive()) Sys.sleep(1)
+    if (is_interactive()) {
+      Sys.sleep(1)
+    }
     cli_text("out2")
     if (is_interactive()) Sys.sleep(1)
   }
@@ -259,7 +263,9 @@ test_that("auto close with styling", {
       msg_failed = "{.alert-danger status1 ... failed}",
       .auto_result = "done"
     )
-    if (is_interactive()) Sys.sleep(1)
+    if (is_interactive()) {
+      Sys.sleep(1)
+    }
     cli_text("out2")
     if (is_interactive()) Sys.sleep(1)
   }
@@ -281,7 +287,9 @@ test_that("process auto close with failure", {
   f <- function() {
     cli_text("out1")
     sb <- cli_process_start("status1", on_exit = "failed")
-    if (is_interactive()) Sys.sleep(2)
+    if (is_interactive()) {
+      Sys.sleep(2)
+    }
     cli_text("out2")
     if (is_interactive()) Sys.sleep(2)
   }
@@ -347,7 +355,9 @@ test_that("auto-close with done or failure", {
   expect_match(out, "status1 ... done")
 
   # This fails on older R versions, only if f2() is tryCatch()-ed.
-  if (getRversion() < "3.5.0") skip("Needs R 3.5.0")
+  if (getRversion() < "3.5.0") {
+    skip("Needs R 3.5.0")
+  }
 
   f2 <- function() {
     cli_text("out1")

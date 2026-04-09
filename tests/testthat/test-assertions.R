@@ -111,6 +111,10 @@ test_that("is_tree_style", {
     list("1", "2", "3", "4")
   )
 
-  for (x in good) expect_true(is_tree_style(x))
-  for (x in bad) expect_false(is_tree_style(x))
+  for (x in good) {
+    expect_true(is_tree_style(x))
+  }
+  for (x in bad) {
+    expect_false(is_tree_style(x))
+  }
 })

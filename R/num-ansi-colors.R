@@ -36,7 +36,9 @@ num_ansi_colors <- function(stream = "auto") {
   #' 1. If the `cli.num_colors` options is set, that is returned.
 
   opt <- getOption("cli.num_colors", NULL)
-  if (!is.null(opt)) return(as.integer(opt))
+  if (!is.null(opt)) {
+    return(as.integer(opt))
+  }
 
   #' 1. If the `R_CLI_NUM_COLORS` environment variable is set to a
   #'    non-empty value, then it is used.
@@ -57,7 +59,9 @@ num_ansi_colors <- function(stream = "auto") {
 
   cray_opt_has <- getOption("crayon.enabled", NULL)
   cray_opt_num <- getOption("crayon.colors", NULL)
-  if (!is.null(cray_opt_has) && !isTRUE(cray_opt_has)) return(1L)
+  if (!is.null(cray_opt_has) && !isTRUE(cray_opt_has)) {
+    return(1L)
+  }
   if (isTRUE(cray_opt_has) && !is.null(cray_opt_num)) {
     return(as.integer(cray_opt_num))
   }
@@ -68,18 +72,24 @@ num_ansi_colors <- function(stream = "auto") {
 
   #' 1. If the `NO_COLOR` environment variable is set, then 1L is returned.
 
-  if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) return(1L)
+  if (!is.na(Sys.getenv("NO_COLOR", NA_character_))) {
+    return(1L)
+  }
 
   #' 1. If we are in knitr, then 1L is returned, to turn off colors in
   #'    `.Rmd` chunks.
 
-  if (isTRUE(getOption("knitr.in.progress"))) return(1L)
+  if (isTRUE(getOption("knitr.in.progress"))) {
+    return(1L)
+  }
 
   #' 1. If `stream` is `"auto"` (the default) and there is an active
   #'    sink (either for `"output"` or `"message"`), then we return 1L.
   #'    (In theory we would only need to check the stream that will be
   #'    be actually used, but there is no easy way to tell that.)
-  if (stream == "auto" && !no_sink()) return(1L)
+  if (stream == "auto" && !no_sink()) {
+    return(1L)
+  }
 
   # Defer computation on streams to speed up common case
   # when environment variables are set
@@ -103,18 +113,24 @@ num_ansi_colors <- function(stream = "auto") {
 
   # If a sink is active for "message" (ie. stderr), then R does not update
   # the `stderr()` stream, so we need to catch this case.
-  if (is_stderr && sink.number("message") != 2) return(1L)
+  if (is_stderr && sink.number("message") != 2) {
+    return(1L)
+  }
 
   #' 1. If the `cli.default_num_colors` option is set, then we use that.
 
   dopt <- get_default_number_of_colors()
-  if (!is.null(dopt)) return(as.integer(dopt))
+  if (!is.null(dopt)) {
+    return(as.integer(dopt))
+  }
 
   #' 1. If R is running inside RGui on Windows, or R.app on macOS, then we
   #'    return 1L.
 
   # RStudio sets GUI to RGui initially, so we'll handle that after RStudio.
-  if (.Platform$GUI == "AQUA") return(1L)
+  if (.Platform$GUI == "AQUA") {
+    return(1L)
+  }
 
   #' 1. If R is running inside RStudio, with color support, then the
   #'    appropriate number of colors is returned, usually 256L.
@@ -126,14 +142,18 @@ num_ansi_colors <- function(stream = "auto") {
     "rstudio_build_pane",
     "rstudio_job"
   )
-  if (is.na(rstudio$num_colors)) rstudio$num_colors <- 1L
+  if (is.na(rstudio$num_colors)) {
+    rstudio$num_colors <- 1L
+  }
   if (rstudio$type %in% rstudio_colors && is_std) {
     return(rstudio$num_colors)
   }
 
   # RGui? We need to do this after RStudio, because .Platform$GUI is
   # "Rgui" in RStudio when we are starting up
-  if (.Platform$GUI == "Rgui") return(1L)
+  if (.Platform$GUI == "Rgui") {
+    return(1L)
+  }
 
   #' 1. If R is running on Windows, inside an Emacs version that is recent
   #'    enough to support ANSI colors, then the value of the
@@ -156,14 +176,20 @@ num_ansi_colors <- function(stream = "auto") {
   #' 1. If `stream` is not the standard output or standard error  in a
   #'    terminal, then 1L is returned.
 
-  if (!isatty(stream)) return(1L)
-  if (!is_std) return(1L)
+  if (!isatty(stream)) {
+    return(1L)
+  }
+  if (!is_std) {
+    return(1L)
+  }
 
   #' 1. Otherwise we use and cache the result of the terminal color
   #'     detection (see below).
 
   # Otherwise use/set the cache
-  if (is.null(clienv$num_colors)) clienv$num_colors <- list()
+  if (is.null(clienv$num_colors)) {
+    clienv$num_colors <- list()
+  }
   clienv$num_colors[[std]] <- clienv$num_colors[[std]] %||% detect_tty_colors()
   clienv$num_colors[[std]]
 }
@@ -194,7 +220,9 @@ detect_tty_colors <- function() {
   #'    enough to support ANSI colors, then the value of the
   #'    `cli.default_num_colors` option is returned, or 8L if unset.
 
-  if (os_type() == "unix" && is_emacs_with_color()) return(default %||% 8L)
+  if (os_type() == "unix" && is_emacs_with_color()) {
+    return(default %||% 8L)
+  }
 
   #' 1. If we are on Windows in an RStudio terminal, then apparently
   #'    we only have eight colors, but the `cli.default_num_colors` option
@@ -238,7 +266,9 @@ detect_tty_colors <- function() {
     ) {
       return(default %||% 8L)
     }
-    if (Sys.getenv("ANSICON") != "") return(default %||% 8L)
+    if (Sys.getenv("ANSICON") != "") {
+      return(default %||% 8L)
+    }
 
     #' 1. Otherwise if we are on Windows, return 1L.
 
@@ -292,7 +322,9 @@ get_default_number_of_colors <- function() {
 
 guess_tty_colors <- function() {
   term <- Sys.getenv("TERM")
-  if (term == "dumb") return(1L)
+  if (term == "dumb") {
+    return(1L)
+  }
 
   if (
     grepl(
@@ -316,7 +348,9 @@ is_emacs_with_color <- function() {
 
 emacs_version <- function() {
   ver <- Sys.getenv("INSIDE_EMACS")
-  if (ver == "") return(NA_integer_)
+  if (ver == "") {
+    return(NA_integer_)
+  }
 
   ver <- gsub("'", "", ver, fixed = TRUE)
 
@@ -327,9 +361,13 @@ emacs_version <- function() {
 
 win10_build <- function() {
   os <- utils::sessionInfo()$running %||% ""
-  if (!grepl("^Windows 10 ", os)) return(0L)
+  if (!grepl("^Windows 10 ", os)) {
+    return(0L)
+  }
   mch <- re_match(os, "[(]build (?<build>[0-9]+)[)]")
   mch <- suppressWarnings(as.integer(mch))
-  if (is.na(mch)) return(0L)
+  if (is.na(mch)) {
+    return(0L)
+  }
   mch
 }

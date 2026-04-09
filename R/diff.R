@@ -126,7 +126,9 @@ format.cli_diff_chr <- function(x, context = 3L, ...) {
   )
 
   ret <- as.character(unlist(out))
-  if (context == Inf && length(ret) > 0) ret <- ret[-1]
+  if (context == Inf && length(ret) > 0) {
+    ret <- ret[-1]
+  }
 
   ret
 }
@@ -151,7 +153,9 @@ get_diff_chunks <- function(lcs, context = 3L) {
     new_length = integer(nchunks) # number of lines from `new` in chunk
   )
 
-  if (nchunks == 0) return(chunks)
+  if (nchunks == 0) {
+    return(chunks)
+  }
 
   # infer some data about the original diff input
   old_off <- c(0, lcs$old_offset)
@@ -162,7 +166,9 @@ get_diff_chunks <- function(lcs, context = 3L) {
   new_empty <- new_size == 0
 
   # avoid working with Inf
-  if (context == Inf) context <- max(old_size, new_size)
+  if (context == Inf) {
+    context <- max(old_size, new_size)
+  }
 
   # chunk starts at operation number sum(length) before it, plus 1, but
   # at the end we change this to include the context chunks are well

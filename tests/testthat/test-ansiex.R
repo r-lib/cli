@@ -432,7 +432,9 @@ test_that("ansi_trimws", {
     )
   )
 
-  for (case in cases) expect_equal(ansi_trimws(case[[1]]), case[[2]])
+  for (case in cases) {
+    expect_equal(ansi_trimws(case[[1]]), case[[2]])
+  }
 
   cases_left <- list(
     list(character(), ansi_string(character())),
@@ -580,7 +582,9 @@ test_that_cli(configs = c("plain", "ansi"), "ansi_strtrim", {
     )
   )
 
-  for (case in cases) expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
+  for (case in cases) {
+    expect_equal(ansi_strtrim(case[[1]], 10), case[[2]])
+  }
 })
 
 test_that("ansi_strtrim with zero-length ellipsis", {

@@ -56,7 +56,9 @@ utf8_nchar <- function(
   type = c("chars", "bytes", "width", "graphemes", "codepoints")
 ) {
   type <- match.arg(type)
-  if (type == "chars") type <- "graphemes"
+  if (type == "chars") {
+    type <- "graphemes"
+  }
 
   x <- enc2utf8(x)
 
@@ -100,7 +102,9 @@ utf8_nchar <- function(
 #' cat(str24)
 
 utf8_substr <- function(x, start, stop) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   if (!is.numeric(start) || !is.numeric(stop)) {
     throw(cli_error(
       "{.arg start} and {.arg stop} must be numeric vectors",
@@ -145,7 +149,9 @@ utf8_substr <- function(x, start, stop) {
 #' chrs <- utf8_graphemes(str)
 
 utf8_graphemes <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   x <- enc2utf8(x)
   .Call(clic_utf8_graphemes, x)
 }

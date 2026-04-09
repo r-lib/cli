@@ -16,7 +16,9 @@ test_that("progress bar terminated at mapping function exit", {
 })
 
 test_that("interpolation uses the right env", {
-  if (getRversion() < "3.5.0") skip("Needs ALTREP")
+  if (getRversion() < "3.5.0") {
+    skip("Needs ALTREP")
+  }
   fun <- function() {
     withr::local_options(
       cli.ansi = TRUE,
@@ -33,7 +35,9 @@ test_that("interpolation uses the right env", {
 })
 
 test_that("cli_progress_along", {
-  if (getRversion() < "3.5.0") skip("Needs ALTREP")
+  if (getRversion() < "3.5.0") {
+    skip("Needs ALTREP")
+  }
   withr::local_envvar(CLI_NO_THREAD = "1")
   fun <- function() {
     withr::local_options(
@@ -50,7 +54,9 @@ test_that("cli_progress_along", {
 })
 
 test_that("cli_progress_along error", {
-  if (getRversion() < "3.5.0") skip("Needs ALTREP")
+  if (getRversion() < "3.5.0") {
+    skip("Needs ALTREP")
+  }
   withr::local_envvar(CLI_NO_THREAD = "1")
   fun <- function() {
     withr::local_options(
@@ -69,7 +75,10 @@ test_that("cli_progress_along error", {
   }
 
   outfile <- tempfile()
-  expect_snapshot(error = TRUE, callr::r(fun, stdout = outfile, stderr = outfile))
+  expect_snapshot(
+    error = TRUE,
+    callr::r(fun, stdout = outfile, stderr = outfile)
+  )
 
   lines <- fix_logger_output(readLines(outfile))
   expect_snapshot(lines)
@@ -87,7 +96,9 @@ test_that("old R is just seq_along", {
 })
 
 test_that("error in handler is a single warning", {
-  if (getRversion() < "3.5.0") skip("Needs ALTREP")
+  if (getRversion() < "3.5.0") {
+    skip("Needs ALTREP")
+  }
   fun <- function() {
     withr::local_options(
       cli.ansi = TRUE,
@@ -114,7 +125,9 @@ test_that("length 1 seq", {
 })
 
 test_that("ALTREP methods", {
-  if (getRversion() < "3.5.0") skip("Needs ALTREP")
+  if (getRversion() < "3.5.0") {
+    skip("Needs ALTREP")
+  }
   seq <- cli_progress_along(1:10)
   expect_output(.Internal(inspect(seq)), "progress_along")
 

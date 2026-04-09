@@ -11,7 +11,9 @@
 #' @family low level ANSI functions
 #' @export
 ansi_string <- function(x) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   x <- enc2utf8(x)
   class(x) <- unique(c("cli_ansi_string", "ansi_string", class(x), "character"))
   x
@@ -57,7 +59,9 @@ ansi_regex <- function() {
 #' ansi_has_any(col_red("foobar"))
 
 ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
-  if (!is.character(string)) string <- as.character(string)
+  if (!is.character(string)) {
+    string <- as.character(string)
+  }
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
@@ -85,7 +89,9 @@ ansi_has_any <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
 #' ansi_strip(col_red("foobar")) == "foobar"
 
 ansi_strip <- function(string, sgr = TRUE, csi = TRUE, link = TRUE) {
-  if (!is.character(string)) string <- as.character(string)
+  if (!is.character(string)) {
+    string <- as.character(string)
+  }
   string <- enc2utf8(string)
   stopifnot(
     is_flag(sgr),
@@ -128,9 +134,13 @@ ansi_nchar <- function(
   type = c("chars", "bytes", "width", "graphemes", "codepoints")
 ) {
   type <- match.arg(type)
-  if (type == "chars") type <- "graphemes"
+  if (type == "chars") {
+    type <- "graphemes"
+  }
   type <- match(type, c("graphemes", "bytes", "width", "codepoints"))
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   x <- enc2utf8(x)
   .Call(clic_ansi_nchar, x, type)
 }
@@ -180,8 +190,12 @@ ansi_nchar <- function(
 #' substr(ansi_strip(c(str, str2)), c(3,5), c(7, 18))
 
 ansi_substr <- function(x, start, stop) {
-  if (!is.character(x)) x <- as.character(x)
-  if (!length(x)) return(ansi_string(x))
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
+  if (!length(x)) {
+    return(ansi_string(x))
+  }
   start <- suppressWarnings(as.integer(start))
   stop <- suppressWarnings(as.integer(stop))
   if (!length(start) || !length(stop)) {
@@ -196,16 +210,18 @@ ansi_substr <- function(x, start, stop) {
   if (nastart || nastop) {
     throw(cli_error(
       "{.arg start} and {.arg stop} must not have {.code NA} values",
-      "i" = if (nastart)
+      "i" = if (nastart) {
         paste(
           "{.arg start} has {sum(is.na(start))}",
           "{.code NA} value{?s}, after coercion to integer"
-        ),
-      "i" = if (nastop)
+        )
+      },
+      "i" = if (nastop) {
         paste(
           "{.arg stop} has {sum(is.na(stop))} {.code NA} value{?s},",
           "after coercion to integer"
         )
+      }
     ))
   }
   x <- enc2utf8(x)
@@ -260,9 +276,13 @@ ansi_substr <- function(x, start, stop) {
 #' substring(ansi_strip(str2), c(3,5), c(7, 18))
 
 ansi_substring <- function(text, first, last = 1000000L) {
-  if (!is.character(text)) text <- as.character(text)
+  if (!is.character(text)) {
+    text <- as.character(text)
+  }
   n <- max(lt <- length(text), length(first), length(last))
-  if (lt && lt < n) text <- rep_len(text, length.out = n)
+  if (lt && lt < n) {
+    text <- rep_len(text, length.out = n)
+  }
   text <- enc2utf8(text)
   first <- rep_len(as.integer(first), n)
   last <- rep_len(as.integer(last), n)
@@ -316,9 +336,13 @@ ansi_strsplit <- function(x, split, ...) {
       i = "{.arg split} is (or was coerced to) {.type {split}}"
     ))
   }
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   x <- enc2utf8(x)
-  if (!length(split)) split <- ""
+  if (!length(split)) {
+    split <- ""
+  }
   plain <- ansi_strip(x)
   splits <- re_table(split, plain, ...)
   chunks <- non_matching(splits, plain, empty = TRUE)
@@ -335,8 +359,11 @@ ansi_strsplit <- function(x, split, ...) {
         y <- y[-1L, , drop = FALSE]
       }
       # drop empty last matches
-      if (nrow(y) && !utils::tail(y, 1L)[, "length"])
-        y[-nrow(y), , drop = FALSE] else y
+      if (nrow(y) && !utils::tail(y, 1L)[, "length"]) {
+        y[-nrow(y), , drop = FALSE]
+      } else {
+        y
+      }
     }
   )
   zero.chunks <- !vapply(chunks, nrow, integer(1L))
@@ -405,7 +432,9 @@ ansi_align <- function(
   text <- enc2utf8(text)
   nc <- ansi_nchar(text, type = type)
 
-  if (!length(text)) return(ansi_string(text))
+  if (!length(text)) {
+    return(ansi_string(text))
+  }
 
   res <- if (align == "left") {
     paste0(text, make_space(width - nc))
@@ -431,7 +460,9 @@ make_space <- function(num, filling = " ") {
 
 strrep <- function(x, times) {
   x = as.character(x)
-  if (length(x) == 0L) return(x)
+  if (length(x) == 0L) {
+    return(x)
+  }
 
   mapply(
     function(x, times) {
@@ -467,10 +498,14 @@ strrep <- function(x, times) {
 #' ansi_trimws(col_red("   I am red   "))
 
 ansi_trimws <- function(x, which = c("both", "left", "right")) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   which <- match.arg(which)
   x <- enc2utf8(x)
-  if (!length(x)) return(ansi_string(x))
+  if (!length(x)) {
+    return(ansi_string(x))
+  }
 
   sl <- 0L
   if (which %in% c("both", "left")) {
@@ -530,7 +565,9 @@ ansi_strwrap <- function(
   exdent = 0,
   simplify = TRUE
 ) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   x <- enc2utf8(x)
   if (length(x) == 0) {
     return(ansi_string(x))
@@ -544,7 +581,9 @@ ansi_strwrap <- function(
       exdent = exdent,
       simplify = FALSE
     )
-    if (simplify) wrp <- ansi_string(unlist(wrp))
+    if (simplify) {
+      wrp <- ansi_string(unlist(wrp))
+    }
     return(wrp)
   }
 
@@ -610,7 +649,9 @@ ansi_strwrap <- function(
 
   xs <- ansi_strip(xx)
   xw0 <- base::strwrap(xs, width = width, indent = indent, exdent = exdent)
-  if (xs == xx) return(ansi_string(unicode_post(fix_ff(xw0))))
+  if (xs == xx) {
+    return(ansi_string(unicode_post(fix_ff(xw0))))
+  }
 
   xw <- trimws(xw0, "left")
   indent <- nchar(xw0) - nchar(xw)
@@ -653,7 +694,9 @@ ansi_strwrap <- function(
   wrp <- vcapply(seq_along(splits[-1]), function(i) {
     from <- splits[i]
     to <- splits[i + 1L] - 1L
-    while (from %in% drop) from <- from + 1L
+    while (from %in% drop) {
+      from <- from + 1L
+    }
     .Call(clic_ansi_substr, xx, from, to)
   })
 
@@ -790,7 +833,9 @@ ansi_columns <- function(
 
   text <- enc2utf8(text)
 
-  if (length(text) == 0) return(ansi_string(text))
+  if (length(text) == 0) {
+    return(ansi_string(text))
+  }
 
   swdh <- ansi_nchar(sep, type = "width")
   twdh <- max(ansi_nchar(text, type = type)) + swdh
@@ -888,7 +933,9 @@ ansi_convert <- function(x, converter, ...) {
 #' @export
 
 ansi_simplify <- function(x, csi = c("keep", "drop")) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   csi <- match.arg(csi)
   x <- enc2utf8(x)
   .Call(clic_ansi_simplify, x, csi == "keep")
@@ -922,7 +969,9 @@ ansi_simplify <- function(x, csi = c("keep", "drop")) {
 #' if (interactive()) htmltools::html_print(page)
 
 ansi_html <- function(x, escape_reserved = TRUE, csi = c("drop", "keep")) {
-  if (!is.character(x)) x <- as.character(x)
+  if (!is.character(x)) {
+    x <- as.character(x)
+  }
   csi <- match.arg(csi)
   x <- enc2utf8(x)
   if (escape_reserved) {

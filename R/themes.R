@@ -31,7 +31,9 @@ clii_add_theme <- function(app, theme) {
 }
 
 clii_remove_theme <- function(app, id) {
-  if (!id %in% names(app$themes)) return(invisible(FALSE))
+  if (!id %in% names(app$themes)) {
+    return(invisible(FALSE))
+  }
   app$themes[[id]] <- NULL
   invisible(TRUE)
 }
@@ -107,8 +109,9 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       "font-weight" = "bold",
       "margin-top" = 1,
       "margin-bottom" = 1,
-      fmt = function(x)
+      fmt = function(x) {
         paste0(symbol$line, symbol$line, " ", x, " ", symbol$line, symbol$line)
+      }
     ),
     h3 = list(
       "margin-top" = 1,
@@ -418,8 +421,9 @@ create_formatter <- function(x) {
   is_color <- "color" %in% names(x)
   is_bg_color <- "background-color" %in% names(x)
 
-  if (!is_bold && !is_italic && !is_underline && !is_color && !is_bg_color)
+  if (!is_bold && !is_italic && !is_underline && !is_color && !is_bg_color) {
     return(x)
+  }
 
   if (is_color && is.null(x[["color"]])) {
     x[["color"]] <- "none"
@@ -518,12 +522,16 @@ parse_selector <- function(x) {
 parse_selector_node <- function(x) {
   parse_ids <- function(y) {
     r <- strsplit(y, "#", fixed = TRUE)[[1]]
-    if (length(r) > 1) r[-1] <- paste0("#", r[-1])
+    if (length(r) > 1) {
+      r[-1] <- paste0("#", r[-1])
+    }
     r
   }
 
   parts <- strsplit(x, ".", fixed = TRUE)[[1]]
-  if (length(parts) > 1) parts[-1] <- paste0(".", parts[-1])
+  if (length(parts) > 1) {
+    parts[-1] <- paste0(".", parts[-1])
+  }
   parts <- unlist(lapply(parts, parse_ids))
   parts <- parts[parts != ""]
 
@@ -556,8 +564,12 @@ parse_selector_node <- function(x) {
 #' @keywords internal
 
 match_selector_node <- function(node, cnt) {
-  if (length(node$id) > 1 || length(cnt$id) > 1) return(FALSE)
-  if (length(node$tag) > 1 || length(cnt$tag) > 1) return(FALSE)
+  if (length(node$id) > 1 || length(cnt$id) > 1) {
+    return(FALSE)
+  }
+  if (length(node$tag) > 1 || length(cnt$tag) > 1) {
+    return(FALSE)
+  }
   all(node$id %in% cnt$id) &&
     all(node$tag %in% cnt$tag) &&
     all(node$class %in% cnt$class)
@@ -579,9 +591,13 @@ match_selector <- function(sels, cnts) {
   cptr <- length(cnts)
 
   # Last selector must match the last container
-  if (sptr == 0 || sptr > cptr) return(FALSE)
+  if (sptr == 0 || sptr > cptr) {
+    return(FALSE)
+  }
   match <- match_selector_node(sels[[sptr]], cnts[[cptr]])
-  if (!match) return(FALSE)
+  if (!match) {
+    return(FALSE)
+  }
 
   # Plus the rest should match somehow
   sptr <- sptr - 1L

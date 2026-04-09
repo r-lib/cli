@@ -30,12 +30,16 @@ load_packages <- function() {
 outdated <- function(lib = NULL, notcran = FALSE) {
   load_packages()
   setup_app()
-  if (is.null(lib)) lib <- .libPaths()[1]
+  if (is.null(lib)) {
+    lib <- .libPaths()[1]
+  }
   inst <- utils::installed.packages(lib = lib)
   cli_alert_info("Getting repository metadata")
   repo <- meta_cache_list(rownames(inst))
 
-  if (!notcran) inst <- inst[inst[, "Package"] %in% repo$package, ]
+  if (!notcran) {
+    inst <- inst[inst[, "Package"] %in% repo$package, ]
+  }
 
   for (i in seq_len(nrow(inst))) {
     pkg <- inst[i, "Package"]
@@ -48,7 +52,9 @@ outdated <- function(lib = NULL, notcran = FALSE) {
 
     rpkg <- repo[repo$package == pkg, ]
     newer <- rpkg[package_version(rpkg$version) > iver, ]
-    if (!nrow(newer)) next
+    if (!nrow(newer)) {
+      next
+    }
 
     nver <- package_version(newer$version)
     mnver <- max(nver)

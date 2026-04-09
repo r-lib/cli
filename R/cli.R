@@ -1063,7 +1063,9 @@ cli__message <- function(
   .envir = NULL,
   record = getOption("cli.record")
 ) {
-  if ("id" %in% names(args) && is.null(args$id)) args$id <- new_uuid()
+  if ("id" %in% names(args) && is.null(args$id)) {
+    args$id <- new_uuid()
+  }
 
   if (.auto_close && !is.null(.envir) && !identical(.envir, .GlobalEnv)) {
     if (type == "status") {

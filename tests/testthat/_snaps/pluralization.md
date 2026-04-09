@@ -1,13 +1,17 @@
 # simplest
 
     Code
-      for (n in 0:2) cli_text("{n} package{?s}")
+      for (n in 0:2) {
+        cli_text("{n} package{?s}")
+      }
     Message
       0 packages
       1 package
       2 packages
     Code
-      for (n in 0:2) print(pluralize("{n} package{?s}"))
+      for (n in 0:2) {
+        print(pluralize("{n} package{?s}"))
+      }
     Output
       0 packages
       1 package
@@ -16,13 +20,17 @@
 # irregular
 
     Code
-      for (n in 0:2) cli_text("{n} dictionar{?y/ies}")
+      for (n in 0:2) {
+        cli_text("{n} dictionar{?y/ies}")
+      }
     Message
       0 dictionaries
       1 dictionary
       2 dictionaries
     Code
-      for (n in 0:2) print(pluralize("{n} dictionar{?y/ies}"))
+      for (n in 0:2) {
+        print(pluralize("{n} dictionar{?y/ies}"))
+      }
     Output
       0 dictionaries
       1 dictionary
@@ -31,13 +39,17 @@
 # multiple substitutions
 
     Code
-      for (n in 0:2) cli_text("{n} package{?s} {?is/are} ...")
+      for (n in 0:2) {
+        cli_text("{n} package{?s} {?is/are} ...")
+      }
     Message
       0 packages are ...
       1 package is ...
       2 packages are ...
     Code
-      for (n in 0:2) print(pluralize("{n} package{?s} {?is/are} ..."))
+      for (n in 0:2) {
+        print(pluralize("{n} package{?s} {?is/are} ..."))
+      }
     Output
       0 packages are ...
       1 package is ...
@@ -46,7 +58,11 @@
 # multiple quantities
 
     Code
-      for (m in 0:2) for (n in 0:2) cli_text("{m} package{?s} and {n} folder{?s}")
+      for (m in 0:2) {
+        for (n in 0:2) {
+          cli_text("{m} package{?s} and {n} folder{?s}")
+        }
+      }
     Message
       0 packages and 0 folders
       0 packages and 1 folder
@@ -58,8 +74,11 @@
       2 packages and 1 folder
       2 packages and 2 folders
     Code
-      for (m in 0:2) for (n in 0:2) print(pluralize(
-        "{m} package{?s} and {n} folder{?s}"))
+      for (m in 0:2) {
+        for (n in 0:2) {
+          print(pluralize("{m} package{?s} and {n} folder{?s}"))
+        }
+      }
     Output
       0 packages and 0 folders
       0 packages and 1 folder
@@ -74,13 +93,17 @@
 # no()
 
     Code
-      for (n in 0:2) cli_text("{no(n)} package{?s}")
+      for (n in 0:2) {
+        cli_text("{no(n)} package{?s}")
+      }
     Message
       no packages
       1 package
       2 packages
     Code
-      for (n in 0:2) print(pluralize("{no(n)} package{?s}"))
+      for (n in 0:2) {
+        print(pluralize("{no(n)} package{?s}"))
+      }
     Output
       no packages
       1 package
@@ -89,13 +112,17 @@
 # set qty() explicitly
 
     Code
-      for (n in 0:2) cli_text("{qty(n)}There {?is/are} {n} package{?s}")
+      for (n in 0:2) {
+        cli_text("{qty(n)}There {?is/are} {n} package{?s}")
+      }
     Message
       There are 0 packages
       There is 1 package
       There are 2 packages
     Code
-      for (n in 0:2) print(pluralize("{qty(n)}There {?is/are} {n} package{?s}"))
+      for (n in 0:2) {
+        print(pluralize("{qty(n)}There {?is/are} {n} package{?s}"))
+      }
     Output
       There are 0 packages
       There is 1 package
@@ -105,13 +132,17 @@
 
     Code
       pkgs <- (function(n) glue::glue("pkg{seq_len(n)}"))
-      for (n in 1:3) cli_text("The {pkgs(n)} package{?s}")
+      for (n in 1:3) {
+        cli_text("The {pkgs(n)} package{?s}")
+      }
     Message
       The pkg1 package
       The pkg1 and pkg2 packages
       The pkg1, pkg2, and pkg3 packages
     Code
-      for (n in 1:3) print(pluralize("The {pkgs(n)} package{?s}"))
+      for (n in 1:3) {
+        print(pluralize("The {pkgs(n)} package{?s}"))
+      }
     Output
       The pkg1 package
       The pkg1 and pkg2 packages
@@ -122,7 +153,9 @@
     Code
       special_style <- list(span.foo = list(before = "<", after = ">"))
       cli_div(theme = special_style)
-      for (n in 0:2) cli_text("{n} {.foo package{?s}}")
+      for (n in 0:2) {
+        cli_text("{n} {.foo package{?s}}")
+      }
     Message
       0 packages
       1 package
@@ -132,7 +165,9 @@
 
     Code
       pkgs <- (function(n) glue::glue("pkg{seq_len(n)}"))
-      for (n in 1:3) cli_text("The {.foo {pkgs(n)}} package{?s}")
+      for (n in 1:3) {
+        cli_text("The {.foo {pkgs(n)}} package{?s}")
+      }
     Message
       The pkg1 package
       The pkg1 and pkg2 packages
@@ -141,7 +176,9 @@
 # post-processing
 
     Code
-      for (n in 0:2) cli_text("Package{?s}: {n}")
+      for (n in 0:2) {
+        cli_text("Package{?s}: {n}")
+      }
     Message
       Packages: 0
       Package: 1
@@ -151,12 +188,16 @@
 
     Code
       pkgs <- (function(n) glue::glue("pkg{seq_len(n)}"))
-      for (n in 1:2) cli_text("Package{?s}: {pkgs(n)}")
+      for (n in 1:2) {
+        cli_text("Package{?s}: {pkgs(n)}")
+      }
     Message
       Package: pkg1
       Packages: pkg1 and pkg2
     Code
-      for (n in 1:2) print(pluralize("Package{?s}: {pkgs(n)}"))
+      for (n in 1:2) {
+        print(pluralize("Package{?s}: {pkgs(n)}"))
+      }
     Output
       Package: pkg1
       Packages: pkg1 and pkg2

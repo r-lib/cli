@@ -31,7 +31,9 @@ start_app <- function(
   .auto_close = TRUE,
   .envir = parent.frame()
 ) {
-  if (!inherits(output, "connection")) output <- match.arg(output)
+  if (!inherits(output, "connection")) {
+    output <- match.arg(output)
+  }
 
   app <- cliapp(
     theme = theme,

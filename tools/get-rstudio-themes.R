@@ -170,8 +170,7 @@ create_rstudio_data <- function() {
 
   # Some substitutions
   for (nm in names(operator_theme_map)) {
-    if (is.null(operator_theme_map[[nm]])) {
-    } else {
+    if (is.null(operator_theme_map[[nm]])) {} else {
       themes[[nm]]$null_ <- operator_theme_map[[nm]]
       themes[[nm]]$operator_ <- operator_theme_map[[nm]]
       themes[[nm]]$bracket_ <- operator_theme_map[[nm]]

@@ -118,8 +118,9 @@ cli_status_clear <- function(
       id = id %||% NA_character_,
       result = match.arg(result[1], c("clear", "done", "failed", "auto")),
       msg_done = if (!is.null(msg_done)) glue_cmd(msg_done, .envir = .envir),
-      msg_failed = if (!is.null(msg_failed))
+      msg_failed = if (!is.null(msg_failed)) {
         glue_cmd(msg_failed, .envir = .envir)
+      }
     )
   )
 }
@@ -163,8 +164,9 @@ cli_status_update <- function(
     list(
       msg = if (!is.null(msg)) glue_cmd(msg, .envir = .envir),
       msg_done = if (!is.null(msg_done)) glue_cmd(msg_done, .envir = .envir),
-      msg_failed = if (!is.null(msg_failed))
-        glue_cmd(msg_failed, .envir = .envir),
+      msg_failed = if (!is.null(msg_failed)) {
+        glue_cmd(msg_failed, .envir = .envir)
+      },
       id = id %||% NA_character_
     )
   )
@@ -339,11 +341,17 @@ clii_status <- function(
 
 clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
   ## If NA then the most recent one
-  if (is.na(id)) id <- names(app$status_bar)[1]
+  if (is.na(id)) {
+    id <- names(app$status_bar)[1]
+  }
 
   ## If no active status bar, then ignore
-  if (is.null(id) || is.na(id)) return(invisible())
-  if (!id %in% names(app$status_bar)) return(invisible())
+  if (is.null(id) || is.na(id)) {
+    return(invisible())
+  }
+  if (!id %in% names(app$status_bar)) {
+    return(invisible())
+  }
 
   if (result == "auto") {
     r1 <- random_marker
@@ -398,17 +406,27 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
 
 clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   ## If NA then the most recent one
-  if (is.na(id)) id <- names(app$status_bar)[1]
+  if (is.na(id)) {
+    id <- names(app$status_bar)[1]
+  }
 
   ## If no active status bar, then ignore
-  if (is.na(id)) return(invisible())
+  if (is.na(id)) {
+    return(invisible())
+  }
 
   ## Update messages
-  if (!is.null(msg_done)) app$status_bar[[id]]$msg_done <- msg_done
-  if (!is.null(msg_failed)) app$status_bar[[id]]$msg_failed <- msg_failed
+  if (!is.null(msg_done)) {
+    app$status_bar[[id]]$msg_done <- msg_done
+  }
+  if (!is.null(msg_failed)) {
+    app$status_bar[[id]]$msg_failed <- msg_failed
+  }
 
   ## Do we have a new message?
-  if (is.null(msg)) return(invisible())
+  if (is.null(msg)) {
+    return(invisible())
+  }
 
   ## Do we need to clear the current content?
   current <- paste0("", app$status_bar[[1]]$content)
@@ -418,7 +436,9 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   fmsg <- app$inline(msg)
   cfmsg <- ansi_strtrim(fmsg, width = app$get_width())
   content <- strsplit(cfmsg, "\r?\n")[[1]][1]
-  if (is.na(content)) content <- ""
+  if (is.na(content)) {
+    content <- ""
+  }
 
   ## Update status bar, put it in front
   app$status_bar[[id]]$content <- content

@@ -134,7 +134,9 @@ create_ansi_style_fun <- function(styles) {
       if (nc > 1 && length(txt) > 0) {
         mystyles <- .styles
         for (st in rev(mystyles)) {
-          if (!is.null(st$palette)) st <- get_palette_color(st, nc)
+          if (!is.null(st$palette)) {
+            st <- get_palette_color(st, nc)
+          }
           txt <- paste0(
             st$open,
             gsub(st$close, st$open, txt, fixed = TRUE),
@@ -231,12 +233,16 @@ make_ansi_style <- function(
   colors = num_ansi_colors()
 ) {
   style <- list(...)[[1]]
-  if (inherits(style, "cli_ansi_style")) return(style)
+  if (inherits(style, "cli_ansi_style")) {
+    return(style)
+  }
   if (inherits(style, "crayon")) {
     return(create_ansi_style_fun(attr(style, "_styles")))
   }
 
-  if (identical(style, "dim")) style <- "blurred"
+  if (identical(style, "dim")) {
+    style <- "blurred"
+  }
 
   orig_style_name <- style_name <- names(args)[1]
 
@@ -262,10 +268,14 @@ make_ansi_style <- function(
     if (bg && substr(style, 1, 3) != "bg_") {
       style <- paste0("bg_", style)
     }
-    if (is.null(style_name)) style_name <- style
+    if (is.null(style_name)) {
+      style_name <- style
+    }
     ansi_builtin_styles[[style]]
   } else if (is_r_color(style)) {
-    if (is.null(style_name)) style_name <- style
+    if (is.null(style_name)) {
+      style_name <- style
+    }
     ansi_style_from_r_color(style, bg, colors, grey)
   } else if (is_rgb_matrix(style)) {
     if (is.null(style_name)) {
@@ -317,7 +327,9 @@ ansi_style_from_rgb <- function(rgb, bg, num_colors, grey) {
   if (num_colors < 256) {
     return(ansi_style_8_from_rgb(rgb, bg))
   }
-  if (num_colors < truecolor || grey) return(ansi256(rgb, bg, grey))
+  if (num_colors < truecolor || grey) {
+    return(ansi256(rgb, bg, grey))
+  }
   return(ansitrue(rgb, bg))
 }
 

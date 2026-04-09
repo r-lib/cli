@@ -31,8 +31,11 @@ is_interactive <- function() {
 #' @export
 
 cli_output_connection <- function() {
-  if ((is_interactive() || rstudio_stdout()) && no_sink()) stdout() else
+  if ((is_interactive() || rstudio_stdout()) && no_sink()) {
+    stdout()
+  } else {
     stderr()
+  }
 }
 
 no_sink <- function() {
@@ -185,7 +188,9 @@ is_ansi_tty <- function(stream = "auto") {
   }
 
   # RStudio is handled separately
-  if (rstudio$detect()[["ansi_tty"]] && is_stdx(stream)) return(TRUE)
+  if (rstudio$detect()[["ansi_tty"]] && is_stdx(stream)) {
+    return(TRUE)
+  }
 
   isatty(stream) &&
     .Platform$OS.type == "unix" &&
@@ -215,7 +220,9 @@ is_ansi_tty <- function(stream = "auto") {
 #' @export
 
 ansi_hide_cursor <- function(stream = "auto") {
-  if (Sys.getenv("R_CLI_HIDE_CURSOR") == "false") return()
+  if (Sys.getenv("R_CLI_HIDE_CURSOR") == "false") {
+    return()
+  }
   stream <- get_real_output(stream)
   if (is_ansi_tty(stream)) cat(ANSI_HIDE_CURSOR, file = stream)
 }
@@ -224,7 +231,9 @@ ansi_hide_cursor <- function(stream = "auto") {
 #' @name ansi_hide_cursor
 
 ansi_show_cursor <- function(stream = "auto") {
-  if (Sys.getenv("R_CLI_HIDE_CURSOR") == "false") return()
+  if (Sys.getenv("R_CLI_HIDE_CURSOR") == "false") {
+    return()
+  }
   stream <- get_real_output(stream)
   if (is_ansi_tty(stream)) cat(ANSI_SHOW_CURSOR, file = stream)
 }
@@ -280,7 +289,9 @@ fix_r_utf8_output <- function(x) {
   end <- grepRaw(as.raw(c(3, 255, 254)), x, fixed = TRUE, all = TRUE)
 
   # In case the output is incomplete, and an UTF-8 tag is left open
-  if (length(end) < length(beg)) end <- c(end, length(x) + 1L)
+  if (length(end) < length(beg)) {
+    end <- c(end, length(x) + 1L)
+  }
 
   if (length(beg) != length(end)) {
     throw(cli_error(
@@ -298,19 +309,25 @@ fix_r_utf8_output <- function(x) {
   on.exit(close(out), add = TRUE)
 
   doutf8 <- function(from, to) {
-    if (from > to) return()
+    if (from > to) {
+      return()
+    }
     writeBin(x[from:to], out)
     size <<- size + (to - from + 1L)
   }
   donati <- function(from, to) {
-    if (from > to) return()
+    if (from > to) {
+      return()
+    }
     xx <- iconv(list(x[from:to]), "", "UTF-8", toRaw = TRUE)[[1]]
     writeBin(xx, out)
     size <<- size + length(xx)
   }
 
   # Initial native part
-  if (beg[1] > 1) donati(1, beg[1] - 1L)
+  if (beg[1] > 1) {
+    donati(1, beg[1] - 1L)
+  }
 
   # UTF-8 chunk, and native part after them
   for (i in seq_along(beg)) {

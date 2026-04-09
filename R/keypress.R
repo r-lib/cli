@@ -28,7 +28,9 @@ keypress <- function(block = TRUE) {
     stop("Your platform/terminal does not support `keypress()`.")
   }
   block <- as.logical(block)
-  if (length(block) != 1) stop("'block' must be a logical scalar")
+  if (length(block) != 1) {
+    stop("'block' must be a logical scalar")
+  }
   ret <- .Call(cli_keypress, block)
   if (ret == "none") NA_character_ else ret
 }

@@ -2,7 +2,9 @@
 
 utf8 <- l10n_info()$`UTF-8`
 newwin <- .Platform$OS.type == "windows" && getRversion() >= "4.0.0"
-if (!utf8 && !newwin) return()
+if (!utf8 && !newwin) {
+  return()
+}
 
 test_that("UTF-8 output on Windows", {
   skip_on_cran()

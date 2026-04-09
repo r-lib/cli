@@ -85,7 +85,9 @@ parse_plural <- function(code, values) {
 
 process_plural <- function(qty, code) {
   parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
-  if (last_character(code) == "/") parts <- c(parts, "")
+  if (last_character(code) == "/") {
+    parts <- c(parts, "")
+  }
   if (length(parts) == 1) {
     if (is.finite(qty) & qty == 1) "" else parts[1]
   } else if (length(parts) == 2) {
@@ -104,7 +106,9 @@ process_plural <- function(qty, code) {
 }
 
 post_process_plurals <- function(str, values) {
-  if (!values$postprocess) return(str)
+  if (!values$postprocess) {
+    return(str)
+  }
   if (values$num_subst == 0) {
     stop("Cannot pluralize without a quantity")
   }

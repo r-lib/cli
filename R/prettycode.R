@@ -308,35 +308,49 @@ replace_in_place <- function(str, start, end, replacement) {
 
 code_theme_default <- function() {
   opt <- code_theme_opt("cli.code_theme")
-  if (!is.null(opt)) return(opt)
+  if (!is.null(opt)) {
+    return(opt)
+  }
 
   rs <- rstudio_detect()
   if (rs$type %in% c("rstudio_console", "rstudio_console_starting")) {
     opt <- code_theme_opt("cli.code_theme_rstudio")
-    if (!is.null(opt)) return(opt)
+    if (!is.null(opt)) {
+      return(opt)
+    }
     if (requireNamespace("rstudioapi", quietly = TRUE)) {
       return(code_theme_default_rstudio())
     }
   }
 
   opt <- code_theme_opt("cli.code_theme_terminal")
-  if (!is.null(opt)) return(opt)
+  if (!is.null(opt)) {
+    return(opt)
+  }
   code_theme_default_term()
 }
 
 code_theme_opt <- function(option) {
   theme <- getOption(option)
-  if (is.null(theme)) return(NULL)
+  if (is.null(theme)) {
+    return(NULL)
+  }
 
   code_theme_make(theme)
 }
 
 code_theme_make <- function(theme) {
-  if (is.list(theme)) return(theme)
+  if (is.list(theme)) {
+    return(theme)
+  }
   if (is_string(theme)) {
-    if (theme %in% names(rstudio_themes)) return(rstudio_themes[[theme]])
+    if (theme %in% names(rstudio_themes)) {
+      return(rstudio_themes[[theme]])
+    }
     lcs <- gsub(" ", "_", tolower(names(rstudio_themes)), fixed = TRUE)
-    if (theme %in% lcs) return(rstudio_themes[[match(theme, lcs)[1]]])
+    if (theme %in% lcs) {
+      return(rstudio_themes[[match(theme, lcs)[1]]])
+    }
     warning("Unknown cli code theme: `", theme, "`.")
     return(NULL)
   }
@@ -412,7 +426,9 @@ code_theme_list <- function() {
 }
 
 pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
-  if (num_ansi_colors() == 1L) return(base::print.function(x, useSource))
+  if (num_ansi_colors() == 1L) {
+    return(base::print.function(x, useSource))
+  }
 
   srcref <- getSrcref(x)
   src <- if (useSource && !is.null(srcref)) {
@@ -426,7 +442,9 @@ pretty_print_function <- function(x, useSource = TRUE, code_theme = NULL, ...) {
     code_highlight(src, code_theme = code_theme, envir = environment(x)),
     error = function(e) err <<- TRUE
   )
-  if (err) return(base::print.function(x, useSource))
+  if (err) {
+    return(base::print.function(x, useSource))
+  }
 
   ## Environment of the function
   hisrc <- c(hisrc, utils::capture.output(print(environment(x))))
@@ -459,7 +477,9 @@ pretty_fun_link <- function(data, fun_call, envir) {
   sprt <- ansi_hyperlink_types()$help
   wch <- which(fun_call)
   txt <- data$text[wch]
-  if (!sprt || length(wch) == 0) return(txt)
+  if (!sprt || length(wch) == 0) {
+    return(txt)
+  }
 
   scheme <- if (identical(attr(sprt, "type"), "rstudio")) {
     "ide:help"
