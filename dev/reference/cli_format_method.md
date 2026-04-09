@@ -79,7 +79,7 @@ new_r_package("cli")
 #> [1] "Helpers for Developing Command Line Interfaces"
 #> 
 #> $desc$Version
-#> [1] "3.6.5.9000"
+#> [1] "3.6.6.9000"
 #> 
 #> $desc$`Authors@R`
 #> [1] "c(\n    person(\"Gábor\", \"Csárdi\", , \"gabor@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Hadley\", \"Wickham\", role = \"ctb\"),\n    person(\"Kirill\", \"Müller\", role = \"ctb\"),\n    person(\"Salim\", \"Brüggemann\", , \"salim-b@pm.me\", role = \"ctb\",\n           comment = c(ORCID = \"0000-0002-5329-5987\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )"
@@ -130,7 +130,7 @@ new_r_package("cli")
 #> [1] "yes"
 #> 
 #> $desc$Packaged
-#> [1] "2026-04-08 17:15:48 UTC; runner"
+#> [1] "2026-04-09 16:28:25 UTC; runner"
 #> 
 #> $desc$Author
 #> [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb],\n  Salim Brüggemann [ctb] (ORCID: <https://orcid.org/0000-0002-5329-5987>),\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)"
@@ -139,7 +139,7 @@ new_r_package("cli")
 #> [1] "Gábor Csárdi <gabor@posit.co>"
 #> 
 #> $desc$Built
-#> [1] "R 4.5.3; x86_64-pc-linux-gnu; 2026-04-08 17:15:49 UTC; unix"
+#> [1] "R 4.5.3; x86_64-pc-linux-gnu; 2026-04-09 16:28:26 UTC; unix"
 #> 
 #> attr(,"file")
 #> [1] "/home/runner/work/_temp/Library/cli/Meta/package.rds"
@@ -161,7 +161,7 @@ print(new_r_package("cli"))
 #> number of lower level 'CLI' elements: rules, boxes, trees, and
 #> 'Unicode' symbols with 'ASCII' alternatives. It support ANSI colors
 #> and text styles as well.
-#> • Version: 3.6.5.9000
+#> • Version: 3.6.6.9000
 #> • Maintainer: Gábor Csárdi <gabor@posit.co>
 #> • License: MIT + file LICENSE
 #> See more at <https://cli.r-lib.org, https://github.com/r-lib/cli>

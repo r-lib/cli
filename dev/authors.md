@@ -22,12 +22,12 @@ Source:
 [`DESCRIPTION`](https://github.com/r-lib/cli/blob/main/DESCRIPTION)
 
 Csárdi G (2026). *cli: Helpers for Developing Command Line Interfaces*.
-R package version 3.6.5.9000, <https://cli.r-lib.org>.
+R package version 3.6.6.9000, <https://cli.r-lib.org>.
 
     @Manual{,
       title = {cli: Helpers for Developing Command Line Interfaces},
       author = {Gábor Csárdi},
       year = {2026},
-      note = {R package version 3.6.5.9000},
+      note = {R package version 3.6.6.9000},
       url = {https://cli.r-lib.org},
     }

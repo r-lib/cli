@@ -2,6 +2,10 @@
 
 ## cli (development version)
 
+## cli 3.6.6
+
+CRAN release: 2026-04-09
+
 - New `{.num}` and `{.bytes}` inline styles to format numbers and bytes
   ([@m-muecke](https://github.com/m-muecke),
   [\#644](https://github.com/r-lib/cli/issues/644),
