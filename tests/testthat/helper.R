@@ -248,6 +248,10 @@ transform_env <- function(x) {
   sub("environment: 0x[0-9a-f]+", "environment: <addr>", x)
 }
 
+transform_column_number <- function(x) {
+  sub("([.]R:[0-9]+:)[0-9]+", "\\1<col>", x)
+}
+
 skip_if_no_srcrefs <- function() {
   if (!asNamespace("pkgload")$is_dev_package("cli") &&
       Sys.getenv("R_KEEP_PKG_SOURCE") != "yes")

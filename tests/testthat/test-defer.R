@@ -6,6 +6,7 @@ test_that("errors", {
 
   expect_snapshot(
     error = TRUE,
-    fun()
+    fun(),
+    transform = transform_column_number
   )
 })
