@@ -5,6 +5,9 @@
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
 
+* `pb_elapsed` rounds to the closest second when the elapsed time exceeds
+  one minute (@mcol, #751).
+
 # cli 3.6.5
 
 * `code_highlight()` supports long strings and symbols
