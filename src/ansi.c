@@ -940,7 +940,13 @@ static void clic__html_start(struct html_data *data) {
 static void clic__html_end(struct html_data *data) {
 
   struct cli_buffer *buffer = &data->buffer;
-  if (data->had_tags) EMITS("</span>");
+  if (data->had_tags) {
+    EMITS("</span>");
+    /* Reset old state after closing tags, so the next text segment
+       correctly detects that it needs to open a new span, even if
+       the same style was reset and re-applied (issue #752). */
+    memset(&data->state.old, 0, sizeof(data->state.old));
+  }
   if (data->is_link) EMITS("</a>");
 }
 
