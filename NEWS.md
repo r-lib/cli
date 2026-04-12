@@ -5,6 +5,9 @@
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
 
+* Fix escaping of `<>` so that `cli_bullets_raw()` doesn't attempt to
+  perform string interpolation on them (@mcol, #789).
+
 # cli 3.6.5
 
 * `code_highlight()` supports long strings and symbols

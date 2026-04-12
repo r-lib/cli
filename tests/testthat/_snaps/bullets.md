@@ -214,3 +214,99 @@
       → This is some text that is longer than the width. This is some text that is
         longer than the width. This is some text that is longer than the width.
 
+# bullets_raw glue [plain]
+
+    Code
+      cli_bullets_raw(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+        x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
+        `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
+    Message
+      noindent {{.key {{1:3}}}}
+        space {{.key {{1:3}}}}
+      v success {{.key {{1:3}}}}
+      x danger {{.key {{1:3}}}}
+      ! warning {{.key {{1:3}}}}
+      i info {{.key {{1:3}}}}
+      * bullet {{.key {{1:3}}}}
+      > arrow {{.key {{1:3}}}}
+
+# bullets_raw glue [ansi]
+
+    Code
+      cli_bullets_raw(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+        x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
+        `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
+    Message
+      noindent {{.key {{1:3}}}}
+        space {{.key {{1:3}}}}
+      [32mv[39m success {{.key {{1:3}}}}
+      [31mx[39m danger {{.key {{1:3}}}}
+      [33m![39m warning {{.key {{1:3}}}}
+      [36mi[39m info {{.key {{1:3}}}}
+      [36m*[39m bullet {{.key {{1:3}}}}
+      > arrow {{.key {{1:3}}}}
+
+# bullets_raw glue [unicode]
+
+    Code
+      cli_bullets_raw(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+        x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
+        `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
+    Message
+      noindent {{.key {{1:3}}}}
+        space {{.key {{1:3}}}}
+      ✔ success {{.key {{1:3}}}}
+      ✖ danger {{.key {{1:3}}}}
+      ! warning {{.key {{1:3}}}}
+      ℹ info {{.key {{1:3}}}}
+      • bullet {{.key {{1:3}}}}
+      → arrow {{.key {{1:3}}}}
+
+# bullets_raw glue [fancy]
+
+    Code
+      cli_bullets_raw(c("noindent {.key {1:3}}", ` ` = "space {.key {1:3}}", v = "success {.key {1:3}}",
+        x = "danger {.key {1:3}}", `!` = "warning {.key {1:3}}", i = "info {.key {1:3}}",
+        `*` = "bullet {.key {1:3}}", `>` = "arrow {.key {1:3}}"))
+    Message
+      noindent {{.key {{1:3}}}}
+        space {{.key {{1:3}}}}
+      [32m✔[39m success {{.key {{1:3}}}}
+      [31m✖[39m danger {{.key {{1:3}}}}
+      [33m![39m warning {{.key {{1:3}}}}
+      [36mℹ[39m info {{.key {{1:3}}}}
+      [36m•[39m bullet {{.key {{1:3}}}}
+      → arrow {{.key {{1:3}}}}
+
+# bullets_raw handles <> (#789) [plain]
+
+    Code
+      cli_bullets_raw(c("{.field field} <x>", "{.field field} <<x>>"))
+    Message
+      {{.field field}} <x>
+      {{.field field}} <<x>>
+
+# bullets_raw handles <> (#789) [ansi]
+
+    Code
+      cli_bullets_raw(c("{.field field} <x>", "{.field field} <<x>>"))
+    Message
+      {{.field field}} <x>
+      {{.field field}} <<x>>
+
+# bullets_raw handles <> (#789) [unicode]
+
+    Code
+      cli_bullets_raw(c("{.field field} <x>", "{.field field} <<x>>"))
+    Message
+      {{.field field}} <x>
+      {{.field field}} <<x>>
+
+# bullets_raw handles <> (#789) [fancy]
+
+    Code
+      cli_bullets_raw(c("{.field field} <x>", "{.field field} <<x>>"))
+    Message
+      {{.field field}} <x>
+      {{.field field}} <<x>>
+
