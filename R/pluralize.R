@@ -9,7 +9,10 @@ make_quantity <- function(object) {
   val <- if (is.numeric(object)) {
     stopifnot(length(object) == 1)
 
-    if (is.finite(object)) as.integer(object) else object
+    if (is.finite(object) && abs(object) <= .Machine$integer.max)
+      as.integer(object)
+    else
+      object
   } else {
     length(object)
   }
