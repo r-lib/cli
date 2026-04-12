@@ -566,7 +566,20 @@ NULL
 #' ```{asciicast links-file-3}
 #' cli_text("... see line 5 in {.file ~/.Rprofile:5}.")
 #' ```
+#' 
+#' There is also support for displaying text and line numbers but the syntax
+#' is a bit different. You have to use `style_hyperlink()` with `params`.
+#' Make sure that `line` and `col` are numeric as they will be ignored otherwise.
 #'
+#' ```{asciicast links-file-4}
+#' link <- style_hyperlink(
+#'   text = "R profile at line 5",
+#'   url = "file://~/.Rprofile",
+#'   params = c(line = 5, col = 1)
+#' )
+#' cli_text("... see {link}")
+#' ```
+#' 
 #' ## Default handler
 #'
 #' In RStudio `file:` URLs open within RStudio. If you click on a file
@@ -578,7 +591,7 @@ NULL
 #' One issue with using `.href` file files is that it does not look great
 #' if hyperlinks are not available. This will be improved in the future:
 #'
-#' ```{asciicast links-file-4}
+#' ```{asciicast links-file-5}
 #' local({
 #'   withr::local_options(cli.hyperlink = FALSE)
 #'   prof <- path.expand("~/.Rprofile")
