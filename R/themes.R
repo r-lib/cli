@@ -267,6 +267,15 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     ),
     span.num = list(
       transform = function(x) format_num$pretty_num(as.numeric(x))
+    ),
+    span.duration = list(
+      before = "[",
+      after = "]",
+      color = "grey",
+      transform = function(x) format_time$pretty_sec(as.numeric(x))
+    ),
+    span.time_ago = list(
+      transform = function(x) format_time_ago$time_ago(as.POSIXct(as.numeric(x), origin = "1970-01-01"))
     )
   )
 }
