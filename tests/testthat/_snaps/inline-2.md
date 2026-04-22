@@ -458,7 +458,7 @@
     Output
       [1] "--- 10 k, 20 k, 30 k, and 40 k ---"
 
-# .duration formats numeric seconds
+# .duration
 
     Code
       format_inline("--- {.duration 0.042} ---")
@@ -472,8 +472,16 @@
       format_inline("--- {.duration 3661} ---")
     Output
       [1] "--- 1h 1m 1s ---"
+    Code
+      format_inline("{.duration {as.difftime(1.5, units = 'mins')}}")
+    Output
+      [1] "1m 30s"
+    Code
+      format_inline("{.duration {as.difftime(1, units = 'hours')}}")
+    Output
+      [1] "1h"
 
-# .time_ago accepts numeric, POSIXct, and POSIXlt inputs
+# .time_ago
 
     Code
       t <- as.numeric(Sys.time() - 120)

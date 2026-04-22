@@ -213,25 +213,22 @@ test_that(".num", {
   })
 })
 
-test_that(".duration formats numeric seconds", {
+test_that(".duration", {
   expect_snapshot({
+    # numeric seconds
     format_inline("--- {.duration 0.042} ---")
     format_inline("--- {.duration 90} ---")
     format_inline("--- {.duration 3661} ---")
+
+    # difftime: units normalised before formatting (not treated as raw seconds)
+    format_inline("{.duration {as.difftime(1.5, units = 'mins')}}")
+    format_inline("{.duration {as.difftime(1, units = 'hours')}}")
   })
 })
 
-test_that(".duration normalises difftime units before formatting", {
-  # difftime stored in non-second units must not be treated as raw seconds
-  dt_mins <- as.difftime(1.5, units = "mins") # 90 seconds
-  expect_equal(format_inline("{.duration {dt_mins}}"), "1m 30s")
-  dt_hours <- as.difftime(1, units = "hours") # 3600 seconds
-  expect_equal(format_inline("{.duration {dt_hours}}"), "1h")
-})
-
-test_that(".time_ago accepts numeric, POSIXct, and POSIXlt inputs", {
+test_that(".time_ago", {
   expect_snapshot({
-    # numeric (unix timestamp)
+    # numeric unix timestamp
     t <- as.numeric(Sys.time() - 120)
     format_inline("{.time_ago {t}}")
 
