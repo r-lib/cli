@@ -212,3 +212,35 @@ test_that(".num", {
     format_inline("--- {.num {1:4 * 10000}} ---")
   })
 })
+
+test_that(".duration", {
+  expect_snapshot({
+    # numeric seconds
+    format_inline("--- {.duration 0.042} ---")
+    format_inline("--- {.duration 90} ---")
+    format_inline("--- {.duration 3661} ---")
+
+    # difftime: units normalised before formatting (not treated as raw seconds)
+    dt_mins <- as.difftime(1.5, units = "mins")
+    format_inline("{.duration {dt_mins}}")
+
+    dt_days <- as.difftime(30, units = "days")
+    format_inline("{.duration {dt_days}}")
+  })
+})
+
+test_that(".time_ago", {
+  expect_snapshot({
+    # numeric unix timestamp
+    t <- as.numeric(Sys.time() - 120)
+    format_inline("{.time_ago {t}}")
+
+    # POSIXct
+    t <- Sys.time() - 120
+    format_inline("{.time_ago {t}}")
+
+    # POSIXlt
+    t <- as.POSIXlt(Sys.time() - 120)
+    format_inline("{.time_ago {t}}")
+  })
+})

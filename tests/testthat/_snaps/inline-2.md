@@ -458,3 +458,46 @@
     Output
       [1] "--- 10 k, 20 k, 30 k, and 40 k ---"
 
+# .duration
+
+    Code
+      format_inline("--- {.duration 0.042} ---")
+    Output
+      [1] "--- 42ms ---"
+    Code
+      format_inline("--- {.duration 90} ---")
+    Output
+      [1] "--- 1m 30s ---"
+    Code
+      format_inline("--- {.duration 3661} ---")
+    Output
+      [1] "--- 1h 1m 1s ---"
+    Code
+      dt_mins <- as.difftime(1.5, units = "mins")
+      format_inline("{.duration {dt_mins}}")
+    Output
+      [1] "1m 30s"
+    Code
+      dt_days <- as.difftime(30, units = "days")
+      format_inline("{.duration {dt_days}}")
+    Output
+      [1] "30d"
+
+# .time_ago
+
+    Code
+      t <- as.numeric(Sys.time() - 120)
+      format_inline("{.time_ago {t}}")
+    Output
+      [1] "2 minutes ago"
+    Code
+      t <- Sys.time() - 120
+      format_inline("{.time_ago {t}}")
+    Output
+      [1] "2 minutes ago"
+    Code
+      t <- as.POSIXlt(Sys.time() - 120)
+      format_inline("{.time_ago {t}}")
+    Output
+      [1] "2 minutes ago"
+
