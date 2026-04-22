@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New `{.duration}` and `{.time_ago}` inline styles to format durations
+  and relative times (@jjjermiah, #814).
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
