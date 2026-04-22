@@ -144,16 +144,7 @@ simple_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     span.var = simple_theme_code(dark),
     span.envvar = simple_theme_code(dark),
 
-    span.timestamp = list(before = "[", after = "]", color = "grey"),
-    span.duration = list(
-      before = "[",
-      after = "]",
-      color = "grey",
-      transform = function(x) format_time$pretty_sec(as.numeric(x))
-    ),
-    span.time_ago = list(
-      transform = function(x) format_time_ago$time_ago(as.POSIXct(as.numeric(x), origin = "1970-01-01"))
-    )
+    span.timestamp = list(before = "[", after = "]", color = "grey")
   )
 }
 
