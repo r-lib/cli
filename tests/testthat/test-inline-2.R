@@ -221,8 +221,11 @@ test_that(".duration", {
     format_inline("--- {.duration 3661} ---")
 
     # difftime: units normalised before formatting (not treated as raw seconds)
-    format_inline("{.duration {as.difftime(1.5, units = 'mins')}}")
-    format_inline("{.duration {as.difftime(1, units = 'hours')}}")
+    dt_mins <- as.difftime(1.5, units = "mins")
+    format_inline("{.duration {dt_mins}}")
+
+    dt_days <- as.difftime(30, units = "days")
+    format_inline("{.duration {dt_days}}")
   })
 })
 
