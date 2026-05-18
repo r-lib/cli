@@ -88,11 +88,11 @@ clii__cat_ln <- function(app, lines, indent, padding) {
 
   signal <- !identical(app$signal, FALSE)
   if (signal && length(app$status_bar)) {
-    clii__clear_status_bar(app)
+    clii__clear_all_status_bars(app)
   }
   app$cat(paste0(paste0(lines, "\n"), collapse = ""))
   if (signal && length(app$status_bar)) {
-    app$cat(paste0(app$status_bar[[1]]$content, "\r"))
+    clii__restore_status_bars(app)
   }
 }
 
@@ -101,7 +101,7 @@ clii__vspace <- function(app, n) {
     sp <- strrep("\n", n - app$margin)
     signal <- !identical(app$signal, FALSE)
     if (signal && length(app$status_bar)) {
-      clii__clear_status_bar(app)
+      clii__clear_all_status_bars(app)
     }
     clii__message(
       sp,
@@ -111,7 +111,7 @@ clii__vspace <- function(app, n) {
     )
     app$margin <- n
     if (signal && length(app$status_bar)) {
-      app$cat(paste0(app$status_bar[[1]]$content, "\r"))
+      clii__restore_status_bars(app)
     }
   }
 }

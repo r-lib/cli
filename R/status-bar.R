@@ -333,6 +333,7 @@ clii_status <- function(
     keep = keep,
     auto_result = auto_result
   )
+  app$status_bar_current <- id
   if (isTRUE(getOption("cli.hide_cursor", TRUE)) && !isTRUE(globalenv)) {
     ansi_hide_cursor(app$output)
   }
@@ -340,9 +341,9 @@ clii_status <- function(
 }
 
 clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
-  ## If NA then the most recent one
+  ## If NA then the current one
   if (is.na(id)) {
-    id <- names(app$status_bar)[1]
+    id <- app$status_bar_current
   }
 
   ## If no active status bar, then ignore
@@ -362,6 +363,10 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
     }
   }
 
+  ## For done/failed, update content via clii_status_update (renders).
+  ## Save and restore status_bar_current so that clearing a non-current bar
+  ## doesn't shift which bar subsequent id-less operations target.
+  saved_current <- app$status_bar_current
   if (result == "done") {
     msg <- msg_done %||% app$status_bar[[id]]$msg_done
     clii_status_update(app, id, msg, NULL, NULL)
@@ -371,47 +376,64 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
     clii_status_update(app, id, msg, NULL, NULL)
     app$status_bar[[id]]$keep <- TRUE
   }
+  app$status_bar_current <- saved_current
 
-  if (names(app$status_bar)[1] == id) {
-    ## This is the active one
+  output <- get_real_output(app$output)
+  is_ansi <- is_ansi_tty(output)
+  is_displayed <- if (is_ansi) TRUE else identical(app$status_bar_current, id)
+
+  ## Clear/emit based on terminal type
+  if (is_ansi && length(app$status_bar) > 1L) {
+    ## Multi-bar ANSI: clear all, emit kept content, re-render remaining
+    clii__clear_all_status_bars(app)
     if (app$status_bar[[id]]$keep) {
-      ## Keep? Just emit it
+      app$cat(paste0(app$status_bar[[id]]$content, "\n"))
+    }
+  } else if (is_displayed) {
+    if (app$status_bar[[id]]$keep) {
       app$cat("\n")
     } else {
-      ## Not keep? Remove it
-      clii__clear_status_bar(app)
+      clii__clear_all_status_bars(app)
     }
+  } else if (app$status_bar[[id]]$keep) {
+    clii__clear_all_status_bars(app)
+    app$cat(paste0(app$status_bar[[id]]$content, "\n"))
+  }
+
+  ## Remove the bar
+  app$status_bar[[id]] <- NULL
+
+  ## Update current pointer
+  if (identical(app$status_bar_current, id)) {
+    nms <- names(app$status_bar)
+    app$status_bar_current <- if (length(nms)) nms[length(nms)] else NULL
+  }
+
+  ## Cursor visibility and restore remaining bars
+  if (length(app$status_bar) == 0L) {
+    app$status_bar_lines <- 0L
+    app$status_bar_prev_content <- ""
     if (isTRUE(getOption("cli.hide_cursor", TRUE))) {
       ansi_show_cursor(app$output)
     }
+  } else if (is_ansi) {
+    clii__render_all_status_bars(app)
   } else {
-    if (app$status_bar[[id]]$keep) {
-      ## Keep?
-      clii__clear_status_bar(app)
-      app$cat(paste0(app$status_bar[[id]]$content, "\n"))
-      app$cat(paste0(app$status_bar[[1]]$content, "\r"))
-    } else {
-      ## Not keep? Nothing to output
+    if (is_displayed && isTRUE(getOption("cli.hide_cursor", TRUE))) {
+      ansi_show_cursor(app$output)
     }
-  }
-
-  ## Remove
-  app$status_bar[[id]] <- NULL
-
-  ## Switch to the previous one
-  if (length(app$status_bar)) {
-    app$cat(paste0(app$status_bar[[1]]$content, "\r"))
+    clii__restore_status_bars(app)
   }
 }
 
 clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
-  ## If NA then the most recent one
+  ## If NA then the current one
   if (is.na(id)) {
-    id <- names(app$status_bar)[1]
+    id <- app$status_bar_current
   }
 
   ## If no active status bar, then ignore
-  if (is.na(id)) {
+  if (is.null(id) || is.na(id)) {
     return(invisible())
   }
 
@@ -428,9 +450,6 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
     return(invisible())
   }
 
-  ## Do we need to clear the current content?
-  current <- paste0("", app$status_bar[[1]]$content)
-
   ## Format the line
   content <- ""
   fmsg <- app$inline(msg)
@@ -440,22 +459,22 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
     content <- ""
   }
 
-  ## Update status bar, put it in front
+  ## Update content in place (stable order)
   app$status_bar[[id]]$content <- content
-  app$status_bar <- c(
-    app$status_bar[id],
-    app$status_bar[setdiff(names(app$status_bar), id)]
-  )
+  app$status_bar_current <- id
 
-  ## New content, if it is an ANSI terminal we'll overwrite and clear
-  ## until the end of the line. Otherwise we add some space characters
-  ## to the content to make sure we clear up residual content.
+  ## Render
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
-    app$cat(paste0("\r", content, ANSI_EL, "\r"))
+    clii__render_all_status_bars(app)
   } else if (is_dynamic_tty(output)) {
-    nsp <- max(ansi_nchar(current) - ansi_nchar(content), 0)
-    app$cat(paste0("\r", content, strrep(" ", nsp), "\r"))
+    ## Non-ANSI dynamic TTY: show only the current bar
+    current_content <- app$status_bar[[id]]$content
+    prev <- app$status_bar_prev_content %||% ""
+    nsp <- max(ansi_nchar(prev) - ansi_nchar(current_content), 0)
+    app$cat(paste0("\r", current_content, strrep(" ", nsp), "\r"))
+    app$status_bar_prev_content <- current_content
+    app$status_bar_lines <- 1L
   } else {
     app$cat(paste0(content, "\n"))
   }
@@ -466,13 +485,98 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
   invisible()
 }
 
-clii__clear_status_bar <- function(app) {
+clii__clear_all_status_bars <- function(app) {
+  n <- app$status_bar_lines
+  if (n == 0L) return(invisible())
+
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
-    app$cat(paste0("\r", ANSI_EL))
+    out <- ""
+    if (n > 1L) {
+      out <- paste0("\033[", n - 1L, "A")
+    }
+    for (i in seq_len(n)) {
+      if (i < n) {
+        out <- paste0(out, "\r", ANSI_EL, "\n")
+      } else {
+        out <- paste0(out, "\r", ANSI_EL)
+      }
+    }
+    if (n > 1L) {
+      out <- paste0(out, "\033[", n - 1L, "A")
+    }
+    app$cat(out)
   } else if (is_dynamic_tty(output)) {
-    text <- app$status_bar[[1]]$content
+    text <- app$status_bar_prev_content %||% ""
     len <- ansi_nchar(text, type = "width")
     app$cat(paste0("\r", strrep(" ", len + rstudio_r_fix), "\r"))
   }
+  app$status_bar_lines <- 0L
+  app$status_bar_prev_content <- ""
+}
+
+clii__render_all_status_bars <- function(app) {
+  n <- length(app$status_bar)
+  if (n == 0L) return(invisible())
+
+  output <- get_real_output(app$output)
+  if (!is_ansi_tty(output)) return(invisible())
+
+  prev <- app$status_bar_lines
+  out <- ""
+
+  ## Move up to the top of previously painted area
+  if (prev > 1L) {
+    out <- paste0("\033[", prev - 1L, "A")
+  }
+
+  ## Render each bar
+  for (i in seq_len(n)) {
+    content <- app$status_bar[[i]]$content
+    if (i < n) {
+      out <- paste0(out, "\r", content, ANSI_EL, "\n")
+    } else {
+      out <- paste0(out, "\r", content, ANSI_EL, "\r")
+    }
+  }
+
+  ## If we previously had more lines, clear the leftover lines below
+  if (prev > n) {
+    for (i in seq_len(prev - n)) {
+      out <- paste0(out, "\n\r", ANSI_EL)
+    }
+    out <- paste0(out, "\033[", prev - n, "A\r")
+  }
+
+  app$cat(out)
+  app$status_bar_lines <- n
+}
+
+clii__restore_status_bars <- function(app) {
+  if (length(app$status_bar) == 0L) return(invisible())
+
+  output <- get_real_output(app$output)
+  if (is_ansi_tty(output)) {
+    if (length(app$status_bar) == 1L) {
+      content <- app$status_bar[[1]]$content
+      app$cat(paste0(content, "\r"))
+      app$status_bar_lines <- 1L
+    } else {
+      clii__render_all_status_bars(app)
+    }
+  } else if (is_dynamic_tty(output)) {
+    cid <- app$status_bar_current
+    if (!is.null(cid) && cid %in% names(app$status_bar)) {
+      content <- app$status_bar[[cid]]$content
+    } else {
+      content <- app$status_bar[[length(app$status_bar)]]$content
+    }
+    app$cat(paste0(content, "\r"))
+    app$status_bar_prev_content <- content
+    app$status_bar_lines <- 1L
+  }
+}
+
+clii__clear_status_bar <- function(app) {
+  clii__clear_all_status_bars(app)
 }
