@@ -576,7 +576,3 @@ clii__restore_status_bars <- function(app) {
     app$status_bar_lines <- 1L
   }
 }
-
-clii__clear_status_bar <- function(app) {
-  clii__clear_all_status_bars(app)
-}
