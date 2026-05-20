@@ -634,3 +634,62 @@ test_that("multi-bar keep/done on ANSI", {
   msgs <- capture_cli_messages(fun())
   expect_snapshot(msgs)
 })
+
+test_that("cli.progress_multiline = FALSE forces single-line ANSI render", {
+  skip_if_not_installed("testthat", "3.1.2")
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = TRUE,
+    cli.progress_show_after = 0,
+    cli.progress_multiline = FALSE
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      "bar1", total = 3, type = "custom",
+      format = "bar1: {pb_current}", current = FALSE
+    )
+    id2 <- cli_progress_bar(
+      "bar2", total = 3, type = "custom",
+      format = "bar2: {pb_current}", current = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_done(id = id1)
+    cli_progress_done(id = id2)
+  }
+
+  msgs <- capture_cli_messages(fun())
+  ## No cursor-up escapes — multiline render is disabled.
+  expect_false(any(grepl("\033\\[\\d+A", msgs)))
+  ## Newlines between bars only happen in multi-line mode.
+  expect_false(any(grepl("\033\\[K\n", msgs)))
+})
+
+test_that("is_progress_multiline() defaults to TRUE", {
+  withr::local_options(cli.progress_multiline = NULL)
+  expect_true(is_progress_multiline())
+})
+
+test_that("is_progress_multiline() honours TRUE/FALSE", {
+  withr::local_options(cli.progress_multiline = TRUE)
+  expect_true(is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = FALSE)
+  expect_false(is_progress_multiline())
+})
+
+test_that("is_progress_multiline() rejects invalid values", {
+  withr::local_options(cli.progress_multiline = "yes")
+  expect_snapshot(error = TRUE, is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = NA)
+  expect_snapshot(error = TRUE, is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = c(TRUE, FALSE))
+  expect_snapshot(error = TRUE, is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = 1)
+  expect_snapshot(error = TRUE, is_progress_multiline())
+})

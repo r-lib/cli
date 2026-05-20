@@ -46,3 +46,39 @@
       [5] "a: 2\n"                              "\rb: 1\033[K\r"                     
       [7] "\rb: 2\033[K\r"                      "\n"                                 
 
+# is_progress_multiline() rejects invalid values
+
+    Code
+      is_progress_multiline()
+    Condition
+      Error:
+      ! ! Invalid value for cli.progress_multiline option.
+      i It must be `TRUE` or `FALSE`, but it is a string.
+
+---
+
+    Code
+      is_progress_multiline()
+    Condition
+      Error:
+      ! ! Invalid value for cli.progress_multiline option.
+      i It must be `TRUE` or `FALSE`, but it is `NA`.
+
+---
+
+    Code
+      is_progress_multiline()
+    Condition
+      Error:
+      ! ! Invalid value for cli.progress_multiline option.
+      i It must be `TRUE` or `FALSE`, but it is a logical vector.
+
+---
+
+    Code
+      is_progress_multiline()
+    Condition
+      Error:
+      ! ! Invalid value for cli.progress_multiline option.
+      i It must be `TRUE` or `FALSE`, but it is a number.
+

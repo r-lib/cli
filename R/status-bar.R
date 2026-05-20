@@ -316,6 +316,20 @@ cli_process_failed <- function(
 
 # -----------------------------------------------------------------------
 
+is_progress_multiline <- function() {
+  opt <- getOption("cli.progress_multiline", TRUE)
+  if (isTRUE(opt)) {
+    return(TRUE)
+  }
+  if (isFALSE(opt)) {
+    return(FALSE)
+  }
+  throw(cli_error(
+    "Invalid value for cli.progress_multiline option.",
+    "i" = "It must be `TRUE` or `FALSE`, but it is {.type {opt}}."
+  ))
+}
+
 clii_status <- function(
   app,
   id,
@@ -380,10 +394,11 @@ clii_status_clear <- function(app, id, result, msg_done, msg_failed) {
 
   output <- get_real_output(app$output)
   is_ansi <- is_ansi_tty(output)
-  is_displayed <- if (is_ansi) TRUE else identical(app$status_bar_current, id)
+  is_multi <- is_ansi && is_progress_multiline()
+  is_displayed <- if (is_multi) TRUE else identical(app$status_bar_current, id)
 
   ## Clear/emit based on terminal type
-  if (is_ansi && length(app$status_bar) > 1L) {
+  if (is_multi && length(app$status_bar) > 1L) {
     ## Multi-bar ANSI: clear all, emit kept content, re-render remaining
     clii__clear_all_status_bars(app)
     if (app$status_bar[[id]]$keep) {
@@ -522,8 +537,8 @@ clii__clear_all_status_bars <- function(app) {
 }
 
 clii__render_all_status_bars <- function(app) {
-  n <- length(app$status_bar)
-  if (n == 0L) {
+  full_n <- length(app$status_bar)
+  if (full_n == 0L) {
     return(invisible())
   }
 
@@ -531,6 +546,10 @@ clii__render_all_status_bars <- function(app) {
   if (!is_ansi_tty(output)) {
     return(invisible())
   }
+
+  ## When multiline is disabled, render only the current bar as a single line.
+  is_multi <- is_progress_multiline()
+  n <- if (is_multi) full_n else 1L
 
   prev <- app$status_bar_lines
   out <- ""
@@ -540,14 +559,20 @@ clii__render_all_status_bars <- function(app) {
     out <- ansi_cuu(prev - 1L)
   }
 
-  ## Render each bar
-  for (i in seq_len(n)) {
-    content <- app$status_bar[[i]]$content
-    if (i < n) {
-      out <- paste0(out, "\r", content, ANSI_EL, "\n")
-    } else {
-      out <- paste0(out, "\r", content, ANSI_EL, "\r")
+  if (is_multi) {
+    ## Render each bar
+    for (i in seq_len(n)) {
+      content <- app$status_bar[[i]]$content
+      if (i < n) {
+        out <- paste0(out, "\r", content, ANSI_EL, "\n")
+      } else {
+        out <- paste0(out, "\r", content, ANSI_EL, "\r")
+      }
     }
+  } else {
+    cid <- app$status_bar_current %||% names(app$status_bar)[full_n]
+    content <- app$status_bar[[cid]]$content
+    out <- paste0(out, "\r", content, ANSI_EL, "\r")
   }
 
   ## If we previously had more lines, clear the leftover lines below
@@ -569,12 +594,14 @@ clii__restore_status_bars <- function(app) {
 
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
-    if (length(app$status_bar) == 1L) {
-      content <- app$status_bar[[1]]$content
+    if (is_progress_multiline() && length(app$status_bar) > 1L) {
+      clii__render_all_status_bars(app)
+    } else {
+      cid <- app$status_bar_current %||%
+        names(app$status_bar)[length(app$status_bar)]
+      content <- app$status_bar[[cid]]$content
       app$cat(paste0(content, "\r"))
       app$status_bar_lines <- 1L
-    } else {
-      clii__render_all_status_bars(app)
     }
   } else if (is_dynamic_tty(output)) {
     cid <- app$status_bar_current

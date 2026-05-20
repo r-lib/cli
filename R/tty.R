@@ -160,14 +160,23 @@ ansi_cuu <- function(n) paste0(ANSI_ESC, n, "A")
 
 #' Detect if a stream support ANSI escape characters
 #'
-#' We check that all of the following hold:
-#' * The stream is a terminal.
-#' * The platform is Unix.
-#' * R is not running inside R.app (the macOS GUI).
-#' * R is not running inside RStudio.
-#' * R is not running inside Emacs.
-#' * The terminal is not "dumb".
-#' * `stream` is either the standard output or the standard error stream.
+#' The detection mechanism is as follows:
+#' 1. If the `cli.ansi` option is set to `TRUE`, `TRUE` is returned.
+#' 1. If the `cli.ansi` option is set to `FALSE`, `FALSE` is returned.
+#' 1. If the `R_CLI_ANSI` environment variable is set to `true` (case
+#'    insensitive), then `TRUE` is returned.
+#' 1. If `R_CLI_ANSI` is not empty and set to `false` (case insensitive),
+#'    `FALSE` is returned.
+#' 1. If R is running in the Positron console, then `TRUE` is returned,
+#'    with 'positron' added as a name. Positron does not currently support
+#'    hide/show cursor, scrolling regions, inserting and deleting lines
+#'    and the alternate screen buffer.
+#' 1. Otherwise we autodetect, by checking that all of the following hold:
+#'    * The stream is a terminal, see [base::isatty()].
+#'    * R is not running inside R.app (the macOS GUI).
+#'    * R is not running inside Emacs.
+#'    * The terminal is not "dumb".
+#'    * `stream` is either the standard output or the standard error stream.
 #'
 #' @inheritParams is_dynamic_tty
 #' @return `TRUE` or `FALSE`.
@@ -181,20 +190,43 @@ is_ansi_tty <- function(stream = "auto") {
   stream <- get_real_output(stream)
 
   # Option takes precedence
-  opt <- getOption("cli.ansi")
-  if (isTRUE(opt)) {
-    return(TRUE)
-  } else if (identical(opt, FALSE)) {
-    return(FALSE)
+  if (!is.null(opt <- getOption("cli.ansi"))) {
+    if (isTRUE(opt)) {
+      return(TRUE)
+    } else if (identical(opt, FALSE)) {
+      return(FALSE)
+    } else {
+      throw(cli_error(
+        "Invalid value for option 'cli.ansi'",
+        "i" = "Expected TRUE or FALSE, got {.type {opt}}."
+      ))
+    }
   }
 
-  # RStudio is handled separately
+  # Env var next
+  if ((x <- tolower(Sys.getenv("R_CLI_ANSI", ""))) != "") {
+    if (x %in% true_values) {
+      return(TRUE)
+    } else if (x %in% false_values) {
+      return(FALSE)
+    } else {
+      throw(cli_error(
+        "Invalid value for environment variable 'R_CLI_ANSI'",
+        "i" = "Expected one of {.val true} or {.val false}, got {x}."
+      ))
+    }
+  }
+
+  if (.Platform$GUI == "Positron") {
+    return(c(positron = TRUE))
+  }
+
+  # This does not currently happen, ever, but just in case
   if (rstudio$detect()[["ansi_tty"]] && is_stdx(stream)) {
     return(TRUE)
   }
 
   isatty(stream) &&
-    .Platform$OS.type == "unix" &&
     !is_rapp() &&
     !is_emacs() &&
     Sys.getenv("TERM", "") != "dumb" &&
