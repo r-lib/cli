@@ -12,6 +12,7 @@ for further reference on their source and how to use them in {cli}.
 Colorblind friendly palette, from
 <https://github.com/romainl/vim-dichromatic#dichromatic>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -19,6 +20,7 @@ Colorblind friendly palette, from
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -35,6 +37,7 @@ mode, which used a 16-entry color table. The colors are different in the
 EGA/VGA graphic modes. From
 <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -42,6 +45,7 @@ EGA/VGA graphic modes. From
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -56,6 +60,7 @@ EGA/VGA graphic modes. From
 Windows XP Console. Seen in Windows XP through Windows 8.1. From
 <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -63,6 +68,7 @@ Windows XP Console. Seen in Windows XP through Windows 8.1. From
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -77,6 +83,7 @@ Windows XP Console. Seen in Windows XP through Windows 8.1. From
 Visual Studio Debug console, ‘Dark+’ theme. From
 <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -84,6 +91,7 @@ Visual Studio Debug console, ‘Dark+’ theme. From
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -98,6 +106,7 @@ Visual Studio Debug console, ‘Dark+’ theme. From
 Campbell theme, used as of Windows 10 version 1709. Also usedby
 PowerShell 6.From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -105,6 +114,7 @@ PowerShell 6.From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -119,6 +129,7 @@ PowerShell 6.From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 Terminal.app in macOSFrom
 <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -126,6 +137,7 @@ Terminal.app in macOSFrom
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -139,6 +151,7 @@ Terminal.app in macOSFrom
 
 From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -146,6 +159,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -159,6 +173,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
 From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -166,6 +181,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -179,6 +195,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
 From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -186,6 +203,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -200,6 +218,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 For virtual terminals, from /etc/vtrgb.From
 <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -207,6 +226,7 @@ For virtual terminals, from /etc/vtrgb.From
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -220,6 +240,7 @@ For virtual terminals, from /etc/vtrgb.From
 
 From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -227,6 +248,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -240,6 +262,7 @@ From <https://en.wikipedia.org/wiki/ANSI_escape_code#SGR>.
 
 Built-in iTerm2 theme.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -247,6 +270,7 @@ Built-in iTerm2 theme.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -260,6 +284,7 @@ Built-in iTerm2 theme.
 
 Built-In iTerm2 theme.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -267,6 +292,7 @@ Built-In iTerm2 theme.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -280,6 +306,7 @@ Built-In iTerm2 theme.
 
 Built-In iTerm2 theme.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -287,6 +314,7 @@ Built-In iTerm2 theme.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -300,6 +328,7 @@ Built-In iTerm2 theme.
 
 From <https://github.com/sindresorhus/iterm2-snazzy>.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -307,6 +336,7 @@ From <https://github.com/sindresorhus/iterm2-snazzy>.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -320,6 +350,7 @@ From <https://github.com/sindresorhus/iterm2-snazzy>.
 
 Built-In iTerm2 theme.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -327,6 +358,7 @@ Built-In iTerm2 theme.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
@@ -340,6 +372,7 @@ Built-In iTerm2 theme.
 
 Built-In iTerm2 theme.
 
+
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte
     #>                                                                                 
@@ -347,6 +380,7 @@ Built-In iTerm2 theme.
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
     #> ████ ████ ████ ████ ████ ████ ████ ████  ████ ████ ████ ████ ████ ████ ████ ████
+
 
     #>                                                      bright variants            
     #> blck red  grn  yllw blue mgnt cyan whte  blck red  grn  yllw blue mgnt cyan whte

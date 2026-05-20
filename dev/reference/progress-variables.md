@@ -23,6 +23,7 @@ then it will return an empty string.
       format = "Fitting model {cli::pb_bar} {cli::pb_percent}"
     )
 
+
     #> Fitting model ███████████████████████████████   66%
 
 ### `pb_current`
@@ -34,6 +35,7 @@ The number of current progress units.
       format = "{cli::pb_spin} Reading file {cli::pb_current}/{cli::pb_total}"
     )
 
+
     #> ⠙ Reading file 66/100
 
 ### `pb_current_bytes`
@@ -44,6 +46,7 @@ a constant width of six characters.
     cli_progress_bar(
       format = "Got {cli::pb_current_bytes} in {cli::pb_elapsed}"
     )
+
 
     #> Got 524 kB in 5s
 
@@ -59,6 +62,7 @@ or similar.
       format = "{cli::pb_bar} {cli::pb_percent} [{cli::pb_elapsed}]"
     )
 
+
     #> ███████████████████████████████   66% [5s]
 
 ### `pb_elapsed_clock`
@@ -70,6 +74,7 @@ The elapsed time, in `hh::mm::ss` format.
       format = "{cli::pb_bar} {cli::pb_percent} [{cli::pb_elapsed_clock}]"
     )
 
+
     #> ███████████████████████████████   66% [00:00:05]
 
 ### `pb_elapsed_raw`
@@ -80,6 +85,7 @@ The number of seconds since the start of the progress bar.
       total = 100,
       format = "{cli::pb_bar} {cli::pb_percent} [{round(cli::pb_elapsed_raw)}s]"
     )
+
 
     #> ███████████████████████████████   66% [5s]
 
@@ -93,6 +99,7 @@ form.
       format = "{cli::pb_bar} {cli::pb_percent} | ETA: {cli::pb_eta}"
     )
 
+
     #> ███████████████████████████████   66% | ETA:  3s
 
 ### `pb_eta_raw`
@@ -104,6 +111,7 @@ is useful if you want to adjust the default `pb_eta` display.
       total = 100,
       format = "{cli::pb_bar} {cli::pb_percent} | ETA: {round(cli::pb_eta_raw)}s"
     )
+
 
     #> ███████████████████████████████   66% | ETA: 3s
 
@@ -117,6 +125,7 @@ otherwise it is the empty string.
       total = 100,
       format = "{cli::pb_bar} {cli::pb_percent} | {cli::pb_eta_str}"
     )
+
 
     #> ███████████████████████████████   66% | ETA:  3s
 
@@ -133,6 +142,7 @@ and
       format = "Cleaning cache for user '{cli::pb_extra$user}': {cli::pb_current_bytes}"
     )
 
+
     #> Cleaning cache for user 'gaborcsardi': 161 MB
 
 ### `pb_id`
@@ -146,6 +156,7 @@ This is useful for debugging progress bars.
     cli_progress_bar(
       format = "Progress bar '{cli::pb_id}' is at {cli::pb_current}"
     )
+
 
     #> Progress bar 'cli-40403-1860' is at 64
 
@@ -161,6 +172,7 @@ names.
       format = "{cli::pb_name} {cli::pb_bar} {cli::pb_percent}"
     )
 
+
     #> Loading training data  ███████████████████████████████   66%
 
 ### `pb_percent`
@@ -173,6 +185,7 @@ it is `" NA%"`.
       total = 100,
       format = "{cli::pb_bar} {cli::pb_percent}"
     )
+
 
     #> ███████████████████████████████   66%
 
@@ -190,6 +203,7 @@ The progress rate, in number of units per second, formatted in a string.
       format = "Reading input files {pb_current}/{pb_total} [{pb_rate}]"
     )
 
+
     #> Reading input files 68/156 [14/s]
 
 ### `pb_rate_raw`
@@ -200,6 +214,7 @@ The raw progress rate, in number of units per second.
       total = 156,
       format = "Reading input files {pb_current}/{pb_total} [{round(pb_rate_raw)}/s]"
     )
+
 
     #> Reading input files 68/156 [14/s]
 
@@ -215,6 +230,7 @@ form.
         "[{ansi_trimws(pb_rate_bytes)}]"
       )
 
+
     #> Reading data  70 MB/266 MB [14 MB/s]
 
 ### `pb_spin`
@@ -228,6 +244,7 @@ call.
       format = "{cli::pb_spin} Reading file {cli::pb_current}/{cli::pb_total}"
     )
 
+
     #> ⠙ Reading file 66/100
 
 ### `pb_status`
@@ -239,6 +256,7 @@ and \`cli_progress_update()\].
 
     cli_progress_bar(status = "Connecting...")
 
+
     #> ⠙ Connecting... 0 done (0/s) | 1s
 
 ### `pb_timestamp`
@@ -248,6 +266,7 @@ A time stamp for the current time in ISO 8601 format.
     cli_progress_bar(
       "Loading training data files",
       format = "{pb_timestamp} {pb_current} ({pb_rate})"
+
 
     #> 2025-04-22T12:27:16+00:00 125 (25/s)
 
@@ -260,6 +279,7 @@ unknown.
       total = 100,
       format = "{cli::pb_spin} Reading file {cli::pb_current}/{cli::pb_total}"
     )
+
 
     #> ⠙ Reading file 66/100
 
@@ -274,6 +294,7 @@ readable format.
         "Reading data {pb_current_bytes}/{pb_total_bytes} ",
         "[{ansi_trimws(pb_rate_bytes)}]"
       )
+
 
     #> Reading data  70 MB/266 MB [14 MB/s]
 

@@ -2,6 +2,18 @@
 
 ## cli (development version)
 
+- Multiple concurrent progress bar and status bars are now rendered on
+  separate lines on ANSI-capable terminals. Non-ANSI dynamic terminals
+  continue to show only the current bar
+  ([@simonpcouch](https://github.com/simonpcouch),
+  [\#819](https://github.com/r-lib/cli/issues/819)). Set the new
+  `cli.progress_multiline` option to `FALSE` to keep the single-line
+  behavior on ANSI terminals.
+
+- New `R_CLI_ANSI` environment variable that is equivalent to the
+  `cli.ansi` option (the option takes precedence). See
+  [`is_ansi_tty()`](https://cli.r-lib.org/dev/reference/is_ansi_tty.md).
+
 ## cli 3.6.6
 
 CRAN release: 2026-04-09
@@ -214,6 +226,7 @@ CRAN release: 2022-09-08
   them, some need UTF-8 and emoji support:
 
   ``` r
+
   new <- c("dots13", "dots8Bit", "sand", "material", "weather", "christmas",
     "grenade", "point", "layer", "betaWave", "fingerDance", "fistBump",
     "soccerHeader", "mindblown", "speaker", "orangePulse", "bluePulse",

@@ -21,6 +21,10 @@ Useful links:
 
 **Maintainer**: Gábor Csárdi <gabor@posit.co>
 
+Authors:
+
+- Gábor Csárdi <gabor@posit.co>
+
 Other contributors:
 
 - Hadley Wickham \[contributor\]

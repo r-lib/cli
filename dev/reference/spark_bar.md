@@ -27,20 +27,24 @@ spark_bar(x)
     x <- seq(0, 1, length = 6)
     spark_bar(x)
 
+
     #> ▁▂▄▅▇█
 
     x <- seq(0, 1, length = 6)
     spark_bar(sample(x))
 
+
     #> ▅▁█▄▇▂
 
     spark_bar(seq(0, 1, length = 8))
+
 
     #> ▁▂▃▄▅▆▇█
 
 `NA`s are left out:
 
     spark_bar(c(0, NA, 0.5, NA, 1))
+
 
     #> ▁ ▄ █
 

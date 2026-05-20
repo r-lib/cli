@@ -36,6 +36,7 @@ substitutions.
       "x" = "You've supplied a {.cls {class(n)}} vector."
     )))
 
+
     #> Error: `n` must be a numeric vector
     #> ✖ You've supplied a <character> vector.
 
@@ -46,6 +47,7 @@ substitutions.
       "i" = "There {?is/are} {len} element{?s}.",
       "x" = "You've tried to subset element {idx}."
     )))
+
 
     #> Error: Must index an existing element:
     #> ℹ There are 26 elements.
@@ -72,7 +74,7 @@ Other functions supporting inline markup:
 [`cli_progress_message()`](https://cli.r-lib.org/dev/reference/cli_progress_message.md),
 [`cli_progress_output()`](https://cli.r-lib.org/dev/reference/cli_progress_output.md),
 [`cli_progress_step()`](https://cli.r-lib.org/dev/reference/cli_progress_step.md),
-[`cli_rule`](https://cli.r-lib.org/dev/reference/cli_rule.md),
+[`cli_rule()`](https://cli.r-lib.org/dev/reference/cli_rule.md),
 [`cli_status()`](https://cli.r-lib.org/dev/reference/cli_status.md),
 [`cli_status_update()`](https://cli.r-lib.org/dev/reference/cli_status_update.md),
 [`cli_text()`](https://cli.r-lib.org/dev/reference/cli_text.md),

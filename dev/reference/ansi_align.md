@@ -46,6 +46,7 @@ The aligned character vector.
     astr <- ansi_align(str, width = 30)
     boxx(astr)
 
+
     #> ┌────────────────────────────────────┐
     #> │                                    │
     #> │   This is red                      │
@@ -60,6 +61,7 @@ The aligned character vector.
     astr <- ansi_align(str, align = "center", width = 30)
     boxx(astr)
 
+
     #> ┌────────────────────────────────────┐
     #> │                                    │
     #> │             This is red            │
@@ -73,6 +75,7 @@ The aligned character vector.
     )
     astr <- ansi_align(str, align = "right", width = 30)
     boxx(astr)
+
 
     #> ┌────────────────────────────────────┐
     #> │                                    │

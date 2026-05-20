@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Configuration • cli</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -269,6 +269,15 @@ txmt://open?url=file://{path}&amp;line={line}&amp;column={column}</code></pre>
 ESS will set this automatically.</p>
 </div>
 <div class="section level3">
+<h3 id="r_cli_ansi">
+<code>R_CLI_ANSI</code><a class="anchor" aria-label="anchor" href="#r_cli_ansi"></a>
+</h3>
+<p>Set to <code>true</code> (case insensitive) to assume a terminal that
+supports ANSI control sequences. Set to <code>false</code> (case
+insensitive) to assume a non-ANSI terminal. The <code>cli.ansi</code>
+option, if set, takes precedence. See [is_ansi_tty()].</p>
+</div>
+<div class="section level3">
 <h3 id="r_cli_dynamic">
 <code>R_CLI_DYNAMIC</code><a class="anchor" aria-label="anchor" href="#r_cli_dynamic"></a>
 </h3>
@@ -292,9 +301,10 @@ anything else to assume a non-dynamic terminal. See
 <h3 id="cli-ansi">
 <code>cli.ansi</code><a class="anchor" aria-label="anchor" href="#cli-ansi"></a>
 </h3>
-<p>Set to <code>true</code>, <code>TRUE</code> or <code>True</code> to
-assume a terminal that supports ANSI control sequences. Set to anything
-else to assume a non-ANSI terminal. See [is_ansi_tty()].</p>
+<p>Set to <code>TRUE</code> to assume a terminal that supports ANSI
+control sequences. Set to <code>FALSE</code> to assume a non-ANSI
+terminal. This option takes precedence over the <code>R_CLI_ANSI</code>
+environment variable. See [is_ansi_tty()].</p>
 </div>
 <div class="section level3">
 <h3 id="cli-condition_unicode_bullets">
@@ -471,6 +481,16 @@ was already selected. See [cli_progress_builtin_handlers()].</p>
 <code>cli.progress_handlers</code> and
 <code>cli.progress_handlers_force</code>. See
 [cli_progress_builtin_handlers()].</p>
+</div>
+<div class="section level3">
+<h3 id="cli-progress_multiline">
+<code>cli.progress_multiline</code><a class="anchor" aria-label="anchor" href="#cli-progress_multiline"></a>
+</h3>
+<p>Whether to render multiple concurrent progress bars on separate lines
+on ANSI-capable terminals. Defaults to <code>TRUE</code>. Set to
+<code>FALSE</code> to show only the most recently updated bar on a
+single line. Has no effect on non-ANSI terminals, which always show a
+single bar. See [is_ansi_tty()] and [cli_progress_bar()].</p>
 </div>
 <div class="section level3">
 <h3 id="cli-progress_say_args">

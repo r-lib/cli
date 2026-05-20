@@ -52,11 +52,11 @@ cli that the terminal is capable of implementing these specialized
 behaviours. Leave this configuration unset (or set to anything else)
 when there is no support for a specific type of hyperlink.
 
-| Action            | Example inline markup                                                                 | Option                   | Env var                    |
-|-------------------|---------------------------------------------------------------------------------------|--------------------------|----------------------------|
-| Run R code        | `{.run testthat::snapshot_review()}`                                                  | `cli.hyperlink_run`      | `R_CLI_HYPERLINK_RUN`      |
-| Open a help topic | `{.fun stats::lm}` `{.topic tibble::tibble_options}` `{.help [{.fun lm}](stats::lm)}` | `cli.hyperlink_help`     | `R_CLI_HYPERLINK_HELP`     |
-| Open a vignette   | `{.vignette tibble::types}`                                                           | `cli.hyperlink_vignette` | `R_CLI_HYPERLINK_VIGNETTE` |
+| Action | Example inline markup | Option | Env var |
+|----|----|----|----|
+| Run R code | `{.run testthat::snapshot_review()}` | `cli.hyperlink_run` | `R_CLI_HYPERLINK_RUN` |
+| Open a help topic | `{.fun stats::lm}` `{.topic tibble::tibble_options}` `{.help [{.fun lm}](stats::lm)}` | `cli.hyperlink_help` | `R_CLI_HYPERLINK_HELP` |
+| Open a vignette | `{.vignette tibble::types}` | `cli.hyperlink_vignette` | `R_CLI_HYPERLINK_VIGNETTE` |
 
 In all cases, the option takes priority over the corresponding env var.
 
@@ -70,12 +70,12 @@ The `URI` part has a default format for each type of hyperlink, but it
 is possible to provide a custom format via an option or an env var. If
 defined, the option takes priority over the env var.
 
-| Action            | Default URI format        | Customize via option                | Customize via env var                 |
-|-------------------|---------------------------|-------------------------------------|---------------------------------------|
-| Open a file       | (see below)               | `cli.hyperlink_file_url_format`     | `R_CLI_HYPERLINK_FILE_URL_FORMAT`     |
-| Run R code        | `x-r-run:{code}`          | `cli.hyperlink_run_url_format`      | `R_CLI_HYPERLINK_RUN_URL_FORMAT`      |
-| Open a help topic | `x-r-help:{topic}`        | `cli.hyperlink_help_url_format`     | `R_CLI_HYPERLINK_HELP_URL_FORMAT`     |
-| Open a vignette   | `x-r-vignette:{vignette}` | `cli.hyperlink_vignette_url_format` | `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT` |
+| Action | Default URI format | Customize via option | Customize via env var |
+|----|----|----|----|
+| Open a file | (see below) | `cli.hyperlink_file_url_format` | `R_CLI_HYPERLINK_FILE_URL_FORMAT` |
+| Run R code | `x-r-run:{code}` | `cli.hyperlink_run_url_format` | `R_CLI_HYPERLINK_RUN_URL_FORMAT` |
+| Open a help topic | `x-r-help:{topic}` | `cli.hyperlink_help_url_format` | `R_CLI_HYPERLINK_HELP_URL_FORMAT` |
+| Open a vignette | `x-r-vignette:{vignette}` | `cli.hyperlink_vignette_url_format` | `R_CLI_HYPERLINK_VIGNETTE_URL_FORMAT` |
 
 A format must be a glue-like template with the relevant placeholder in
 curly braces (`code`, `topic` or `vignette`).
@@ -117,6 +117,13 @@ Set this environment variable to `light` or `dark` to indicate dark mode
 in Emacs. Once <https://github.com/emacs-ess/ESS/pull/1178> is merged,
 ESS will set this automatically.
 
+### `R_CLI_ANSI`
+
+Set to `true` (case insensitive) to assume a terminal that supports ANSI
+control sequences. Set to `false` (case insensitive) to assume a
+non-ANSI terminal. The `cli.ansi` option, if set, takes precedence. See
+\[is_ansi_tty()\].
+
 ### `R_CLI_DYNAMIC`
 
 Set to `true`, `TRUE` or `True` to assume a dynamic terminal, that
@@ -132,9 +139,10 @@ Set to a positive integer to assume a given number of colors. See
 
 ### `cli.ansi`
 
-Set to `true`, `TRUE` or `True` to assume a terminal that supports ANSI
-control sequences. Set to anything else to assume a non-ANSI terminal.
-See \[is_ansi_tty()\].
+Set to `TRUE` to assume a terminal that supports ANSI control sequences.
+Set to `FALSE` to assume a non-ANSI terminal. This option takes
+precedence over the `R_CLI_ANSI` environment variable. See
+\[is_ansi_tty()\].
 
 ### `cli.condition_unicode_bullets`
 
@@ -268,6 +276,14 @@ already selected. See \[cli_progress_builtin_handlers()\].
 Progress handlers to force, ignoring handlers set in
 `cli.progress_handlers` and `cli.progress_handlers_force`. See
 \[cli_progress_builtin_handlers()\].
+
+### `cli.progress_multiline`
+
+Whether to render multiple concurrent progress bars on separate lines on
+ANSI-capable terminals. Defaults to `TRUE`. Set to `FALSE` to show only
+the most recently updated bar on a single line. Has no effect on
+non-ANSI terminals, which always show a single bar. See
+\[is_ansi_tty()\] and \[cli_progress_bar()\].
 
 ### `cli.progress_say_args`
 

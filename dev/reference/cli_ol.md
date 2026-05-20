@@ -62,6 +62,7 @@ The id of the new container element, invisibly.
     }
     fun()
 
+
     #> 1. one
     #> 2. two
     #> 3. three
@@ -77,6 +78,7 @@ The id of the new container element, invisibly.
       cli_end()
     }
     fun()
+
 
     #> 1. one
     #> 2. two
@@ -94,6 +96,7 @@ The id of the new container element, invisibly.
       cli_end()
     }
     fun()
+
 
     #> • one
     #>     1. foo
@@ -121,7 +124,7 @@ Other functions supporting inline markup:
 [`cli_progress_message()`](https://cli.r-lib.org/dev/reference/cli_progress_message.md),
 [`cli_progress_output()`](https://cli.r-lib.org/dev/reference/cli_progress_output.md),
 [`cli_progress_step()`](https://cli.r-lib.org/dev/reference/cli_progress_step.md),
-[`cli_rule`](https://cli.r-lib.org/dev/reference/cli_rule.md),
+[`cli_rule()`](https://cli.r-lib.org/dev/reference/cli_rule.md),
 [`cli_status()`](https://cli.r-lib.org/dev/reference/cli_status.md),
 [`cli_status_update()`](https://cli.r-lib.org/dev/reference/cli_status_update.md),
 [`cli_text()`](https://cli.r-lib.org/dev/reference/cli_text.md),

@@ -38,6 +38,7 @@ is `FALSE`), the `cli_pgoress_bar_style_ascii` and
     }
     options(cli.progress_var_style = NULL)
 
+
     #> Style 'classic'      #####################             66% | ETA:  3s
     #> Style 'squares'      ■■■■■■■■■■■■■■■■■■■■■             66% | ETA:  3s
     #> Style 'dot'          ────────────────────●──────────   66% | ETA:  3s

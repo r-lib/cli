@@ -15,6 +15,7 @@ parts of the text, and these classes can be used in themes. For example
 
     cli_text("This is {.emph important}.")
 
+
     #> This is important.
 
 adds a class to the "important" word, class `"emph"`. Note that in this
@@ -25,6 +26,7 @@ braces:
     adjective <- "great"
     cli_text("This is {.emph {adjective}}.")
 
+
     #> This is great.
 
 An inline class will always create a `span` element internally. So in
@@ -34,6 +36,7 @@ text is emphasized:
     cli_div(theme = list(span.emph = list(color = "red")))
     adjective <- "nice and red"
     cli_text("This is {.emph {adjective}}.")
+
 
     #> This is nice and red.
 
@@ -155,6 +158,7 @@ The default theme defines the following inline classes:
     cli_li("`mtcars` is {.obj_type_friendly {mtcars}}")
     cli_end(ul)
 
+
     #> • Emphasized text.
     #> • Strong importance.
     #> • A piece of code: `sum(a) / length(a)`.
@@ -176,6 +180,7 @@ them.
       "span.myclass" = list(after = ">>")))
     cli_text("This is {.myclass in angle brackets}.")
     cli_end()
+
 
     #> This is <<in angle brackets>>.
 
@@ -204,6 +209,7 @@ files, packages, etc.
     cli_text("Packages: {pkgs}.")
     cli_text("Packages: {.pkg {pkgs}}.")
 
+
     #> Packages: pkg1, pkg2, and pkg3.
     #> Packages: pkg1, pkg2, and pkg3.
 
@@ -211,6 +217,7 @@ Class names are collapsed differently by default
 
     x <- Sys.time()
     cli_text("Hey, {.var x} has class {.cls {class(x)}}.")
+
 
     #> Hey, `x` has class <POSIXct/POSIXt>.
 
@@ -220,6 +227,7 @@ style.
 
     nms <- cli_vec(names(mtcars), list("vec-trunc" = 5))
     cli_text("Column names: {nms}.")
+
 
     #> Column names: mpg, cyl, disp, …, gear, and carb.
 
@@ -246,12 +254,14 @@ refer to the string from a template:
     msg <- "Error in if (ncol(dat$y)) {: argument is of length zero"
     cli_alert_warning("{msg}")
 
+
     #> ! Error in if (ncol(dat$y)) {: argument is of length zero
 
 If you want to explicitly escape `{` and `}` characters, just double
 them:
 
     cli_alert_warning("A warning with {{ braces }}.")
+
 
     #> ! A warning with { braces }.
 
@@ -266,6 +276,7 @@ All cli commands that emit text support pluralization. Some examples:
     pkgs <- c("pkg1", "pkg2", "pkg3")
     cli_alert_info("Found {ndirs} director{?y/ies} and {nfiles} file{?s}.")
     cli_text("Will install {length(pkgs)} package{?s}: {.pkg {pkgs}}")
+
 
     #> ℹ Found 1 directory and 13 files.
     #> Will install 3 packages: pkg1, pkg2, and pkg3

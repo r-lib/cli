@@ -5,8 +5,8 @@ supports them.
 
 ## Note: hyperlinks are currently experimental
 
-The details of the styles that create hyperlinks will prrobably change
-in the near future, based on user feedback.
+The details of the styles that create hyperlinks will probably change in
+the near future, based on user feedback.
 
 ## About the links in this manual page
 
@@ -62,6 +62,7 @@ this will create a list of three URLs, all clickable:
     urls <- paste0("https://httpbin.org/status/", c(200, 403, 404))
     cli::cli_text("Some httpbin URLs: {.url {urls}}.")
 
+
     #> Some httpbin URLs: <https://httpbin.org/status/200>,
     #> <https://httpbin.org/status/403>, and
     #> <https://httpbin.org/status/404>.
@@ -83,11 +84,13 @@ custom link text, but `\href` does.
       "See the cli homepage at {.url https://cli.r-lib.org} for details."
     )
 
+
     #> See the cli homepage at <https://cli.r-lib.org> for details.
 
     cli_text(
       "See the {.href [cli homepage](https://cli.r-lib.org)} for details."
     )
+
 
     #> See the cli homepage for details.
 
@@ -105,6 +108,7 @@ This is how these links look without hyperlink support:
       )
     })
 
+
     #> See the cli homepage at <https://cli.r-lib.org> for details.
     #> See the cli homepage (<https://cli.r-lib.org>) for details.
 
@@ -118,6 +122,7 @@ especially, if it is substituted in via
     weirdurl <- utils::URLencode("https://example.com/has some spaces")
     cli_text("See more at {.url {weirdurl}}.")
 
+
     #> See more at <https://example.com/has%20some%20spaces>.
 
 ## Files
@@ -127,6 +132,7 @@ The `.file` style now automatically creates a `file:` hyperlink. Because
 relative paths, and paths starting with `~` to absolute path.
 
     cli_text("... edit your {.file ~/.Rprofile} file.")
+
 
     #> ... edit your ~/.Rprofile file.
 
@@ -138,6 +144,7 @@ can use `.href` with a `file:` URL.
     prof <- path.expand("~/.Rprofile")
     cli_text("... edit your {.href [R profile](file://{prof})}.")
 
+
     #> ... edit your R profile.
 
 ### Line and column numbers
@@ -148,6 +155,7 @@ also add a column number, after the line number, separated by another
 `:`.
 
     cli_text("... see line 5 in {.file ~/.Rprofile:5}.")
+
 
     #> ... see line 5 in ~/.Rprofile:5.
 
@@ -168,6 +176,7 @@ if hyperlinks are not available. This will be improved in the future:
       cli_text("... edit your {.href [R profile](file://{prof})}.")
     })
 
+
     #> ... edit your R profile (<file:///Users/gaborcsardi/.Rprofile>).
 
 ## Links to the manual
@@ -177,6 +186,7 @@ provided the function name is in the `packagename::functionname` form:
 
     cli::cli_text("... see {.fun stats::lm} to learn more.")
 
+
     #> ... see `stats::lm()` to learn more.
 
 ### Link text
@@ -184,6 +194,7 @@ provided the function name is in the `packagename::functionname` form:
 For a custom link text, use `.help` instead of `.fun`.
 
     cli::cli_text("... see {.help [{.fun lm}](stats::lm)} to learn more.")
+
 
     #> ... see `lm()` to learn more.
 
@@ -196,6 +207,7 @@ The same message without hyperlink support looks like this:
       cli::cli_text("... see {.help [{.fun lm}](stats::lm)} to learn more.")
     })
 
+
     #> ... see `lm()` (`?stats::lm()`) to learn more.
 
 ### Topics
@@ -203,6 +215,7 @@ The same message without hyperlink support looks like this:
 To link to a help topic that is not a function, use `.topic`:
 
     cli::cli_text("... the tibble options at {.topic tibble::tibble_options}.")
+
 
     #> ... the tibble options at tibble::tibble_options.
 
@@ -214,6 +227,7 @@ To link to a vignette, use `.vignette`:
 
     cli::cli_text("... see the {.vignette tibble::types} vignette.")
 
+
     #> ... see the tibble::types vignette.
 
 ## Click to run code
@@ -224,6 +238,7 @@ current R session upon clicking.
 You can create these links with `.run`:
 
     cli::cli_text("Run {.run testthat::snapshot_review()} to review")
+
 
     #> Run testthat::snapshot_review() to review
 
@@ -237,6 +252,7 @@ this:
     cli::cli_text(
       "Run {.run [snapshot_review()](testthat::snapshot_review())} to review"
     )
+
 
     #> Run snapshot_review() to review
 

@@ -72,6 +72,7 @@ all.
     )
     tree(data)
 
+
     #> processx
     #> ├─assertthat
     #> ├─crayon
@@ -80,6 +81,7 @@ all.
     #> └─R6
 
     tree(data, root = "rcmdcheck")
+
 
     #> rcmdcheck
     #> ├─callr
@@ -118,6 +120,7 @@ all.
     roots <- ! data$package %in% unlist(data$dependencies)
     data$label[roots] <- col_cyan(style_italic(data$label[roots]))
     tree(data, root = "rcmdcheck")
+
 
     #> rcmdcheck (1.2.1.9002)
     #> ├─callr (1.0.0.9000)
@@ -186,6 +189,7 @@ all.
 
     tree(pkgs, trim = TRUE)
 
+
     #> dplyr@0.8.3
     #> ├─assertthat@0.2.1
     #> ├─glue@1.3.1
@@ -224,6 +228,7 @@ all.
     pkgs$label <- pkgs$name
     pkgs$trimmed <- paste(pkgs$name, " (trimmed)")
     tree(pkgs, trim = TRUE)
+
 
     #> dplyr@0.8.3
     #> ├─assertthat@0.2.1

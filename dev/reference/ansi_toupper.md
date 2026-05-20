@@ -52,28 +52,6 @@ Other ANSI string operations:
 [`ansi_substring()`](https://cli.r-lib.org/dev/reference/ansi_substring.md),
 [`ansi_trimws()`](https://cli.r-lib.org/dev/reference/ansi_trimws.md)
 
-Other ANSI string operations:
-[`ansi_align()`](https://cli.r-lib.org/dev/reference/ansi_align.md),
-[`ansi_columns()`](https://cli.r-lib.org/dev/reference/ansi_columns.md),
-[`ansi_nchar()`](https://cli.r-lib.org/dev/reference/ansi_nchar.md),
-[`ansi_strsplit()`](https://cli.r-lib.org/dev/reference/ansi_strsplit.md),
-[`ansi_strtrim()`](https://cli.r-lib.org/dev/reference/ansi_strtrim.md),
-[`ansi_strwrap()`](https://cli.r-lib.org/dev/reference/ansi_strwrap.md),
-[`ansi_substr()`](https://cli.r-lib.org/dev/reference/ansi_substr.md),
-[`ansi_substring()`](https://cli.r-lib.org/dev/reference/ansi_substring.md),
-[`ansi_trimws()`](https://cli.r-lib.org/dev/reference/ansi_trimws.md)
-
-Other ANSI string operations:
-[`ansi_align()`](https://cli.r-lib.org/dev/reference/ansi_align.md),
-[`ansi_columns()`](https://cli.r-lib.org/dev/reference/ansi_columns.md),
-[`ansi_nchar()`](https://cli.r-lib.org/dev/reference/ansi_nchar.md),
-[`ansi_strsplit()`](https://cli.r-lib.org/dev/reference/ansi_strsplit.md),
-[`ansi_strtrim()`](https://cli.r-lib.org/dev/reference/ansi_strtrim.md),
-[`ansi_strwrap()`](https://cli.r-lib.org/dev/reference/ansi_strwrap.md),
-[`ansi_substr()`](https://cli.r-lib.org/dev/reference/ansi_substr.md),
-[`ansi_substring()`](https://cli.r-lib.org/dev/reference/ansi_substring.md),
-[`ansi_trimws()`](https://cli.r-lib.org/dev/reference/ansi_trimws.md)
-
 ## Examples
 
 ``` r

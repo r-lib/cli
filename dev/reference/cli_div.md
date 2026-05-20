@@ -55,6 +55,7 @@ The id of the new container element, invisibly.
     cli_h1("Custom title")
     cli_end(d)
 
+
     #>
     #> Custom title
 
@@ -69,6 +70,7 @@ exits.
     }
     div()
     cli_text("This is not yellow any more")
+
 
     #> This is yellow
     #> This is not yellow any more

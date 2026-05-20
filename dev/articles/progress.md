@@ -3,6 +3,7 @@
 ## Introduction
 
 ``` r
+
 library(cli)
 options(cli.progress_show_after = 0)
 options(cli.progress_clear = FALSE)
@@ -38,6 +39,7 @@ Add a progress bar in three steps:
 For example:
 
 ``` r
+
 clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {
@@ -69,6 +71,7 @@ The current progress bar lets us omit the
 call:
 
 ``` r
+
 clean <- function() {
   cli_progress_bar("Cleaning data #1", total = 100)
   for (i in 1:100) {
@@ -97,6 +100,7 @@ omit them from
 unknown:
 
 ``` r
+
 walk_dirs <- function() {
   cli_progress_bar("Walking directories")
   while (TRUE) {
@@ -134,6 +138,7 @@ function, wrap the input sequence into
 [`cli_progress_along()`](https://cli.r-lib.org/dev/reference/cli_progress_along.md):
 
 ``` r
+
 lapply(cli_progress_along(X), fun)
 ```
 
@@ -154,6 +159,7 @@ to a variable.
 An example:
 
 ``` r
+
 f <- function() {
   rawabc <- lapply(
     cli_progress_along(letters),
@@ -184,6 +190,7 @@ in `for` loops, with the additional complication that if you use
 terminate the progress bar explicitly:
 
 ``` r
+
 for (i in cli_progress_along(seq)) {
   ...
   if (cond) cli_progress_done() && break
@@ -197,6 +204,7 @@ always returns `TRUE` to allow this form.
 Alternatively, you can terminate the progress bar right after loop:
 
 ``` r
+
 for (i in cli_progress_along(seq)) {
   ...
   if (cond) break
@@ -232,6 +240,7 @@ convenience, the progress bar rules still apply here by default:
   of the same caller function.
 
 ``` r
+
 f <- function() {
   cli_progress_message("Task one is running...")
   Sys.sleep(2)
@@ -268,6 +277,7 @@ is slightly different from
 - it keeps the messages on the screen after they are terminated.
 
 ``` r
+
 f <- function() {
   cli_progress_step("Downloading data")
   Sys.sleep(2)
@@ -295,6 +305,7 @@ As usual, you can use
 to update an existing status message.
 
 ``` r
+
 f <- function(n = 10) {
   cli_alert_info("About to start downloads of {n} file{?s}")
   i <- 0
@@ -318,6 +329,7 @@ If you can update the status message frequently enough, then you can
 also add a spinner to it:
 
 ``` r
+
 f <- function() {
   cli_progress_step("Downloading data", spinner = TRUE)
   for (i in 1:100) { cli_progress_update(); Sys.sleep(2/100) }
@@ -340,6 +352,7 @@ end.](progress_files/figure-html/cli_progress_step_spinner.svg)
 automatically handles errors, and styles the status message accordingly:
 
 ``` r
+
 f <- function() {
   cli_progress_step("First step, this will succeed")
   Sys.sleep(1)

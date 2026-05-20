@@ -33,6 +33,7 @@ Character vector, one element for each line of the printout.
 ## Examples
 
 ``` r
+
 # Let's create format and print methods for a new S3 class that
 # represents the an installed R package: `r_package`
 
@@ -117,8 +118,8 @@ new_r_package("cli")
 #> $desc$Encoding
 #> [1] "UTF-8"
 #> 
-#> $desc$RoxygenNote
-#> [1] "7.3.2.9000"
+#> $desc$`Config/roxygen2/version`
+#> [1] "8.0.0"
 #> 
 #> $desc$RemotePkgRef
 #> [1] "local::."
@@ -130,7 +131,7 @@ new_r_package("cli")
 #> [1] "yes"
 #> 
 #> $desc$Packaged
-#> [1] "2026-04-09 17:59:45 UTC; runner"
+#> [1] "2026-05-20 12:39:47 UTC; runner"
 #> 
 #> $desc$Author
 #> [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb],\n  Salim Brüggemann [ctb] (ORCID: <https://orcid.org/0000-0002-5329-5987>),\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)"
@@ -139,7 +140,7 @@ new_r_package("cli")
 #> [1] "Gábor Csárdi <gabor@posit.co>"
 #> 
 #> $desc$Built
-#> [1] "R 4.5.3; x86_64-pc-linux-gnu; 2026-04-09 17:59:46 UTC; unix"
+#> [1] "R 4.6.0; x86_64-pc-linux-gnu; 2026-05-20 12:39:49 UTC; unix"
 #> 
 #> attr(,"file")
 #> [1] "/home/runner/work/_temp/Library/cli/Meta/package.rds"

@@ -1,6 +1,7 @@
 # Advanced cli progress bars
 
 ``` r
+
 library(cli)
 ```
 
@@ -144,6 +145,7 @@ number of built-in cli progress variables, see ‘Progress variables’
 below.
 
 ``` r
+
 f <- function() {
   cli_progress_bar(
     total = 20000,
@@ -195,12 +197,14 @@ Otherwise `cli.progress_bar_style` is used. On non UTF-8 displays
 These options can be set to a built-in progress bar style name:
 
 ``` r
+
 names(cli_progress_styles())
 #> [1] "classic"     "squares"     "dot"         "fillsquares"
 #> [5] "bar"
 ```
 
 ``` r
+
 options(cli.progress_bar_style = "fillsquares")
 f <- function() lapply(cli_progress_along(letters), function(l) Sys.sleep(0.2))
 x <- f()
@@ -215,6 +219,7 @@ Alternatively, they can be set to a list with entries `complete`,
 the parts of the progress bar:
 
 ``` r
+
 options(cli.progress_bar_style = list(
   complete = cli::col_yellow("\u2605"),
   incomplete = cli::col_grey("\u00b7")
@@ -247,6 +252,7 @@ to list all spinners and
 to take a peek at them.
 
 ``` r
+
 options(cli.spinner = "moon")
 f <- function() {
   cli_progress_bar(format = strrep("{cli::pb_spin} ", 20), clear = TRUE)
@@ -300,6 +306,7 @@ E.g. to show the current number of steps with letters instead of
 numbers, use `letters[pb_current]`:
 
 ``` r
+
 f <- function() {
   cli_progress_bar(
     total = 26,

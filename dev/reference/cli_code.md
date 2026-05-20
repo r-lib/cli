@@ -67,6 +67,7 @@ The id of the container that contains the code.
     }
     cli_code(format(myfun))
 
+
     #> function ()
     #> {
     #>     message("Just an example function")

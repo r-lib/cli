@@ -28,6 +28,7 @@ cli_end(id = NULL)
     cli_text("Second paragraph.")
     cli_end(cnt)
 
+
     #> First paragraph.
     #>
     #> Second paragraph.
@@ -42,6 +43,7 @@ cli_end(id = NULL)
     cli_text("Still item two.")
     cli_end(list)
     cli_text("Not in the list any more")
+
 
     #> • Item one:
     #> • Item two:
@@ -60,6 +62,7 @@ If `id` is omitted, the container that was opened last will be closed.
     cli_text("Second paragraph")
     cli_end()
 
+
     #> First paragraph
     #>
     #> Second paragraph
@@ -76,6 +79,7 @@ currently open containers.
       cli:::cli_debug_doc()
     }
     fun()
+
 
     #> <cli document>
     #> <body id="body">

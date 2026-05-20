@@ -26,6 +26,7 @@ cli_verbatim(..., .envir = parent.frame())
 
     cli_verbatim("This has\nthree\nlines,")
 
+
     #> This has
     #> three
     #> lines,
@@ -35,6 +36,7 @@ cli_verbatim(..., .envir = parent.frame())
 No glue substitution happens here.
 
     cli_verbatim("No string {interpolation} or {.emph styling} here")
+
 
     #> No string {interpolation} or {.emph styling} here
 

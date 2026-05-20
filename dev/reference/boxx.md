@@ -102,6 +102,7 @@ boxx(
 
     boxx("Hello there!")
 
+
     #> ┌──────────────────┐
     #> │                  │
     #> │   Hello there!   │
@@ -112,6 +113,7 @@ boxx(
 
     boxx("Hello there!", border_style = "double")
 
+
     #> ╔══════════════════╗
     #> ║                  ║
     #> ║   Hello there!   ║
@@ -121,6 +123,7 @@ boxx(
 ### Multiple lines
 
     boxx(c("Hello", "there!"), padding = 1)
+
 
     #> ┌────────────┐
     #> │            │
@@ -133,6 +136,7 @@ boxx(
 
     boxx("Hello there!", padding = 1)
     boxx("Hello there!", padding = c(1, 5, 1, 5))
+
 
     #> ┌──────────────────┐
     #> │                  │
@@ -150,6 +154,7 @@ boxx(
     boxx("Hello there!", padding = 1, float = "center")
     boxx("Hello there!", padding = 1, float = "right")
 
+
     #>                           ┌──────────────────┐
     #>                           │                  │
     #>                           │   Hello there!   │
@@ -165,6 +170,7 @@ boxx(
 
     boxx(col_cyan("Hello there!"), padding = 1, float = "center")
 
+
     #>                           ┌──────────────────┐
     #>                           │                  │
     #>                           │   Hello there!   │
@@ -175,6 +181,7 @@ boxx(
 
     boxx("Hello there!", padding = 1, background_col = "brown")
     boxx("Hello there!", padding = 1, background_col = bg_red)
+
 
     #> ┌──────────────────┐
     #> │                  │
@@ -192,6 +199,7 @@ boxx(
     boxx("Hello there!", padding = 1, border_col = "green")
     boxx("Hello there!", padding = 1, border_col = col_red)
 
+
     #> ┌──────────────────┐
     #> │                  │
     #> │   Hello there!   │
@@ -208,6 +216,7 @@ boxx(
     boxx(c("Hi", "there", "you!"), padding = 1, align = "left")
     boxx(c("Hi", "there", "you!"), padding = 1, align = "center")
     boxx(c("Hi", "there", "you!"), padding = 1, align = "right")
+
 
     #> ┌───────────┐
     #> │           │
@@ -243,6 +252,7 @@ boxx(
       border_col = "tomato3",
       background_col="darkolivegreen"
     )
+
 
     #>                            ╭───────────────╮
     #>                            │               │

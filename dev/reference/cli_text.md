@@ -31,6 +31,7 @@ Text is wrapped to the console width, see
 
     cli_text(cli:::lorem_ipsum())
 
+
     #> Lorem ad ipsum veniam esse nisi deserunt duis. Qui incididunt elit
     #> elit mollit sint nulla consectetur aute commodo do elit laboris minim
     #> et. Laboris ipsum mollit voluptate et non do incididunt eiusmod. Anim
@@ -44,6 +45,7 @@ A `cli_text()` call always appends a newline character to the end.
     cli_text("First line.")
     cli_text("Second line.")
 
+
     #> First line.
     #> Second line.
 
@@ -53,6 +55,7 @@ You can use [inline
 markup](https://cli.r-lib.org/dev/reference/inline-markup.md), as usual.
 
     cli_text("The {.fn cli_text} function in the {.pkg cli} package.")
+
 
     #> The `cli_text()` function in the cli package.
 
@@ -64,6 +67,7 @@ collapsed.
     pos <- c(5, 14, 25, 26)
     cli_text("We have {length(pos)} missing measurements: {pos}.")
 
+
     #> We have 4 missing measurements: 5, 14, 25, and 26.
 
 ### Styling and interpolation
@@ -74,6 +78,7 @@ Use double braces to combine styling and string interpolation.
     pkg <- "cli"
     cli_text("The {.fn {fun}} function in the {.pkg {pkg}} package.")
 
+
     #> The `cli-text()` function in the cli package.
 
 ### Multiple arguments
@@ -81,6 +86,7 @@ Use double braces to combine styling and string interpolation.
 Arguments are concatenated.
 
     cli_text(c("This ", "will ", "all "), "be ", "one ", "sentence.")
+
 
     #> This will all be one sentence.
 
@@ -95,6 +101,7 @@ You can use `cli_text()` within cli
     cli_li("Second item.")
     cli_text("Still the {.emph second} item")
     cli_end(ul)
+
 
     #> • First item.
     #> Still the first item
@@ -122,7 +129,7 @@ Other functions supporting inline markup:
 [`cli_progress_message()`](https://cli.r-lib.org/dev/reference/cli_progress_message.md),
 [`cli_progress_output()`](https://cli.r-lib.org/dev/reference/cli_progress_output.md),
 [`cli_progress_step()`](https://cli.r-lib.org/dev/reference/cli_progress_step.md),
-[`cli_rule`](https://cli.r-lib.org/dev/reference/cli_rule.md),
+[`cli_rule()`](https://cli.r-lib.org/dev/reference/cli_rule.md),
 [`cli_status()`](https://cli.r-lib.org/dev/reference/cli_status.md),
 [`cli_status_update()`](https://cli.r-lib.org/dev/reference/cli_status_update.md),
 [`cli_ul()`](https://cli.r-lib.org/dev/reference/cli_ul.md),
