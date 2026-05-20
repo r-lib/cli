@@ -71,4 +71,3 @@ is one palette.
 ansi_palettes
 ansi_palette_show("dichro", colors = truecolor)
 }
-\keyword{datasets}

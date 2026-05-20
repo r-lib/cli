@@ -33,7 +33,7 @@ code_highlight(deparse(ls))
 cat(code_highlight(deparse(ls)), sep = "\n")
 }
 \seealso{
-Other syntax highlighting: 
-\code{\link{code_theme_list}()}
+Other syntax highlighting:
+\code{\link[=code_theme_list]{code_theme_list()}}
 }
 \concept{syntax highlighting}

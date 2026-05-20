@@ -37,7 +37,7 @@ cat("You pressed key", x, "\n")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other keypress function: 
-\code{\link{has_keypress_support}()}
+Other keypress function:
+\code{\link[=has_keypress_support]{has_keypress_support()}}
 }
 \concept{keypress function}

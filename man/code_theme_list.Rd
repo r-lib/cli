@@ -51,7 +51,7 @@ code_theme_list()
 code_highlight(deparse(get), code_theme = "Solarized Dark")
 }
 \seealso{
-Other syntax highlighting: 
-\code{\link{code_highlight}()}
+Other syntax highlighting:
+\code{\link[=code_highlight]{code_highlight()}}
 }
 \concept{syntax highlighting}

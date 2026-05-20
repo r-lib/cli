@@ -17,9 +17,9 @@ list_spinners()
 get_spinner(list_spinners()[1])
 }
 \seealso{
-Other spinners: 
-\code{\link{demo_spinners}()},
-\code{\link{get_spinner}()},
-\code{\link{make_spinner}()}
+Other spinners:
+\code{\link[=demo_spinners]{demo_spinners()}},
+\code{\link[=get_spinner]{get_spinner()}},
+\code{\link[=make_spinner]{make_spinner()}}
 }
 \concept{spinners}

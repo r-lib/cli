@@ -28,15 +28,15 @@ text <- cli::col_red(cli:::lorem_ipsum())
 ansi_strtrim(c(text, "foobar"), 40)
 }
 \seealso{
-Other ANSI string operations: 
-\code{\link{ansi_align}()},
-\code{\link{ansi_columns}()},
-\code{\link{ansi_nchar}()},
-\code{\link{ansi_strsplit}()},
-\code{\link{ansi_strwrap}()},
-\code{\link{ansi_substr}()},
-\code{\link{ansi_substring}()},
-\code{\link{ansi_toupper}()},
-\code{\link{ansi_trimws}()}
+Other ANSI string operations:
+\code{\link[=ansi_align]{ansi_align()}},
+\code{\link[=ansi_columns]{ansi_columns()}},
+\code{\link[=ansi_nchar]{ansi_nchar()}},
+\code{\link[=ansi_strsplit]{ansi_strsplit()}},
+\code{\link[=ansi_strwrap]{ansi_strwrap()}},
+\code{\link[=ansi_substr]{ansi_substr()}},
+\code{\link[=ansi_substring]{ansi_substring()}},
+\code{\link[=ansi_toupper]{ansi_toupper()}},
+\code{\link[=ansi_trimws]{ansi_trimws()}}
 }
 \concept{ANSI string operations}

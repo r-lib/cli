@@ -380,3 +380,316 @@ test_that("auto-close with done or failure", {
     )
   )
 })
+
+# ---- multi-line progress bars ----
+
+test_that("concurrent progress bars on ANSI terminal", {
+  skip_if_not_installed("testthat", "3.1.2")
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = TRUE,
+    cli.progress_show_after = 0
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      "bar1",
+      total = 3,
+      type = "custom",
+      format = "bar1: {pb_current}",
+      current = FALSE
+    )
+    id2 <- cli_progress_bar(
+      "bar2",
+      total = 3,
+      type = "custom",
+      format = "bar2: {pb_current}",
+      current = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_done(id = id1)
+    cli_progress_done(id = id2)
+  }
+
+  msgs <- capture_cli_messages(fun())
+  expect_snapshot(msgs)
+})
+
+test_that("bar completion while others remain (ANSI)", {
+  skip_if_not_installed("testthat", "3.1.2")
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = TRUE,
+    cli.progress_show_after = 0,
+    cli.progress_clear = TRUE
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      type = "custom",
+      format = "first: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = TRUE
+    )
+    id2 <- cli_progress_bar(
+      type = "custom",
+      format = "second: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = TRUE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_done(id = id1)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_done(id = id2)
+  }
+
+  msgs <- capture_cli_messages(fun())
+  expect_snapshot(msgs)
+})
+
+test_that("interleaved cli output with multiple active bars (ANSI)", {
+  skip_if_not_installed("testthat", "3.1.2")
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = TRUE,
+    cli.progress_show_after = 0
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      type = "custom",
+      format = "dl: {pb_current}",
+      total = 3,
+      current = FALSE
+    )
+    id2 <- cli_progress_bar(
+      type = "custom",
+      format = "proc: {pb_current}",
+      total = 3,
+      current = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_alert_info("checkpoint")
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_done(id = id1)
+    cli_progress_done(id = id2)
+  }
+
+  msgs <- capture_cli_messages(fun())
+  expect_snapshot(msgs)
+})
+
+test_that("non-ANSI dynamic fallback shows single bar", {
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = FALSE,
+    cli.progress_show_after = 0
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      type = "custom",
+      format = "bar1: {pb_current}",
+      total = 2,
+      current = FALSE
+    )
+    id2 <- cli_progress_bar(
+      type = "custom",
+      format = "bar2: {pb_current}",
+      total = 2,
+      current = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_done(id = id1)
+    cli_progress_done(id = id2)
+  }
+
+  out <- ansi_strip(capt0(fun()))
+  expect_match(out, "bar1: 1", fixed = TRUE)
+  expect_match(out, "bar2: 1", fixed = TRUE)
+})
+
+test_that("non-dynamic output preserves newline-per-update", {
+  withr::local_options(
+    cli.dynamic = FALSE,
+    cli.ansi = FALSE,
+    cli.progress_show_after = 0
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      type = "custom",
+      format = "bar1: {pb_current}",
+      total = 2,
+      current = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_done(id = id1)
+  }
+
+  out <- ansi_strip(capt0(fun()))
+  expect_match(out, "bar1: 1\n", fixed = TRUE)
+})
+
+test_that("cli_status multiple bars regression", {
+  withr::local_options(cli.ansi = FALSE, cli.dynamic = TRUE)
+
+  f <- function() {
+    sb1 <- cli_status("status1")
+    cli_text("text1")
+    sb2 <- cli_status("status2")
+    cli_text("text2")
+    cli_status_clear(sb2)
+    cli_text("text3")
+  }
+  out <- ansi_strip(capt0(f()))
+  expect_equal(
+    out,
+    paste0(
+      "\rstatus1\r",
+      "\r       \rtext1\nstatus1\r",
+      "\rstatus2\r",
+      "\r       \rtext2\nstatus2\r",
+      "\r       \rstatus1\r",
+      "\r       \rtext3\nstatus1\r",
+      "\r       \r"
+    )
+  )
+})
+
+test_that("cli_process_start/done regression", {
+  withr::local_options(cli.ansi = FALSE, cli.dynamic = TRUE)
+
+  f <- function() {
+    cli_process_start("working")
+    cli_process_done()
+  }
+  out <- ansi_strip(capt0(f()))
+  expect_match(out, "working", fixed = TRUE)
+  expect_match(out, "done", fixed = TRUE)
+})
+
+test_that("auto-close with .keep regression", {
+  withr::local_options(cli.ansi = FALSE, cli.dynamic = TRUE)
+
+  f <- function() {
+    cli_status("kept status", .keep = TRUE)
+    cli_status_clear()
+  }
+  out <- ansi_strip(capt0(f()))
+  expect_equal(out, "\rkept status\r\n")
+})
+
+test_that("clearing non-current bar preserves current id", {
+  withr::local_options(cli.ansi = FALSE, cli.dynamic = TRUE)
+
+  f <- function() {
+    sb1 <- cli_status("first")
+    sb2 <- cli_status("second")
+    sb3 <- cli_status("third")
+    cli_status_clear(sb2, result = "done")
+    cli_status_update(msg = "third-updated")
+  }
+  out <- ansi_strip(capt0(f()))
+  expect_match(out, "third-updated", fixed = TRUE)
+  expect_match(out, "second ... done", fixed = TRUE)
+})
+
+test_that("multi-bar keep/done on ANSI", {
+  skip_if_not_installed("testthat", "3.1.2")
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = TRUE,
+    cli.progress_show_after = 0
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      type = "custom",
+      format = "a: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = FALSE
+    )
+    id2 <- cli_progress_bar(
+      type = "custom",
+      format = "b: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_update(id = id1, set = 2, force = TRUE)
+    cli_progress_update(id = id2, set = 2, force = TRUE)
+  }
+
+  msgs <- capture_cli_messages(fun())
+  expect_snapshot(msgs)
+})
+
+test_that("cli.progress_multiline = FALSE forces single-line ANSI render", {
+  skip_if_not_installed("testthat", "3.1.2")
+  withr::local_options(
+    cli.dynamic = TRUE,
+    cli.ansi = TRUE,
+    cli.progress_show_after = 0,
+    cli.progress_multiline = FALSE
+  )
+
+  fun <- function() {
+    id1 <- cli_progress_bar(
+      "bar1", total = 3, type = "custom",
+      format = "bar1: {pb_current}", current = FALSE
+    )
+    id2 <- cli_progress_bar(
+      "bar2", total = 3, type = "custom",
+      format = "bar2: {pb_current}", current = FALSE
+    )
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_update(id = id2, force = TRUE)
+    cli_progress_update(id = id1, force = TRUE)
+    cli_progress_done(id = id1)
+    cli_progress_done(id = id2)
+  }
+
+  msgs <- capture_cli_messages(fun())
+  ## No cursor-up escapes — multiline render is disabled.
+  expect_false(any(grepl("\033\\[\\d+A", msgs)))
+  ## Newlines between bars only happen in multi-line mode.
+  expect_false(any(grepl("\033\\[K\n", msgs)))
+})
+
+test_that("is_progress_multiline() defaults to TRUE", {
+  withr::local_options(cli.progress_multiline = NULL)
+  expect_true(is_progress_multiline())
+})
+
+test_that("is_progress_multiline() honours TRUE/FALSE", {
+  withr::local_options(cli.progress_multiline = TRUE)
+  expect_true(is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = FALSE)
+  expect_false(is_progress_multiline())
+})
+
+test_that("is_progress_multiline() rejects invalid values", {
+  withr::local_options(cli.progress_multiline = "yes")
+  expect_snapshot(error = TRUE, is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = NA)
+  expect_snapshot(error = TRUE, is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = c(TRUE, FALSE))
+  expect_snapshot(error = TRUE, is_progress_multiline())
+
+  withr::local_options(cli.progress_multiline = 1)
+  expect_snapshot(error = TRUE, is_progress_multiline())
+})

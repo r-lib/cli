@@ -40,7 +40,7 @@ if (interactive()) htmltools::html_print(page)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other ANSI to HTML conversion: 
-\code{\link{ansi_html_style}()}
+Other ANSI to HTML conversion:
+\code{\link[=ansi_html_style]{ansi_html_style()}}
 }
 \concept{ANSI to HTML conversion}

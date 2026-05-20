@@ -1,5 +1,14 @@
 # cli (development version)
 
+* Multiple concurrent progress bar and status bars are now rendered
+  on separate lines on ANSI-capable terminals. Non-ANSI dynamic terminals
+  continue to show only the current bar (@simonpcouch, #819).
+  Set the new `cli.progress_multiline` option to `FALSE` to keep the
+  single-line behavior on ANSI terminals.
+
+* New `R_CLI_ANSI` environment variable that is equivalent to the
+  `cli.ansi` option (the option takes precedence). See `is_ansi_tty()`.
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers

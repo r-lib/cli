@@ -80,11 +80,11 @@ hash_emoji("foobar", 4)$text
 \seealso{
 the emoji package for a comprehensive list of emojis
 
-Other hash functions: 
-\code{\link{hash_animal}()},
-\code{\link{hash_md5}()},
-\code{\link{hash_sha1}()},
-\code{\link{hash_sha256}()},
-\code{\link{hash_xxhash}()}
+Other hash functions:
+\code{\link[=hash_animal]{hash_animal()}},
+\code{\link[=hash_md5]{hash_md5()}},
+\code{\link[=hash_sha1]{hash_sha1()}},
+\code{\link[=hash_sha256]{hash_sha256()}},
+\code{\link[=hash_xxhash]{hash_xxhash()}}
 }
 \concept{hash functions}

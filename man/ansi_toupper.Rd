@@ -40,37 +40,15 @@ x <- paste0(col_green("MiXeD"), col_red(" cAsE 123"))
 ansi_chartr("iXs", "why", x)
 }
 \seealso{
-Other ANSI string operations: 
-\code{\link{ansi_align}()},
-\code{\link{ansi_columns}()},
-\code{\link{ansi_nchar}()},
-\code{\link{ansi_strsplit}()},
-\code{\link{ansi_strtrim}()},
-\code{\link{ansi_strwrap}()},
-\code{\link{ansi_substr}()},
-\code{\link{ansi_substring}()},
-\code{\link{ansi_trimws}()}
-
-Other ANSI string operations: 
-\code{\link{ansi_align}()},
-\code{\link{ansi_columns}()},
-\code{\link{ansi_nchar}()},
-\code{\link{ansi_strsplit}()},
-\code{\link{ansi_strtrim}()},
-\code{\link{ansi_strwrap}()},
-\code{\link{ansi_substr}()},
-\code{\link{ansi_substring}()},
-\code{\link{ansi_trimws}()}
-
-Other ANSI string operations: 
-\code{\link{ansi_align}()},
-\code{\link{ansi_columns}()},
-\code{\link{ansi_nchar}()},
-\code{\link{ansi_strsplit}()},
-\code{\link{ansi_strtrim}()},
-\code{\link{ansi_strwrap}()},
-\code{\link{ansi_substr}()},
-\code{\link{ansi_substring}()},
-\code{\link{ansi_trimws}()}
+Other ANSI string operations:
+\code{\link[=ansi_align]{ansi_align()}},
+\code{\link[=ansi_columns]{ansi_columns()}},
+\code{\link[=ansi_nchar]{ansi_nchar()}},
+\code{\link[=ansi_strsplit]{ansi_strsplit()}},
+\code{\link[=ansi_strtrim]{ansi_strtrim()}},
+\code{\link[=ansi_strwrap]{ansi_strwrap()}},
+\code{\link[=ansi_substr]{ansi_substr()}},
+\code{\link[=ansi_substring]{ansi_substring()}},
+\code{\link[=ansi_trimws]{ansi_trimws()}}
 }
 \concept{ANSI string operations}

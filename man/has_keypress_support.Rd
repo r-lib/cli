@@ -35,7 +35,7 @@ Not supported:
 has_keypress_support()
 }
 \seealso{
-Other keypress function: 
-\code{\link{keypress}()}
+Other keypress function:
+\code{\link[=keypress]{keypress()}}
 }
 \concept{keypress function}

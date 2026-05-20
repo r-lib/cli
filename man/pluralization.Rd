@@ -216,8 +216,8 @@ one otherwise.
 }
 
 \seealso{
-Other pluralization: 
-\code{\link{no}()},
-\code{\link{pluralize}()}
+Other pluralization:
+\code{\link[=no]{no()}},
+\code{\link[=pluralize]{pluralize()}}
 }
 \concept{pluralization}
