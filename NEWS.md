@@ -1,5 +1,9 @@
 # cli (development version)
 
+* Multiple concurrent progress bar and status bars are now rendered
+  on separate lines on ANSI-capable terminals. Non-ANSI dynamic terminals
+  continue to show only the current bar (@simonpcouch, #819).
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
