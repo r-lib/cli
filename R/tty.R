@@ -156,6 +156,7 @@ ANSI_ESC <- "\u001B["
 ANSI_HIDE_CURSOR <- paste0(ANSI_ESC, "?25l")
 ANSI_SHOW_CURSOR <- paste0(ANSI_ESC, "?25h")
 ANSI_EL <- paste0(ANSI_ESC, "K")
+ansi_cuu <- function(n) paste0(ANSI_ESC, n, "A")
 
 #' Detect if a stream support ANSI escape characters
 #'

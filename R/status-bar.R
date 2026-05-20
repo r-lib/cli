@@ -493,7 +493,7 @@ clii__clear_all_status_bars <- function(app) {
   if (is_ansi_tty(output)) {
     out <- ""
     if (n > 1L) {
-      out <- paste0("\033[", n - 1L, "A")
+      out <- ansi_cuu(n - 1L)
     }
     for (i in seq_len(n)) {
       if (i < n) {
@@ -503,7 +503,7 @@ clii__clear_all_status_bars <- function(app) {
       }
     }
     if (n > 1L) {
-      out <- paste0(out, "\033[", n - 1L, "A")
+      out <- paste0(out, ansi_cuu(n - 1L))
     }
     app$cat(out)
   } else if (is_dynamic_tty(output)) {
@@ -527,7 +527,7 @@ clii__render_all_status_bars <- function(app) {
 
   ## Move up to the top of previously painted area
   if (prev > 1L) {
-    out <- paste0("\033[", prev - 1L, "A")
+    out <- ansi_cuu(prev - 1L)
   }
 
   ## Render each bar
@@ -545,7 +545,7 @@ clii__render_all_status_bars <- function(app) {
     for (i in seq_len(prev - n)) {
       out <- paste0(out, "\n\r", ANSI_EL)
     }
-    out <- paste0(out, "\033[", prev - n, "A\r")
+    out <- paste0(out, ansi_cuu(prev - n), "\r")
   }
 
   app$cat(out)
