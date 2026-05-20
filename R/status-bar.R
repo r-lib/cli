@@ -509,6 +509,10 @@ clii__clear_all_status_bars <- function(app) {
     }
     app$cat(out)
   } else if (is_dynamic_tty(output)) {
+    ## status_bar_prev_content tracks the painted width in the non-ANSI
+    ## dynamic branch (the ANSI path uses status_bar[[i]]$content directly).
+    ## Reset it unconditionally below in case the terminal mode flipped
+    ## between paint and clear.
     text <- app$status_bar_prev_content %||% ""
     len <- ansi_nchar(text, type = "width")
     app$cat(paste0("\r", strrep(" ", len + rstudio_r_fix), "\r"))
