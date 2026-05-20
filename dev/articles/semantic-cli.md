@@ -571,8 +571,8 @@ builtin_theme()$h1
     #> $fmt                                                                            
     #> function (x)                                                                    
     #> cli::rule(x, line_col = "cyan")                                                 
-    #> <bytecode: 0x5562d22a8aa8>                                                      
-    #> <environment: 0x5562d0effbd8>                                                   
+    #> <bytecode: 0x562b1df05aa8>                                                      
+    #> <environment: 0x562b1cb5cbd8>                                                   
     #>                                                                                 
 
 See also [`?cli::themes`](https://cli.r-lib.org/dev/reference/themes.md)
@@ -695,8 +695,8 @@ invisible(rs$close())
 ```
 
 
-    #> This is sub-process 16837 from callr                                            
-    #> [1] 16837                                                                       
+    #> This is sub-process 16158 from callr                                            
+    #> [1] 16158                                                                       
 
 ## Utility functions
 
@@ -1027,5 +1027,5 @@ ansi_with_hidden_cursor(demo_spinners("clock"))
 ```
 
 ![Animation of a spinner that is a Unicode clock glyph where the small
-arm of the clock is spinning
-around.](semantic-cli_files/figure-html/spinner-clock.svg)
+arm of the clock is spinning around.
+](semantic-cli_files/figure-html/spinner-clock.svg)

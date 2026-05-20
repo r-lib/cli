@@ -67,6 +67,49 @@ last progress bar of the script will be only terminated when the script
 terminates, or when you explicitly terminate it using
 [`cli_progress_done()`](https://cli.r-lib.org/dev/reference/cli_progress_bar.md).
 
+## Multiple progress bars
+
+cli renders multiple concurrent progress bars on separate lines on
+ANSI-capable terminals. This is useful when an outer task drives inner
+tasks, or when multiple independent jobs run in parallel and you want to
+see all of their progress at once.
+
+By default a new progress bar in the same calling function terminates
+the previous one (the “current” bar of that environment). To keep
+several bars alive at the same time, pass `current = FALSE` and keep the
+ids around so you can update and finish them explicitly:
+
+``` r
+
+f <- function() {
+  files <- c("a.csv", "b.csv", "c.csv")
+  outer <- cli_progress_bar(
+    "Files", total = length(files), current = FALSE
+  )
+  for (file in files) {
+    inner <- cli_progress_bar(
+      paste("Reading", file), total = 100, current = FALSE
+    )
+    for (i in 1:100) {
+      Sys.sleep(1 / 100)
+      cli_progress_update(id = inner)
+    }
+    cli_progress_done(id = inner)
+    cli_progress_update(id = outer)
+  }
+  cli_progress_done(id = outer)
+}
+f()
+```
+
+![Two progress bars on separate lines: an outer 'Files' bar that ticks
+once per processed file, and an inner per-file bar that resets for each
+file. ](progress-advanced_files/figure-html/multiple.svg)
+
+Bars are rendered in the order they were created (insertion order), so
+the outer bar stays on top. On non-ANSI dynamic terminals cli falls back
+to showing the most recently updated bar on a single line.
+
 ## Customization
 
 cli progress bars can be customized by the developer and the end user,
@@ -92,14 +135,14 @@ the total number of iterations is known.
 
 ![Example of an \`iterator\` progress bar, from left to right it
 contains a label (\`Data cleaning\`), a progress bar, the progress
-percentage, and the
-ETA.](progress-advanced_files/figure-html/iterator.svg)
+percentage, and the ETA.
+](progress-advanced_files/figure-html/iterator.svg)
 
 ![Example of an \`iterator\` progress var, where the total number of
 iterations is unknown. From left to right it contains a spinner, the
 label (\`Data cleaning\`), how many iterations are done (\`50 done\`),
-how many seconds it takes to run an iteration, and the elapsed
-time.](progress-advanced_files/figure-html/iterator2.svg)
+how many seconds it takes to run an iteration, and the elapsed time.
+](progress-advanced_files/figure-html/iterator2.svg)
 
 #### `tasks`
 
@@ -107,14 +150,14 @@ For a list of tasks, by default it shows a `current/total` display.
 
 ![Example of a \`tasks\` progress bar, from left to right it contains a
 spinner, the number of completed tasks per the total number of tasks,
-the ETA, and the specified label: \`Finding data
-files\`.](progress-advanced_files/figure-html/tasks.svg)
+the ETA, and the specified label: \`Finding data files\`.
+](progress-advanced_files/figure-html/tasks.svg)
 
 ![Example of a \`tasks\` progress bar where the total number of tasks is
 unknown. From left to right it contains a spinner, the specified label
 ('Finding data files\`), the number of tasks completed, how long it taks
-to complete a task, and the elapsed
-time.](progress-advanced_files/figure-html/tasks2.svg)
+to complete a task, and the elapsed time.
+](progress-advanced_files/figure-html/tasks2.svg)
 
 #### `download`
 
@@ -122,14 +165,14 @@ For downloads, progress units are shown as bytes by default here.
 
 ![Example of a \`download\` progress bar. From left to right it contains
 a label ('Downloading\`), an actual progress bar, the completed and the
-total download size and the
-ETA.](progress-advanced_files/figure-html/download.svg)
+total download size and the ETA.
+](progress-advanced_files/figure-html/download.svg)
 
 ![Example of a \`download\` progress bar, where the total download size
 is unknown. From left to right it contains the specified label
 (\`Downloading\`), a spinner, the number of downloaded bytes, the
-download rate (\`kB/s\`), and the elapsed
-time.](progress-advanced_files/figure-html/download2.svg)
+download rate (\`kB/s\`), and the elapsed time.
+](progress-advanced_files/figure-html/download2.svg)
 
 #### `custom`
 
@@ -166,8 +209,8 @@ f()
 ```
 
 ![Example of a \`custom\` progress bar. It contains a dynamic label,
-\`Step 1\` that changed to \`Step 2\` later, a bar and the
-percentage.](progress-advanced_files/figure-html/custom.svg)
+\`Step 1\` that changed to \`Step 2\` later, a bar and the percentage.
+](progress-advanced_files/figure-html/custom.svg)
 
 For `custom` progress bars cli always uses the specified format string.
 For other types, the end user might customize the format string, see
@@ -212,7 +255,7 @@ x <- f()
 
 ![Example with the \`fillsquares\` progress bar style. It contains a
 progress bar where empty squares are filled up, the progress percentage
-and the ETA.](progress-advanced_files/figure-html/progress-styles.svg)
+and the ETA. ](progress-advanced_files/figure-html/progress-styles.svg)
 
 Alternatively, they can be set to a list with entries `complete`,
 `incomplete` and `current`, to specify the characters (or strings) for
@@ -230,8 +273,8 @@ x <- f()
 
 ![Example of a customized progress bar. Centered black dots are replaced
 by yellow stars in the progress bar, that also has the progress
-percentage and the
-ETA.](progress-advanced_files/figure-html/progress-custom-style.svg)
+percentage and the ETA.
+](progress-advanced_files/figure-html/progress-custom-style.svg)
 
 #### Custom spinners
 
@@ -265,7 +308,7 @@ f()
 ```
 
 ![A custom spinner that shows 20 spinners, each animating the moon
-phases.](progress-advanced_files/figure-html/custom-spinner.svg)
+phases. ](progress-advanced_files/figure-html/custom-spinner.svg)
 
 #### Custom format strings
 
@@ -298,8 +341,8 @@ set a minimal display for downloads you might write
 to get
 
 ![A custom download progress bar, it has a thick down arrow, a spinner,
-a label (\`Downloading\`), the completed and the total number of
-bytes.](progress-advanced_files/figure-html/download2-vars2.svg)
+a label (\`Downloading\`), the completed and the total number of bytes.
+](progress-advanced_files/figure-html/download2-vars2.svg)
 
 You can use your own expressions and functions on progress bar tokens.
 E.g. to show the current number of steps with letters instead of
@@ -322,8 +365,8 @@ f()
 
 ![A custom progress bar, it has two spinners, one on the left, the other
 on the right. In the middle it has a dynamic label that iterates over
-the letters of the English
-alphabet.](progress-advanced_files/figure-html/function-of-token.svg)
+the letters of the English alphabet.
+](progress-advanced_files/figure-html/function-of-token.svg)
 
 ### Clearing or keeping terminated progress bars
 

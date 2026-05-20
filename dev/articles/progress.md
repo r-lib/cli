@@ -367,5 +367,5 @@ f()
 line is an 'i' (info) line. The first step finishes successfully and its
 'i' mark is turned into a tick mark. The second step fails with an error
 and its line is overwritten with the error message, and moved down to
-the third line, and marked with an 'x' (error)
-mark.](progress_files/figure-html/step-error.svg)
+the third line, and marked with an 'x' (error) mark.
+](progress_files/figure-html/step-error.svg)
