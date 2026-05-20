@@ -31,8 +31,8 @@ We check that all of the following hold:
 is_ansi_tty()
 }
 \seealso{
-Other terminal capabilities: 
-\code{\link{ansi_hide_cursor}()},
-\code{\link{is_dynamic_tty}()}
+Other terminal capabilities:
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=is_dynamic_tty]{is_dynamic_tty()}}
 }
 \concept{terminal capabilities}

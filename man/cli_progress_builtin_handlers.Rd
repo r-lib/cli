@@ -85,14 +85,14 @@ This handler is available if a shiny app is running.
 }
 
 \seealso{
-Other progress bar functions: 
-\code{\link{cli_progress_along}()},
-\code{\link{cli_progress_bar}()},
-\code{\link{cli_progress_message}()},
-\code{\link{cli_progress_num}()},
-\code{\link{cli_progress_output}()},
-\code{\link{cli_progress_step}()},
-\code{\link{cli_progress_styles}()},
+Other progress bar functions:
+\code{\link[=cli_progress_along]{cli_progress_along()}},
+\code{\link[=cli_progress_bar]{cli_progress_bar()}},
+\code{\link[=cli_progress_message]{cli_progress_message()}},
+\code{\link[=cli_progress_num]{cli_progress_num()}},
+\code{\link[=cli_progress_output]{cli_progress_output()}},
+\code{\link[=cli_progress_step]{cli_progress_step()}},
+\code{\link[=cli_progress_styles]{cli_progress_styles()}},
 \code{\link{progress-variables}}
 }
 \concept{progress bar functions}

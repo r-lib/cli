@@ -33,15 +33,15 @@ does nothing.
 evaluating an expression.
 }
 \seealso{
-Other terminal capabilities: 
-\code{\link{is_ansi_tty}()},
-\code{\link{is_dynamic_tty}()}
+Other terminal capabilities:
+\code{\link[=is_ansi_tty]{is_ansi_tty()}},
+\code{\link[=is_dynamic_tty]{is_dynamic_tty()}}
 
-Other low level ANSI functions: 
-\code{\link{ansi_has_any}()},
-\code{\link{ansi_regex}()},
-\code{\link{ansi_string}()},
-\code{\link{ansi_strip}()}
+Other low level ANSI functions:
+\code{\link[=ansi_has_any]{ansi_has_any()}},
+\code{\link[=ansi_regex]{ansi_regex()}},
+\code{\link[=ansi_string]{ansi_string()}},
+\code{\link[=ansi_strip]{ansi_strip()}}
 }
 \concept{low level ANSI functions}
 \concept{terminal capabilities}

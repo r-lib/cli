@@ -53,11 +53,11 @@ hash_md5(c("foo", NA, "bar", ""))
 \code{\link[tools:md5sum]{tools::md5sum()}} for a base R MD5 function that works on
 files.
 
-Other hash functions: 
-\code{\link{hash_animal}()},
-\code{\link{hash_emoji}()},
-\code{\link{hash_sha1}()},
-\code{\link{hash_sha256}()},
-\code{\link{hash_xxhash}()}
+Other hash functions:
+\code{\link[=hash_animal]{hash_animal()}},
+\code{\link[=hash_emoji]{hash_emoji()}},
+\code{\link[=hash_sha1]{hash_sha1()}},
+\code{\link[=hash_sha256]{hash_sha256()}},
+\code{\link[=hash_xxhash]{hash_xxhash()}}
 }
 \concept{hash functions}

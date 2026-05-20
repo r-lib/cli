@@ -43,8 +43,8 @@ is_dynamic_tty()
 is_dynamic_tty(stdout())
 }
 \seealso{
-Other terminal capabilities: 
-\code{\link{ansi_hide_cursor}()},
-\code{\link{is_ansi_tty}()}
+Other terminal capabilities:
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=is_ansi_tty]{is_ansi_tty()}}
 }
 \concept{terminal capabilities}

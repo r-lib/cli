@@ -3,7 +3,7 @@
 \name{ansi_grep}
 \alias{ansi_grep}
 \alias{ansi_grepl}
-\title{Like \code{\link[base:grep]{base::grep()}} and \code{\link[base:grep]{base::grepl()}}, but for ANSI strings}
+\title{Like \code{\link[base:grep]{base::grep()}} and \code{\link[base:grepl]{base::grepl()}}, but for ANSI strings}
 \usage{
 ansi_grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE, ...)
 
@@ -19,10 +19,10 @@ using \code{\link[=as.character]{as.character()}}.}
 
 \item{ignore.case, perl, value}{Passed to \code{\link[base:grep]{base::grep()}}.}
 
-\item{...}{Extra arguments are passed to \code{\link[base:grep]{base::grep()}} or \code{\link[base:grep]{base::grepl()}}.}
+\item{...}{Extra arguments are passed to \code{\link[base:grep]{base::grep()}} or \code{\link[base:grepl]{base::grepl()}}.}
 }
 \value{
-The same as \code{\link[base:grep]{base::grep()}} and \code{\link[base:grep]{base::grepl()}}, respectively.
+The same as \code{\link[base:grep]{base::grep()}} and \code{\link[base:grepl]{base::grepl()}}, respectively.
 }
 \description{
 First ANSI sequences will be stripped with \code{\link[=ansi_strip]{ansi_strip()}}, both
@@ -31,7 +31,7 @@ First ANSI sequences will be stripped with \code{\link[=ansi_strip]{ansi_strip()
 Note that these functions work on code points (or bytes if
 \code{useBytes = TRUE}), and not graphemes.
 
-Unlike \code{\link[base:grep]{base::grep()}} and \code{\link[base:grep]{base::grepl()}} these functions do not special
+Unlike \code{\link[base:grep]{base::grep()}} and \code{\link[base:grepl]{base::grepl()}} these functions do not special
 case factors.
 
 Both \code{pattern} and \code{x} are converted to UTF-8.

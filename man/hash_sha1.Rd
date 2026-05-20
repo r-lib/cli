@@ -53,11 +53,11 @@ more files.
 hash_sha1(c("foo", NA, "bar", ""))
 }
 \seealso{
-Other hash functions: 
-\code{\link{hash_animal}()},
-\code{\link{hash_emoji}()},
-\code{\link{hash_md5}()},
-\code{\link{hash_sha256}()},
-\code{\link{hash_xxhash}()}
+Other hash functions:
+\code{\link[=hash_animal]{hash_animal()}},
+\code{\link[=hash_emoji]{hash_emoji()}},
+\code{\link[=hash_md5]{hash_md5()}},
+\code{\link[=hash_sha256]{hash_sha256()}},
+\code{\link[=hash_xxhash]{hash_xxhash()}}
 }
 \concept{hash functions}

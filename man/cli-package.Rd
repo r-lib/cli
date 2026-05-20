@@ -19,6 +19,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Gábor Csárdi \email{gabor@posit.co}
 
+Authors:
+\itemize{
+  \item Gábor Csárdi \email{gabor@posit.co}
+}
+
 Other contributors:
 \itemize{
   \item Hadley Wickham [contributor]

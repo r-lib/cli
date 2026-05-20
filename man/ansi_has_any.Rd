@@ -29,10 +29,10 @@ ansi_has_any("foobar")
 ansi_has_any(col_red("foobar"))
 }
 \seealso{
-Other low level ANSI functions: 
-\code{\link{ansi_hide_cursor}()},
-\code{\link{ansi_regex}()},
-\code{\link{ansi_string}()},
-\code{\link{ansi_strip}()}
+Other low level ANSI functions:
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=ansi_regex]{ansi_regex()}},
+\code{\link[=ansi_string]{ansi_string()}},
+\code{\link[=ansi_strip]{ansi_strip()}}
 }
 \concept{low level ANSI functions}

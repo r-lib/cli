@@ -62,8 +62,8 @@ cli_text("{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other pluralization: 
-\code{\link{no}()},
+Other pluralization:
+\code{\link[=no]{no()}},
 \code{\link{pluralization}}
 }
 \concept{pluralization}
