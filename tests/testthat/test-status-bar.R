@@ -393,12 +393,18 @@ test_that("concurrent progress bars on ANSI terminal", {
 
   fun <- function() {
     id1 <- cli_progress_bar(
-      "bar1", total = 3, type = "custom",
-      format = "bar1: {pb_current}", current = FALSE
+      "bar1",
+      total = 3,
+      type = "custom",
+      format = "bar1: {pb_current}",
+      current = FALSE
     )
     id2 <- cli_progress_bar(
-      "bar2", total = 3, type = "custom",
-      format = "bar2: {pb_current}", current = FALSE
+      "bar2",
+      total = 3,
+      type = "custom",
+      format = "bar2: {pb_current}",
+      current = FALSE
     )
     cli_progress_update(id = id1, force = TRUE)
     cli_progress_update(id = id2, force = TRUE)
@@ -422,12 +428,18 @@ test_that("bar completion while others remain (ANSI)", {
 
   fun <- function() {
     id1 <- cli_progress_bar(
-      type = "custom", format = "first: {pb_current}",
-      total = 2, current = FALSE, clear = TRUE
+      type = "custom",
+      format = "first: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = TRUE
     )
     id2 <- cli_progress_bar(
-      type = "custom", format = "second: {pb_current}",
-      total = 2, current = FALSE, clear = TRUE
+      type = "custom",
+      format = "second: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = TRUE
     )
     cli_progress_update(id = id1, force = TRUE)
     cli_progress_update(id = id2, force = TRUE)
@@ -450,12 +462,16 @@ test_that("interleaved cli output with multiple active bars (ANSI)", {
 
   fun <- function() {
     id1 <- cli_progress_bar(
-      type = "custom", format = "dl: {pb_current}",
-      total = 3, current = FALSE
+      type = "custom",
+      format = "dl: {pb_current}",
+      total = 3,
+      current = FALSE
     )
     id2 <- cli_progress_bar(
-      type = "custom", format = "proc: {pb_current}",
-      total = 3, current = FALSE
+      type = "custom",
+      format = "proc: {pb_current}",
+      total = 3,
+      current = FALSE
     )
     cli_progress_update(id = id1, force = TRUE)
     cli_progress_update(id = id2, force = TRUE)
@@ -478,12 +494,16 @@ test_that("non-ANSI dynamic fallback shows single bar", {
 
   fun <- function() {
     id1 <- cli_progress_bar(
-      type = "custom", format = "bar1: {pb_current}",
-      total = 2, current = FALSE
+      type = "custom",
+      format = "bar1: {pb_current}",
+      total = 2,
+      current = FALSE
     )
     id2 <- cli_progress_bar(
-      type = "custom", format = "bar2: {pb_current}",
-      total = 2, current = FALSE
+      type = "custom",
+      format = "bar2: {pb_current}",
+      total = 2,
+      current = FALSE
     )
     cli_progress_update(id = id1, force = TRUE)
     cli_progress_update(id = id2, force = TRUE)
@@ -505,8 +525,10 @@ test_that("non-dynamic output preserves newline-per-update", {
 
   fun <- function() {
     id1 <- cli_progress_bar(
-      type = "custom", format = "bar1: {pb_current}",
-      total = 2, current = FALSE
+      type = "custom",
+      format = "bar1: {pb_current}",
+      total = 2,
+      current = FALSE
     )
     cli_progress_update(id = id1, force = TRUE)
     cli_progress_done(id = id1)
@@ -590,12 +612,18 @@ test_that("multi-bar keep/done on ANSI", {
 
   fun <- function() {
     id1 <- cli_progress_bar(
-      type = "custom", format = "a: {pb_current}",
-      total = 2, current = FALSE, clear = FALSE
+      type = "custom",
+      format = "a: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = FALSE
     )
     id2 <- cli_progress_bar(
-      type = "custom", format = "b: {pb_current}",
-      total = 2, current = FALSE, clear = FALSE
+      type = "custom",
+      format = "b: {pb_current}",
+      total = 2,
+      current = FALSE,
+      clear = FALSE
     )
     cli_progress_update(id = id1, force = TRUE)
     cli_progress_update(id = id2, force = TRUE)

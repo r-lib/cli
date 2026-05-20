@@ -487,7 +487,9 @@ clii_status_update <- function(app, id, msg, msg_done, msg_failed) {
 
 clii__clear_all_status_bars <- function(app) {
   n <- app$status_bar_lines
-  if (n == 0L) return(invisible())
+  if (n == 0L) {
+    return(invisible())
+  }
 
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
@@ -517,10 +519,14 @@ clii__clear_all_status_bars <- function(app) {
 
 clii__render_all_status_bars <- function(app) {
   n <- length(app$status_bar)
-  if (n == 0L) return(invisible())
+  if (n == 0L) {
+    return(invisible())
+  }
 
   output <- get_real_output(app$output)
-  if (!is_ansi_tty(output)) return(invisible())
+  if (!is_ansi_tty(output)) {
+    return(invisible())
+  }
 
   prev <- app$status_bar_lines
   out <- ""
@@ -553,7 +559,9 @@ clii__render_all_status_bars <- function(app) {
 }
 
 clii__restore_status_bars <- function(app) {
-  if (length(app$status_bar) == 0L) return(invisible())
+  if (length(app$status_bar) == 0L) {
+    return(invisible())
+  }
 
   output <- get_real_output(app$output)
   if (is_ansi_tty(output)) {
