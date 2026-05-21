@@ -112,6 +112,27 @@
     Output
       [1] "1h 5m"
 
+---
+
+    Code
+      cli__pb_elapsed()
+    Output
+      [1] "1h 4m 13s"
+
+---
+
+    Code
+      cli__pb_elapsed()
+    Output
+      [1] "1h 4m 19s"
+
+---
+
+    Code
+      cli__pb_elapsed()
+    Output
+      [1] "58.1s"
+
 # pb_elapsed_clock
 
     Code
@@ -139,6 +160,27 @@
       cli__pb_elapsed_clock()
     Output
       [1] "01:05:00"
+
+---
+
+    Code
+      cli__pb_elapsed_clock()
+    Output
+      [1] "00:00:58.1"
+
+---
+
+    Code
+      cli__pb_elapsed_clock()
+    Output
+      [1] "01:04:13.2"
+
+---
+
+    Code
+      cli__pb_elapsed_clock()
+    Output
+      [1] "01:04:18.6"
 
 # pb_elapsed_raw
 

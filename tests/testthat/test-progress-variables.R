@@ -58,6 +58,16 @@ test_that("pb_elapsed", {
   expect_snapshot(cli__pb_elapsed())
   local_mocked_bindings(.Call = function(...) 60 * 65)
   expect_snapshot(cli__pb_elapsed())
+
+  ## seconds should get rounded
+  local_mocked_bindings(.Call = function(...) 60 * 64.22)
+  expect_snapshot(cli__pb_elapsed())
+  local_mocked_bindings(.Call = function(...) 60 * 64.31)
+  expect_snapshot(cli__pb_elapsed())
+
+  ## seconds should not get rounded
+  local_mocked_bindings(.Call = function(...) 58.1)
+  expect_snapshot(cli__pb_elapsed())
 })
 
 test_that("pb_elapsed_clock", {
@@ -70,6 +80,14 @@ test_that("pb_elapsed_clock", {
   local_mocked_bindings(.Call = function(...) 58)
   expect_snapshot(cli__pb_elapsed_clock())
   local_mocked_bindings(.Call = function(...) 60 * 65)
+  expect_snapshot(cli__pb_elapsed_clock())
+
+  ## seconds should not get rounded
+  local_mocked_bindings(.Call = function(...) 58.1)
+  expect_snapshot(cli__pb_elapsed_clock())
+  local_mocked_bindings(.Call = function(...) 60 * 64.22)
+  expect_snapshot(cli__pb_elapsed_clock())
+  local_mocked_bindings(.Call = function(...) 60 * 64.31)
   expect_snapshot(cli__pb_elapsed_clock())
 })
 
