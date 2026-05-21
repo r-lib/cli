@@ -236,6 +236,7 @@ test_that_cli(configs = "plain", links = "all", ".run with custom format", {
   })
 })
 
+
 # -- {.topic} -------------------------------------------------------------
 
 test_that_cli(configs = "plain", links = c("all", "none"), "{.topic}", {
@@ -322,6 +323,37 @@ test_that_cli(
     )
     expect_snapshot({
       cli_text("{.vignette pkgdown::accessibility}")
+    })
+  }
+)
+
+
+# -- Issue #681 - fs::path weirdness -------------------------------------
+
+test_that_cli(
+  configs = c("plain", "fancy"),
+  links = c("all", "none"),
+  "{.run} and {.href} with fs_path",
+  {
+    skip_if_not_installed("fs")
+
+    path <- "~/Desktop/foo.R"
+
+    # Not working
+    expect_snapshot({
+      cli_text("{.run ['hi mom']({fs::path(path)})}")
+      cli_text("{.run {fs::path(path)}}")
+    })
+
+    expect_snapshot({
+      cli_text("{.href [link]({fs::path(path)})}")
+      cli_text("{.href {fs::path(path)}}")
+    })
+
+    # Working
+    expect_snapshot({
+      cli_text("{.file {fs::path(path)}}")
+      cli_text("{.path {fs::path(path)}}")
     })
   }
 )

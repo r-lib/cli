@@ -253,6 +253,10 @@ make_link_help <- function(txt) {
 # -- {.href} --------------------------------------------------------------
 
 make_link_href <- function(txt) {
+  # Addresses #681 - if already linked, strip link and re-link
+  linked <- grepl("\007|\033\\\\", txt)
+  txt[linked] <- ansi_strip(txt[linked])
+
   mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
   text <- ifelse(is.na(mch$text), txt, mch$text)
   url <- ifelse(is.na(mch$url), txt, mch$url)
@@ -273,6 +277,10 @@ make_link_href <- function(txt) {
 # -- {.run} ---------------------------------------------------------------
 
 make_link_run <- function(txt) {
+  # Addresses #681 - if already linked, strip link and re-link
+  linked <- grepl("\007|\033\\\\", txt)
+  txt[linked] <- ansi_strip(txt[linked])
+
   mch <- re_match(txt, "^\\[(?<text>.*)\\]\\((?<url>.*)\\)$")
   text <- ifelse(is.na(mch$text), txt, mch$text)
   code <- ifelse(is.na(mch$url), txt, mch$url)
