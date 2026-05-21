@@ -74,6 +74,12 @@ ANSI-capable terminals. This is useful when an outer task drives inner
 tasks, or when multiple independent jobs run in parallel and you want to
 see all of their progress at once.
 
+Bars are rendered in the order they were created (insertion order), so
+the outer bar stays on top. On non-ANSI dynamic terminals cli falls back
+to showing the most recently updated bar on a single line.
+
+### Nested progress bars
+
 By default a new progress bar in the same calling function terminates
 the previous one (the “current” bar of that environment). To keep
 several bars alive at the same time, pass `current = FALSE` and keep the
@@ -82,22 +88,29 @@ ids around so you can update and finish them explicitly:
 ``` r
 
 f <- function() {
-  files <- c("a.csv", "b.csv", "c.csv")
-  outer <- cli_progress_bar(
-    "Files", total = length(files), current = FALSE
+  files <- c("one.csv", "two.csv", "three.csv", "four.csv", "five.csv")
+  p_outer <- cli_progress_bar(
+    type = "custom",
+    format = "Reading files {idx}/{length(files)}",
+    total = length(files)
   )
-  for (file in files) {
-    inner <- cli_progress_bar(
-      paste("Reading", file), total = 100, current = FALSE
+  # initial update to force a progress bar render
+  idx <- 0
+  cli_progress_update(id = p_outer, set = 0, force = TRUE)
+  # to make the labels identical width
+  dispfiles <- format(files)
+  for (idx in seq_along(files)) {
+    p_inner <- cli_progress_bar(
+      paste("Reading", dispfiles[idx]), total = 100, current = FALSE
     )
     for (i in 1:100) {
-      Sys.sleep(1 / 100)
-      cli_progress_update(id = inner)
+      Sys.sleep(3 / 100)
+      cli_progress_update(id = p_inner)
     }
-    cli_progress_done(id = inner)
-    cli_progress_update(id = outer)
+    cli_progress_done(id = p_inner)
+    cli_progress_update(id = p_outer, force = TRUE)
   }
-  cli_progress_done(id = outer)
+  cli_progress_done(id = p_outer)
 }
 f()
 ```
@@ -106,9 +119,26 @@ f()
 once per processed file, and an inner per-file bar that resets for each
 file. ](progress-advanced_files/figure-html/multiple.svg)
 
-Bars are rendered in the order they were created (insertion order), so
-the outer bar stays on top. On non-ANSI dynamic terminals cli falls back
-to showing the most recently updated bar on a single line.
+### Multiple independent progress bars
+
+``` r
+
+f <- function() {
+  id1 <- cli_progress_bar("Downloads ", total = 20, current = FALSE, clear = FALSE)
+  id2 <- cli_progress_bar("Processing", total = 20, current = FALSE, clear = FALSE)
+  for (i in 1:20) {
+    Sys.sleep(0.15)
+    cli_progress_update(id = id1)
+    Sys.sleep(0.15)
+    cli_progress_update(id = id2)
+  }
+}
+f()
+```
+
+![Two independent progress bars on separate lines, one for \`Downloads\`
+and one for \`Processing\`, that tick in an interleaved fashion.
+](progress-advanced_files/figure-html/multiple2.svg)
 
 ## Customization
 
