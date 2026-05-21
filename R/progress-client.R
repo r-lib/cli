@@ -449,7 +449,8 @@ cli_progress_update <- function(
     }
   }
 
-  if (pb$auto_terminate && !is.na(pb$total) && pb$current == pb$total) {
+  if (pb$auto_terminate && !is.na(pb$total) && pb$current == pb$total &&
+      pb$total > 1) {
     cli_progress_done(id, .envir = .envir, result = "done")
     return(invisible(id))
   }
