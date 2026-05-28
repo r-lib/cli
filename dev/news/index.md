@@ -2,6 +2,10 @@
 
 ## cli (development version)
 
+- [`ansi_strip()`](https://cli.r-lib.org/dev/reference/ansi_strip.md)
+  now also removes generic OSC sequences such as the `\033]0;...\a`
+  window-title sequence emitted by `Rscript.exe` on Windows.
+
 - [`ansi_strwrap()`](https://cli.r-lib.org/dev/reference/ansi_strwrap.md)
   (used by `cli_alert_*(wrap = TRUE)` and friends) now correctly wraps
   strings that contain multi-codepoint graphemes, such as an emoji
