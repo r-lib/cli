@@ -124,6 +124,13 @@ Set this environment variable to `light` or `dark` to indicate dark mode
 in Emacs. Once https://github.com/emacs-ess/ESS/pull/1178 is merged, ESS
 will set this automatically.
 
+#### `R_CLI_ANSI`
+
+Set to `true` (case insensitive) to assume a terminal that supports ANSI
+control sequences. Set to `false` (case insensitive) to assume a
+non-ANSI terminal. The `cli.ansi` option, if set, takes precedence. See
+[`is_ansi_tty()`](https://cli.r-lib.org/dev/reference/is_ansi_tty.md).
+
 #### `R_CLI_DYNAMIC`
 
 Set to `true`, `TRUE` or `True` to assume a dynamic terminal, that
@@ -140,9 +147,9 @@ Set to a positive integer to assume a given number of colors. See
 
 #### `cli.ansi`
 
-Set to `true`, `TRUE` or `True` to assume a terminal that supports ANSI
-control sequences. Set to anything else to assume a non-ANSI terminal.
-See
+Set to `TRUE` to assume a terminal that supports ANSI control sequences.
+Set to `FALSE` to assume a non-ANSI terminal. This option takes
+precedence over the `R_CLI_ANSI` environment variable. See
 [`is_ansi_tty()`](https://cli.r-lib.org/dev/reference/is_ansi_tty.md).
 
 #### `cli.condition_unicode_bullets`
@@ -297,6 +304,16 @@ already selected. See
 Progress handlers to force, ignoring handlers set in
 `cli.progress_handlers` and `cli.progress_handlers_force`. See
 [`cli_progress_builtin_handlers()`](https://cli.r-lib.org/dev/reference/cli_progress_builtin_handlers.md).
+
+#### `cli.progress_multiline`
+
+Whether to render multiple concurrent progress bars on separate lines on
+ANSI-capable terminals. Defaults to `TRUE`. Set to `FALSE` to show only
+the most recently updated bar on a single line. Has no effect on
+non-ANSI terminals, which always show a single bar. See
+[`is_ansi_tty()`](https://cli.r-lib.org/dev/reference/is_ansi_tty.md)
+and
+[`cli_progress_bar()`](https://cli.r-lib.org/dev/reference/cli_progress_bar.md).
 
 #### `cli.progress_say_args`
 

@@ -143,6 +143,16 @@ will set this automatically.</p>
 </div>
 
 <div class="section">
+<h4 id="r-cli-ansi"><code>R_CLI_ANSI</code><a class="anchor" aria-label="anchor" href="#r-cli-ansi"></a></h4>
+
+
+<p>Set to <code>true</code> (case insensitive) to assume a terminal that supports ANSI
+control sequences. Set to <code>false</code> (case insensitive) to assume a non-ANSI
+terminal. The <code>cli.ansi</code> option, if set, takes precedence.
+See <code><a href="is_ansi_tty.html">is_ansi_tty()</a></code>.</p>
+</div>
+
+<div class="section">
 <h4 id="r-cli-dynamic"><code>R_CLI_DYNAMIC</code><a class="anchor" aria-label="anchor" href="#r-cli-dynamic"></a></h4>
 
 
@@ -169,9 +179,9 @@ See <code><a href="num_ansi_colors.html">num_ansi_colors()</a></code>.</p>
 <h4 id="cli-ansi"><code>cli.ansi</code><a class="anchor" aria-label="anchor" href="#cli-ansi"></a></h4>
 
 
-<p>Set to <code>true</code>, <code>TRUE</code> or <code>True</code> to assume a terminal that supports ANSI
-control sequences.
-Set to anything else to assume a non-ANSI terminal.
+<p>Set to <code>TRUE</code> to assume a terminal that supports ANSI control sequences.
+Set to <code>FALSE</code> to assume a non-ANSI terminal. This option takes precedence
+over the <code>R_CLI_ANSI</code> environment variable.
 See <code><a href="is_ansi_tty.html">is_ansi_tty()</a></code>.</p>
 </div>
 
@@ -367,6 +377,17 @@ See <code><a href="cli_progress_builtin_handlers.html">cli_progress_builtin_hand
 <p>Progress handlers to force, ignoring handlers set in
 <code>cli.progress_handlers</code> and <code>cli.progress_handlers_force</code>.
 See <code><a href="cli_progress_builtin_handlers.html">cli_progress_builtin_handlers()</a></code>.</p>
+</div>
+
+<div class="section">
+<h4 id="cli-progress-multiline"><code>cli.progress_multiline</code><a class="anchor" aria-label="anchor" href="#cli-progress-multiline"></a></h4>
+
+
+<p>Whether to render multiple concurrent progress bars on separate lines on
+ANSI-capable terminals. Defaults to <code>TRUE</code>. Set to <code>FALSE</code> to show only the
+most recently updated bar on a single line. Has no effect on non-ANSI
+terminals, which always show a single bar.
+See <code><a href="is_ansi_tty.html">is_ansi_tty()</a></code> and <code><a href="cli_progress_bar.html">cli_progress_bar()</a></code>.</p>
 </div>
 
 <div class="section">

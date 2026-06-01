@@ -1,20 +1,35 @@
 # Detect if a stream support ANSI escape characters
 
-We check that all of the following hold:
+The detection mechanism is as follows:
 
-- The stream is a terminal.
+1.  If the `cli.ansi` option is set to `TRUE`, `TRUE` is returned.
 
-- The platform is Unix.
+2.  If the `cli.ansi` option is set to `FALSE`, `FALSE` is returned.
 
-- R is not running inside R.app (the macOS GUI).
+3.  If the `R_CLI_ANSI` environment variable is set to `true` (case
+    insensitive), then `TRUE` is returned.
 
-- R is not running inside RStudio.
+4.  If `R_CLI_ANSI` is not empty and set to `false` (case insensitive),
+    `FALSE` is returned.
 
-- R is not running inside Emacs.
+5.  If R is running in the Positron console, then `TRUE` is returned,
+    with 'positron' added as a name. Positron does not currently support
+    hide/show cursor, scrolling regions, inserting and deleting lines
+    and the alternate screen buffer.
 
-- The terminal is not "dumb".
+6.  Otherwise we autodetect, by checking that all of the following hold:
 
-- `stream` is either the standard output or the standard error stream.
+    - The stream is a terminal, see
+      [`base::isatty()`](https://rdrr.io/r/base/showConnections.html).
+
+    - R is not running inside R.app (the macOS GUI).
+
+    - R is not running inside Emacs.
+
+    - The terminal is not "dumb".
+
+    - `stream` is either the standard output or the standard error
+      stream.
 
 ## Usage
 

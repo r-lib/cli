@@ -10,7 +10,7 @@ has_keypress_support()
 
 ## Value
 
-Whether there is support for waiting for individual keypressses.
+Whether there is support for waiting for individual keypresses.
 
 ## Details
 
