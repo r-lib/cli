@@ -30,7 +30,7 @@ still run):
 
 ``` r
 
-withr::with_envvar(c(NOT_CRAN = "true"), rcmdcheck::rcmdcheck())
+withr::with_envvar(c(NOT_CRAN = "true", DISPLAY = ""), rcmdcheck::rcmdcheck())
 ```
 
 Running a single test file or a single test:
