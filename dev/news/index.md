@@ -32,6 +32,9 @@
   `cli.ansi` option (the option takes precedence). See
   [`is_ansi_tty()`](https://cli.r-lib.org/dev/reference/is_ansi_tty.md).
 
+- If `cli.progress_show_after = 0` is set then the progress bar is now
+  shown even if it terminates immediately.
+
 ## cli 3.6.6
 
 CRAN release: 2026-04-09
