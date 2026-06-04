@@ -462,6 +462,9 @@ for a quick overview of most of them.
 - [`cli_sitrep()`](https://cli.r-lib.org/dev/reference/cli_sitrep.md) :
   cli situation report
 
+- [`cli_with_progress_ticks()`](https://cli.r-lib.org/dev/reference/cli_with_progress_ticks.md)
+  : Evaluate an expression with forcing all progress bar updates enabled
+
 - [`console_width()`](https://cli.r-lib.org/dev/reference/console_width.md)
   : Determine the width of the console
 
