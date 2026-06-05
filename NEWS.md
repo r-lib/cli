@@ -1,5 +1,9 @@
 # cli (development version)
 
+* The `cli_progress_bar()` documentation now shows how to leave completion and
+  failure messages on screen with `format_done`, `format_failed`, and
+  `clear = FALSE` (#610).
+
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a
     key press.

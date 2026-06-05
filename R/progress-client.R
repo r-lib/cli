@@ -216,6 +216,11 @@
 #' like the elapsed time, of the ETA manually. You can also use your own
 #' variables in the calling function:
 #'
+#' To leave a completion or failure message on screen after the progress bar
+#' finishes, set `clear = FALSE` and customize `format_done` and
+#' `format_failed`. The `pb_elapsed` variable is often useful for reporting the
+#' total runtime.
+#'
 #' ```{asciicast progress-format}
 #' #| asciicast_at = "all",
 #' #| asciicast_knitr_output = "svg",
@@ -229,6 +234,9 @@
 #'     format_done = paste0(
 #'       "{col_green(symbol$tick)} Downloaded {pb_total} files ",
 #'       "in {pb_elapsed}."
+#'     ),
+#'     format_failed = paste0(
+#'       "{col_red(symbol$cross)} Download failed after {pb_elapsed}."
 #'     ),
 #'     clear = FALSE,
 #'     total = length(urls)
