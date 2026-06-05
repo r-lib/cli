@@ -414,6 +414,10 @@ format string. In this case <a href="progress-variables.html">progress variables
 are probably useful to avoid calculating some progress bar quantities
 like the elapsed time, of the ETA manually. You can also use your own
 variables in the calling function:</p>
+<p>To leave a completion or failure message on screen after the progress bar
+finishes, set <code>clear = FALSE</code> and customize <code>format_done</code> and
+<code>format_failed</code>. The <code>pb_elapsed</code> variable is often useful for reporting the
+total runtime.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">urls</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/cli_progress_bar.html">cli_progress_bar</a></span><span class="op">(</span></span>
 <span>    format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
@@ -423,6 +427,9 @@ variables in the calling function:</p>
 <span>    format_done <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
 <span>      <span class="st">"{col_green(symbol$tick)} Downloaded {pb_total} files "</span>,</span>
 <span>      <span class="st">"in {pb_elapsed}."</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    format_failed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
+<span>      <span class="st">"{col_red(symbol$cross)} Download failed after {pb_elapsed}."</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    clear <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">urls</span><span class="op">)</span></span>
