@@ -17,7 +17,7 @@ cliappenv$pid <- Sys.getpid()
 #' @param .envir The environment to use, instead of the calling frame,
 #'   to trigger the stop of the app.
 #' @param app App to stop. If `NULL`, the current default app is stopped.
-#'   Otherwise we find the supplied app in the app stack, and remote it,
+#'   Otherwise we find the supplied app in the app stack, and remove it,
 #'   together with all the apps above it.
 #' @return
 #'   `start_app` returns the new app, `default_app` returns the default app.

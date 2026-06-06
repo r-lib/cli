@@ -280,7 +280,7 @@ cli_verbatim <- function(..., .envir = parent.frame()) {
 #'   themes.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
-#' @seealso These functions supports [inline markup][inline-markup].
+#' @seealso These functions support [inline markup][inline-markup].
 #' @family functions supporting inline markup
 #' @export
 
@@ -795,7 +795,7 @@ cli_li <- function(
 #' @param wrap Whether to auto-wrap the text of the alert.
 #' @param .envir Environment to evaluate the glue expressions in.
 #'
-#' @seealso These functions supports [inline markup][inline-markup].
+#' @seealso These functions support [inline markup][inline-markup].
 #' @family functions supporting inline markup
 #' @export
 

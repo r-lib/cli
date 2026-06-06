@@ -29,7 +29,7 @@ is destroyed.}
 to trigger the stop of the app.}
 
 \item{app}{App to stop. If \code{NULL}, the current default app is stopped.
-Otherwise we find the supplied app in the app stack, and remote it,
+Otherwise we find the supplied app in the app stack, and remove it,
 together with all the apps above it.}
 }
 \value{

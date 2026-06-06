@@ -43,7 +43,7 @@ cli_h3("Header \{.emph 3\}")
 }}
 }
 \seealso{
-These functions supports \link[=inline-markup]{inline markup}.
+These functions support \link[=inline-markup]{inline markup}.
 
 Other functions supporting inline markup:
 \code{\link[=cli_abort]{cli_abort()}},

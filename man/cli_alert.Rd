@@ -124,7 +124,7 @@ cli_alert_info("Data columns: \{.val \{names(mtcars)\}\}.", wrap = TRUE)
 }
 }
 \seealso{
-These functions supports \link[=inline-markup]{inline markup}.
+These functions support \link[=inline-markup]{inline markup}.
 
 Other functions supporting inline markup:
 \code{\link[=cli_abort]{cli_abort()}},
