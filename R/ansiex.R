@@ -151,9 +151,11 @@ ansi_nchar <- function(
 #' Substring(s) of an ANSI colored string
 #'
 #' This is a color-aware counterpart of [base::substr()].
-#' It works exactly like the original, but keeps the colors
+#' It works like the original, but keeps the colors
 #' in the substrings. The ANSI escape sequences are ignored when
 #' calculating the positions within the string.
+#' Unlike [base::substr()], the replacement form
+#' (`ansi_substr(x, start, stop) <- value`) is not supported.
 #'
 #' @param x Character vector, potentially ANSI styled, or a vector to
 #'   coerced to character.
@@ -236,9 +238,11 @@ ansi_substr <- function(x, start, stop) {
 #' Substring(s) of an ANSI colored string
 #'
 #' This is the color-aware counterpart of [base::substring()].
-#' It works exactly like the original, but keeps the colors in the
+#' It works like the original, but keeps the colors in the
 #' substrings. The ANSI escape sequences are ignored when
 #' calculating the positions within the string.
+#' Unlike [base::substring()], the replacement form
+#' (`substring(text, first, last) <- value`) is not supported.
 #'
 #' @param text Character vector, potentially ANSI styled, or a vector to
 #'   coerced to character. It is recycled to the longest of `first`

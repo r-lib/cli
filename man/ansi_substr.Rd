@@ -22,9 +22,11 @@ the requested substrings. ANSI styles are retained.
 }
 \description{
 This is a color-aware counterpart of \code{\link[base:substr]{base::substr()}}.
-It works exactly like the original, but keeps the colors
+It works like the original, but keeps the colors
 in the substrings. The ANSI escape sequences are ignored when
 calculating the positions within the string.
+Unlike \code{\link[base:substr]{base::substr()}}, the replacement form
+(\code{ansi_substr(x, start, stop) <- value}) is not supported.
 }
 \examples{
 str <- paste(
