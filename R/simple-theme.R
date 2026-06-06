@@ -60,6 +60,7 @@
 #'   Detection usually works in recent RStudio versions, and in iTerm
 #'   on macOS, but not on other platforms.
 #'
+#' @return A named list that can be used as a cli theme.
 #' @seealso [themes], [builtin_theme()].
 #' @export
 

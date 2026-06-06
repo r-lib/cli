@@ -9,6 +9,9 @@ spark_line(x)
 \arguments{
 \item{x}{A numeric vector between 0 and 1}
 }
+\value{
+A character string of class \code{cli_spark_line} and \code{cli_spark}.
+}
 \description{
 You might want to avoid sparklines on non-UTF-8 systems, because they
 do not look good. You can use \code{\link[=is_utf8_output]{is_utf8_output()}} to test for support

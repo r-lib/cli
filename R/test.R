@@ -41,6 +41,8 @@
 #'   * `"all"`: turn on all hyperlinks,
 #'   * `"none"`: turn off all hyperlinks.
 #'
+#' @return The return value of [testthat::test_that()] for the last
+#'   configuration tested (invisibly).
 #' @export
 #' @examples
 #' # testthat cannot record or compare snapshots when you run these

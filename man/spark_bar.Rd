@@ -9,6 +9,9 @@ spark_bar(x)
 \arguments{
 \item{x}{A numeric vector between 0 and 1}
 }
+\value{
+A character string of class \code{cli_spark_bar} and \code{cli_spark}.
+}
 \description{
 Rendered using \href{https://en.wikipedia.org/wiki/Block_Elements}{block elements}.
 In most common fixed width fonts these are rendered wider than regular

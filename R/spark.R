@@ -34,6 +34,7 @@
 #' ```
 #'
 #' @param x A numeric vector between 0 and 1
+#' @return A character string of class `cli_spark_bar` and `cli_spark`.
 #' @export
 #' @seealso [spark_line()]
 
@@ -95,6 +96,7 @@ spark_bar_chars <- function(x, bars = NULL) {
 #' ```
 #'
 #' @inheritParams spark_bar
+#' @return A character string of class `cli_spark_line` and `cli_spark`.
 #' @export
 #' @seealso [spark_bar()]
 

@@ -12,6 +12,9 @@ background. If \code{"auto"}, then cli will try to detect this.
 Detection usually works in recent RStudio versions, and in iTerm
 on macOS, but not on other platforms.}
 }
+\value{
+A named list that can be used as a cli theme.
+}
 \description{
 To use this theme, you can set it as the \code{cli.theme} option.
 Note that this is in addition to the builtin theme, which is still in

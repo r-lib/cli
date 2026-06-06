@@ -9,6 +9,10 @@ ruler(width = console_width())
 \arguments{
 \item{width}{Ruler width.}
 }
+\value{
+\code{NULL}, invisibly. Called for its side effect of printing a
+ruler to the screen.
+}
 \description{
 Print the helpful ruler to the screen
 }

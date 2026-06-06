@@ -1,5 +1,7 @@
 #' Print the helpful ruler to the screen
 #'
+#' @return `NULL`, invisibly. Called for its side effect of printing a
+#'   ruler to the screen.
 #' @export
 #' @param width Ruler width.
 #' @examples

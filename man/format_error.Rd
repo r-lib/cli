@@ -17,6 +17,9 @@ format_message(message, .envir = parent.frame())
 
 \item{.envir}{Environment to evaluate the glue expressions in.}
 }
+\value{
+A character string containing the formatted message.
+}
 \description{
 You can then throw this message with \code{\link[=stop]{stop()}} or \code{rlang::abort()}.
 }

@@ -70,7 +70,7 @@ cli_bullets <- function(
 
 #' List of verbatim items
 #'
-#' `cli_format_bullets_raw()` is similar to [cli_bullets()], but it does
+#' `cli_bullets_raw()` is similar to [cli_bullets()], but it does
 #' not perform any inline styling or glue substitutions in the input.
 #'
 #' `format_bullets_raw()` returns the output instead of printing it.

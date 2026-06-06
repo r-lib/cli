@@ -31,6 +31,10 @@ vector with possible hyperlink configurations:
 \item \code{"none"}: turn off all hyperlinks.
 }}
 }
+\value{
+The return value of \code{\link[testthat:test_that]{testthat::test_that()}} for the last
+configuration tested (invisibly).
+}
 \description{
 Use this function in your testthat test files, to test cli output.
 It requires testthat edition 3, and works best with snapshot tests.
