@@ -213,6 +213,22 @@ static R_INLINE void cli_progress_set_status(SEXP bar, const char *status);
 
 static R_INLINE void cli_progress_set_type(SEXP bar, const char *type);
 
+//' ### `cli_progress_sleep()`
+//'
+//' ```c
+//' void cli_progress_sleep(int s, long ns);
+//' ```
+//'
+//' Sleep for the specified amount of time. This function is mainly
+//' useful in examples and tests, to simulate a computation that takes
+//' some time. It respects the `CLI_SPEED_TIME` environment variable,
+//' so automated tests can run faster.
+//'
+//' * `s`: number of seconds to sleep.
+//' * `ns`: number of nanoseconds to sleep.
+
+static R_INLINE void cli_progress_sleep(int s, long ns);
+
 //' ### `cli_progress_update()`
 //'
 //' ```c
