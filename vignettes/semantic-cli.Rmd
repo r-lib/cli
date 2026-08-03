@@ -438,12 +438,12 @@ fun()
 # CLI messages
 
 All `cli_*()` functions are implemented using standard R conditions.
-For example a `cli_alert()` call emits an R condition with class `cli_message`.
+For example a `cli_alert()` call emits an R condition with class `cliMessage`.
 These messages can be caught, muffled, transferred from a sub-process to the main R process.
 
 When a cli function is called:
 
-1.  cli throws a `cli_message` condition.
+1.  cli throws a `cliMessage` condition.
 2.  If this condition is caught and muffled (via the `cli_message_handled` restart), then nothing else happens.
 3.  Otherwise the `cli.default_handler` option is checked and if this is a function, then it is called with the message.
 4.  If the `cli.default_handler` option is not set, or it is not a function, the default cli handler is called, which shows the text, alert, heading, etc. on the screen, using the standard R `message()` function.
