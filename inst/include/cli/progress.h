@@ -213,6 +213,21 @@ static R_INLINE void cli_progress_set_status(SEXP bar, const char *status);
 
 static R_INLINE void cli_progress_set_type(SEXP bar, const char *type);
 
+//' ### `cli_progress_sleep()`
+//'
+//' ```c
+//' void cli_progress_sleep(int s, long ns);
+//' ```
+//'
+//' Sleep for the specified duration. Used to simulate work in progress
+//' bar examples and tests. The actual duration may be scaled by the
+//' `CLI_SPEED_TIME` environment variable, see [cli-config].
+//'
+//' * `s`: number of whole seconds to sleep.
+//' * `ns`: number of additional nanoseconds to sleep.
+
+static R_INLINE void cli_progress_sleep(int s, long ns);
+
 //' ### `cli_progress_update()`
 //'
 //' ```c
