@@ -80,7 +80,7 @@
                         <h4 data-toc-skip class="author">Gábor
 Csárdi</h4>
             
-            <h4 data-toc-skip class="date">2026-06-05</h4>
+            <h4 data-toc-skip class="date">2026-08-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/cli/blob/main/vignettes/semantic-cli.Rmd" class="external-link"><code>vignettes/semantic-cli.Rmd</code></a></small>
       <div class="d-none name"><code>semantic-cli.Rmd</code></div>
@@ -609,8 +609,8 @@ looks like this in the built-in theme:</p>
 #&gt; $fmt                                                                            
 #&gt; function (x)                                                                    
 #&gt; cli::rule(x, line_col = "cyan")                                                 
-#&gt; &lt;bytecode: 0x561ed7d544d0&gt;                                                      
-#&gt; &lt;environment: 0x561ed6602a60&gt;                                                   
+#&gt; &lt;bytecode: 0x55d65ad06b70&gt;                                                      
+#&gt; &lt;environment: 0x55d65a88e610&gt;                                                   
 #&gt;                                                                                 
 </pre>
 </div>
@@ -701,9 +701,19 @@ not a function, the default cli handler is called, which shows the text,
 alert, heading, etc. on the screen, using the standard R
 <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function.</li>
 </ol>
+<p>The message that is shown in the last step is a regular R message,
+with class <code>message</code>. In addition, it also has class
+<code>cliMessage</code>, which you can use to suppress or catch these
+messages specifically, e.g. with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code> or
+<code><a href="https://testthat.r-lib.org/reference/expect_error.html" class="external-link">testthat::expect_message()</a></code>. Note that this is different
+from the <code>cli_message</code> class mentioned above, which belongs
+to the earlier, internal condition from step 1, and is not the class to
+use with <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code> or
+<code>expect_message()</code>.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_h1.html">cli_h1</a></span><span class="op">(</span><span class="st">"Heading"</span><span class="op">)</span>, cli_message <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Not shown"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_text.html">cli_text</a></span><span class="op">(</span><span class="st">"Not shown"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="../reference/cli_alert.html">cli_alert</a></span><span class="op">(</span><span class="st">"Not shown either"</span><span class="op">)</span>, class <span class="op">=</span> <span class="st">"cliMessage"</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
 <pre>
 #&gt; &lt;cli_message: cli message h1&gt;                                                   
@@ -728,8 +738,8 @@ to the main R process:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">rs</span><span class="op">$</span><span class="fu">close</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000">
 <pre>
-#&gt; This is sub-process <span style="font-style: italic;">16650</span> from <span style="color: #268BD2;">callr</span>                                            
-#&gt; [1] 16650                                                                       
+#&gt; This is sub-process <span style="font-style: italic;">16924</span> from <span style="color: #268BD2;">callr</span>                                            
+#&gt; [1] 16924                                                                       
 </pre>
 </div>
 </div>
@@ -1040,7 +1050,7 @@ project.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
   </div></footer>
