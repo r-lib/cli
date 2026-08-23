@@ -448,9 +448,14 @@ When a cli function is called:
 3.  Otherwise the `cli.default_handler` option is checked and if this is a function, then it is called with the message.
 4.  If the `cli.default_handler` option is not set, or it is not a function, the default cli handler is called, which shows the text, alert, heading, etc. on the screen, using the standard R `message()` function.
 
+The message that is shown in the last step is a regular R message, with class `message`.
+In addition, it also has class `cliMessage`, which you can use to suppress or catch these messages specifically, e.g. with `suppressMessages()` or `testthat::expect_message()`.
+Note that this is different from the `cli_message` class mentioned above, which belongs to the earlier, internal condition from step 1, and is not the class to use with `suppressMessages()` or `expect_message()`.
+
 ```{asciicast}
 tryCatch(cli_h1("Heading"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))
+suppressMessages(cli_alert("Not shown either"), class = "cliMessage")
 ```
 
 # Sub-Processes
