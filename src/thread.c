@@ -2,9 +2,6 @@
 #include "cli.h"
 
 #include <pthread.h>
-#ifdef __TERMUX__
-#include <bthread.h>
-#endif
 
 #include <time.h>
 #ifndef _WIN32
@@ -20,17 +17,36 @@ double cli_speed_time = 1.0;
 volatile int cli__reset = 1;
 static int unloaded = 0;
 
+#ifdef __TERMUX__
+static void thread_signal_handler(int signum) {
+  pthread_exit(0);
+}
+#endif
+
 void* clic_thread_func(void *arg) {
 #ifndef _WIN32
   sigset_t set;
   sigfillset(&set);
+
+#ifdef __TERMUX__
+  sigdelset(&set, SIGUSR1);
+#endif
+
   int ret = pthread_sigmask(SIG_SETMASK, &set, NULL);
   /* We chicken out if the signals cannot be blocked. */
   if (ret) return NULL;
 #endif
 
+#ifndef __TERMUX__
   int old;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
+#else
+  struct sigaction actions = { 0 };
+  sigfillset(&actions.sa_mask);
+  actions.sa_flags = 0;
+  actions.sa_handler = thread_signal_handler;
+  sigaction(SIGUSR1, &actions, NULL);
+#endif
 
   while (1) {
     /* TODO: handle signals */
@@ -100,7 +116,11 @@ int cli__kill_thread(void) {
 
   /* This should not happen, but be extra careful */
   if (tick_thread) {
+#ifndef __TERMUX__
     ret = pthread_cancel(tick_thread);
+#else
+    ret = pthread_kill(tick_thread, SIGUSR1);
+#endif
     if (ret) {
       /* If we could not cancel, then accept the memory leak.
 	 We do not try to free the R object, because the tick
