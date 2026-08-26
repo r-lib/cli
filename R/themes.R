@@ -152,6 +152,14 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       "text-exdent" = 2,
       before = function(x) paste0(col_cyan(symbol$info), " ")
     ),
+    ".bullets .bullet-?" = list(
+      "text-exdent" = 2,
+      before = function(x) paste0(col_red(symbol$fancy_question_mark), " ")
+    ),
+    ".bullets .bullet-[]" = list(
+      "text-exdent" = 2,
+      before = function(x) paste0(col_red(symbol$checkbox_off), " ")
+    ),
     ".bullets .bullet-*" = list(
       "text-exdent" = 2,
       before = function(x) paste0(col_cyan(symbol$bullet), " ")
