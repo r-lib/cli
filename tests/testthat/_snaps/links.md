@@ -1127,3 +1127,135 @@
     Message
       ]8;;aaa-pkgdown::accessibility-zzzpkgdown::accessibility]8;;
 
+# {.run} and {.href} with fs_path [plain-none]
+
+    Code
+      cli_text("{.run ['hi mom']({fs::path(path)})}")
+    Message
+      `'hi mom'`
+    Code
+      cli_text("{.run {fs::path(path)}}")
+    Message
+      ''`~/Desktop/foo.R`''
+
+---
+
+    Code
+      cli_text("{.href [link]({fs::path(path)})}")
+    Message
+      link (<'~/Desktop/foo.R'>)
+    Code
+      cli_text("{.href {fs::path(path)}}")
+    Message
+      ''<~/Desktop/foo.R>''
+
+---
+
+    Code
+      cli_text("{.file {fs::path(path)}}")
+    Message
+      '~/Desktop/foo.R'
+    Code
+      cli_text("{.path {fs::path(path)}}")
+    Message
+      '~/Desktop/foo.R'
+
+# {.run} and {.href} with fs_path [fancy-none]
+
+    Code
+      cli_text("{.run ['hi mom']({fs::path(path)})}")
+    Message
+      `'hi mom'`
+    Code
+      cli_text("{.run {fs::path(path)}}")
+    Message
+      '[34m'`~/Desktop/foo.R`'[39m'
+
+---
+
+    Code
+      cli_text("{.href [link]({fs::path(path)})}")
+    Message
+      link ([3m[34m<~/Desktop/foo.R>[39m[23m)
+    Code
+      cli_text("{.href {fs::path(path)}}")
+    Message
+      '[34m'[3m<~/Desktop/foo.R>[23m'[39m'
+
+---
+
+    Code
+      cli_text("{.file {fs::path(path)}}")
+    Message
+      [34m~/Desktop/foo.R[39m
+    Code
+      cli_text("{.path {fs::path(path)}}")
+    Message
+      [34m~/Desktop/foo.R[39m
+
+# {.run} and {.href} with fs_path [plain-all]
+
+    Code
+      cli_text("{.run ['hi mom']({fs::path(path)})}")
+    Message
+      ]8;;x-r-run:'~/Desktop/foo.R''hi mom']8;;
+    Code
+      cli_text("{.run {fs::path(path)}}")
+    Message
+      ']8;;x-r-run:~/Desktop/foo.R~/Desktop/foo.R]8;;'
+
+---
+
+    Code
+      cli_text("{.href [link]({fs::path(path)})}")
+    Message
+      ]8;;'~/Desktop/foo.R'link]8;;
+    Code
+      cli_text("{.href {fs::path(path)}}")
+    Message
+      ''<]8;;~/Desktop/foo.R~/Desktop/foo.R]8;;>''
+
+---
+
+    Code
+      cli_text("{.file {fs::path(path)}}")
+    Message
+      ']8;;file:///Users/rundel/Desktop/foo.R~/Desktop/foo.R]8;;'
+    Code
+      cli_text("{.path {fs::path(path)}}")
+    Message
+      ']8;;file:///Users/rundel/Desktop/foo.R~/Desktop/foo.R]8;;'
+
+# {.run} and {.href} with fs_path [fancy-all]
+
+    Code
+      cli_text("{.run ['hi mom']({fs::path(path)})}")
+    Message
+      ]8;;x-r-run:~/Desktop/foo.R'hi mom']8;;
+    Code
+      cli_text("{.run {fs::path(path)}}")
+    Message
+      ]8;;x-r-run:~/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
+
+---
+
+    Code
+      cli_text("{.href [link]({fs::path(path)})}")
+    Message
+      ]8;;~/Desktop/foo.Rlink]8;;
+    Code
+      cli_text("{.href {fs::path(path)}}")
+    Message
+      '[34m'[3m<]8;;~/Desktop/foo.R~/Desktop/foo.R]8;;>[23m'[39m'
+
+---
+
+    Code
+      cli_text("{.file {fs::path(path)}}")
+    Message
+      ]8;;file:///Users/rundel/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
+    Code
+      cli_text("{.path {fs::path(path)}}")
+    Message
+      ]8;;file:///Users/rundel/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
+
