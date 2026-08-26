@@ -175,3 +175,12 @@ test_that("Edge cases for pluralize() (#701)", {
     print(pluralize("Will remove {?no/the/the} {-Inf} package{?s}."))
   })
 })
+
+test_that("issue 773", {
+  expect_snapshot({
+    # Should be pluralized
+    print(pluralize("{.Machine$integer.max} value{?s}"))
+    print(pluralize("{.Machine$integer.max + 1} value{?s}"))
+    print(pluralize("{-1L * .Machine$integer.max - 1} value{?s}"))
+  })
+})
