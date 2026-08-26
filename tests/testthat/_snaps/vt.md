@@ -54,10 +54,10 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1                   12 FALSE  FALSE     FALSE         FALSE
-      2      1         1                   34 FALSE  FALSE     FALSE         FALSE
-      3      1         1                   56  TRUE  FALSE     FALSE         FALSE
-      4      1         1                   78  TRUE  FALSE     FALSE         FALSE
-      5      1         1         90           FALSE  FALSE     FALSE         FALSE
+      2      1         2                   34 FALSE  FALSE     FALSE         FALSE
+      3      1         3                   56  TRUE  FALSE     FALSE         FALSE
+      4      1         4                   78  TRUE  FALSE     FALSE         FALSE
+      5      1         5         90           FALSE  FALSE     FALSE         FALSE
       6      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
@@ -74,7 +74,7 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1             I'm bold  TRUE  FALSE     FALSE         FALSE
-      2      1         1                      FALSE  FALSE     FALSE         FALSE
+      2      1         2                      FALSE  FALSE     FALSE         FALSE
       3      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
@@ -88,7 +88,7 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1           I'm italic FALSE   TRUE     FALSE         FALSE
-      2      1         1                      FALSE  FALSE     FALSE         FALSE
+      2      1         2                      FALSE  FALSE     FALSE         FALSE
       3      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
@@ -102,7 +102,7 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1       I'm underlined FALSE  FALSE      TRUE         FALSE
-      2      1         1                      FALSE  FALSE     FALSE         FALSE
+      2      1         2                      FALSE  FALSE     FALSE         FALSE
       3      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
@@ -116,7 +116,7 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1    I'm strikethrough FALSE  FALSE     FALSE          TRUE
-      2      1         1                      FALSE  FALSE     FALSE         FALSE
+      2      1         2                      FALSE  FALSE     FALSE         FALSE
       3      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
@@ -130,7 +130,7 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1          I'm inverse FALSE  FALSE     FALSE         FALSE
-      2      1         1                      FALSE  FALSE     FALSE         FALSE
+      2      1         2                      FALSE  FALSE     FALSE         FALSE
       3      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE    TRUE  <NA>             <NA> <NA>        <NA>
@@ -145,8 +145,8 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1                 pre  FALSE  FALSE     FALSE         FALSE
-      2      1         1                 text FALSE  FALSE     FALSE         FALSE
-      3      1         1          post        FALSE  FALSE     FALSE         FALSE
+      2      1         2                 text FALSE  FALSE     FALSE         FALSE
+      3      1         3          post        FALSE  FALSE     FALSE         FALSE
       4      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
@@ -162,8 +162,8 @@
     Output
         lineno segmentno              segment  bold italic underline strikethrough
       1      1         1                 pre  FALSE  FALSE     FALSE         FALSE
-      2      1         1                 text FALSE  FALSE     FALSE         FALSE
-      3      1         1          post        FALSE  FALSE     FALSE         FALSE
+      2      1         2                 text FALSE  FALSE     FALSE         FALSE
+      3      1         3          post        FALSE  FALSE     FALSE         FALSE
       4      2         1                      FALSE  FALSE     FALSE         FALSE
         blink inverse color background_color link link_params
       1 FALSE   FALSE  <NA>             <NA> <NA>        <NA>
