@@ -7,7 +7,10 @@
 #endif
 
 #include <time.h>
-#ifndef _WIN32
+#ifdef _WIN32
+#include <errno.h>
+#include <windows.h>
+#else
 #include <signal.h>
 #endif
 
@@ -20,14 +23,24 @@ double cli_speed_time = 1.0;
 volatile int cli__reset = 1;
 static int unloaded = 0;
 
+#ifdef _WIN32
+static HANDLE tick_stop_event = NULL;
+#endif
+
 void* clic_thread_func(void *arg) {
-#ifndef _WIN32
+#ifdef _WIN32
+  DWORD timeout = cli__tick_ts.tv_sec * 1000 + cli__tick_ts.tv_nsec / 1000000;
+  /* Wake immediately on shutdown, even if the next tick is far away. */
+  while (WaitForSingleObject(tick_stop_event, timeout) == WAIT_TIMEOUT) {
+    if (cli__reset) cli__timer_flag = 1;
+  }
+  return NULL;
+#else
   sigset_t set;
   sigfillset(&set);
   int ret = pthread_sigmask(SIG_SETMASK, &set, NULL);
   /* We chicken out if the signals cannot be blocked. */
   if (ret) return NULL;
-#endif
 
   int old;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old);
@@ -37,6 +50,7 @@ void* clic_thread_func(void *arg) {
     nanosleep(&cli__tick_ts, NULL);
     if (cli__reset) cli__timer_flag = 1;
   }
+#endif
 }
 
 int cli__start_thread(SEXP ticktime, SEXP speedtime) {
@@ -51,16 +65,24 @@ int cli__start_thread(SEXP ticktime, SEXP speedtime) {
   cli__reset = 0;
 #else
   if (! getenv("CLI_NO_THREAD")) {
+#ifdef _WIN32
+    tick_stop_event = CreateEvent(NULL, TRUE, FALSE, NULL);
+    if (!tick_stop_event) return EAGAIN;
+#endif
     ret = pthread_create(
       & tick_thread,
       /* attr = */ 0,
       clic_thread_func,
       /* arg = */ NULL
     );
-    /* detaching makes it easier to clean up resources
-     * On Windows this causes issues and the thread cannot
-     * be cancelled, so we don't do it there. */
-#ifndef _WIN32
+#ifdef _WIN32
+    if (ret) {
+      CloseHandle(tick_stop_event);
+      tick_stop_event = NULL;
+      tick_thread = 0;
+    }
+#else
+    /* Windows keeps the thread joinable so cleanup can wait for it. */
     if (!ret) pthread_detach(tick_thread);
 #endif
   } else {
@@ -86,17 +108,23 @@ int cli__kill_thread(void) {
   int ret = 0;
 
 #ifdef _WIN32
+  if (!tick_thread) return 0;
 
-  // On ARM64 builds of Windows (when running through x86 emulation),
-  // cancelling the running tick thread seems to cause issues during
-  // process shutdown. Avoid the issue by just neglecting to cancel
-  // the thread altogether.
-  const char* arch = getenv("PROCESSOR_ARCHITECTURE");
-  if (!strcmp(arch, "ARM64")) {
-    return 0;
+  /* Do not asynchronously cancel a thread inside the Windows runtime.
+   * Let it return normally, and wait before releasing its resources. */
+  if (!SetEvent(tick_stop_event)) {
+    ret = EINVAL;
+  } else {
+    ret = pthread_join(tick_thread, NULL);
   }
-
-#endif
+  if (ret) {
+    warning("Could not stop cli thread");
+    return ret;
+  }
+  CloseHandle(tick_stop_event);
+  tick_stop_event = NULL;
+  tick_thread = 0;
+#else
 
   /* This should not happen, but be extra careful */
   if (tick_thread) {
@@ -111,6 +139,7 @@ int cli__kill_thread(void) {
       return ret;                             // __NO_COVERAGE__
     }
   }
+#endif
 
   return ret;
 }
@@ -122,7 +151,7 @@ int cli__kill_thread(void) {
 SEXP clic_stop_thread(void) {
   if (unloaded) return R_NilValue;
   int ret = 1;
-#if defined(__clang__) && defined(__has_feature)
+#if defined(__clang__) && defined(__has_feature) && !defined(_WIN32)
 # if __has_feature(address_sanitizer)
   /* clang in ASAN, do nothing */
 # else

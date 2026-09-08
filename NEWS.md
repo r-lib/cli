@@ -1,5 +1,9 @@
 # cli (development version)
 
+* On Windows, cli now wakes and joins its timer thread during cleanup,
+  instead of cancelling it asynchronously. Cleanup also works when
+  `PROCESSOR_ARCHITECTURE` is unset (#375, #494).
+
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a
     key press.
