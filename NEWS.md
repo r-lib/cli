@@ -1,6 +1,6 @@
 # cli (development version)
 
-* `cli_progress_bar()` has a new argument `quiet`. If FALSE, then progress bar will be suppressed.
+* `cli_progress_bar()` has a new argument `quiet`. If TRUE, then progress bar will be suppressed.
 
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a

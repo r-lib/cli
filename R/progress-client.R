@@ -362,7 +362,7 @@ cli_progress_bar <- function(
   bar$extra <- extra
   clienv$progress[[id]] <- bar
   if (current) {
-    if (!is.null(clienv$progress_ids[[envkey]]) && quiet == FALSE) {
+    if (!is.null(clienv$progress_ids[[envkey]]) && !quiet) {
       cli_progress_done(
         clienv$progress_ids[[envkey]],
         .envir = .envir,
@@ -372,7 +372,7 @@ cli_progress_bar <- function(
     clienv$progress_ids[[envkey]] <- id
   }
 
-  if( quiet == FALSE){
+  if(!quiet){
     if (.auto_close && envkey != clienv$globalenv) {
       defer(
         cli_progress_done(id = id, .envir = .envir, result = "auto"),
