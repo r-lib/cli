@@ -148,7 +148,7 @@ convert relative paths, and paths starting with \code{~} to absolute path.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("... edit your \{.file ~/.Rprofile\} file.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> ... edit your <span style="color: #268BD2;"><a href="file:///Users/gaborcsardi/.Rprofile">~/.Rprofile</a></span> file.                                                 
+#> ... edit your <span style="color: #268BD2;"><a href="file:///Users/hadleywickham/.Rprofile">~/.Rprofile</a></span> file.                                                 
 </pre></div>
 }}
 
@@ -161,7 +161,7 @@ you can use \code{.href} with a \verb{file:} URL.
 cli_text("... edit your \{.href [R profile](file://\{prof\})\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> ... edit your <a href="file:///Users/gaborcsardi/.Rprofile">R profile</a>.                                                        
+#> ... edit your <a href="file:///Users/hadleywickham/.Rprofile">R profile</a>.                                                        
 </pre></div>
 }}
 
@@ -177,7 +177,7 @@ another \code{:}.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{cli_text("... see line 5 in \{.file ~/.Rprofile:5\}.")
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> ... see line 5 in <span style="color: #268BD2;"><a href="file:///Users/gaborcsardi/.Rprofile">~/.Rprofile:5</a></span>.                                                
+#> ... see line 5 in <span style="color: #268BD2;"><a href="file:///Users/hadleywickham/.Rprofile">~/.Rprofile:5</a></span>.                                                
 </pre></div>
 }}
 
@@ -202,7 +202,7 @@ if hyperlinks are not available. This will be improved in the future:
 \})
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> ... edit your R profile (<span style="font-style: italic;color: #268BD2;">&lt;file:///Users/gaborcsardi/.Rprofile&gt;</span>).                
+#> ... edit your R profile (<span style="font-style: italic;color: #268BD2;">&lt;file:///Users/hadleywickham/.Rprofile&gt;</span>).              
 </pre></div>
 }}
 

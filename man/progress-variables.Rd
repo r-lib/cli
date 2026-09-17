@@ -223,7 +223,7 @@ of \code{cli_progress_bar()} and \code{cli_progress_update()}.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Cleaning cache for user 'gaborcsardi': 161 MB                                   
+#> Cleaning cache for user 'hadleywickham': 161 MB                                 
 </pre></div>
 }}
 
@@ -243,7 +243,7 @@ This is useful for debugging progress bars.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Progress bar 'cli-40403-1860' is at 64                                          
+#> Progress bar 'cli-75901-1818' is at 64                                          
 </pre></div>
 }}
 
@@ -382,7 +382,7 @@ A time stamp for the current time in ISO 8601 format.
   format = "\{pb_timestamp\} \{pb_current\} (\{pb_rate\})"
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> 2025-04-22T12:27:16+00:00 125 (25/s)                                            
+#> 2026-09-17T13:59:56+00:00 125 (25/s)                                            
 </pre></div>
 }}
 
