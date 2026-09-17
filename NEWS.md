@@ -1,5 +1,9 @@
 # cli (development version)
 
+* Interpolating an `fs_path` (or any object mapped to the `file` style via
+  the theme's `class-map`) into the target of a link, e.g.
+  `{.run [text]({path})}`, no longer corrupts the link's URL (#683).
+
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a
     key press.

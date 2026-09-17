@@ -191,10 +191,16 @@ inline_transformer <- function(code, envir) {
       id <- NULL
     }
 
+    # Don't apply implicit `class-map` styling (e.g. `fs_path` -> `file`)
+    # inside URL-building link containers
+    in_link <- any(vlapply(app$doc, function(x) {
+      any(x$class %in% c("run", "href", "help", "topic", "vignette"))
+    }))
+
     rcls <- class(val)
     stls <- app$get_current_style()$`class-map`
     cls <- na.omit(match(rcls, names(stls)))[1]
-    if (!is.na(cls)) {
+    if (!is.na(cls) && !in_link) {
       class <- c(class, stls[[cls]])
     }
 

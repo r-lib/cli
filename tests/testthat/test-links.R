@@ -236,6 +236,34 @@ test_that_cli(configs = "plain", links = "all", ".run with custom format", {
   })
 })
 
+test_that("fs_path is not auto-linked inside a link target (#683)", {
+  withr::local_options(
+    cli.hyperlink = TRUE,
+    cli.hyperlink_run = TRUE
+  )
+
+  # fs_path values must not be implicitly styled as files when they are
+  # substituted into a link target, as the embedded file link would
+  # corrupt the target URL.
+  path <- structure("~/foo.R", class = c("fs_path", "character"))
+  chr <- "~/foo.R"
+
+  # the target should be identical to the plain-character case
+  expect_equal(
+    format_inline("{.run ['hi mom']({path})}"),
+    format_inline("{.run ['hi mom']({chr})}")
+  )
+  expect_equal(
+    format_inline("{.run ['file.R'](pkgdown::preview_page('{path}'))}"),
+    format_inline("{.run ['file.R'](pkgdown::preview_page('{chr}'))}")
+  )
+
+  # and the target must not contain a nested (file) hyperlink
+  out <- format_inline("{.run ['hi mom']({path})}")
+  expect_match(out, "x-r-run:~/foo.R", fixed = TRUE)
+  expect_false(grepl("file://", out, fixed = TRUE))
+})
+
 # -- {.topic} -------------------------------------------------------------
 
 test_that_cli(configs = "plain", links = c("all", "none"), "{.topic}", {
