@@ -207,16 +207,16 @@ test_that("cli_progress_bar handles Inf like NA", {
 })
 
 test_that("no progress bar when quiet = TRUE", {
-    withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
+
     fun <- function() {
       bar <- cli_progress_bar(
         name = "name",
-        status = "status",
-        format = "{cli::pb_spin} {cli::pb_name}{cli::pb_status}{cli::pb_current}",
         quiet = TRUE
       )
-      cli_progress_update(force = TRUE)
-      cli_progress_done(id = bar)
+      for (i in 1:100) {
+        Sys.sleep(5/100)
+        cli_progress_update(id = bar)
+      }
     }
 
     # No messages to display
