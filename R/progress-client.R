@@ -282,6 +282,8 @@
 #' @param current Whether to use this progress bar as the current progress
 #'   bar of the calling function. See more at 'The current progress bar'
 #'   below.
+#' @param quiet if `TRUE` suppresses output from this function. Defaults to the `cli.disable_progress` option, or
+#'   `TRUE` if unset.
 #' @param auto_terminate Whether to terminate the progress bar if the
 #'   number of current units reaches the number of total units.
 #' @param extra Extra data to add to the progress bar. This can be
@@ -320,6 +322,7 @@ cli_progress_bar <- function(
   format_failed = NULL,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
+  quiet = getOption("cli.disable_progress", FALSE),
   auto_terminate = type != "download",
   extra = NULL,
   .auto_close = TRUE,
@@ -359,7 +362,7 @@ cli_progress_bar <- function(
   bar$extra <- extra
   clienv$progress[[id]] <- bar
   if (current) {
-    if (!is.null(clienv$progress_ids[[envkey]])) {
+    if (!is.null(clienv$progress_ids[[envkey]]) && quiet == FALSE) {
       cli_progress_done(
         clienv$progress_ids[[envkey]],
         .envir = .envir,
@@ -369,19 +372,21 @@ cli_progress_bar <- function(
     clienv$progress_ids[[envkey]] <- id
   }
 
-  if (.auto_close && envkey != clienv$globalenv) {
-    defer(
-      cli_progress_done(id = id, .envir = .envir, result = "auto"),
-      envir = .envir
-    )
-  }
+  if( quiet == FALSE){
+    if (.auto_close && envkey != clienv$globalenv) {
+      defer(
+        cli_progress_done(id = id, .envir = .envir, result = "auto"),
+        envir = .envir
+      )
+    }
 
-  opt <- options(cli__pb = bar)
-  on.exit(options(opt), add = TRUE)
+    opt <- options(cli__pb = bar)
+    on.exit(options(opt), add = TRUE)
 
-  bar$handlers <- cli_progress_select_handlers(bar, .envir)
-  for (h in bar$handlers) {
-    if ("create" %in% names(h)) h$create(bar, .envir = .envir)
+    bar$handlers <- cli_progress_select_handlers(bar, .envir)
+    for (h in bar$handlers) {
+      if ("create" %in% names(h)) h$create(bar, .envir = .envir)
+    }
   }
 
   invisible(id)
