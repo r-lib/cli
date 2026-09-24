@@ -336,6 +336,7 @@ test_that_cli(
   "{.run} and {.href} with fs_path",
   {
     skip_if_not_installed("fs")
+    withr::local_envvar(HOME = "/home/user")
 
     path <- "~/Desktop/foo.R"
 
