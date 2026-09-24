@@ -205,3 +205,21 @@ test_that("cli_progress_bar handles Inf like NA", {
     capture_cli_messages(fun(total = Inf))
   )
 })
+
+test_that("no progress bar when quiet = TRUE", {
+
+    fun <- function() {
+      bar <- cli_progress_bar(
+        name = "name",
+        quiet = TRUE
+      )
+      for (i in 1:100) {
+        Sys.sleep(5/100)
+        cli_progress_update(id = bar)
+      }
+    }
+
+    # No messages to display
+    expect_snapshot(capture_cli_messages(fun()))
+  })
+
