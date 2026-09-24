@@ -1136,18 +1136,18 @@
     Code
       cli_text("{.run {fs::path(path)}}")
     Message
-      ''`~/Desktop/foo.R`''
+      `~/Desktop/foo.R`
 
 ---
 
     Code
       cli_text("{.href [link]({fs::path(path)})}")
     Message
-      link (<'~/Desktop/foo.R'>)
+      link (<~/Desktop/foo.R>)
     Code
       cli_text("{.href {fs::path(path)}}")
     Message
-      ''<~/Desktop/foo.R>''
+      <~/Desktop/foo.R>
 
 ---
 
@@ -1169,7 +1169,7 @@
     Code
       cli_text("{.run {fs::path(path)}}")
     Message
-      '[34m'`~/Desktop/foo.R`'[39m'
+      `~/Desktop/foo.R`
 
 ---
 
@@ -1180,7 +1180,7 @@
     Code
       cli_text("{.href {fs::path(path)}}")
     Message
-      '[34m'[3m<~/Desktop/foo.R>[23m'[39m'
+      [3m[34m<~/Desktop/foo.R>[39m[23m
 
 ---
 
@@ -1198,22 +1198,22 @@
     Code
       cli_text("{.run ['hi mom']({fs::path(path)})}")
     Message
-      ]8;;x-r-run:'~/Desktop/foo.R''hi mom']8;;
+      ]8;;x-r-run:~/Desktop/foo.R'hi mom']8;;
     Code
       cli_text("{.run {fs::path(path)}}")
     Message
-      ']8;;x-r-run:~/Desktop/foo.R~/Desktop/foo.R]8;;'
+      ]8;;x-r-run:~/Desktop/foo.R~/Desktop/foo.R]8;;
 
 ---
 
     Code
       cli_text("{.href [link]({fs::path(path)})}")
     Message
-      ]8;;'~/Desktop/foo.R'link]8;;
+      ]8;;~/Desktop/foo.Rlink]8;;
     Code
       cli_text("{.href {fs::path(path)}}")
     Message
-      ''<]8;;~/Desktop/foo.R~/Desktop/foo.R]8;;>''
+      <]8;;~/Desktop/foo.R~/Desktop/foo.R]8;;>
 
 ---
 
@@ -1235,7 +1235,7 @@
     Code
       cli_text("{.run {fs::path(path)}}")
     Message
-      ]8;;x-r-run:~/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
+      ]8;;x-r-run:~/Desktop/foo.R~/Desktop/foo.R]8;;
 
 ---
 
@@ -1246,7 +1246,7 @@
     Code
       cli_text("{.href {fs::path(path)}}")
     Message
-      '[34m'[3m<]8;;~/Desktop/foo.R~/Desktop/foo.R]8;;>[23m'[39m'
+      [3m[34m<]8;;~/Desktop/foo.R~/Desktop/foo.R]8;;>[39m[23m
 
 ---
 
