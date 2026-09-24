@@ -49,6 +49,15 @@
       [3] "\n"                           "\ri Second step\033[K\r"     
       [5] "\rv Second step [1s]\033[K\r" "\n"                          
 
+# cli_progress_step ignores clear
+
+    Code
+      msgs
+    Output
+      [1] "\ri First step\033[K\r"       "\rv First step [1s]\033[K\r" 
+      [3] "\n"                           "\ri Second step\033[K\r"     
+      [5] "\rv Second step [1s]\033[K\r" "\n"                          
+
 # cli_progress_step error
 
     Code
