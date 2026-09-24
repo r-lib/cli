@@ -282,6 +282,24 @@ cli_text("Hey {.var x} has class {.cls {class(x)}}")
 
     #> Hey `x` has class <POSIXct/POSIXt>                                              
 
+You can also use
+[`cli_vec()`](https://cli.r-lib.org/dev/reference/cli_vec.md)’s
+`style =` argument to customize inline separators to be passed into
+[`cli_text()`](https://cli.r-lib.org/dev/reference/cli_text.md):
+
+``` r
+
+v <- cli_vec(
+  c("foo", "bar", "foobar", "more", "nonsensical", "words"),
+  style = list("vec-sep" = " & ", "vec-last" = " !!!! ")
+)
+
+cli_text("My list: {v}.")
+```
+
+
+    #> My list: foo & bar & foobar & more & nonsensical !!!! words.                    
+
 ### Non-breaking spaces
 
 Use `\u00a0` to create a non-breaking space. E.g. in here we insert some
@@ -571,8 +589,8 @@ builtin_theme()$h1
     #> $fmt                                                                            
     #> function (x)                                                                    
     #> cli::rule(x, line_col = "cyan")                                                 
-    #> <bytecode: 0x55bb91cf3030>                                                      
-    #> <environment: 0x55bb9187aad0>                                                   
+    #> <bytecode: 0x564213f95b70>                                                      
+    #> <environment: 0x564213c8cb38>                                                   
     #>                                                                                 
 
 See also [`?cli::themes`](https://cli.r-lib.org/dev/reference/themes.md)
@@ -707,8 +725,8 @@ invisible(rs$close())
 ```
 
 
-    #> This is sub-process 16696 from callr                                            
-    #> [1] 16696                                                                       
+    #> This is sub-process 16335 from callr                                            
+    #> [1] 16335                                                                       
 
 ## Utility functions
 
