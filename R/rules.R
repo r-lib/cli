@@ -1,6 +1,8 @@
 make_line <- function(x, char = symbol$line, col = NULL) {
   ## Easiest to handle this specially
-  if (x <= 0) return("")
+  if (x <= 0) {
+    return("")
+  }
 
   cw <- ansi_nchar(char, "width")
 
@@ -240,7 +242,9 @@ rule_left_right <- function(o) {
   ncr <- ansi_nchar(o$right, "width")
 
   ## -- (ncl) -- (ncr) --
-  if (ncl + ncr + 10 > o$width) return(rule_left(o))
+  if (ncl + ncr + 10 > o$width) {
+    return(rule_left(o))
+  }
 
   paste0(
     make_line(2, o$line, o$line_col),

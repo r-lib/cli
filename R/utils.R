@@ -25,3 +25,6 @@ isFALSE <- function(x) {
 get_ppid <- function() {
   .Call(clic_getppid)
 }
+
+true_values <- c("true", "on", "yes", "y", "t", "1")
+false_values <- c("false", "off", "no", "n", "f", "0")

@@ -36,8 +36,12 @@ NULL
 #' ```
 
 cli__pb_bar <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
-  if (is.na(pb$total)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
+  if (is.na(pb$total)) {
+    return("")
+  }
   structure(
     list(current = pb$current, total = pb$total),
     class = "cli-progress-bar"
@@ -65,7 +69,9 @@ cli__pb_bar <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_current <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   pb$current
 }
 
@@ -90,7 +96,9 @@ cli__pb_current <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_current_bytes <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   format_bytes$pretty_bytes(pb$current, style = "6")
 }
 
@@ -117,7 +125,9 @@ cli__pb_current_bytes <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_elapsed <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   secs <- (.Call(clic_get_time) - pb$start) * clienv$speed_time
   format_time$pretty_sec(secs)
 }
@@ -143,7 +153,9 @@ cli__pb_elapsed <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_elapsed_clock <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   s <- (.Call(clic_get_time) - pb$start) * clienv$speed_time
   hours <- floor(s / 3600)
   minutes <- floor((s / 60) %% 60)
@@ -178,7 +190,9 @@ cli__pb_elapsed_clock <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_elapsed_raw <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   (.Call(clic_get_time) - pb$start) * clienv$speed_time
 }
 
@@ -204,7 +218,9 @@ cli__pb_elapsed_raw <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_eta <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   eta <- cli__pb_eta_raw(pb)
   if (is.na(eta)) {
     "?"
@@ -236,10 +252,18 @@ cli__pb_eta <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
-  if (is.na(pb$total)) return(NA_real_)
-  if (pb$current == pb$total) return(as.difftime(0, units = "secs"))
-  if (pb$current == 0L) return(NA_real_)
+  if (is.null(pb)) {
+    return("")
+  }
+  if (is.na(pb$total)) {
+    return(NA_real_)
+  }
+  if (pb$current == pb$total) {
+    return(as.difftime(0, units = "secs"))
+  }
+  if (pb$current == 0L) {
+    return(NA_real_)
+  }
   elapsed <- (.Call(clic_get_time) - pb$start) * clienv$speed_time
   as.difftime(elapsed * (pb$total / pb$current - 1.0), units = "secs")
 }
@@ -267,7 +291,9 @@ cli__pb_eta_raw <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_eta_str <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   eta <- cli__pb_eta(pb)
   if (eta != "?") paste0("ETA: ", eta) else ""
 }
@@ -295,7 +321,9 @@ cli__pb_eta_str <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_extra <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   pb$extra
 }
 
@@ -324,7 +352,9 @@ cli__pb_extra <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_id <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   pb$id
 }
 
@@ -353,7 +383,9 @@ cli__pb_id <- function(pb = getOption("cli__pb")) {
 #'
 
 cli__pb_name <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   if (!is.null(pb$name)) {
     paste0(pb$name, " ")
   } else {
@@ -384,7 +416,9 @@ cli__pb_name <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_percent <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   paste0(format(round(pb$current / pb$total * 100), width = 3), "%")
 }
 
@@ -400,7 +434,9 @@ cli__pb_percent <- function(pb = getOption("cli__pb")) {
 #' aggregating logging output or progress results from multiple processes.
 
 cli__pb_pid <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   pb$pid %||% Sys.getpid()
 }
 
@@ -425,9 +461,13 @@ cli__pb_pid <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_rate <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   rate <- cli__pb_rate_raw(pb)
-  if (is.nan(rate) || is.na(rate) || is.infinite(rate)) return("?/s")
+  if (is.nan(rate) || is.na(rate) || is.infinite(rate)) {
+    return("?/s")
+  }
   paste0(format(rate, digits = 2), "/s")
 }
 
@@ -452,7 +492,9 @@ cli__pb_rate <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_rate_raw <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   elapsed <- cli__pb_elapsed_raw(pb)
   pb$current / elapsed
 }
@@ -481,7 +523,9 @@ cli__pb_rate_raw <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_rate_bytes <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   rate <- cli__pb_rate_raw(pb)
   paste0(
     format_bytes$pretty_bytes(rate, style = "6"),
@@ -510,7 +554,9 @@ cli__pb_rate_bytes <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_spin <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
 
   pb$spinner <- pb$spinner %||% get_spinner()
   nx <- pb$tick %% length(pb$spinner$frames) + 1L
@@ -537,7 +583,9 @@ cli__pb_spin <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_status <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   if (!is.null(pb$status)) {
     paste0(pb$status, " ")
   } else {
@@ -566,7 +614,9 @@ cli__pb_status <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_timestamp <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   st <- Sys.time()
   if (clienv$speed_time != 1.0) {
     st <- clienv$load_time + (st - clienv$load_time) * clienv$speed_time
@@ -596,7 +646,9 @@ cli__pb_timestamp <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_total <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   pb$total
 }
 
@@ -625,7 +677,9 @@ cli__pb_total <- function(pb = getOption("cli__pb")) {
 #' ```
 
 cli__pb_total_bytes <- function(pb = getOption("cli__pb")) {
-  if (is.null(pb)) return("")
+  if (is.null(pb)) {
+    return("")
+  }
   format_bytes$pretty_bytes(pb$total, style = "6")
 }
 
@@ -645,7 +699,9 @@ var_helper2 <- function(expr, clear = TRUE, delay = 0, ...) {
   bar$start <- bar$start - delay
   bar$clear <- clear
   args <- list(...)
-  for (i in seq_along(args)) bar[[names(args)[i]]] <- args[[i]]
+  for (i in seq_along(args)) {
+    bar[[names(args)[i]]] <- args[[i]]
+  }
   cli_progress_update(force = TRUE, id = id)
   cat("\n")
   suppressMessages(cli_progress_done(id = id))

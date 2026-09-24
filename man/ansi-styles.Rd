@@ -265,9 +265,9 @@ style_italic(col_red(paste(
 )))
 }
 \seealso{
-Other ANSI styling: 
-\code{\link{combine_ansi_styles}()},
-\code{\link{make_ansi_style}()},
-\code{\link{num_ansi_colors}()}
+Other ANSI styling:
+\code{\link[=combine_ansi_styles]{combine_ansi_styles()}},
+\code{\link[=make_ansi_style]{make_ansi_style()}},
+\code{\link[=num_ansi_colors]{num_ansi_colors()}}
 }
 \concept{ANSI styling}

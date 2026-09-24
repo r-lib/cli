@@ -35,7 +35,9 @@ progress_c_update <- function(pb, auto_done = TRUE) {
 }
 
 progress_c_done <- function(pb, caller = NULL) {
-  if (isTRUE(pb$done)) return()
+  if (isTRUE(pb$done)) {
+    return()
+  }
 
   caller <- caller %||% pb$caller %||% sys.frame(sys.nframe() - 1L)
 
@@ -49,8 +51,12 @@ progress_c_done <- function(pb, caller = NULL) {
     }
   }
 
-  if (!is.null(pb$id)) clienv$progress[[pb$id]] <- NULL
-  if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
+  if (!is.null(pb$id)) {
+    clienv$progress[[pb$id]] <- NULL
+  }
+  if (!is.null(pb$envkey)) {
+    clienv$progress_ids[[pb$envkey]] <- NULL
+  }
 
   pb$done <- TRUE
 

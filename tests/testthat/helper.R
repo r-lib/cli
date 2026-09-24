@@ -80,8 +80,8 @@ test_style <- function() {
 }
 
 fix_times <- function(out) {
-  out <- sub("[(][ ]*[.0-9]+ [Mk]B/s[)]", "(8.5 MB/s)", out)
-  out <- sub("[(][.0-9]+/s[)]", "(100/s)", out)
+  out <- sub("[(][ ]*[.0-9eE+-]+ [Mk]B/s[)]", "(8.5 MB/s)", out)
+  out <- sub("[(][.0-9eE+-]+/s[)]", "(100/s)", out)
   out <- sub(" [.0-9]+(ms|s|m)", " 3ms", out)
   out <- sub("ETA:[ ]*[.0-9]+m?s", "ETA:  1s", out)
   out <- gsub("\\[[.0-9]+m?s\\]", "[1s]", out)
@@ -177,7 +177,9 @@ test_package_root <- function() {
     error = function(e) NULL
   )
 
-  if (!is.null(x)) return(x)
+  if (!is.null(x)) {
+    return(x)
+  }
 
   pkg <- testthat::testing_package()
   x <- tryCatch(
@@ -187,7 +189,9 @@ test_package_root <- function() {
     error = function(e) NULL
   )
 
-  if (!is.null(x)) return(x)
+  if (!is.null(x)) {
+    return(x)
+  }
 
   stop("Cannot find package root")
 }
@@ -219,8 +223,9 @@ r_pty <- function(.envir = parent.frame()) {
   ) {
     skip("fails on CI in covr")
   }
-  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux"))
+  if (!Sys.info()[["sysname"]] %in% c("Darwin", "Linux")) {
     skip("Needs Linux or macOS")
+  }
 
   r <- file.path(R.home("bin"), "R")
   p <- processx::process$new(
@@ -246,4 +251,17 @@ r_pty <- function(.envir = parent.frame()) {
 
 transform_env <- function(x) {
   sub("environment: 0x[0-9a-f]+", "environment: <addr>", x)
+}
+
+transform_column_number <- function(x) {
+  sub("([.]R:[0-9]+:)[0-9]+", "\\1<col>", x)
+}
+
+skip_if_no_srcrefs <- function() {
+  if (
+    !asNamespace("pkgload")$is_dev_package("cli") &&
+      Sys.getenv("R_KEEP_PKG_SOURCE") != "yes"
+  ) {
+    skip("no srcrefs")
+  }
 }

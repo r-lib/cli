@@ -2,18 +2,18 @@
 % Please edit documentation in R/ansiex.R
 \name{ansi_nzchar}
 \alias{ansi_nzchar}
-\title{Like \code{\link[base:nchar]{base::nzchar()}}, but for ANSI strings}
+\title{Like \code{\link[base:nzchar]{base::nzchar()}}, but for ANSI strings}
 \usage{
 ansi_nzchar(x, ...)
 }
 \arguments{
 \item{x}{Character vector. Other objects are coerced using
-\code{\link[base:character]{base::as.character()}}.}
+\code{\link[base:as.character]{base::as.character()}}.}
 
-\item{...}{Passed to \code{\link[base:nchar]{base::nzchar()}}.}
+\item{...}{Passed to \code{\link[base:nzchar]{base::nzchar()}}.}
 }
 \description{
-Like \code{\link[base:nchar]{base::nzchar()}}, but for ANSI strings
+Like \code{\link[base:nzchar]{base::nzchar()}}, but for ANSI strings
 }
 \examples{
 ansi_nzchar("")

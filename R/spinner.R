@@ -196,7 +196,9 @@ make_spinner <- function(
   inc <- function() {
     c_state <<- c_state + 1L
     c_first <<- FALSE
-    if (c_state > length(c_spinner$frames)) c_state <<- 1L
+    if (c_state > length(c_spinner$frames)) {
+      c_state <<- 1L
+    }
     c_last <<- Sys.time()
     invisible(c_res)
   }
@@ -206,14 +208,22 @@ make_spinner <- function(
     c_first <<- TRUE
     c_col <<- 1L
     c_last <<- Sys.time()
-    if (is_dynamic_tty(c_stream)) clear_line() else cat("\n", file = c_stream)
+    if (is_dynamic_tty(c_stream)) {
+      clear_line()
+    } else {
+      cat("\n", file = c_stream)
+    }
     invisible(c_res)
   }
 
   if (is_dynamic_tty(c_stream)) {
     c_res$spin <- function(template = NULL) {
-      if (!is.null(template)) c_template <<- template
-      if (throttle()) return()
+      if (!is.null(template)) {
+        c_template <<- template
+      }
+      if (throttle()) {
+        return()
+      }
       line <- sub(
         "{spin}",
         c_spinner$frames[[c_state]],
@@ -240,9 +250,15 @@ make_spinner <- function(
   } else {
     if (c_static == "dots") {
       c_res$spin <- function(template = NULL) {
-        if (!is.null(template)) c_template <<- template
-        if (c_first) cat(template, "\n", sep = "", file = c_stream)
-        if (throttle()) return()
+        if (!is.null(template)) {
+          c_template <<- template
+        }
+        if (c_first) {
+          cat(template, "\n", sep = "", file = c_stream)
+        }
+        if (throttle()) {
+          return()
+        }
         cat(".", file = c_stream)
         c_col <<- c_col + 1L
         if (c_col == console_width()) {
@@ -253,8 +269,12 @@ make_spinner <- function(
       }
     } else if (c_static == "print") {
       c_res$spin <- function(template = NULL) {
-        if (!is.null(template)) c_template <<- template
-        if (throttle()) return()
+        if (!is.null(template)) {
+          c_template <<- template
+        }
+        if (throttle()) {
+          return()
+        }
         line <- sub(
           "{spin}",
           c_spinner$frames[[c_state]],
@@ -266,8 +286,12 @@ make_spinner <- function(
       }
     } else if (c_static == "print_line") {
       c_res$spin <- function(template = NULL) {
-        if (!is.null(template)) c_template <<- template
-        if (throttle()) return()
+        if (!is.null(template)) {
+          c_template <<- template
+        }
+        if (throttle()) {
+          return()
+        }
         line <- sub(
           "{spin}",
           c_spinner$frames[[c_state]],
@@ -279,8 +303,12 @@ make_spinner <- function(
       }
     } else if (c_static == "silent") {
       c_res$spin <- function(template = NULL) {
-        if (!is.null(template)) c_template <<- template
-        if (throttle()) return()
+        if (!is.null(template)) {
+          c_template <<- template
+        }
+        if (throttle()) {
+          return()
+        }
         inc()
       }
     }

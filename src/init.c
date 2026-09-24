@@ -93,12 +93,16 @@ static const R_CallMethodDef callMethods[]  = {
 
   { "clic_vt_output",      (DL_FUNC) clic_vt_output,      3 },
 
-  { "cli_keypress",            (DL_FUNC) cli_keypress,            1 },
+  { "cli_keypress",            (DL_FUNC) cli_keypress,            2 },
 
   { NULL, NULL, 0 }
 };
 
 #define RCC(fun) R_RegisterCCallable("cli", # fun, (DL_FUNC) fun);
+
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+#define R_getVar(x,y,z) Rf_findVar(x,y)
+#endif
 
 r_export
 void R_init_cli(DllInfo *dll) {
@@ -110,7 +114,7 @@ void R_init_cli(DllInfo *dll) {
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
 
-  cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
+  cleancall_fns_dot_call = R_getVar(Rf_install(".Call"), R_BaseEnv, TRUE);
 
   RCC(cli_progress_add);
   RCC(cli_progress_bar);

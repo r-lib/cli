@@ -40,8 +40,12 @@ default_progress_style <- function() {
 }
 
 progress_style <- function(x) {
-  if (is.null(x)) return(x)
-  if (is_string(x)) return(cli_progress_styles()[[x]])
+  if (is.null(x)) {
+    return(x)
+  }
+  if (is_string(x)) {
+    return(cli_progress_styles()[[x]])
+  }
   x
 }
 

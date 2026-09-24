@@ -33,8 +33,8 @@ nfile <- 2; cli_text("Found {no(nfile)} file{?s}.")
 
 }
 \seealso{
-Other pluralization: 
+Other pluralization:
 \code{\link{pluralization}},
-\code{\link{pluralize}()}
+\code{\link[=pluralize]{pluralize()}}
 }
 \concept{pluralization}

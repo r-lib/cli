@@ -4,7 +4,7 @@
       ansi_substr("foobar", NULL, 10)
     Condition
       Error:
-      ! `ansi_substr()` must have non-empty `start` and `stop` arguments
+      ! ! `ansi_substr()` must have non-empty `start` and `stop` arguments
       i `start` has length 0
 
 ---
@@ -13,7 +13,7 @@
       ansi_substr("foobar", 10, NULL)
     Condition
       Error:
-      ! `ansi_substr()` must have non-empty `start` and `stop` arguments
+      ! ! `ansi_substr()` must have non-empty `start` and `stop` arguments
       i `stop` has length 0
 
 ---
@@ -22,7 +22,7 @@
       ansi_substr("foobar", "bad", "bad")
     Condition
       Error:
-      ! `start` and `stop` must not have `NA` values
+      ! ! `start` and `stop` must not have `NA` values
       i `start` has 1 `NA` value, after coercion to integer
       i `stop` has 1 `NA` value, after coercion to integer
 
@@ -32,7 +32,7 @@
       ansi_substr("abc", "hello", 1)
     Condition
       [1m[33mError[39m:[22m
-      [33m![39m [1m[22m`start` and `stop` must not have `NA` values
+      [33m![39m [33m![39m [1m[22m`start` and `stop` must not have `NA` values
       [36mi[39m `start` has 1 `NA` value, after coercion to integer
 
 # Weird length 'split'
@@ -41,7 +41,7 @@
       ansi_strsplit(c("ab", "bd"), c("b", "d"))
     Condition
       [1m[33mError[39m:[22m
-      [33m![39m [1m[22m`split` must be character of length <= 1, or must coerce to that
+      [33m![39m [33m![39m [1m[22m`split` must be character of length <= 1, or must coerce to that
       [36mi[39m `split` is (or was coerced to) a character vector
 
 # ansi_strtrim with zero-length ellipsis
@@ -68,7 +68,7 @@
       ansi_strtrim("foobar", -1)
     Condition
       Error:
-      ! `width` must be non-negative in `cli::ansi_strtrim()`.
+      ! ! `width` must be non-negative in `cli::ansi_strtrim()`.
 
 # ansi_strtrim edge cases
 

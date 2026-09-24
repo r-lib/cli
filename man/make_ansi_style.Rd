@@ -55,9 +55,9 @@ orange("foobar")
 cat(orange("foobar"))
 }
 \seealso{
-Other ANSI styling: 
+Other ANSI styling:
 \code{\link{ansi-styles}},
-\code{\link{combine_ansi_styles}()},
-\code{\link{num_ansi_colors}()}
+\code{\link[=combine_ansi_styles]{combine_ansi_styles()}},
+\code{\link[=num_ansi_colors]{num_ansi_colors()}}
 }
 \concept{ANSI styling}

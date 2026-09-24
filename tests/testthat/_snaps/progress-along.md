@@ -3,8 +3,7 @@
     Code
       out
     Output
-      [1] "\rx: 10\033[K\r" "\rx: 10\033[K\r" "\rx: 10\033[K\r" "\rx: 10\033[K\r"
-      [5] "\r\033[K"       
+      [1] "\rx: 10\033[K\r" "\rx: 10\033[K\r" "\r\033[K"       
 
 # cli_progress_along
 
@@ -31,8 +30,8 @@
       callr::r(fun, stdout = outfile, stderr = outfile)
     Condition
       Error:
-      ! in callr subprocess.
-      Caused by error:
+      ! ! in callr subprocess.
+      Caused by error in `FUN(X[[i]], ...)`:
       ! oops
 
 ---
