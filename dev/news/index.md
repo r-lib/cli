@@ -40,6 +40,11 @@
   function to be used when testing cli progress bars. It makes cli
   redraw the progress bar for every progress update.
 
+- Fix issues with
+  [`ansi_strwrap()`](https://cli.r-lib.org/dev/reference/ansi_strwrap.md)
+  having `\r` in the string
+  ([\#667](https://github.com/r-lib/cli/issues/667))
+
 ## cli 3.6.6
 
 CRAN release: 2026-04-09
