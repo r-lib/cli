@@ -107,7 +107,7 @@ new_r_package("cli")
 #> [1] "callr, covr, crayon, digest, glue (>= 1.6.0), grDevices,\nhtmltools, htmlwidgets, knitr, methods, processx, ps (>=\n1.3.4.9000), rlang (>= 1.0.2.9003), rmarkdown, rprojroot,\nrstudioapi, testthat (>= 3.2.0), tibble, whoami, withr"
 #> 
 #> $desc$`Config/Needs/website`
-#> [1] "r-lib/asciicast, bench, brio, cpp11, decor, desc,\nfansi, prettyunits, sessioninfo, tidyverse/tidytemplate,\nusethis, vctrs"
+#> [1] "asciicast, bench, brio, cpp11, decor, desc,\nfansi, prettyunits, sessioninfo, tidyverse/tidytemplate,\nusethis, vctrs"
 #> 
 #> $desc$`Config/testthat/edition`
 #> [1] "3"
@@ -119,7 +119,7 @@ new_r_package("cli")
 #> [1] "UTF-8"
 #> 
 #> $desc$`Config/roxygen2/version`
-#> [1] "8.0.0"
+#> [1] "8.1.0"
 #> 
 #> $desc$RemotePkgRef
 #> [1] "local::."
@@ -131,7 +131,7 @@ new_r_package("cli")
 #> [1] "yes"
 #> 
 #> $desc$Packaged
-#> [1] "2026-09-24 11:44:32 UTC; runner"
+#> [1] "2026-09-24 11:57:50 UTC; runner"
 #> 
 #> $desc$Author
 #> [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb],\n  Salim Brüggemann [ctb] (ORCID: <https://orcid.org/0000-0002-5329-5987>),\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)"
@@ -140,7 +140,7 @@ new_r_package("cli")
 #> [1] "Gábor Csárdi <gabor@posit.co>"
 #> 
 #> $desc$Built
-#> [1] "R 4.6.1; x86_64-pc-linux-gnu; 2026-09-24 11:44:34 UTC; unix"
+#> [1] "R 4.6.1; x86_64-pc-linux-gnu; 2026-09-24 11:57:51 UTC; unix"
 #> 
 #> attr(,"file")
 #> [1] "/home/runner/work/_temp/Library/cli/Meta/package.rds"
