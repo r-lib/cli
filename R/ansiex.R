@@ -462,7 +462,7 @@ make_space <- function(num, filling = " ") {
 }
 
 strrep <- function(x, times) {
-  x = as.character(x)
+  x <- as.character(x)
   if (length(x) == 0L) {
     return(x)
   }

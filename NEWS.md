@@ -1,5 +1,9 @@
 # cli (development version)
 
+* Hyperlinks containing `fs_path` objects (or any object with a
+  `class-map` entry that itself creates a hyperlink) now generate the
+  correct ANSI escape sequences (#683).
+
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a
     key press.
