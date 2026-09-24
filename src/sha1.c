@@ -194,6 +194,7 @@ static void bin2str(char *to, const unsigned char *p, size_t len) {
 #include "errors.h"
 
 #include <stdint.h>
+#include <string.h>
 
 #include <Rinternals.h>
 
