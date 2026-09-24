@@ -40,3 +40,23 @@ test_that_cli("bullets wrapping", {
     ">" = txt
   )))
 })
+
+test_that_cli("bullets_raw glue", {
+  expect_snapshot(cli_bullets_raw(c(
+    "noindent {.key {1:3}}",
+    " " = "space {.key {1:3}}",
+    "v" = "success {.key {1:3}}",
+    "x" = "danger {.key {1:3}}",
+    "!" = "warning {.key {1:3}}",
+    "i" = "info {.key {1:3}}",
+    "*" = "bullet {.key {1:3}}",
+    ">" = "arrow {.key {1:3}}"
+  )))
+})
+
+test_that_cli("bullets_raw handles <> (#789)", {
+  expect_snapshot(cli_bullets_raw(c(
+    "{.field field} <x>",
+    "{.field field} <<x>>"
+  )))
+})
