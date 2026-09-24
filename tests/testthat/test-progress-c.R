@@ -123,9 +123,13 @@ test_that("clic__find_var", {
   expect_snapshot(error = TRUE, {
     .Call(clic__find_var, env, as.symbol("x"))
   })
-  expect_snapshot(error = TRUE, {
-    .Call(clic__find_var, environment(), as.symbol(basename(tempfile())))
-  }, transform = function(x) sub("`file.*`", "`<tmpfile>`", x))
+  expect_snapshot(
+    error = TRUE,
+    {
+      .Call(clic__find_var, environment(), as.symbol(basename(tempfile())))
+    },
+    transform = function(x) sub("`file.*`", "`<tmpfile>`", x)
+  )
 })
 
 test_that("unloading stops the thread", {

@@ -102,7 +102,9 @@ parse_file_link_params <- function(txt) {
   matches <- re_match(txt, pattern)
   ret <- as.list(matches)
   ret[!nzchar(ret)] <- list(NULL)
-  if (is.null(ret[["path"]])) ret[["path"]] <- ""
+  if (is.null(ret[["path"]])) {
+    ret[["path"]] <- ""
+  }
   ret
 }
 
@@ -194,9 +196,15 @@ abs_path <- function(x) {
 }
 
 abs_path1 <- function(x) {
-  if (grepl("^file://", x)) return(x)
-  if (grepl("^/", x)) return(paste0("file://", x))
-  if (is_windows() && grepl("^[a-zA-Z]:", x)) return(paste0("file://", x))
+  if (grepl("^file://", x)) {
+    return(x)
+  }
+  if (grepl("^/", x)) {
+    return(paste0("file://", x))
+  }
+  if (is_windows() && grepl("^[a-zA-Z]:", x)) {
+    return(paste0("file://", x))
+  }
   paste0("file://", file.path(getwd(), x))
 }
 
@@ -206,7 +214,9 @@ make_link_fun <- function(txt) {
   tolink <- grepl("::", txt, fixed = TRUE)
   linked <- grepl("\007|\033\\\\", txt)
   todo <- tolink & !linked
-  if (!any(todo)) return(txt)
+  if (!any(todo)) {
+    return(txt)
+  }
 
   sprt <- ansi_hyperlink_types()$help
   if (!sprt) {
@@ -297,7 +307,9 @@ make_link_topic <- function(txt) {
 
 make_link_url <- function(txt) {
   linked <- grepl("\007|\033\\\\", txt)
-  if (all(linked)) return(txt)
+  if (all(linked)) {
+    return(txt)
+  }
   txt[!linked] <- style_hyperlink(txt[!linked], txt[!linked])
   txt
 }
@@ -396,7 +408,9 @@ ansi_has_hyperlink_support <- function() {
   }
 
   ## If ANSI support is off, then this is off as well
-  if (num_ansi_colors() == 1) return(FALSE)
+  if (num_ansi_colors() == 1) {
+    return(FALSE)
+  }
 
   ## Are we in RStudio?
   rstudio <- rstudio_detect()
@@ -464,10 +478,14 @@ ansi_has_hyperlink_support <- function() {
 ansi_hyperlink_types <- function() {
   get_config <- function(x, default = NULL) {
     opt <- getOption(paste0("cli.", tolower(x)))
-    if (!is.null(opt)) return(isTRUE(opt))
+    if (!is.null(opt)) {
+      return(isTRUE(opt))
+    }
 
     env <- Sys.getenv(paste0("R_CLI_", toupper(x)), NA_character_)
-    if (!is.na(env)) return(isTRUE(as.logical(env)))
+    if (!is.na(env)) {
+      return(isTRUE(as.logical(env)))
+    }
 
     default
   }
@@ -539,7 +557,9 @@ get_config_chr <- function(x, default = NULL) {
   }
 
   env <- Sys.getenv(paste0("R_CLI_", toupper(x)), NA_character_)
-  if (!is.na(env)) return(env)
+  if (!is.na(env)) {
+    return(env)
+  }
 
   default
 }

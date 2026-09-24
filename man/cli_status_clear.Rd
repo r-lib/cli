@@ -43,9 +43,9 @@ Clear the status bar
 The \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}}
 functions, for a superior API.
 
-Other status bar: 
-\code{\link{cli_process_start}()},
-\code{\link{cli_status}()},
-\code{\link{cli_status_update}()}
+Other status bar:
+\code{\link[=cli_process_start]{cli_process_start()}},
+\code{\link[=cli_status]{cli_status()}},
+\code{\link[=cli_status_update]{cli_status_update()}}
 }
 \concept{status bar}

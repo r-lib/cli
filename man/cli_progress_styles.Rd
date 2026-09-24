@@ -44,14 +44,14 @@ options(cli.progress_var_style = NULL)
 }}
 }
 \seealso{
-Other progress bar functions: 
-\code{\link{cli_progress_along}()},
-\code{\link{cli_progress_bar}()},
-\code{\link{cli_progress_builtin_handlers}()},
-\code{\link{cli_progress_message}()},
-\code{\link{cli_progress_num}()},
-\code{\link{cli_progress_output}()},
-\code{\link{cli_progress_step}()},
+Other progress bar functions:
+\code{\link[=cli_progress_along]{cli_progress_along()}},
+\code{\link[=cli_progress_bar]{cli_progress_bar()}},
+\code{\link[=cli_progress_builtin_handlers]{cli_progress_builtin_handlers()}},
+\code{\link[=cli_progress_message]{cli_progress_message()}},
+\code{\link[=cli_progress_num]{cli_progress_num()}},
+\code{\link[=cli_progress_output]{cli_progress_output()}},
+\code{\link[=cli_progress_step]{cli_progress_step()}},
 \code{\link{progress-variables}}
 }
 \concept{progress bar functions}

@@ -1,7 +1,9 @@
 # deep lists ul
 
     Code
-      for (i in 1:4) test_ul(i)
+      for (i in 1:4) {
+        test_ul(i)
+      }
     Message
       * Level 1
       * Level 1
@@ -17,7 +19,9 @@
 # deep lists ol
 
     Code
-      for (i in 1:4) test_ol(i)
+      for (i in 1:4) {
+        test_ol(i)
+      }
     Message
       1. Level 1
       1. Level 1
@@ -33,7 +37,9 @@
 # deep lists ol ul
 
     Code
-      for (i in 1:4) test_ol_ul(i)
+      for (i in 1:4) {
+        test_ol_ul(i)
+      }
     Message
       1. Level 1
         * Level 2
@@ -59,7 +65,9 @@
 # deep lists ul ol
 
     Code
-      for (i in 1:4) test_ul_ol(i)
+      for (i in 1:4) {
+        test_ul_ol(i)
+      }
     Message
       * Level 1
         1. Level 2

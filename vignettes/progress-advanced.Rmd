@@ -111,7 +111,93 @@ However, there is not function to return from, so the last progress bar
 of the script will be only terminated when the script terminates, or when
 you explicitly terminate it using `cli_progress_done()`.
 
-<!-- # Nested progress bars TODO -->
+# Multiple progress bars
+
+cli renders multiple concurrent progress bars on separate lines on
+ANSI-capable terminals. This is useful when an outer task drives inner
+tasks, or when multiple independent jobs run in parallel and you want to
+see all of their progress at once.
+
+Bars are rendered in the order they were created (insertion order), so
+the outer bar stays on top. On non-ANSI dynamic terminals cli falls back
+to showing the most recently updated bar on a single line.
+
+## Nested progress bars
+
+By default a new progress bar in the same calling function terminates the
+previous one (the "current" bar of that environment). To keep several bars
+alive at the same time, pass `current = FALSE` and keep the ids around so
+you can update and finish them explicitly:
+
+```{asciicast}
+#| label: multiple-setup
+#| include: false
+options(cli.progress_clear = TRUE)
+```
+
+```{asciicast}
+#| label: multiple
+#| fig-alt: >
+#|   Two progress bars on separate lines: an outer 'Files' bar that ticks
+#|   once per processed file, and an inner per-file bar that resets for
+#|   each file.
+#| asciicast_at: "all"
+#| asciicast_rows: 2
+f <- function() {
+  files <- c("one.csv", "two.csv", "three.csv", "four.csv", "five.csv")
+  p_outer <- cli_progress_bar(
+    type = "custom",
+    format = "Reading files {idx}/{length(files)}",
+    total = length(files)
+  )
+  # initial update to force a progress bar render
+  idx <- 0
+  cli_progress_update(id = p_outer, set = 0, force = TRUE)
+  # to make the labels identical width
+  dispfiles <- format(files)
+  for (idx in seq_along(files)) {
+    p_inner <- cli_progress_bar(
+      paste("Reading", dispfiles[idx]), total = 100, current = FALSE
+    )
+    for (i in 1:100) {
+      Sys.sleep(3 / 100)
+      cli_progress_update(id = p_inner)
+    }
+    cli_progress_done(id = p_inner)
+    cli_progress_update(id = p_outer, force = TRUE)
+  }
+  cli_progress_done(id = p_outer)
+}
+f()
+```
+
+```{asciicast}
+#| label: multiple-teardown
+#| include: false
+options(cli.progress_clear = FALSE)
+```
+
+## Multiple independent progress bars
+
+```{asciicast}
+#| label: multiple2
+#| fig-alt: >
+#|   Two independent progress bars on separate lines, one for `Downloads`
+#|   and one for `Processing`, that tick in an interleaved fashion.
+#| asciicast_at: "all"
+#| asciicast_rows: 2
+f <- function() {
+  id1 <- cli_progress_bar("Downloads ", total = 20, current = FALSE, clear = FALSE)
+  id2 <- cli_progress_bar("Processing", total = 20, current = FALSE, clear = FALSE)
+  for (i in 1:20) {
+    Sys.sleep(0.15)
+    cli_progress_update(id = id1)
+    Sys.sleep(0.15)
+    cli_progress_update(id = id2)
+  }
+}
+f()
+```
 
 # Customization
 
@@ -137,14 +223,21 @@ by default, if the total number of iterations is known.
 
 ```{asciicast}
 #| label: iterator
-#| fig-alt: "Example of an `iterator` progress bar, from left to right it contains a label (`Data cleaning`), a progress bar, the progress percentage, and the ETA."
+#| fig-alt: >
+#|   Example of an `iterator` progress bar, from left to right it contains
+#|   a label (`Data cleaning`), a progress bar, the progress percentage,
+#|   and the ETA.
 #| echo: false
 cli_progress_demo("Data cleaning", total = 100, at = 50, clear = FALSE)
 ```
 
 ```{asciicast}
 #| label: iterator2
-#| fig-alt: "Example of an `iterator` progress var, where the total number of iterations is unknown. From left to right it contains a spinner, the label (`Data cleaning`), how many iterations are done (`50 done`), how many seconds it takes to run an iteration, and the elapsed time."
+#| fig-alt: >
+#|   Example of an `iterator` progress var, where the total number of
+#|   iterations is unknown. From left to right it contains a spinner, the
+#|   label (`Data cleaning`), how many iterations are done (`50 done`),
+#|   how many seconds it takes to run an iteration, and the elapsed time.
 #| echo: false
 cli_progress_demo("Data cleaning", at = 50, clear = FALSE)
 ```
@@ -155,7 +248,10 @@ For a list of tasks, by default it shows a `current/total` display.
 
 ```{asciicast}
 #| label: tasks
-#| fig-alt: "Example of a `tasks` progress bar, from left to right it contains a spinner, the number of completed tasks per the total number of tasks, the ETA, and the specified label: `Finding data files`."
+#| fig-alt: >
+#|   Example of a `tasks` progress bar, from left to right it contains a
+#|   spinner, the number of completed tasks per the total number of tasks,
+#|   the ETA, and the specified label: `Finding data files`.
 #| echo: false
 cli_progress_demo(
   "Finding data files", total = 100, at = 50,
@@ -165,7 +261,11 @@ cli_progress_demo(
 
 ```{asciicast}
 #| label: tasks2
-#| fig-alt: "Example of a `tasks` progress bar where the total number of tasks is unknown. From left to right it contains a spinner, the specified label ('Finding data files`), the number of tasks completed, how long it taks to complete a task, and the elapsed time."
+#| fig-alt: >
+#|   Example of a `tasks` progress bar where the total number of tasks is
+#|   unknown. From left to right it contains a spinner, the specified
+#|   label ('Finding data files`), the number of tasks completed, how
+#|   long it taks to complete a task, and the elapsed time.
 #| echo: false
 cli_progress_demo(
   "Finding data files", at = 50,
@@ -179,7 +279,10 @@ For downloads, progress units are shown as bytes by default here.
 
 ```{asciicast}
 #| label: download
-#| fig-alt: "Example of a `download` progress bar. From left to right it contains a label ('Downloading`), an actual progress bar, the completed and the total download size and the ETA."
+#| fig-alt: >
+#|   Example of a `download` progress bar. From left to right it contains
+#|   a label ('Downloading`), an actual progress bar, the completed and
+#|   the total download size and the ETA.
 #| echo: false
 cli_progress_demo(
   "Downloading", total = 10280, at = 5120, clear = FALSE,
@@ -189,7 +292,11 @@ cli_progress_demo(
 
 ```{asciicast}
 #| label: download2
-#| fig-alt: "Example of a `download` progress bar, where the total download size is unknown. From left to right it contains the specified label (`Downloading`), a spinner, the number of downloaded bytes, the download rate (`kB/s`), and the elapsed time."
+#| fig-alt: >
+#|   Example of a `download` progress bar, where the total download size
+#|   is unknown. From left to right it contains the specified label
+#|   (`Downloading`), a spinner, the number of downloaded bytes, the
+#|   download rate (`kB/s`), and the elapsed time.
 #| echo: false
 cli_progress_demo(
   "Downloading", at = 5120, clear = FALSE,
@@ -211,7 +318,9 @@ of built-in cli progress variables, see 'Progress variables' below.
 
 ```{asciicast}
 #| label: custom
-#| fig-alt: "Example of a `custom` progress bar. It contains a dynamic label, `Step 1` that changed to `Step 2` later, a bar and the percentage."
+#| fig-alt: >
+#|   Example of a `custom` progress bar. It contains a dynamic label,
+#|   `Step 1` that changed to `Step 2` later, a bar and the percentage.
 #| asciicast_at: "all"
 f <- function() {
   cli_progress_bar(
@@ -240,7 +349,7 @@ For other types, the end user might customize the format string, see below.
 ### Quick loops
 
 The `cli.progress_show_after` (default is two seconds) option is the number
-seconds to wait before showing a progress bar. 
+seconds to wait before showing a progress bar.
 
 ### Custom bars
 
@@ -270,7 +379,10 @@ names(cli_progress_styles())
 
 ```{asciicast}
 #| label: progress-styles
-#| fig-alt: "Example with the `fillsquares` progress bar style. It contains a progress bar where empty squares are filled up, the progress percentage and the ETA."
+#| fig-alt: >
+#|   Example with the `fillsquares` progress bar style. It contains a
+#|   progress bar where empty squares are filled up, the progress
+#|   percentage and the ETA.
 #| asciicast_at: "all"
 options(cli.progress_bar_style = "fillsquares")
 f <- function() lapply(cli_progress_along(letters), function(l) Sys.sleep(0.2))
@@ -290,7 +402,10 @@ parts of the progress bar:
 
 ```{asciicast}
 #| label: progress-custom-style
-#| fig-alt: "Example of a customized progress bar. Centered black dots are replaced by yellow stars in the progress bar, that also has the progress percentage and the ETA."
+#| fig-alt: >
+#|   Example of a customized progress bar. Centered black dots are
+#|   replaced by yellow stars in the progress bar, that also has the
+#|   progress percentage and the ETA.
 #| asciicast_at: "all"
 options(cli.progress_bar_style = list(
   complete = cli::col_yellow("\u2605"),
@@ -324,7 +439,9 @@ a peek at them.
 
 ```{asciicast}
 #| label: custom-spinner
-#| fig-alt: "A custom spinner that shows 20 spinners, each animating the moon phases."
+#| fig-alt: >
+#|   A custom spinner that shows 20 spinners, each animating the moon
+#|   phases.
 #| asciicast_at: "all"
 options(cli.spinner = "moon")
 f <- function() {
@@ -363,7 +480,7 @@ If you refer to a progress variable from a package, you need need to
 import it or qualify the reference with `cli::`. When you set a custom
 format string as an end user option, we suggest that you always use the
 qualified form, in case the cli package is not attached. For example, to
-set a minimal display for downloads you might write 
+set a minimal display for downloads you might write
 
 ```{asciicast}
 #| label: download-vars
@@ -396,7 +513,9 @@ to get
 
 ```{asciicast}
 #| label: download2-vars2
-#| fig-alt: "A custom download progress bar, it has a thick down arrow, a spinner, a label (`Downloading`), the completed and the total number of bytes."
+#| fig-alt: >
+#|   A custom download progress bar, it has a thick down arrow, a spinner,
+#|   a label (`Downloading`), the completed and the total number of bytes.
 #| echo: false
 cli_progress_demo(
 "Downloading", total = 10280, at = 5121, clear = FALSE,
@@ -410,7 +529,10 @@ use `letters[pb_current]`:
 
 ```{asciicast}
 #| label: function-of-token
-#| fig-alt: "A custom progress bar, it has two spinners, one on the left, the other on the right. In the middle it has a dynamic label that iterates over the letters of the English alphabet."
+#| fig-alt: >
+#|   A custom progress bar, it has two spinners, one on the left, the
+#|   other on the right. In the middle it has a dynamic label that
+#|   iterates over the letters of the English alphabet.
 #| asciicast_at: "all"
 f <- function() {
   cli_progress_bar(

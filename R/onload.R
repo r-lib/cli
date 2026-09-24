@@ -3,8 +3,7 @@ NULL
 
 ## nocov start
 
-dummy <- function() {
-}
+dummy <- function() {}
 
 cli_timer_dynamic <- 200L
 cli_timer_non_dynamic <- 3000L
@@ -139,7 +138,9 @@ rstudio_r_fix <- 0
 }
 
 unload <- function() {
-  if (!clienv$unloaded) .Call(clic_unload)
+  if (!clienv$unloaded) {
+    .Call(clic_unload)
+  }
   clienv$unloaded <- TRUE
 }
 

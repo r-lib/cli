@@ -41,8 +41,8 @@ nchar(emo, "bytes")
 nchar(emo, "width")
 }
 \seealso{
-Other UTF-8 string manipulation: 
-\code{\link{utf8_graphemes}()},
-\code{\link{utf8_substr}()}
+Other UTF-8 string manipulation:
+\code{\link[=utf8_graphemes]{utf8_graphemes()}},
+\code{\link[=utf8_substr]{utf8_substr()}}
 }
 \concept{UTF-8 string manipulation}

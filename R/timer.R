@@ -37,6 +37,20 @@ cli_with_ticks <- function(expr) {
   expr
 }
 
+#' Evaluate an expression with forcing all progress bar updates enabled
+#'
+#' Evaluates `expr` while redrawing the progress bar for every progress
+#' bar update. This function is meant to be used in test cases, when
+#' specifically testing the progress bar output.
+#'
+#' @param expr Expression to evaluate.
+#' @return The value of `expr`.
+#' @export
+
+cli_with_progress_ticks <- function(expr) {
+  cli_with_ticks(expr)
+}
+
 cli_without_ticks <- function(expr) {
   on.exit(cli_tick_resume(TRUE), add = TRUE)
   opts <- options(cli.progress_show_after = 0)

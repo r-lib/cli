@@ -20,10 +20,10 @@ This function sets the class of its argument, activating
 ANSI-string-specific methods such as for printing.
 }
 \seealso{
-Other low level ANSI functions: 
-\code{\link{ansi_has_any}()},
-\code{\link{ansi_hide_cursor}()},
-\code{\link{ansi_regex}()},
-\code{\link{ansi_strip}()}
+Other low level ANSI functions:
+\code{\link[=ansi_has_any]{ansi_has_any()}},
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=ansi_regex]{ansi_regex()}},
+\code{\link[=ansi_strip]{ansi_strip()}}
 }
 \concept{low level ANSI functions}

@@ -97,9 +97,13 @@ static const R_CallMethodDef CallEntries[] = {
   { NULL, NULL, 0 }
 };
 
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
+#define R_getVar(x,y,z) Rf_findVar(x,y)
+#endif
+
 void R_init_progresstest(DllInfo *dll) {
   R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);
-  cleancall_fns_dot_call = Rf_findVar(Rf_install(".Call"), R_BaseEnv);
+  cleancall_fns_dot_call = R_getVar(Rf_install(".Call"), R_BaseEnv, TRUE);
 }

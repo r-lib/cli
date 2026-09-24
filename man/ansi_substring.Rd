@@ -22,7 +22,7 @@ Character vector of the same length as \code{x}, containing
 the requested substrings. ANSI styles are retained.
 }
 \description{
-This is the color-aware counterpart of \code{\link[base:substr]{base::substring()}}.
+This is the color-aware counterpart of \code{\link[base:substring]{base::substring()}}.
 It works exactly like the original, but keeps the colors in the
 substrings. The ANSI escape sequences are ignored when
 calculating the positions within the string.
@@ -54,15 +54,15 @@ cat(ansi_substring(str2, c(3,5), c(7, 18)), sep = "\n")
 substring(ansi_strip(str2), c(3,5), c(7, 18))
 }
 \seealso{
-Other ANSI string operations: 
-\code{\link{ansi_align}()},
-\code{\link{ansi_columns}()},
-\code{\link{ansi_nchar}()},
-\code{\link{ansi_strsplit}()},
-\code{\link{ansi_strtrim}()},
-\code{\link{ansi_strwrap}()},
-\code{\link{ansi_substr}()},
-\code{\link{ansi_toupper}()},
-\code{\link{ansi_trimws}()}
+Other ANSI string operations:
+\code{\link[=ansi_align]{ansi_align()}},
+\code{\link[=ansi_columns]{ansi_columns()}},
+\code{\link[=ansi_nchar]{ansi_nchar()}},
+\code{\link[=ansi_strsplit]{ansi_strsplit()}},
+\code{\link[=ansi_strtrim]{ansi_strtrim()}},
+\code{\link[=ansi_strwrap]{ansi_strwrap()}},
+\code{\link[=ansi_substr]{ansi_substr()}},
+\code{\link[=ansi_toupper]{ansi_toupper()}},
+\code{\link[=ansi_trimws]{ansi_trimws()}}
 }
 \concept{ANSI string operations}

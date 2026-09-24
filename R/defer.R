@@ -11,8 +11,11 @@
 #   infinite recursion issues.
 # * The handler list is now soft-namespaced.
 
-defer <- function(expr, envir = parent.frame(), priority = c("first", "last")) {
-}
+defer <- function(
+  expr,
+  envir = parent.frame(),
+  priority = c("first", "last")
+) {}
 
 local({
   defer <<- defer <- function(

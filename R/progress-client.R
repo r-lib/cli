@@ -216,6 +216,11 @@
 #' like the elapsed time, of the ETA manually. You can also use your own
 #' variables in the calling function:
 #'
+#' To leave a completion or failure message on screen after the progress bar
+#' finishes, set `clear = FALSE` and customize `format_done` and
+#' `format_failed`. The `pb_elapsed` variable is often useful for reporting the
+#' total runtime.
+#'
 #' ```{asciicast progress-format}
 #' #| asciicast_at = "all",
 #' #| asciicast_knitr_output = "svg",
@@ -229,7 +234,11 @@
 #'     format_done = paste0(
 #'       "{col_green(symbol$tick)} Downloaded {pb_total} files ",
 #'       "in {pb_elapsed}."
-#'     ),,
+#'     ),
+#'     format_failed = paste0(
+#'       "{col_red(symbol$cross)} Download failed after {pb_elapsed}."
+#'     ),
+#'     clear = FALSE,
 #'     total = length(urls)
 #'   )
 #'   for (url in urls) {
@@ -415,11 +424,17 @@ cli_progress_update <- function(
     stop("Cannot find current progress bar for `", envkey, "`")
   }
   pb <- clienv$progress[[id]]
-  if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
+  if (is.null(pb)) {
+    stop("Cannot find progress bar `", id, "`")
+  }
 
-  if (!is.null(status)) pb$status <- status
+  if (!is.null(status)) {
+    pb$status <- status
+  }
 
-  if (!is.null(extra)) pb$extra <- utils::modifyList(pb$extra, extra)
+  if (!is.null(extra)) {
+    pb$extra <- utils::modifyList(pb$extra, extra)
+  }
 
   if (!is.null(set)) {
     pb$current <- set
@@ -451,13 +466,15 @@ cli_progress_update <- function(
   upd <- .Call(clic_update_due)
   if (
     force ||
-      (upd && now > pb$show_after) ||
+      (upd && now >= pb$show_after) ||
       (!is.na(pb$total) &&
         upd &&
         now > pb$show_50 &&
         pb$current <= pb$total / 2)
   ) {
-    if (upd) cli_tick_reset()
+    if (upd) {
+      cli_tick_reset()
+    }
     pb$tick <- pb$tick + 1L
 
     if (is.null(pb$format)) {
@@ -504,9 +521,13 @@ cli_progress_done <- function(
 ) {
   envkey <- format(.envir)
   id <- id %||% clienv$progress_ids[[envkey]]
-  if (is.null(id)) return(invisible(TRUE))
+  if (is.null(id)) {
+    return(invisible(TRUE))
+  }
   pb <- clienv$progress[[id]]
-  if (is.null(pb)) return(invisible(TRUE))
+  if (is.null(pb)) {
+    return(invisible(TRUE))
+  }
 
   opt <- options(cli__pb = pb)
   on.exit(options(opt), add = TRUE)
@@ -527,7 +548,9 @@ cli_progress_done <- function(
   }
 
   clienv$progress[[id]] <- NULL
-  if (!is.null(pb$envkey)) clienv$progress_ids[[pb$envkey]] <- NULL
+  if (!is.null(pb$envkey)) {
+    clienv$progress_ids[[pb$envkey]] <- NULL
+  }
 
   invisible(TRUE)
 }
@@ -578,7 +601,9 @@ cli_progress_output <- function(text, id = NULL, .envir = parent.frame()) {
     stop("Cannot find current progress bar for `", envkey, "`")
   }
   pb <- clienv$progress[[id]]
-  if (is.null(pb)) stop("Cannot find progress bar `", id, "`")
+  if (is.null(pb)) {
+    stop("Cannot find progress bar `", id, "`")
+  }
 
   txt <- cli_fmt(cli_text(text, .envir = .envir))
   for (h in pb$handlers) {
@@ -842,7 +867,9 @@ pb__default_format <- function(type, total) {
   if (type == "iterator") {
     if (!is.na(total)) {
       opt <- getOption("cli.progress_format_iterator")
-      if (!is.null(opt)) return(opt)
+      if (!is.null(opt)) {
+        return(opt)
+      }
       paste0(
         "{cli::pb_name}{cli::pb_bar} {cli::pb_percent} | {cli::pb_status}",
         "ETA: {cli::pb_eta}"
@@ -850,7 +877,9 @@ pb__default_format <- function(type, total) {
     } else {
       opt <- getOption("cli.progress_format_iterator_nototal") %||%
         getOption("cli.progress_format_iterator")
-      if (!is.null(opt)) return(opt)
+      if (!is.null(opt)) {
+        return(opt)
+      }
       paste0(
         "{cli::pb_spin} {cli::pb_name}{cli::pb_status}",
         "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
@@ -859,7 +888,9 @@ pb__default_format <- function(type, total) {
   } else if (type == "tasks") {
     if (!is.na(total)) {
       opt <- getOption("cli.progress_format_tasks")
-      if (!is.null(opt)) return(opt)
+      if (!is.null(opt)) {
+        return(opt)
+      }
       paste0(
         "{cli::pb_spin} {cli::pb_current}/{cli::pb_total} ",
         "ETA: {cli::pb_eta} | {cli::pb_name}{cli::pb_status}"
@@ -867,7 +898,9 @@ pb__default_format <- function(type, total) {
     } else {
       opt <- getOption("cli.progress_format_tasks_nototal") %||%
         getOption("cli.progress_format_tasks")
-      if (!is.null(opt)) return(opt)
+      if (!is.null(opt)) {
+        return(opt)
+      }
       paste0(
         "{cli::pb_spin} {cli::pb_name}{cli::pb_status}",
         "{cli::pb_current} done ({cli::pb_rate}) | {cli::pb_elapsed}"
@@ -876,7 +909,9 @@ pb__default_format <- function(type, total) {
   } else if (type == "download") {
     if (!is.na(total)) {
       opt <- getOption("cli.progress_format_download")
-      if (!is.null(opt)) return(opt)
+      if (!is.null(opt)) {
+        return(opt)
+      }
       paste0(
         "{cli::pb_name}{cli::pb_status}{cli::pb_bar}| ",
         "{cli::pb_current_bytes}/{cli::pb_total_bytes} {cli::pb_eta_str}"
@@ -884,7 +919,9 @@ pb__default_format <- function(type, total) {
     } else {
       opt <- getOption("cli.progress_format_download_nototal") %||%
         getOption("cli.progress_format_download")
-      if (!is.null(opt)) return(opt)
+      if (!is.null(opt)) {
+        return(opt)
+      }
       paste0(
         "{cli::pb_name}{cli::pb_status}{cli::pb_spin} ",
         "{cli::pb_current_bytes} ({cli::pb_rate_bytes}) | {cli::pb_elapsed}"

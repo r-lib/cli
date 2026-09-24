@@ -14,12 +14,16 @@ parse_iterm <- function(path) {
       xml2::xml_find_all(v, "key"),
       xml2::xml_text
     )
-    if (!"Color Space" %in% vks) stop("Unknown color space")
+    if (!"Color Space" %in% vks) {
+      stop("Unknown color space")
+    }
     chd <- xml2::xml_children(v)
     csp <- xml2::xml_text(
       chd[[which(vks == "Color Space") * 2]]
     )
-    if (csp != "sRGB") stop("Color space is not sRGB")
+    if (csp != "sRGB") {
+      stop("Color space is not sRGB")
+    }
     r <- as.numeric(xml2::xml_text(chd[[which(vks == "Red Component") * 2]]))
     g <- as.numeric(xml2::xml_text(chd[[which(vks == "Green Component") * 2]]))
     b <- as.numeric(xml2::xml_text(chd[[which(vks == "Blue Component") * 2]]))

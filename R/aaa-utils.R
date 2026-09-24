@@ -10,11 +10,17 @@ make_space <- function(len) {
 
 strrep <- function(x, times) {
   x <- as.character(x)
-  if (length(x) == 0L) return(x)
+  if (length(x) == 0L) {
+    return(x)
+  }
   r <- .mapply(
     function(x, times) {
-      if (is.na(x) || is.na(times)) return(NA_character_)
-      if (times <= 0L) return("")
+      if (is.na(x) || is.na(times)) {
+        return(NA_character_)
+      }
+      if (times <= 0L) {
+        return("")
+      }
       paste0(replicate(times, x), collapse = "")
     },
     list(x = x, times = times),
@@ -27,7 +33,9 @@ strrep <- function(x, times) {
 }
 
 is_latex_output <- function() {
-  if (!("knitr" %in% loadedNamespaces())) return(FALSE)
+  if (!("knitr" %in% loadedNamespaces())) {
+    return(FALSE)
+  }
   get("is_latex_output", asNamespace("knitr"))()
 }
 
@@ -36,7 +44,9 @@ is_windows <- function() {
 }
 
 apply_style <- function(text, style, bg = FALSE) {
-  if (identical(text, "")) return(text)
+  if (identical(text, "")) {
+    return(text)
+  }
 
   if (is.function(style)) {
     style(text)
@@ -65,16 +75,24 @@ vlapply <- function(X, FUN, ..., USE.NAMES = TRUE) {
 }
 
 rpad <- function(x, width = NULL) {
-  if (!length(x)) return(x)
+  if (!length(x)) {
+    return(x)
+  }
   w <- nchar(x, type = "width")
-  if (is.null(width)) width <- max(w)
+  if (is.null(width)) {
+    width <- max(w)
+  }
   paste0(x, strrep(" ", pmax(width - w, 0)))
 }
 
 lpad <- function(x, width = NULL) {
-  if (!length(x)) return(x)
+  if (!length(x)) {
+    return(x)
+  }
   w <- nchar(x, type = "width")
-  if (is.null(width)) width <- max(w)
+  if (is.null(width)) {
+    width <- max(w)
+  }
   paste0(strrep(" ", pmax(width - w, 0)), x)
 }
 

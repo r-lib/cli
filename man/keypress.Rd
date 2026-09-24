@@ -4,15 +4,22 @@
 \alias{keypress}
 \title{Read a single keypress at the terminal}
 \usage{
-keypress(block = TRUE)
+keypress(block = TRUE, timeout = Inf)
 }
 \arguments{
 \item{block}{Whether to wait for a key press, if there is none
 available now.}
+
+\item{timeout}{Maximum number of seconds to wait for a key press, if
+\code{block} is \code{TRUE}. The default \code{Inf} waits indefinitely. If no key
+is pressed before the timeout expires, \code{NA} is returned. Ignored
+for non-blocking reads (\code{block = FALSE}). The wait is interruptible
+regardless of the timeout.}
 }
 \value{
-The key pressed, a character scalar. For non-blocking reads
-\code{NA} is returned if no keys are available.
+The key pressed, a character scalar. \code{NA} is returned if no
+key is available: for non-blocking reads, or when a blocking read
+times out.
 }
 \description{
 It currently only works at Linux/Unix and OSX terminals,
@@ -31,13 +38,17 @@ The following special keys are supported:
 }
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 x <- keypress()
 cat("You pressed key", x, "\n")
+
+# Wait at most five seconds for a key press
+x <- keypress(timeout = 5)
+if (is.na(x)) cat("No key pressed\n") else cat("You pressed key", x, "\n")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other keypress function: 
-\code{\link{has_keypress_support}()}
+Other keypress function:
+\code{\link[=has_keypress_support]{has_keypress_support()}}
 }
 \concept{keypress function}
