@@ -223,3 +223,17 @@
     Output
       [1m\[22m(x) x * 2
 
+# strings with tabs [plain]
+
+    Code
+      code_highlight("x\t + 1")
+    Output
+      [1] "x\t + 1"
+
+# strings with tabs [ansi]
+
+    Code
+      code_highlight("x\t + 1")
+    Output
+      [1] "x\t \033[33m+\033[39m \033[35m1\033[39m"
+
