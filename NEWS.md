@@ -30,11 +30,12 @@
   cli progress bars. It makes cli redraw the progress bar for every
   progress update.
 
+* Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
   and bytes (@m-muecke, #644, #588, #643).
-* Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
 
 # cli 3.6.5
 
