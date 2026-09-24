@@ -1220,11 +1220,11 @@
     Code
       cli_text("{.file {fs::path(path)}}")
     Message
-      ']8;;file:///home/user/Desktop/foo.R~/Desktop/foo.R]8;;'
+      ']8;;file://~/Desktop/foo.R~/Desktop/foo.R]8;;'
     Code
       cli_text("{.path {fs::path(path)}}")
     Message
-      ']8;;file:///home/user/Desktop/foo.R~/Desktop/foo.R]8;;'
+      ']8;;file://~/Desktop/foo.R~/Desktop/foo.R]8;;'
 
 # {.run} and {.href} with fs_path [fancy-all]
 
@@ -1253,9 +1253,9 @@
     Code
       cli_text("{.file {fs::path(path)}}")
     Message
-      ]8;;file:///home/user/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
+      ]8;;file://~/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
     Code
       cli_text("{.path {fs::path(path)}}")
     Message
-      ]8;;file:///home/user/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
+      ]8;;file://~/Desktop/foo.R[34m~/Desktop/foo.R[39m]8;;
 

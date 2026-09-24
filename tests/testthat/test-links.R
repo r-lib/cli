@@ -336,27 +336,26 @@ test_that_cli(
   "{.run} and {.href} with fs_path",
   {
     skip_if_not_installed("fs")
-    withr::local_envvar(
-      HOME = "/home/user",
-      R_USER = "/home/user",
-      USERPROFILE = "/home/user"
-    )
 
     path <- "~/Desktop/foo.R"
+    home <- path.expand("~")
+    scrub_home <- function(text) {
+      gsub(home, "~", text, fixed = TRUE)
+    }
 
     # Not working
-    expect_snapshot({
+    expect_snapshot(transform = scrub_home, {
       cli_text("{.run ['hi mom']({fs::path(path)})}")
       cli_text("{.run {fs::path(path)}}")
     })
 
-    expect_snapshot({
+    expect_snapshot(transform = scrub_home, {
       cli_text("{.href [link]({fs::path(path)})}")
       cli_text("{.href {fs::path(path)}}")
     })
 
     # Working
-    expect_snapshot({
+    expect_snapshot(transform = scrub_home, {
       cli_text("{.file {fs::path(path)}}")
       cli_text("{.path {fs::path(path)}}")
     })
