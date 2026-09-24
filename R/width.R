@@ -20,9 +20,10 @@
 #' * We are _not_ using the `RSTUDIO_CONSOLE_WIDTH` environment variable
 #'   if we are in the RStudio console.
 #'
-#' If we cannot determine the size of the terminal or console window, then
-#' we use the `width` option. If the `width` option is not set, then
-#' we return 80L.
+#' If we cannot determine the size of the terminal or console window (e.g. if
+#' `console_width()` is called in a startup `.Rprofile` script before a console
+#' is present), then we use the `width` option. If the `width` option is not
+#' set, then we return 80L.
 #'
 #' @return Integer scalar, the console with, in number of characters.
 #'
@@ -102,7 +103,9 @@ tty_size <- function() {
 }
 
 terminal_width <- function() {
-  if (isTRUE(clienv$notaconsole)) return(NULL)
+  if (isTRUE(clienv$notaconsole)) {
+    return(NULL)
+  }
   w <- tryCatch(
     tty_size()[["width"]],
     error = function(e) {
@@ -112,7 +115,9 @@ terminal_width <- function() {
   )
 
   # this is probably a pty that does not set the width, use st sensible
-  if (!is.null(w) && w == 0) w <- 80L
+  if (!is.null(w) && w == 0) {
+    w <- 80L
+  }
   w
 }
 

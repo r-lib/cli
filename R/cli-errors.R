@@ -16,8 +16,12 @@ cli_error <- function(
     )
   )
 
-  if (length(.data)) cnd[names(.data)] <- .data
-  if (length(class)) class(cnd) <- c(.class, class(cnd))
+  if (length(.data)) {
+    cnd[names(.data)] <- .data
+  }
+  if (length(class)) {
+    class(cnd) <- c(.class, class(cnd))
+  }
 
   cnd
 }

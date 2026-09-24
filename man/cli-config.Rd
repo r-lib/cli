@@ -112,6 +112,14 @@ in Emacs. Once https://github.com/emacs-ess/ESS/pull/1178 is merged, ESS
 will set this automatically.
 }
 
+\subsection{\code{R_CLI_ANSI}}{
+
+Set to \code{true} (case insensitive) to assume a terminal that supports ANSI
+control sequences. Set to \code{false} (case insensitive) to assume a non-ANSI
+terminal. The \code{cli.ansi} option, if set, takes precedence.
+See \code{\link[=is_ansi_tty]{is_ansi_tty()}}.
+}
+
 \subsection{\code{R_CLI_DYNAMIC}}{
 
 Set to \code{true}, \code{TRUE} or \code{True} to assume a dynamic terminal, that supports \verb{\\r}.
@@ -130,9 +138,9 @@ See \code{\link[=num_ansi_colors]{num_ansi_colors()}}.
 \subsection{User facing options}{
 \subsection{\code{cli.ansi}}{
 
-Set to \code{true}, \code{TRUE} or \code{True} to assume a terminal that supports ANSI
-control sequences.
-Set to anything else to assume a non-ANSI terminal.
+Set to \code{TRUE} to assume a terminal that supports ANSI control sequences.
+Set to \code{FALSE} to assume a non-ANSI terminal. This option takes precedence
+over the \code{R_CLI_ANSI} environment variable.
 See \code{\link[=is_ansi_tty]{is_ansi_tty()}}.
 }
 
@@ -290,6 +298,15 @@ See \code{\link[=cli_progress_builtin_handlers]{cli_progress_builtin_handlers()}
 Progress handlers to force, ignoring handlers set in
 \code{cli.progress_handlers} and \code{cli.progress_handlers_force}.
 See \code{\link[=cli_progress_builtin_handlers]{cli_progress_builtin_handlers()}}.
+}
+
+\subsection{\code{cli.progress_multiline}}{
+
+Whether to render multiple concurrent progress bars on separate lines on
+ANSI-capable terminals. Defaults to \code{TRUE}. Set to \code{FALSE} to show only the
+most recently updated bar on a single line. Has no effect on non-ANSI
+terminals, which always show a single bar.
+See \code{\link[=is_ansi_tty]{is_ansi_tty()}} and \code{\link[=cli_progress_bar]{cli_progress_bar()}}.
 }
 
 \subsection{\code{cli.progress_say_args}}{

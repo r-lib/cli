@@ -19,9 +19,9 @@ Each spinner is shown for about 2-3 seconds.
 \if{html}{\figure{demo-spinners.svg}}
 }
 \seealso{
-Other spinners: 
-\code{\link{get_spinner}()},
-\code{\link{list_spinners}()},
-\code{\link{make_spinner}()}
+Other spinners:
+\code{\link[=get_spinner]{get_spinner()}},
+\code{\link[=list_spinners]{list_spinners()}},
+\code{\link[=make_spinner]{make_spinner()}}
 }
 \concept{spinners}

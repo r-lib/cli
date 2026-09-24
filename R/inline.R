@@ -1,4 +1,6 @@
-if (getRversion() >= "2.15.1") utils::globalVariables("app")
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables("app")
+}
 
 inline_generic <- function(app, x, style) {
   if (is.character(x) && any(grepl("\n", x))) {
@@ -192,7 +194,9 @@ inline_transformer <- function(code, envir) {
     rcls <- class(val)
     stls <- app$get_current_style()$`class-map`
     cls <- na.omit(match(rcls, names(stls)))[1]
-    if (!is.na(cls)) class <- c(class, stls[[cls]])
+    if (!is.na(cls)) {
+      class <- c(class, stls[[cls]])
+    }
 
     vec_style <- attr(val, "cli_style")
     tid <- if (!is.null(vec_style)) {

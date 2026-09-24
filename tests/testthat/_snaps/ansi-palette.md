@@ -30,7 +30,7 @@
       withr::with_options(list(cli.palette = "foobar12"), ansi_palette_show(colors = 256))
     Condition
       Error:
-      ! [1m[22mCannot find cli ANSI palette [34m"foobar12"[39m
+      ! [33m![39m [1m[22mCannot find cli ANSI palette [34m"foobar12"[39m
       [36mi[39m Know palettes are [34m"dichro"[39m, [34m"vga"[39m, [34m"winxp"[39m, [34m"vscode"[39m, [34m"win10"[39m, [34m"macos"[39m, [34m"putty"[39m, [34m"mirc"[39m, [34m"xterm"[39m, [34m"ubuntu"[39m, [34m"eclipse"[39m, [34m"iterm"[39m, [34m"iterm-pastel"[39m, [34m"iterm-smoooooth"[39m, [34m"iterm-snazzy"[39m, [34m"iterm-solarized"[39m, and [34m"iterm-tango"[39m.
       [36mi[39m Maybe the `cli.palette` option is incorrect?
 

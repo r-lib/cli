@@ -49,7 +49,7 @@ diff_chr(letters, letters2)
 The diffobj package for a much more comprehensive set of
 \code{diff}-like tools.
 
-Other diff functions in cli: 
-\code{\link{diff_str}()}
+Other diff functions in cli:
+\code{\link[=diff_str]{diff_str()}}
 }
 \concept{diff functions in cli}

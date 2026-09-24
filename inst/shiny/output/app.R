@@ -32,7 +32,9 @@ server <- function(input, output) {
       # Produce some extra output
       Sys.sleep(0.5)
       msg <- paste(strwrap(cli:::lorem_ipsum(1, 1)), collapse = "\n")
-      if (i != n) cli_progress_output(msg)
+      if (i != n) {
+        cli_progress_output(msg)
+      }
       Sys.sleep(0.5)
     }
 

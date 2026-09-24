@@ -593,7 +593,7 @@
       cli_dl("foo", "must be a named character vector")
     Condition
       Error:
-      ! `items` must be a named character vector
+      ! ! `items` must be a named character vector
       i `items` is not named
 
 ---

@@ -139,7 +139,9 @@ tree <- function(
 
   pt <- function(root, n = integer(), mx = integer(), used = character()) {
     num_root <- match(root, data[[1]])
-    if (is.na(num_root)) return()
+    if (is.na(num_root)) {
+      return()
+    }
 
     prefix <- vcapply(seq_along(n), function(i) {
       if (n[i] < mx[i]) {
@@ -156,8 +158,11 @@ tree <- function(
     })
 
     root_seen <- root %in% seen
-    root_lab <- if (trim && root_seen) trimlabs[[num_root]] else
+    root_lab <- if (trim && root_seen) {
+      trimlabs[[num_root]]
+    } else {
       labels[[num_root]]
+    }
 
     # multi-line labels
     prefix2 <- if (grepl("\n", root_lab, fixed = TRUE)) {
@@ -206,7 +211,9 @@ tree <- function(
     }
   }
 
-  if (nrow(data)) pt(root)
+  if (nrow(data)) {
+    pt(root)
+  }
 
   res <- ansi_substr(res, 1, width)
 

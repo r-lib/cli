@@ -28,7 +28,9 @@ cli_progress_cleanup <- function() {
 }
 
 should_run_progress_examples <- function() {
-  if (is_rcmd_check()) return(FALSE)
+  if (is_rcmd_check()) {
+    return(FALSE)
+  }
   tolower(Sys.getenv("R_PROGRESS_NO_EXAMPLES")) != "true"
 }
 

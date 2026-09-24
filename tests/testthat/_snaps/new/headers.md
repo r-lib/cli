@@ -34,7 +34,6 @@
         cli_h2("{xx}. header: {x}")
       })
     Message
-      
       [1m[3m[1m[3mHEADER[3m[1m[23m[22m
       
       [1m[1mHeader[1m[22m
@@ -80,7 +79,6 @@
         cli_h2("{xx}. header: {x}")
       })
     Message
-      
       [1m[3m[1m[3mHEADER[3m[1m[23m[22m
       
       [1m[1mHeader[1m[22m

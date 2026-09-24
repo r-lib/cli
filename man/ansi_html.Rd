@@ -22,7 +22,7 @@ Character vector of HTML.
 Convert ANSI styled text to HTML
 }
 \examples{
-\dontshow{if (cli:::has_packages(c("htmltools", "withr"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (cli:::has_packages(c("htmltools", "withr"))) withAutoprint(\{ # examplesIf}
 ## Syntax highlight the source code of an R function with ANSI tags,
 ## and export it to a HTML file.
 code <- withr::with_options(
@@ -40,7 +40,7 @@ if (interactive()) htmltools::html_print(page)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other ANSI to HTML conversion: 
-\code{\link{ansi_html_style}()}
+Other ANSI to HTML conversion:
+\code{\link[=ansi_html_style]{ansi_html_style()}}
 }
 \concept{ANSI to HTML conversion}

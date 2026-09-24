@@ -27,10 +27,10 @@ from the result.
 ansi_strip(col_red("foobar")) == "foobar"
 }
 \seealso{
-Other low level ANSI functions: 
-\code{\link{ansi_has_any}()},
-\code{\link{ansi_hide_cursor}()},
-\code{\link{ansi_regex}()},
-\code{\link{ansi_string}()}
+Other low level ANSI functions:
+\code{\link[=ansi_has_any]{ansi_has_any()}},
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=ansi_regex]{ansi_regex()}},
+\code{\link[=ansi_string]{ansi_string()}}
 }
 \concept{low level ANSI functions}

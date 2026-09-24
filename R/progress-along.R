@@ -108,7 +108,9 @@ cli_progress_along <- function(
   .envir
   list(...)
 
-  if (getRversion() < "3.5.0") return(seq_along(x))
+  if (getRversion() < "3.5.0") {
+    return(seq_along(x))
+  }
   id <- cli_progress_bar(
     name = name,
     total = total,

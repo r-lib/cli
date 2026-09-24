@@ -96,6 +96,7 @@ SEXP clic_get_time(void) {
   return Rf_ScalarReal(ts);
 }
 
+#if (defined(R_VERSION) && R_VERSION < R_Version(4, 5, 0))
 SEXP clic__find_var(SEXP rho, SEXP symbol) {
   SEXP ret = Rf_findVarInFrame(rho, symbol);
   if (ret == R_UnboundValue) {
@@ -111,6 +112,25 @@ SEXP clic__find_var(SEXP rho, SEXP symbol) {
     return ret;
   }
 }
+#else
+SEXP clic__find_var(SEXP rho, SEXP symbol) {
+  Rboolean ex = R_existsVarInFrame(rho, symbol);
+  if (!ex) {
+    error("Cannot find variable `%s`.", CHAR(PRINTNAME(symbol)));
+  }
+
+  SEXP ret = R_getVar(symbol, rho, TRUE);
+  if (TYPEOF(ret) == PROMSXP) {
+    PROTECT(ret);
+    SEXP ret2 = Rf_eval(ret, rho);
+    UNPROTECT(1);
+    return(ret2);
+
+  } else {
+    return ret;
+  }
+}
+#endif
 
 static int cli__counter = 0;
 
@@ -272,7 +292,7 @@ void cli_progress_set(SEXP bar, double set) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) {
+    if (now >= REAL(show_after)[0]) {
       cli__progress_update(bar);
     } else {
       SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));
@@ -332,9 +352,7 @@ void cli_progress_done(SEXP bar) {
 
 int cli_progress_num(void) {
   SEXP clienv = PROTECT(clic__find_var(cli_pkgenv, Rf_install("clienv")));
-  if (clienv == R_UnboundValue) error("Cannot find 'clienv'");
   SEXP bars = PROTECT(clic__find_var(clienv, Rf_install("progress")));
-  if (bars == R_UnboundValue) error("Cannot find 'clienv$progress'");
   UNPROTECT(2);
   return LENGTH(bars);
 }
@@ -383,7 +401,7 @@ void cli_progress_update(SEXP bar, double set, double inc, int force) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) {
+    if (now >= REAL(show_after)[0]) {
       cli__progress_update(bar);
     } else {
       SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));

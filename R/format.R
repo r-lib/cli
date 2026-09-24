@@ -81,7 +81,9 @@ cli_format.character <- function(x, style = NULL, ...) {
 
 cli_format.numeric <- function(x, style = NULL, ...) {
   digits <- style$digits
-  if (!is.null(digits)) x <- round(x, digits)
+  if (!is.null(digits)) {
+    x <- round(x, digits)
+  }
   x
 }
 
