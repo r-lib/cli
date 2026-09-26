@@ -496,7 +496,7 @@ test_that("ansi_trimws", {
 })
 
 test_that("ansi_strwrap simple", {
-  cases = list(
+  cases <- list(
     list(character(), character()),
     list("", ""),
     list("foo", "foo"),
@@ -510,7 +510,7 @@ test_that("ansi_strwrap simple", {
 })
 
 test_that("ansi_strwrap simple styled", {
-  cases = list(
+  cases <- list(
     list(col_red("foo"), col_red("foo")),
     list(col_red(c("foo", "bar")), col_red(c("foo", "bar"))),
     list(
@@ -583,6 +583,11 @@ test_that("ansi_strwrap newlines", {
   expect_equal(
     ansi_strwrap("\033[32mv\033[39m hello world.\nxxx"),
     ansi_string("\033[32mv\033[39m hello world. xxx")
+  )
+  # Reprex for issue #667 about using \r
+  expect_equal(
+    ansi_strwrap("\033[36m•\033[39m x \r y"),
+    ansi_string("\033[36m•\033[39m x y")
   )
 })
 

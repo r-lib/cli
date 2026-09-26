@@ -1,5 +1,9 @@
 # cli (development version)
 
+* Hyperlinks containing `fs_path` objects (or any object with a
+  `class-map` entry that itself creates a hyperlink) now generate the
+  correct ANSI escape sequences (#683).
+
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a
     key press.
@@ -33,6 +37,8 @@
 * `hash_raw_animal()` and `hash_raw_emoji()` now validate `n_adj` and `size`,
   respectively, consistently with their character-vector variants. This also
   affects `hash_obj_animal()` and `hash_obj_emoji()` (#834, @fly1d).
+
+* Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
 
 # cli 3.6.6
 
