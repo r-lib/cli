@@ -45,6 +45,17 @@
   function to be used when testing cli progress bars. It makes cli
   redraw the progress bar for every progress update.
 
+- [`hash_raw_animal()`](https://cli.r-lib.org/dev/reference/hash_animal.md)
+  and
+  [`hash_raw_emoji()`](https://cli.r-lib.org/dev/reference/hash_emoji.md)
+  now validate `n_adj` and `size`, respectively, consistently with their
+  character-vector variants. This also affects
+  [`hash_obj_animal()`](https://cli.r-lib.org/dev/reference/hash_animal.md)
+  and
+  [`hash_obj_emoji()`](https://cli.r-lib.org/dev/reference/hash_emoji.md)
+  ([\#834](https://github.com/r-lib/cli/issues/834),
+  [@fly1d](https://github.com/fly1d)).
+
 - Fix issues with
   [`ansi_strwrap()`](https://cli.r-lib.org/dev/reference/ansi_strwrap.md)
   having `\r` in the string
