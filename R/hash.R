@@ -351,6 +351,8 @@ hash_raw_emoji <- function(x, size = 3) {
   stopifnot(
     is.raw(x),
     is_count(size),
+    # Match hash_emoji(): at least one emoji, and at most four to keep
+    # nrow(emojis)^size within the exact integer range of an R double.
     size >= 1 && size <= 4
   )
   md5 <- hash_raw_md5(x)
@@ -499,6 +501,9 @@ hash_raw_animal <- function(x, n_adj = 2) {
   stopifnot(
     is.raw(x),
     is_count(n_adj),
+    # Match hash_animal(): zero adjectives leaves just the animal name;
+    # at most three keeps length(gfycat_adjectives)^n_adj *
+    # length(gfycat_animals) within the exact integer range of an R double.
     n_adj >= 0 && n_adj <= 3
   )
   md5 <- hash_raw_md5(x)
