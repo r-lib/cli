@@ -165,6 +165,16 @@ test_that("hash_obj_emoji", {
   })
 })
 
+test_that("emoji hash size is validated for raw vectors and objects", {
+  expect_no_error(hash_raw_emoji(raw(), size = 1))
+  expect_no_error(hash_raw_emoji(raw(), size = 4))
+  expect_error(hash_raw_emoji(raw(), size = 0), class = "simpleError")
+  expect_error(hash_raw_emoji(raw(), size = 1.5), class = "simpleError")
+  expect_error(hash_raw_emoji(raw(), size = 5), class = "simpleError")
+  expect_error(hash_obj_emoji(NULL, size = 0), class = "simpleError")
+  expect_error(hash_obj_emoji(NULL, size = 5), class = "simpleError")
+})
+
 test_that("hash_animal", {
   expect_snapshot({
     hash_animal(character())$words
@@ -191,6 +201,16 @@ test_that("hash_obj_animal", {
     hash_obj_animal(1:10)$words
     hash_obj_animal(mtcars)$words
   })
+})
+
+test_that("animal hash adjective count is validated for raw vectors and objects", {
+  expect_no_error(hash_raw_animal(raw(), n_adj = 0))
+  expect_no_error(hash_raw_animal(raw(), n_adj = 3))
+  expect_error(hash_raw_animal(raw(), n_adj = -1), class = "simpleError")
+  expect_error(hash_raw_animal(raw(), n_adj = 1.5), class = "simpleError")
+  expect_error(hash_raw_animal(raw(), n_adj = 4), class = "simpleError")
+  expect_error(hash_obj_animal(NULL, n_adj = -1), class = "simpleError")
+  expect_error(hash_obj_animal(NULL, n_adj = 4), class = "simpleError")
 })
 
 test_that("hash_xxhash", {

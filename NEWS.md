@@ -34,6 +34,10 @@
   cli progress bars. It makes cli redraw the progress bar for every
   progress update.
 
+* `hash_raw_animal()` and `hash_raw_emoji()` now validate `n_adj` and `size`,
+  respectively, consistently with their character-vector variants. This also
+  affects `hash_obj_animal()` and `hash_obj_emoji()` (#834, @fly1d).
+
 * Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
 
 # cli 3.6.6
