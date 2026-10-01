@@ -159,32 +159,32 @@ code_highlight <- function(code, code_theme = NULL, envir = NULL) {
   do_subst(code, data, hitext)
 }
 
+substr_with_tabs <- function(x, start, stop, tabsize = 8) {
+  widths <- rep_len(1, nchar(x))
+  tabs <- which(strsplit(x, "")[[1]] == "\t")
+  for (i in tabs) {
+    cols <- cumsum(widths)
+    widths[i] <- tabsize - (cols[i] - 1) %% tabsize
+  }
+  cols <- cumsum(widths)
+  start <- which(cols >= start)
+  if (!length(start)) {
+    return("")
+  }
+  start <- start[1]
+  stop <- which(cols <= stop)
+  if (length(stop)) {
+    stop <- stop[length(stop)]
+    substr(x, start, stop)
+  } else {
+    ""
+  }
+}
+
 get_parse_data <- function(x) {
   # getParseData(x, includeText = NA) would trim long strings and symbols
   data <- getParseData(x, includeText = FALSE)
   data$text <- character(nrow(data))
-
-  substr_with_tabs <- function(x, start, stop, tabsize = 8) {
-    widths <- rep_len(1, nchar(x))
-    tabs <- which(strsplit(x, "")[[1]] == "\t")
-    for (i in tabs) {
-      cols <- cumsum(widths)
-      widths[i] <- tabsize - (cols[i] - 1) %% tabsize
-    }
-    cols <- cumsum(widths)
-    start <- which(cols >= start)
-    if (!length(start)) {
-      return("")
-    }
-    start <- start[1]
-    stop <- which(cols <= stop)
-    if (length(stop)) {
-      stop <- stop[length(stop)]
-      substr(x, start, stop)
-    } else {
-      ""
-    }
-  }
 
   srcfile <- attr(data, "srcfile")
   terminal <- which(data$terminal)
@@ -294,7 +294,10 @@ replace_in_place <- function(str, start, end, replacement) {
     length(end) == length(replacement)
   )
 
-  keep <- substring(str, c(1, end + 1), c(start - 1, nchar(str)))
+  starts <- c(1, end + 1)
+  ends <- c(start - 1, nchar(str))
+  keep <- sapply(seq_along(starts),
+                 function(i) substr_with_tabs(str, starts[i], ends[i]))
 
   pieces <- character(length(replacement) * 2 + 1)
 

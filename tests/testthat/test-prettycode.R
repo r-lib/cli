@@ -145,6 +145,11 @@ test_that("replace_in_place", {
     replace_in_place("1234567890", c(1, 5), c(6, 10), c("A", "B")),
     "AB"
   )
+
+  expect_equal(
+    replace_in_place("x\t + 1", c(1, 10, 12), c(1, 10, 12), c("x", "+", "1")),
+    "x\t + 1"
+  )
 })
 
 test_that("replace_in_place corner cases", {
@@ -262,6 +267,11 @@ test_that_cli(configs = "ansi", "new language features, lambda functions", {
   expect_snapshot(
     cat(code_highlight('\\(x) x * 2', list(reserved = "bold")))
   )
+})
+
+test_that_cli(configs = c("plain", "ansi"), "strings with tabs", {
+  expect_snapshot(
+      code_highlight("x\t + 1"))
 })
 
 test_that("code_highlight() works on long strings and symbols", {
