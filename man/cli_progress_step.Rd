@@ -42,7 +42,8 @@ class for steps with a spinner.}
 
 \item{.envir}{Passed to \code{\link[=cli_progress_bar]{cli_progress_bar()}}.}
 
-\item{...}{Passed to \code{\link[=cli_progress_bar]{cli_progress_bar()}}.}
+\item{...}{Passed to \code{\link[=cli_progress_bar]{cli_progress_bar()}} (with
+the exclusion of `clear`, which is always `FALSE`).}
 }
 \description{
 This is a simplified progress bar, a single (dynamic)
