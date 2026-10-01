@@ -38,6 +38,7 @@ This is how the headings look with the default builtin theme.
     cli_h2("Header {.emph 2}")
     cli_h3("Header {.emph 3}")
 
+
     #>
     #> ── Header 1 ──────────────────────────────────────────────────────────
     #>

@@ -69,6 +69,7 @@ cli_inform(message, ..., .envir = parent.frame())
       "x" = "You've supplied a {.cls {class(n)}} vector."
     ))
 
+
     #> Error:
     #> ! `n` must be a numeric vector
     #> ✖ You've supplied a <character> vector.
@@ -81,6 +82,7 @@ cli_inform(message, ..., .envir = parent.frame())
       "i" = "There {?is/are} {len} element{?s}.",
       "x" = "You've tried to subset element {idx}."
     ))
+
 
     #> Error:
     #> ! Must index an existing element:

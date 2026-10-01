@@ -62,6 +62,7 @@ The id of the new container element, invisibly.
     }
     fun()
 
+
     #> • one
     #> • two
     #> • three
@@ -76,6 +77,7 @@ The id of the new container element, invisibly.
       cli_end()
     }
     fun()
+
 
     #> • one
     #> • two

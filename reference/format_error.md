@@ -36,6 +36,7 @@ substitutions.
       "x" = "You've supplied a {.cls {class(n)}} vector."
     )))
 
+
     #> Error: `n` must be a numeric vector
     #> ✖ You've supplied a <character> vector.
 
@@ -46,6 +47,7 @@ substitutions.
       "i" = "There {?is/are} {len} element{?s}.",
       "x" = "You've tried to subset element {idx}."
     )))
+
 
     #> Error: Must index an existing element:
     #> ℹ There are 26 elements.

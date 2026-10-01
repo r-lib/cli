@@ -19,7 +19,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/r-lib/cli/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/r-lib/cli/blob/cran-3.6.6/DESCRIPTION)
 
 Csárdi G (2026). *cli: Helpers for Developing Command Line Interfaces*.
 R package version 3.6.6, <https://cli.r-lib.org>.

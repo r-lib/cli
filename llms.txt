@@ -1,5 +1,7 @@
 # cli
 
+![cli logo](inst/logo/cli-light.svg)
+
 > Helpers for Developing Command Line Interfaces
 
 A suite of tools to build attractive command line interfaces (CLIs),
@@ -29,12 +31,14 @@ styles.
 Install the stable version from CRAN:
 
 ``` r
+
 install.packages("cli")
 ```
 
 Install the development version from GitHub:
 
 ``` r
+
 pak::pak("r-lib/cli")
 ```
 
@@ -47,34 +51,44 @@ Some of the more commonly used cli elements, and features.
 One liner messages to inform or warn.
 
 ``` r
+
 pkgs <- c("foo", "bar", "foobar")
 cli_alert_success("Downloaded {length(pkgs)} packages.")
 ```
 
+
     #> ✔ Downloaded 3 packages.
 
 ``` r
+
 db_url <- "example.com:port"
 cli_alert_info("Reopened database {.url {db_url}}.")
 ```
 
+
     #> ℹ Reopened database <example.com:port>.
 
 ``` r
+
 cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
+
 
     #> ! Cannot reach GitHub, using local database cache.
 
 ``` r
+
 cli_alert_danger("Failed to connect to database.")
 ```
+
 
     #> ✖ Failed to connect to database.
 
 ``` r
+
 cli_alert("A generic alert")
 ```
+
 
     #> → A generic alert
 
@@ -83,23 +97,29 @@ cli_alert("A generic alert")
 Three levels of headings.
 
 ``` r
+
 cli_h1("Heading 1")
 ```
+
 
     #>
     #> ── Heading 1 ───────────────────────────────────────────────────────────────────
 
 ``` r
+
 cli_h2("Heading 2")
 ```
+
 
     #>
     #> ── Heading 2 ──
     #>
 
 ``` r
+
 cli_h3("Heading 3")
 ```
+
 
     #> ── Heading 3
 
@@ -108,6 +128,7 @@ cli_h3("Heading 3")
 Ordered, unordered and description lists, that can be nested.
 
 ``` r
+
 fun <- function() {
   cli_ol()
   cli_li("Item 1")
@@ -121,6 +142,7 @@ fun <- function() {
 fun()
 ```
 
+
     #> 1. Item 1
     #>   • Subitem 1
     #>   • Subitem 2
@@ -131,6 +153,7 @@ fun()
 Theming via a CSS-like language.
 
 ``` r
+
 fun <- function() {
   cli_div(theme = list(span.emph = list(color = "orange")))
   cli_text("This is very {.emph important}")
@@ -139,6 +162,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> This is very important
     #> Back to the previous theme
@@ -149,12 +173,14 @@ Automatic command substitution via the
 [glue](https://github.com/tidyverse/glue) package.
 
 ``` r
+
 size <- 123143123
 dt <- 1.3454
 cli_alert_info(c(
   "Downloaded {prettyunits::pretty_bytes(size)} in ",
   "{prettyunits::pretty_sec(dt)}"))
 ```
+
 
     #> ℹ Downloaded 123.14 MB in 1.3s
 
@@ -163,16 +189,19 @@ cli_alert_info(c(
 Pluralization support.
 
 ``` r
+
 nfiles <- 3
 ndirs <- 1
 cli_alert_info("Found {nfiles} file{?s} and {ndirs} director{?y/ies}.")
 ```
+
 
     #> ℹ Found 3 files and 1 directory.
 
 ## Progress bars
 
 ``` r
+
 clean <- function() {
   cli_progress_bar("Cleaning data", total = 100)
   for (i in 1:100) {

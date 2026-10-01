@@ -47,6 +47,7 @@ cli_rule(
     pkg <- "mypackage"
     cli_rule(left = "{.pkg {pkg}} results")
 
+
     #> ── mypackage results ─────────────────────────────────────────────────
 
 ### Theming
@@ -67,6 +68,7 @@ Colors and background colors can similarly changed via a theme.
       "line-type" = "double")))
     cli_rule("Summary", right = "{.pkg mypackage}")
     cli_end(d)
+
 
     #> ══ Summary ══════════════════════════════════════════════ mypackage ══
 

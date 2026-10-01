@@ -47,6 +47,7 @@ cli_blockquote(
       "most of it) in programming.")
     cli_blockquote(evil, citation = "Donald Ervin Knuth")
 
+
     #>
     #>     “The real problem is that programmers have spent far
     #>     too much time worrying about efficiency in the wrong

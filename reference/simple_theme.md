@@ -65,6 +65,7 @@ You can also use it temporarily, in a div element:
 
     cli_end(show)
 
+
     #>
     #> ── Heading 1 ─────────────────────────────────────────────────────────
     #>

@@ -74,6 +74,7 @@ corresponding `bullet-<name>` classes.
       "i" = "info"
     ))
 
+
     #> noindent
     #>   indent
     #> • bullet

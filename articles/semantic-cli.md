@@ -18,6 +18,7 @@ CLI elements, and also some common features of them.
 ## Building a command line interface
 
 ``` r
+
 library(cli)
 ```
 
@@ -31,32 +32,42 @@ Alerts are typically short messages. cli has four types of alerts
 (success, info, warning, danger) and also a generic alert type:
 
 ``` r
+
 cli_alert_success("Updated database.")
 ```
+
 
     #> ✔ Updated database.                                                             
 
 ``` r
+
 cli_alert_info("Reopened database.")
 ```
+
 
     #> ℹ Reopened database.                                                            
 
 ``` r
+
 cli_alert_warning("Cannot reach GitHub, using local database cache.")
 ```
+
 
     #> ! Cannot reach GitHub, using local database cache.                              
 
 ``` r
+
 cli_alert_danger("Failed to connect to database.")
 ```
+
 
     #> ✖ Failed to connect to database.                                                
 
 ``` r
+
 cli_alert("A generic alert")
 ```
+
 
     #> → A generic alert                                                               
 
@@ -65,8 +76,10 @@ cli_alert("A generic alert")
 Text is automatically wrapped to the terminal width.
 
 ``` r
+
 cli_text(cli:::lorem_ipsum())
 ```
+
 
     #> Lorem ad ipsum veniam esse nisi deserunt duis. Qui incididunt elit elit mollit  
     #> sint nulla consectetur aute commodo do elit laboris minim et. Laboris ipsum     
@@ -82,6 +95,7 @@ before and after paragraphs, but only a single empty line is added
 between two paragraphs.
 
 ``` r
+
 fun <- function() {
   cli_par()
   cli_text("This is some text.")
@@ -93,6 +107,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> This is some text.                                                              
     #> Some more text.                                                                 
@@ -122,22 +137,28 @@ an empty line after
 [`cli_h2()`](https://cli.r-lib.org/reference/cli_h1.md).
 
 ``` r
+
 cli_h1("Heading 1")
 ```
+
 
     #> ── Heading 1 ───────────────────────────────────────────────────────────────────
 
 ``` r
+
 cli_h2("Heading 2")
 ```
+
 
     #>                                                                                 
     #> ── Heading 2 ──                                                                 
     #>                                                                                 
 
 ``` r
+
 cli_h3("Heading 3")
 ```
+
 
     #> ── Heading 3                                                                    
 
@@ -147,12 +168,14 @@ All cli text is treated as a glue template, with special formatters
 available (see the ‘Inline text formatting’ Section):
 
 ``` r
+
 size <- 123143123
 dt <- 1.3454
 cli_alert_info(c(
   "Downloaded {prettyunits::pretty_bytes(size)} in ",
   "{prettyunits::pretty_sec(dt)}"))
 ```
+
 
     #> ℹ Downloaded 123.14 MB in 1.3s                                                  
 
@@ -166,6 +189,7 @@ are below, see
 for details.
 
 ``` r
+
 fun <- function() {
   cli_ul()
   cli_li("{.emph Emphasized} text")
@@ -183,6 +207,7 @@ fun <- function() {
 fun()
 ```
 
+
     #> • Emphasized text                                                               
     #> • Strong importance                                                             
     #> • A piece of code: `sum(a) / length(a)`                                         
@@ -199,9 +224,11 @@ To combine inline markup and string interpolation, you need to add
 another set of braces:
 
 ``` r
+
 dlurl <- "https://httpbin.org/status/404"
 cli_alert_danger("Failed to download {.url {dlurl}}.")
 ```
+
 
     #> ✖ Failed to download <https://httpbin.org/status/404>.                          
 
@@ -211,10 +238,12 @@ tailor the conversion of values to strings. The conversion can be
 themed, see “Theming” below.
 
 ``` r
+
 cli_div(theme = list(.val = list(digits = 2)))
 cli_text("Some random numbers: {.val {runif(4)}}.")
 cli_end()
 ```
+
 
     #> Some random numbers: 0.07, 0.1, 0.32, and 0.52.                                 
 
@@ -225,25 +254,31 @@ glue substitutions, after formatting. This is handy to create lists of
 files, packages, etc.
 
 ``` r
+
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: {pkgs}.")
 ```
 
+
     #> Packages: pkg1, pkg2, and pkg3.                                                 
 
 ``` r
+
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Packages: {.pkg {pkgs}}")
 ```
+
 
     #> Packages: pkg1, pkg2, and pkg3                                                  
 
 By default class names are collapsed differently:
 
 ``` r
+
 x <- Sys.time()
 cli_text("Hey {.var x} has class {.cls {class(x)}}")
 ```
+
 
     #> Hey `x` has class <POSIXct/POSIXt>                                              
 
@@ -254,6 +289,7 @@ non-breaking spaces, and mark them with an `X`, so it is easy to see
 that there are no line breaks at a non-breaking space:
 
 ``` r
+
 # Make some spaces non-breaking, and mark them with X
 txt <- cli:::lorem_ipsum()
 mch <- gregexpr(txt, pattern = " ", fixed = TRUE)
@@ -261,6 +297,7 @@ nbs <- runif(length(mch[[1]])) < 0.5
 regmatches(txt, mch)[[1]] <- ifelse(nbs, "X\u00a0", " ")
 cli_text(txt)
 ```
+
 
     #> Qui mollit anim est in deserunt adipisicing nostrud duis enimX deserunt.X Ad    
     #> quiX quiX magna animX esse non anim magnaX Lorem.X Dolore laboreX cupidatat     
@@ -277,25 +314,31 @@ see [`cli_ol()`](https://cli.r-lib.org/reference/cli_ol.md),
 [`cli_dl()`](https://cli.r-lib.org/reference/cli_dl.md):
 
 ``` r
+
 cli_ol(c("item 1", "item 2", "item 3"))
 ```
+
 
     #> 1. item 1                                                                       
     #> 2. item 2                                                                       
     #> 3. item 3                                                                       
 
 ``` r
+
 cli_ul(c("item 1", "item 2", "item 3"))
 ```
+
 
     #> • item 1                                                                        
     #> • item 2                                                                        
     #> • item 3                                                                        
 
 ``` r
+
 cli_dl(c("item 1" = "description 1", "item 2" = "description 2",
          "item 3" = "description 3"))
 ```
+
 
     #> item 1: description 1                                                           
     #> item 2: description 2                                                           
@@ -304,9 +347,11 @@ cli_dl(c("item 1" = "description 1", "item 2" = "description 2",
 Item text is wrapped to the terminal width:
 
 ``` r
+
 cli_ul(c("item 1" = cli:::lorem_paragraph(1, 50),
          "item 2" = cli:::lorem_paragraph(1, 50)))
 ```
+
 
     #> • Officia ad.                                                                   
     #> • Minim velit ullamco cupidatat eu ipsum adipisicing ea dolore ipsum consequat  
@@ -319,6 +364,7 @@ cli_ul(c("item 1" = cli:::lorem_paragraph(1, 50),
 Items can be added one by one:
 
 ``` r
+
 fun <- function() {
   lid <- cli_ul()
   cli_li("Item 1")
@@ -328,6 +374,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> • Item 1                                                                        
     #> • Item 2                                                                        
@@ -350,6 +397,7 @@ adding text to the item, until the container is closed via
 the current item container, and creates another one for the new item:
 
 ``` r
+
 fun <- function() {
   cli_ul()
   cli_li("First item")
@@ -358,6 +406,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> • First item                                                                    
     #> This is still the first item                                                    
@@ -368,6 +417,7 @@ fun()
 To create nested lists, open nested containers:
 
 ``` r
+
 fun <- function() {
   cli_ol()
   cli_li("Item 1")
@@ -380,6 +430,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> 1. Item 1                                                                       
     #>   • Subitem 1                                                                   
@@ -396,8 +447,10 @@ close the container of the list item.
 horizontal rule.
 
 ``` r
+
 cli_rule(left = "Compiling {.pkg mypackage}")
 ```
+
 
     #> ── Compiling mypackage ─────────────────────────────────────────────────────────
 
@@ -447,6 +500,7 @@ This output is created “above” the status bar, which is always kept in
 the last line of the screen. See the following example:
 
 ``` r
+
 f <- function() {
   cli_alert_info("About to start downloads.")
   sb <- cli_status("{symbol$arrow_right} Downloading 10 files.")
@@ -497,8 +551,10 @@ declarations. For example, the style of `<h1>` tags looks like this in
 the built-in theme:
 
 ``` r
+
 builtin_theme()$h1
 ```
+
 
     #> $`font-weight`                                                                  
     #> [1] "bold"                                                                      
@@ -512,8 +568,8 @@ builtin_theme()$h1
     #> $fmt                                                                            
     #> function (x)                                                                    
     #> cli::rule(x, line_col = "cyan")                                                 
-    #> <bytecode: 0x555c3897e268>                                                      
-    #> <environment: 0x555c36aa5948>                                                   
+    #> <bytecode: 0x56128593acb8>                                                      
+    #> <environment: 0x56128395fb88>                                                   
     #>                                                                                 
 
 See also [`?cli::themes`](https://cli.r-lib.org/reference/themes.md) for
@@ -530,6 +586,7 @@ containers, [`cli_div()`](https://cli.r-lib.org/reference/cli_div.md)
 auto-closes when the calling function exits.)
 
 ``` r
+
 fun <- function() {
   cli_div(theme = list (.alert = list(color = "red")))
   cli_alert("This will be red")
@@ -538,6 +595,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> → This will be red                                                              
     #> → Back to normal color                                                          
@@ -548,6 +606,7 @@ The inline markup formatters always use a `<span>` tag, and add the name
 of the formatter as a class.
 
 ``` r
+
 fun <- function() {
   cli_div(theme = list(span.emph = list(color = "orange")))
   cli_text("This is very {.emph important}")
@@ -556,6 +615,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> This is very important                                                          
     #> Back to the previous theme                                                      
@@ -569,6 +629,7 @@ have a `filename` S3 class, we can make sure that it is always shown as
 a `.file` in the cli output:
 
 ``` r
+
 fun <- function() {
   cli_div(theme = list(body = list("class-map" = list("filename" = "file"))))
   fns <- structure(c("file1", "file2", "file3"), class = "filename")
@@ -577,6 +638,7 @@ fun <- function() {
 }
 fun()
 ```
+
 
     #> Found some files: file1, file2, and file3.                                      
 
@@ -601,9 +663,11 @@ When a cli function is called:
     [`message()`](https://rdrr.io/r/base/message.html) function.
 
 ``` r
+
 tryCatch(cli_h1("Heading"), cli_message = function(x) x)
 suppressMessages(cli_text("Not shown"))
 ```
+
 
     #> <cli_message: cli message h1>                                                   
 
@@ -616,6 +680,7 @@ set to `"callr_message"`, then cli messages are automatically copied to
 the main R process:
 
 ``` r
+
 rs <- callr::r_session$new()
 rs$run(function() {
   options(cli.message_class = "callr_message")
@@ -625,8 +690,9 @@ rs$run(function() {
 invisible(rs$close())
 ```
 
-    #> This is sub-process 16998 from callr                                            
-    #> [1] 16998                                                                       
+
+    #> This is sub-process 16615 from callr                                            
+    #> [1] 16615                                                                       
 
 ## Utility functions
 
@@ -642,14 +708,17 @@ These functions concatenate their arguments using
 `cli_ansi_string` class to their result:
 
 ``` r
+
 cat(col_red("This ", "is ", "red."), sep = "\n")
 ```
+
 
     #> This is red.                                                                    
 
 Foreground colors:
 
 ``` r
+
 cli_ul(c(
   col_black("black"),
   col_blue("blue"),
@@ -662,6 +731,7 @@ cli_ul(c(
   col_grey("grey")
 ))
 ```
+
 
     #> • black                                                                         
     #> • blue                                                                          
@@ -677,6 +747,7 @@ Note that these might actually look different depending on your terminal
 theme. Background colors:
 
 ``` r
+
 cli_ul(c(
   bg_black("black background"),
   bg_blue("blue background"),
@@ -688,6 +759,7 @@ cli_ul(c(
   bg_yellow("yellow background")
 ))
 ```
+
 
     #> • black background                                                              
     #> • blue background                                                               
@@ -701,6 +773,7 @@ cli_ul(c(
 Text styles:
 
 ``` r
+
 cli_ul(c(
   style_dim("dim style"),
   style_blurred("blurred style"),
@@ -713,6 +786,7 @@ cli_ul(c(
   style_underline("underline style")
 ))
 ```
+
 
     #> • dim style                                                                     
     #> • blurred style                                                                 
@@ -729,8 +803,10 @@ Not all `style_*` functions are supported by all terminals.
 Colors, background colors and styles can be combined:
 
 ``` r
+
 bg_white(style_bold(col_red("TITLE")))
 ```
+
 
     #> <cli_ansi_string>                                                               
     #> [1] TITLE                                                                       
@@ -741,10 +817,12 @@ can create custom colors, assuming your terminal supports them.
 combines several styles into a function:
 
 ``` r
+
 col_warn <- combine_ansi_styles(make_ansi_style("pink"), style_bold)
 col_warn("This is a warning in pink!")
 cat(col_warn("This is a warning in pink!"))
 ```
+
 
     #> <cli_ansi_string>                                                               
     #> [1] This is a warning in pink!                                                  
@@ -755,22 +833,27 @@ cat(col_warn("This is a warning in pink!"))
 Query the console width:
 
 ``` r
+
 console_width()
 ```
+
 
     #> [1] 80                                                                          
 
 Query if the console supports ansi escapes:
 
 ``` r
+
 is_ansi_tty()
 ```
+
 
     #> [1] TRUE                                                                        
 
 Hide the cursor, if the console supports it (no-op otherwise):
 
 ``` r
+
 ansi_hide_cursor()
 ansi_show_cursor()
 ```
@@ -781,16 +864,20 @@ See also
 Query if the console supports `\r`:
 
 ``` r
+
 is_dynamic_tty()
 ```
+
 
     #> [1] TRUE                                                                        
 
 Query if the console supports UTF-8 output:
 
 ``` r
+
 is_utf8_output()
 ```
+
 
     #> [1] TRUE                                                                        
 
@@ -802,16 +889,20 @@ the platform does not support them. You can use these symbols both with
 the semantic `cli_*()` functions and directly.
 
 ``` r
+
 cli_text("{symbol$tick} no errors  |  {symbol$cross} 2 warnings")
 ```
+
 
     #> ✔ no errors | ✖ 2 warnings                                                      
 
 Here is a list of all symbols:
 
 ``` r
+
 list_symbols()
 ```
+
 
     #> ✔tick                       ≠neq                                                
     #> ✖cross                      ≥geq                                                
@@ -865,8 +956,10 @@ From the awesome
 project.
 
 ``` r
+
 list_spinners()
 ```
+
 
     #>  [1] "dots"                "dots2"               "dots3"                        
     #>  [4] "dots4"               "dots5"               "dots6"                        
@@ -900,8 +993,10 @@ list_spinners()
     #> [88] "growVeriticalDotsRR"                                                      
 
 ``` r
+
 get_spinner("dots")
 ```
+
 
     #> $name                                                                           
     #> [1] "dots"                                                                      
@@ -914,6 +1009,7 @@ get_spinner("dots")
     #>                                                                                 
 
 ``` r
+
 ansi_with_hidden_cursor(demo_spinners("dots"))
 ```
 
@@ -921,6 +1017,7 @@ ansi_with_hidden_cursor(demo_spinners("dots"))
 characters.](semantic-cli_files/figure-html/spinner-dots.svg)
 
 ``` r
+
 ansi_with_hidden_cursor(demo_spinners("clock"))
 ```
 

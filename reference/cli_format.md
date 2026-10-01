@@ -41,10 +41,12 @@ cli_format(x, style = NULL, ...)
     months <- month.name[1:3]
     cli_text("{.val {months}}")
 
+
     #> "January", "February", and "March"
 
     nums <- 1:5 / 7
     cli_text("{.val {nums}}")
+
 
     #> 0.142857142857143, 0.285714285714286, 0.428571428571429,
     #> 0.571428571428571, and 0.714285714285714
@@ -55,6 +57,7 @@ cli_format(x, style = NULL, ...)
     divid <- cli_div(theme = list(.val = list(digits = 3)))
     cli_text("{.val {nums}}")
     cli_end(divid)
+
 
     #> 0.143, 0.286, 0.429, 0.571, and 0.714
 
@@ -68,6 +71,7 @@ will be used automatically for `{.val ...}` expressions.
     registerS3method("cli_format", "month", cli_format.month)
     months <- structure(month.name[1:3], class = "month")
     cli_text("{.val {months}}")
+
 
     #> "Jan", "Feb", and "Mar"
 

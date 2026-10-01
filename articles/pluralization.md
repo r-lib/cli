@@ -23,6 +23,7 @@ plural forms. Pluralization uses markup that is similar to glue, but
 uses the `{?` and `}` delimiters:
 
 ``` r
+
 library(cli)
 nfile <- 0; cli_text("Found {nfile} file{?s}.")
 ```
@@ -30,12 +31,14 @@ nfile <- 0; cli_text("Found {nfile} file{?s}.")
     #> Found 0 files.
 
 ``` r
+
 nfile <- 1; cli_text("Found {nfile} file{?s}.")
 ```
 
     #> Found 1 file.
 
 ``` r
+
 nfile <- 2; cli_text("Found {nfile} file{?s}.")
 ```
 
@@ -51,12 +54,14 @@ If the plural form is more difficult than a simple `s` suffix, then the
 singular and plural forms can be given, separated with a forward slash:
 
 ``` r
+
 ndir <- 1; cli_text("Found {ndir} director{?y/ies}.")
 ```
 
     #> Found 1 directory.
 
 ``` r
+
 ndir <- 5; cli_text("Found {ndir} director{?y/ies}.")
 ```
 
@@ -72,18 +77,21 @@ prints the word `"no"` if the count is zero, and prints the numeric
 count otherwise:
 
 ``` r
+
 nfile <- 0; cli_text("Found {no(nfile)} file{?s}.")
 ```
 
     #> Found no files.
 
 ``` r
+
 nfile <- 1; cli_text("Found {no(nfile)} file{?s}.")
 ```
 
     #> Found 1 file.
 
 ``` r
+
 nfile <- 2; cli_text("Found {no(nfile)} file{?s}.")
 ```
 
@@ -96,6 +104,7 @@ objects in a message. When cli interprets a character vector as a
 pluralization quantity, it takes the length of the vector:
 
 ``` r
+
 pkgs <- "pkg1"
 cli_text("Will remove the {.pkg {pkgs}} package{?s}.")
 ```
@@ -103,6 +112,7 @@ cli_text("Will remove the {.pkg {pkgs}} package{?s}.")
     #> Will remove the pkg1 package.
 
 ``` r
+
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Will remove the {.pkg {pkgs}} package{?s}.")
 ```
@@ -117,6 +127,7 @@ numeric vector, convert it to character via
 You can combine collapsed vectors with `"no"`, like this:
 
 ``` r
+
 pkgs <- character()
 cli_text("Will remove {?no/the/the} {.pkg {pkgs}} package{?s}.")
 ```
@@ -124,6 +135,7 @@ cli_text("Will remove {?no/the/the} {.pkg {pkgs}} package{?s}.")
     #> Will remove no packages.
 
 ``` r
+
 pkgs <- c("pkg1", "pkg2", "pkg3")
 cli_text("Will remove {?no/the/the} {.pkg {pkgs}} package{?s}.")
 ```
@@ -141,6 +153,7 @@ When the text contains multiple glue
 before the pluralization markup is used. For example:
 
 ``` r
+
 nfiles <- 3; ndirs <- 1
 cli_text("Found {nfiles} file{?s} and {ndirs} director{?y/ies}")
 ```
@@ -153,6 +166,7 @@ the correct quantity using the
 function. This sets that quantity without printing anything:
 
 ``` r
+
 nupd <- 3; ntotal <- 10
 cli_text("{nupd}/{ntotal} {qty(nupd)} file{?s} {?needs/need} updates")
 ```

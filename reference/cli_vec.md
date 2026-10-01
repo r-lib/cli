@@ -37,12 +37,14 @@ will remove the style as well.
     )
     cli_text("My list: {v}.")
 
+
     #> My list: foo & bar & foobar.
 
 ### Custom truncation
 
     x <- cli_vec(names(mtcars), list("vec-trunc" = 3))
     cli_text("Column names: {x}.")
+
 
     #> Column names: mpg, cyl, disp, …, gear, and carb.
 

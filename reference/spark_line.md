@@ -22,6 +22,7 @@ spark_line(x)
     x <- seq(0, 1, length = 10)
     spark_line(x)
 
+
     #> ⣀⡠⠔⠊⠉
 
 ## See also

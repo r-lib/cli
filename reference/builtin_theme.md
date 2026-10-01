@@ -56,6 +56,7 @@ A named list, a CLI theme.
       '  group_by(cyl) |>',
       '  mutate(rank = min_rank(desc(mpg)))')
 
+
     #> ── Heading 1 ─────────────────────────────────────────────────────────
     #>
     #> ── Heading 2 ──

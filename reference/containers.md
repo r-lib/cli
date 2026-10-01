@@ -22,6 +22,7 @@ exits.
     cli_h1("Custom title")
     cli_end(d)
 
+
     #>
     #> Custom title
 
@@ -40,6 +41,7 @@ default behavior can be changed with the `.auto_close` argument.
     div()
     cli_text("This is not yellow any more")
 
+
     #> This is yellow
     #> This is not yellow any more
 
@@ -54,6 +56,7 @@ currently open containers.
       cli:::cli_debug_doc()
     }
     fun()
+
 
     #>
     #> <cli document>

@@ -77,6 +77,7 @@ Character scalar, the rule.
 
     rule()
 
+
     #> ──────────────────────────────────────────────────────────────────────
 
 ### Line styles
@@ -93,12 +94,14 @@ Some strings for the `line` argument are interpreted specially:
 
     rule(line = 2)
 
+
     #> ══════════════════════════════════════════════════════════════════════
 
 #### Bars
 
     rule(line = "bar2")
     rule(line = "bar5")
+
 
     #> ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
     #> ▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅
@@ -107,9 +110,11 @@ Some strings for the `line` argument are interpreted specially:
 
     rule(center = "TITLE", line = "~")
 
+
     #> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TITLE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     rule(center = "TITLE", line = col_blue("~-"))
+
 
     #> ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~- TITLE ~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 
@@ -118,11 +123,13 @@ Some strings for the `line` argument are interpreted specially:
       line = "\u2582",
       line_col = "orange")
 
+
     #> ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂  ★TITLE★  ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
 
 ### Left label
 
     rule(left = "Results")
+
 
     #> ── Results ───────────────────────────────────────────────────────────
 
@@ -130,16 +137,19 @@ Some strings for the `line` argument are interpreted specially:
 
     rule(center = " * RESULTS * ")
 
+
     #> ────────────────────────────  * RESULTS *  ───────────────────────────
 
 ### Colored labels
 
     rule(center = col_red(" * RESULTS * "))
 
+
     #> ────────────────────────────  * RESULTS *  ───────────────────────────
 
 ### Colored line
 
     rule(center = col_red(" * RESULTS * "), line_col = "red")
+
 
     #> ────────────────────────────  * RESULTS *  ───────────────────────────

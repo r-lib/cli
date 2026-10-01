@@ -66,6 +66,7 @@ The id of the new container element, invisibly.
     }
     fun()
 
+
     #> foo: one
     #> bar: two
     #> baz: three
@@ -79,6 +80,7 @@ The id of the new container element, invisibly.
       cli_li(c(baz = "three"))
     }
     fun()
+
 
     #> foo: one
     #> bar: two

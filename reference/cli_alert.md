@@ -70,12 +70,14 @@ cli_alert_info(
     tbld <- prettyunits::pretty_sec(5.6)
     cli_alert_success("Built {.emph {nbld}} status report{?s} in {tbld}.")
 
+
     #> ✔ Built 11 status reports in 5.6s.
 
 ### Info
 
     cfl <- "~/.cache/files/latest.cache"
     cli_alert_info("Updating cache file {.path {cfl}}.")
+
 
     #> ℹ Updating cache file ~/.cache/files/latest.cache.
 
@@ -84,12 +86,14 @@ cli_alert_info(
     cfl <- "~/.cache/files/latest.cache"
     cli_alert_warning("Failed to update cache file {.path {cfl}}.")
 
+
     #> ! Failed to update cache file ~/.cache/files/latest.cache.
 
 ### Danger
 
     cfl <- "~/.config/report.yaml"
     cli_alert_danger("Cannot validate config file at {.path {cfl}}.")
+
 
     #> ✖ Cannot validate config file at ~/.config/report.yaml.
 
@@ -99,6 +103,7 @@ Alerts are printed without wrapping, unless you set `wrap = TRUE`:
 
     cli_alert_info("Data columns: {.val {names(mtcars)}}.")
     cli_alert_info("Data columns: {.val {names(mtcars)}}.", wrap = TRUE)
+
 
     #> ℹ Data columns: "mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "g
     #> ear", and "carb".

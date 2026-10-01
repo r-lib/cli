@@ -210,6 +210,7 @@ CRAN release: 2022-09-08
   them, some need UTF-8 and emoji support:
 
   ``` r
+
   new <- c("dots13", "dots8Bit", "sand", "material", "weather", "christmas",
     "grenade", "point", "layer", "betaWave", "fingerDance", "fistBump",
     "soccerHeader", "mindblown", "speaker", "orangePulse", "bluePulse",

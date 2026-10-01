@@ -152,6 +152,7 @@ Other functions supporting inline markup:
 ## Examples
 
 ``` r
+
 ## Failure by default
 fun <- function() {
   cli_process_start("Calculating")
