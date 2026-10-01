@@ -83,3 +83,16 @@ test_that("ansi_html_style", {
     ansi_html_style(colors = 256, palette = "ubuntu")
   )
 })
+
+# https://github.com/r-lib/cli/issues/752
+test_that("consecutive strings with the same style pasted together", {
+  x <- "\033[91mR\033[39m\033[91mR\033[39m"
+  expect_equal(
+    ansi_html(x),
+    "<span class=\"ansi ansi-color-1\">R</span><span class=\"ansi ansi-color-1\">R</span>"
+  )
+  expect_equal(
+    ansi_html(ansi_simplify(x)),
+    "<span class=\"ansi ansi-color-1\">RR</span>"
+  )
+})
