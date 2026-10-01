@@ -1,5 +1,7 @@
 # cli
 
+![cli logo](inst/logo/cli-light.svg)
+
 > Helpers for Developing Command Line Interfaces
 
 A suite of tools to build attractive command line interfaces (CLIs),
