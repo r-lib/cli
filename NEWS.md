@@ -40,6 +40,9 @@
 
 * Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
 
+* `ansi_collapse(style = "head")` no longer exceeds `width` when not even
+  the first element fits (#570, @taekop).
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
