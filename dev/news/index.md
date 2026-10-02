@@ -61,6 +61,11 @@
   having `\r` in the string
   ([\#667](https://github.com/r-lib/cli/issues/667))
 
+- `ansi_collapse(style = "head")` no longer exceeds `width` when not
+  even the first element fits
+  ([\#570](https://github.com/r-lib/cli/issues/570),
+  [@taekop](https://github.com/taekop)).
+
 ## cli 3.6.6
 
 CRAN release: 2026-04-09
