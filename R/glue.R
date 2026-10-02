@@ -245,7 +245,7 @@ collapse_head <- function(x, sep, sep2, last, trunc, width, ellipsis) {
     } else if (well == width) {
       return(ellipsis)
     } else if (well + wsep >= width) {
-      return(paste0(ansi_strtrim(x[1L], width, ellipsis = ""), ellipsis))
+      return(paste0(ansi_strtrim(x[1L], width - well, ellipsis = ""), ellipsis))
     } else {
       return(paste0(
         ansi_strtrim(x[1L], max(width - well - wsep, 0L), ellipsis = ellipsis),
