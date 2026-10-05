@@ -2,6 +2,10 @@
 
 ## cli (development version)
 
+- [`cli_progress_bar()`](https://cli.r-lib.org/dev/reference/cli_progress_bar.md)
+  has a new argument `quiet`. If TRUE, then progress bar will be
+  suppressed.
+
 - Hyperlinks containing `fs_path` objects (or any object with a
   `class-map` entry that itself creates a hyperlink) now generate the
   correct ANSI escape sequences
