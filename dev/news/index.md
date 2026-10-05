@@ -66,6 +66,12 @@
   ([\#570](https://github.com/r-lib/cli/issues/570),
   [@taekop](https://github.com/taekop)).
 
+- `cli_progress_update(set = )` no longer fails with a deferred
+  [`on.exit()`](https://rdrr.io/r/base/on.exit.html) error when the
+  progress bar is drawn with a value below zero or above the total
+  ([\#580](https://github.com/r-lib/cli/issues/580),
+  [@taekop](https://github.com/taekop)).
+
 ## cli 3.6.6
 
 CRAN release: 2026-04-09
