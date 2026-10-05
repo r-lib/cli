@@ -310,7 +310,7 @@ make_link_url <- function(txt) {
   if (all(linked)) {
     return(txt)
   }
-  txt[!linked] <- style_hyperlink(txt[!linked], txt[!linked])
+  txt[!linked] <- style_hyperlink(txt[!linked], ansi_strip(txt[!linked]))
   txt
 }
 

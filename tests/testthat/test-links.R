@@ -299,6 +299,18 @@ test_that("make_link_url", {
   expect_equal(make_link_url(x), x)
 })
 
+test_that("{.url} with a substitution has no ANSI in the link target", {
+  withr::local_options(
+    cli.hyperlink = TRUE,
+    cli.ansi = TRUE,
+    cli.num_colors = 256
+  )
+  test <- "path"
+  out <- format_inline("{.url https://example.com/{test}}")
+  target <- sub("^.*?\033\\]8;;([^\a]*)\a.*$", "\\1", out, perl = TRUE)
+  expect_equal(target, "https://example.com/path")
+})
+
 # -- {.vignette} ----------------------------------------------------------
 
 test_that_cli(configs = "plain", links = c("all", "none"), "{.vignette}", {

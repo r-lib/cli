@@ -43,6 +43,10 @@
 * `ansi_collapse(style = "head")` no longer exceeds `width` when not even
   the first element fits (#570, @taekop).
 
+* `{.url}` with a substituted value, e.g. `{.url https://example.com/{x}}`,
+  no longer puts ANSI escape sequences into the hyperlink target (#757,
+  @taekop).
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
