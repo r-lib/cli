@@ -127,6 +127,17 @@ test_that("update set", {
   expect_snapshot(capture_cli_messages(fun()))
 })
 
+test_that("update set outside of 0..total", {
+  withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
+  fun <- function(set) {
+    bar <- cli_progress_bar(total = 10, format = "{cli::pb_bar}")
+    cli_progress_update(force = TRUE, set = set)
+    cli_progress_done(id = bar)
+  }
+  expect_no_error(capture_cli_messages(fun(-1)))
+  expect_no_error(capture_cli_messages(fun(11)))
+})
+
 test_that("format changes if we (un)learn total", {
   withr::local_options(cli.dynamic = FALSE, cli.ansi = FALSE)
   fun <- function() {

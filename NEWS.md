@@ -47,6 +47,10 @@
   no longer puts ANSI escape sequences into the hyperlink target (#757,
   @taekop).
 
+* `cli_progress_update(set = )` no longer fails with a deferred `on.exit()`
+  error when the progress bar is drawn with a value below zero or above
+  the total (#580, @taekop).
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
