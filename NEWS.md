@@ -54,6 +54,9 @@
   error when the progress bar is drawn with a value below zero or above
   the total (#580, @taekop).
 
+* `cli_progress_output()` no longer fails with the Shiny progress handler
+  if the progress bar has not been shown yet (#762, @taekop).
+
 # cli 3.6.6
 
 * New `{.num}` and `{.bytes}` inline styles to format numbers
