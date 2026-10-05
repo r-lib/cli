@@ -43,6 +43,10 @@
 * `ansi_collapse(style = "head")` no longer exceeds `width` when not even
   the first element fits (#570, @taekop).
 
+* `{.url}` with a substituted value, e.g. `{.url https://example.com/{x}}`,
+  no longer puts ANSI escape sequences into the hyperlink target (#757,
+  @taekop).
+
 * `cli_progress_update(set = )` no longer fails with a deferred `on.exit()`
   error when the progress bar is drawn with a value below zero or above
   the total (#580, @taekop).
