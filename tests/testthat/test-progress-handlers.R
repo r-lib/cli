@@ -56,3 +56,18 @@ test_that("builtin_handlers", {
   expect_true(is.list(builtin_handlers()))
   expect_true(all(c("cli", "shiny", "rstudio") %in% names(builtin_handlers())))
 })
+
+test_that("shiny handler, cli_progress_output() before the bar is shown", {
+  skip_if_not_installed("shiny")
+  withr::local_options(
+    cli.progress_handlers_only = "shiny",
+    cli.progress_show_after = 3600
+  )
+  server <- function(input, output, session) {
+    id <- cli_progress_bar(total = 10)
+    cli_progress_output("custom message", id = id)
+    cli_progress_update(id = id)
+    cli_progress_done(id = id)
+  }
+  expect_no_error(shiny::testServer(server, {}))
+})
