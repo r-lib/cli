@@ -66,6 +66,12 @@
   ([\#570](https://github.com/r-lib/cli/issues/570),
   [@taekop](https://github.com/taekop)).
 
+- `{.url}` with a substituted value,
+  e.g. `{.url https://example.com/{x}}`, no longer puts ANSI escape
+  sequences into the hyperlink target
+  ([\#757](https://github.com/r-lib/cli/issues/757),
+  [@taekop](https://github.com/taekop)).
+
 - `cli_progress_update(set = )` no longer fails with a deferred
   [`on.exit()`](https://rdrr.io/r/base/on.exit.html) error when the
   progress bar is drawn with a value below zero or above the total
