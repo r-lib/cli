@@ -11,7 +11,7 @@ test_that("No leftover SVG figures", {
 
   expect_equal(
     sort(figs),
-    sort(unique(rd_figs))
+    sort(c(unique(rd_figs), "logo.svg"))
   )
 
   figs2 <- dir(

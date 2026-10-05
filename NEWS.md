@@ -1,6 +1,11 @@
 # cli (development version)
 
-* `cli_progress_bar()` has a new argument `quiet`. If TRUE, then progress bar will be suppressed.
+* `cli_progress_bar()` has a new argument `quiet`. If TRUE, then 
+  progress bar will be suppressed.
+
+* Hyperlinks containing `fs_path` objects (or any object with a
+  `class-map` entry that itself creates a hyperlink) now generate the
+  correct ANSI escape sequences (#683).
 
 * `keypress()` improvements:
   - `timeout` argument to wait at most a given number of seconds for a
@@ -31,6 +36,23 @@
 * New `cli_with_progress_ticks()` function to be used when testing
   cli progress bars. It makes cli redraw the progress bar for every
   progress update.
+
+* `hash_raw_animal()` and `hash_raw_emoji()` now validate `n_adj` and `size`,
+  respectively, consistently with their character-vector variants. This also
+  affects `hash_obj_animal()` and `hash_obj_emoji()` (#834, @fly1d).
+
+* Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
+
+* `ansi_collapse(style = "head")` no longer exceeds `width` when not even
+  the first element fits (#570, @taekop).
+
+* `{.url}` with a substituted value, e.g. `{.url https://example.com/{x}}`,
+  no longer puts ANSI escape sequences into the hyperlink target (#757,
+  @taekop).
+
+* `cli_progress_update(set = )` no longer fails with a deferred `on.exit()`
+  error when the progress bar is drawn with a value below zero or above
+  the total (#580, @taekop).
 
 # cli 3.6.6
 

@@ -181,6 +181,16 @@ inline_transformer <- function(code, envir) {
     # class-less span, so that the non-inherited styles (e.g. `before`) are
     # not used before collapsing.
 
+    # Is this substitution already nested inside a span with its own
+    # `transform` (e.g. `.href`, `.run`, `.url` build hyperlinks)? Check
+    # all open ancestors, not just the immediate one, because a
+    # non-brace-expression like `.href [text]({expr})` wraps `expr` in
+    # an extra class-less span first, see below.
+    ancestor_transform <- any(vlapply(
+      app$styles,
+      function(s) !is.null(s[["transform"]])
+    ))
+
     node <- utils::tail(app$doc, 1)[[1]]
     if (node$tag == "span") {
       class <- node$class
@@ -195,7 +205,19 @@ inline_transformer <- function(code, envir) {
     stls <- app$get_current_style()$`class-map`
     cls <- na.omit(match(rcls, names(stls)))[1]
     if (!is.na(cls)) {
-      class <- c(class, stls[[cls]])
+      new_class <- stls[[cls]]
+      # A `class-map` entry (e.g. `fs_path -> "file"`) is meant to
+      # auto-style bare values. If the value is already inside an
+      # explicit span that has its own `transform`, and the mapped
+      # class also has a `transform`, stacking both is undefined: the
+      # mapped class's transform can corrupt the explicit span's output
+      # (e.g. embedding ANSI/quoting into a hyperlink's URL). In that
+      # case, keep the explicit class only and skip the mapped one.
+      conflicts <- ancestor_transform &&
+        !is.null(class_map_style(app, new_class)[["transform"]])
+      if (!conflicts) {
+        class <- c(class, new_class)
+      }
     }
 
     vec_style <- attr(val, "cli_style")
@@ -221,6 +243,25 @@ inline_transformer <- function(code, envir) {
       style = style
     )
   }
+}
+
+# Resolve the style that a `<span class="{class}">` would get, as a
+# child of the current document, without actually adding it to the
+# document. Used to check whether a `class-map` class would introduce
+# its own `transform`, see `inline_transformer()`.
+
+class_map_style <- function(app, class) {
+  doc <- c(app$doc, list(list(tag = "span", id = "", class = class)))
+  sels <- list()
+  for (t in seq_along(app$themes)) {
+    theme <- app$themes[[t]]
+    for (i in seq_len(nrow(theme))) {
+      if (match_selector(theme$parsed[[i]], doc)) {
+        sels <- utils::modifyList(sels, theme$style[[i]])
+      }
+    }
+  }
+  sels
 }
 
 clii__inline <- function(app, text, .list) {
