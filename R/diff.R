@@ -77,9 +77,10 @@ diff_chr <- function(old, new, max_dist = Inf) {
 #' @param old First string, must not be `NA`.
 #' @param new Second string, must not be `NA`.
 #' @inheritParams diff_chr
-#' @return A list that is a `cli_diff_str` object and also a
-#'   `cli_diff_chr` object, see [diff_str] for the details about its
-#'   structure.
+#' @return A list with class `cli_diff_str` and `cli_diff_chr`.
+#'   It represents the character-by-character diff between the input
+#'   strings and is primarily intended for printing.
+#'   See [print.cli_diff_str] and [format.cli_diff_str] for details.
 #'
 #' @family diff functions in cli
 #' @seealso The diffobj package for a much more comprehensive set of
