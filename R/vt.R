@@ -76,7 +76,7 @@ vt_output <- function(output, width = 80L, height = 25L) {
     data.frame(
       stringsAsFactors = FALSE,
       lineno = i,
-      segmentno = seq_along(segments),
+      segmentno = seq_along(segs),
       segment = segs,
       bold = grepl("bold;", lgs$values, fixed = TRUE),
       italic = grepl("italic;", lgs$values, fixed = TRUE),
