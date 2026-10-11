@@ -2,8 +2,8 @@
 
 \$output function (x, options) { if (class == “output” && output_asis(x,
 options)) return(x) hook.t(x, options\[\[paste0(“attr.”, class)\]\],
-options\[\[paste0(“class.”, class)\]\]) } \<bytecode: 0x55f7d71bedc0\>
-\<environment: 0x55f7d7cea9c0\>
+options\[\[paste0(“class.”, class)\]\]) } \<bytecode: 0x55cc3255f100\>
+\<environment: 0x55cc3308ac30\>
 
 ## Introduction
 
@@ -80,9 +80,9 @@ bench::mark(
 #> # A tibble: 3 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 ansi        29.05µs  32.98µs    29742.    99.6KB     29.8
-#> 2 plain       29.32µs  32.95µs    29737.        0B     32.7
-#> 3 base         8.34µs   9.62µs   100940.    48.6KB     20.2
+#> 1 ansi        25.65µs   28.7µs    33834.    99.6KB     33.9
+#> 2 plain       25.63µs  27.55µs    34817.        0B     38.3
+#> 3 base         7.74µs   8.32µs   115942.    48.6KB     23.2
 ```
 
 ``` r
@@ -99,9 +99,9 @@ bench::mark(
 #> # A tibble: 3 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 ansi        30.61µs   35.2µs    27862.        0B     33.5
-#> 2 plain       30.87µs   34.4µs    28533.        0B     34.3
-#> 3 base         9.66µs   11.2µs    86544.        0B     34.6
+#> 1 ansi         26.8µs   29.2µs    33115.        0B     39.8
+#> 2 plain       26.51µs  28.62µs    33785.        0B     40.6
+#> 3 base         8.76µs   9.75µs   100035.        0B     40.0
 ```
 
 ### `ansi_chartr()`
@@ -120,9 +120,9 @@ bench::mark(
 #> # A tibble: 3 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 ansi        78.02µs  84.97µs    11487.   77.03KB     23.4
-#> 2 plain       59.41µs  65.53µs    14901.    8.91KB     21.1
-#> 3 base         1.44µs   1.63µs   579143.        0B     57.9
+#> 1 ansi         66.4µs  72.32µs    13386.   77.03KB     27.1
+#> 2 plain          52µs  58.47µs    16401.    8.91KB     25.0
+#> 3 base          1.5µs   1.75µs   559085.        0B      0
 ```
 
 ### `ansi_columns()`
@@ -140,8 +140,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 ansi          210µs    237µs     4187.   33.24KB     30.3
-#> 2 plain         210µs    232µs     4209.    1.09KB     25.5
+#> 1 ansi          187µs    205µs     4762.   33.24KB     36.1
+#> 2 plain         186µs    217µs     4559.    1.09KB     16.6
 ```
 
 ### `ansi_has_any()`
@@ -169,18 +169,18 @@ bench::mark(
 #> # A tibble: 12 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi          4.25µs   4.93µs   192898.    9.27KB     19.3
-#>  2 fansi_ansi       21.37µs  23.94µs    40709.    4.18KB     16.3
-#>  3 cli_plain         4.27µs   4.93µs   196708.        0B     19.7
-#>  4 fansi_plain      21.15µs  23.92µs    40899.      688B     16.4
-#>  5 cli_vec_ansi      5.38µs   6.09µs   159758.      448B     16.0
-#>  6 fansi_vec_ansi   28.64µs  31.57µs    30895.    5.02KB     15.5
-#>  7 cli_vec_plain     5.94µs   6.73µs   144573.      448B     14.5
-#>  8 fansi_vec_plain  27.63µs  30.98µs    31665.    5.02KB     12.7
-#>  9 cli_txt_ansi      4.24µs   4.93µs   196303.        0B     19.6
-#> 10 fansi_txt_ansi    21.3µs  23.88µs    40982.      688B     16.4
-#> 11 cli_txt_plain        5µs   5.64µs   172108.        0B     17.2
-#> 12 fansi_txt_plain  27.97µs  31.11µs    31485.    5.02KB     15.8
+#>  1 cli_ansi          3.89µs   4.46µs   214716.    9.27KB     21.5
+#>  2 fansi_ansi        19.4µs  22.62µs    43588.    4.18KB     21.8
+#>  3 cli_plain          3.9µs   4.58µs   214422.        0B     21.4
+#>  4 fansi_plain      19.29µs  22.03µs    44554.      688B     17.8
+#>  5 cli_vec_ansi      5.17µs   5.54µs   174370.      448B     17.4
+#>  6 fansi_vec_ansi   28.22µs  31.12µs    31140.    5.02KB     12.5
+#>  7 cli_vec_plain     5.58µs   6.41µs   152135.      448B     15.2
+#>  8 fansi_vec_plain  26.85µs  29.84µs    32536.    5.02KB     16.3
+#>  9 cli_txt_ansi      3.89µs   4.62µs   209919.        0B     21.0
+#> 10 fansi_txt_ansi   19.35µs   21.3µs    45505.      688B     18.2
+#> 11 cli_txt_plain      4.6µs   5.27µs   185304.        0B     18.5
+#> 12 fansi_txt_plain  26.78µs  30.16µs    32494.    5.02KB     13.0
 ```
 
 ### `ansi_html()`
@@ -200,8 +200,8 @@ bench::mark(
 #> # A tibble: 2 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cli          43.4µs   45.3µs    21689.    22.7KB     6.51
-#> 2 fansi        86.2µs   90.9µs    10813.    55.3KB     6.11
+#> 1 cli          46.2µs   51.8µs    19137.    22.7KB     6.10
+#> 2 fansi        90.7µs    105µs     9476.    55.3KB     6.11
 ```
 
 ### `ansi_nchar()`
@@ -235,24 +235,24 @@ bench::mark(
 #> # A tibble: 18 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi          5.12µs   5.91µs   163334.        0B    16.3 
-#>  2 fansi_ansi        56.9µs  62.53µs    15629.   38.84KB    12.4 
-#>  3 base_ansi       711.07ns 791.04ns  1135011.        0B   114.  
-#>  4 cli_plain         5.04µs   5.86µs   165698.        0B     0   
-#>  5 fansi_plain      56.75µs  62.24µs    15749.      688B    14.6 
-#>  6 base_plain      650.99ns 711.07ns  1256729.        0B     0   
-#>  7 cli_vec_ansi     23.55µs  24.51µs    40160.      448B     4.02
-#>  8 fansi_vec_ansi   73.92µs  79.79µs    12296.    5.02KB    10.4 
-#>  9 base_vec_ansi    15.84µs  15.94µs    61651.      448B     0   
-#> 10 cli_vec_plain    21.74µs  22.84µs    43304.      448B     4.33
-#> 11 fansi_vec_plain  66.21µs  71.78µs    13675.    5.02KB    12.6 
-#> 12 base_vec_plain    9.17µs   9.26µs   105749.      448B     0   
-#> 13 cli_txt_ansi     23.48µs  24.44µs    40332.        0B     4.03
-#> 14 fansi_txt_ansi   66.78µs  72.46µs    13553.      688B    12.4 
-#> 15 base_txt_ansi    15.82µs  15.91µs    61908.        0B     0   
-#> 16 cli_txt_plain    21.47µs   22.4µs    43943.        0B     4.39
-#> 17 fansi_txt_plain  58.05µs  63.99µs    15100.      688B    12.4 
-#> 18 base_txt_plain    9.13µs   9.21µs   106317.        0B     0
+#>  1 cli_ansi          4.67µs   5.77µs   166389.        0B    16.6 
+#>  2 fansi_ansi       49.76µs  59.88µs    16417.   38.84KB    14.4 
+#>  3 base_ansi       615.95ns 696.05ns  1288209.        0B     0   
+#>  4 cli_plain         4.67µs   5.62µs   170614.        0B    17.1 
+#>  5 fansi_plain      49.02µs  57.13µs    17163.      688B    14.4 
+#>  6 base_plain      621.08ns 684.06ns  1351555.        0B     0   
+#>  7 cli_vec_ansi     20.29µs   24.5µs    40174.      448B     4.02
+#>  8 fansi_vec_ansi   68.07µs  80.84µs    12221.    5.02KB    10.5 
+#>  9 base_vec_ansi    13.41µs  16.11µs    60464.      448B     6.05
+#> 10 cli_vec_plain    19.23µs  22.03µs    44684.      448B     4.47
+#> 11 fansi_vec_plain  60.16µs  71.26µs    13785.    5.02KB    10.3 
+#> 12 base_vec_plain    8.23µs    9.5µs   101789.      448B    10.2 
+#> 13 cli_txt_ansi     20.45µs  24.83µs    39605.        0B     3.96
+#> 14 fansi_txt_ansi   59.05µs   69.8µs    14063.      688B    12.3 
+#> 15 base_txt_ansi    14.44µs  16.55µs    59425.        0B     0   
+#> 16 cli_txt_plain    18.13µs  20.62µs    47991.        0B     4.80
+#> 17 fansi_txt_plain  52.49µs  63.49µs    15487.      688B    12.4 
+#> 18 base_txt_plain    8.02µs   9.68µs   103630.        0B     0
 ```
 
 ``` r
@@ -284,24 +284,24 @@ bench::mark(
 #> # A tibble: 18 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi          6.17µs   7.09µs   136031.        0B    13.6 
-#>  2 fansi_ansi       57.16µs  62.11µs    15753.      688B    14.6 
-#>  3 base_ansi       951.11ns   1.04µs   898035.        0B     0   
-#>  4 cli_plain         6.15µs      7µs   137909.        0B    13.8 
-#>  5 fansi_plain      56.69µs  62.18µs    15747.      688B    12.4 
-#>  6 base_plain      791.04ns 872.07ns  1035875.        0B   104.  
-#>  7 cli_vec_ansi     26.26µs  27.31µs    35958.      448B     3.60
-#>  8 fansi_vec_ansi   75.52µs   81.3µs    12021.    5.02KB    10.5 
-#>  9 base_vec_ansi    34.99µs  35.95µs    27550.      448B     0   
-#> 10 cli_vec_plain    24.97µs  26.11µs    37691.      448B     3.77
-#> 11 fansi_vec_plain  67.54µs  73.41µs    13327.    5.02KB    12.6 
-#> 12 base_vec_plain   18.28µs  18.53µs    53188.      448B     0   
-#> 13 cli_txt_ansi      26.8µs  27.89µs    35274.        0B     3.53
-#> 14 fansi_txt_ansi   69.14µs  74.98µs    13028.      688B    12.4 
-#> 15 base_txt_ansi    36.52µs  37.63µs    26292.        0B     0   
-#> 16 cli_txt_plain    24.85µs  25.94µs    37963.        0B     3.80
-#> 17 fansi_txt_plain  61.08µs  66.31µs    14771.      688B    12.4 
-#> 18 base_txt_plain    20.1µs  20.35µs    48495.        0B     0
+#>  1 cli_ansi          5.55µs   6.77µs   142041.        0B    14.2 
+#>  2 fansi_ansi       49.93µs  59.12µs    16607.      688B    14.4 
+#>  3 base_ansi       888.02ns 962.06ns   956705.        0B     0   
+#>  4 cli_plain         5.55µs   6.68µs   145255.        0B    14.5 
+#>  5 fansi_plain      49.52µs   58.3µs    16747.      688B    14.6 
+#>  6 base_plain      696.05ns    751ns  1094351.        0B     0   
+#>  7 cli_vec_ansi     23.93µs  28.62µs    34186.      448B     6.84
+#>  8 fansi_vec_ansi   69.88µs  84.78µs    11666.    5.02KB    10.3 
+#>  9 base_vec_ansi    34.73µs  38.89µs    25299.      448B     0   
+#> 10 cli_vec_plain    23.27µs  27.06µs    36661.      448B     3.67
+#> 11 fansi_vec_plain  62.81µs  75.91µs    12808.    5.02KB    10.3 
+#> 12 base_vec_plain   18.52µs  21.38µs    46297.      448B     0   
+#> 13 cli_txt_ansi      23.9µs  29.15µs    33771.        0B     6.76
+#> 14 fansi_txt_ansi   61.07µs  73.73µs    13386.      688B    10.3 
+#> 15 base_txt_ansi     38.5µs  47.56µs    21048.        0B     0   
+#> 16 cli_txt_plain    23.49µs  28.21µs    35253.        0B     7.05
+#> 17 fansi_txt_plain  53.36µs  63.88µs    15423.      688B    12.3 
+#> 18 base_txt_plain   20.99µs  23.97µs    41548.        0B     0
 ```
 
 ### `ansi_simplify()`
@@ -325,12 +325,12 @@ bench::mark(
 #> # A tibble: 6 × 6
 #>   expression         min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr>    <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cli_ansi        4.93µs   5.48µs   178486.        0B     0   
-#> 2 cli_plain       4.72µs   5.24µs   186744.        0B    18.7 
-#> 3 cli_vec_ansi   23.74µs  24.51µs    40195.      848B     4.02
-#> 4 cli_vec_plain   7.88µs   8.47µs   115441.      848B    11.5 
-#> 5 cli_txt_ansi   23.53µs  24.81µs    39778.        0B     3.98
-#> 6 cli_txt_plain   5.43µs      6µs   163297.        0B    16.3
+#> 1 cli_ansi        4.52µs   5.25µs   186791.        0B     0   
+#> 2 cli_plain       4.33µs   5.15µs   187054.        0B    18.7 
+#> 3 cli_vec_ansi    26.6µs  30.53µs    33034.      848B     3.30
+#> 4 cli_vec_plain   7.59µs   9.04µs   109868.      848B    11.0 
+#> 5 cli_txt_ansi   25.84µs  30.23µs    33225.        0B     3.32
+#> 6 cli_txt_plain   5.04µs      6µs   164162.        0B    16.4
 ```
 
 ### `ansi_strip()`
@@ -358,18 +358,18 @@ bench::mark(
 #> # A tibble: 12 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi          18.5µs   19.9µs    49101.        0B    19.6 
-#>  2 fansi_ansi        19.7µs   21.4µs    45398.    7.24KB    18.2 
-#>  3 cli_plain         18.4µs   19.8µs    49388.        0B    24.7 
-#>  4 fansi_plain       19.5µs   21.4µs    45410.      688B    18.2 
-#>  5 cli_vec_ansi      25.8µs   28.3µs    34599.      848B    13.8 
-#>  6 fansi_vec_ansi    40.3µs   43.4µs    22612.    5.41KB     9.05
-#>  7 cli_vec_plain     21.1µs     23µs    42466.      848B    17.0 
-#>  8 fansi_vec_plain   27.4µs   29.9µs    32741.    4.59KB    13.1 
-#>  9 cli_txt_ansi      25.5µs     28µs    35048.        0B    17.5 
-#> 10 fansi_txt_ansi    32.9µs   35.4µs    27641.    5.12KB    11.1 
-#> 11 cli_txt_plain     19.3µs   21.2µs    46118.        0B    18.5 
-#> 12 fansi_txt_plain   20.5µs   22.6µs    43041.      688B    17.2
+#>  1 cli_ansi            17µs   19.8µs    49666.        0B    19.9 
+#>  2 fansi_ansi        18.2µs   21.1µs    46513.    7.24KB    18.6 
+#>  3 cli_plain         16.9µs   19.2µs    50738.        0B    25.4 
+#>  4 fansi_plain       17.7µs   20.6µs    47952.      688B    19.2 
+#>  5 cli_vec_ansi      25.4µs   29.4µs    33844.      848B    13.5 
+#>  6 fansi_vec_ansi    42.2µs     49µs    20304.    5.41KB     8.26
+#>  7 cli_vec_plain     19.8µs     24µs    40839.      848B    16.3 
+#>  8 fansi_vec_plain   27.1µs   31.6µs    31184.    4.59KB    12.5 
+#>  9 cli_txt_ansi      25.5µs   29.9µs    33050.        0B    16.5 
+#> 10 fansi_txt_ansi    32.5µs   38.8µs    25520.    5.12KB    10.2 
+#> 11 cli_txt_plain     17.6µs   21.8µs    44697.        0B    17.9 
+#> 12 fansi_txt_plain   19.1µs   22.5µs    43507.      688B    17.4
 ```
 
 ### `ansi_strsplit()`
@@ -403,24 +403,24 @@ bench::mark(
 #> # A tibble: 18 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi        102.69µs 111.82µs     8753.  104.86KB    17.0 
-#>  2 fansi_ansi       84.68µs  92.44µs    10655.  106.35KB    14.7 
-#>  3 base_ansi         3.08µs    3.4µs   287385.      224B     0   
-#>  4 cli_plain       102.72µs 111.11µs     8794.    8.09KB    16.8 
-#>  5 fansi_plain      83.76µs  91.97µs    10710.    9.62KB    14.7 
-#>  6 base_plain        2.69µs   2.92µs   328345.        0B     0   
-#>  7 cli_vec_ansi      5.08ms    5.3ms      188.  823.77KB    18.4 
-#>  8 fansi_vec_ansi  798.13µs 842.13µs     1112.  846.81KB    24.8 
-#>  9 base_vec_ansi   120.57µs 125.67µs     7843.    22.7KB     4.14
-#> 10 cli_vec_plain     5.02ms   5.28ms      189.  823.77KB    18.6 
-#> 11 fansi_vec_plain 750.43µs 795.14µs     1229.  845.98KB    26.4 
-#> 12 base_vec_plain   82.69µs  87.15µs    11272.      848B     2.01
-#> 13 cli_txt_ansi      2.63ms   2.72ms      366.    63.6KB     2.02
-#> 14 fansi_txt_ansi    1.25ms   1.27ms      785.   35.05KB     0   
-#> 15 base_txt_ansi   109.02µs 117.75µs     8446.   18.47KB     4.09
-#> 16 cli_txt_plain        2ms   2.02ms      493.    63.6KB     0   
-#> 17 fansi_txt_plain 408.06µs 439.02µs     2268.    30.6KB     4.08
-#> 18 base_txt_plain   70.62µs  73.05µs    13406.   11.05KB     2.02
+#>  1 cli_ansi         92.21µs 110.66µs     8911.  104.86KB    14.4 
+#>  2 fansi_ansi       75.84µs  94.12µs    10376.  106.35KB    16.7 
+#>  3 base_ansi         3.11µs   3.75µs   263479.      224B     0   
+#>  4 cli_plain        91.13µs 110.43µs     8920.    8.09KB    14.5 
+#>  5 fansi_plain      76.08µs   93.4µs    10534.    9.62KB    16.8 
+#>  6 base_plain        2.65µs   3.09µs   313180.        0B     0   
+#>  7 cli_vec_ansi       4.7ms   5.27ms      192.  823.77KB    18.3 
+#>  8 fansi_vec_ansi   732.8µs 837.99µs     1183.  846.81KB    26.5 
+#>  9 base_vec_ansi    112.3µs 129.67µs     7572.    22.7KB     2.05
+#> 10 cli_vec_plain     4.83ms   5.45ms      185.  823.77KB    18.7 
+#> 11 fansi_vec_plain  728.9µs 809.92µs     1200.  845.98KB    21.4 
+#> 12 base_vec_plain   79.13µs  92.01µs    10726.      848B     4.06
+#> 13 cli_txt_ansi      2.43ms   2.63ms      377.    63.6KB     0   
+#> 14 fansi_txt_ansi    1.18ms   1.33ms      761.   35.05KB     2.02
+#> 15 base_txt_ansi    97.31µs 116.22µs     8479.   18.47KB     2.02
+#> 16 cli_txt_plain     1.65ms   1.75ms      560.    63.6KB     2.01
+#> 17 fansi_txt_plain 365.91µs 393.85µs     2497.    30.6KB     4.08
+#> 18 base_txt_plain   63.41µs  76.33µs    12915.   11.05KB     2.02
 ```
 
 ### `ansi_strtrim()`
@@ -454,24 +454,24 @@ bench::mark(
 #> # A tibble: 18 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi          97.4µs  103.1µs     9491.   33.84KB    18.9 
-#>  2 fansi_ansi        38.3µs   41.5µs    23585.   31.42KB    16.5 
-#>  3 base_ansi        821.1ns  902.1ns  1027150.     4.2KB     0   
-#>  4 cli_plain         98.3µs  105.8µs     9308.        0B    18.9 
-#>  5 fansi_plain       37.8µs   41.9µs    23478.      872B    16.4 
-#>  6 base_plain         761ns  831.1ns  1120987.        0B     0   
-#>  7 cli_vec_ansi     196.6µs  205.8µs     4801.   16.73KB     8.28
-#>  8 fansi_vec_ansi    89.1µs   93.8µs    10517.    5.59KB    10.4 
-#>  9 base_vec_ansi       29µs   29.4µs    33649.      848B     0   
-#> 10 cli_vec_plain    166.7µs  175.2µs     5635.   16.73KB    10.5 
-#> 11 fansi_vec_plain     82µs   86.3µs    11420.    5.59KB     8.28
-#> 12 base_vec_plain    24.1µs   24.5µs    40377.      848B     0   
-#> 13 cli_txt_ansi     105.4µs    113µs     8720.        0B    19.1 
-#> 14 fansi_txt_ansi    38.1µs     42µs    23433.      872B    16.4 
-#> 15 base_txt_ansi    831.1ns  921.1ns  1022750.        0B     0   
-#> 16 cli_txt_plain     99.8µs  106.4µs     9271.        0B    16.7 
-#> 17 fansi_txt_plain   37.4µs   42.1µs    23328.      872B    18.7 
-#> 18 base_txt_plain   770.9ns    842ns  1104544.        0B     0
+#>  1 cli_ansi          86.4µs   99.4µs     9954.   33.84KB    18.9 
+#>  2 fansi_ansi          34µs   38.3µs    25580.   31.42KB    17.9 
+#>  3 base_ansi        770.1ns  853.6ns  1122697.     4.2KB     0   
+#>  4 cli_plain         85.8µs   98.9µs    10079.        0B    20.7 
+#>  5 fansi_plain       34.1µs   39.4µs    25044.      872B    17.5 
+#>  6 base_plain         700ns  767.1ns  1232285.        0B     0   
+#>  7 cli_vec_ansi     194.4µs  216.1µs     4570.   16.73KB    10.3 
+#>  8 fansi_vec_ansi    82.4µs     96µs    10329.    5.59KB     8.21
+#>  9 base_vec_ansi     26.9µs   31.2µs    31453.      848B     0   
+#> 10 cli_vec_plain    157.6µs  185.1µs     5341.   16.73KB    10.4 
+#> 11 fansi_vec_plain   75.5µs   87.3µs    11404.    5.59KB     8.25
+#> 12 base_vec_plain    22.6µs   26.5µs    37286.      848B     0   
+#> 13 cli_txt_ansi      95.3µs  112.4µs     8783.        0B    18.7 
+#> 14 fansi_txt_ansi    33.8µs   38.3µs    25542.      872B    17.9 
+#> 15 base_txt_ansi      756ns  818.5ns  1177025.        0B     0   
+#> 16 cli_txt_plain     87.6µs  102.4µs     9697.        0B    18.6 
+#> 17 fansi_txt_plain   33.4µs   39.1µs    24615.      872B    17.2 
+#> 18 base_txt_plain   726.1ns  823.1ns  1201098.        0B     0
 ```
 
 ### `ansi_strwrap()`
@@ -508,24 +508,24 @@ bench::mark(
 #> # A tibble: 18 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi        278.13µs 300.07µs    3304.     6.18KB    16.8 
-#>  2 fansi_ansi       68.38µs  75.47µs   13002.    97.33KB    14.9 
-#>  3 base_ansi        25.25µs  27.57µs   35416.         0B    14.2 
-#>  4 cli_plain       175.87µs 186.81µs    5259.         0B    16.8 
-#>  5 fansi_plain      67.75µs  75.64µs   12986.       872B    16.9 
-#>  6 base_plain       19.93µs  21.42µs   45756.         0B    13.7 
-#>  7 cli_vec_ansi     28.21ms  28.44ms      35.1   94.67KB    31.2 
-#>  8 fansi_vec_ansi  181.42µs  187.9µs    5243.     7.25KB     8.23
-#>  9 base_vec_ansi     1.68ms   1.74ms     571.    48.18KB    17.5 
-#> 10 cli_vec_plain    18.11ms  18.48ms      53.9    2.48KB    24.0 
-#> 11 fansi_vec_plain 145.22µs 153.02µs    6453.     6.42KB     8.25
-#> 12 base_vec_plain    1.24ms    1.3ms     767.     47.4KB    17.2 
-#> 13 cli_txt_ansi     22.25ms  22.48ms      44.5    4.27MB     7.03
-#> 14 fansi_txt_ansi  177.29µs 186.24µs    5308.     6.77KB     6.12
-#> 15 base_txt_ansi        1ms   1.05ms     940.   582.06KB    13.7 
-#> 16 cli_txt_plain   996.56µs   1.04ms     950.   369.84KB    11.0 
-#> 17 fansi_txt_plain 135.46µs 144.08µs    6839.     2.51KB     8.29
-#> 18 base_txt_plain  677.57µs 719.11µs    1382.   367.31KB    11.1
+#>  1 cli_ansi        244.53µs 287.32µs    3435.     6.18KB    16.8 
+#>  2 fansi_ansi       59.59µs  69.31µs   14274.    97.33KB    16.5 
+#>  3 base_ansi         21.8µs  24.98µs   39516.         0B    15.8 
+#>  4 cli_plain       151.51µs 173.03µs    5720.         0B    17.1 
+#>  5 fansi_plain      58.68µs  65.97µs   14856.       872B    18.6 
+#>  6 base_plain       17.72µs  19.33µs   49981.         0B    20.0 
+#>  7 cli_vec_ansi     26.49ms  27.68ms      35.6   94.67KB    28.5 
+#>  8 fansi_vec_ansi  174.95µs 192.81µs    5104.     7.25KB     8.19
+#>  9 base_vec_ansi     1.55ms   1.74ms     576.    48.18KB    17.0 
+#> 10 cli_vec_plain    16.71ms  18.11ms      55.6    2.48KB    23.4 
+#> 11 fansi_vec_plain 139.57µs 159.64µs    6252.     6.42KB    10.3 
+#> 12 base_vec_plain     1.1ms   1.26ms     794.     47.4KB    14.6 
+#> 13 cli_txt_ansi     24.13ms  25.15ms      39.4    4.27MB     6.96
+#> 14 fansi_txt_ansi  166.19µs 191.34µs    5228.     6.77KB     8.20
+#> 15 base_txt_ansi   983.78µs   1.11ms     890.   582.06KB    11.1 
+#> 16 cli_txt_plain   976.97µs   1.13ms     882.   369.84KB    10.8 
+#> 17 fansi_txt_plain 128.79µs 148.92µs    6703.     2.51KB     8.17
+#> 18 base_txt_plain  651.15µs  729.3µs    1353.   367.31KB    10.8
 ```
 
 ### `ansi_substr()`
@@ -559,24 +559,24 @@ bench::mark(
 #> # A tibble: 18 × 6
 #>    expression           min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>      <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi          5.07µs   5.87µs   163866.   25.09KB    16.4 
-#>  2 fansi_ansi        55.2µs  61.36µs    16008.   28.48KB    14.7 
-#>  3 base_ansi       820.96ns 891.97ns  1014566.        0B     0   
-#>  4 cli_plain         5.01µs   5.87µs   164282.        0B    16.4 
-#>  5 fansi_plain      54.44µs  61.06µs    16064.    1.98KB    16.9 
-#>  6 base_plain      771.02ns 861.01ns  1065638.        0B     0   
-#>  7 cli_vec_ansi     20.53µs  21.82µs    45018.     1.7KB     4.50
-#>  8 fansi_vec_ansi   84.07µs   90.3µs    10873.    8.86KB    10.5 
-#>  9 base_vec_ansi     5.12µs   5.38µs   181578.      848B     0   
-#> 10 cli_vec_plain    17.98µs  19.27µs    50994.     1.7KB     5.10
-#> 11 fansi_vec_plain  79.59µs  86.11µs    11406.    8.86KB    10.5 
-#> 12 base_vec_plain    4.84µs   5.15µs   188669.      848B    18.9 
-#> 13 cli_txt_ansi      5.01µs    5.9µs   163491.        0B    16.4 
-#> 14 fansi_txt_ansi   55.51µs  61.19µs    16035.    1.98KB    14.8 
-#> 15 base_txt_ansi      5.5µs    5.6µs   174322.        0B     0   
-#> 16 cli_txt_plain     5.76µs   6.59µs   145775.        0B    14.6 
-#> 17 fansi_txt_plain  55.56µs  61.86µs    15900.    1.98KB    14.6 
-#> 18 base_txt_plain    3.42µs   3.51µs   274775.        0B    27.5
+#>  1 cli_ansi          4.54µs   5.58µs   172453.   25.09KB    17.2 
+#>  2 fansi_ansi       50.14µs  59.12µs    16565.   28.48KB    14.5 
+#>  3 base_ansi       705.01ns 837.14ns  1054033.        0B   105.  
+#>  4 cli_plain         4.48µs   5.54µs   175243.        0B    17.5 
+#>  5 fansi_plain      49.73µs  59.47µs    16471.    1.98KB    14.5 
+#>  6 base_plain      665.08ns 793.02ns  1100487.        0B   110.  
+#>  7 cli_vec_ansi     21.72µs     25µs    39493.     1.7KB     3.95
+#>  8 fansi_vec_ansi   79.82µs  93.52µs    10596.    8.86KB    10.5 
+#>  9 base_vec_ansi     5.74µs   6.55µs   150800.      848B     0   
+#> 10 cli_vec_plain    17.47µs  20.93µs    47357.     1.7KB     4.74
+#> 11 fansi_vec_plain  74.95µs  87.87µs    11248.    8.86KB    10.4 
+#> 12 base_vec_plain    5.19µs   5.88µs   167887.      848B     0   
+#> 13 cli_txt_ansi      4.54µs   5.59µs   169959.        0B    17.0 
+#> 14 fansi_txt_ansi   49.82µs  58.98µs    16608.    1.98KB    16.6 
+#> 15 base_txt_ansi     4.29µs   5.76µs   171226.        0B     0   
+#> 16 cli_txt_plain     5.38µs   6.46µs   149357.        0B    14.9 
+#> 17 fansi_txt_plain  49.03µs  57.58µs    16991.    1.98KB    17.2 
+#> 18 base_txt_plain    3.29µs   3.88µs   254939.        0B     0
 ```
 
 ### `ansi_tolower()` , `ansi_toupper()`
@@ -604,18 +604,18 @@ bench::mark(
 #> # A tibble: 12 × 6
 #>    expression          min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi        73.14µs  79.23µs   12282.     12.1KB    12.5 
-#>  2 base_ansi           1µs   1.06µs  881372.         0B     0   
-#>  3 cli_plain       56.48µs   60.4µs   16117.     8.91KB    12.5 
-#>  4 base_plain     761.12ns 831.09ns 1148624.         0B     0   
-#>  5 cli_vec_ansi     3.24ms   3.32ms     300.   838.95KB    17.8 
-#>  6 base_vec_ansi   58.69µs  60.01µs   16505.       848B     0   
-#>  7 cli_vec_plain     1.8ms   1.86ms     534.   817.08KB    19.7 
-#>  8 base_vec_plain  36.02µs  36.68µs   27029.       848B     0   
-#>  9 cli_txt_ansi    12.43ms  12.55ms      79.4   114.6KB     4.29
-#> 10 base_txt_ansi   57.36µs  58.53µs   16914.         0B     0   
-#> 11 cli_txt_plain  228.59µs 239.85µs    4106.    18.34KB     2.01
-#> 12 base_txt_plain  33.45µs  33.65µs   29410.         0B     0
+#>  1 cli_ansi        67.89µs     79µs   12361.     12.1KB    10.3 
+#>  2 base_ansi        1.09µs   1.13µs  845767.         0B    84.6 
+#>  3 cli_plain          54µs  63.44µs   15418.     8.91KB    10.3 
+#>  4 base_plain     811.07ns 835.98ns 1153990.         0B     0   
+#>  5 cli_vec_ansi      3.2ms   3.53ms     282.   838.95KB    17.9 
+#>  6 base_vec_ansi   58.94µs  67.18µs   14866.       848B     0   
+#>  7 cli_vec_plain    1.87ms   2.08ms     483.   817.08KB    17.3 
+#>  8 base_vec_plain  35.58µs  41.26µs   24285.       848B     0   
+#>  9 cli_txt_ansi    12.97ms  13.78ms      72.6   114.6KB     2.02
+#> 10 base_txt_ansi   58.47µs  66.55µs   14999.         0B     0   
+#> 11 cli_txt_plain   217.7µs 253.85µs    3970.    18.34KB     4.05
+#> 12 base_txt_plain  32.02µs  38.09µs   26570.         0B     0
 ```
 
 ### `ansi_trimws()`
@@ -643,18 +643,18 @@ bench::mark(
 #> # A tibble: 12 × 6
 #>    expression          min   median `itr/sec` mem_alloc `gc/sec`
 #>    <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#>  1 cli_ansi         69.9µs   74.9µs    13074.        0B    18.9 
-#>  2 base_ansi        11.9µs   13.2µs    73960.        0B    14.8 
-#>  3 cli_plain        69.6µs   74.6µs    13123.        0B    18.9 
-#>  4 base_plain       11.7µs   13.1µs    74347.        0B    14.9 
-#>  5 cli_vec_ansi    151.6µs  161.8µs     6098.     7.2KB     8.24
-#>  6 base_vec_ansi    44.9µs   51.2µs    19235.    1.66KB     4.06
-#>  7 cli_vec_plain   141.4µs  150.9µs     6531.     7.2KB     8.25
-#>  8 base_vec_plain   39.1µs     45µs    21853.    1.66KB     4.37
-#>  9 cli_txt_ansi    134.5µs  140.6µs     7000.        0B    10.3 
-#> 10 base_txt_ansi      32µs   33.6µs    29237.        0B     5.85
-#> 11 cli_txt_plain   122.6µs  128.6µs     7645.        0B    10.3 
-#> 12 base_txt_plain   27.1µs   28.6µs    34321.        0B     6.87
+#>  1 cli_ansi         64.6µs   78.1µs    12502.        0B    18.9 
+#>  2 base_ansi        11.5µs   13.8µs    69609.        0B    13.9 
+#>  3 cli_plain        64.1µs   79.6µs    11810.        0B    14.5 
+#>  4 base_plain       11.3µs   13.7µs    70550.        0B    14.1 
+#>  5 cli_vec_ansi      150µs  171.4µs     5802.     7.2KB     8.21
+#>  6 base_vec_ansi    43.4µs   51.6µs    19009.    1.66KB     4.05
+#>  7 cli_vec_plain   136.4µs  160.5µs     6190.     7.2KB     8.35
+#>  8 base_vec_plain   38.2µs     46µs    21289.    1.66KB     4.26
+#>  9 cli_txt_ansi    129.3µs  143.1µs     6787.        0B    10.3 
+#> 10 base_txt_ansi    31.8µs   36.2µs    26905.        0B     5.38
+#> 11 cli_txt_plain   113.8µs  129.2µs     7658.        0B    10.2 
+#> 12 base_txt_plain   27.1µs   31.3µs    31640.        0B     6.33
 ```
 
 ## UTF-8 functions
@@ -678,12 +678,12 @@ bench::mark(
 #> # A tibble: 6 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cli          6.02µs   6.87µs   140102.        0B    14.0 
-#> 2 base       661.01ns 751.11ns  1152054.        0B   115.  
-#> 3 cli_vec     18.01µs  19.16µs    51342.      448B     5.13
-#> 4 base_vec     9.42µs   9.73µs   100271.      448B     0   
-#> 5 cli_txt     17.99µs  18.98µs    51743.        0B     5.17
-#> 6 base_txt    10.19µs  10.38µs    94740.        0B     0
+#> 1 cli          5.36µs   6.65µs   143891.        0B    28.8 
+#> 2 base       588.95ns    639ns  1380169.        0B     0   
+#> 3 cli_vec     19.07µs  22.86µs    42924.      448B     4.29
+#> 4 base_vec    10.07µs  10.88µs    89800.      448B     0   
+#> 5 cli_txt     19.99µs  22.93µs    42749.        0B     4.28
+#> 6 base_txt    11.53µs  12.45µs    78530.        0B     0
 ```
 
 ``` r
@@ -703,12 +703,12 @@ bench::mark(
 #> # A tibble: 6 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cli          5.98µs   6.84µs   140305.        0B    28.1 
-#> 2 base            1µs    1.1µs   856607.        0B     0   
-#> 3 cli_vec     23.56µs  24.73µs    39839.      448B     3.98
-#> 4 base_vec    41.54µs  42.12µs    23502.      448B     0   
-#> 5 cli_txt     23.64µs     25µs    39417.        0B     3.94
-#> 6 base_txt     73.7µs  74.61µs    12917.        0B     0
+#> 1 cli          5.35µs   6.66µs   143876.        0B    14.4 
+#> 2 base          978ns   1.11µs   817484.        0B     0   
+#> 3 cli_vec     20.24µs  23.93µs    41234.      448B     4.12
+#> 4 base_vec    41.63µs  45.66µs    21540.      448B     0   
+#> 5 cli_txt     20.76µs   24.3µs    41134.        0B     4.11
+#> 6 base_txt    68.06µs  75.32µs    12933.        0B     2.01
 ```
 
 ``` r
@@ -728,12 +728,12 @@ bench::mark(
 #> # A tibble: 6 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cli          6.44µs   8.04µs    84819.        0B     8.48
-#> 2 base        641.1ns 721.08ns  1223583.        0B     0   
-#> 3 cli_vec     15.33µs  16.54µs    59323.      448B     5.93
-#> 4 base_vec     9.38µs   9.71µs   101301.      448B     0   
-#> 5 cli_txt     15.99µs  16.97µs    57721.        0B    11.5 
-#> 6 base_txt    10.18µs  10.36µs    95005.        0B     0
+#> 1 cli          5.88µs   7.22µs   133087.        0B    13.3 
+#> 2 base       610.13ns 650.06ns  1267617.        0B     0   
+#> 3 cli_vec     15.46µs  17.89µs    55231.      448B    11.0 
+#> 4 base_vec    10.04µs  10.79µs    90552.      448B     0   
+#> 5 cli_txt     16.95µs  18.94µs    51721.        0B     5.17
+#> 6 base_txt     11.6µs   12.8µs    77777.        0B     0
 ```
 
 ### `utf8_substr()`
@@ -755,12 +755,12 @@ bench::mark(
 #> # A tibble: 6 × 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 cli           4.8µs   5.59µs   171598.    22.2KB    17.2 
-#> 2 base       801.17ns 892.09ns   949632.        0B    95.0 
-#> 3 cli_vec     22.82µs  23.96µs    41105.     1.7KB     4.11
-#> 4 base_vec     6.45µs   6.68µs   146975.      848B     0   
-#> 5 cli_txt      4.77µs   5.56µs   172455.        0B    17.2 
-#> 6 base_txt     4.08µs   4.31µs   226974.        0B     0
+#> 1 cli           4.3µs    5.5µs   170544.    22.2KB    34.1 
+#> 2 base       706.06ns 773.99ns  1156411.        0B     0   
+#> 3 cli_vec     25.82µs  29.25µs    33404.     1.7KB     3.34
+#> 4 base_vec     6.65µs   7.63µs   129213.      848B     0   
+#> 5 cli_txt      4.32µs   5.59µs   169917.        0B    17.0 
+#> 6 base_txt     4.32µs   4.91µs   197703.        0B    19.8
 ```
 
 ## Session info
@@ -781,7 +781,7 @@ sessioninfo::session_info()
 #>  collate  C.UTF-8
 #>  ctype    C.UTF-8
 #>  tz       UTC
-#>  date     2026-10-05
+#>  date     2026-10-11
 #>  pandoc   3.8.3 @ /opt/hostedtoolcache/pandoc/3.8.3/x64/ (via rmarkdown)
 #>  quarto   NA
 #> 
@@ -790,7 +790,7 @@ sessioninfo::session_info()
 #>  bench         1.1.4      2025-01-16 [1] RSPM
 #>  bslib         0.12.0     2026-08-04 [1] RSPM
 #>  cachem        1.1.0      2024-05-16 [1] RSPM
-#>  cli         * 3.6.6.9000 2026-10-05 [1] local
+#>  cli         * 3.6.6.9000 2026-10-11 [1] local
 #>  codetools     0.2-20     2024-03-31 [3] CRAN (R 4.6.1)
 #>  desc          1.4.3      2023-12-10 [1] RSPM
 #>  digest        0.6.39     2025-11-19 [1] RSPM
