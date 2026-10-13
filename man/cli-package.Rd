@@ -3,6 +3,10 @@
 \docType{package}
 \name{cli-package}
 \alias{cli-package}
+\alias{__cli_update_due}
+\alias{cli_tick_reset}
+\alias{ccli_tick_reset}
+\alias{ticking}
 \title{cli: Helpers for Developing Command Line Interfaces}
 \description{
 \if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}

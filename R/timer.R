@@ -1,10 +1,6 @@
 #' @export
 `__cli_update_due` <- FALSE
 
-#' Reset the cli progress timer
-#'
-#' @return `NULL`, invisibly.
-#' @keywords internal
 #' @export
 
 cli_tick_reset <- function() {

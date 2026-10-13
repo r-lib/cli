@@ -2,8 +2,6 @@
 % Please edit documentation in R/progress-client.R
 \name{cli_progress_bar}
 \alias{cli_progress_bar}
-\alias{__cli_update_due}
-\alias{ccli_tick_reset}
 \alias{cli_progress_update}
 \alias{cli_progress_done}
 \title{cli progress bars}
