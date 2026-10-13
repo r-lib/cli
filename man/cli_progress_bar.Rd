@@ -20,6 +20,7 @@ cli_progress_bar(
   format_failed = NULL,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
+  quiet = getOption("cli.disable_progress", FALSE),
   auto_terminate = type != "download",
   extra = NULL,
   .auto_close = TRUE,
@@ -82,6 +83,9 @@ it has terminated. Defaults to the \code{cli.progress_clear} option, or
 \item{current}{Whether to use this progress bar as the current progress
 bar of the calling function. See more at 'The current progress bar'
 below.}
+
+\item{quiet}{if \code{TRUE} suppresses output from this function. Defaults to the \code{cli.disable_progress} option, or
+\code{TRUE} if unset.}
 
 \item{auto_terminate}{Whether to terminate the progress bar if the
 number of current units reaches the number of total units.}
