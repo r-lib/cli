@@ -444,11 +444,7 @@ cli_extract_vars <- function(text, functions = TRUE, unique = TRUE) {
   if (length(text) == 0L) {
     return(character())
   }
-  nms <- names(text)
-  text <- as.character(text)
-  if (!is.null(nms)) {
-    text <- as.vector(rbind(nms, text))
-  }
+  text <- c(names(text), as.character(text))
   call <- sys.call()
   exprs <- lapply(text, function(x) {
     glue_cmd(x, .envir = emptyenv(), .call = call, .eval = FALSE)$values$exprs

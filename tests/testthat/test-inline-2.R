@@ -263,7 +263,7 @@ test_that("cli_extract_vars", {
   )
   expect_identical(
     cli_extract_vars(c("{.field {term1}}" = "Means {desc1}", "{term2}" = "{desc2}")),
-    c("term1", "desc1", "term2", "desc2")
+    c("term1", "term2", "desc1", "desc2")
   )
 
   # Edge cases: empty, NULL, NA, plain text, and non-evaluation
