@@ -389,8 +389,7 @@ make_cmd_transformer <- function(values, .call = NULL, .eval = TRUE) {
   }
 }
 
-glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE,
-                     .eval = TRUE) {
+glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE, .eval = TRUE) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
   transformer <- make_cmd_transformer(values, .call = .call, .eval = .eval)
