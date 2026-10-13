@@ -3,9 +3,7 @@
 \name{cli_progress_bar}
 \alias{cli_progress_bar}
 \alias{__cli_update_due}
-\alias{cli_tick_reset}
 \alias{ccli_tick_reset}
-\alias{ticking}
 \alias{cli_progress_update}
 \alias{cli_progress_done}
 \title{cli progress bars}
