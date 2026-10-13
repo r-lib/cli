@@ -228,13 +228,17 @@ test_that("cli_extract_vars", {
 
   # Deeply nested styles and hyperlink styles
   expect_identical(
-    cli_extract_vars("{.pkg {.emph {pkg}}} and {.href [text {a}](https://x.com/{b})}"),
+    cli_extract_vars(
+      "{.pkg {.emph {pkg}}} and {.href [text {a}](https://x.com/{b})}"
+    ),
     c("pkg", "a", "b")
   )
 
   # Pluralization directives and helpers
   expect_identical(
-    cli_extract_vars("Found {n} file{?s} and {?no/one/some} {ndir} director{?y/ies}."),
+    cli_extract_vars(
+      "Found {n} file{?s} and {?no/one/some} {ndir} director{?y/ies}."
+    ),
     c("n", "ndir")
   )
   expect_identical(
@@ -242,13 +246,17 @@ test_that("cli_extract_vars", {
     "pkgs"
   )
   expect_identical(
-    cli_extract_vars("{nupd}/{ntotal} {qty(nupd)} file{?s} and {no(nfile)} dir{?s}"),
+    cli_extract_vars(
+      "{nupd}/{ntotal} {qty(nupd)} file{?s} and {no(nfile)} dir{?s}"
+    ),
     c("nupd", "ntotal", "qty", "no", "nfile")
   )
 
   # Escaped braces, empty braces, and purrr dot exceptions
   expect_identical(
-    cli_extract_vars("Escaped {{ignored}} and {.code {{also_ignored}}} and {} with {used}"),
+    cli_extract_vars(
+      "Escaped {{ignored}} and {.code {{also_ignored}}} and {} with {used}"
+    ),
     "used"
   )
   expect_identical(
@@ -258,11 +266,18 @@ test_that("cli_extract_vars", {
 
   # Character vectors and named character vectors (bullets and dl/li)
   expect_identical(
-    cli_extract_vars(c("Header {a}", "i" = "Info {.val {b}}", "x" = "Error {c}")),
+    cli_extract_vars(c(
+      "Header {a}",
+      "i" = "Info {.val {b}}",
+      "x" = "Error {c}"
+    )),
     c("a", "b", "c")
   )
   expect_identical(
-    cli_extract_vars(c("{.field {term1}}" = "Means {desc1}", "{term2}" = "{desc2}")),
+    cli_extract_vars(c(
+      "{.field {term1}}" = "Means {desc1}",
+      "{term2}" = "{desc2}"
+    )),
     c("term1", "term2", "desc1", "desc2")
   )
 
@@ -273,11 +288,17 @@ test_that("cli_extract_vars", {
   expect_identical(cli_extract_vars("plain text {.arg x}"), character())
   expect_identical(cli_extract_vars(NA_character_), character())
   expect_identical(cli_extract_vars(c("hello {a}", NA_character_)), "a")
-  expect_identical(cli_extract_vars("{stop(not_evaluated)}"), c("stop", "not_evaluated"))
+  expect_identical(
+    cli_extract_vars("{stop(not_evaluated)}"),
+    c("stop", "not_evaluated")
+  )
 
   # Syntax and markup errors
   expect_error(cli_extract_vars("unclosed {a"), "Expecting '\\}'")
   expect_error(cli_extract_vars("bad {a + }"), "Could not parse cli")
   expect_error(cli_extract_vars("bad {.foobar}"), "Invalid cli literal")
-  expect_error(cli_extract_vars("bad {?s}"), "Cannot pluralize without a quantity")
+  expect_error(
+    cli_extract_vars("bad {?s}"),
+    "Cannot pluralize without a quantity"
+  )
 })
