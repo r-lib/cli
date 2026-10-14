@@ -24,6 +24,7 @@ cli_progress_bar(
   format_failed = NULL,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
+  quiet = getOption("cli.disable_progress", FALSE),
   auto_terminate = type != "download",
   extra = NULL,
   .auto_close = TRUE,
@@ -108,6 +109,11 @@ cli_progress_done(id = NULL, .envir = parent.frame(), result = "done")
 
   Whether to use this progress bar as the current progress bar of the
   calling function. See more at 'The current progress bar' below.
+
+- quiet:
+
+  if `TRUE` suppresses output from this function. Defaults to the
+  `cli.disable_progress` option, or `TRUE` if unset.
 
 - auto_terminate:
 

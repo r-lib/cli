@@ -589,8 +589,8 @@ builtin_theme()$h1
     #> $fmt                                                                            
     #> function (x)                                                                    
     #> cli::rule(x, line_col = "cyan")                                                 
-    #> <bytecode: 0x55c511b54d50>                                                      
-    #> <environment: 0x55c511877ed8>                                                   
+    #> <bytecode: 0x5592491cd400>                                                      
+    #> <environment: 0x559248ef0588>                                                   
     #>                                                                                 
 
 See also [`?cli::themes`](https://cli.r-lib.org/dev/reference/themes.md)
@@ -725,8 +725,8 @@ invisible(rs$close())
 ```
 
 
-    #> This is sub-process 16007 from callr                                            
-    #> [1] 16007                                                                       
+    #> This is sub-process 16246 from callr                                            
+    #> [1] 16246                                                                       
 
 ## Utility functions
 
