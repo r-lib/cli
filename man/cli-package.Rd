@@ -3,8 +3,14 @@
 \docType{package}
 \name{cli-package}
 \alias{cli-package}
+\alias{__cli_update_due}
+\alias{cli_tick_reset}
+\alias{ccli_tick_reset}
+\alias{ticking}
 \title{cli: Helpers for Developing Command Line Interfaces}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 A suite of tools to build attractive command line interfaces ('CLIs'), from semantic elements: headings, lists, alerts, paragraphs, etc. Supports custom themes via a 'CSS'-like language. It also contains a number of lower level 'CLI' elements: rules, boxes, trees, and 'Unicode' symbols with 'ASCII' alternatives. It support ANSI colors and text styles as well.
 }
 \seealso{

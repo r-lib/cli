@@ -309,7 +309,6 @@
 #'   progress messages.
 #' @family progress bar functions
 #' @family functions supporting inline markup
-#' @aliases __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @export
 
 cli_progress_bar <- function(
