@@ -283,12 +283,15 @@ clii__inline <- function(app, text, .list) {
 
 inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
-make_cmd_transformer <- function(values, .call = NULL) {
+make_cmd_transformer <- function(values, .call = NULL, .eval = TRUE) {
   values$marker <- random_id()
   values$qty <- NA_integer_
   values$num_subst <- 0L
   values$postprocess <- FALSE
   values$pmarkers <- list()
+  if (!.eval) {
+    values$exprs <- expression()
+  }
 
   # These are common because of purrr's default argument names, so we
   # hardcode them es exceptions. They are in packages
@@ -365,12 +368,17 @@ make_cmd_transformer <- function(values, .call = NULL) {
           "Could not parse cli {.code {{}}} expression:
            {.code {abbrev(code, 20)}}."
         )
-      res <- eval(expr, envir = envir) %??%
-        cli_error(
-          call. = caller,
-          "Could not evaluate cli {.code {{}}} expression:
-           {.code {abbrev(code, 20)}}."
-        )
+      if (.eval) {
+        res <- eval(expr, envir = envir) %??%
+          cli_error(
+            call. = caller,
+            "Could not evaluate cli {.code {{}}} expression:
+             {.code {abbrev(code, 20)}}."
+          )
+      } else {
+        values$exprs <- c(values$exprs, expr)
+        res <- 1L
+      }
 
       id <- paste0("v", length(values))
       values[[id]] <- res
@@ -381,10 +389,16 @@ make_cmd_transformer <- function(values, .call = NULL) {
   }
 }
 
-glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE) {
+glue_cmd <- function(
+  ...,
+  .envir,
+  .call = sys.call(-1),
+  .trim = TRUE,
+  .eval = TRUE
+) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
-  transformer <- make_cmd_transformer(values, .call = .call)
+  transformer <- make_cmd_transformer(values, .call = .call, .eval = .eval)
   pstr <- glue(
     str,
     .envir = .envir,
@@ -396,6 +410,51 @@ glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE) {
     str = post_process_plurals(pstr, values),
     values = values
   )
+}
+
+#' Extract variable and function names from cli format strings
+#'
+#' Parses cli [inline markup][inline-markup] and glue substitutions in
+#' `text` without evaluating the embedded R expressions, returning the
+#' symbol names referenced inside `{...}` interpolation blocks via
+#' [base::all.vars()].
+#'
+#' Static analysis tools (such as `lintr::object_usage_linter()`) can use
+#' `cli_extract_vars()` to discover variables and functions referenced in
+#' cli calls.
+#'
+#' If `text` is a named character vector (for example, as passed to
+#' [cli_dl()], [cli_li()], [cli_bullets()], or [cli_abort()]), both
+#' `names(text)` and `text` are inspected.
+#'
+#' @param text Character vector of cli format strings.
+#' @param functions Logical scalar passed to [base::all.vars()]: whether to
+#'   include function names in addition to variable names. Defaults to
+#'   `TRUE`.
+#' @param unique Logical scalar passed to [base::all.vars()]: whether to
+#'   deduplicate extracted symbol names. Defaults to `TRUE`.
+#' @return Character vector of extracted symbol names.
+#'
+#' @export
+#' @examples
+#' cli_extract_vars(
+#'   "{.arg x} has {length(x)} elements, but it should be {.emph {length(y)}}"
+#' )
+#' cli_extract_vars(
+#'   "{.arg x} has {length(x)} elements, but it should be {.emph {length(y)}}",
+#'   functions = FALSE
+#' )
+
+cli_extract_vars <- function(text, functions = TRUE, unique = TRUE) {
+  if (length(text) == 0L) {
+    return(character())
+  }
+  text <- c(names(text), as.character(text))
+  call <- sys.call()
+  exprs <- lapply(text, function(x) {
+    glue_cmd(x, .envir = emptyenv(), .call = call, .eval = FALSE)$values$exprs
+  })
+  all.vars(do.call(c, exprs), functions = functions, unique = unique)
 }
 
 glue_no_cmd <- function(...) {
