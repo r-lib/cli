@@ -414,9 +414,10 @@ glue_cmd <- function(
 
 #' Extract variable and function names from cli format strings
 #'
-#' Parses cli inline markup and glue substitutions in `text` without
-#' evaluating the embedded R expressions, returning the symbol names
-#' referenced inside `{...}` interpolation blocks via [base::all.vars()].
+#' Parses cli [inline markup][inline-markup] and glue substitutions in
+#' `text` without evaluating the embedded R expressions, returning the
+#' symbol names referenced inside `{...}` interpolation blocks via
+#' [base::all.vars()].
 #'
 #' Static analysis tools (such as `lintr::object_usage_linter()`) can use
 #' `cli_extract_vars()` to discover variables and functions referenced in
@@ -434,8 +435,6 @@ glue_cmd <- function(
 #'   deduplicate extracted symbol names. Defaults to `TRUE`.
 #' @return Character vector of extracted symbol names.
 #'
-#' @seealso This function supports [inline markup][inline-markup].
-#' @family functions supporting inline markup
 #' @export
 #' @examples
 #' cli_extract_vars(

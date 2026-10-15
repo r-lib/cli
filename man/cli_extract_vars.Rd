@@ -20,9 +20,10 @@ deduplicate extracted symbol names. Defaults to \code{TRUE}.}
 Character vector of extracted symbol names.
 }
 \description{
-Parses cli inline markup and glue substitutions in \code{text} without
-evaluating the embedded R expressions, returning the symbol names
-referenced inside \code{{...}} interpolation blocks via \code{\link[base:all.vars]{base::all.vars()}}.
+Parses cli \link[=inline-markup]{inline markup} and glue substitutions in
+\code{text} without evaluating the embedded R expressions, returning the
+symbol names referenced inside \code{{...}} interpolation blocks via
+\code{\link[base:all.vars]{base::all.vars()}}.
 }
 \details{
 Static analysis tools (such as \code{lintr::object_usage_linter()}) can use
@@ -42,31 +43,3 @@ cli_extract_vars(
   functions = FALSE
 )
 }
-\seealso{
-This function supports \link[=inline-markup]{inline markup}.
-
-Other functions supporting inline markup:
-\code{\link[=cli_abort]{cli_abort()}},
-\code{\link[=cli_alert]{cli_alert()}},
-\code{\link[=cli_blockquote]{cli_blockquote()}},
-\code{\link[=cli_bullets]{cli_bullets()}},
-\code{\link[=cli_bullets_raw]{cli_bullets_raw()}},
-\code{\link[=cli_dl]{cli_dl()}},
-\code{\link[=cli_h1]{cli_h1()}},
-\code{\link[=cli_li]{cli_li()}},
-\code{\link[=cli_ol]{cli_ol()}},
-\code{\link[=cli_process_start]{cli_process_start()}},
-\code{\link[=cli_progress_along]{cli_progress_along()}},
-\code{\link[=cli_progress_bar]{cli_progress_bar()}},
-\code{\link[=cli_progress_message]{cli_progress_message()}},
-\code{\link[=cli_progress_output]{cli_progress_output()}},
-\code{\link[=cli_progress_step]{cli_progress_step()}},
-\code{\link[=cli_rule]{cli_rule()}},
-\code{\link[=cli_status]{cli_status()}},
-\code{\link[=cli_status_update]{cli_status_update()}},
-\code{\link[=cli_text]{cli_text()}},
-\code{\link[=cli_ul]{cli_ul()}},
-\code{\link[=format_error]{format_error()}},
-\code{\link[=format_inline]{format_inline()}}
-}
-\concept{functions supporting inline markup}
