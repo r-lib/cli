@@ -332,6 +332,7 @@ make_cmd_transformer <- function(values, .call = NULL, .eval = TRUE) {
       if (!has_match) {
         throw(cli_error(
           call. = caller,
+          .class = c("cli_style_error", "cli_error"),
           "Invalid cli literal: {.code {{{abbrev(code, 10)}}}} starts with a dot.",
           "i" = "Interpreted literals must not start with a dot in cli >= 3.4.0.",
           "i" = paste(
@@ -365,6 +366,7 @@ make_cmd_transformer <- function(values, .call = NULL, .eval = TRUE) {
       expr <- parse(text = code, keep.source = FALSE) %??%
         cli_error(
           call. = caller,
+          .class = c("cli_parse_error", "cli_error"),
           "Could not parse cli {.code {{}}} expression:
            {.code {abbrev(code, 20)}}."
         )
@@ -421,7 +423,11 @@ glue_cmd <- function(
 #'
 #' Static analysis tools (such as `lintr::object_usage_linter()`) can use
 #' `cli_extract_vars()` to discover variables and functions referenced in
-#' cli calls.
+#' cli calls. Malformed cli strings or R expressions signal an error of
+#' class `"cli_error"` (with subclasses `"cli_glue_error"`,
+#' `"cli_style_error"`, `"cli_parse_error"`, and
+#' `"cli_pluralization_error"`), so static analysis callers should wrap
+#' `cli_extract_vars()` in [base::tryCatch()].
 #'
 #' If `text` is a named character vector (for example, as passed to
 #' [cli_dl()], [cli_li()], [cli_bullets()], or [cli_abort()]), both

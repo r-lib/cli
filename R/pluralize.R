@@ -83,6 +83,12 @@ parse_plural <- function(code, values) {
   }
 }
 
+stop_pluralization <- function(..., call. = sys.call(-1)) {
+  cnd <- simpleError(.makeMessage(...), call = call.)
+  class(cnd) <- c("cli_pluralization_error", "cli_error", class(cnd))
+  stop(cnd)
+}
+
 process_plural <- function(qty, code) {
   parts <- strsplit(str_tail(code), "/", fixed = TRUE)[[1]]
   if (last_character(code) == "/") {
@@ -101,7 +107,7 @@ process_plural <- function(qty, code) {
       parts[3]
     }
   } else {
-    stop("Invalid pluralization directive: `", code, "`")
+    stop_pluralization("Invalid pluralization directive: `", code, "`")
   }
 }
 
@@ -110,10 +116,10 @@ post_process_plurals <- function(str, values) {
     return(str)
   }
   if (values$num_subst == 0) {
-    stop("Cannot pluralize without a quantity")
+    stop_pluralization("Cannot pluralize without a quantity")
   }
   if (values$num_subst != 1) {
-    stop("Multiple quantities for pluralization")
+    stop_pluralization("Multiple quantities for pluralization")
   }
 
   qty <- make_quantity(values$qty)
