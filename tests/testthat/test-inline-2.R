@@ -294,37 +294,34 @@ test_that("cli_extract_vars", {
   )
 
   # Syntax and markup errors
-  expect_s3_class(
-    expect_error(cli_extract_vars("unclosed {a"), "Expecting '\\}'"),
-    c("cli_glue_error", "cli_error")
+  expect_error(
+    cli_extract_vars("unclosed {a"),
+    "Expecting '\\}'",
+    class = "cli_glue_error"
   )
-  expect_s3_class(
-    expect_error(cli_extract_vars("bad {a + }"), "Could not parse cli"),
-    c("cli_parse_error", "cli_error")
+  expect_error(
+    cli_extract_vars("bad {a + }"),
+    "Could not parse cli",
+    class = "cli_parse_error"
   )
-  expect_s3_class(
-    expect_error(cli_extract_vars("bad {.foobar}"), "Invalid cli literal"),
-    c("cli_style_error", "cli_error")
+  expect_error(
+    cli_extract_vars("bad {.foobar}"),
+    "Invalid cli literal",
+    class = "cli_style_error"
   )
-  expect_s3_class(
-    expect_error(
-      cli_extract_vars("bad {?s}"),
-      "Cannot pluralize without a quantity"
-    ),
-    c("cli_pluralization_error", "cli_error")
+  expect_error(
+    cli_extract_vars("bad {?s}"),
+    "Cannot pluralize without a quantity",
+    class = "cli_pluralization_error"
   )
-  expect_s3_class(
-    expect_error(
-      cli_extract_vars("{?s} {a} and {b}"),
-      "Multiple quantities for pluralization"
-    ),
-    c("cli_pluralization_error", "cli_error")
+  expect_error(
+    cli_extract_vars("{?s} {a} and {b}"),
+    "Multiple quantities for pluralization",
+    class = "cli_pluralization_error"
   )
-  expect_s3_class(
-    expect_error(
-      cli_extract_vars("{a} {?a/b/c/d}"),
-      "Invalid pluralization directive"
-    ),
-    c("cli_pluralization_error", "cli_error")
+  expect_error(
+    cli_extract_vars("{a} {?a/b/c/d}"),
+    "Invalid pluralization directive",
+    class = "cli_pluralization_error"
   )
 })
