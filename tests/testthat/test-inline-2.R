@@ -212,3 +212,116 @@ test_that(".num", {
     format_inline("--- {.num {1:4 * 10000}} ---")
   })
 })
+
+test_that("cli_extract_vars", {
+  msg <- "{.arg z} has {length(x)} elements, but it should be {.emph {length(y)}}"
+  expect_identical(cli_extract_vars(msg), c("length", "x", "y"))
+  expect_identical(cli_extract_vars(msg, functions = FALSE), c("x", "y"))
+  expect_identical(
+    cli_extract_vars(msg, unique = FALSE),
+    c("length", "x", "length", "y")
+  )
+  expect_identical(
+    cli_extract_vars(msg, functions = FALSE, unique = FALSE),
+    c("x", "y")
+  )
+
+  # Deeply nested styles and hyperlink styles
+  expect_identical(
+    cli_extract_vars(
+      "{.pkg {.emph {pkg}}} and {.href [text {a}](https://x.com/{b})}"
+    ),
+    c("pkg", "a", "b")
+  )
+
+  # Pluralization directives and helpers
+  expect_identical(
+    cli_extract_vars(
+      "Found {n} file{?s} and {?no/one/some} {ndir} director{?y/ies}."
+    ),
+    c("n", "ndir")
+  )
+  expect_identical(
+    cli_extract_vars("Will remove {?no/the/the} {pkgs} package{?s}."),
+    "pkgs"
+  )
+  expect_identical(
+    cli_extract_vars(
+      "{nupd}/{ntotal} {qty(nupd)} file{?s} and {no(nfile)} dir{?s}"
+    ),
+    c("nupd", "ntotal", "qty", "no", "nfile")
+  )
+
+  # Escaped braces, empty braces, and purrr dot exceptions
+  expect_identical(
+    cli_extract_vars(
+      "Escaped {{ignored}} and {.code {{also_ignored}}} and {} with {used}"
+    ),
+    "used"
+  )
+  expect_identical(
+    cli_extract_vars("{.x} and {.y} and {.}"),
+    c(".x", ".y", ".")
+  )
+
+  # Character vectors and named character vectors (bullets and dl/li)
+  expect_identical(
+    cli_extract_vars(c(
+      "Header {a}",
+      "i" = "Info {.val {b}}",
+      "x" = "Error {c}"
+    )),
+    c("a", "b", "c")
+  )
+  expect_identical(
+    cli_extract_vars(c(
+      "{.field {term1}}" = "Means {desc1}",
+      "{term2}" = "{desc2}"
+    )),
+    c("term1", "term2", "desc1", "desc2")
+  )
+
+  # Edge cases: empty, NULL, NA, plain text, and non-evaluation
+  expect_identical(cli_extract_vars(character()), character())
+  expect_identical(cli_extract_vars(NULL), character())
+  expect_identical(cli_extract_vars(""), character())
+  expect_identical(cli_extract_vars("plain text {.arg x}"), character())
+  expect_identical(cli_extract_vars(NA_character_), character())
+  expect_identical(cli_extract_vars(c("hello {a}", NA_character_)), "a")
+  expect_identical(
+    cli_extract_vars("{stop(not_evaluated)}"),
+    c("stop", "not_evaluated")
+  )
+
+  # Syntax and markup errors
+  expect_error(
+    cli_extract_vars("unclosed {a"),
+    "Expecting '\\}'",
+    class = "cli_glue_error"
+  )
+  expect_error(
+    cli_extract_vars("bad {a + }"),
+    "Could not parse cli",
+    class = "cli_parse_error"
+  )
+  expect_error(
+    cli_extract_vars("bad {.foobar}"),
+    "Invalid cli literal",
+    class = "cli_style_error"
+  )
+  expect_error(
+    cli_extract_vars("bad {?s}"),
+    "Cannot pluralize without a quantity",
+    class = "cli_pluralization_error"
+  )
+  expect_error(
+    cli_extract_vars("{?s} {a} and {b}"),
+    "Multiple quantities for pluralization",
+    class = "cli_pluralization_error"
+  )
+  expect_error(
+    cli_extract_vars("{a} {?a/b/c/d}"),
+    "Invalid pluralization directive",
+    class = "cli_pluralization_error"
+  )
+})
