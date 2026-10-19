@@ -450,6 +450,9 @@ for a quick overview of most of them.
 - [`cli_debug_doc()`](https://cli.r-lib.org/dev/reference/cli_debug_doc.md)
   : Debug cli internals
 
+- [`cli_extract_vars()`](https://cli.r-lib.org/dev/reference/cli_extract_vars.md)
+  : Extract variable and function names from cli format strings
+
 - [`cli_fmt()`](https://cli.r-lib.org/dev/reference/cli_fmt.md) :
   Capture the output of cli functions instead of printing it
 

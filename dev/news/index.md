@@ -2,6 +2,13 @@
 
 ## cli (development version)
 
+- New
+  [`cli_extract_vars()`](https://cli.r-lib.org/dev/reference/cli_extract_vars.md)
+  function to extract variable and function names from cli format
+  strings without evaluating them
+  ([\#750](https://github.com/r-lib/cli/issues/750),
+  [@MichaelChirico](https://github.com/MichaelChirico)).
+
 - [`cli_progress_bar()`](https://cli.r-lib.org/dev/reference/cli_progress_bar.md)
   has a new argument `quiet`. If TRUE, then progress bar will be
   suppressed.
