@@ -130,7 +130,8 @@ configurable via env vars (`CLI_TICK_TIME`, `CLI_SPEED_TIME`,
 ## Documentation
 
 - Roxygen2 (version 8.0.0) generates `man/` and `NAMESPACE` — never edit
-  those by hand; edit the roxygen comments and run `uncovr::document()`.
+  those by hand; edit the roxygen comments and run
+  [`uncovr::document()`](https://rdrr.io/pkg/uncovr/man/document.html).
 - Many `.Rd` examples use **asciicast** ```` ```{asciicast ...} ````
   code chunks (rendered to SVG for the website) rather than plain
   `\examples`. Match the surrounding style when adding examples.
