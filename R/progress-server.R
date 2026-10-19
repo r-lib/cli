@@ -392,10 +392,12 @@ builtin_handler_shiny <- list(
   output = function(bar, .envir, text) {
     bar$shiny_output <-
       last_lines(paste0(bar$shiny_output, " \u2022 ", text))
-    bar$shiny_progress$set(
-      value = bar$current,
-      detail = shiny_detail(bar, .envir)
-    )
+    if (!is.null(bar$shiny_progress)) {
+      bar$shiny_progress$set(
+        value = bar$current,
+        detail = shiny_detail(bar, .envir)
+      )
+    }
   }
 )
 
