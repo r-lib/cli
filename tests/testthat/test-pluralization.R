@@ -83,6 +83,22 @@ test_that("collapsing vectors", {
   })
 })
 
+test_that("pluralize preserves vector elements alongside NA (#717)", {
+  files <- c("file1", "file2", NA_character_)
+  expect_equal(
+    as.character(pluralize("{files} file{?s}")),
+    "file1, file2, and NA files"
+  )
+  expect_equal(
+    as.character(pluralize("{files} file{?s}", .na = "missing")),
+    "file1, file2, and missing files"
+  )
+  expect_equal(
+    as.character(pluralize("{files} file{?s}", .na = NULL)),
+    NA_character_
+  )
+})
+
 test_that("pluralization and style", {
   expect_snapshot({
     special_style <- list(span.foo = list(before = "<", after = ">"))

@@ -1,5 +1,8 @@
 # cli (development version)
 
+* `pluralize()` preserves non-missing vector elements when other elements are
+  `NA`, and applies `.na` before collapsing the vector (#717).
+
 * New `cli_extract_vars()` function to extract variable and function names
   from cli format strings without evaluating them (#750, @MichaelChirico).
 

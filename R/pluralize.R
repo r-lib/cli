@@ -141,7 +141,7 @@ post_process_plurals <- function(str, values) {
 #'
 #' You need to install the glue package to use this function.
 #'
-#' @param ...,.envir,.transformer All arguments are passed to [glue::glue()].
+#' @param ...,.envir,.transformer,.na All arguments are passed to [glue::glue()].
 #'
 #' @export
 #' @family pluralization
@@ -182,7 +182,8 @@ post_process_plurals <- function(str, values) {
 pluralize <- function(
   ...,
   .envir = parent.frame(),
-  .transformer = glue::identity_transformer
+  .transformer = glue::identity_transformer,
+  .na = "NA"
 ) {
   values <- new.env(parent = emptyenv())
   values$empty <- random_id()
@@ -205,10 +206,20 @@ pluralize <- function(
       values$num_subst <- values$num_subst + 1
       qty <- .transformer(text, envir)
       values$qty <- qty
+      qty <- as.character(qty)
+      if (!is.null(.na)) {
+        qty[is.na(qty)] <- .na
+      }
       return(inline_collapse(qty))
     }
   }
 
-  raw <- glue::glue(..., .envir = .envir, .transformer = tf, .comment = "")
+  raw <- glue::glue(
+    ...,
+    .envir = .envir,
+    .transformer = tf,
+    .comment = "",
+    .na = .na
+  )
   post_process_plurals(raw, values)
 }

@@ -7,11 +7,12 @@
 pluralize(
   ...,
   .envir = parent.frame(),
-  .transformer = glue::identity_transformer
+  .transformer = glue::identity_transformer,
+  .na = "NA"
 )
 }
 \arguments{
-\item{..., .envir, .transformer}{All arguments are passed to \code{\link[glue:glue]{glue::glue()}}.}
+\item{..., .envir, .transformer, .na}{All arguments are passed to \code{\link[glue:glue]{glue::glue()}}.}
 }
 \description{
 \code{pluralize()} is similar to \code{\link[glue:glue]{glue::glue()}}, with two differences:
