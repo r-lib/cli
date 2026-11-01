@@ -154,6 +154,9 @@ cliapp <- function(
     styles = NULL,
     delayed_item = NULL,
     status_bar = list(),
+    status_bar_lines = 0L,
+    status_bar_current = NULL,
+    status_bar_prev_content = "",
 
     margin = 0,
     output = NULL,

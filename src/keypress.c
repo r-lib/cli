@@ -71,10 +71,17 @@ keypress_key_t keypress_utf8(const char *buf) {
   return result;
 }
 
-SEXP cli_keypress(SEXP s_block) {
+/* Back-compatible entry point: block forever (or return immediately for a
+   non-blocking read). New code should use keypress_read_timeout(). */
+keypress_key_t keypress_read(int block) {
+  return keypress_read_timeout(block, -1.0);
+}
+
+SEXP cli_keypress(SEXP s_block, SEXP s_timeout) {
   SEXP result = NULL;
   int block = LOGICAL(s_block)[0];
-  keypress_key_t key = keypress_read(block);
+  double timeout = REAL(s_timeout)[0];
+  keypress_key_t key = keypress_read_timeout(block, timeout);
 
   if (key.code == KEYPRESS_CHAR) {
     return ScalarString(mkCharCE(key.utf8, CE_UTF8));

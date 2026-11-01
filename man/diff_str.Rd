@@ -34,7 +34,7 @@ diff_str(str1, str2)
 The diffobj package for a much more comprehensive set of
 \code{diff}-like tools.
 
-Other diff functions in cli: 
-\code{\link{diff_chr}()}
+Other diff functions in cli:
+\code{\link[=diff_chr]{diff_chr()}}
 }
 \concept{diff functions in cli}

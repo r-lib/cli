@@ -14,7 +14,7 @@ load_packages <- function() {
     library(pkgsearch)
     library(docopt)
     library(prettyunits)
-    error = function(e) {
+    error <- function(e) {
       cli_alert_danger(
         "The {.pkg pkgsearch}, {.pkg prettyunits} and {.pkg docopt} packages are needed!"
       )

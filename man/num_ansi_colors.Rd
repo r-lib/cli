@@ -117,9 +117,9 @@ num_ansi_colors()
 
 }
 \seealso{
-Other ANSI styling: 
+Other ANSI styling:
 \code{\link{ansi-styles}},
-\code{\link{combine_ansi_styles}()},
-\code{\link{make_ansi_style}()}
+\code{\link[=combine_ansi_styles]{combine_ansi_styles()}},
+\code{\link[=make_ansi_style]{make_ansi_style()}}
 }
 \concept{ANSI styling}

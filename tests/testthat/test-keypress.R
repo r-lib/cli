@@ -102,3 +102,90 @@ test_that("nonblocking", {
     cat(p$read_output())
   })
 })
+
+# Wait for a marker to appear in a pty process's output, or time out.
+keypress_wait_for <- function(p, marker, timeout = 10) {
+  strip_ansi <- function(x) {
+    gsub("\033(?:\\[[0-9;?]*[A-Za-z]|\\][^\007]*\007)", "", x, perl = TRUE)
+  }
+  out <- ""
+  deadline <- Sys.time() + timeout
+  while (
+    Sys.time() < deadline && !grepl(marker, strip_ansi(out), fixed = TRUE)
+  ) {
+    p$poll_io(200)
+    out <- paste0(out, p$read_output())
+  }
+  strip_ansi(out)
+}
+
+test_that("keypress() times out", {
+  skip_on_cran()
+  skip_on_os("windows")
+
+  opts <- callr::r_process_options(
+    func = function() {
+      # Make sure has_keypress_support() is happy in the child, and stop
+      # cli from writing cursor-control sequences to the pty (otherwise the
+      # child can block on the tty write and never exit).
+      Sys.setenv(TERM = "xterm", R_CLI_HIDE_CURSOR = "false")
+      cat("READY\n")
+      flush(stdout())
+      t0 <- Sys.time()
+      res <- cli::keypress(timeout = 1)
+      dt <- as.numeric(Sys.time() - t0, units = "secs")
+      list(res = res, elapsed = dt)
+    },
+    stdout = NULL,
+    stderr = NULL
+  )
+  opts$extra$pty <- TRUE
+
+  p <- callr::r_process$new(opts)
+  on.exit(p$kill(), add = TRUE)
+
+  expect_match(keypress_wait_for(p, "READY"), "READY", fixed = TRUE)
+
+  # We never press a key, so keypress() should return NA on its own after
+  # roughly one second, and the process should finish without hanging.
+  p$wait(timeout = 5000)
+  expect_false(p$is_alive())
+  res <- p$get_result()
+  expect_true(is.na(res$res))
+  expect_gte(res$elapsed, 1)
+})
+
+test_that("keypress() is interruptible", {
+  skip_on_cran()
+  skip_on_os("windows")
+
+  opts <- callr::r_process_options(
+    func = function() {
+      # Make sure has_keypress_support() is happy in the child, and stop
+      # cli from writing cursor-control sequences to the pty (otherwise the
+      # child can block on the tty write and never exit).
+      Sys.setenv(TERM = "xterm", R_CLI_HIDE_CURSOR = "false")
+      cat("READY\n")
+      flush(stdout())
+      tryCatch(cli::keypress(), interrupt = function(...) "interrupted")
+    },
+    stdout = NULL,
+    stderr = NULL
+  )
+  opts$extra$pty <- TRUE
+
+  p <- callr::r_process$new(opts)
+  on.exit(p$kill(), add = TRUE)
+
+  expect_match(keypress_wait_for(p, "READY"), "READY", fixed = TRUE)
+
+  # Give keypress() a moment to enter its poll loop, then interrupt it.
+  Sys.sleep(0.5)
+  p$interrupt()
+
+  # The interrupt should be caught and turned into "interrupted", and the
+  # process should finish on its own (rather than hanging).
+  p$wait(timeout = 5000)
+  expect_false(p$is_alive())
+  expect_equal(p$get_result(), "interrupted")
+})

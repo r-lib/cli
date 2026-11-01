@@ -38,7 +38,7 @@ ansi_html_style(colors = FALSE)
 ansi_html_style(colors = 8, palette = "iterm-snazzy")
 }
 \seealso{
-Other ANSI to HTML conversion: 
-\code{\link{ansi_html}()}
+Other ANSI to HTML conversion:
+\code{\link[=ansi_html]{ansi_html()}}
 }
 \concept{ANSI to HTML conversion}

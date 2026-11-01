@@ -224,7 +224,7 @@ rstudio <- local({
     list(
       type = "rstudio_console",
       dynamic_tty = TRUE,
-      ansi_tty = FALSE,
+      ansi_tty = data$ver >= "2026.06",
       ansi_color = data$envs[["RSTUDIO_CONSOLE_COLOR"]] != "",
       num_colors = as.integer(data$envs[["RSTUDIO_CONSOLE_COLOR"]]),
       hyperlink = data$envs[["RSTUDIO_CLI_HYPERLINKS"]] != "",

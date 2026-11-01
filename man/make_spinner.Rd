@@ -100,9 +100,9 @@ ansi_with_hidden_cursor(fun_with_spinner3())
 }
 
 \seealso{
-Other spinners: 
-\code{\link{demo_spinners}()},
-\code{\link{get_spinner}()},
-\code{\link{list_spinners}()}
+Other spinners:
+\code{\link[=demo_spinners]{demo_spinners()}},
+\code{\link[=get_spinner]{get_spinner()}},
+\code{\link[=list_spinners]{list_spinners()}}
 }
 \concept{spinners}

@@ -2,10 +2,6 @@
 % Please edit documentation in R/progress-client.R
 \name{cli_progress_bar}
 \alias{cli_progress_bar}
-\alias{__cli_update_due}
-\alias{cli_tick_reset}
-\alias{ccli_tick_reset}
-\alias{ticking}
 \alias{cli_progress_update}
 \alias{cli_progress_done}
 \title{cli progress bars}
@@ -20,6 +16,7 @@ cli_progress_bar(
   format_failed = NULL,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
+  quiet = getOption("cli.disable_progress", FALSE),
   auto_terminate = type != "download",
   extra = NULL,
   .auto_close = TRUE,
@@ -82,6 +79,9 @@ it has terminated. Defaults to the \code{cli.progress_clear} option, or
 \item{current}{Whether to use this progress bar as the current progress
 bar of the calling function. See more at 'The current progress bar'
 below.}
+
+\item{quiet}{if \code{TRUE} suppresses output from this function. Defaults to the \code{cli.disable_progress} option, or
+\code{TRUE} if unset.}
 
 \item{auto_terminate}{Whether to terminate the progress bar if the
 number of current units reaches the number of total units.}
@@ -337,6 +337,11 @@ are probably useful to avoid calculating some progress bar quantities
 like the elapsed time, of the ETA manually. You can also use your own
 variables in the calling function:
 
+To leave a completion or failure message on screen after the progress bar
+finishes, set \code{clear = FALSE} and customize \code{format_done} and
+\code{format_failed}. The \code{pb_elapsed} variable is often useful for reporting the
+total runtime.
+
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{fun <- function(urls) \{
   cli_progress_bar(
     format = paste0(
@@ -346,6 +351,9 @@ variables in the calling function:
     format_done = paste0(
       "\{col_green(symbol$tick)\} Downloaded \{pb_total\} files ",
       "in \{pb_elapsed\}."
+    ),
+    format_failed = paste0(
+      "\{col_red(symbol$cross)\} Download failed after \{pb_elapsed\}."
     ),
     clear = FALSE,
     total = length(urls)
@@ -367,38 +375,38 @@ These functions support \link[=inline-markup]{inline markup}.
 \code{\link[=cli_progress_message]{cli_progress_message()}} and \code{\link[=cli_progress_step]{cli_progress_step()}} for simpler
 progress messages.
 
-Other progress bar functions: 
-\code{\link{cli_progress_along}()},
-\code{\link{cli_progress_builtin_handlers}()},
-\code{\link{cli_progress_message}()},
-\code{\link{cli_progress_num}()},
-\code{\link{cli_progress_output}()},
-\code{\link{cli_progress_step}()},
-\code{\link{cli_progress_styles}()},
+Other progress bar functions:
+\code{\link[=cli_progress_along]{cli_progress_along()}},
+\code{\link[=cli_progress_builtin_handlers]{cli_progress_builtin_handlers()}},
+\code{\link[=cli_progress_message]{cli_progress_message()}},
+\code{\link[=cli_progress_num]{cli_progress_num()}},
+\code{\link[=cli_progress_output]{cli_progress_output()}},
+\code{\link[=cli_progress_step]{cli_progress_step()}},
+\code{\link[=cli_progress_styles]{cli_progress_styles()}},
 \code{\link{progress-variables}}
 
-Other functions supporting inline markup: 
-\code{\link{cli_abort}()},
-\code{\link{cli_alert}()},
-\code{\link{cli_blockquote}()},
-\code{\link{cli_bullets}()},
-\code{\link{cli_bullets_raw}()},
-\code{\link{cli_dl}()},
-\code{\link{cli_h1}()},
-\code{\link{cli_li}()},
-\code{\link{cli_ol}()},
-\code{\link{cli_process_start}()},
-\code{\link{cli_progress_along}()},
-\code{\link{cli_progress_message}()},
-\code{\link{cli_progress_output}()},
-\code{\link{cli_progress_step}()},
-\code{\link{cli_rule}},
-\code{\link{cli_status}()},
-\code{\link{cli_status_update}()},
-\code{\link{cli_text}()},
-\code{\link{cli_ul}()},
-\code{\link{format_error}()},
-\code{\link{format_inline}()}
+Other functions supporting inline markup:
+\code{\link[=cli_abort]{cli_abort()}},
+\code{\link[=cli_alert]{cli_alert()}},
+\code{\link[=cli_blockquote]{cli_blockquote()}},
+\code{\link[=cli_bullets]{cli_bullets()}},
+\code{\link[=cli_bullets_raw]{cli_bullets_raw()}},
+\code{\link[=cli_dl]{cli_dl()}},
+\code{\link[=cli_h1]{cli_h1()}},
+\code{\link[=cli_li]{cli_li()}},
+\code{\link[=cli_ol]{cli_ol()}},
+\code{\link[=cli_process_start]{cli_process_start()}},
+\code{\link[=cli_progress_along]{cli_progress_along()}},
+\code{\link[=cli_progress_message]{cli_progress_message()}},
+\code{\link[=cli_progress_output]{cli_progress_output()}},
+\code{\link[=cli_progress_step]{cli_progress_step()}},
+\code{\link[=cli_rule]{cli_rule()}},
+\code{\link[=cli_status]{cli_status()}},
+\code{\link[=cli_status_update]{cli_status_update()}},
+\code{\link[=cli_text]{cli_text()}},
+\code{\link[=cli_ul]{cli_ul()}},
+\code{\link[=format_error]{format_error()}},
+\code{\link[=format_inline]{format_inline()}}
 }
 \concept{functions supporting inline markup}
 \concept{progress bar functions}

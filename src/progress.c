@@ -292,7 +292,7 @@ void cli_progress_set(SEXP bar, double set) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) {
+    if (now >= REAL(show_after)[0]) {
       cli__progress_update(bar);
     } else {
       SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));
@@ -401,7 +401,7 @@ void cli_progress_update(SEXP bar, double set, double inc, int force) {
     if (cli__reset) *cli_timer_flag = 0;
     double now = clic__get_time();
     SEXP show_after = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_after"))));
-    if (now > REAL(show_after)[0]) {
+    if (now >= REAL(show_after)[0]) {
       cli__progress_update(bar);
     } else {
       SEXP show_50 = PROTECT(clic__find_var(bar, PROTECT(Rf_install("show_50"))));

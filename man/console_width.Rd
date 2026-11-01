@@ -35,9 +35,10 @@ get garbled.
 if we are in the RStudio console.
 }
 
-If we cannot determine the size of the terminal or console window, then
-we use the \code{width} option. If the \code{width} option is not set, then
-we return 80L.
+If we cannot determine the size of the terminal or console window (e.g. if
+\code{console_width()} is called in a startup \code{.Rprofile} script before a console
+is present), then we use the \code{width} option. If the \code{width} option is not
+set, then we return 80L.
 }
 \examples{
 console_width()

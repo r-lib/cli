@@ -15,10 +15,10 @@ Don't forget to use \code{perl = TRUE} when using this with \code{\link[=grepl]{
 friends.
 }
 \seealso{
-Other low level ANSI functions: 
-\code{\link{ansi_has_any}()},
-\code{\link{ansi_hide_cursor}()},
-\code{\link{ansi_string}()},
-\code{\link{ansi_strip}()}
+Other low level ANSI functions:
+\code{\link[=ansi_has_any]{ansi_has_any()}},
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=ansi_string]{ansi_string()}},
+\code{\link[=ansi_strip]{ansi_strip()}}
 }
 \concept{low level ANSI functions}

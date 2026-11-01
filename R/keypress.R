@@ -14,25 +14,43 @@
 #'
 #' @param block Whether to wait for a key press, if there is none
 #'   available now.
-#' @return The key pressed, a character scalar. For non-blocking reads
-#'   `NA` is returned if no keys are available.
+#' @param timeout Maximum number of seconds to wait for a key press, if
+#'   `block` is `TRUE`. The default `Inf` waits indefinitely. If no key
+#'   is pressed before the timeout expires, `NA` is returned. Ignored
+#'   for non-blocking reads (`block = FALSE`). The wait is interruptible
+#'   regardless of the timeout.
+#' @return The key pressed, a character scalar. `NA` is returned if no
+#'   key is available: for non-blocking reads, or when a blocking read
+#'   times out.
 #'
 #' @family keypress function
 #' @export
 #' @examplesIf FALSE
 #' x <- keypress()
 #' cat("You pressed key", x, "\n")
+#'
+#' # Wait at most five seconds for a key press
+#' x <- keypress(timeout = 5)
+#' if (is.na(x)) cat("No key pressed\n") else cat("You pressed key", x, "\n")
 
-keypress <- function(block = TRUE) {
+keypress <- function(block = TRUE, timeout = Inf) {
   if (!has_keypress_support()) {
     stop("Your platform/terminal does not support `keypress()`.")
   }
   block <- as.logical(block)
-  if (length(block) != 1) {
+  if (length(block) != 1 || is.na(block)) {
     stop("'block' must be a logical scalar")
   }
-  ret <- .Call(cli_keypress, block)
+  timeout <- as.double(timeout)
+  if (length(timeout) != 1 || is.na(timeout) || timeout < 0) {
+    stop("'timeout' must be a non-negative number of seconds")
+  }
+  ret <- call_with_cleanup(cli_keypress, block, timeout)
   if (ret == "none") NA_character_ else ret
+}
+
+call_with_cleanup <- function(ptr, ...) {
+  .Call(cleancall_call, pairlist(ptr, ...), parent.frame())
 }
 
 #' Check if the current platform/terminal supports reading
@@ -51,7 +69,7 @@ keypress <- function(block = TRUE) {
 #' * Others.
 #'
 #' @return Whether there is support for waiting for individual
-#' keypressses.
+#' keypresses.
 #'
 #' @family keypress function
 #' @export

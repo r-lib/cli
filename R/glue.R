@@ -31,11 +31,22 @@ glue <- function(
     text <- trim(text)
   }
 
+  in_transformer <- FALSE
   f <- function(expr) {
+    in_transformer <<- TRUE
+    on.exit(in_transformer <<- FALSE)
     eval_func <- as.character(.transformer(expr, .envir) %||% character())
   }
 
-  res <- .Call(glue_, text, f, .open, .close, .cli)
+  res <- withCallingHandlers(
+    .Call(glue_, text, f, .open, .close, .cli),
+    error = function(e) {
+      if (!in_transformer) {
+        class(e) <- c("cli_glue_error", "cli_error", class(e))
+        stop(e)
+      }
+    }
+  )
 
   res <- drop_null(res)
   if (any(lengths(res) == 0L)) {
@@ -245,7 +256,7 @@ collapse_head <- function(x, sep, sep2, last, trunc, width, ellipsis) {
     } else if (well == width) {
       return(ellipsis)
     } else if (well + wsep >= width) {
-      return(paste0(ansi_strtrim(x[1L], width, ellipsis = ""), ellipsis))
+      return(paste0(ansi_strtrim(x[1L], width - well, ellipsis = ""), ellipsis))
     } else {
       return(paste0(
         ansi_strtrim(x[1L], max(width - well - wsep, 0L), ellipsis = ellipsis),

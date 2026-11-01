@@ -1,4 +1,4 @@
-#' @aliases cli-package NULL
+#' @aliases cli-package NULL __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @keywords internal
 "_PACKAGE"
 

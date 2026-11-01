@@ -486,17 +486,17 @@
 # .time_ago
 
     Code
-      t <- as.numeric(Sys.time() - 120)
+      t <- as.numeric(fixed - 120)
       format_inline("{.time_ago {t}}")
     Output
       [1] "2 minutes ago"
     Code
-      t <- Sys.time() - 120
+      t <- fixed - 120
       format_inline("{.time_ago {t}}")
     Output
       [1] "2 minutes ago"
     Code
-      t <- as.POSIXlt(Sys.time() - 120)
+      t <- as.POSIXlt(fixed - 120)
       format_inline("{.time_ago {t}}")
     Output
       [1] "2 minutes ago"

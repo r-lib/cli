@@ -3,6 +3,11 @@ cli
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="inst/logo/cli-dark.svg">
+<img src="inst/logo/cli-light.svg" align="right" height="138" alt="cli logo">
+</picture>
+
 > Helpers for Developing Command Line Interfaces
 
 <!-- badges: start -->

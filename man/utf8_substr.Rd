@@ -36,8 +36,8 @@ str24 <- utf8_substr(str, 2, 4)
 cat(str24)
 }
 \seealso{
-Other UTF-8 string manipulation: 
-\code{\link{utf8_graphemes}()},
-\code{\link{utf8_nchar}()}
+Other UTF-8 string manipulation:
+\code{\link[=utf8_graphemes]{utf8_graphemes()}},
+\code{\link[=utf8_nchar]{utf8_nchar()}}
 }
 \concept{UTF-8 string manipulation}

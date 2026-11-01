@@ -275,7 +275,16 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
       }
     ),
     span.time_ago = list(
-      transform = function(x) format_time_ago$time_ago(as.POSIXct(x, origin = "1970-01-01"))
+      transform = function(x) {
+        dates <- as.POSIXct(x, origin = "1970-01-01")
+        present <- !is.na(dates)
+        if (any(dates[present] > Sys.time())) {
+          stop("`.time_ago` requires a past timestamp.", call. = FALSE)
+        }
+        out <- rep(NA_character_, length(dates))
+        out[present] <- format_time_ago$time_ago(dates[present])
+        out
+      }
     )
   )
 }

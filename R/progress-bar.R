@@ -1,5 +1,5 @@
 make_progress_bar <- function(percent, width = 30, style = list()) {
-  complete_len <- round(width * percent)
+  complete_len <- round(width * min(max(percent, 0), 1))
 
   def <- default_progress_style()
   chr_complete <- style[["progress-complete"]] %||% def[["complete"]]

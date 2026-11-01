@@ -64,7 +64,7 @@
 #define KEYPRESS_NAME_SIZE 43
 
 /* The longest UTF8 character in bytes */
-#define KEYPRESS_UTF8_BUFFER_SIZE 4
+#define KEYPRESS_UTF8_BUFFER_SIZE 8
 
 typedef struct {
   int code;
@@ -73,11 +73,12 @@ typedef struct {
 } keypress_key_t;
 
 keypress_key_t keypress_read(int block);
+keypress_key_t keypress_read_timeout(int block, double timeout);
 
 keypress_key_t keypress_special(int key);
 keypress_key_t keypress_utf8(const char *buf);
 
-SEXP cli_keypress(SEXP s_block);
+SEXP cli_keypress(SEXP s_block, SEXP s_timeout);
 
 extern const char *keypress_key_names[KEYPRESS_NAME_SIZE];
 

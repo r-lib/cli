@@ -93,7 +93,7 @@ static const R_CallMethodDef callMethods[]  = {
 
   { "clic_vt_output",      (DL_FUNC) clic_vt_output,      3 },
 
-  { "cli_keypress",            (DL_FUNC) cli_keypress,            1 },
+  { "cli_keypress",            (DL_FUNC) cli_keypress,            2 },
 
   { NULL, NULL, 0 }
 };

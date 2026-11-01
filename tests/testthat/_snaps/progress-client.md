@@ -109,3 +109,10 @@
       [1] "\rfirst\r"     "\r     \r"     "just 1 text\n" "first\r"      
       [5] "\rfirst\r"     "\r     \r"    
 
+# no progress bar when quiet = TRUE
+
+    Code
+      capture_cli_messages(fun())
+    Output
+      character(0)
+

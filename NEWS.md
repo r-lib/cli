@@ -1,7 +1,64 @@
 # cli (development version)
 
 * New `{.duration}` and `{.time_ago}` inline styles to format durations
-  and relative times (@jjjermiah, #814).
+  and past relative times (@jjjermiah, #814).
+
+* New `cli_extract_vars()` function to extract variable and function names
+  from cli format strings without evaluating them (#750, @MichaelChirico).
+
+* `cli_progress_bar()` has a new argument `quiet`. If TRUE, then 
+  progress bar will be suppressed.
+
+* Hyperlinks containing `fs_path` objects (or any object with a
+  `class-map` entry that itself creates a hyperlink) now generate the
+  correct ANSI escape sequences (#683).
+
+* `keypress()` improvements:
+  - `timeout` argument to wait at most a given number of seconds for a
+    key press.
+  - Blocking reads are now interruptible.
+  - Unicode characters (including emoji) are now read correctly on Windows.
+
+* `ansi_strip()` now also removes generic OSC sequences such as the
+  `\033]0;...\a` window-title sequence emitted by `Rscript.exe` on
+  Windows.
+
+* `ansi_strwrap()` (used by `cli_alert_*(wrap = TRUE)` and friends) now
+  correctly wraps strings that contain multi-codepoint graphemes,
+  such as an emoji (#822).
+
+* Multiple concurrent progress bar and status bars are now rendered
+  on separate lines on ANSI-capable terminals. Non-ANSI dynamic terminals
+  continue to show only the current bar (@simonpcouch, #819).
+  Set the new `cli.progress_multiline` option to `FALSE` to keep the
+  single-line behavior on ANSI terminals.
+
+* New `R_CLI_ANSI` environment variable that is equivalent to the
+  `cli.ansi` option (the option takes precedence). See `is_ansi_tty()`.
+
+* If `cli.progress_show_after = 0` is set then the progress bar is now
+  shown even if it terminates immediately.
+
+* New `cli_with_progress_ticks()` function to be used when testing
+  cli progress bars. It makes cli redraw the progress bar for every
+  progress update.
+
+* `hash_raw_animal()` and `hash_raw_emoji()` now validate `n_adj` and `size`,
+  respectively, consistently with their character-vector variants. This also
+  affects `hash_obj_animal()` and `hash_obj_emoji()` (#834, @fly1d).
+
+* Fix issues with `ansi_strwrap()` having `\r` in the string (#667)
+
+* `ansi_collapse(style = "head")` no longer exceeds `width` when not even
+  the first element fits (#570, @taekop).
+
+* `{.url}` with a substituted value, e.g. `{.url https://example.com/{x}}`,
+  no longer puts ANSI escape sequences into the hyperlink target (#757,
+  @taekop).
+
+* `cli_progress_update(set = )` no longer fails with a deferred `on.exit()`
+  error when the progress bar is drawn with a value below zero or above
+  the total (#580, @taekop).
 
 # cli 3.6.6
 

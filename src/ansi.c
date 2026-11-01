@@ -513,7 +513,7 @@ void clic__ansi_iterator(SEXP sx,
 
       } else if (*x == '\033' && *(x + 1) == ']' && *(x + 2) == '8' &&
                  *(x + 3) == ';') {
-        // OSC
+        // OSC 8 hyperlink
         s_start = x;
         s_param = s_uri = x + 4;
         while (*s_uri != ';' && *s_uri != '\0') s_uri++;
@@ -530,6 +530,27 @@ void clic__ansi_iterator(SEXP sx,
         }
         if (link_cb) {
           if (link_cb(s_param, s_uri, s_end, data)) goto end;
+        }
+        shaft = s_end + 1;
+        x = *s_end ? s_end + 1 : s_end;
+
+      } else if (*x == '\033' && *(x + 1) == ']') {
+        // Generic OSC (window title, etc.). Treated as a non-SGR
+        // control sequence and dispatched through csi_cb.
+        s_start = x;
+        s_param = x + 2;
+        s_end = s_param;
+        for (;;) {
+          if (*s_end == '\0') break;
+          if (*s_end == '\007') break;
+          if (*s_end == '\\' && *(s_end - 1) == '\033') break;
+          s_end++;
+        }
+        if (s_start > shaft && text_cb) {
+          if (text_cb(shaft, s_start, data)) goto end;
+        }
+        if (csi_cb) {
+          if (csi_cb(s_param, s_end, s_end, data)) goto end;
         }
         shaft = s_end + 1;
         x = *s_end ? s_end + 1 : s_end;

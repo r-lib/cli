@@ -53,6 +53,27 @@ test_that("ansi_strip works", {
   }
 })
 
+test_that("ansi_strip removes generic OSC sequences", {
+  # BEL-terminated window title (OSC 0)
+  expect_equal(
+    ansi_strip("i\033]0;some title\asatty: TRUE \r\n"),
+    "isatty: TRUE \r\n"
+  )
+  # ST-terminated OSC
+  expect_equal(
+    ansi_strip("before\033]2;title\033\\after"),
+    "beforeafter"
+  )
+  # Multiple OSC sequences mixed with text and SGR
+  expect_equal(
+    ansi_strip("\033]0;t1\a\033[31mred\033[39m\033]0;t2\a"),
+    "red"
+  )
+  # csi = FALSE keeps the OSC sequence
+  s <- "x\033]0;t\ay"
+  expect_equal(ansi_strip(s, csi = FALSE), s)
+})
+
 str <- c(
   "",
   "plain",
@@ -475,7 +496,7 @@ test_that("ansi_trimws", {
 })
 
 test_that("ansi_strwrap simple", {
-  cases = list(
+  cases <- list(
     list(character(), character()),
     list("", ""),
     list("foo", "foo"),
@@ -489,7 +510,7 @@ test_that("ansi_strwrap simple", {
 })
 
 test_that("ansi_strwrap simple styled", {
-  cases = list(
+  cases <- list(
     list(col_red("foo"), col_red("foo")),
     list(col_red(c("foo", "bar")), col_red(c("foo", "bar"))),
     list(
@@ -544,10 +565,29 @@ test_that("ansi_strwrap double width", {
   )
 })
 
+test_that("ansi_strwrap with multi-codepoint graphemes", {
+  # U+2139 + U+FE0F is one grapheme but two codepoints
+  msg <- paste0(
+    "\u2139\ufe0f one two three four five six seven eight nine ten ",
+    "eleven twelve"
+  )
+  styled <- paste0(col_cyan("x"), " ", msg)
+  wrapped <- ansi_strwrap(styled, 40)
+  expect_equal(
+    ansi_strip(wrapped),
+    strwrap(ansi_strip(styled), 40)
+  )
+})
+
 test_that("ansi_strwrap newlines", {
   expect_equal(
     ansi_strwrap("\033[32mv\033[39m hello world.\nxxx"),
     ansi_string("\033[32mv\033[39m hello world. xxx")
+  )
+  # Reprex for issue #667 about using \r
+  expect_equal(
+    ansi_strwrap("\033[36m•\033[39m x \r y"),
+    ansi_string("\033[36m•\033[39m x y")
   )
 })
 

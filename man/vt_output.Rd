@@ -9,7 +9,7 @@ vt_output(output, width = 80L, height = 25L)
 \arguments{
 \item{output}{Character vector or raw vector. Character vectors are
 collapsed (without a separator), and converted to a raw vector using
-\code{\link[base:rawConversion]{base::charToRaw()}}.}
+\code{\link[base:charToRaw]{base::charToRaw()}}.}
 
 \item{width}{Terminal width.}
 

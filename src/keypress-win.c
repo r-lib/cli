@@ -6,7 +6,9 @@ void keypress_win_dummy(void) { }
 
 #include "errors.h"
 #include "keypress.h"
+#include "keypress-internal.h"
 #include <windows.h>
+#include <R_ext/Utils.h>		/* R_CheckUserInterrupt */
 
 static HANDLE console_in, console_out;
 
@@ -32,26 +34,80 @@ static int disableRawMode(void) {
   return 0;
 }
 
-keypress_key_t getWinChar(int block) {
+// Below not needed for Windows terminal
+
+SEXP save_term_status(void) {
+  return R_NilValue;
+}
+
+SEXP restore_term_status(void) {
+  return R_NilValue;
+}
+
+SEXP set_term_echo(SEXP s_echo) {
+  return R_NilValue;
+}
+
+SEXP test_single_char(SEXP s_bytes) {
+  error("test_single_char is not supported on Windows");
+  return R_NilValue;
+}
+
+SEXP test_function_key(SEXP s_bytes) {
+  error("test_function_key is not supported on Windows");
+  return R_NilValue;
+}
+
+keypress_key_t getWinChar(int block, double timeout) {
   INPUT_RECORD rec;
   DWORD count;
-  char buf[2] = { 0, 0 };
+  DWORD waitres;
+  int infinite = timeout < 0 || !R_FINITE(timeout);
+  ULONGLONG deadline =
+    infinite ? 0 : GetTickCount64() + (ULONGLONG)(timeout * 1000.0);
+  char buf[KEYPRESS_UTF8_BUFFER_SIZE + 1] = { 0 };
+  WCHAR wbuf[2];
+  int wlen;
   int chr;
+  /* Holds a pending UTF-16 high surrogate between two key events, since
+     characters outside the BMP (e.g. emoji) arrive as two WCHARs. */
+  static WCHAR high_surrogate = 0;
 
-  for (;; Sleep(10)) {
+  for (;;) {
 
     GetNumberOfConsoleInputEvents(console_in, &count);
 
-    if ((count == 0) && (block == NON_BLOCKING)) {
-      return keypress_special(KEYPRESS_NONE);
+    if (count == 0) {
+      if (block == NON_BLOCKING) {
+        return keypress_special(KEYPRESS_NONE);
+      }
+      /* Interruptible wait, the Windows equivalent of poll() on Unix.
+         The console input handle is signalled when input is available.
+         We wait in chunks of at most 100ms so we can check for an R user
+         interrupt (e.g. Ctrl+C / Esc in RStudio) between waits, while
+         honouring the overall timeout (if any). */
+      DWORD wait_ms = 100;
+      if (!infinite) {
+        ULONGLONG now = GetTickCount64();
+        if (now >= deadline) return keypress_special(KEYPRESS_NONE);
+        ULONGLONG remaining = deadline - now;
+        if (remaining < wait_ms) wait_ms = (DWORD) remaining;
+      }
+      waitres = WaitForSingleObject(console_in, wait_ms);
+      if (waitres == WAIT_TIMEOUT) {
+        R_CheckUserInterrupt();
+        continue;
+      } else if (waitres == WAIT_FAILED) {
+        R_THROW_SYSTEM_ERROR("Cannot wait for console input");
+      }
     }
 
-    if (! ReadConsoleInputA(console_in, &rec, 1, &count)) {
+    if (! ReadConsoleInputW(console_in, &rec, 1, &count)) {
       R_THROW_SYSTEM_ERROR("Cannot read from console");
     }
     if (rec.EventType != KEY_EVENT) continue;
     if (! rec.Event.KeyEvent.bKeyDown) continue;
-    buf[0] = chr = rec.Event.KeyEvent.uChar.AsciiChar;
+    chr = rec.Event.KeyEvent.uChar.UnicodeChar;
 
     switch (rec.Event.KeyEvent.wVirtualKeyCode) {
 
@@ -100,7 +156,28 @@ keypress_key_t getWinChar(int block) {
 	case 21: return keypress_special(KEYPRESS_CTRL_U);
 	case 22: return keypress_special(KEYPRESS_CTRL_W);
 	}
-      } else if (buf[0]) {
+      } else if (chr) {
+	/* Combine surrogate pairs into a single code point. A high
+	   surrogate is buffered until its low surrogate arrives. */
+	if (chr >= 0xD800 && chr <= 0xDBFF) {
+	  high_surrogate = (WCHAR) chr;
+	  continue;
+	}
+	if (chr >= 0xDC00 && chr <= 0xDFFF) {
+	  if (!high_surrogate) continue;   /* lone low surrogate, ignore */
+	  wbuf[0] = high_surrogate;
+	  wbuf[1] = (WCHAR) chr;
+	  wlen = 2;
+	  high_surrogate = 0;
+	} else {
+	  high_surrogate = 0;
+	  wbuf[0] = (WCHAR) chr;
+	  wlen = 1;
+	}
+	count = WideCharToMultiByte(
+	  CP_UTF8, 0, wbuf, wlen, buf, KEYPRESS_UTF8_BUFFER_SIZE, NULL, NULL);
+	if (count == 0) continue;        /* conversion failed, skip */
+	buf[count] = '\0';
 	return keypress_utf8(buf);
       }
     }
@@ -108,7 +185,7 @@ keypress_key_t getWinChar(int block) {
   }
 }
 
-keypress_key_t keypress_read(int block) {
+keypress_key_t keypress_read_timeout(int block, double timeout) {
 
   keypress_key_t res;
 
@@ -120,7 +197,7 @@ keypress_key_t keypress_read(int block) {
     R_THROW_SYSTEM_ERROR("Cannot query console information");
   }
 
-  res = getWinChar(block);
+  res = getWinChar(block, timeout);
 
   disableRawMode();
 

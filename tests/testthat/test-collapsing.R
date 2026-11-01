@@ -189,6 +189,22 @@ test_that("ansi_collapse with width trimming", {
   })
 })
 
+test_that("ansi_collapse with style = 'head' never exceeds width (#570)", {
+  x <- c("loooooooong", "healthy live the Penguin")
+  expect_equal(ansi_collapse(x, width = 4, style = "head"), "l...")
+  expect_equal(ansi_collapse(x, width = 5, style = "head"), "lo...")
+  expect_equal(
+    ansi_collapse(x, width = 2, style = "head", ellipsis = "\u2026"),
+    "l\u2026"
+  )
+  for (width in 0:30) {
+    expect_lte(
+      ansi_nchar(ansi_collapse(x, width = width, style = "head")),
+      width
+    )
+  }
+})
+
 test_that("ansi_collapse produces consistent truncation results", {
   expect_equal(
     ansi_collapse(1:2, trunc = 1, style = "head"),

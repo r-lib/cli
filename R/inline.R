@@ -181,6 +181,16 @@ inline_transformer <- function(code, envir) {
     # class-less span, so that the non-inherited styles (e.g. `before`) are
     # not used before collapsing.
 
+    # Is this substitution already nested inside a span with its own
+    # `transform` (e.g. `.href`, `.run`, `.url` build hyperlinks)? Check
+    # all open ancestors, not just the immediate one, because a
+    # non-brace-expression like `.href [text]({expr})` wraps `expr` in
+    # an extra class-less span first, see below.
+    ancestor_transform <- any(vlapply(
+      app$styles,
+      function(s) !is.null(s[["transform"]])
+    ))
+
     node <- utils::tail(app$doc, 1)[[1]]
     if (node$tag == "span") {
       class <- node$class
@@ -195,7 +205,19 @@ inline_transformer <- function(code, envir) {
     stls <- app$get_current_style()$`class-map`
     cls <- na.omit(match(rcls, names(stls)))[1]
     if (!is.na(cls)) {
-      class <- c(class, stls[[cls]])
+      new_class <- stls[[cls]]
+      # A `class-map` entry (e.g. `fs_path -> "file"`) is meant to
+      # auto-style bare values. If the value is already inside an
+      # explicit span that has its own `transform`, and the mapped
+      # class also has a `transform`, stacking both is undefined: the
+      # mapped class's transform can corrupt the explicit span's output
+      # (e.g. embedding ANSI/quoting into a hyperlink's URL). In that
+      # case, keep the explicit class only and skip the mapped one.
+      conflicts <- ancestor_transform &&
+        !is.null(class_map_style(app, new_class)[["transform"]])
+      if (!conflicts) {
+        class <- c(class, new_class)
+      }
     }
 
     vec_style <- attr(val, "cli_style")
@@ -223,6 +245,25 @@ inline_transformer <- function(code, envir) {
   }
 }
 
+# Resolve the style that a `<span class="{class}">` would get, as a
+# child of the current document, without actually adding it to the
+# document. Used to check whether a `class-map` class would introduce
+# its own `transform`, see `inline_transformer()`.
+
+class_map_style <- function(app, class) {
+  doc <- c(app$doc, list(list(tag = "span", id = "", class = class)))
+  sels <- list()
+  for (t in seq_along(app$themes)) {
+    theme <- app$themes[[t]]
+    for (i in seq_len(nrow(theme))) {
+      if (match_selector(theme$parsed[[i]], doc)) {
+        sels <- utils::modifyList(sels, theme$style[[i]])
+      }
+    }
+  }
+  sels
+}
+
 clii__inline <- function(app, text, .list) {
   ## Inject that app, so we can style
   texts <- c(if (!is.null(text)) list(text), .list)
@@ -242,12 +283,15 @@ clii__inline <- function(app, text, .list) {
 
 inline_regex <- function() "(?s)^[.]([-[:alnum:]_]+)[[:space:]]+(.*)"
 
-make_cmd_transformer <- function(values, .call = NULL) {
+make_cmd_transformer <- function(values, .call = NULL, .eval = TRUE) {
   values$marker <- random_id()
   values$qty <- NA_integer_
   values$num_subst <- 0L
   values$postprocess <- FALSE
   values$pmarkers <- list()
+  if (!.eval) {
+    values$exprs <- expression()
+  }
 
   # These are common because of purrr's default argument names, so we
   # hardcode them es exceptions. They are in packages
@@ -288,6 +332,7 @@ make_cmd_transformer <- function(values, .call = NULL) {
       if (!has_match) {
         throw(cli_error(
           call. = caller,
+          .class = c("cli_style_error", "cli_error"),
           "Invalid cli literal: {.code {{{abbrev(code, 10)}}}} starts with a dot.",
           "i" = "Interpreted literals must not start with a dot in cli >= 3.4.0.",
           "i" = paste(
@@ -321,15 +366,21 @@ make_cmd_transformer <- function(values, .call = NULL) {
       expr <- parse(text = code, keep.source = FALSE) %??%
         cli_error(
           call. = caller,
+          .class = c("cli_parse_error", "cli_error"),
           "Could not parse cli {.code {{}}} expression:
            {.code {abbrev(code, 20)}}."
         )
-      res <- eval(expr, envir = envir) %??%
-        cli_error(
-          call. = caller,
-          "Could not evaluate cli {.code {{}}} expression:
-           {.code {abbrev(code, 20)}}."
-        )
+      if (.eval) {
+        res <- eval(expr, envir = envir) %??%
+          cli_error(
+            call. = caller,
+            "Could not evaluate cli {.code {{}}} expression:
+             {.code {abbrev(code, 20)}}."
+          )
+      } else {
+        values$exprs <- c(values$exprs, expr)
+        res <- 1L
+      }
 
       id <- paste0("v", length(values))
       values[[id]] <- res
@@ -340,10 +391,16 @@ make_cmd_transformer <- function(values, .call = NULL) {
   }
 }
 
-glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE) {
+glue_cmd <- function(
+  ...,
+  .envir,
+  .call = sys.call(-1),
+  .trim = TRUE,
+  .eval = TRUE
+) {
   str <- paste0(unlist(list(...), use.names = FALSE), collapse = "")
   values <- new.env(parent = emptyenv())
-  transformer <- make_cmd_transformer(values, .call = .call)
+  transformer <- make_cmd_transformer(values, .call = .call, .eval = .eval)
   pstr <- glue(
     str,
     .envir = .envir,
@@ -355,6 +412,55 @@ glue_cmd <- function(..., .envir, .call = sys.call(-1), .trim = TRUE) {
     str = post_process_plurals(pstr, values),
     values = values
   )
+}
+
+#' Extract variable and function names from cli format strings
+#'
+#' Parses cli [inline markup][inline-markup] and glue substitutions in
+#' `text` without evaluating the embedded R expressions, returning the
+#' symbol names referenced inside `{...}` interpolation blocks via
+#' [base::all.vars()].
+#'
+#' Static analysis tools (such as `lintr::object_usage_linter()`) can use
+#' `cli_extract_vars()` to discover variables and functions referenced in
+#' cli calls. Malformed cli strings or R expressions signal an error of
+#' class `"cli_error"` (with subclasses `"cli_glue_error"`,
+#' `"cli_style_error"`, `"cli_parse_error"`, and
+#' `"cli_pluralization_error"`), so static analysis callers should wrap
+#' `cli_extract_vars()` in [base::tryCatch()].
+#'
+#' If `text` is a named character vector (for example, as passed to
+#' [cli_dl()], [cli_li()], [cli_bullets()], or [cli_abort()]), both
+#' `names(text)` and `text` are inspected.
+#'
+#' @param text Character vector of cli format strings.
+#' @param functions Logical scalar passed to [base::all.vars()]: whether to
+#'   include function names in addition to variable names. Defaults to
+#'   `TRUE`.
+#' @param unique Logical scalar passed to [base::all.vars()]: whether to
+#'   deduplicate extracted symbol names. Defaults to `TRUE`.
+#' @return Character vector of extracted symbol names.
+#'
+#' @export
+#' @examples
+#' cli_extract_vars(
+#'   "{.arg x} has {length(x)} elements, but it should be {.emph {length(y)}}"
+#' )
+#' cli_extract_vars(
+#'   "{.arg x} has {length(x)} elements, but it should be {.emph {length(y)}}",
+#'   functions = FALSE
+#' )
+
+cli_extract_vars <- function(text, functions = TRUE, unique = TRUE) {
+  if (length(text) == 0L) {
+    return(character())
+  }
+  text <- c(names(text), as.character(text))
+  call <- sys.call()
+  exprs <- lapply(text, function(x) {
+    glue_cmd(x, .envir = emptyenv(), .call = call, .eval = FALSE)$values$exprs
+  })
+  all.vars(do.call(c, exprs), functions = functions, unique = unique)
 }
 
 glue_no_cmd <- function(...) {

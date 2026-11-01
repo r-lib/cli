@@ -20,9 +20,10 @@
 #' * We are _not_ using the `RSTUDIO_CONSOLE_WIDTH` environment variable
 #'   if we are in the RStudio console.
 #'
-#' If we cannot determine the size of the terminal or console window, then
-#' we use the `width` option. If the `width` option is not set, then
-#' we return 80L.
+#' If we cannot determine the size of the terminal or console window (e.g. if
+#' `console_width()` is called in a startup `.Rprofile` script before a console
+#' is present), then we use the `width` option. If the `width` option is not
+#' set, then we return 80L.
 #'
 #' @return Integer scalar, the console with, in number of characters.
 #'

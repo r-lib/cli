@@ -64,6 +64,12 @@ test_that_cli(configs = "ansi", "ANSI SGR", {
   )
 })
 
+test_that("segments are numbered within each line", {
+  output <- vt_output("a\033[31mb\033[32mc", width = 3, height = 1)
+
+  expect_equal(output$segmentno, 1:3)
+})
+
 test_that("hyperlinks", {
   withr::local_options(cli.hyperlink = TRUE)
   expect_snapshot({

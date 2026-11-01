@@ -37,7 +37,10 @@ ansi_regex <- function() {
     "|\\x{001b}[A-M]",
     # this is for hyperlinks, we must be non-greedy
     "|\\x{001b}\\]8;.*?;.*?\\x{001b}\\\\",
-    "|\\x{001b}\\]8;.*?;.*?\\x{0007}"
+    "|\\x{001b}\\]8;.*?;.*?\\x{0007}",
+    # generic OSC (e.g. window title), BEL- or ST-terminated
+    "|\\x{001b}\\].*?\\x{001b}\\\\",
+    "|\\x{001b}\\].*?\\x{0007}"
   )
 }
 
@@ -459,7 +462,7 @@ make_space <- function(num, filling = " ") {
 }
 
 strrep <- function(x, times) {
-  x = as.character(x)
+  x <- as.character(x)
   if (length(x) == 0L) {
     return(x)
   }
@@ -628,7 +631,7 @@ ansi_strwrap <- function(
 
   # First we need to remove the multiple spaces, to make it easier to
   # map the strings later on. We do this per paragraph, to keep paragraphs.
-  pars <- strsplit(x, "\n[ \t\n]*\n", perl = TRUE)
+  pars <- strsplit(x, "\r?\n[ \t\n\r]*\r?\n", perl = TRUE)
   pars <- lapply(pars, ansi_trimws)
 
   # Within paragraphs, replace multiple spaces with one, except when there
@@ -637,11 +640,11 @@ ansi_strwrap <- function(
   # some is outside, but for now, we'll live with this limitation.
   pars <- lapply(pars, function(s) {
     # First replace multiple spaces that are not at the end of a sentence
-    s <- gsub("(?<![.!?])[ \t\n][ \t\n]*", " ", s, perl = TRUE)
+    s <- gsub("(?<![.!?])[ \t\r\n][ \t\r\n]*", " ", s, perl = TRUE)
     # Handle multiple spaces at the end of a sentence
-    s <- gsub("(?<=[.!?])[ \t\n][ \t\n][ \t\n]*", "  ", s, perl = TRUE)
+    s <- gsub("(?<=[.!?])[ \t\r\n][ \t\n][ \t\r\n]*", "  ", s, perl = TRUE)
     # Handle simple space at the end of a sentence
-    gsub("(?<=[.!?])[ \t\n]", " ", s, perl = TRUE)
+    gsub("(?<=[.!?])[ \t\r\n]", " ", s, perl = TRUE)
   })
 
   # Put them back together
@@ -673,7 +676,8 @@ ansi_strwrap <- function(
     } else if (xsc == xwc) {
       xsidx <- xsidx + 1L
       xwidx[2] <- xwidx[2] + 1L
-    } else if (xsc %in% c(" ", "\n", "\t")) {
+    } else if (xsc %in% c(" ", "\n", "\t", "\r")) {
+      # Ignore whitespace characters
       drop <- c(drop, xsidx)
       xsidx <- xsidx + 1L
     } else if (xwc == " ") {
@@ -691,13 +695,18 @@ ansi_strwrap <- function(
   }
   splits <- c(splits, xsidx)
 
+  # splits and drop are codepoint positions, but we need grapheme positions
+  g_len <- nchar(utf8_graphemes(xs)[[1]])
+  g_start <- c(1L, cumsum(g_len)[-length(g_len)] + 1L)
+  cp_to_g <- function(p) findInterval(p, g_start)
+
   wrp <- vcapply(seq_along(splits[-1]), function(i) {
     from <- splits[i]
     to <- splits[i + 1L] - 1L
     while (from %in% drop) {
       from <- from + 1L
     }
-    .Call(clic_ansi_substr, xx, from, to)
+    .Call(clic_ansi_substr, xx, cp_to_g(from), cp_to_g(to))
   })
 
   indent <- strrep(" ", indent)

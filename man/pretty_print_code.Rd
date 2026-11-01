@@ -12,5 +12,5 @@ syntax highlighting.
 }
 \details{
 The new print method takes priority over the built-in one. Use
-\code{\link[base:message]{base::suppressMessages()}} to suppress the alert message.
+\code{\link[base:suppressMessages]{base::suppressMessages()}} to suppress the alert message.
 }

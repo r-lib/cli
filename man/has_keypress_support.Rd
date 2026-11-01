@@ -9,7 +9,7 @@ has_keypress_support()
 }
 \value{
 Whether there is support for waiting for individual
-keypressses.
+keypresses.
 }
 \description{
 Check if the current platform/terminal supports reading
@@ -35,7 +35,7 @@ Not supported:
 has_keypress_support()
 }
 \seealso{
-Other keypress function: 
-\code{\link{keypress}()}
+Other keypress function:
+\code{\link[=keypress]{keypress()}}
 }
 \concept{keypress function}

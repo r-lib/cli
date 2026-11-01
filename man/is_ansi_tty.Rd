@@ -16,23 +16,34 @@ interactive and there are no sinks, otherwise it will select \code{stderr()}.}
 \code{TRUE} or \code{FALSE}.
 }
 \description{
-We check that all of the following hold:
+The detection mechanism is as follows:
+\enumerate{
+\item If the \code{cli.ansi} option is set to \code{TRUE}, \code{TRUE} is returned.
+\item If the \code{cli.ansi} option is set to \code{FALSE}, \code{FALSE} is returned.
+\item If the \code{R_CLI_ANSI} environment variable is set to \code{true} (case
+insensitive), then \code{TRUE} is returned.
+\item If \code{R_CLI_ANSI} is not empty and set to \code{false} (case insensitive),
+\code{FALSE} is returned.
+\item If R is running in the Positron console, then \code{TRUE} is returned,
+with 'positron' added as a name. Positron does not currently support
+hide/show cursor, scrolling regions, inserting and deleting lines
+and the alternate screen buffer.
+\item Otherwise we autodetect, by checking that all of the following hold:
 \itemize{
-\item The stream is a terminal.
-\item The platform is Unix.
+\item The stream is a terminal, see \code{\link[base:isatty]{base::isatty()}}.
 \item R is not running inside R.app (the macOS GUI).
-\item R is not running inside RStudio.
 \item R is not running inside Emacs.
 \item The terminal is not "dumb".
 \item \code{stream} is either the standard output or the standard error stream.
+}
 }
 }
 \examples{
 is_ansi_tty()
 }
 \seealso{
-Other terminal capabilities: 
-\code{\link{ansi_hide_cursor}()},
-\code{\link{is_dynamic_tty}()}
+Other terminal capabilities:
+\code{\link[=ansi_hide_cursor]{ansi_hide_cursor()}},
+\code{\link[=is_dynamic_tty]{is_dynamic_tty()}}
 }
 \concept{terminal capabilities}

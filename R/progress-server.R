@@ -41,7 +41,7 @@
 #'
 #' ### `rstudio`
 #'
-#' Use [RStudio's job panel](https://posit.co/blog/rstudio-1-2-jobs/)
+#' Use [RStudio's job panel](https://posit.co/blog/rstudio-1-2-jobs)
 #' to show the progress bars. This handler is available at the RStudio console,
 #' in recent versions of RStudio.
 #'
@@ -316,7 +316,7 @@ builtin_handler_rstudio <- list(
     }
   },
 
-  complete = function(bar, .envir, results) {
+  complete = function(bar, .envir, result) {
     if (!is.null(bar$rstudio_id)) {
       rstudioapi::jobRemove(bar$rstudio_id)
     }
@@ -378,7 +378,7 @@ builtin_handler_shiny <- list(
     )
   },
 
-  complete = function(bar, .envir, results) {
+  complete = function(bar, .envir, result) {
     if (!is.null(bar$shiny_progress)) {
       bar$shiny_progress$set(
         value = bar$current,

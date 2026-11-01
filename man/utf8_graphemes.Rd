@@ -28,8 +28,8 @@ cat(str, "\n")
 chrs <- utf8_graphemes(str)
 }
 \seealso{
-Other UTF-8 string manipulation: 
-\code{\link{utf8_nchar}()},
-\code{\link{utf8_substr}()}
+Other UTF-8 string manipulation:
+\code{\link[=utf8_nchar]{utf8_nchar()}},
+\code{\link[=utf8_substr]{utf8_substr()}}
 }
 \concept{UTF-8 string manipulation}

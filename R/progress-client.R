@@ -216,6 +216,11 @@
 #' like the elapsed time, of the ETA manually. You can also use your own
 #' variables in the calling function:
 #'
+#' To leave a completion or failure message on screen after the progress bar
+#' finishes, set `clear = FALSE` and customize `format_done` and
+#' `format_failed`. The `pb_elapsed` variable is often useful for reporting the
+#' total runtime.
+#'
 #' ```{asciicast progress-format}
 #' #| asciicast_at = "all",
 #' #| asciicast_knitr_output = "svg",
@@ -229,6 +234,9 @@
 #'     format_done = paste0(
 #'       "{col_green(symbol$tick)} Downloaded {pb_total} files ",
 #'       "in {pb_elapsed}."
+#'     ),
+#'     format_failed = paste0(
+#'       "{col_red(symbol$cross)} Download failed after {pb_elapsed}."
 #'     ),
 #'     clear = FALSE,
 #'     total = length(urls)
@@ -274,6 +282,8 @@
 #' @param current Whether to use this progress bar as the current progress
 #'   bar of the calling function. See more at 'The current progress bar'
 #'   below.
+#' @param quiet if `TRUE` suppresses output from this function. Defaults to the `cli.disable_progress` option, or
+#'   `TRUE` if unset.
 #' @param auto_terminate Whether to terminate the progress bar if the
 #'   number of current units reaches the number of total units.
 #' @param extra Extra data to add to the progress bar. This can be
@@ -299,7 +309,6 @@
 #'   progress messages.
 #' @family progress bar functions
 #' @family functions supporting inline markup
-#' @aliases __cli_update_due cli_tick_reset ccli_tick_reset ticking
 #' @export
 
 cli_progress_bar <- function(
@@ -312,6 +321,7 @@ cli_progress_bar <- function(
   format_failed = NULL,
   clear = getOption("cli.progress_clear", TRUE),
   current = TRUE,
+  quiet = getOption("cli.disable_progress", FALSE),
   auto_terminate = type != "download",
   extra = NULL,
   .auto_close = TRUE,
@@ -351,7 +361,7 @@ cli_progress_bar <- function(
   bar$extra <- extra
   clienv$progress[[id]] <- bar
   if (current) {
-    if (!is.null(clienv$progress_ids[[envkey]])) {
+    if (!is.null(clienv$progress_ids[[envkey]]) && !quiet) {
       cli_progress_done(
         clienv$progress_ids[[envkey]],
         .envir = .envir,
@@ -361,19 +371,21 @@ cli_progress_bar <- function(
     clienv$progress_ids[[envkey]] <- id
   }
 
-  if (.auto_close && envkey != clienv$globalenv) {
-    defer(
-      cli_progress_done(id = id, .envir = .envir, result = "auto"),
-      envir = .envir
-    )
-  }
+  if(!quiet){
+    if (.auto_close && envkey != clienv$globalenv) {
+      defer(
+        cli_progress_done(id = id, .envir = .envir, result = "auto"),
+        envir = .envir
+      )
+    }
 
-  opt <- options(cli__pb = bar)
-  on.exit(options(opt), add = TRUE)
+    opt <- options(cli__pb = bar)
+    on.exit(options(opt), add = TRUE)
 
-  bar$handlers <- cli_progress_select_handlers(bar, .envir)
-  for (h in bar$handlers) {
-    if ("create" %in% names(h)) h$create(bar, .envir = .envir)
+    bar$handlers <- cli_progress_select_handlers(bar, .envir)
+    for (h in bar$handlers) {
+      if ("create" %in% names(h)) h$create(bar, .envir = .envir)
+    }
   }
 
   invisible(id)
@@ -458,7 +470,7 @@ cli_progress_update <- function(
   upd <- .Call(clic_update_due)
   if (
     force ||
-      (upd && now > pb$show_after) ||
+      (upd && now >= pb$show_after) ||
       (!is.na(pb$total) &&
         upd &&
         now > pb$show_50 &&
