@@ -270,7 +270,9 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     ),
     span.duration = list(
       transform = function(x) {
-        if (inherits(x, "difftime")) units(x) <- "secs"
+        if (inherits(x, "difftime")) {
+          units(x) <- "secs"
+        }
         format_time$pretty_sec(as.numeric(x))
       }
     ),
