@@ -267,6 +267,26 @@ builtin_theme <- function(dark = getOption("cli.theme_dark", "auto")) {
     ),
     span.num = list(
       transform = function(x) format_num$pretty_num(as.numeric(x))
+    ),
+    span.duration = list(
+      transform = function(x) {
+        if (inherits(x, "difftime")) {
+          units(x) <- "secs"
+        }
+        format_time$pretty_sec(as.numeric(x))
+      }
+    ),
+    span.time_ago = list(
+      transform = function(x) {
+        dates <- as.POSIXct(x, origin = "1970-01-01")
+        present <- !is.na(dates)
+        if (any(dates[present] > Sys.time())) {
+          stop("`.time_ago` requires a past timestamp.", call. = FALSE)
+        }
+        out <- rep(NA_character_, length(dates))
+        out[present] <- format_time_ago$time_ago(dates[present])
+        out
+      }
     )
   )
 }

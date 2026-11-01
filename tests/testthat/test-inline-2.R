@@ -213,6 +213,55 @@ test_that(".num", {
   })
 })
 
+test_that(".duration", {
+  expect_snapshot({
+    # numeric seconds
+    format_inline("--- {.duration 0.042} ---")
+    format_inline("--- {.duration 90} ---")
+    format_inline("--- {.duration 3661} ---")
+
+    # difftime: units normalised before formatting (not treated as raw seconds)
+    dt_mins <- as.difftime(1.5, units = "mins")
+    format_inline("{.duration {dt_mins}}")
+
+    dt_days <- as.difftime(30, units = "days")
+    format_inline("{.duration {dt_days}}")
+  })
+
+  dt <- as.difftime(1.5, units = "mins")
+  transform <- builtin_theme()[["span.duration"]]$transform
+  expect_identical(transform(c(0, NA, 90)), c("0ms", NA_character_, "1m 30s"))
+  expect_identical(transform(dt), "1m 30s")
+  expect_identical(units(dt), "mins")
+})
+
+test_that(".time_ago", {
+  fixed <- as.POSIXct("2026-04-22 12:00:00", tz = "UTC")
+  local_mocked_bindings(Sys.time = function() fixed)
+  expect_snapshot({
+    # numeric unix timestamp
+    t <- as.numeric(fixed - 120)
+    format_inline("{.time_ago {t}}")
+
+    # POSIXct
+    t <- fixed - 120
+    format_inline("{.time_ago {t}}")
+
+    # POSIXlt
+    t <- as.POSIXlt(fixed - 120)
+    format_inline("{.time_ago {t}}")
+  })
+
+  transform <- builtin_theme()[["span.time_ago"]]$transform
+  expect_identical(transform(as.POSIXct(NA)), NA_character_)
+  expect_identical(transform(numeric()), character())
+  expect_identical(
+    transform(c(as.numeric(fixed - 120), NA, as.numeric(fixed - 3600))),
+    c("2 minutes ago", NA_character_, "about an hour ago")
+  )
+  expect_error(transform(fixed + 3600), "past timestamp")
+})
+
 test_that("cli_extract_vars", {
   msg <- "{.arg z} has {length(x)} elements, but it should be {.emph {length(y)}}"
   expect_identical(cli_extract_vars(msg), c("length", "x", "y"))

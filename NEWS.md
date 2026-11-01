@@ -1,5 +1,8 @@
 # cli (development version)
 
+* New `{.duration}` and `{.time_ago}` inline styles to format durations
+  and past relative times (@jjjermiah, #814).
+
 * New `cli_extract_vars()` function to extract variable and function names
   from cli format strings without evaluating them (#750, @MichaelChirico).
 
