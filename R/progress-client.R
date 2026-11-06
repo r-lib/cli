@@ -371,7 +371,7 @@ cli_progress_bar <- function(
     clienv$progress_ids[[envkey]] <- id
   }
 
-  if(!quiet){
+  if (!quiet) {
     if (.auto_close && envkey != clienv$globalenv) {
       defer(
         cli_progress_done(id = id, .envir = .envir, result = "auto"),
@@ -950,13 +950,28 @@ pb__default_format_llm <- function(type, total) {
     return(opt)
   }
 
-  current <- if (type == "download") "{cli::pb_current_bytes}" else "{cli::pb_current}"
-  total_ <- if (type == "download") "{cli::pb_total_bytes}" else "{cli::pb_total}"
+  current <- if (type == "download") {
+    "{cli::pb_current_bytes}"
+  } else {
+    "{cli::pb_current}"
+  }
+  total_ <- if (type == "download") {
+    "{cli::pb_total_bytes}"
+  } else {
+    "{cli::pb_total}"
+  }
   if (is.na(total)) {
-    paste0("{cli::pb_name}{cli::pb_status}", current, " done | {cli::pb_elapsed}")
+    paste0(
+      "{cli::pb_name}{cli::pb_status}",
+      current,
+      " done | {cli::pb_elapsed}"
+    )
   } else {
     paste0(
-      "{cli::pb_name}{cli::pb_status}", current, "/", total_,
+      "{cli::pb_name}{cli::pb_status}",
+      current,
+      "/",
+      total_,
       " ({cli::pb_percent}) | {cli::pb_elapsed}"
     )
   }

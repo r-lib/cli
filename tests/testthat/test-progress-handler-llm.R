@@ -8,9 +8,13 @@ test_that("llm handler prints compact, rate limited lines", {
   )
   fun <- function() {
     cli_progress_bar("Fitting", total = 100)
-    for (i in 1:100) cli_progress_update(force = TRUE)
+    for (i in 1:100) {
+      cli_progress_update(force = TRUE)
+    }
   }
-  expect_snapshot(fun(), transform = function(x) sub("[0-9.]+m?s$", "<time>", x))
+  expect_snapshot(fun(), transform = function(x) {
+    sub("[0-9.]+m?s$", "<time>", x)
+  })
 })
 
 test_that("llm handler is selected by default for agents", {
