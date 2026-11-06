@@ -374,3 +374,13 @@ fix_r_utf8_output <- function(x) {
   Encoding(chr) <- "UTF-8"
   chr
 }
+
+# Same heuristic as devtools:::is_llm()
+is_llm <- function() {
+  isTRUE(getOption("posit_assistant")) ||
+    nzchar(Sys.getenv("AGENT")) ||
+    nzchar(Sys.getenv("CLAUDECODE")) ||
+    nzchar(Sys.getenv("GEMINI_CLI")) ||
+    nzchar(Sys.getenv("CURSOR_AGENT")) ||
+    nzchar(Sys.getenv("CODEX_CI"))
+}
