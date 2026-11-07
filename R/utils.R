@@ -3,7 +3,7 @@ is_yes <- function(x) {
 }
 
 format_iso_8601 <- function(p) {
-  format(p, "%Y-%m-%dT%H:%M:%S+00:00")
+  format(p, "%Y-%m-%dT%H:%M:%S+00:00", tz = "UTC")
 }
 
 has_packages <- function(pkgs) {
