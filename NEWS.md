@@ -5,6 +5,8 @@
   seconds (configurable with `cli.progress_llm_interval`), plus a final
   line. This is implemented by the new `llm` progress handler.
 
+* The `logger` progress handler and the `pb_timestamp` progress variable now report timestamps in UTC, matching their `+00:00` suffix. Previously they used local time.
+
 * New `cli_extract_vars()` function to extract variable and function names
   from cli format strings without evaluating them (#750, @MichaelChirico).
 
