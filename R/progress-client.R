@@ -371,7 +371,7 @@ cli_progress_bar <- function(
     clienv$progress_ids[[envkey]] <- id
   }
 
-  if(!quiet){
+  if (!quiet) {
     if (.auto_close && envkey != clienv$globalenv) {
       defer(
         cli_progress_done(id = id, .envir = .envir, result = "auto"),
