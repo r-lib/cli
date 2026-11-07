@@ -28,6 +28,14 @@
 #' Use cli's internal status bar, the last line of the screen, to show the
 #' progress bar. This handler is always able to handle all progress bars.
 #'
+#' ### `llm`
+#'
+#' Plain, append-only output for LLM coding agents (detected via the
+#' `posit_assistant` option or the `AGENT`, `CLAUDECODE`, `GEMINI_CLI`,
+#' `CURSOR_AGENT` or `CODEX_CI` environment variables). Bars and spinners
+#' are dropped from the default formats, and at most one line is printed
+#' every `cli.progress_llm_interval` seconds (default 10), plus a final line.
+#'
 #' ### `logger`
 #'
 #' Log progress updates to the screen, with one line for each update and with
@@ -79,7 +87,7 @@ cli_progress_builtin_handlers <- function() {
 }
 
 cli_progress_select_handlers <- function(bar, .envir) {
-  hnd <- getOption("cli.progress_handlers", c("shiny", "cli"))
+  hnd <- getOption("cli.progress_handlers", c("shiny", "llm", "cli"))
   frc <- getOption("cli.progress_handlers_force")
   onl <- getOption("cli.progress_handlers_only")
 
@@ -149,6 +157,56 @@ builtin_handler_cli <- list(
       }
     }
     bar$cli_statusbar <- TRUE
+  },
+
+  output = function(bar, .envir, text) {
+    cli_verbatim(text)
+  }
+)
+
+# ------------------------------------------------------------------------
+
+# Plain, append-only output for LLM agents: no \r or ANSI redraws (each
+# redraw would be captured as a new line), and lines are rate limited to
+# keep token usage low while still giving regular heartbeats.
+
+llm_out <- function(bar, .envir, format = bar$format) {
+  bar$llm_last <- .Call(clic_get_time)
+  cli_verbatim(format_inline(format, .envir = .envir))
+}
+
+builtin_handler_llm <- list(
+  able = function(bar, .envir) is_llm(),
+
+  add = function(bar, .envir) {
+    llm_out(bar, .envir)
+    bar$justadded <- TRUE
+  },
+
+  set = function(bar, .envir) {
+    if (isTRUE(bar$justadded)) {
+      bar$justadded <- FALSE
+      return()
+    }
+    interval <- getOption("cli.progress_llm_interval", 10)
+    if (.Call(clic_get_time) - bar$llm_last >= interval) {
+      llm_out(bar, .envir)
+    }
+  },
+
+  complete = function(bar, .envir, result) {
+    if (!isTRUE(bar$added)) {
+      return()
+    }
+    if (result == "done" && !is.na(bar$total)) {
+      bar$current <- bar$total
+    }
+    format <- if (result == "failed") {
+      bar$format_failed %||% bar$format
+    } else {
+      bar$format_done %||% bar$format
+    }
+    llm_out(bar, .envir, format)
   },
 
   output = function(bar, .envir, text) {
@@ -404,6 +462,7 @@ builtin_handler_shiny <- list(
 builtin_handlers <- function() {
   list(
     cli = builtin_handler_cli,
+    llm = builtin_handler_llm,
     logger = builtin_handler_logger,
     progressr = builtin_handler_progressr,
     rstudio = builtin_handler_rstudio,

@@ -868,6 +868,9 @@ cli_progress_step <- function(
 # ------------------------------------------------------------------------
 
 pb__default_format <- function(type, total) {
+  if (is_llm()) {
+    return(pb__default_format_llm(type, total))
+  }
   if (type == "iterator") {
     if (!is.na(total)) {
       opt <- getOption("cli.progress_format_iterator")
@@ -931,5 +934,45 @@ pb__default_format <- function(type, total) {
         "{cli::pb_current_bytes} ({cli::pb_rate_bytes}) | {cli::pb_elapsed}"
       )
     }
+  }
+}
+
+# Compact formats for LLM agents: no bars or spinners, since every
+# character costs tokens and they carry no extra information in a log.
+pb__default_format_llm <- function(type, total) {
+  opt_name <- paste0("cli.progress_format_", type)
+  if (is.na(total)) {
+    opt <- getOption(paste0(opt_name, "_nototal")) %||% getOption(opt_name)
+  } else {
+    opt <- getOption(opt_name)
+  }
+  if (!is.null(opt)) {
+    return(opt)
+  }
+
+  current <- if (type == "download") {
+    "{cli::pb_current_bytes}"
+  } else {
+    "{cli::pb_current}"
+  }
+  total_ <- if (type == "download") {
+    "{cli::pb_total_bytes}"
+  } else {
+    "{cli::pb_total}"
+  }
+  if (is.na(total)) {
+    paste0(
+      "{cli::pb_name}{cli::pb_status}",
+      current,
+      " done | {cli::pb_elapsed}"
+    )
+  } else {
+    paste0(
+      "{cli::pb_name}{cli::pb_status}",
+      current,
+      "/",
+      total_,
+      " ({cli::pb_percent}) | {cli::pb_elapsed}"
+    )
   }
 }
