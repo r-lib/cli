@@ -223,7 +223,7 @@ of \code{cli_progress_bar()} and \code{cli_progress_update()}.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Cleaning cache for user 'gaborcsardi': 161 MB                                   
+#> Cleaning cache for user 'user': 161 MB                                          
 </pre></div>
 }}
 
@@ -243,7 +243,7 @@ This is useful for debugging progress bars.
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <div class="asciicast" style="color: #172431;font-family: 'Fira Code',Monaco,Consolas,Menlo,'Bitstream Vera Sans Mono','Powerline Symbols',monospace;line-height: 1.300000"><pre>
-#> Progress bar 'cli-40403-1860' is at 64                                          
+#> Progress bar 'cli-12345-1' is at 64                                             
 </pre></div>
 }}
 
