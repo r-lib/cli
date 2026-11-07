@@ -42,6 +42,15 @@ you want to use:
 Use cli's internal status bar, the last line of the screen, to show the
 progress bar. This handler is always able to handle all progress bars.
 
+### `llm`
+
+Plain, append-only output for LLM coding agents (detected via the
+`posit_assistant` option or the `AGENT`, `CLAUDECODE`, `GEMINI_CLI`,
+`CURSOR_AGENT` or `CODEX_CI` environment variables). Bars and spinners
+are dropped from the default formats, and at most one line is printed
+every `cli.progress_llm_interval` seconds (default 10), plus a final
+line.
+
 ### `logger`
 
 Log progress updates to the screen, with one line for each update and

@@ -2,6 +2,11 @@
 
 ## cli (development version)
 
+- Progress bars now use a compact, append-only display when running
+  under an LLM coding agent: no bars or spinners, and at most one line
+  every 10 seconds (configurable with `cli.progress_llm_interval`), plus
+  a final line. This is implemented by the new `llm` progress handler.
+
 - New
   [`cli_extract_vars()`](https://cli.r-lib.org/dev/reference/cli_extract_vars.md)
   function to extract variable and function names from cli format
