@@ -32,7 +32,7 @@ cli calls. Malformed cli strings or R expressions signal an error of
 class \code{"cli_error"} (with subclasses \code{"cli_glue_error"},
 \code{"cli_style_error"}, \code{"cli_parse_error"}, and
 \code{"cli_pluralization_error"}), so static analysis callers should wrap
-\code{cli_extract_vars()} in \code{\link[base:conditions]{base::tryCatch()}}.
+\code{cli_extract_vars()} in \code{\link[base:tryCatch]{base::tryCatch()}}.
 
 If \code{text} is a named character vector (for example, as passed to
 \code{\link[=cli_dl]{cli_dl()}}, \code{\link[=cli_li]{cli_li()}}, \code{\link[=cli_bullets]{cli_bullets()}}, or \code{\link[=cli_abort]{cli_abort()}}), both

@@ -342,7 +342,8 @@ cli__pb_extra <- function(pb = getOption("cli__pb")) {
 #'
 #' This is useful for debugging progress bars.
 #'
-#' ```{asciicast progress-var-id, echo = 2:4}
+#' ```{asciicast progress-var-id, echo = 3:5}
+#' assign("cnt", 0, envir = environment(cli:::new_uuid))
 #' x <- invisible(quote(
 #' cli_progress_bar(
 #'   format = "Progress bar '{cli::pb_id}' is at {cli::pb_current}"
