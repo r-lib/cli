@@ -143,7 +143,7 @@ and
     )
 
 
-    #> Cleaning cache for user 'gaborcsardi': 161 MB
+    #> Cleaning cache for user 'user': 161 MB
 
 ### `pb_id`
 
@@ -158,7 +158,7 @@ This is useful for debugging progress bars.
     )
 
 
-    #> Progress bar 'cli-40403-1860' is at 64
+    #> Progress bar 'cli-12345-1' is at 64
 
 ### `pb_name`
 

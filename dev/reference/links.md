@@ -177,7 +177,7 @@ if hyperlinks are not available. This will be improved in the future:
     })
 
 
-    #> ... edit your R profile (<file:///Users/gaborcsardi/.Rprofile>).
+    #> ... edit your R profile (<file:///Users/user/.Rprofile>).
 
 ## Links to the manual
 
