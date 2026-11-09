@@ -10,7 +10,9 @@ test_that_cli("bullets", {
     "!" = "warning",
     "i" = "info",
     "*" = "bullet",
-    ">" = "arrow"
+    ">" = "arrow",
+    "[]"= "TODO",
+    "?" = "question"
   )))
 })
 
@@ -23,7 +25,9 @@ test_that_cli("bullets glue", {
     "!" = "warning {.key {1:3}}",
     "i" = "info {.key {1:3}}",
     "*" = "bullet {.key {1:3}}",
-    ">" = "arrow {.key {1:3}}"
+    ">" = "arrow {.key {1:3}}",
+    "[]"= "TODO {.key {1:3}}",
+    "?" = "question {.key {1:3}}"
   )))
 })
 
@@ -37,6 +41,8 @@ test_that_cli("bullets wrapping", {
     "!" = txt,
     "i" = txt,
     "*" = txt,
-    ">" = txt
+    ">" = txt,
+    "[]"= txt,
+    "?" = txt
   )))
 })
