@@ -44,12 +44,15 @@ format_time <- local({
           return(NA_character_)
         }
 
+        ## round to the closest second if the elapsed time exceeds one minute
+        digits <- if (sum(pieces[1:3])) 0 else 1
+
         ## handle non-NAs
         paste0(
           if (pieces[1]) paste0(pieces[1], "d "),
           if (pieces[2]) paste0(pieces[2], "h "),
           if (pieces[3]) paste0(pieces[3], "m "),
-          if (pieces[4]) paste0(pieces[4], "s ")
+          if (pieces[4]) paste0(round(pieces[4], digits), "s ")
         )
       }
       approx <- trim(apply(parsed, 2, merge_pieces))
