@@ -333,3 +333,18 @@
     Output
       Will remove the -Inf packages.
 
+# issue 773
+
+    Code
+      print(pluralize("{.Machine$integer.max} value{?s}"))
+    Output
+      2147483647 values
+    Code
+      print(pluralize("{.Machine$integer.max + 1} value{?s}"))
+    Output
+      2147483648 values
+    Code
+      print(pluralize("{-1L * .Machine$integer.max - 1} value{?s}"))
+    Output
+      -2147483648 values
+
