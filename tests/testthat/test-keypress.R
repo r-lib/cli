@@ -144,7 +144,10 @@ test_that("keypress() times out", {
   p <- callr::r_process$new(opts)
   on.exit(p$kill(), add = TRUE)
 
-  expect_match(keypress_wait_for(p, "READY"), "READY", fixed = TRUE)
+  # Not inline in expect_match(), it evaluates `object` twice (2x), and the
+  # second call would wait for the full timeout.
+  out <- keypress_wait_for(p, "READY")
+  expect_match(out, "READY", fixed = TRUE)
 
   # We never press a key, so keypress() should return NA on its own after
   # roughly one second, and the process should finish without hanging.
@@ -177,7 +180,10 @@ test_that("keypress() is interruptible", {
   p <- callr::r_process$new(opts)
   on.exit(p$kill(), add = TRUE)
 
-  expect_match(keypress_wait_for(p, "READY"), "READY", fixed = TRUE)
+  # Not inline in expect_match(), it evaluates `object` twice (2x), and the
+  # second call would wait for the full timeout.
+  out <- keypress_wait_for(p, "READY")
+  expect_match(out, "READY", fixed = TRUE)
 
   # Give keypress() a moment to enter its poll loop, then interrupt it.
   Sys.sleep(0.5)
