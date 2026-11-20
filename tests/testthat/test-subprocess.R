@@ -68,7 +68,7 @@ test_that("subprocess with default handler", {
         }
       }
     ),
-    rs$run(do)
+    handle_callr_messages(rs$run(do))
   )
 
   expect_equal(length(msgs), 4)
@@ -157,7 +157,7 @@ test_that("substitution in child process", {
   rs <- callr::r_session$new()
   on.exit(rs$kill(), add = TRUE)
 
-  out <- capt0(rs$run(do))
+  out <- capt0(handle_callr_messages(rs$run(do)))
   expect_match(out, glue::glue("This is process {rs$get_pid()}"))
 
   rs$close()

@@ -128,6 +128,9 @@ test_that("ALTREP methods", {
   if (getRversion() < "3.5.0") {
     skip("Needs ALTREP")
   }
+  # Do not show these progress bars, their output would leak to the
+  # test output
+  withr::local_options(cli.progress_show_after = Inf)
   seq <- cli_progress_along(1:10)
   expect_output(.Internal(inspect(seq)), "progress_along")
 

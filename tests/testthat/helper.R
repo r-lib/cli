@@ -27,6 +27,29 @@ capture_cli_messages <- function(expr) {
   msgs
 }
 
+# testthat's parallel workers are callr sessions, and they forward every
+# `callr_message` condition to the main process, which prints it. Messages
+# from a callr subprocess of a test are signalled again in the worker, so
+# they would leak to the test output. This runs callr's default handler
+# for them here, like callr would, and then muffles them.
+handle_callr_messages <- function(expr) {
+  withCallingHandlers(
+    expr,
+    callr_message = function(msg) {
+      for (cl in class(msg)) {
+        hnd <- getOption(paste0("callr.condition_handler_", cl))
+        if (is.function(hnd)) {
+          hnd(msg)
+          break
+        }
+      }
+      if (!is.null(msg$muffle) && !is.null(findRestart(msg$muffle))) {
+        invokeRestart(msg$muffle)
+      }
+    }
+  )
+}
+
 capt <- function(expr, print_it = TRUE) {
   pr <- if (print_it) print else identity
   paste(capture.output(pr(expr)), collapse = "\n")
