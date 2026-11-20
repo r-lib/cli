@@ -232,7 +232,14 @@ r_pty <- function(.envir = parent.frame()) {
     r,
     c("-q", "--slave", "--vanilla"),
     pty = TRUE,
-    env = c("current", R_CLI_HIDE_CURSOR = "false", R_LIBS = .libPaths()[1])
+    # TERM: testthat's parallel workers are callr sessions, which set
+    # TERM=dumb, and then has_keypress_support() is FALSE in the child.
+    env = c(
+      "current",
+      R_CLI_HIDE_CURSOR = "false",
+      R_LIBS = .libPaths()[1],
+      TERM = "xterm"
+    )
   )
 
   defer(
