@@ -137,7 +137,7 @@ new_r_package("cli")
 #> [1] "yes"
 #> 
 #> $desc$Packaged
-#> [1] "2026-11-21 10:37:23 UTC; runner"
+#> [1] "2026-11-21 10:51:33 UTC; runner"
 #> 
 #> $desc$Author
 #> [1] "Gábor Csárdi [aut, cre],\n  Hadley Wickham [ctb],\n  Kirill Müller [ctb],\n  Salim Brüggemann [ctb] (ORCID: <https://orcid.org/0000-0002-5329-5987>),\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)"
@@ -146,7 +146,7 @@ new_r_package("cli")
 #> [1] "Gábor Csárdi <gabor@posit.co>"
 #> 
 #> $desc$Built
-#> [1] "R 4.6.2; x86_64-pc-linux-gnu; 2026-11-21 10:37:25 UTC; unix"
+#> [1] "R 4.6.2; x86_64-pc-linux-gnu; 2026-11-21 10:51:34 UTC; unix"
 #> 
 #> attr(,"file")
 #> [1] "/home/runner/work/_temp/Library/cli/Meta/package.rds"
