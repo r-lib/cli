@@ -250,6 +250,13 @@ r_pty <- function(.envir = parent.frame()) {
     skip("Needs Linux or macOS")
   }
 
+  # With a non-dumb TERM, GNU readline >= 8.1 turns on bracketed paste mode
+  # and writes \033[?2004h / \033[?2004l around every prompt. That breaks
+  # the snapshots, so turn it off.
+  inputrc <- tempfile()
+  writeLines("set enable-bracketed-paste off", inputrc)
+  defer(unlink(inputrc), envir = .envir)
+
   r <- file.path(R.home("bin"), "R")
   p <- processx::process$new(
     r,
@@ -261,7 +268,8 @@ r_pty <- function(.envir = parent.frame()) {
       "current",
       R_CLI_HIDE_CURSOR = "false",
       R_LIBS = .libPaths()[1],
-      TERM = "xterm"
+      TERM = "xterm",
+      INPUTRC = inputrc
     )
   )
 
