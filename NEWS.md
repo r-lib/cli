@@ -10,7 +10,7 @@
 * New `cli_extract_vars()` function to extract variable and function names
   from cli format strings without evaluating them (#750, @MichaelChirico).
 
-* `cli_progress_bar()` has a new argument `quiet`. If TRUE, then 
+* `cli_progress_bar()` has a new argument `quiet`. If TRUE, then
   progress bar will be suppressed.
 
 * Hyperlinks containing `fs_path` objects (or any object with a

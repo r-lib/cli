@@ -33,10 +33,21 @@ rstudio <- local({
     )
 
     if (d$api) {
-      ns <- asNamespace("rstudioapi")
-      d$ver <- if (d$api) ns$getVersion()
-      new_api <- package_version(getNamespaceVersion(ns)) >= "0.17.0"
-      d$desktop <- if (new_api) ns$getMode() else ns$versionInfo()$mode
+      # rstudioapi might think that RStudio is available, but it might
+      # still fail, e.g. if `tools:rstudio` is not on the search path.
+      tryCatch(
+        {
+          ns <- asNamespace("rstudioapi")
+          d$ver <- ns$getVersion()
+          new_api <- package_version(getNamespaceVersion(ns)) >= "0.17.0"
+          d$desktop <- if (new_api) ns$getMode() else ns$versionInfo()$mode
+        },
+        error = function(err) {
+          d$api <<- FALSE
+          d$ver <<- NULL
+          d$desktop <<- NULL
+        }
+      )
     }
 
     d
