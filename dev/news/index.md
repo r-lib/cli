@@ -2,6 +2,11 @@
 
 ## cli (development version)
 
+- The Shiny progress handler is now only used when there is an active
+  Shiny session, so progress bars don’t error in the `global.R` file or
+  the `onStart` hook of a Shiny app
+  ([\#857](https://github.com/r-lib/cli/issues/857)).
+
 - Progress bars now use a compact, append-only display when running
   under an LLM coding agent: no bars or spinners, and at most one line
   every 10 seconds (configurable with `cli.progress_llm_interval`), plus

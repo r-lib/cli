@@ -49,7 +49,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="cli-development-version">cli (development version)<a class="anchor" aria-label="anchor" href="#cli-development-version"></a></h2>
-<ul><li><p>Progress bars now use a compact, append-only display when running under an LLM coding agent: no bars or spinners, and at most one line every 10 seconds (configurable with <code>cli.progress_llm_interval</code>), plus a final line. This is implemented by the new <code>llm</code> progress handler.</p></li>
+<ul><li><p>The Shiny progress handler is now only used when there is an active Shiny session, so progress bars don’t error in the <code>global.R</code> file or the <code>onStart</code> hook of a Shiny app (<a href="https://github.com/r-lib/cli/issues/857" class="external-link">#857</a>).</p></li>
+<li><p>Progress bars now use a compact, append-only display when running under an LLM coding agent: no bars or spinners, and at most one line every 10 seconds (configurable with <code>cli.progress_llm_interval</code>), plus a final line. This is implemented by the new <code>llm</code> progress handler.</p></li>
 <li><p>The <code>logger</code> progress handler and the <code>pb_timestamp</code> progress variable now report timestamps in UTC, matching their <code>+00:00</code> suffix. Previously they used local time.</p></li>
 <li><p>New <code><a href="../reference/cli_extract_vars.html">cli_extract_vars()</a></code> function to extract variable and function names from cli format strings without evaluating them (<a href="https://github.com/r-lib/cli/issues/750" class="external-link">#750</a>, <a href="https://github.com/MichaelChirico" class="external-link">@MichaelChirico</a>).</p></li>
 <li><p><code><a href="../reference/cli_progress_bar.html">cli_progress_bar()</a></code> has a new argument <code>quiet</code>. If TRUE, then progress bar will be suppressed.</p></li>
