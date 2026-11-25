@@ -414,7 +414,11 @@ last_lines <- function(txt, keep = 5) {
 
 builtin_handler_shiny <- list(
   able = function(bar, .envir) {
-    "shiny" %in% loadedNamespaces() && asNamespace("shiny")$isRunning()
+    # isRunning() is already TRUE in global.R and onStart, before a
+    # session exists, and shiny::Progress needs a session (#857)
+    "shiny" %in% loadedNamespaces() &&
+      asNamespace("shiny")$isRunning() &&
+      !is.null(asNamespace("shiny")$getDefaultReactiveDomain())
   },
 
   add = function(bar, .envir) {

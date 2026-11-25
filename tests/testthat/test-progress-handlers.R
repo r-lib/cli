@@ -52,6 +52,29 @@ test_that("cli_progress_select_handlers #3", {
   expect_equal(cli_progress_select_handlers(), fake[c("bar", "forced")])
 })
 
+test_that("shiny handler needs a session, not only a running app (#857)", {
+  skip_if_not_installed("shiny")
+  loadNamespace("shiny")
+  able <- builtin_handler_shiny$able
+
+  local_mocked_bindings(isRunning = function() FALSE, .package = "shiny")
+  expect_false(able(list(), environment()))
+
+  # global.R and onStart: app is running, but no session yet
+  local_mocked_bindings(
+    isRunning = function() TRUE,
+    getDefaultReactiveDomain = function() NULL,
+    .package = "shiny"
+  )
+  expect_false(able(list(), environment()))
+
+  local_mocked_bindings(
+    getDefaultReactiveDomain = function() list(),
+    .package = "shiny"
+  )
+  expect_true(able(list(), environment()))
+})
+
 test_that("builtin_handlers", {
   expect_true(is.list(builtin_handlers()))
   expect_true(all(c("cli", "shiny", "rstudio") %in% names(builtin_handlers())))
