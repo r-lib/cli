@@ -452,15 +452,19 @@ create_formatter <- function(x) {
   x
 }
 
-merge_embedded_styles <- function(old, new) {
+merge_embedded_styles <- function(old, new, inherit_color = FALSE) {
   # before and after is not inherited, fmt is not inherited, either
   # side margins are additive, class mappings are merged
   # rest is updated, counter is reset, prefix and postfix are merged
   old$before <- old$after <- old$fmt <- NULL
   old$transform <- NULL
 
-  # these will be applied on the container, so we don't need them inside
-  old$color <- old$`background-color` <- NULL
+  # For inline spans, color is applied on the enclosing container, so we
+  # don't need to re-apply it inside. Block containers inherit color so
+  # nested elements like bullets keep the parent div's color.
+  if (!inherit_color) {
+    old$color <- old$`background-color` <- NULL
+  }
 
   top <- new$`margin-top` %||% 0L
   bottom <- new$`margin-bottom` %||% 0L
