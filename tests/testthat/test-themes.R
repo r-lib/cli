@@ -131,3 +131,51 @@ test_that_cli(configs = "ansi", "NULL will undo background color", {
     cli_alert("{.emph {.code this does not}}")
   }))
 })
+
+test_that_cli(
+  configs = "ansi",
+  "container color and background-color inherit into nested containers",
+  {
+    out <- cli_fmt({
+      cli_div(
+        class = "tmp",
+        theme = list(.tmp = list(color = "yellow", "background-color" = "blue"))
+      )
+      cli_text("plain")
+      cli_bullets(c("bullet", " " = "indented"))
+      cli_par()
+      cli_text("paragraph")
+      cli_end()
+      cli_end()
+    })
+
+    expect_equal(out[[1]], as.character(col_yellow(bg_blue("plain"))))
+    expect_equal(out[[2]], as.character(col_yellow(bg_blue("bullet"))))
+    expect_equal(
+      out[[3]],
+      paste0("  ", as.character(col_yellow(bg_blue("indented"))))
+    )
+    expect_equal(out[[4]], as.character(col_yellow(bg_blue("paragraph"))))
+
+    out_override <- cli_fmt({
+      cli_div(
+        class = "outer",
+        theme = list(
+          .outer = list(color = "yellow"),
+          .inner = list(color = "blue"),
+          .reset = list(color = NULL)
+        )
+      )
+      cli_div(class = "inner")
+      cli_bullets("blue bullet")
+      cli_end()
+      cli_div(class = "reset")
+      cli_bullets("plain bullet")
+      cli_end()
+      cli_end()
+    })
+
+    expect_equal(out_override[[1]], as.character(col_blue("blue bullet")))
+    expect_equal(out_override[[2]], "plain bullet")
+  }
+)

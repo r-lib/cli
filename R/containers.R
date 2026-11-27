@@ -29,7 +29,11 @@ clii__container_start <- function(
       }
     }
   }
-  new_style <- merge_embedded_styles(last(app$styles) %||% list(), new_sels)
+  new_style <- merge_embedded_styles(
+    last(app$styles) %||% list(),
+    new_sels,
+    inherit_color = tag != "span"
+  )
   app$styles <- push(app$styles, new_style, name = id)
 
   ## Top margin, if any
