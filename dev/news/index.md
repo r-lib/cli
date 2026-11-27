@@ -113,6 +113,11 @@ CRAN release: 2026-04-09
   [\#588](https://github.com/r-lib/cli/issues/588),
   [\#643](https://github.com/r-lib/cli/issues/643)).
 
+- Make [`pluralize()`](https://cli.r-lib.org/dev/reference/pluralize.md)
+  support values exceeding `.Machine$integer.max`
+  ([@mcol](https://github.com/mcol),
+  [\#773](https://github.com/r-lib/cli/issues/773)).
+
 ## cli 3.6.5
 
 CRAN release: 2025-04-23
